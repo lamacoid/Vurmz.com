@@ -1,0 +1,17 @@
+# VURMZ Website - Cloudflare Pages Configuration
+name = "vurmz-website"
+compatibility_date = "2024-12-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Pages configuration - next-on-pages output
+pages_build_output_dir = ".vercel/output/static"
+
+# D1 Database for quotes
+[[d1_databases]]
+binding = "DB"
+database_name = "vurmz-quotes"
+database_id = "b57e42c9-229c-436c-8109-fa3362e52b60"
+
+# Environment variables
+[vars]
+SITE_URL = "https://vurmz.com"

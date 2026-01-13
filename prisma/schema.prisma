@@ -1,0 +1,153 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String?
+  role      String   @default("EMPLOYEE")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Customer {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  company   String?
+  address   String?
+  city      String?
+  state     String?  @default("CO")
+  zip       String?
+  notes     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  quotes    Quote[]
+  orders    Order[]
+  invoices  Invoice[]
+}
+
+model Quote {
+  id                 String   @id @default(cuid())
+  customerId         String
+  customer           Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  projectDescription String
+  material           String
+  quantity           Int
+  artworkFiles       String?  @default("[]")
+  status             String   @default("PENDING")
+  estimatedPrice     Float?
+  turnaround         String   @default("STANDARD")
+  deliveryMethod     String   @default("PICKUP")
+  howHeardAboutUs    String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  order              Order?
+}
+
+model Order {
+  id                 String    @id @default(cuid())
+  orderNumber        String    @unique
+  customerId         String
+  customer           Customer  @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  quoteId            String?   @unique
+  quote              Quote?    @relation(fields: [quoteId], references: [id])
+  projectDescription String
+  material           String
+  quantity           Int
+  artworkFiles       String?   @default("[]")
+  price              Float
+  status             String    @default("PENDING")
+  dueDate            DateTime?
+  deliveryMethod     String    @default("PICKUP")
+  deliveryNotes      String?
+  lightburnFileUrl   String?
+  productionNotes    String?
+  laserType          String?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  completedAt        DateTime?
+
+  invoice            Invoice?
+}
+
+model Material {
+  id                String   @id @default(cuid())
+  name              String   @unique
+  description       String?
+  costPerUnit       Float
+  unit              String   @default("each")
+  quantityInStock   Int      @default(0)
+  lowStockThreshold Int      @default(10)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model Invoice {
+  id            String    @id @default(cuid())
+  invoiceNumber String    @unique
+  orderId       String    @unique
+  order         Order     @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  customerId    String
+  customer      Customer  @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  amount        Float
+  tax           Float     @default(0)
+  total         Float
+  status        String    @default("UNPAID")
+  paidAt        DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model PortfolioItem {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  imageUrl    String
+  category    String
+  industry    String?
+  location    String?
+  featured    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Testimonial {
+  id          String   @id @default(cuid())
+  name        String
+  company     String?
+  location    String?
+  content     String
+  rating      Int      @default(5)
+  featured    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+}
+
+model Settings {
+  id                    String   @id @default(cuid())
+  businessName          String   @default("VURMZ LLC")
+  phone                 String   @default("")
+  email                 String   @default("info@vurmz.com")
+  address               String   @default("")
+  city                  String   @default("Centennial")
+  state                 String   @default("CO")
+  zip                   String   @default("80016")
+  serviceRadius         Int      @default(15)
+  minOrderFreeDelivery  Float    @default(100)
+  deliveryFee           Float    @default(15)
+  salesTaxRate          Float    @default(0.0875)
+  businessHours         String   @default("Mon-Fri 9am-6pm, Sat by appointment")
+  primaryColor          String   @default("#1a1a1a")
+  logoUrl               String?
+  updatedAt             DateTime @updatedAt
+}
