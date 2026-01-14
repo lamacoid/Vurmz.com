@@ -158,7 +158,7 @@ export default function ProductSelector({
   const isTagsLabels = value === 'tags-labels'
 
   // Products with dedicated designers (show checkmark when configured)
-  const designerProducts = ['pens', 'business-cards', 'tags-labels']
+  const designerProducts = ['pens', 'business-cards', 'tags-labels', 'knives']
   const hasDesigner = designerProducts.includes(value)
 
   return (
@@ -264,7 +264,9 @@ export default function ProductSelector({
             {isOther
               ? '✏️ Tell me about your project in the notes below'
               : isTagsLabels
-              ? '✨ Use the Vurkshop below to design your labels'
+              ? '✨ Use the designer below to customize your labels'
+              : value === 'knives'
+              ? '✨ Design your knife engraving below'
               : hasDesigner
               ? '✨ Use the designer below to customize your order'
               : `✅ ${products.find(p => p.value === value)?.label} selected - describe your project below`

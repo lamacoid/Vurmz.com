@@ -1,12 +1,26 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
-import Image from 'next/image'
-import { ArrowRightIcon, MapPinIcon, CheckCircleIcon } from '@heroicons/react/24/outline'
-import ServiceAreaMap from '@/components/ServiceAreaMap'
+import { ArrowRightIcon, MapPinIcon } from '@heroicons/react/24/outline'
 
 export const metadata: Metadata = {
-  title: 'About',
-  description: 'Meet Zach, owner of VURMZ LLC. Colorado native, Centennial local, chef, and laser engraver. Self-taught and obsessed with the craft.',
+  title: 'About | VURMZ Laser Engraving',
+  description: 'VURMZ laser engraving based in Centennial, Colorado. Local business serving Denver metro.',
+  keywords: [
+    'VURMZ',
+    'Centennial laser engraving',
+    'Denver engraver',
+    'local business Centennial',
+    'custom engraving Denver metro',
+  ],
+  openGraph: {
+    title: 'About | VURMZ',
+    description: 'Laser engraving based in Centennial, Colorado.',
+    type: 'website',
+    url: 'https://www.vurmz.com/about',
+  },
+  alternates: {
+    canonical: 'https://www.vurmz.com/about',
+  },
 }
 
 export default function AboutPage() {
@@ -16,74 +30,55 @@ export default function AboutPage() {
       <section className="bg-vurmz-dark text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
-            <div className="flex items-center gap-2 text-vurmz-powder mb-4">
+            <div className="flex items-center gap-2 text-vurmz-sky mb-4">
               <MapPinIcon className="h-5 w-5" />
               <span>Centennial, Colorado</span>
             </div>
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
-              About Me
+              About Vurmz
             </h1>
             <p className="text-xl text-gray-300">
-              I am Zach. Colorado native, chef, husband, dad. I run VURMZ out of Centennial.
+              Local. Been here forever.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Story */}
+      {/* Simple Story */}
       <section className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-            <div>
-              <h2 className="text-3xl font-bold text-vurmz-dark mb-6">My Story</h2>
-              <div className="space-y-4 text-gray-600">
-                <p>
-                  I grew up in Colorado and have been in Centennial since it was still unincorporated Arapahoe County. This is home.
-                </p>
-                <p>
-                  Chef by trade. Been in kitchens for 15 years. Time to try something new and my own. I stumbled into laser engraving, fell down a very deep hole, taught myself everything, and developed a genuine love for the work. When I get into something, I go hard. So here we are.
-                </p>
-                <p>
-                  I live here with my wife and son. Running VURMZ lets me do work I care about while staying close to home.
-                </p>
-              </div>
-            </div>
-            <div className="relative aspect-square overflow-hidden">
-              <Image
-                src="/images/zach.jpeg"
-                alt="Zach and his son in the Colorado mountains"
-                fill
-                className="object-cover"
-              />
-            </div>
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="space-y-6 text-gray-600 text-lg">
+            <p className="text-vurmz-dark text-xl">
+              Zach. Dad. Husband. <span className="line-through text-gray-400">Chef</span>{' '}
+              <span className="text-vurmz-teal font-medium">Engraver.</span>
+            </p>
+            <p>
+              Grew up here before it was even called Centennial. Raised my family here.
+              This is home.
+            </p>
+            <p>
+              I want to literally leave my mark on the community I've been part of my entire life.
+            </p>
           </div>
         </div>
       </section>
 
       {/* Service Area */}
       <section className="bg-vurmz-light py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl font-bold text-vurmz-dark mb-6">
-                Service Area
-              </h2>
-              <p className="text-gray-600 mb-6">
-                Based in Centennial. Serving all of south suburban Denver and the metro area.
-              </p>
-              <div>
-                <h3 className="font-semibold text-vurmz-dark mb-3">Serving:</h3>
-                <div className="flex flex-wrap gap-2">
-                  {['Centennial', 'Greenwood Village', 'Cherry Hills', 'Highlands Ranch', 'Lone Tree', 'Englewood', 'Littleton', 'Denver', 'Aurora', 'Parker'].map((area) => (
-                    <span key={area} className="bg-gray-200 text-gray-700 px-3 py-1 text-sm">
-                      {area}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-            <ServiceAreaMap />
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-2xl font-bold text-vurmz-dark mb-6">
+            Serving Denver Metro
+          </h2>
+          <div className="flex flex-wrap gap-2 justify-center mb-6">
+            {['Centennial', 'Greenwood Village', 'Cherry Hills', 'Highlands Ranch', 'Lone Tree', 'Englewood', 'Littleton', 'Denver', 'Aurora', 'Parker'].map((area) => (
+              <span key={area} className="bg-white text-gray-700 px-3 py-1 text-sm border border-gray-200">
+                {area}
+              </span>
+            ))}
           </div>
+          <p className="text-gray-600">
+            Free delivery on orders over $100. Pickup always available.
+          </p>
         </div>
       </section>
 
@@ -91,10 +86,10 @@ export default function AboutPage() {
       <section className="bg-vurmz-teal text-white py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold mb-4">
-            Get a Quote
+            Get Started
           </h2>
           <p className="text-xl text-white/80 mb-8">
-            Text or send a quote request. I respond the same day.
+            Text me or submit a quote request.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link

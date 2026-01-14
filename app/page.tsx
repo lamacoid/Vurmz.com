@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { Metadata } from 'next'
 import {
   ClockIcon,
   MapPinIcon,
@@ -10,10 +11,166 @@ import {
 } from '@heroicons/react/24/outline'
 import ServiceAreaMap from '@/components/ServiceAreaMap'
 
+export const metadata: Metadata = {
+  title: 'VURMZ | Custom Laser Engraving in Centennial, Colorado',
+  description: 'Local laser engraving for Denver metro businesses. Fast turnaround, no minimums, local delivery. Pens, knives, business cards, equipment marking, awards. Serving Centennial, Greenwood Village, Cherry Hills, Highlands Ranch.',
+  keywords: [
+    'laser engraving Centennial',
+    'laser engraving Denver',
+    'custom engraving Colorado',
+    'fast turnaround engraving',
+    'no minimum order engraving',
+    'branded pens Denver',
+    'equipment marking Colorado',
+    'metal business cards',
+    'corporate gifts Denver',
+    'promotional products Centennial',
+    'local engraving service',
+    'Greenwood Village engraving',
+    'Cherry Hills laser',
+    'Highlands Ranch engraving',
+  ],
+  openGraph: {
+    title: 'VURMZ | Custom Laser Engraving in Centennial, Colorado',
+    description: 'Local laser engraving for Denver metro businesses. Fast turnaround, no minimums. Pens, knives, business cards, equipment marking.',
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://www.vurmz.com',
+    siteName: 'VURMZ',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'VURMZ | Laser Engraving Centennial CO',
+    description: 'Fast laser engraving for Denver metro businesses. No minimums, local delivery.',
+  },
+  alternates: {
+    canonical: 'https://www.vurmz.com',
+  },
+}
+
+// JSON-LD structured data: LocalBusiness + FAQ Schema for voice search and featured snippets
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'LocalBusiness',
+      '@id': 'https://www.vurmz.com/#business',
+      name: 'VURMZ',
+      description: 'Custom laser engraving for Denver metro businesses. Fast turnaround, no minimums, local pickup and delivery.',
+      url: 'https://www.vurmz.com',
+      telephone: '+1-719-257-3834',
+      email: 'hello@vurmz.com',
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Centennial',
+        addressRegion: 'CO',
+        postalCode: '80112',
+        addressCountry: 'US',
+      },
+      geo: {
+        '@type': 'GeoCoordinates',
+        latitude: 39.5807,
+        longitude: -104.8772,
+      },
+      areaServed: [
+        { '@type': 'City', name: 'Centennial', sameAs: 'https://en.wikipedia.org/wiki/Centennial,_Colorado' },
+        { '@type': 'City', name: 'Denver' },
+        { '@type': 'City', name: 'Greenwood Village' },
+        { '@type': 'City', name: 'Cherry Hills Village' },
+        { '@type': 'City', name: 'Highlands Ranch' },
+        { '@type': 'City', name: 'Lone Tree' },
+        { '@type': 'City', name: 'Parker' },
+        { '@type': 'City', name: 'Littleton' },
+        { '@type': 'City', name: 'Englewood' },
+        { '@type': 'City', name: 'Aurora' },
+      ],
+      priceRange: '$$',
+      openingHoursSpecification: [
+        {
+          '@type': 'OpeningHoursSpecification',
+          dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+          opens: '08:00',
+          closes: '18:00',
+        },
+        {
+          '@type': 'OpeningHoursSpecification',
+          dayOfWeek: 'Saturday',
+          opens: '09:00',
+          closes: '14:00',
+        },
+      ],
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name: 'Laser Engraving Services',
+        itemListElement: [
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Branded Pens' }, priceSpecification: { '@type': 'PriceSpecification', price: '3.00', priceCurrency: 'USD', unitText: 'per pen' } },
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Metal Business Cards' }, priceSpecification: { '@type': 'PriceSpecification', price: '5.00', priceCurrency: 'USD', unitText: 'per card' } },
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Equipment Marking' }, priceSpecification: { '@type': 'PriceSpecification', price: '3.00', priceCurrency: 'USD', unitText: 'starting price' } },
+        ],
+      },
+      sameAs: [],
+    },
+    {
+      '@type': 'FAQPage',
+      '@id': 'https://www.vurmz.com/#faq',
+      mainEntity: [
+        {
+          '@type': 'Question',
+          name: 'Where can I get pens engraved near me in Denver?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'VURMZ offers custom pen engraving in Centennial, serving all of Denver metro. Fast turnaround with no minimum order. Local pickup in Centennial or delivery to your business.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'How do I prevent restaurant equipment theft?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Laser engraving your restaurant name and phone number on pans, containers, and equipment makes theft less appealing and stolen items easier to identify. VURMZ specializes in restaurant equipment marking with durable engravings that survive commercial dishwashers.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'What is the minimum order for custom engraving?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'VURMZ has no minimum order. Need just 5 pens or 1 knife engraved? No problem. Online wholesalers typically require 50-250 piece minimums. Local service means you order exactly what you need.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'How fast can I get custom engraved items in Denver?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'VURMZ offers next-day delivery for most orders. Online competitors typically take 1-3 weeks plus shipping. Rush orders available when you need items for an event or opening.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'What makes metal business cards stand out?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Metal business cards are kept instead of thrown away. Made from anodized aluminum, they feel premium and memorable. Perfect for real estate agents, restaurant owners, and anyone who wants their card to make an impression.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'Can you engrave my own knives or tools?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Yes, VURMZ can engrave items you provide. Bring your own chef knives, pocket knives, power tools, or equipment. We also supply knives and pens if you need them.',
+          },
+        },
+      ],
+    },
+  ],
+}
+
 const valueProps = [
   {
-    title: 'Same-Day Service',
-    description: 'Get your order in hours, not weeks. Online competitors take 1-3 weeks.',
+    title: 'Next-Day Delivery',
+    description: 'Get your order in days, not weeks. Online competitors take 1-3 weeks.',
     icon: ClockIcon,
     color: 'teal',
   },
@@ -40,8 +197,8 @@ const valueProps = [
 const products = [
   {
     name: 'Branded Pens',
-    price: '$3.00-$3.50/unit',
-    description: 'Metal stylus pens with your logo.',
+    price: '$3-$7/pen',
+    description: 'Metal stylus pens with your logo. Price varies with upgrades.',
   },
   {
     name: 'Tool & Equipment Marking',
@@ -62,7 +219,14 @@ const products = [
 
 export default function HomePage() {
   return (
-    <div>
+    <>
+      {/* JSON-LD Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
+      <div>
       {/* Hero Section */}
       <section className="relative bg-vurmz-dark text-white">
         <div className="absolute inset-0 bg-gradient-to-br from-vurmz-dark via-vurmz-dark to-[#2a3533]" />
@@ -79,7 +243,7 @@ export default function HomePage() {
               Serving small businesses in South Metro Denver with quality engraving, fast.
             </p>
             <p className="text-lg text-gray-400 mb-8">
-              Same-day turnaround, no minimum orders, and you talk directly to me.
+              Fast turnaround, no minimum orders, and you talk directly to me.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
@@ -206,7 +370,7 @@ export default function HomePage() {
             Premium Service at Fair Prices
           </h2>
           <p className="text-xl text-gray-600 mb-8">
-            I am 20-35% above online wholesalers. Here is why that makes sense for your business:
+            Prices run 20-35% above online wholesalers. Here's why that makes sense:
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left mb-12">
             <div className="bg-vurmz-light p-6">
@@ -216,7 +380,7 @@ export default function HomePage() {
                 Online: $2/pen + $50 shipping + 2 weeks wait + 100 minimum = $250 and hassle
               </p>
               <p className="text-vurmz-teal text-sm mt-2 font-medium">
-                VURMZ: $3.50/pen + same day + 25 units = exactly what you need
+                VURMZ: $3.50/pen + next day + 25 units = what you actually need
               </p>
             </div>
             <div className="bg-vurmz-light p-6">
@@ -273,5 +437,6 @@ export default function HomePage() {
         </div>
       </section>
     </div>
+    </>
   )
 }

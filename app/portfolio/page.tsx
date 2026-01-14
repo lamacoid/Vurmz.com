@@ -4,8 +4,27 @@ import { ArrowRightIcon } from '@heroicons/react/24/outline'
 import PortfolioGallery from '@/components/PortfolioGallery'
 
 export const metadata: Metadata = {
-  title: 'Portfolio',
-  description: 'View laser engraving work for local businesses in Centennial and Denver metro.',
+  title: 'Portfolio | Laser Engraving Examples Denver Metro',
+  description: 'Laser engraving projects for Denver businesses. Chef knives, restaurant equipment, branded pens, metal business cards, awards, and custom work.',
+  keywords: [
+    'laser engraving examples',
+    'Denver engraving portfolio',
+    'custom knife engraving photos',
+    'restaurant equipment marking',
+    'branded pen examples',
+    'metal business card samples',
+    'Centennial laser work',
+    'corporate gifts Denver',
+  ],
+  openGraph: {
+    title: 'Portfolio | VURMZ Laser Engraving',
+    description: 'Laser engraving projects for Denver metro businesses. Knives, pens, cards, equipment marking.',
+    type: 'website',
+    url: 'https://www.vurmz.com/portfolio',
+  },
+  alternates: {
+    canonical: 'https://www.vurmz.com/portfolio',
+  },
 }
 
 // Portfolio items organized by category
@@ -199,11 +218,8 @@ export default function PortfolioPage() {
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
               My Work
             </h1>
-            <p className="text-xl text-gray-300 mb-4">
-              Real projects for real local businesses. Every piece represents a relationship with a Centennial or Denver metro business owner.
-            </p>
-            <p className="text-gray-400">
-              Photos coming soon as I build my portfolio. In the meantime, here is a sample of the types of projects I handle.
+            <p className="text-xl text-gray-300">
+              Types of projects I handle for local businesses. Photos coming as I document more work.
             </p>
           </div>
         </div>
@@ -245,38 +261,6 @@ export default function PortfolioPage() {
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* Equipment */}
-      <section className="bg-vurmz-dark text-white py-16">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold mb-6">
-            Professional Equipment for Professional Results
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-            <div className="border border-gray-700 p-6">
-              <h3 className="font-semibold text-vurmz-teal mb-2">30W Fiber Laser</h3>
-              <p className="text-gray-400 text-sm">
-                Gweike Cloud G2 Pro for precision metal engraving
-              </p>
-            </div>
-            <div className="border border-gray-700 p-6">
-              <h3 className="font-semibold text-vurmz-teal mb-2">50W CO2 Laser</h3>
-              <p className="text-gray-400 text-sm">
-                With rotary for pens, bottles, and cylindrical items
-              </p>
-            </div>
-            <div className="border border-gray-700 p-6">
-              <h3 className="font-semibold text-vurmz-teal mb-2">22W Diode Laser</h3>
-              <p className="text-gray-400 text-sm">
-                Reality Falcon 2 for wood cutting and engraving
-              </p>
-            </div>
-          </div>
-          <p className="text-gray-400">
-            $35,000 invested in professional-grade equipment because quality requires the right tools.
-          </p>
         </div>
       </section>
 

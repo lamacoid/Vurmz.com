@@ -2,12 +2,15 @@
 
 import { useState, useRef, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
+import { motion, AnimatePresence } from 'framer-motion'
 import { CloudArrowUpIcon, XMarkIcon, DocumentIcon } from '@heroicons/react/24/outline'
 import AddressAutocomplete from '@/components/AddressAutocomplete'
 import MetalBusinessCardPreview from '@/components/MetalBusinessCardPreview'
 import BrandedPenPreview from '@/components/BrandedPenPreview'
 import LabelDesigner, { LabelDesignData, generateLabelDescription, generateLabelSVG } from '@/components/LabelDesigner'
+import KnifeDesigner, { KnifeDesignData } from '@/components/KnifeDesigner'
 import ProductSelector from '@/components/ProductSelector'
+import { motionVariants } from '@/lib/builder-tokens'
 
 const businessTypes = [
   { value: 'restaurant', label: 'Restaurant / Culinary' },
@@ -103,6 +106,8 @@ export default function QuoteForm() {
 
   const [labelDesignData, setLabelDesignData] = useState<LabelDesignData | null>(null)
 
+  const [knifeDesignData, setKnifeDesignData] = useState<KnifeDesignData | null>(null)
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -135,6 +140,10 @@ export default function QuoteForm() {
 
   const handleLabelDesignChange = useCallback((data: LabelDesignData) => {
     setLabelDesignData(data)
+  }, [])
+
+  const handleKnifeDesignChange = useCallback((data: KnifeDesignData) => {
+    setKnifeDesignData(data)
   }, [])
 
   // Calculate order total for products with known pricing
@@ -172,6 +181,16 @@ export default function QuoteForm() {
       }
     }
 
+    // Knife engraving
+    if (formData.productType === 'knives' && knifeDesignData) {
+      return {
+        productName: `${knifeDesignData.knifeType === 'pocket' ? 'Pocket' : 'Chef'} Knife Engraving`,
+        quantity: knifeDesignData.quantity,
+        pricePerUnit: knifeDesignData.pricePerUnit,
+        total: knifeDesignData.totalPrice
+      }
+    }
+
     return null
   }
 
@@ -179,7 +198,7 @@ export default function QuoteForm() {
   const isOrderWithPrice = orderTotal !== null
 
   // Products that have designers and require pricing
-  const productsRequiringPrice = ['pens', 'business-cards', 'tags-labels']
+  const productsRequiringPrice = ['pens', 'business-cards', 'tags-labels', 'knives']
   const requiresPricing = productsRequiringPrice.includes(formData.productType)
 
   // Check if designer content is filled in (at minimum, the text/name to engrave)
@@ -191,7 +210,10 @@ export default function QuoteForm() {
       return cardData.name.trim().length > 0
     }
     if (formData.productType === 'tags-labels' && labelDesignData) {
-      return labelDesignData.elements.length > 0
+      return labelDesignData.text.trim().length > 0
+    }
+    if (formData.productType === 'knives' && knifeDesignData) {
+      return knifeDesignData.bladeText.trim().length > 0 || knifeDesignData.handleText.trim().length > 0
     }
     return true
   }
@@ -268,7 +290,7 @@ export default function QuoteForm() {
 
       // For designer products, provide default description if none given
       const descriptionOrDefault = formData.description.trim() ||
-        (['business-cards', 'pens', 'tags-labels'].includes(formData.productType)
+        (['business-cards', 'pens', 'tags-labels', 'knives'].includes(formData.productType)
           ? 'See design specifications below.'
           : formData.description)
 
@@ -302,6 +324,17 @@ export default function QuoteForm() {
         const svgContent = generateLabelSVG(labelDesignData)
         const svgBlob = new Blob([svgContent], { type: 'image/svg+xml' })
         submitData.append('designFile', svgBlob, `label-design-${Date.now()}.svg`)
+      }
+
+      // Include knife design data if selected
+      if (formData.productType === 'knives' && knifeDesignData) {
+        submitData.append('knifeDesignData', JSON.stringify(knifeDesignData))
+        // Include human-readable description
+        const knifeDescription = `${knifeDesignData.knifeType === 'pocket' ? 'Pocket' : 'Chef'} Knife - ${
+          knifeDesignData.engravingLocation === 'both' ? 'Blade & Handle' :
+          knifeDesignData.engravingLocation === 'blade' ? 'Blade' : 'Handle'
+        } Engraving. ${knifeDesignData.bladeText ? `Blade: "${knifeDesignData.bladeText}"` : ''} ${knifeDesignData.handleText ? `Handle: "${knifeDesignData.handleText}"` : ''} Qty: ${knifeDesignData.quantity}`
+        submitData.append('knifeDescription', knifeDescription)
       }
 
       // Include calculated price for orders with known pricing
@@ -514,8 +547,8 @@ export default function QuoteForm() {
             }))}
           />
 
-          {/* Quantity - hidden for tags-labels since designer has its own quantity */}
-          {formData.productType !== 'tags-labels' && (
+          {/* Quantity - hidden for designer products that have their own quantity */}
+          {!['tags-labels', 'knives'].includes(formData.productType) && (
             <div className="max-w-xs">
               <label htmlFor="quantity" className="block text-sm font-medium text-vurmz-dark mb-1">
                 Quantity <span className="text-red-500">*</span>
@@ -524,7 +557,7 @@ export default function QuoteForm() {
                 type="text"
                 id="quantity"
                 name="quantity"
-                required={formData.productType !== 'tags-labels'}
+                required={!['tags-labels', 'knives'].includes(formData.productType)}
                 value={formData.quantity}
                 onChange={handleChange}
                 placeholder="e.g., 25, 50-100, not sure yet"
@@ -533,33 +566,69 @@ export default function QuoteForm() {
             </div>
           )}
 
-          {/* Metal Business Card Preview */}
-          {formData.productType === 'business-cards' && (
-            <MetalBusinessCardPreview onChange={handleCardDataChange} />
-          )}
+          {/* Product Designers with Liquid Transitions */}
+          <AnimatePresence mode="wait">
+            {formData.productType === 'business-cards' && (
+              <motion.div
+                key="business-cards"
+                variants={motionVariants.productMorph}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+              >
+                <MetalBusinessCardPreview onChange={handleCardDataChange} />
+              </motion.div>
+            )}
 
-          {/* Branded Pen Preview */}
-          {formData.productType === 'pens' && (
-            <BrandedPenPreview onChange={handlePenDataChange} />
-          )}
+            {formData.productType === 'pens' && (
+              <motion.div
+                key="pens"
+                variants={motionVariants.productMorph}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+              >
+                <BrandedPenPreview onChange={handlePenDataChange} />
+              </motion.div>
+            )}
 
-          {/* Labels & Signs Designer */}
-          {formData.productType === 'tags-labels' && (
-            <LabelDesigner
-              onChange={handleLabelDesignChange}
-              initialQuantity={parseInt(formData.quantity, 10) || 1}
-            />
-          )}
+            {formData.productType === 'tags-labels' && (
+              <motion.div
+                key="tags-labels"
+                variants={motionVariants.productMorph}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+              >
+                <LabelDesigner
+                  onChange={handleLabelDesignChange}
+                  initialQuantity={parseInt(formData.quantity, 10) || 1}
+                />
+              </motion.div>
+            )}
+
+            {formData.productType === 'knives' && (
+              <motion.div
+                key="knives"
+                variants={motionVariants.productMorph}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+              >
+                <KnifeDesigner onChange={handleKnifeDesignChange} />
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           <div>
             <label htmlFor="description" className="block text-sm font-medium text-vurmz-dark mb-1">
-              {['business-cards', 'pens', 'tags-labels'].includes(formData.productType) ? 'Additional Notes (Optional)' : 'Tell Me About Your Project'} {!['business-cards', 'pens', 'tags-labels'].includes(formData.productType) && <span className="text-red-500">*</span>}
+              {['business-cards', 'pens', 'tags-labels', 'knives'].includes(formData.productType) ? 'Additional Notes (Optional)' : 'Tell Me About Your Project'} {!['business-cards', 'pens', 'tags-labels', 'knives'].includes(formData.productType) && <span className="text-red-500">*</span>}
             </label>
             <textarea
               id="description"
               name="description"
-              required={!['business-cards', 'pens', 'tags-labels'].includes(formData.productType)}
-              rows={['business-cards', 'pens', 'tags-labels'].includes(formData.productType) ? 3 : 4}
+              required={!['business-cards', 'pens', 'tags-labels', 'knives'].includes(formData.productType)}
+              rows={['business-cards', 'pens', 'tags-labels', 'knives'].includes(formData.productType) ? 3 : 4}
               value={formData.description}
               onChange={handleChange}
               placeholder={
@@ -569,6 +638,8 @@ export default function QuoteForm() {
                   ? "Any special requests? Questions about your order? (Optional)"
                   : formData.productType === 'tags-labels'
                   ? "Need different text on each label? Special instructions? (Optional)"
+                  : formData.productType === 'knives'
+                  ? "Describe your knife - brand, style, blade material. Any special requests? (Optional)"
                   : "What do you want engraved? Any specific text, logo, or design? Size preferences? Bringing your own items?"
               }
               className="w-full border border-gray-300 px-4 py-3 focus:border-vurmz-teal focus:ring-1 focus:ring-vurmz-teal outline-none resize-none"

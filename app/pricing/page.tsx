@@ -10,15 +10,36 @@ import {
 } from '@heroicons/react/24/outline'
 
 export const metadata: Metadata = {
-  title: 'Pricing',
-  description: 'Transparent laser engraving pricing for Centennial and Denver metro businesses. Premium service at fair prices. No hidden fees, no surprises.',
+  title: 'Laser Engraving Pricing | No Hidden Fees | VURMZ',
+  description: 'Transparent laser engraving prices for Denver metro. Pens from $3, equipment marking from $3, business cards from $5. No setup fees for repeat customers. No minimums.',
+  keywords: [
+    'laser engraving prices Denver',
+    'engraving cost Centennial',
+    'custom pen pricing',
+    'equipment marking cost',
+    'metal business card price',
+    'knife engraving cost',
+    'no minimum engraving',
+    'affordable laser engraving Colorado',
+    'transparent engraving pricing',
+    'corporate gift pricing Denver',
+  ],
+  openGraph: {
+    title: 'Pricing | VURMZ Laser Engraving',
+    description: 'Transparent pricing. No hidden fees. Pens from $3, equipment marking from $3. Denver metro.',
+    type: 'website',
+    url: 'https://www.vurmz.com/pricing',
+  },
+  alternates: {
+    canonical: 'https://www.vurmz.com/pricing',
+  },
 }
 
 const pricingCategories = [
   {
     category: 'Promotional Items',
     items: [
-      { name: 'Metal Stylus Pens', price: '$3.00-$3.50/unit', note: 'Volume discounts available' },
+      { name: 'Metal Stylus Pens', price: '$3-$7/pen', note: 'Price varies with upgrades' },
       { name: 'Keychains', price: 'Starting at $4/unit', note: 'Various styles' },
       { name: 'Coasters', price: 'Starting at $6/unit', note: 'Wood or metal' },
       { name: 'Bottle Openers', price: 'Starting at $5/unit', note: 'Metal' },
@@ -28,8 +49,10 @@ const pricingCategories = [
     category: 'Tool & Equipment Marking',
     items: [
       { name: 'Kitchen Pans (existing)', price: '$3-$5/pan', note: '9th, 6th, hotel pans, sheet trays' },
-      { name: 'Chef Knives (name + icon)', price: '$20/knife', note: 'Standard engraving' },
-      { name: 'Chef Knives (custom design)', price: '$45/knife', note: 'Large detailed artwork' },
+      { name: 'Knife Engraving (your knife)', price: '$15/knife', note: 'Bring your own knife' },
+      { name: 'Pocket Knife + Engraving', price: '$40', note: 'Basic pocket knife included' },
+      { name: 'Chef Knife + Engraving', price: '$50', note: 'Basic chef knife included' },
+      { name: 'Steak Knife Sets', price: '$60-$85', note: '4-piece or 6-piece sets' },
       { name: 'Power Tools', price: '$30-$75/item', note: 'Complexity varies' },
       { name: 'Hand Tools', price: '$30-$50/item', note: 'Depends on size/material' },
     ],
@@ -37,7 +60,7 @@ const pricingCategories = [
   {
     category: 'Business Cards & Signage',
     items: [
-      { name: 'Metal Business Cards', price: 'Starting at $5/card', note: 'Anodized aluminum' },
+      { name: 'Metal Business Cards', price: '$3-$6/card', note: 'Stainless steel from $15' },
       { name: 'Name Plates', price: 'Starting at $15', note: 'Desk or door mount' },
       { name: 'Custom Signs', price: 'Quote based', note: 'Size and material dependent' },
     ],
@@ -65,7 +88,7 @@ const pricingCategories = [
 const comparison = [
   {
     factor: 'Turnaround',
-    vurmz: 'Same-day or next-day',
+    vurmz: 'Next-day, same-day often possible',
     online: '1-3 weeks',
   },
   {
@@ -85,7 +108,7 @@ const comparison = [
   },
   {
     factor: 'Errors/Issues',
-    vurmz: 'Fixed same day, personally',
+    vurmz: 'Fixed quickly, personally',
     online: 'Return shipping, wait for replacement',
   },
   {
@@ -106,7 +129,7 @@ export default function PricingPage() {
               Transparent Pricing
             </h1>
             <p className="text-xl text-gray-300 mb-4">
-              I am honest about being a premium option. Here is exactly what things cost and why it makes sense for your business.
+              Premium local service, honestly priced. Here's what things cost and why.
             </p>
           </div>
         </div>
@@ -117,15 +140,15 @@ export default function PricingPage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-2xl md:text-3xl font-bold text-vurmz-dark mb-4">
-              Why I Cost More Than Online
+              Why Local Costs More
             </h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div className="bg-white p-6 border border-gray-200 border-t-4 border-t-vurmz-teal text-center">
               <ClockIcon className="h-10 w-10 text-vurmz-teal mx-auto mb-4" />
-              <h3 className="font-semibold text-vurmz-dark mb-2">Same-Day Service</h3>
-              <p className="text-gray-600 text-sm">Hours, not weeks</p>
+              <h3 className="font-semibold text-vurmz-dark mb-2">Fast Turnaround</h3>
+              <p className="text-gray-600 text-sm">Days, not weeks</p>
             </div>
             <div className="bg-white p-6 border border-gray-200 border-t-4 border-t-vurmz-powder text-center">
               <CubeIcon className="h-10 w-10 text-vurmz-powder mx-auto mb-4" />
@@ -205,7 +228,7 @@ export default function PricingPage() {
                   </li>
                   <li className="flex justify-between">
                     <span>Wait time</span>
-                    <span>Same day</span>
+                    <span>Next day</span>
                   </li>
                   <li className="flex justify-between">
                     <span>Extra pens</span>
@@ -221,7 +244,7 @@ export default function PricingPage() {
               </div>
             </div>
             <p className="text-center text-gray-600 mt-6">
-              <span className="font-semibold">Result:</span> You save $68 and get them the same day.
+              <span className="font-semibold">Result:</span> You save $68 and get them next day.
             </p>
           </div>
         </div>

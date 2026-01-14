@@ -7,6 +7,9 @@
   --vurmz-teal-light: #7A9C9C;
   --vurmz-powder: #B5C9D4;
   --vurmz-powder-light: #C8D8E0;
+  --vurmz-sky: #8CAEC4;
+  --vurmz-sky-light: #A3C1D4;
+  --vurmz-sky-dark: #7A9DB3;
   --vurmz-sage: #8C9A8C;
   --vurmz-sage-light: #A0ACA0;
   --vurmz-dark: #2C3533;
@@ -96,5 +99,23 @@ html {
   }
   .border-t-vurmz-sage {
     border-top-color: var(--vurmz-sage);
+  }
+  .bg-vurmz-sky {
+    background-color: var(--vurmz-sky);
+  }
+  .bg-vurmz-sky-light {
+    background-color: var(--vurmz-sky-light);
+  }
+  .text-vurmz-sky {
+    color: var(--vurmz-sky);
+  }
+  .border-vurmz-sky {
+    border-color: var(--vurmz-sky);
+  }
+  .border-t-vurmz-sky {
+    border-top-color: var(--vurmz-sky);
+  }
+  .hover\:bg-vurmz-sky-dark:hover {
+    background-color: var(--vurmz-sky-dark);
   }
 }

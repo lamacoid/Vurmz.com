@@ -1,7 +1,7 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { QrCodeIcon, PhotoIcon, ArrowPathIcon } from '@heroicons/react/24/outline'
+import { useState, useEffect, useCallback } from 'react'
+import { QrCodeIcon, PhotoIcon, ArrowPathIcon, ArrowDownTrayIcon } from '@heroicons/react/24/outline'
 import { fontOptions, ENGRAVING_COLOR } from '@/lib/fonts'
 import FontSelector from './FontSelector'
 
@@ -50,6 +50,28 @@ export default function MetalBusinessCardPreview({ onChange }: MetalBusinessCard
     layout: 'horizontal',
     pricePerCard: 3
   })
+
+  // Logo image stored as base64 data URL
+  const [logoImage, setLogoImage] = useState<string | null>(null)
+
+  // Handle logo file upload
+  const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      alert('Please upload an image file')
+      return
+    }
+
+    // Read file as base64
+    const reader = new FileReader()
+    reader.onload = (event) => {
+      setLogoImage(event.target?.result as string)
+    }
+    reader.readAsDataURL(file)
+  }
 
   const selectedFont = fontOptions.find(f => f.value === cardData.font) || fontOptions[0]
 
@@ -162,6 +184,144 @@ export default function MetalBusinessCardPreview({ onChange }: MetalBusinessCard
     { value: 'gloss-white', label: 'Gloss White', className: 'bg-white text-zinc-800 border border-zinc-300' },
     { value: 'stainless-steel', label: 'Stainless Steel', className: 'bg-gradient-to-r from-zinc-400 to-zinc-300 text-zinc-800', premium: true },
   ]
+
+  // Generate SVG for Lightburn export
+  const generateSVG = useCallback(() => {
+    // Card dimensions: 3.5" x 2" at 96 DPI
+    const dpi = 96
+    const isPortrait = cardData.layout === 'portrait'
+    const cardWidth = isPortrait ? 2 * dpi : 3.5 * dpi
+    const cardHeight = isPortrait ? 3.5 * dpi : 2 * dpi
+    const cornerRadius = 8
+
+    // Font mapping for SVG
+    const fontFamily = selectedFont?.style?.fontFamily || 'Arial'
+
+    let svg = `<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="${isPortrait ? '2in' : '3.5in'}"
+     height="${isPortrait ? '3.5in' : '2in'}"
+     viewBox="0 0 ${cardWidth} ${cardHeight}">
+  <!-- VURMZ Metal Business Card - ${cardData.name || 'Unnamed'} -->
+  <!-- Import into Lightburn: File > Import -->
+
+  <!-- Card outline (reference - set to no output or delete) -->
+  <rect x="1" y="1" width="${cardWidth - 2}" height="${cardHeight - 2}" rx="${cornerRadius}" ry="${cornerRadius}"
+        style="fill:none;stroke:#0000ff;stroke-width:0.5"/>
+
+  <!-- Engrave layer (black = engrave in Lightburn) -->
+  <g id="engrave" style="fill:#000000;">
+`
+
+    // Calculate positions based on layout
+    const padding = 15
+    const centerX = cardWidth / 2
+    let yPos = isPortrait ? 50 : 35
+
+    // Business name (smaller, above name)
+    if (cardData.business) {
+      svg += `    <text x="${isPortrait ? centerX : padding}" y="${yPos}"
+           font-family="${fontFamily}" font-size="10" font-weight="500"
+           ${isPortrait ? 'text-anchor="middle"' : ''}
+           letter-spacing="2">${escapeXml(cardData.business.toUpperCase())}</text>\n`
+      yPos += 18
+    }
+
+    // Name (large, bold)
+    svg += `    <text x="${isPortrait ? centerX : padding}" y="${yPos}"
+           font-family="${fontFamily}" font-size="18" font-weight="bold"
+           ${isPortrait ? 'text-anchor="middle"' : ''}>${escapeXml(cardData.name || 'YOUR NAME')}</text>\n`
+    yPos += 16
+
+    // Title
+    if (cardData.title) {
+      svg += `    <text x="${isPortrait ? centerX : padding}" y="${yPos}"
+           font-family="${fontFamily}" font-size="10"
+           ${isPortrait ? 'text-anchor="middle"' : ''}>${escapeXml(cardData.title)}</text>\n`
+      yPos += 14
+    }
+
+    // Contact info (bottom of card)
+    const contactY = isPortrait ? cardHeight - 60 : cardHeight - 45
+    let contactLine = contactY
+
+    if (cardData.phone) {
+      svg += `    <text x="${isPortrait ? centerX : padding}" y="${contactLine}"
+           font-family="${fontFamily}" font-size="9"
+           ${isPortrait ? 'text-anchor="middle"' : ''}>${escapeXml(cardData.phone)}</text>\n`
+      contactLine += 12
+    }
+    if (cardData.email) {
+      svg += `    <text x="${isPortrait ? centerX : padding}" y="${contactLine}"
+           font-family="${fontFamily}" font-size="9"
+           ${isPortrait ? 'text-anchor="middle"' : ''}>${escapeXml(cardData.email)}</text>\n`
+      contactLine += 12
+    }
+    if (cardData.website) {
+      svg += `    <text x="${isPortrait ? centerX : padding}" y="${contactLine}"
+           font-family="${fontFamily}" font-size="9"
+           ${isPortrait ? 'text-anchor="middle"' : ''}>${escapeXml(cardData.website)}</text>\n`
+    }
+
+    // QR Code placeholder (bottom right for horizontal, bottom center for portrait)
+    if (cardData.qrEnabled) {
+      const qrSize = 50
+      const qrX = isPortrait ? centerX - qrSize/2 : cardWidth - qrSize - padding
+      const qrY = isPortrait ? cardHeight - qrSize - 20 : cardHeight - qrSize - padding
+      svg += `    <!-- QR Code area - replace with actual QR SVG -->
+    <rect x="${qrX}" y="${qrY}" width="${qrSize}" height="${qrSize}"
+          style="fill:none;stroke:#000000;stroke-width:0.5;stroke-dasharray:2,2"/>
+    <text x="${qrX + qrSize/2}" y="${qrY + qrSize/2 + 3}"
+          font-family="Arial" font-size="8" text-anchor="middle">QR CODE</text>\n`
+    }
+
+    // Logo - embed actual image if uploaded
+    if (cardData.logoEnabled) {
+      const logoSize = 40
+      const logoX = isPortrait ? centerX - logoSize/2 : cardWidth - logoSize - padding
+      const logoY = isPortrait ? 80 : padding
+      if (logoImage) {
+        svg += `    <!-- Logo (embedded image) -->
+    <image x="${logoX}" y="${logoY}" width="${logoSize}" height="${logoSize}"
+           href="${logoImage}" preserveAspectRatio="xMidYMid meet"/>\n`
+      } else {
+        svg += `    <!-- Logo placeholder - upload logo to embed -->
+    <rect x="${logoX}" y="${logoY}" width="${logoSize}" height="${logoSize}"
+          style="fill:none;stroke:#000000;stroke-width:0.5;stroke-dasharray:2,2"/>
+    <text x="${logoX + logoSize/2}" y="${logoY + logoSize/2 + 3}"
+          font-family="Arial" font-size="7" text-anchor="middle">LOGO</text>\n`
+      }
+    }
+
+    svg += `  </g>
+</svg>`
+
+    return svg
+  }, [cardData, selectedFont, logoImage])
+
+  // Download SVG file
+  const downloadSVG = useCallback(() => {
+    const svg = generateSVG()
+    const blob = new Blob([svg], { type: 'image/svg+xml' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `business-card-${cardData.name?.replace(/\s+/g, '-').toLowerCase() || 'design'}.svg`
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    URL.revokeObjectURL(url)
+  }, [generateSVG, cardData.name])
+
+  // Helper to escape XML special characters
+  function escapeXml(str: string): string {
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&apos;')
+  }
 
   return (
     <div className="bg-gray-50 border border-gray-200 p-6 mt-4">
@@ -347,6 +507,30 @@ export default function MetalBusinessCardPreview({ onChange }: MetalBusinessCard
               <span className="text-xs text-vurmz-teal font-medium">+$1</span>
             </label>
 
+            {cardData.logoEnabled && (
+              <div className="ml-7 space-y-2">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleLogoUpload}
+                  className="w-full text-sm text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-medium file:bg-vurmz-teal file:text-white hover:file:bg-vurmz-teal-dark"
+                />
+                {logoImage && (
+                  <div className="flex items-center gap-2">
+                    <img src={logoImage} alt="Logo preview" className="h-10 w-auto object-contain bg-gray-100 rounded p-1" />
+                    <button
+                      type="button"
+                      onClick={() => setLogoImage(null)}
+                      className="text-xs text-red-500 hover:text-red-700"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                )}
+                <p className="text-xs text-gray-500">PNG or SVG with transparent background works best</p>
+              </div>
+            )}
+
             <label className="flex items-center gap-3 cursor-pointer">
               <input
                 type="checkbox"
@@ -467,10 +651,21 @@ export default function MetalBusinessCardPreview({ onChange }: MetalBusinessCard
 
               {/* Front Side */}
               <div className={`relative h-full p-5 flex flex-col ${cardData.layout === 'portrait' ? 'justify-start pt-8' : 'justify-between'}`}>
-                {/* Logo placeholder */}
+                {/* Logo */}
                 {cardData.logoEnabled && (
-                  <div className={`${cardData.layout === 'portrait' ? 'mx-auto mb-4' : 'absolute top-4 right-4'} w-12 h-12 border-2 border-dashed ${colors.accent} rounded flex items-center justify-center`}>
-                    <span className={`text-xs ${colors.accent}`}>LOGO</span>
+                  <div className={`${cardData.layout === 'portrait' ? 'mx-auto mb-4' : 'absolute top-4 right-4'} w-12 h-12 flex items-center justify-center`}>
+                    {logoImage ? (
+                      <img
+                        src={logoImage}
+                        alt="Logo"
+                        className="max-w-full max-h-full object-contain"
+                        style={{ filter: cardData.cardColor === 'gloss-white' || cardData.cardColor === 'stainless-steel' ? 'none' : 'brightness(1.5) contrast(0.9)' }}
+                      />
+                    ) : (
+                      <div className={`w-full h-full border-2 border-dashed ${colors.accent} rounded flex items-center justify-center`}>
+                        <span className={`text-xs ${colors.accent}`}>LOGO</span>
+                      </div>
+                    )}
                   </div>
                 )}
 
@@ -563,10 +758,21 @@ export default function MetalBusinessCardPreview({ onChange }: MetalBusinessCard
 
                     {cardData.backSideOption === 'large-logo' && (
                       <div className="text-center">
-                        <div className={`w-24 h-24 border-2 border-dashed ${colors.accent} rounded flex items-center justify-center mx-auto`}>
-                          <PhotoIcon className={`w-12 h-12 ${colors.accent}`} />
-                        </div>
-                        <p className={`text-xs ${colors.accent} mt-2`}>Your Logo</p>
+                        {logoImage ? (
+                          <div className="w-28 h-28 flex items-center justify-center mx-auto">
+                            <img
+                              src={logoImage}
+                              alt="Logo"
+                              className="max-w-full max-h-full object-contain"
+                              style={{ filter: cardData.cardColor === 'gloss-white' || cardData.cardColor === 'stainless-steel' ? 'none' : 'brightness(1.5) contrast(0.9)' }}
+                            />
+                          </div>
+                        ) : (
+                          <div className={`w-24 h-24 border-2 border-dashed ${colors.accent} rounded flex items-center justify-center mx-auto`}>
+                            <PhotoIcon className={`w-12 h-12 ${colors.accent}`} />
+                          </div>
+                        )}
+                        <p className={`text-xs ${colors.accent} mt-2`}>{logoImage ? '' : 'Upload logo above'}</p>
                       </div>
                     )}
 
@@ -590,6 +796,21 @@ export default function MetalBusinessCardPreview({ onChange }: MetalBusinessCard
           <div className="text-center text-xs text-gray-500 mt-4">
             <p>Standard size: 3.5&quot; x 2&quot; (89mm x 51mm)</p>
             <p>Laser engraved on metal</p>
+          </div>
+
+          {/* Download SVG Button */}
+          <div className="mt-4 pt-4 border-t border-gray-200">
+            <button
+              type="button"
+              onClick={downloadSVG}
+              className="w-full flex items-center justify-center gap-2 bg-vurmz-dark text-white px-4 py-3 rounded-lg font-medium hover:bg-gray-800 transition-colors"
+            >
+              <ArrowDownTrayIcon className="w-5 h-5" />
+              Download SVG for Lightburn
+            </button>
+            <p className="text-xs text-gray-500 mt-2 text-center">
+              Import the SVG into Lightburn. Blue outline is for alignment reference.
+            </p>
           </div>
         </div>
       </div>

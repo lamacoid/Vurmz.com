@@ -6,15 +6,37 @@ import {
 } from '@heroicons/react/24/outline'
 
 export const metadata: Metadata = {
-  title: 'Laser Engraving Services',
-  description: 'Professional laser engraving in Centennial and Denver metro. Pens, tools, business cards, cutting boards, awards, and custom projects.',
+  title: 'Laser Engraving Services Denver Metro | VURMZ',
+  description: 'Professional laser engraving services in Centennial, CO. Branded pens, custom knives, metal business cards, equipment marking, cutting boards, awards. Fast turnaround.',
+  keywords: [
+    'laser engraving services Denver',
+    'custom engraving Centennial',
+    'branded pens service',
+    'knife engraving Colorado',
+    'metal business card engraving',
+    'equipment marking service',
+    'cutting board engraving',
+    'corporate awards Denver',
+    'promotional products engraving',
+    'tool marking service',
+    'restaurant equipment engraving',
+  ],
+  openGraph: {
+    title: 'Laser Engraving Services | VURMZ',
+    description: 'Professional laser engraving in Centennial. Pens, knives, cards, equipment marking, awards. Fast turnaround.',
+    type: 'website',
+    url: 'https://www.vurmz.com/services',
+  },
+  alternates: {
+    canonical: 'https://www.vurmz.com/services',
+  },
 }
 
 const products = [
   {
     name: 'Branded Pens',
     description: 'Metal stylus pens with your logo. Good for any business that hands things to customers.',
-    price: '$3.00-$3.50/pen',
+    price: '$3-$7/pen',
   },
   {
     name: 'Tool & Equipment Marking',

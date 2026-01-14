@@ -4,8 +4,25 @@ import { MapPinIcon, PhoneIcon, EnvelopeIcon, ClockIcon, ArrowRightIcon } from '
 import ServiceAreaMap from '@/components/ServiceAreaMap'
 
 export const metadata: Metadata = {
-  title: 'Contact',
-  description: 'Contact Zach at VURMZ for laser engraving in Centennial and Denver metro. Text (719) 257-3834 or email. Same-day response.',
+  title: 'Contact VURMZ | Laser Engraving Centennial CO',
+  description: 'Contact Zach at VURMZ for laser engraving in Centennial and Denver metro. Text (719) 257-3834 or email. Quick response.',
+  keywords: [
+    'contact laser engraver Denver',
+    'VURMZ phone number',
+    'Centennial engraving contact',
+    'laser engraving near me',
+    'Denver metro engraver contact',
+    'custom engraving inquiry',
+  ],
+  openGraph: {
+    title: 'Contact VURMZ | Laser Engraving',
+    description: 'Text (719) 257-3834 for quick response. Laser engraving in Centennial, serving Denver metro.',
+    type: 'website',
+    url: 'https://www.vurmz.com/contact',
+  },
+  alternates: {
+    canonical: 'https://www.vurmz.com/contact',
+  },
 }
 
 export default function ContactPage() {
@@ -141,16 +158,15 @@ export default function ContactPage() {
             <div className="bg-white p-6 border border-gray-200">
               <h3 className="font-semibold text-vurmz-dark mb-2">How fast can you turn around an order?</h3>
               <p className="text-gray-600">
-                Same-day and next-day are often possible for local businesses. Standard orders are 3-5 days.
-                Rush orders may have an additional fee, but I am flexible.
+                Next-day is often possible, same-day for some orders. Standard turnaround is 3-5 days.
+                Rush orders may have a fee.
               </p>
             </div>
 
             <div className="bg-white p-6 border border-gray-200">
               <h3 className="font-semibold text-vurmz-dark mb-2">Do you have minimum order quantities?</h3>
               <p className="text-gray-600">
-                No minimums. Need 10 pens instead of 100? That is fine. I believe small businesses should
-                not be forced into ordering more than they need.
+                No minimums. Need 10 pens instead of 100? No problem.
               </p>
             </div>
 

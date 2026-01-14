@@ -3,8 +3,27 @@ import QuoteForm from './QuoteForm'
 import { CheckCircleIcon, TruckIcon, ClockIcon, PhoneIcon } from '@heroicons/react/24/outline'
 
 export const metadata: Metadata = {
-  title: 'Start Your Order',
-  description: 'Order custom laser engraving in Centennial and Denver metro. No minimums, fast turnaround, local service.',
+  title: 'Start Your Order | Custom Laser Engraving Quote',
+  description: 'Get a quick quote for laser engraving in Denver metro. No minimums, no setup fees, local pickup or delivery. Pens, knives, business cards, equipment marking.',
+  keywords: [
+    'laser engraving quote Denver',
+    'custom engraving order',
+    'no minimum engraving',
+    'fast engraving quote',
+    'Centennial laser engraving order',
+    'Denver metro custom engraving',
+    'branded pens order',
+    'equipment marking quote',
+  ],
+  openGraph: {
+    title: 'Start Your Order | VURMZ Laser Engraving',
+    description: 'Quick quotes for custom laser engraving. No minimums. Local Denver metro service.',
+    type: 'website',
+    url: 'https://www.vurmz.com/order',
+  },
+  alternates: {
+    canonical: 'https://www.vurmz.com/order',
+  },
 }
 
 export default function QuotePage() {
@@ -18,7 +37,7 @@ export default function QuotePage() {
               Start Your Order
             </h1>
             <p className="text-xl text-gray-300 mb-4">
-              Build your order below. For standard products, you&apos;ll see live pricing. For custom work, I&apos;ll get back to you same-day with a quote.
+              Build your order below. For standard products, you'll see live pricing. For custom work, I'll get back to you quickly with a quote.
             </p>
             <p className="text-gray-400">
               No minimum orders. No setup fees for repeat customers. No surprises.
@@ -45,9 +64,9 @@ export default function QuotePage() {
                   <div className="flex items-start gap-4">
                     <ClockIcon className="h-6 w-6 text-vurmz-teal flex-shrink-0 mt-0.5" />
                     <div>
-                      <h4 className="font-semibold text-vurmz-dark">Same-Day Response</h4>
+                      <h4 className="font-semibold text-vurmz-dark">Quick Response</h4>
                       <p className="text-gray-600 text-sm">
-                        I respond within hours, not days. Your quote includes exact pricing.
+                        I respond within hours. Your quote includes exact pricing.
                       </p>
                     </div>
                   </div>
@@ -57,7 +76,7 @@ export default function QuotePage() {
                     <div>
                       <h4 className="font-semibold text-vurmz-dark">No Minimums</h4>
                       <p className="text-gray-600 text-sm">
-                        Need 10 pens? 5 pans? One knife? That is fine.
+                        Need 10 pens? 5 pans? One knife? No problem.
                       </p>
                     </div>
                   </div>
