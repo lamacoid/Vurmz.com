@@ -112,10 +112,27 @@ export default function KnifeDesigner({ onChange }: KnifeDesignerProps) {
   }, [design, onChange])
 
   return (
-    <div className="bg-gray-50 border border-gray-200 p-6 mt-4">
-      <h3 className="font-bold text-lg mb-4">Knife Engraving Designer</h3>
+    <div className="bg-white border-2 border-gray-200 rounded-xl shadow-lg overflow-hidden">
+      {/* Header */}
+      <div className="bg-gradient-to-r from-vurmz-dark via-gray-800 to-vurmz-dark px-6 py-4">
+        <h3 className="text-white font-bold text-lg">Knife Engraving Designer</h3>
+        <p className="text-gray-400 text-sm mt-1">Custom engraving for chef and pocket knives</p>
+      </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      {/* Live Preview */}
+      <div className="bg-gray-100 p-6 border-b border-gray-200">
+        <div className="text-xs text-gray-500 uppercase tracking-wide mb-3 text-center">Live Preview</div>
+        <KnifeVisualizer
+          type={design.knifeType}
+          bladeText={design.bladeText}
+          handleText={design.handleText}
+          engravingLocation={design.engravingLocation}
+          font={selectedFont?.style?.fontFamily}
+          setSize={design.setSize}
+        />
+      </div>
+
+      <div className="p-6 space-y-6">
         {/* Form Section */}
         <div className="space-y-4">
           {/* Knife Type */}
@@ -400,28 +417,8 @@ export default function KnifeDesigner({ onChange }: KnifeDesignerProps) {
           </div>
         </div>
 
-        {/* Preview Section */}
+        {/* Popular engraving ideas */}
         <div className="space-y-4">
-          <span className="text-sm font-medium text-gray-700">Preview</span>
-
-          <div className="bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg p-6 flex items-center justify-center min-h-[200px]">
-            <KnifeVisualizer
-              type={design.knifeType}
-              bladeText={design.bladeText}
-              handleText={design.handleText}
-              engravingLocation={design.engravingLocation}
-              font={selectedFont?.style?.fontFamily}
-              setSize={design.setSize}
-            />
-          </div>
-
-          {!['steak-set', 'kitchen-set'].includes(design.knifeType) && (
-            <div className="text-center text-xs text-gray-500">
-              <p>Engraving: {ENGRAVING_LOCATIONS.find(l => l.value === design.engravingLocation)?.label}</p>
-            </div>
-          )}
-
-          {/* Popular engraving ideas */}
           <div className="mt-4 p-4 bg-white border border-gray-200 rounded-lg">
             <p className="text-sm font-medium text-gray-700 mb-2">Popular Engravings:</p>
             <div className="flex flex-wrap gap-2">

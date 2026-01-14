@@ -324,10 +324,63 @@ export default function MetalBusinessCardPreview({ onChange }: MetalBusinessCard
   }
 
   return (
-    <div className="bg-gray-50 border border-gray-200 p-6 mt-4">
-      <h3 className="font-bold text-lg mb-4">Design Your Metal Business Card</h3>
+    <div className="bg-white border-2 border-gray-200 rounded-xl shadow-lg overflow-hidden">
+      {/* Header */}
+      <div className="bg-gradient-to-r from-vurmz-dark via-gray-800 to-vurmz-dark px-6 py-4">
+        <h3 className="text-white font-bold text-lg">Metal Business Card Designer</h3>
+        <p className="text-gray-400 text-sm mt-1">Premium metal cards that people keep</p>
+      </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      {/* Live Preview */}
+      <div className="bg-gray-100 p-6 border-b border-gray-200">
+        <div className="text-xs text-gray-500 uppercase tracking-wide mb-3 text-center">Live Preview</div>
+        <div className="flex justify-center">
+          <div
+            className={`relative rounded-lg shadow-xl ${colors.bg} ${colors.border} border overflow-hidden transition-all duration-300 ${
+              cardData.layout === 'portrait' ? 'w-[160px] h-[272px]' : 'w-[272px] h-[160px]'
+            }`}
+            style={{ background: colors.gradient }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-black/10 pointer-events-none" />
+            <div className={`relative h-full p-4 flex flex-col ${cardData.layout === 'portrait' ? 'justify-start pt-6' : 'justify-between'}`}>
+              {cardData.logoEnabled && (
+                <div className={`${cardData.layout === 'portrait' ? 'mx-auto mb-3' : 'absolute top-3 right-3'} w-8 h-8 flex items-center justify-center`}>
+                  {logoImage ? (
+                    <img src={logoImage} alt="Logo" className="max-w-full max-h-full object-contain" style={{ filter: cardData.cardColor === 'gloss-white' || cardData.cardColor === 'stainless-steel' ? 'none' : 'brightness(1.5) contrast(0.9)' }} />
+                  ) : (
+                    <div className={`w-full h-full border border-dashed ${colors.accent} rounded flex items-center justify-center`}>
+                      <span className={`text-[8px] ${colors.accent}`}>LOGO</span>
+                    </div>
+                  )}
+                </div>
+              )}
+              <div className={`flex-1 flex flex-col ${cardData.layout === 'portrait' ? 'items-center text-center justify-start' : 'justify-center'}`}>
+                {cardData.business && <p className={`text-[9px] font-medium ${colors.accent} tracking-wider uppercase mb-0.5`} style={selectedFont?.style}>{cardData.business}</p>}
+                <h4 className={`${cardData.layout === 'portrait' ? 'text-sm' : 'text-base'} font-bold ${colors.text} tracking-wide`} style={selectedFont?.style}>{cardData.name || 'Your Name'}</h4>
+                {cardData.title && <p className={`text-[10px] ${colors.accent} mt-0.5`} style={selectedFont?.style}>{cardData.title}</p>}
+              </div>
+              <div className={`flex ${cardData.layout === 'portrait' ? 'flex-col items-center mt-auto' : 'items-end justify-between'}`}>
+                <div className={`text-[8px] ${colors.accent} space-y-0.5 ${cardData.layout === 'portrait' ? 'text-center mb-2' : ''}`} style={selectedFont?.style}>
+                  {cardData.phone && <p>{cardData.phone}</p>}
+                  {cardData.email && <p>{cardData.email}</p>}
+                  {cardData.website && <p>{cardData.website}</p>}
+                </div>
+                {cardData.qrEnabled && getQrCodeUrl() && (
+                  <div className={`bg-white/90 rounded p-0.5 ${cardData.layout === 'portrait' ? 'w-10 h-10' : 'w-12 h-12'}`}>
+                    <img src={getQrCodeUrl()!} alt="QR Code" className="w-full h-full" />
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="text-center text-xs text-gray-500 mt-3">
+          {colorOptions.find(c => c.value === cardData.cardColor)?.label} • {cardData.layout === 'portrait' ? 'Portrait' : 'Horizontal'}
+          {cardData.backSideEnabled && ' • Double-sided'}
+        </div>
+      </div>
+
+      <div className="p-6 space-y-6">
         {/* Input Fields */}
         <div className="space-y-4">
           <div className="grid grid-cols-2 gap-3">

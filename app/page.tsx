@@ -380,7 +380,7 @@ export default function HomePage() {
                 Online: $2/pen + $50 shipping + 2 weeks wait + 100 minimum = $250 and hassle
               </p>
               <p className="text-vurmz-teal text-sm mt-2 font-medium">
-                VURMZ: $3.50/pen + next day + 25 units = what you actually need
+                VURMZ: $3/pen + next day + 25 units = what you actually need
               </p>
             </div>
             <div className="bg-vurmz-light p-6">

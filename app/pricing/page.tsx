@@ -215,8 +215,8 @@ export default function PricingPage() {
                 <h4 className="font-semibold text-vurmz-teal mb-4">VURMZ</h4>
                 <ul className="space-y-2 text-gray-600">
                   <li className="flex justify-between">
-                    <span>50 pens @ $3.50</span>
-                    <span>$175</span>
+                    <span>50 pens @ $3</span>
+                    <span>$150</span>
                   </li>
                   <li className="flex justify-between">
                     <span>Setup fee</span>
@@ -238,13 +238,13 @@ export default function PricingPage() {
                 <div className="border-t border-vurmz-teal mt-4 pt-4">
                   <p className="flex justify-between font-semibold text-vurmz-teal">
                     <span>Total</span>
-                    <span>$175</span>
+                    <span>$150</span>
                   </p>
                 </div>
               </div>
             </div>
             <p className="text-center text-gray-600 mt-6">
-              <span className="font-semibold">Result:</span> You save $68 and get them next day.
+              <span className="font-semibold">Result:</span> You save $93 and get them next day.
             </p>
           </div>
         </div>
