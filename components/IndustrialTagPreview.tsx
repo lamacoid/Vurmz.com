@@ -1,6 +1,20 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
+import dynamic from 'next/dynamic'
+
+// Photorealistic 3D preview
+const PlasticSign3D = dynamic(() => import('./builder/visualizers/PlasticSign3D'), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-[260px] flex items-center justify-center">
+      <div className="flex flex-col items-center gap-3">
+        <div className="w-8 h-8 border-2 border-vurmz-teal/30 border-t-vurmz-teal rounded-full animate-spin" />
+        <div className="text-gray-400 text-sm">Loading 3D Preview...</div>
+      </div>
+    </div>
+  ),
+})
 
 // ============================================================================
 // PREMIUM INDUSTRIAL LABELS, TAGS & NAMETAGS DESIGNER
@@ -352,7 +366,7 @@ export default function IndustrialTagPreview({ onChange, quantity = 1 }: Props) 
   }
 
   return (
-    <div className="bg-white border-2 border-gray-200 rounded-xl shadow-lg overflow-hidden mt-4">
+    <div className="bg-white rounded-2xl shadow-xl overflow-hidden mt-4">
       {/* Premium Header */}
       <div className="bg-gradient-to-r from-vurmz-dark via-gray-800 to-vurmz-dark px-6 py-4">
         <h3 className="text-white font-bold text-lg flex items-center gap-2">
@@ -914,314 +928,22 @@ export default function IndustrialTagPreview({ onChange, quantity = 1 }: Props) 
         </div>
 
         {/* Right: Preview */}
-        <div className="bg-gray-100 p-6">
-          {/* Preview Header */}
-          <div className="flex items-center justify-between mb-4">
-            <span className="text-sm font-semibold text-gray-700">Live Preview</span>
-            <span className="text-xs text-gray-500">{width}" × {height}"</span>
-          </div>
-
-          {/* Preview Area */}
-          <div className="bg-[repeating-linear-gradient(45deg,#f0f0f0,#f0f0f0_10px,#e8e8e8_10px,#e8e8e8_20px)] rounded-xl p-8 min-h-[280px] flex items-center justify-center">
-            <svg
-              width={width * scale}
-              height={height * scale}
-              viewBox={`0 0 ${width * scale} ${height * scale}`}
-              className="drop-shadow-xl"
-            >
-              <defs>
-                <linearGradient id="tagShine" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="rgba(255,255,255,0.2)" />
-                  <stop offset="50%" stopColor="rgba(255,255,255,0)" />
-                  <stop offset="100%" stopColor="rgba(0,0,0,0.1)" />
-                </linearGradient>
-                <filter id="innerShadow">
-                  <feOffset dx="0" dy="1" />
-                  <feGaussianBlur stdDeviation="1" result="offset-blur" />
-                  <feComposite operator="out" in="SourceGraphic" in2="offset-blur" result="inverse" />
-                  <feFlood floodColor="black" floodOpacity="0.2" result="color" />
-                  <feComposite operator="in" in="color" in2="inverse" result="shadow" />
-                  <feComposite operator="over" in="shadow" in2="SourceGraphic" />
-                </filter>
-              </defs>
-
-              {/* Tag Shape */}
-              {sizeInfo.shape === 'round' || data.size.includes('round') ? (
-                <>
-                  <circle
-                    cx={width * scale / 2}
-                    cy={height * scale / 2}
-                    r={(Math.min(width, height) * scale / 2) - 2}
-                    fill={material.color}
-                    stroke={material.highlight}
-                    strokeWidth="2"
-                    filter="url(#innerShadow)"
-                  />
-                  <circle
-                    cx={width * scale / 2}
-                    cy={height * scale / 2}
-                    r={(Math.min(width, height) * scale / 2) - 2}
-                    fill="url(#tagShine)"
-                  />
-                  {/* Hole for chain */}
-                  <circle
-                    cx={width * scale / 2}
-                    cy={12}
-                    r={4}
-                    fill="#333"
-                    stroke="#222"
-                    strokeWidth="1"
-                  />
-                </>
-              ) : data.tagType === 'nametag' ? (
-                <>
-                  <path
-                    d={getNametagPath(width * scale, height * scale, data.nametagShape)}
-                    fill={material.color}
-                    stroke={material.highlight}
-                    strokeWidth="1.5"
-                    filter="url(#innerShadow)"
-                  />
-                  <path
-                    d={getNametagPath(width * scale, height * scale, data.nametagShape)}
-                    fill="url(#tagShine)"
-                  />
-                </>
-              ) : (
-                <>
-                  <rect
-                    x="2"
-                    y="2"
-                    width={width * scale - 4}
-                    height={height * scale - 4}
-                    rx="4"
-                    fill={material.color}
-                    stroke={material.highlight}
-                    strokeWidth="1.5"
-                    filter="url(#innerShadow)"
-                  />
-                  <rect
-                    x="2"
-                    y="2"
-                    width={width * scale - 4}
-                    height={height * scale - 4}
-                    rx="4"
-                    fill="url(#tagShine)"
-                  />
-                </>
-              )}
-
-              {/* Mounting Hole */}
-              {data.holePosition !== 'none' && data.tagType !== 'nametag' && !sizeInfo.shape?.includes('round') && (
-                <circle
-                  cx={
-                    data.holePosition === 'left' ? 12 :
-                    data.holePosition === 'top-center' ? width * scale / 2 :
-                    width * scale - 16
-                  }
-                  cy={
-                    data.holePosition === 'left' ? height * scale / 2 :
-                    12
-                  }
-                  r={4}
-                  fill="#333"
-                  stroke="#222"
-                  strokeWidth="1"
-                />
-              )}
-
-              {/* Text Content */}
-              <g style={{
-                fontFamily: FONTS.find(f => f.id === data.font)?.style || 'Arial',
-                fontWeight: FONTS.find(f => f.id === data.font)?.weight || 'normal'
-              }}>
-                {/* Company (nametag) or Line 3 shown at top */}
-                {data.line3 && data.tagType === 'nametag' && (
-                  <text
-                    x={width * scale / 2}
-                    y={height * scale * 0.25}
-                    textAnchor="middle"
-                    fill={material.textColor}
-                    fontSize={Math.min(scale * 0.08 * width, 10)}
-                    letterSpacing="1"
-                    opacity="0.8"
-                  >
-                    {data.line3.toUpperCase()}
-                  </text>
-                )}
-
-                {/* Line 1 - Primary */}
-                {data.line1 && (
-                  <text
-                    x={
-                      data.textAlignment === 'left' ? 16 :
-                      data.textAlignment === 'right' ? width * scale - 16 :
-                      width * scale / 2
-                    }
-                    y={
-                      data.tagType === 'nametag'
-                        ? (data.line3 ? height * scale * 0.55 : height * scale * 0.45)
-                        : height * scale * 0.35
-                    }
-                    textAnchor={data.textAlignment === 'left' ? 'start' : data.textAlignment === 'right' ? 'end' : 'middle'}
-                    fill={material.textColor}
-                    fontSize={Math.min(scale * 0.18 * width, 18)}
-                    fontWeight="bold"
-                  >
-                    {data.line1}
-                  </text>
-                )}
-
-                {/* Line 2 */}
-                {data.line2 && (
-                  <text
-                    x={
-                      data.textAlignment === 'left' ? 16 :
-                      data.textAlignment === 'right' ? width * scale - 16 :
-                      width * scale / 2
-                    }
-                    y={
-                      data.tagType === 'nametag'
-                        ? (data.line3 ? height * scale * 0.78 : height * scale * 0.72)
-                        : height * scale * 0.55
-                    }
-                    textAnchor={data.textAlignment === 'left' ? 'start' : data.textAlignment === 'right' ? 'end' : 'middle'}
-                    fill={material.textColor}
-                    fontSize={Math.min(scale * 0.12 * width, 12)}
-                    opacity="0.9"
-                  >
-                    {data.line2}
-                  </text>
-                )}
-
-                {/* Line 3 (non-nametag) */}
-                {data.line3 && data.tagType !== 'nametag' && (
-                  <text
-                    x={width * scale / 2}
-                    y={height * scale * 0.72}
-                    textAnchor="middle"
-                    fill={material.textColor}
-                    fontSize={Math.min(scale * 0.1 * width, 10)}
-                    opacity="0.85"
-                  >
-                    {data.line3}
-                  </text>
-                )}
-
-                {/* Line 4 */}
-                {data.line4 && data.tagType !== 'nametag' && (
-                  <text
-                    x={width * scale / 2}
-                    y={height * scale * 0.88}
-                    textAnchor="middle"
-                    fill={material.textColor}
-                    fontSize={Math.min(scale * 0.08 * width, 9)}
-                    opacity="0.8"
-                  >
-                    {data.line4}
-                  </text>
-                )}
-
-                {/* Serial Number */}
-                {data.includeSerialPlaceholder && (
-                  <text
-                    x={width * scale / 2}
-                    y={height * scale - 8}
-                    textAnchor="middle"
-                    fill={material.textColor}
-                    fontSize={Math.min(scale * 0.06 * width, 8)}
-                    opacity="0.7"
-                  >
-                    {data.serialPrefix || 'SN-'}{data.serialStartNumber || '001'}
-                  </text>
-                )}
-              </g>
-
-              {/* Logo Indicator */}
-              {data.includeLogo && (
-                <g>
-                  <rect
-                    x={
-                      data.logoPosition === 'left' ? 8 :
-                      data.logoPosition === 'right' ? width * scale - 28 :
-                      data.logoPosition === 'center' ? width * scale / 2 - 10 :
-                      width * scale / 2 - 10
-                    }
-                    y={data.logoPosition === 'top' ? 8 : height * scale / 2 - 8}
-                    width={20}
-                    height={16}
-                    rx="2"
-                    fill={material.textColor}
-                    opacity="0.3"
-                  />
-                  <text
-                    x={
-                      data.logoPosition === 'left' ? 18 :
-                      data.logoPosition === 'right' ? width * scale - 18 :
-                      width * scale / 2
-                    }
-                    y={(data.logoPosition === 'top' ? 8 : height * scale / 2 - 8) + 11}
-                    textAnchor="middle"
-                    fill={material.textColor}
-                    fontSize="6"
-                    opacity="0.5"
-                  >
-                    LOGO
-                  </text>
-                </g>
-              )}
-
-              {/* QR Code Indicator */}
-              {data.includeQR && (
-                <g>
-                  <rect
-                    x={width * scale - 28}
-                    y={height * scale - 28}
-                    width={20}
-                    height={20}
-                    fill="white"
-                    stroke={material.textColor}
-                    strokeWidth="1"
-                    rx="2"
-                  />
-                  <text
-                    x={width * scale - 18}
-                    y={height * scale - 15}
-                    textAnchor="middle"
-                    fill={material.textColor}
-                    fontSize="6"
-                  >
-                    QR
-                  </text>
-                </g>
-              )}
-
-              {/* Barcode Indicator */}
-              {data.includeBarcode && (
-                <g>
-                  <rect
-                    x={8}
-                    y={height * scale - 20}
-                    width={40}
-                    height={12}
-                    fill="white"
-                    stroke={material.textColor}
-                    strokeWidth="1"
-                    rx="1"
-                  />
-                  <text
-                    x={28}
-                    y={height * scale - 11}
-                    textAnchor="middle"
-                    fill={material.textColor}
-                    fontSize="5"
-                  >
-                    |||||||
-                  </text>
-                </g>
-              )}
-            </svg>
-          </div>
+        <div className="bg-gray-50 p-4">
+          {/* 3D Preview */}
+          <PlasticSign3D
+            type={data.tagType === 'nametag' ? 'nametag' : 'tag'}
+            shape={sizeInfo.shape === 'round' || data.size.includes('round') ? 'round' : data.nametagShape === 'rounded' ? 'rounded' : 'rectangle'}
+            width={width}
+            height={height}
+            material={data.material}
+            line1={data.line1 || (data.tagType === 'nametag' ? 'Your Name' : 'LINE 1')}
+            line2={data.line2}
+            line3={data.line3}
+            line4={data.line4}
+            textAlignment={data.textAlignment}
+            hasHole={data.holePosition !== 'none'}
+            holePosition={data.holePosition}
+          />
 
           {/* Attachment Indicator */}
           {data.attachment !== 'none' && (
@@ -1270,7 +992,7 @@ export default function IndustrialTagPreview({ onChange, quantity = 1 }: Props) 
             </div>
             <div className="flex justify-between">
               <span>Size:</span>
-              <span className="font-medium text-gray-800">{width}" × {height}"</span>
+              <span className="font-medium text-gray-800">{width}&quot; × {height}&quot;</span>
             </div>
           </div>
         </div>

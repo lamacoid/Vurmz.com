@@ -112,7 +112,7 @@ export default function KnifeDesigner({ onChange }: KnifeDesignerProps) {
   }, [design, onChange])
 
   return (
-    <div className="bg-white border-2 border-gray-200 rounded-xl shadow-lg overflow-hidden">
+    <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
       {/* Header */}
       <div className="bg-gradient-to-r from-vurmz-dark via-gray-800 to-vurmz-dark px-6 py-4">
         <h3 className="text-white font-bold text-lg">Knife Engraving Designer</h3>

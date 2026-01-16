@@ -324,16 +324,17 @@ export default function MetalBusinessCardPreview({ onChange }: MetalBusinessCard
   }
 
   return (
-    <div className="bg-white border-2 border-gray-200 rounded-xl shadow-lg overflow-hidden">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-vurmz-dark via-gray-800 to-vurmz-dark px-6 py-4">
-        <h3 className="text-white font-bold text-lg">Metal Business Card Designer</h3>
-        <p className="text-gray-400 text-sm mt-1">Premium metal cards that people keep</p>
+    <div className="bg-white rounded-2xl shadow-xl overflow-hidden" style={{ boxShadow: '0 8px 40px rgba(106,140,140,0.12)' }}>
+      {/* Premium Header */}
+      <div className="relative bg-gradient-to-r from-vurmz-dark via-gray-800 to-vurmz-dark px-6 py-5">
+        <div className="absolute inset-0 bg-gradient-to-r from-vurmz-teal/5 via-transparent to-vurmz-teal/5" />
+        <h3 className="relative text-white font-bold text-lg tracking-tight">Metal Business Card Designer</h3>
+        <p className="relative text-gray-400 text-sm mt-1">Premium laser-engraved metal cards that people keep</p>
       </div>
 
-      {/* Live Preview */}
-      <div className="bg-gray-100 p-6 border-b border-gray-200">
-        <div className="text-xs text-gray-500 uppercase tracking-wide mb-3 text-center">Live Preview</div>
+      {/* Live Preview - Clean background */}
+      <div className="relative p-6 border-b border-gray-100" style={{ background: 'linear-gradient(180deg, rgba(250,251,250,0.98) 0%, rgba(245,247,246,0.95) 100%)' }}>
+        <div className="text-xs text-gray-400 uppercase tracking-wider mb-4 text-center font-medium">Live Preview</div>
         <div className="flex justify-center">
           <div
             className={`relative rounded-lg shadow-xl ${colors.bg} ${colors.border} border overflow-hidden transition-all duration-300 ${
@@ -644,46 +645,48 @@ export default function MetalBusinessCardPreview({ onChange }: MetalBusinessCard
             )}
           </div>
 
-          {/* Price Calculator */}
-          <div className="pt-3 border-t border-gray-200">
-            <div className="bg-vurmz-dark text-white p-4 rounded">
-              <div className="flex justify-between items-center mb-2">
-                <span className="text-sm text-gray-300">Price per card:</span>
-                <span className="text-xl font-bold">
-                  ${cardData.cardColor === 'stainless-steel'
-                    ? (15 + (cardData.qrEnabled ? 1 : 0) + (cardData.logoEnabled ? 1 : 0) + (cardData.backSideEnabled ? 1 : 0)).toFixed(2)
-                    : (3 + (cardData.qrEnabled ? 1 : 0) + (cardData.logoEnabled ? 1 : 0) + (cardData.backSideEnabled ? 1 : 0)).toFixed(2)
-                  }
-                </span>
-              </div>
-              <div className="text-xs text-gray-400 space-y-0.5">
-                <div className="flex justify-between">
-                  <span>{cardData.cardColor === 'stainless-steel' ? 'Stainless Steel' : 'Metal Card'}</span>
-                  <span>${cardData.cardColor === 'stainless-steel' ? '15.00' : '3.00'}</span>
+          {/* Premium Price Calculator */}
+          <div className="pt-4 border-t border-gray-100">
+            <div className="relative overflow-hidden rounded-2xl" style={{ background: 'linear-gradient(135deg, #2C3533 0%, #1E2422 100%)', boxShadow: '0 8px 32px rgba(0,0,0,0.15)' }}>
+              {/* Subtle glow */}
+              <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-vurmz-teal/30 to-transparent" />
+
+              <div className="p-5 text-white">
+                <div className="flex justify-between items-center mb-3">
+                  <span className="text-sm text-gray-400 uppercase tracking-wide">Price per card</span>
+                  <span className="text-2xl font-bold text-vurmz-teal">
+                    ${cardData.cardColor === 'stainless-steel'
+                      ? (15 + (cardData.qrEnabled ? 1 : 0) + (cardData.logoEnabled ? 1 : 0) + (cardData.backSideEnabled ? 1 : 0)).toFixed(2)
+                      : (3 + (cardData.qrEnabled ? 1 : 0) + (cardData.logoEnabled ? 1 : 0) + (cardData.backSideEnabled ? 1 : 0)).toFixed(2)
+                    }
+                  </span>
                 </div>
-                {cardData.qrEnabled && (
+                <div className="text-xs text-gray-500 space-y-1 border-t border-white/10 pt-3">
                   <div className="flex justify-between">
-                    <span>+ QR Code</span>
-                    <span>$1.00</span>
+                    <span>{cardData.cardColor === 'stainless-steel' ? 'Stainless Steel' : 'Metal Card'}</span>
+                    <span className="text-gray-400">${cardData.cardColor === 'stainless-steel' ? '15.00' : '3.00'}</span>
                   </div>
-                )}
-                {cardData.logoEnabled && (
-                  <div className="flex justify-between">
-                    <span>+ Custom Logo</span>
-                    <span>$1.00</span>
-                  </div>
-                )}
-                {cardData.backSideEnabled && (
-                  <div className="flex justify-between">
-                    <span>+ Back Side</span>
-                    <span>$1.00</span>
-                  </div>
-                )}
+                  {cardData.qrEnabled && (
+                    <div className="flex justify-between">
+                      <span>+ QR Code</span>
+                      <span className="text-gray-400">$1.00</span>
+                    </div>
+                  )}
+                  {cardData.logoEnabled && (
+                    <div className="flex justify-between">
+                      <span>+ Custom Logo</span>
+                      <span className="text-gray-400">$1.00</span>
+                    </div>
+                  )}
+                  {cardData.backSideEnabled && (
+                    <div className="flex justify-between">
+                      <span>+ Back Side</span>
+                      <span className="text-gray-400">$1.00</span>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
-            <p className="text-xs text-gray-500 mt-2 text-center">
-              Price shown at checkout
-            </p>
           </div>
         </div>
 
@@ -851,20 +854,6 @@ export default function MetalBusinessCardPreview({ onChange }: MetalBusinessCard
             <p>Laser engraved on metal</p>
           </div>
 
-          {/* Download SVG Button */}
-          <div className="mt-4 pt-4 border-t border-gray-200">
-            <button
-              type="button"
-              onClick={downloadSVG}
-              className="w-full flex items-center justify-center gap-2 bg-vurmz-dark text-white px-4 py-3 rounded-lg font-medium hover:bg-gray-800 transition-colors"
-            >
-              <ArrowDownTrayIcon className="w-5 h-5" />
-              Download SVG for Lightburn
-            </button>
-            <p className="text-xs text-gray-500 mt-2 text-center">
-              Import the SVG into Lightburn. Blue outline is for alignment reference.
-            </p>
-          </div>
         </div>
       </div>
     </div>

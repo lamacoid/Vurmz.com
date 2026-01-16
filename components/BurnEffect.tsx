@@ -3,22 +3,25 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
-interface BurnMark {
-  id: number
+interface Point {
   x: number
   y: number
-  size: number
-  rotation: number
+}
+
+interface BurnLine {
+  id: number
+  points: Point[]
 }
 
 export default function BurnEffect() {
   const [isActive, setIsActive] = useState(false)
-  const [burnMarks, setBurnMarks] = useState<BurnMark[]>([])
+  const [burnLines, setBurnLines] = useState<BurnLine[]>([])
+  const [currentLine, setCurrentLine] = useState<Point[]>([])
   const [showHint, setShowHint] = useState(false)
+  const [isDrawing, setIsDrawing] = useState(false)
   const clickCount = useRef(0)
   const clickTimer = useRef<NodeJS.Timeout | null>(null)
-  const markId = useRef(0)
-  const lastMarkTime = useRef(0)
+  const lineId = useRef(0)
 
   // Secret activation: Click the logo area 5 times quickly
   const handleSecretClick = useCallback(() => {
@@ -30,7 +33,7 @@ export default function BurnEffect() {
 
     clickTimer.current = setTimeout(() => {
       clickCount.current = 0
-    }, 2000) // Reset after 2 seconds of no clicks
+    }, 2000)
 
     if (clickCount.current >= 5) {
       setIsActive(prev => !prev)
@@ -40,39 +43,43 @@ export default function BurnEffect() {
     }
   }, [])
 
-  // Track mouse movement and create burn marks
+  // Track mouse for drawing burn lines
   useEffect(() => {
     if (!isActive) return
 
-    const handleMouseMove = (e: MouseEvent) => {
-      const now = Date.now()
-      // Throttle mark creation (every 50ms)
-      if (now - lastMarkTime.current < 50) return
-      lastMarkTime.current = now
-
-      const newMark: BurnMark = {
-        id: markId.current++,
-        x: e.clientX,
-        y: e.clientY,
-        size: 20 + Math.random() * 30,
-        rotation: Math.random() * 360,
-      }
-
-      setBurnMarks(prev => {
-        const updated = [...prev, newMark]
-        // Keep max 100 marks for performance
-        if (updated.length > 100) {
-          return updated.slice(-100)
-        }
-        return updated
-      })
+    const handleMouseDown = (e: MouseEvent) => {
+      setIsDrawing(true)
+      setCurrentLine([{ x: e.clientX, y: e.clientY }])
     }
 
-    window.addEventListener('mousemove', handleMouseMove)
-    return () => window.removeEventListener('mousemove', handleMouseMove)
-  }, [isActive])
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isDrawing) return
+      setCurrentLine(prev => [...prev, { x: e.clientX, y: e.clientY }])
+    }
 
-  // Keyboard shortcut: Ctrl+Shift+F to toggle
+    const handleMouseUp = () => {
+      if (isDrawing && currentLine.length > 1) {
+        setBurnLines(prev => [
+          ...prev,
+          { id: lineId.current++, points: currentLine }
+        ])
+      }
+      setIsDrawing(false)
+      setCurrentLine([])
+    }
+
+    window.addEventListener('mousedown', handleMouseDown)
+    window.addEventListener('mousemove', handleMouseMove)
+    window.addEventListener('mouseup', handleMouseUp)
+
+    return () => {
+      window.removeEventListener('mousedown', handleMouseDown)
+      window.removeEventListener('mousemove', handleMouseMove)
+      window.removeEventListener('mouseup', handleMouseUp)
+    }
+  }, [isActive, isDrawing, currentLine])
+
+  // Keyboard shortcuts
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.ctrlKey && e.shiftKey && e.key === 'F') {
@@ -81,10 +88,10 @@ export default function BurnEffect() {
         setShowHint(true)
         setTimeout(() => setShowHint(false), 3000)
       }
-      // ESC to turn off
       if (e.key === 'Escape' && isActive) {
         setIsActive(false)
-        setBurnMarks([])
+        setBurnLines([])
+        setCurrentLine([])
       }
     }
 
@@ -92,16 +99,26 @@ export default function BurnEffect() {
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [isActive])
 
-  // Clear marks when deactivated
+  // Clear lines when deactivated
   useEffect(() => {
     if (!isActive) {
-      // Fade out marks gradually
       const fadeOut = setTimeout(() => {
-        setBurnMarks([])
+        setBurnLines([])
+        setCurrentLine([])
       }, 2000)
       return () => clearTimeout(fadeOut)
     }
   }, [isActive])
+
+  // Convert points to SVG path
+  const pointsToPath = (points: Point[]): string => {
+    if (points.length < 2) return ''
+    let path = `M ${points[0].x} ${points[0].y}`
+    for (let i = 1; i < points.length; i++) {
+      path += ` L ${points[i].x} ${points[i].y}`
+    }
+    return path
+  }
 
   return (
     <>
@@ -110,7 +127,6 @@ export default function BurnEffect() {
         onClick={handleSecretClick}
         className="fixed top-0 left-0 w-40 h-20 z-50 cursor-pointer"
         style={{ background: 'transparent' }}
-        title=""
       />
 
       {/* Hint message */}
@@ -126,7 +142,7 @@ export default function BurnEffect() {
               {isActive ? (
                 <>
                   <span className="text-orange-400">🔥</span>
-                  Burn mode activated! Press ESC to stop.
+                  Click and drag to burn! Press ESC to clear.
                 </>
               ) : (
                 <>
@@ -139,65 +155,129 @@ export default function BurnEffect() {
         )}
       </AnimatePresence>
 
-      {/* Burn marks layer */}
-      <div
-        className="fixed inset-0 pointer-events-none z-40 overflow-hidden"
-        style={{ mixBlendMode: 'multiply' }}
+      {/* Burn lines layer */}
+      <svg
+        className="fixed inset-0 pointer-events-none z-40 w-full h-full"
+        style={{ overflow: 'visible' }}
       >
+        <defs>
+          {/* Outer glow filter */}
+          <filter id="burn-glow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="3" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+
+        {/* Completed burn lines */}
         <AnimatePresence>
-          {burnMarks.map((mark) => (
-            <motion.div
-              key={mark.id}
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{ opacity: 0.7, scale: 1 }}
+          {burnLines.map((line) => (
+            <motion.g
+              key={line.id}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="absolute"
-              style={{
-                left: mark.x - mark.size / 2,
-                top: mark.y - mark.size / 2,
-                width: mark.size,
-                height: mark.size,
-                transform: `rotate(${mark.rotation}deg)`,
-              }}
+              transition={{ duration: 0.5 }}
             >
-              {/* Burn mark SVG */}
-              <svg viewBox="0 0 100 100" className="w-full h-full">
-                <defs>
-                  <radialGradient id={`burn-${mark.id}`} cx="50%" cy="50%" r="50%">
-                    <stop offset="0%" stopColor="#1a0f00" stopOpacity="0.9" />
-                    <stop offset="30%" stopColor="#3d2517" stopOpacity="0.7" />
-                    <stop offset="60%" stopColor="#5c3d2e" stopOpacity="0.4" />
-                    <stop offset="100%" stopColor="#8b6914" stopOpacity="0" />
-                  </radialGradient>
-                </defs>
-                <ellipse
-                  cx="50"
-                  cy="50"
-                  rx={45 + Math.random() * 10}
-                  ry={35 + Math.random() * 15}
-                  fill={`url(#burn-${mark.id})`}
-                />
-                {/* Char detail */}
-                <ellipse
-                  cx="50"
-                  cy="50"
-                  rx="20"
-                  ry="15"
-                  fill="#0d0705"
-                  opacity="0.6"
-                />
-              </svg>
-            </motion.div>
+              {/* Outer glow */}
+              <path
+                d={pointsToPath(line.points)}
+                fill="none"
+                stroke="#ff8c00"
+                strokeWidth="12"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                opacity="0.3"
+                filter="url(#burn-glow)"
+              />
+              {/* Middle amber layer */}
+              <path
+                d={pointsToPath(line.points)}
+                fill="none"
+                stroke="#8b4513"
+                strokeWidth="6"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                opacity="0.7"
+              />
+              {/* Core burn line - dark */}
+              <path
+                d={pointsToPath(line.points)}
+                fill="none"
+                stroke="#3d1f00"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </motion.g>
           ))}
         </AnimatePresence>
-      </div>
 
-      {/* Fire cursor when active */}
+        {/* Current line being drawn */}
+        {currentLine.length > 1 && (
+          <g>
+            {/* Outer glow */}
+            <path
+              d={pointsToPath(currentLine)}
+              fill="none"
+              stroke="#ff8c00"
+              strokeWidth="12"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              opacity="0.4"
+              filter="url(#burn-glow)"
+            />
+            {/* Middle amber layer */}
+            <path
+              d={pointsToPath(currentLine)}
+              fill="none"
+              stroke="#8b4513"
+              strokeWidth="6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              opacity="0.8"
+            />
+            {/* Core burn line */}
+            <path
+              d={pointsToPath(currentLine)}
+              fill="none"
+              stroke="#3d1f00"
+              strokeWidth="3"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            {/* Hot tip indicator */}
+            <circle
+              cx={currentLine[currentLine.length - 1].x}
+              cy={currentLine[currentLine.length - 1].y}
+              r="6"
+              fill="#ff4500"
+              opacity="0.9"
+            >
+              <animate
+                attributeName="r"
+                values="4;8;4"
+                dur="0.3s"
+                repeatCount="indefinite"
+              />
+              <animate
+                attributeName="opacity"
+                values="0.9;0.5;0.9"
+                dur="0.3s"
+                repeatCount="indefinite"
+              />
+            </circle>
+          </g>
+        )}
+      </svg>
+
+      {/* Laser head cursor when active */}
       {isActive && (
         <style jsx global>{`
           * {
-            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24'%3E%3Cpath fill='%23ff6b35' d='M12 23c-3.866 0-7-3.134-7-7 0-2.529 1.342-4.727 3.346-5.947A7.002 7.002 0 0 1 12 2c1.996 0 3.812.835 5.092 2.175A7.002 7.002 0 0 1 19 16c0 3.866-3.134 7-7 7z'/%3E%3Cpath fill='%23ffcc02' d='M12 20c-2.21 0-4-1.79-4-4 0-1.48.8-2.77 2-3.46A4.002 4.002 0 0 1 12 8a4.002 4.002 0 0 1 2 4.54c1.2.69 2 1.98 2 3.46 0 2.21-1.79 4-4 4z'/%3E%3C/svg%3E") 16 28, auto !important;
+            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='40' viewBox='0 0 32 40'%3E%3C!-- Laser head body --%3E%3Crect x='8' y='0' width='16' height='20' rx='2' fill='%23444444'/%3E%3Crect x='10' y='2' width='12' height='4' fill='%23666666'/%3E%3C!-- Lens/nozzle --%3E%3Crect x='11' y='18' width='10' height='6' fill='%23333333'/%3E%3Ccircle cx='16' cy='21' r='3' fill='%23222222'/%3E%3Ccircle cx='16' cy='21' r='1.5' fill='%23111111'/%3E%3C!-- Laser beam --%3E%3Cline x1='16' y1='24' x2='16' y2='38' stroke='%23ff3300' stroke-width='2' opacity='0.9'/%3E%3Cline x1='16' y1='24' x2='16' y2='38' stroke='%23ff6600' stroke-width='4' opacity='0.4'/%3E%3C!-- Hot spot --%3E%3Ccircle cx='16' cy='38' r='3' fill='%23ff4400' opacity='0.8'/%3E%3Ccircle cx='16' cy='38' r='1.5' fill='%23ffffff' opacity='0.9'/%3E%3C/svg%3E") 16 38, crosshair !important;
           }
         `}</style>
       )}

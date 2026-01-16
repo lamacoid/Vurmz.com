@@ -2,8 +2,22 @@
 
 import { useState, useEffect } from 'react'
 import { PhotoIcon } from '@heroicons/react/24/outline'
-import { fontOptions, ENGRAVING_COLOR } from '@/lib/fonts'
+import { fontOptions } from '@/lib/fonts'
 import FontSelector from './FontSelector'
+import dynamic from 'next/dynamic'
+
+// Dynamic import for 3D component (avoid SSR issues with Three.js)
+const Pen3D = dynamic(() => import('./builder/visualizers/Pen3D'), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-[300px] flex items-center justify-center">
+      <div className="flex flex-col items-center gap-3">
+        <div className="w-8 h-8 border-2 border-vurmz-teal/30 border-t-vurmz-teal rounded-full animate-spin" />
+        <div className="text-gray-400 text-sm">Loading 3D Preview...</div>
+      </div>
+    </div>
+  ),
+})
 
 interface PenData {
   penStyle: 'stylus' | 'fountain'
@@ -49,6 +63,7 @@ export default function BrandedPenPreview({ onChange }: BrandedPenPreviewProps) 
 
   const calculatePrice = (data: Omit<PenData, 'pricePerPen'>) => {
     let price = 3
+    if (data.textStyle === 'two-lines' && data.line2.trim().length > 0) price += 0.50
     if (data.logoEnabled) price += 2
     if (data.bothSides) price += 2
     return price
@@ -68,7 +83,7 @@ export default function BrandedPenPreview({ onChange }: BrandedPenPreviewProps) 
         updated.logoEnabled = false
         updated.bothSides = false
       }
-      if (['logoEnabled', 'bothSides', 'penStyle'].includes(field)) {
+      if (['logoEnabled', 'bothSides', 'penStyle', 'textStyle', 'line2'].includes(field)) {
         updated.pricePerPen = calculatePrice(updated)
       }
       return updated
@@ -78,97 +93,26 @@ export default function BrandedPenPreview({ onChange }: BrandedPenPreviewProps) 
   const isFountainPen = penData.penStyle === 'fountain'
   const selectedColor = penColors.find(c => c.value === penData.penColor) || penColors[0]
   const selectedFont = fontOptions.find(f => f.value === penData.font) || fontOptions[0]
-  const getTextStyle = () => selectedFont?.style || { fontFamily: 'Arial, sans-serif' }
 
   return (
-    <div className="bg-white border-2 border-gray-200 rounded-xl shadow-lg overflow-hidden">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-vurmz-dark via-gray-800 to-vurmz-dark px-6 py-4">
-        <h3 className="text-white font-bold text-lg">Branded Pen Designer</h3>
-        <p className="text-gray-400 text-sm mt-1">Custom engraved pens for your business</p>
+    <div className="bg-white rounded-2xl shadow-xl overflow-hidden" style={{ boxShadow: '0 8px 40px rgba(106,140,140,0.12)' }}>
+      {/* Premium Header */}
+      <div className="relative bg-gradient-to-r from-vurmz-dark via-gray-800 to-vurmz-dark px-6 py-5">
+        <div className="absolute inset-0 bg-gradient-to-r from-vurmz-teal/5 via-transparent to-vurmz-teal/5" />
+        <h3 className="relative text-white font-bold text-lg tracking-tight">Branded Pen Designer</h3>
+        <p className="relative text-gray-400 text-sm mt-1">Custom laser-engraved pens for your business</p>
       </div>
 
-      {/* Live Preview */}
-      <div className="bg-gray-100 p-6 border-b border-gray-200">
-        <div className="text-xs text-gray-500 uppercase tracking-wide mb-3 text-center">Live Preview</div>
-        <div className="flex justify-center py-4">
-          {isFountainPen ? (
-            <svg width="340" height="40" viewBox="0 0 340 40" className="drop-shadow-lg">
-              <defs>
-                <linearGradient id="blackAnodized" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="#3a3a3a" />
-                  <stop offset="50%" stopColor="#1a1a1a" />
-                  <stop offset="100%" stopColor="#0a0a0a" />
-                </linearGradient>
-                <linearGradient id="goldAccent" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="#d4af37" />
-                  <stop offset="50%" stopColor="#b8960c" />
-                  <stop offset="100%" stopColor="#8b7355" />
-                </linearGradient>
-              </defs>
-              <polygon points="0,20 25,16 25,24" fill="url(#goldAccent)" />
-              <line x1="0" y1="20" x2="20" y2="20" stroke="#1a1a1a" strokeWidth="0.5" />
-              <rect x="25" y="14" width="40" height="12" rx="1" fill="url(#blackAnodized)" />
-              <rect x="65" y="13" width="3" height="14" fill="url(#goldAccent)" />
-              <rect x="68" y="12" width="220" height="16" rx="2" fill="url(#blackAnodized)" />
-              <rect x="68" y="12" width="220" height="5" rx="2" fill="rgba(255,255,255,0.1)" />
-              <text x="178" y="23" textAnchor="middle" fill="#c0c0c0" fontSize="9" fontWeight="bold" style={getTextStyle()}>
-                {penData.line1 || 'YOUR BUSINESS'}
-              </text>
-              <rect x="288" y="13" width="3" height="14" fill="url(#goldAccent)" />
-              <rect x="291" y="14" width="30" height="12" rx="2" fill="url(#blackAnodized)" />
-              <path d="M 305 12 L 305 6 L 330 6 L 330 9 L 308 9 L 308 12" fill="url(#goldAccent)" />
-            </svg>
-          ) : (
-            <svg width="340" height="50" viewBox="0 0 340 50" className="drop-shadow-lg">
-              <defs>
-                <linearGradient id="chromeGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="#f0f0f0" />
-                  <stop offset="50%" stopColor="#c0c0c0" />
-                  <stop offset="100%" stopColor="#909090" />
-                </linearGradient>
-              </defs>
-              <polygon points="0,25 30,15 30,35" fill="url(#chromeGradient)" />
-              <rect x="30" y="14" width="3" height="22" fill="#e8e8e8" />
-              <rect x="35" y="14" width="3" height="22" fill="#e8e8e8" />
-              <rect x="38" y="12" width="250" height="26" rx="2" fill={selectedColor.barrel} />
-              <rect x="38" y="12" width="250" height="8" rx="2" fill="rgba(255,255,255,0.15)" />
-              <g style={getTextStyle()}>
-                {penData.textStyle === 'two-lines' ? (
-                  <>
-                    <text x="163" y="22" textAnchor="middle" fill={ENGRAVING_COLOR} fontSize="9" fontWeight="bold">
-                      {penData.line1 || 'YOUR BUSINESS NAME'}
-                    </text>
-                    <text x="163" y="34" textAnchor="middle" fill={ENGRAVING_COLOR} fontSize="7" opacity="0.8">
-                      {penData.line2 || 'www.yourbusiness.com'}
-                    </text>
-                  </>
-                ) : (
-                  <text x="163" y="30" textAnchor="middle" fill={ENGRAVING_COLOR} fontSize="12" fontWeight="bold">
-                    {penData.line1 || 'YOUR BUSINESS'}
-                  </text>
-                )}
-              </g>
-              {penData.logoEnabled && penData.logoPlacement === 'barrel' && (
-                <g>
-                  <rect x="240" y="16" width="24" height="18" fill="rgba(255,255,255,0.2)" rx="2" />
-                  <text x="252" y="28" textAnchor="middle" fill={ENGRAVING_COLOR} fontSize="7" fontWeight="bold" opacity="0.7">LOGO</text>
-                </g>
-              )}
-              <path d="M 280 12 L 280 5 L 320 5 L 320 8 L 283 8 L 283 12" fill="url(#chromeGradient)" />
-              <rect x="288" y="14" width="8" height="22" rx="1" fill="#d0d0d0" />
-              <ellipse cx="306" cy="25" rx="10" ry="8" fill="#2a2a2a" />
-              <rect x="296" y="17" width="10" height="16" fill="#2a2a2a" />
-              {penData.logoEnabled && penData.logoPlacement === 'cap' && (
-                <g>
-                  <rect x="50" y="16" width="24" height="18" fill="rgba(255,255,255,0.2)" rx="2" />
-                  <text x="62" y="28" textAnchor="middle" fill={ENGRAVING_COLOR} fontSize="7" fontWeight="bold" opacity="0.7">LOGO</text>
-                </g>
-              )}
-            </svg>
-          )}
-        </div>
-        <div className="text-center text-xs text-gray-500">
+      {/* Live 3D Preview - Clean background */}
+      <div className="relative p-6 border-b border-gray-100" style={{ background: 'linear-gradient(180deg, rgba(250,251,250,0.98) 0%, rgba(245,247,246,0.95) 100%)' }}>
+        <Pen3D
+          line1={penData.line1}
+          line2={penData.line2}
+          textStyle={penData.textStyle}
+          penColor={selectedColor.barrel}
+          isFountain={isFountainPen}
+        />
+        <div className="text-center text-sm text-gray-500 mt-3 font-medium">
           {isFountainPen ? 'Premium Fountain Pen' : `${selectedColor.label} Stylus Pen`}
           {penData.bothSides && ' • Both sides engraved'}
         </div>
@@ -363,29 +307,34 @@ export default function BrandedPenPreview({ onChange }: BrandedPenPreviewProps) 
           </div>
         )}
 
-        {/* Price Summary */}
-        <div className="bg-vurmz-dark text-white p-4 rounded-xl">
-          <div className="flex justify-between items-center mb-2">
-            <span className="text-sm text-gray-300">Price per pen:</span>
-            <span className="text-xl font-bold">${penData.pricePerPen.toFixed(2)}</span>
-          </div>
-          <div className="text-xs text-gray-400 space-y-0.5">
-            <div className="flex justify-between">
-              <span>Base price</span>
-              <span>$3.00</span>
+        {/* Premium Price Summary */}
+        <div className="relative overflow-hidden rounded-2xl" style={{ background: 'linear-gradient(135deg, #2C3533 0%, #1E2422 100%)', boxShadow: '0 8px 32px rgba(0,0,0,0.15)' }}>
+          {/* Subtle glow */}
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-vurmz-teal/30 to-transparent" />
+
+          <div className="p-5 text-white">
+            <div className="flex justify-between items-center mb-3">
+              <span className="text-sm text-gray-400 uppercase tracking-wide">Price per pen</span>
+              <span className="text-2xl font-bold text-vurmz-teal">${penData.pricePerPen.toFixed(2)}</span>
             </div>
-            {penData.logoEnabled && (
+            <div className="text-xs text-gray-500 space-y-1 border-t border-white/10 pt-3">
               <div className="flex justify-between">
-                <span>+ Logo ({penData.logoPlacement})</span>
-                <span>$2.00</span>
+                <span>Base price</span>
+                <span className="text-gray-400">$3.00</span>
               </div>
-            )}
-            {penData.bothSides && (
-              <div className="flex justify-between">
-                <span>+ Both Sides</span>
-                <span>$2.00</span>
-              </div>
-            )}
+              {penData.logoEnabled && (
+                <div className="flex justify-between">
+                  <span>+ Logo ({penData.logoPlacement})</span>
+                  <span className="text-gray-400">$2.00</span>
+                </div>
+              )}
+              {penData.bothSides && (
+                <div className="flex justify-between">
+                  <span>+ Both Sides</span>
+                  <span className="text-gray-400">$2.00</span>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

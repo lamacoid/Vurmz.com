@@ -3,6 +3,9 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
+import { motion } from 'framer-motion'
+
+const liquidEase = [0.23, 1, 0.32, 1] as const
 
 export default function LoginPage() {
   const router = useRouter()
@@ -10,6 +13,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [focused, setFocused] = useState<string | null>(null)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -38,76 +42,236 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-vurmz-light flex items-center justify-center px-4">
-      <div className="max-w-md w-full">
-        <div className="bg-white border border-gray-200 p-8">
-          {/* Logo */}
-          <div className="text-center mb-8">
-            <Image
-              src="/images/vurmz-logo.svg"
-              alt="VURMZ LLC"
-              width={60}
-              height={60}
-              className="mx-auto mb-4"
-            />
-            <h1 className="text-2xl font-bold text-vurmz-dark">Admin Dashboard</h1>
-            <p className="text-gray-600 text-sm mt-1">Sign in to manage VURMZ</p>
-          </div>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 flex items-center justify-center px-4 relative overflow-hidden">
+      {/* Ambient background effects */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: 'radial-gradient(ellipse 80% 60% at 20% 20%, rgba(106,140,140,0.08) 0%, transparent 50%), radial-gradient(ellipse 60% 50% at 80% 80%, rgba(140,174,196,0.06) 0%, transparent 50%)',
+        }}
+      />
 
-          {/* Error */}
-          {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 p-3 mb-6 text-sm">
-              {error}
-            </div>
-          )}
+      {/* Glass card */}
+      <motion.div
+        initial={{ opacity: 0, y: 30, scale: 0.95 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.8, ease: liquidEase }}
+        className="relative max-w-md w-full"
+      >
+        {/* Card glow */}
+        <div
+          className="absolute -inset-4 rounded-3xl opacity-50"
+          style={{
+            background: 'radial-gradient(circle at 50% 0%, rgba(106,140,140,0.15) 0%, transparent 60%)',
+            filter: 'blur(20px)',
+          }}
+        />
 
-          {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-vurmz-dark mb-1">
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                className="w-full border border-gray-300 px-4 py-3 focus:border-vurmz-teal focus:ring-1 focus:ring-vurmz-teal outline-none"
-                placeholder="zach@vurmz.com"
-              />
-            </div>
+        <div
+          className="relative rounded-2xl overflow-hidden"
+          style={{
+            background: 'linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.9) 100%)',
+            backdropFilter: 'blur(40px) saturate(180%)',
+            WebkitBackdropFilter: 'blur(40px) saturate(180%)',
+            boxShadow: '0 20px 60px rgba(106,140,140,0.15), 0 1px 0 rgba(255,255,255,0.8) inset',
+            border: '1px solid rgba(255,255,255,0.5)',
+          }}
+        >
+          {/* Top glass edge highlight */}
+          <div
+            className="absolute top-0 left-0 right-0 h-px"
+            style={{
+              background: 'linear-gradient(90deg, transparent 10%, rgba(255,255,255,0.8) 50%, transparent 90%)',
+            }}
+          />
 
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-vurmz-dark mb-1">
-                Password
-              </label>
-              <input
-                type="password"
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                className="w-full border border-gray-300 px-4 py-3 focus:border-vurmz-teal focus:ring-1 focus:ring-vurmz-teal outline-none"
-              />
-            </div>
-
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full bg-vurmz-teal text-white px-6 py-3 font-semibold hover:bg-vurmz-teal-dark transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
+          <div className="p-10">
+            {/* Logo */}
+            <motion.div
+              className="text-center mb-10"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2, ease: liquidEase }}
             >
-              {loading ? 'Signing in...' : 'Sign In'}
-            </button>
-          </form>
+              <Image
+                src="/images/vurmz-logo-full.svg"
+                alt="VURMZ"
+                width={180}
+                height={50}
+                className="mx-auto mb-6"
+                priority
+              />
+              <h1 className="text-xl font-semibold text-gray-800 tracking-tight">Customer Portal</h1>
+              <p className="text-gray-500 text-sm mt-1">Sign in to manage your account</p>
+            </motion.div>
 
-          {/* Demo credentials */}
-          <div className="mt-6 pt-6 border-t border-gray-200 text-center text-sm text-gray-600">
-            <p>Demo credentials:</p>
-            <p className="font-mono mt-1">zach@vurmz.com / admin123</p>
+            {/* Error */}
+            {error && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mb-6 p-4 rounded-xl text-sm"
+                style={{
+                  background: 'rgba(239, 68, 68, 0.08)',
+                  border: '1px solid rgba(239, 68, 68, 0.2)',
+                  color: '#dc2626',
+                }}
+              >
+                {error}
+              </motion.div>
+            )}
+
+            {/* Form */}
+            <motion.form
+              onSubmit={handleSubmit}
+              className="space-y-5"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.3, ease: liquidEase }}
+            >
+              {/* Email field */}
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                  Email
+                </label>
+                <motion.div
+                  animate={{
+                    boxShadow: focused === 'email'
+                      ? '0 0 0 3px rgba(106,140,140,0.15), 0 2px 8px rgba(106,140,140,0.1)'
+                      : '0 2px 8px rgba(106,140,140,0.06)',
+                  }}
+                  transition={{ duration: 0.3, ease: liquidEase }}
+                  className="rounded-xl overflow-hidden"
+                >
+                  <input
+                    type="email"
+                    id="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    onFocus={() => setFocused('email')}
+                    onBlur={() => setFocused(null)}
+                    required
+                    className="w-full px-4 py-3.5 rounded-xl outline-none transition-colors"
+                    style={{
+                      background: 'rgba(106,140,140,0.04)',
+                      border: '1px solid rgba(106,140,140,0.12)',
+                    }}
+                    placeholder="your@email.com"
+                  />
+                </motion.div>
+              </div>
+
+              {/* Password field */}
+              <div>
+                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+                  Password
+                </label>
+                <motion.div
+                  animate={{
+                    boxShadow: focused === 'password'
+                      ? '0 0 0 3px rgba(106,140,140,0.15), 0 2px 8px rgba(106,140,140,0.1)'
+                      : '0 2px 8px rgba(106,140,140,0.06)',
+                  }}
+                  transition={{ duration: 0.3, ease: liquidEase }}
+                  className="rounded-xl overflow-hidden"
+                >
+                  <input
+                    type="password"
+                    id="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    onFocus={() => setFocused('password')}
+                    onBlur={() => setFocused(null)}
+                    required
+                    className="w-full px-4 py-3.5 rounded-xl outline-none transition-colors"
+                    style={{
+                      background: 'rgba(106,140,140,0.04)',
+                      border: '1px solid rgba(106,140,140,0.12)',
+                    }}
+                  />
+                </motion.div>
+              </div>
+
+              {/* Submit button */}
+              <motion.button
+                type="submit"
+                disabled={loading}
+                className="relative w-full py-4 rounded-xl text-white font-medium overflow-hidden"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(106,140,140,0.95) 0%, rgba(90,122,122,1) 100%)',
+                  boxShadow: '0 4px 20px rgba(106,140,140,0.35), inset 0 1px 0 rgba(255,255,255,0.15)',
+                }}
+                whileHover={{
+                  scale: 1.01,
+                  boxShadow: '0 6px 30px rgba(106,140,140,0.45), inset 0 1px 0 rgba(255,255,255,0.2)',
+                }}
+                whileTap={{ scale: 0.99 }}
+                transition={{ duration: 0.3, ease: liquidEase }}
+              >
+                {/* Glass shine */}
+                <div
+                  className="absolute inset-0 pointer-events-none"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 50%)',
+                  }}
+                />
+                <span className="relative z-10">
+                  {loading ? (
+                    <span className="flex items-center justify-center gap-2">
+                      <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                      </svg>
+                      Signing in...
+                    </span>
+                  ) : 'Sign In'}
+                </span>
+              </motion.button>
+            </motion.form>
+
+            {/* Footer */}
+            <motion.div
+              className="mt-8 pt-6 text-center"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.5, ease: liquidEase }}
+              style={{
+                borderTop: '1px solid rgba(106,140,140,0.1)',
+              }}
+            >
+              <p className="text-xs text-gray-400">
+                Need help? Contact <a href="mailto:hello@vurmz.com" className="text-[#6a8c8c] hover:underline">hello@vurmz.com</a>
+              </p>
+            </motion.div>
           </div>
         </div>
-      </div>
+
+        {/* Reflection */}
+        <div
+          className="absolute -bottom-20 left-0 right-0 h-20 pointer-events-none"
+          style={{
+            background: 'linear-gradient(180deg, rgba(106,140,140,0.03) 0%, transparent 100%)',
+            filter: 'blur(10px)',
+            transform: 'scaleY(-0.3)',
+          }}
+        />
+      </motion.div>
+
+      {/* Corner accents */}
+      <div
+        className="absolute -top-32 -right-32 w-[400px] h-[400px] pointer-events-none"
+        style={{
+          background: 'radial-gradient(circle, rgba(106,140,140,0.06) 0%, transparent 50%)',
+          filter: 'blur(40px)',
+        }}
+      />
+      <div
+        className="absolute -bottom-32 -left-32 w-[400px] h-[400px] pointer-events-none"
+        style={{
+          background: 'radial-gradient(circle, rgba(140,174,196,0.05) 0%, transparent 50%)',
+          filter: 'blur(40px)',
+        }}
+      />
     </div>
   )
 }

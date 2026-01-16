@@ -1,7 +1,21 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import dynamic from 'next/dynamic'
 import { SafetyIcon, iconDefinitions, type SafetyIconId } from './builder/icons/SafetyIcons'
+
+// Photorealistic 3D preview - dynamically imported to avoid SSR issues
+const PlasticSign3D = dynamic(() => import('./builder/visualizers/PlasticSign3D'), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-[260px] flex items-center justify-center">
+      <div className="flex flex-col items-center gap-3">
+        <div className="w-8 h-8 border-2 border-vurmz-teal/30 border-t-vurmz-teal rounded-full animate-spin" />
+        <div className="text-gray-400 text-sm">Loading 3D Preview...</div>
+      </div>
+    </div>
+  ),
+})
 
 // ============================================================================
 // Tag & Sign Designer
@@ -168,7 +182,7 @@ export default function LabelDesigner({ onChange, initialQuantity = 1 }: Props) 
   }, [productType, material, size, customWidth, customHeight, mounting, icon, text, quantity, pricePerUnit, totalPrice, onChange])
 
   return (
-    <div className="bg-white border-2 border-gray-200 rounded-xl shadow-lg overflow-hidden">
+    <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
       {/* Header */}
       <div className="bg-gradient-to-r from-vurmz-dark via-gray-800 to-vurmz-dark px-6 py-4">
         <h3 className="text-white font-bold text-lg">
@@ -177,71 +191,20 @@ export default function LabelDesigner({ onChange, initialQuantity = 1 }: Props) 
         <p className="text-gray-400 text-sm mt-1">Custom engraved tags & signs</p>
       </div>
 
-      {/* Live Preview */}
-      <div className="bg-gray-100 p-6 border-b border-gray-200">
-        <div className="text-xs text-gray-500 uppercase tracking-wide mb-3 text-center">Live Preview</div>
-        <div className="flex justify-center">
-          <div
-            className="relative flex flex-col items-center justify-center transition-all duration-300"
-            style={{
-              width: `${Math.min(width * 25, 300)}px`,
-              height: `${Math.min(height * 25, 300)}px`,
-              minWidth: '120px',
-              minHeight: '60px',
-              backgroundColor: selectedMaterial.color,
-              borderRadius: size.includes('round') ? '50%' : '8px',
-              boxShadow: '0 4px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1)',
-              border: '1px solid rgba(0,0,0,0.2)',
-            }}
-          >
-            {/* Mounting holes visualization */}
-            {mounting === '1-hole' && (
-              <div className="absolute top-2 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-gray-100 border border-gray-400" />
-            )}
-            {mounting === '2-holes' && (
-              <>
-                <div className="absolute top-2 left-3 w-3 h-3 rounded-full bg-gray-100 border border-gray-400" />
-                <div className="absolute top-2 right-3 w-3 h-3 rounded-full bg-gray-100 border border-gray-400" />
-              </>
-            )}
-            {mounting === '4-holes' && (
-              <>
-                <div className="absolute top-2 left-3 w-2.5 h-2.5 rounded-full bg-gray-100 border border-gray-400" />
-                <div className="absolute top-2 right-3 w-2.5 h-2.5 rounded-full bg-gray-100 border border-gray-400" />
-                <div className="absolute bottom-2 left-3 w-2.5 h-2.5 rounded-full bg-gray-100 border border-gray-400" />
-                <div className="absolute bottom-2 right-3 w-2.5 h-2.5 rounded-full bg-gray-100 border border-gray-400" />
-              </>
-            )}
-
-            {/* Icon */}
-            {icon !== 'none' && (
-              <div className="mb-1">
-                {LABEL_ICONS.find(i => i.id === icon)?.isoId && (
-                  <SafetyIcon
-                    icon={LABEL_ICONS.find(i => i.id === icon)!.isoId!}
-                    size={Math.min(height * 12, 40)}
-                  />
-                )}
-              </div>
-            )}
-
-            {/* Text preview */}
-            <div
-              className="text-center px-3 font-bold leading-tight"
-              style={{
-                color: selectedMaterial.engraveColor,
-                fontSize: text.length > 30 ? '10px' : text.length > 15 ? '12px' : '14px',
-                maxWidth: '90%',
-                wordBreak: 'break-word',
-                textShadow: selectedMaterial.color === '#1a1a1a' ? '0 0 1px rgba(255,255,255,0.3)' : 'none',
-              }}
-            >
-              {text || (productType === 'tag' ? 'YOUR TEXT HERE' : 'YOUR SIGN TEXT')}
-            </div>
-          </div>
-        </div>
-        <div className="text-center mt-3 text-xs text-gray-500">
-          {width}" × {height}" • {selectedMaterial.name}
+      {/* Live 3D Preview */}
+      <div className="p-4 border-b border-gray-200">
+        <PlasticSign3D
+          type={productType}
+          shape={size.includes('round') ? 'round' : 'rectangle'}
+          width={width}
+          height={height}
+          material={material}
+          line1={text || (productType === 'tag' ? 'YOUR TEXT' : 'YOUR SIGN')}
+          hasHole={mounting !== 'none' && mounting !== 'adhesive'}
+          holePosition={mounting === '1-hole' ? 'top-center' : mounting === '2-holes' || mounting === '4-holes' ? 'top' : 'none'}
+        />
+        <div className="text-center mt-2 text-xs text-gray-500">
+          {width}&quot; × {height}&quot; • {selectedMaterial.name}
         </div>
       </div>
 
@@ -274,7 +237,7 @@ export default function LabelDesigner({ onChange, initialQuantity = 1 }: Props) 
             >
               <div className="text-2xl mb-1">🪧</div>
               <div className="font-semibold text-gray-800">Signs</div>
-              <div className="text-xs text-gray-500">Larger signs up to 12"×12"</div>
+              <div className="text-xs text-gray-500">Larger signs up to 12&quot;×12&quot;</div>
             </button>
           </div>
         </div>
@@ -448,7 +411,7 @@ export default function LabelDesigner({ onChange, initialQuantity = 1 }: Props) 
         <div className="bg-gray-50 rounded-xl p-4 border border-gray-200">
           <div className="flex justify-between items-center mb-2">
             <span className="text-sm text-gray-600">
-              {productType === 'tag' ? 'Tag' : 'Sign'} ({width}" × {height}")
+              {productType === 'tag' ? 'Tag' : 'Sign'} ({width}&quot; × {height}&quot;)
             </span>
             <span className="font-medium">${pricePerUnit.toFixed(2)} each</span>
           </div>

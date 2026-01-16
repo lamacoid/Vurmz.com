@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import AdminShell from '@/components/AdminShell'
+import { motion } from 'framer-motion'
 import {
   DocumentTextIcon,
   ClipboardDocumentListIcon,
@@ -39,14 +40,16 @@ interface DashboardData {
   }>
 }
 
-const statusColors: Record<string, string> = {
-  PENDING: 'bg-amber-100 text-amber-800',
-  SENT: 'bg-vurmz-powder/50 text-vurmz-teal-dark',
-  APPROVED: 'bg-green-100 text-green-800',
-  DECLINED: 'bg-red-100 text-red-800',
-  IN_PROGRESS: 'bg-vurmz-teal/20 text-vurmz-teal-dark',
-  COMPLETED: 'bg-green-100 text-green-800'
+const statusStyles: Record<string, { bg: string; text: string; border: string }> = {
+  PENDING: { bg: 'rgba(251, 191, 36, 0.1)', text: '#b45309', border: 'rgba(251, 191, 36, 0.2)' },
+  SENT: { bg: 'rgba(106, 140, 140, 0.1)', text: '#5a7a7a', border: 'rgba(106, 140, 140, 0.2)' },
+  APPROVED: { bg: 'rgba(34, 197, 94, 0.1)', text: '#15803d', border: 'rgba(34, 197, 94, 0.2)' },
+  DECLINED: { bg: 'rgba(239, 68, 68, 0.1)', text: '#dc2626', border: 'rgba(239, 68, 68, 0.2)' },
+  IN_PROGRESS: { bg: 'rgba(106, 140, 140, 0.15)', text: '#5a7a7a', border: 'rgba(106, 140, 140, 0.25)' },
+  COMPLETED: { bg: 'rgba(34, 197, 94, 0.1)', text: '#15803d', border: 'rgba(34, 197, 94, 0.2)' }
 }
+
+const liquidEase = [0.23, 1, 0.32, 1] as const
 
 export default function DashboardPage() {
   const [data, setData] = useState<DashboardData | null>(null)
@@ -68,156 +71,203 @@ export default function DashboardPage() {
   return (
     <AdminShell title="Dashboard">
       {loading ? (
-        <div className="text-gray-500">Loading dashboard...</div>
+        <div className="flex items-center justify-center py-20">
+          <div
+            className="w-8 h-8 rounded-full border-2 border-t-transparent animate-spin"
+            style={{ borderColor: 'rgba(106,140,140,0.2)', borderTopColor: '#6a8c8c' }}
+          />
+        </div>
       ) : !data ? (
         <div className="text-red-500">Failed to load dashboard data</div>
       ) : (
         <div className="space-y-8">
           {/* Stats Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="bg-white p-6 border border-gray-200">
-              <div className="flex items-center gap-4">
-                <div className="bg-amber-100 p-3">
-                  <DocumentTextIcon className="h-6 w-6 text-amber-700" />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+            {[
+              { label: 'Pending Quotes', value: data.stats.pendingQuotes, icon: DocumentTextIcon, color: '#f59e0b' },
+              { label: 'Active Orders', value: data.stats.activeOrders, icon: ClipboardDocumentListIcon, color: '#6a8c8c' },
+              { label: 'Total Customers', value: data.stats.totalCustomers, icon: UserGroupIcon, color: '#8caec4' },
+              { label: 'Monthly Revenue', value: `$${data.stats.monthlyRevenue.toLocaleString()}`, icon: CurrencyDollarIcon, color: '#22c55e' },
+            ].map((stat, i) => (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: i * 0.1, ease: liquidEase }}
+                className="relative rounded-2xl overflow-hidden"
+                style={{
+                  background: 'linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.9) 100%)',
+                  boxShadow: '0 4px 20px rgba(106,140,140,0.08), inset 0 1px 0 rgba(255,255,255,0.8)',
+                  border: '1px solid rgba(106,140,140,0.08)',
+                }}
+              >
+                <div className="p-6">
+                  <div className="flex items-center gap-4">
+                    <div
+                      className="p-3 rounded-xl"
+                      style={{
+                        background: `${stat.color}15`,
+                        border: `1px solid ${stat.color}25`,
+                      }}
+                    >
+                      <stat.icon className="h-6 w-6" style={{ color: stat.color }} />
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500">{stat.label}</p>
+                      <p className="text-2xl font-semibold text-gray-800">{stat.value}</p>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-sm text-gray-600">Pending Quotes</p>
-                  <p className="text-2xl font-bold text-vurmz-dark">{data.stats.pendingQuotes}</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white p-6 border border-gray-200">
-              <div className="flex items-center gap-4">
-                <div className="bg-vurmz-teal/20 p-3">
-                  <ClipboardDocumentListIcon className="h-6 w-6 text-vurmz-teal" />
-                </div>
-                <div>
-                  <p className="text-sm text-gray-600">Active Orders</p>
-                  <p className="text-2xl font-bold text-vurmz-dark">{data.stats.activeOrders}</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white p-6 border border-gray-200">
-              <div className="flex items-center gap-4">
-                <div className="bg-vurmz-powder/50 p-3">
-                  <UserGroupIcon className="h-6 w-6 text-vurmz-teal-dark" />
-                </div>
-                <div>
-                  <p className="text-sm text-gray-600">Total Customers</p>
-                  <p className="text-2xl font-bold text-vurmz-dark">{data.stats.totalCustomers}</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white p-6 border border-gray-200">
-              <div className="flex items-center gap-4">
-                <div className="bg-green-100 p-3">
-                  <CurrencyDollarIcon className="h-6 w-6 text-green-700" />
-                </div>
-                <div>
-                  <p className="text-sm text-gray-600">Monthly Revenue</p>
-                  <p className="text-2xl font-bold text-vurmz-dark">
-                    ${data.stats.monthlyRevenue.toLocaleString()}
-                  </p>
-                </div>
-              </div>
-            </div>
+              </motion.div>
+            ))}
           </div>
 
           {/* Low Stock Alert */}
           {data.stats.lowStockMaterials > 0 && (
-            <div className="bg-amber-50 border border-amber-200 p-4 flex items-center gap-4">
-              <ExclamationTriangleIcon className="h-6 w-6 text-amber-600" />
-              <div>
-                <p className="font-semibold text-amber-800">Low Stock Alert</p>
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.4, ease: liquidEase }}
+              className="rounded-2xl p-5 flex items-center gap-4"
+              style={{
+                background: 'rgba(251, 191, 36, 0.08)',
+                border: '1px solid rgba(251, 191, 36, 0.2)',
+              }}
+            >
+              <div
+                className="p-2.5 rounded-xl"
+                style={{ background: 'rgba(251, 191, 36, 0.15)' }}
+              >
+                <ExclamationTriangleIcon className="h-5 w-5 text-amber-600" />
+              </div>
+              <div className="flex-1">
+                <p className="font-medium text-amber-800">Low Stock Alert</p>
                 <p className="text-sm text-amber-600">
                   {data.stats.lowStockMaterials} material(s) are running low
                 </p>
               </div>
               <Link
                 href="/admin/materials"
-                className="ml-auto text-amber-700 font-medium hover:underline"
+                className="px-4 py-2 rounded-xl text-sm font-medium text-amber-700 hover:bg-amber-100/50 transition-colors"
               >
                 View Materials
               </Link>
-            </div>
+            </motion.div>
           )}
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Recent Quotes */}
-            <div className="bg-white border border-gray-200">
-              <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
-                <h2 className="font-semibold text-vurmz-dark">Recent Quotes</h2>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.5, ease: liquidEase }}
+              className="rounded-2xl overflow-hidden"
+              style={{
+                background: 'linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.9) 100%)',
+                boxShadow: '0 4px 20px rgba(106,140,140,0.08), inset 0 1px 0 rgba(255,255,255,0.8)',
+                border: '1px solid rgba(106,140,140,0.08)',
+              }}
+            >
+              <div
+                className="px-6 py-4 flex justify-between items-center"
+                style={{ borderBottom: '1px solid rgba(106,140,140,0.08)' }}
+              >
+                <h2 className="font-semibold text-gray-800">Recent Quotes</h2>
                 <Link
                   href="/admin/quotes"
-                  className="text-sm text-gray-600 hover:text-vurmz-teal flex items-center gap-1"
+                  className="text-sm text-gray-500 hover:text-[#6a8c8c] flex items-center gap-1 transition-colors"
                 >
                   View All <ArrowRightIcon className="h-3 w-3" />
                 </Link>
               </div>
-              <div className="divide-y divide-gray-100">
+              <div className="divide-y divide-gray-100/50">
                 {data.recentQuotes.map((quote) => (
                   <Link
                     key={quote.id}
                     href={`/admin/quotes/${quote.id}`}
-                    className="block px-6 py-4 hover:bg-gray-50"
+                    className="block px-6 py-4 hover:bg-gray-50/50 transition-colors"
                   >
                     <div className="flex justify-between items-start">
                       <div>
-                        <p className="font-medium text-vurmz-dark">
+                        <p className="font-medium text-gray-800">
                           {quote.customer.company || quote.customer.name}
                         </p>
-                        <p className="text-sm text-gray-600 line-clamp-1">
+                        <p className="text-sm text-gray-500 line-clamp-1 mt-0.5">
                           {quote.projectDescription}
                         </p>
                       </div>
-                      <span className={`text-xs px-2 py-1 ${statusColors[quote.status]}`}>
+                      <span
+                        className="text-xs px-2.5 py-1 rounded-lg font-medium"
+                        style={{
+                          background: statusStyles[quote.status]?.bg || 'rgba(106,140,140,0.1)',
+                          color: statusStyles[quote.status]?.text || '#5a7a7a',
+                          border: `1px solid ${statusStyles[quote.status]?.border || 'rgba(106,140,140,0.2)'}`,
+                        }}
+                      >
                         {quote.status}
                       </span>
                     </div>
-                    <p className="text-xs text-gray-400 mt-1">
+                    <p className="text-xs text-gray-400 mt-2">
                       {format(new Date(quote.createdAt), 'MMM d, yyyy')}
                     </p>
                   </Link>
                 ))}
                 {data.recentQuotes.length === 0 && (
-                  <p className="px-6 py-4 text-gray-500 text-sm">No quotes yet</p>
+                  <p className="px-6 py-8 text-gray-400 text-sm text-center">No quotes yet</p>
                 )}
               </div>
-            </div>
+            </motion.div>
 
             {/* Recent Orders */}
-            <div className="bg-white border border-gray-200">
-              <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
-                <h2 className="font-semibold text-vurmz-dark">Recent Orders</h2>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.6, ease: liquidEase }}
+              className="rounded-2xl overflow-hidden"
+              style={{
+                background: 'linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.9) 100%)',
+                boxShadow: '0 4px 20px rgba(106,140,140,0.08), inset 0 1px 0 rgba(255,255,255,0.8)',
+                border: '1px solid rgba(106,140,140,0.08)',
+              }}
+            >
+              <div
+                className="px-6 py-4 flex justify-between items-center"
+                style={{ borderBottom: '1px solid rgba(106,140,140,0.08)' }}
+              >
+                <h2 className="font-semibold text-gray-800">Recent Orders</h2>
                 <Link
                   href="/admin/orders"
-                  className="text-sm text-gray-600 hover:text-vurmz-teal flex items-center gap-1"
+                  className="text-sm text-gray-500 hover:text-[#6a8c8c] flex items-center gap-1 transition-colors"
                 >
                   View All <ArrowRightIcon className="h-3 w-3" />
                 </Link>
               </div>
-              <div className="divide-y divide-gray-100">
+              <div className="divide-y divide-gray-100/50">
                 {data.recentOrders.map((order) => (
                   <Link
                     key={order.id}
                     href={`/admin/orders/${order.id}`}
-                    className="block px-6 py-4 hover:bg-gray-50"
+                    className="block px-6 py-4 hover:bg-gray-50/50 transition-colors"
                   >
                     <div className="flex justify-between items-start">
                       <div>
-                        <p className="font-medium text-vurmz-dark">{order.orderNumber}</p>
-                        <p className="text-sm text-gray-600">
+                        <p className="font-medium text-gray-800">{order.orderNumber}</p>
+                        <p className="text-sm text-gray-500 mt-0.5">
                           {order.customer.company || order.customer.name}
                         </p>
                       </div>
                       <div className="text-right">
-                        <span className={`text-xs px-2 py-1 ${statusColors[order.status]}`}>
+                        <span
+                          className="text-xs px-2.5 py-1 rounded-lg font-medium"
+                          style={{
+                            background: statusStyles[order.status]?.bg || 'rgba(106,140,140,0.1)',
+                            color: statusStyles[order.status]?.text || '#5a7a7a',
+                            border: `1px solid ${statusStyles[order.status]?.border || 'rgba(106,140,140,0.2)'}`,
+                          }}
+                        >
                           {order.status.replace('_', ' ')}
                         </span>
-                        <p className="text-sm font-medium text-vurmz-dark mt-1">
+                        <p className="text-sm font-medium text-gray-800 mt-2">
                           ${order.price.toLocaleString()}
                         </p>
                       </div>
@@ -225,10 +275,10 @@ export default function DashboardPage() {
                   </Link>
                 ))}
                 {data.recentOrders.length === 0 && (
-                  <p className="px-6 py-4 text-gray-500 text-sm">No orders yet</p>
+                  <p className="px-6 py-8 text-gray-400 text-sm text-center">No orders yet</p>
                 )}
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       )}
