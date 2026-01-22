@@ -2,7 +2,7 @@
 
 import { useState, useRef, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
-import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import {
   CloudArrowUpIcon,
   XMarkIcon,
@@ -18,12 +18,45 @@ import LabelDesigner, { LabelDesignData, generateLabelDescription, generateLabel
 import KnifeDesigner, { KnifeDesignData } from '@/components/KnifeDesigner'
 import ToolDesigner, { ToolDesignData } from '@/components/ToolDesigner'
 import KeychainDesigner, { KeychainDesignData } from '@/components/KeychainDesigner'
+import NameplateDesigner, { NameplateData } from '@/components/NameplateDesigner'
+import CoasterDesigner, { CoasterData } from '@/components/CoasterDesigner'
+import { PACK_CONFIG, getPackPrice } from '@/lib/pack-config'
+
+// Type definitions for designer data
+interface CardData {
+  name: string
+  title: string
+  business: string
+  phone: string
+  email: string
+  website: string
+  qrEnabled: boolean
+  qrValue: string
+  logoEnabled: boolean
+  backSideEnabled: boolean
+  backSideOption: string
+  backSideText: string
+  cardColor: string
+  layout: string
+  pricePerCard: number
+}
+
+interface PenData {
+  line1: string
+  line2: string
+  textStyle: string
+  font: string
+  logoEnabled: boolean
+  logoPlacement: string
+  bothSides: boolean
+  penColor: string
+  pricePerPen: number
+}
 import {
   StepIndicator,
   ProductCard,
   ProductGrid,
   Spinner,
-  PulseLoader,
 } from '@/components/builder'
 
 // Step definitions
@@ -40,7 +73,7 @@ const products = [
     value: 'pens',
     label: 'Branded Pens',
     description: 'Metal stylus pens with your logo',
-    price: 'From $3/pen',
+    price: 'Pack of 15 from $45',
     hasDesigner: true,
     icon: (
       <svg viewBox="0 0 48 24" className="w-16 h-8">
@@ -64,7 +97,7 @@ const products = [
     value: 'business-cards',
     label: 'Metal Business Cards',
     description: 'Premium anodized aluminum cards',
-    price: 'From $5/card',
+    price: 'Pack of 15 from $75',
     hasDesigner: true,
     icon: (
       <svg viewBox="0 0 40 28" className="w-14 h-10">
@@ -77,11 +110,40 @@ const products = [
     ),
   },
   {
-    value: 'tags-labels',
-    label: 'Tags & Labels',
-    description: 'Industrial signs and labels',
-    price: 'From $8/sign',
+    value: 'nameplates',
+    label: 'Name Plates',
+    description: 'Desk & door name plates',
+    price: 'Pack of 5 from $40',
     hasDesigner: true,
+    icon: (
+      <svg viewBox="0 0 48 16" className="w-16 h-6">
+        <rect x="0" y="0" width="48" height="16" rx="1" fill="#1a1a1a" />
+        <rect x="2" y="2" width="44" height="12" rx="0.5" fill="none" stroke="#c0c0c0" strokeWidth="0.5" opacity="0.3" />
+        <text x="24" y="10" textAnchor="middle" fill="#c0c0c0" fontSize="6" fontFamily="Arial">JOHN SMITH</text>
+      </svg>
+    ),
+  },
+  {
+    value: 'coasters',
+    label: 'Custom Coasters',
+    description: 'Wood, slate, or stainless steel',
+    price: 'Pack of 15 from $60',
+    hasDesigner: true,
+    icon: (
+      <svg viewBox="0 0 32 32" className="w-12 h-12">
+        <circle cx="16" cy="16" r="14" fill="#8B5A2B" />
+        <circle cx="16" cy="16" r="10" fill="none" stroke="#3d2817" strokeWidth="0.5" opacity="0.5" />
+        <text x="16" y="18" textAnchor="middle" fill="#3d2817" fontSize="8" fontWeight="bold">ABC</text>
+      </svg>
+    ),
+  },
+  {
+    value: 'tags-labels',
+    label: 'Industrial Labels',
+    description: 'Nameplates, panel labels, valve tags, safety signage',
+    price: 'Quote per job',
+    hasDesigner: false,
+    isIndustrial: true,
     icon: (
       <svg viewBox="0 0 32 32" className="w-12 h-12">
         <path d="M4 8 L20 8 L28 16 L20 24 L4 24 Z" fill="#1a1a1a" stroke="#333" strokeWidth="1" />
@@ -207,42 +269,18 @@ export default function PremiumBuilder() {
   // Product data
   const [selectedProduct, setSelectedProduct] = useState('')
   const [quantity, setQuantity] = useState('')
+  const [numPacks, setNumPacks] = useState(1)
 
   // Designer data
-  const [cardData, setCardData] = useState<{
-    name: string
-    title: string
-    business: string
-    phone: string
-    email: string
-    website: string
-    qrEnabled: boolean
-    qrValue: string
-    logoEnabled: boolean
-    backSideEnabled: boolean
-    backSideOption: string
-    backSideText: string
-    cardColor: string
-    layout: string
-    pricePerCard: number
-  } | null>(null)
-
-  const [penData, setPenData] = useState<{
-    line1: string
-    line2: string
-    textStyle: string
-    font: string
-    logoEnabled: boolean
-    logoPlacement: string
-    bothSides: boolean
-    penColor: string
-    pricePerPen: number
-  } | null>(null)
+  const [cardData, setCardData] = useState<CardData | null>(null)
+  const [penData, setPenData] = useState<PenData | null>(null)
 
   const [labelDesignData, setLabelDesignData] = useState<LabelDesignData | null>(null)
   const [knifeDesignData, setKnifeDesignData] = useState<KnifeDesignData | null>(null)
   const [toolDesignData, setToolDesignData] = useState<ToolDesignData | null>(null)
   const [keychainDesignData, setKeychainDesignData] = useState<KeychainDesignData | null>(null)
+  const [nameplateData, setNameplateData] = useState<NameplateData | null>(null)
+  const [coasterData, setCoasterData] = useState<CoasterData | null>(null)
 
   // Contact & delivery
   const [formData, setFormData] = useState({
@@ -263,24 +301,78 @@ export default function PremiumBuilder() {
     setFormData(prev => ({ ...prev, [name]: value }))
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleCardDataChange = useCallback((data: any) => setCardData(data), [])
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handlePenDataChange = useCallback((data: any) => setPenData(data), [])
+  const handleCardDataChange = useCallback((data: CardData) => setCardData(data), [])
+  const handlePenDataChange = useCallback((data: PenData) => setPenData(data), [])
   const handleLabelDesignChange = useCallback((data: LabelDesignData) => setLabelDesignData(data), [])
   const handleKnifeDesignChange = useCallback((data: KnifeDesignData) => setKnifeDesignData(data), [])
   const handleToolDesignChange = useCallback((data: ToolDesignData) => setToolDesignData(data), [])
   const handleKeychainDesignChange = useCallback((data: KeychainDesignData) => setKeychainDesignData(data), [])
+  const handleNameplateChange = useCallback((data: NameplateData) => setNameplateData(data), [])
+  const handleCoasterChange = useCallback((data: CoasterData) => setCoasterData(data), [])
 
   // Calculate order total
   const getOrderTotal = () => {
-    const qty = parseInt(quantity, 10)
-    if (selectedProduct === 'business-cards' && cardData && !isNaN(qty) && qty > 0) {
-      return { productName: 'Metal Business Cards', quantity: qty, pricePerUnit: cardData.pricePerCard, total: qty * cardData.pricePerCard }
+    // Pack-based products (pens and business cards)
+    if (selectedProduct === 'pens' && penData) {
+      const config = PACK_CONFIG['pens']
+      const totalItems = numPacks * config.itemsPerPack
+      const packPrice = getPackPrice('pens', penData.pricePerPen)
+      const total = packPrice * numPacks
+      return {
+        productName: 'Branded Pens',
+        quantity: totalItems,
+        numPacks,
+        itemsPerPack: config.itemsPerPack,
+        pricePerUnit: penData.pricePerPen,
+        packPrice,
+        total
+      }
     }
-    if (selectedProduct === 'pens' && penData && !isNaN(qty) && qty > 0) {
-      return { productName: 'Branded Pens', quantity: qty, pricePerUnit: penData.pricePerPen, total: qty * penData.pricePerPen }
+    if (selectedProduct === 'business-cards' && cardData) {
+      const config = PACK_CONFIG['business-cards']
+      const totalItems = numPacks * config.itemsPerPack
+      const packPrice = getPackPrice('business-cards', cardData.pricePerCard)
+      const total = packPrice * numPacks
+      return {
+        productName: 'Metal Business Cards',
+        quantity: totalItems,
+        numPacks,
+        itemsPerPack: config.itemsPerPack,
+        pricePerUnit: cardData.pricePerCard,
+        packPrice,
+        total
+      }
     }
+    if (selectedProduct === 'nameplates' && nameplateData) {
+      const filledNames = nameplateData.names.filter(n => n.line1.trim().length > 0)
+      const quantity = filledNames.length || 1
+      const total = nameplateData.pricePerPlate * quantity
+      return {
+        productName: 'Name Plates',
+        quantity,
+        numPacks: 1,
+        itemsPerPack: quantity,
+        pricePerUnit: nameplateData.pricePerPlate,
+        packPrice: total,
+        total
+      }
+    }
+    if (selectedProduct === 'coasters' && coasterData) {
+      const config = PACK_CONFIG['coasters']
+      const totalItems = numPacks * config.itemsPerPack
+      const packPrice = getPackPrice('coasters', coasterData.pricePerCoaster)
+      const total = packPrice * numPacks
+      return {
+        productName: 'Custom Coasters',
+        quantity: totalItems,
+        numPacks,
+        itemsPerPack: config.itemsPerPack,
+        pricePerUnit: coasterData.pricePerCoaster,
+        packPrice,
+        total
+      }
+    }
+    // Non-pack products
     if (selectedProduct === 'tags-labels' && labelDesignData) {
       return { productName: 'Custom Labels/Signs', quantity: labelDesignData.quantity, pricePerUnit: labelDesignData.pricePerUnit, total: labelDesignData.totalPrice }
     }
@@ -329,8 +421,10 @@ export default function PremiumBuilder() {
       case 0: return selectedProduct !== ''
       case 1:
         if (!selectedProductData?.hasDesigner) return formData.description.trim().length > 0
-        if (selectedProduct === 'pens') return penData && penData.line1.trim().length > 0 && parseInt(quantity, 10) > 0
-        if (selectedProduct === 'business-cards') return cardData && cardData.name.trim().length > 0 && parseInt(quantity, 10) > 0
+        if (selectedProduct === 'pens') return penData && penData.line1.trim().length > 0 && numPacks >= 1
+        if (selectedProduct === 'business-cards') return cardData && cardData.name.trim().length > 0 && numPacks >= 1
+        if (selectedProduct === 'nameplates') return nameplateData && nameplateData.names.some(n => n.line1.trim().length > 0)
+        if (selectedProduct === 'coasters') return coasterData && (coasterData.text.trim().length > 0 || coasterData.logoEnabled) && numPacks >= 1
         if (selectedProduct === 'tags-labels') return labelDesignData && labelDesignData.text.trim().length > 0
         if (selectedProduct === 'knives') return knifeDesignData && (knifeDesignData.bladeText.trim().length > 0 || knifeDesignData.handleText.trim().length > 0)
         if (selectedProduct === 'tools') return toolDesignData && toolDesignData.text.trim().length > 0
@@ -342,6 +436,11 @@ export default function PremiumBuilder() {
   }
 
   const nextStep = () => {
+    // Redirect to industrial builder for industrial products
+    if (currentStep === 0 && selectedProduct === 'tags-labels') {
+      router.push('/order/industrial')
+      return
+    }
     if (canProceed() && currentStep < STEPS.length - 1) {
       setCurrentStep(prev => prev + 1)
     }
@@ -365,12 +464,14 @@ export default function PremiumBuilder() {
       if (selectedProduct === 'tags-labels' && labelDesignData) {
         submitData.append('labelDesignData', JSON.stringify(labelDesignData))
         submitData.append('labelDescription', generateLabelDescription(labelDesignData))
-        const svgBlob = new Blob([generateLabelSVG(labelDesignData)], { type: 'image/svg+xml' })
+        const svgBlob = new Blob([generateLabelSVG()], { type: 'image/svg+xml' })
         submitData.append('designFile', svgBlob, `label-design-${Date.now()}.svg`)
       }
       if (selectedProduct === 'knives' && knifeDesignData) submitData.append('knifeDesignData', JSON.stringify(knifeDesignData))
       if (selectedProduct === 'tools' && toolDesignData) submitData.append('toolDesignData', JSON.stringify(toolDesignData))
       if (selectedProduct === 'keychains' && keychainDesignData) submitData.append('keychainDesignData', JSON.stringify(keychainDesignData))
+      if (selectedProduct === 'nameplates' && nameplateData) submitData.append('nameplateData', JSON.stringify(nameplateData))
+      if (selectedProduct === 'coasters' && coasterData) submitData.append('coasterData', JSON.stringify(coasterData))
       if (orderTotal) {
         submitData.append('calculatedPrice', orderTotal.total.toString())
         submitData.append('isOrder', 'true')
@@ -503,7 +604,14 @@ export default function PremiumBuilder() {
                       price={product.price}
                       icon={product.icon}
                       selected={selectedProduct === product.value}
-                      onClick={() => setSelectedProduct(product.value)}
+                      onClick={() => {
+                        // Navigate directly to industrial builder for industrial products
+                        if (product.isIndustrial) {
+                          router.push('/order/industrial')
+                          return
+                        }
+                        setSelectedProduct(product.value)
+                      }}
                       badge={product.hasDesigner && !product.isCustom ? 'Designer' : undefined}
                     />
                   </motion.div>
@@ -528,8 +636,64 @@ export default function PremiumBuilder() {
                 <p className="text-gray-500">Customize your order below</p>
               </div>
 
-              {/* Quantity for non-designer products or pens/cards */}
-              {(selectedProduct === 'pens' || selectedProduct === 'business-cards' || !selectedProductData?.hasDesigner) && (
+              {/* Pack selector for pack-based products */}
+              {(selectedProduct === 'pens' || selectedProduct === 'business-cards' || selectedProduct === 'nameplates' || selectedProduct === 'coasters') && (
+                <div className="max-w-md mx-auto mb-8">
+                  <div className="bg-gradient-to-br from-vurmz-light to-white border-2 border-vurmz-teal/20 rounded-2xl p-6">
+                    <div className="text-center mb-4">
+                      <span className="text-sm font-medium text-vurmz-teal uppercase tracking-wide">
+                        Sold in packs of {PACK_CONFIG[selectedProduct as 'pens' | 'business-cards' | 'nameplates' | 'coasters'].itemsPerPack}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center justify-center gap-6 mb-4">
+                      <button
+                        type="button"
+                        onClick={() => setNumPacks(Math.max(1, numPacks - 1))}
+                        disabled={numPacks <= 1}
+                        className="w-12 h-12 rounded-xl bg-vurmz-teal text-white font-bold text-xl disabled:opacity-40 disabled:cursor-not-allowed hover:bg-vurmz-dark transition-colors flex items-center justify-center"
+                      >
+                        -
+                      </button>
+                      <div className="text-center min-w-[100px]">
+                        <div className="text-4xl font-bold text-vurmz-dark">{numPacks}</div>
+                        <div className="text-sm text-gray-500">{numPacks === 1 ? 'pack' : 'packs'}</div>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => setNumPacks(Math.min(selectedProduct === 'nameplates' ? 20 : 10, numPacks + 1))}
+                        disabled={numPacks >= (selectedProduct === 'nameplates' ? 20 : 10)}
+                        className="w-12 h-12 rounded-xl bg-vurmz-teal text-white font-bold text-xl disabled:opacity-40 disabled:cursor-not-allowed hover:bg-vurmz-dark transition-colors flex items-center justify-center"
+                      >
+                        +
+                      </button>
+                    </div>
+
+                    <div className="text-center">
+                      <div className="text-lg text-gray-700">
+                        = <span className="font-bold text-vurmz-dark">{numPacks * PACK_CONFIG[selectedProduct as 'pens' | 'business-cards' | 'nameplates' | 'coasters'].itemsPerPack}</span> {
+                          selectedProduct === 'pens' ? 'pens' :
+                          selectedProduct === 'business-cards' ? 'cards' :
+                          selectedProduct === 'nameplates' ? 'plates' : 'coasters'
+                        }
+                      </div>
+                      {orderTotal && (
+                        <div className="text-2xl font-bold text-vurmz-teal mt-2">
+                          ${orderTotal.total.toFixed(2)}
+                        </div>
+                      )}
+                      {orderTotal && (
+                        <div className="text-xs text-gray-500 mt-1">
+                          ${orderTotal.pricePerUnit.toFixed(2)} each × {orderTotal.quantity}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Quantity for non-designer products */}
+              {!selectedProductData?.hasDesigner && (
                 <div className="max-w-xs mx-auto mb-8">
                   <label className="block text-sm font-medium text-vurmz-dark mb-2">
                     Quantity
@@ -556,6 +720,18 @@ export default function PremiumBuilder() {
                 {selectedProduct === 'pens' && (
                   <motion.div key="pens-designer" variants={cardVariants} initial="initial" animate="animate" exit="exit">
                     <BrandedPenPreview onChange={handlePenDataChange} />
+                  </motion.div>
+                )}
+
+                {selectedProduct === 'nameplates' && (
+                  <motion.div key="nameplates-designer" variants={cardVariants} initial="initial" animate="animate" exit="exit">
+                    <NameplateDesigner onChange={handleNameplateChange} />
+                  </motion.div>
+                )}
+
+                {selectedProduct === 'coasters' && (
+                  <motion.div key="coasters-designer" variants={cardVariants} initial="initial" animate="animate" exit="exit">
+                    <CoasterDesigner onChange={handleCoasterChange} />
                   </motion.div>
                 )}
 
@@ -798,14 +974,33 @@ export default function PremiumBuilder() {
 
                     {orderTotal && (
                       <>
-                        <div className="flex justify-between">
-                          <span className="text-gray-400">Quantity</span>
-                          <span className="font-medium">{orderTotal.quantity} units</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-400">Price per unit</span>
-                          <span className="font-medium">${orderTotal.pricePerUnit.toFixed(2)}</span>
-                        </div>
+                        {'numPacks' in orderTotal && 'packPrice' in orderTotal ? (
+                          <>
+                            <div className="flex justify-between">
+                              <span className="text-gray-400">Packs</span>
+                              <span className="font-medium">{(orderTotal as { numPacks: number; itemsPerPack: number }).numPacks} × {(orderTotal as { numPacks: number; itemsPerPack: number }).itemsPerPack} = {orderTotal.quantity} {selectedProduct === 'pens' ? 'pens' : 'cards'}</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-gray-400">Price per {selectedProduct === 'pens' ? 'pen' : 'card'}</span>
+                              <span className="font-medium">${orderTotal.pricePerUnit.toFixed(2)}</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-gray-400">Pack price</span>
+                              <span className="font-medium">${(orderTotal as { packPrice: number }).packPrice.toFixed(2)}</span>
+                            </div>
+                          </>
+                        ) : (
+                          <>
+                            <div className="flex justify-between">
+                              <span className="text-gray-400">Quantity</span>
+                              <span className="font-medium">{orderTotal.quantity} units</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-gray-400">Price per unit</span>
+                              <span className="font-medium">${orderTotal.pricePerUnit.toFixed(2)}</span>
+                            </div>
+                          </>
+                        )}
                         <div className="border-t border-gray-700 pt-4 mt-4">
                           <div className="flex justify-between items-center">
                             <span className="font-semibold text-lg">Total</span>

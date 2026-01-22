@@ -145,9 +145,9 @@ export default function HomePageContent() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2, ease: easing.liquid }}
           >
-            <span className="block">Custom Laser</span>
+            <span className="block">Equipment Labels</span>
             <span className="block mt-2 bg-gradient-to-r from-vurmz-teal via-vurmz-teal-light to-vurmz-powder bg-clip-text text-transparent">
-              Engraving
+              &amp; Industrial Engraving
             </span>
           </motion.h1>
 

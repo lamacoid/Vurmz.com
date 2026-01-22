@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { fontOptions } from '@/lib/fonts'
+// Font options available in design state
 import FontSelector from './FontSelector'
 import dynamic from 'next/dynamic'
 
@@ -63,7 +63,6 @@ export default function KeychainDesigner({ onChange }: KeychainDesignerProps) {
     totalPrice: 4,
   })
 
-  const selectedFont = fontOptions.find(f => f.value === design.font) || fontOptions[0]
 
   const calculatePrice = (shape: KeychainShape, qty: number) => {
     const shapeData = KEYCHAIN_SHAPES.find(s => s.value === shape)

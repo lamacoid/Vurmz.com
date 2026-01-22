@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef, useState, useEffect, ReactNode, MouseEvent } from 'react'
-import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from 'framer-motion'
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 
 // 3D Tilt Card - Like Apple's product cards
 export function TiltCard({
@@ -159,9 +159,11 @@ export function TextScramble({
 export function SpotlightCard({
   children,
   className = '',
+  style,
 }: {
   children: ReactNode
   className?: string
+  style?: React.CSSProperties
 }) {
   const ref = useRef<HTMLDivElement>(null)
   const [position, setPosition] = useState({ x: 0, y: 0 })
@@ -183,6 +185,7 @@ export function SpotlightCard({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className={`relative overflow-hidden ${className}`}
+      style={style}
     >
       <motion.div
         className="absolute inset-0 pointer-events-none"

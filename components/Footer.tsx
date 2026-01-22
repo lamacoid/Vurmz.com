@@ -11,6 +11,7 @@ import {
   SparklesIcon,
   ArrowUpRightIcon,
 } from '@heroicons/react/24/outline'
+import { useSiteConfig } from '@/components/SiteConfigProvider'
 
 const serviceAreas = [
   'Centennial',
@@ -23,7 +24,7 @@ const serviceAreas = [
   'Denver Metro',
 ]
 
-const quickLinks = [
+const defaultQuickLinks = [
   { name: 'Services', href: '/services' },
   { name: 'Portfolio', href: '/portfolio' },
   { name: 'Pricing', href: '/pricing' },
@@ -57,6 +58,15 @@ const itemVariants = {
 }
 
 export default function Footer() {
+  const config = useSiteConfig()
+  const { contact, header, footer, social } = config
+
+  // Use footer links if available, otherwise use defaults
+  const quickLinks = (footer?.links || [])
+    .filter(link => link.enabled)
+    .map(link => ({ name: link.label, href: link.href }))
+  const displayLinks = quickLinks.length > 0 ? quickLinks : defaultQuickLinks
+
   return (
     <footer className="relative overflow-hidden">
       {/* Glass background */}
@@ -97,9 +107,9 @@ export default function Footer() {
       />
 
       {/* Main footer content */}
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20">
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 md:gap-12"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -115,7 +125,7 @@ export default function Footer() {
               }}
             >
               <Image
-                src="/images/vurmz-logo-full.svg"
+                src={header?.logoUrl || '/images/vurmz-logo-full.svg'}
                 alt="VURMZ LLC"
                 width={140}
                 height={35}
@@ -128,9 +138,9 @@ export default function Footer() {
 
             <div className="space-y-4">
               {[
-                { icon: MapPinIcon, text: 'Centennial, Colorado', color: 'vurmz-teal' },
-                { icon: PhoneIcon, text: '(719) 257-3834', href: 'sms:+17192573834', color: 'vurmz-powder' },
-                { icon: EnvelopeIcon, text: 'zach@vurmz.com', href: 'mailto:zach@vurmz.com', color: 'vurmz-teal' },
+                { icon: MapPinIcon, text: `${contact?.city || 'Centennial'}, ${contact?.state || 'Colorado'}`, color: 'vurmz-teal' },
+                { icon: PhoneIcon, text: contact?.phone || '(719) 257-3834', href: `sms:${(contact?.phone || '').replace(/[^0-9]/g, '')}`, color: 'vurmz-powder' },
+                { icon: EnvelopeIcon, text: contact?.email || 'zach@vurmz.com', href: `mailto:${contact?.email || 'zach@vurmz.com'}`, color: 'vurmz-teal' },
                 { icon: ClockIcon, text: 'Flexible hours', color: 'vurmz-sage' },
               ].map((item, i) => (
                 <motion.div
@@ -170,7 +180,7 @@ export default function Footer() {
               Quick Links
             </h3>
             <ul className="space-y-3">
-              {quickLinks.map((link) => (
+              {displayLinks.map((link) => (
                 <li key={link.name}>
                   <Link
                     href={link.href}
@@ -246,7 +256,7 @@ export default function Footer() {
 
         {/* CTA Section - Glass card */}
         <motion.div
-          className="mt-16 rounded-3xl p-8 text-center"
+          className="mt-10 sm:mt-12 md:mt-16 rounded-2xl sm:rounded-3xl p-6 sm:p-8 text-center"
           style={{
             background: 'linear-gradient(180deg, rgba(106,140,140,0.1) 0%, rgba(106,140,140,0.05) 100%)',
             boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.1), 0 20px 40px rgba(0,0,0,0.2)',
@@ -256,13 +266,13 @@ export default function Footer() {
           viewport={{ once: true }}
           transition={{ delay: 0.4 }}
         >
-          <h3 className="text-2xl font-bold text-white mb-3">Ready to get started?</h3>
-          <p className="text-gray-400 mb-6">Same-day response guaranteed</p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 sm:mb-3">Ready to get started?</h3>
+          <p className="text-gray-400 mb-5 sm:mb-6 text-sm sm:text-base">Same-day response guaranteed</p>
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
               <Link
                 href="/order"
-                className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl text-white font-semibold text-sm"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 sm:px-8 sm:py-4 rounded-xl sm:rounded-2xl text-white font-semibold text-sm"
                 style={{
                   background: 'linear-gradient(135deg, rgba(106,140,140,0.9) 0%, rgba(90,122,122,0.95) 100%)',
                   boxShadow: '0 8px 30px rgba(106,140,140,0.3), inset 0 1px 0 rgba(255,255,255,0.2)',
@@ -275,7 +285,7 @@ export default function Footer() {
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
               <a
                 href="sms:+17192573834"
-                className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl text-white font-semibold text-sm"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 sm:px-8 sm:py-4 rounded-xl sm:rounded-2xl text-white font-semibold text-sm"
                 style={{
                   background: 'rgba(255,255,255,0.1)',
                   boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.1)',
@@ -297,7 +307,7 @@ export default function Footer() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-gray-500 text-sm">
-              &copy; {new Date().getFullYear()} VURMZ LLC. All rights reserved.
+              {footer?.copyrightText || `© ${new Date().getFullYear()} VURMZ LLC. All rights reserved.`}
             </p>
             <div className="flex gap-6 text-sm">
               <Link

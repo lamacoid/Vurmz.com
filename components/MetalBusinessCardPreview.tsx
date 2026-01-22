@@ -1,12 +1,21 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
-import { QrCodeIcon, PhotoIcon, ArrowPathIcon, ArrowDownTrayIcon } from '@heroicons/react/24/outline'
+import { useState, useEffect } from 'react'
+import { QrCodeIcon, PhotoIcon, ArrowPathIcon } from '@heroicons/react/24/outline'
 import { fontOptions, ENGRAVING_COLOR } from '@/lib/fonts'
 import FontSelector from './FontSelector'
 
 type CardColor = 'matte-black' | 'gloss-black' | 'gloss-green' | 'gloss-red' | 'gloss-blue' | 'gloss-pink' | 'gloss-white' | 'stainless-steel'
 type BackSideOption = 'large-qr' | 'large-logo' | 'custom-text'
+type MarkingStyle = 'deep' | 'surface'
+type CardTemplate = 'classic' | 'centered' | 'minimal' | 'bold' | 'logo-focus' | 'modern'
+
+// Business card exclusive font - Spacetime
+const SPACETIME_FONT = {
+  value: 'spacetime',
+  label: 'Spacetime',
+  style: { fontFamily: 'spacetime-regular, sans-serif' }
+}
 
 interface CardData {
   name: string
@@ -16,6 +25,7 @@ interface CardData {
   email: string
   website: string
   font: string
+  markingStyle: MarkingStyle
   qrEnabled: boolean
   qrValue: string
   logoEnabled: boolean
@@ -24,6 +34,7 @@ interface CardData {
   backSideText: string
   cardColor: CardColor
   layout: 'horizontal' | 'portrait'
+  template: CardTemplate
   pricePerCard: number
 }
 
@@ -40,40 +51,23 @@ export default function MetalBusinessCardPreview({ onChange }: MetalBusinessCard
     email: '',
     website: '',
     font: 'arial',
-    qrEnabled: false,
+    markingStyle: 'deep',
+    qrEnabled: true,
     qrValue: '',
-    logoEnabled: false,
-    backSideEnabled: false,
+    logoEnabled: true,
+    backSideEnabled: true,
     backSideOption: 'large-qr',
     backSideText: '',
     cardColor: 'matte-black',
     layout: 'horizontal',
-    pricePerCard: 3
+    template: 'classic',
+    pricePerCard: 6
   })
 
-  // Logo image stored as base64 data URL
-  const [logoImage, setLogoImage] = useState<string | null>(null)
-
-  // Handle logo file upload
-  const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (!file) return
-
-    // Validate file type
-    if (!file.type.startsWith('image/')) {
-      alert('Please upload an image file')
-      return
-    }
-
-    // Read file as base64
-    const reader = new FileReader()
-    reader.onload = (event) => {
-      setLogoImage(event.target?.result as string)
-    }
-    reader.readAsDataURL(file)
-  }
-
-  const selectedFont = fontOptions.find(f => f.value === cardData.font) || fontOptions[0]
+  // Get selected font - check for Spacetime first, then regular fonts
+  const selectedFont = cardData.font === 'spacetime'
+    ? SPACETIME_FONT
+    : (fontOptions.find(f => f.value === cardData.font) || fontOptions[0])
 
   // Calculate price whenever options change
   const calculatePrice = (data: Omit<CardData, 'pricePerCard'>) => {
@@ -174,6 +168,15 @@ export default function MetalBusinessCardPreview({ onChange }: MetalBusinessCard
     return `https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=${encodeURIComponent(value)}&bgcolor=transparent&color=${colors.qrColor}`
   }
 
+  const templateOptions: { value: CardTemplate; label: string; description: string }[] = [
+    { value: 'classic', label: 'Classic', description: 'Traditional business card layout' },
+    { value: 'centered', label: 'Centered', description: 'Everything centered and balanced' },
+    { value: 'minimal', label: 'Minimal', description: 'Clean and simple' },
+    { value: 'bold', label: 'Bold', description: 'Large name emphasis' },
+    { value: 'logo-focus', label: 'Logo Focus', description: 'Logo takes center stage' },
+    { value: 'modern', label: 'Modern', description: 'Contemporary asymmetric design' },
+  ]
+
   const colorOptions: { value: CardColor; label: string; className: string; premium?: boolean }[] = [
     { value: 'matte-black', label: 'Matte Black', className: 'bg-zinc-900 text-white' },
     { value: 'gloss-black', label: 'Gloss Black', className: 'bg-black text-white' },
@@ -185,203 +188,11 @@ export default function MetalBusinessCardPreview({ onChange }: MetalBusinessCard
     { value: 'stainless-steel', label: 'Stainless Steel', className: 'bg-gradient-to-r from-zinc-400 to-zinc-300 text-zinc-800', premium: true },
   ]
 
-  // Generate SVG for Lightburn export
-  const generateSVG = useCallback(() => {
-    // Card dimensions: 3.5" x 2" at 96 DPI
-    const dpi = 96
-    const isPortrait = cardData.layout === 'portrait'
-    const cardWidth = isPortrait ? 2 * dpi : 3.5 * dpi
-    const cardHeight = isPortrait ? 3.5 * dpi : 2 * dpi
-    const cornerRadius = 8
-
-    // Font mapping for SVG
-    const fontFamily = selectedFont?.style?.fontFamily || 'Arial'
-
-    let svg = `<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg"
-     width="${isPortrait ? '2in' : '3.5in'}"
-     height="${isPortrait ? '3.5in' : '2in'}"
-     viewBox="0 0 ${cardWidth} ${cardHeight}">
-  <!-- VURMZ Metal Business Card - ${cardData.name || 'Unnamed'} -->
-  <!-- Import into Lightburn: File > Import -->
-
-  <!-- Card outline (reference - set to no output or delete) -->
-  <rect x="1" y="1" width="${cardWidth - 2}" height="${cardHeight - 2}" rx="${cornerRadius}" ry="${cornerRadius}"
-        style="fill:none;stroke:#0000ff;stroke-width:0.5"/>
-
-  <!-- Engrave layer (black = engrave in Lightburn) -->
-  <g id="engrave" style="fill:#000000;">
-`
-
-    // Calculate positions based on layout
-    const padding = 15
-    const centerX = cardWidth / 2
-    let yPos = isPortrait ? 50 : 35
-
-    // Business name (smaller, above name)
-    if (cardData.business) {
-      svg += `    <text x="${isPortrait ? centerX : padding}" y="${yPos}"
-           font-family="${fontFamily}" font-size="10" font-weight="500"
-           ${isPortrait ? 'text-anchor="middle"' : ''}
-           letter-spacing="2">${escapeXml(cardData.business.toUpperCase())}</text>\n`
-      yPos += 18
-    }
-
-    // Name (large, bold)
-    svg += `    <text x="${isPortrait ? centerX : padding}" y="${yPos}"
-           font-family="${fontFamily}" font-size="18" font-weight="bold"
-           ${isPortrait ? 'text-anchor="middle"' : ''}>${escapeXml(cardData.name || 'YOUR NAME')}</text>\n`
-    yPos += 16
-
-    // Title
-    if (cardData.title) {
-      svg += `    <text x="${isPortrait ? centerX : padding}" y="${yPos}"
-           font-family="${fontFamily}" font-size="10"
-           ${isPortrait ? 'text-anchor="middle"' : ''}>${escapeXml(cardData.title)}</text>\n`
-      yPos += 14
-    }
-
-    // Contact info (bottom of card)
-    const contactY = isPortrait ? cardHeight - 60 : cardHeight - 45
-    let contactLine = contactY
-
-    if (cardData.phone) {
-      svg += `    <text x="${isPortrait ? centerX : padding}" y="${contactLine}"
-           font-family="${fontFamily}" font-size="9"
-           ${isPortrait ? 'text-anchor="middle"' : ''}>${escapeXml(cardData.phone)}</text>\n`
-      contactLine += 12
-    }
-    if (cardData.email) {
-      svg += `    <text x="${isPortrait ? centerX : padding}" y="${contactLine}"
-           font-family="${fontFamily}" font-size="9"
-           ${isPortrait ? 'text-anchor="middle"' : ''}>${escapeXml(cardData.email)}</text>\n`
-      contactLine += 12
-    }
-    if (cardData.website) {
-      svg += `    <text x="${isPortrait ? centerX : padding}" y="${contactLine}"
-           font-family="${fontFamily}" font-size="9"
-           ${isPortrait ? 'text-anchor="middle"' : ''}>${escapeXml(cardData.website)}</text>\n`
-    }
-
-    // QR Code placeholder (bottom right for horizontal, bottom center for portrait)
-    if (cardData.qrEnabled) {
-      const qrSize = 50
-      const qrX = isPortrait ? centerX - qrSize/2 : cardWidth - qrSize - padding
-      const qrY = isPortrait ? cardHeight - qrSize - 20 : cardHeight - qrSize - padding
-      svg += `    <!-- QR Code area - replace with actual QR SVG -->
-    <rect x="${qrX}" y="${qrY}" width="${qrSize}" height="${qrSize}"
-          style="fill:none;stroke:#000000;stroke-width:0.5;stroke-dasharray:2,2"/>
-    <text x="${qrX + qrSize/2}" y="${qrY + qrSize/2 + 3}"
-          font-family="Arial" font-size="8" text-anchor="middle">QR CODE</text>\n`
-    }
-
-    // Logo - embed actual image if uploaded
-    if (cardData.logoEnabled) {
-      const logoSize = 40
-      const logoX = isPortrait ? centerX - logoSize/2 : cardWidth - logoSize - padding
-      const logoY = isPortrait ? 80 : padding
-      if (logoImage) {
-        svg += `    <!-- Logo (embedded image) -->
-    <image x="${logoX}" y="${logoY}" width="${logoSize}" height="${logoSize}"
-           href="${logoImage}" preserveAspectRatio="xMidYMid meet"/>\n`
-      } else {
-        svg += `    <!-- Logo placeholder - upload logo to embed -->
-    <rect x="${logoX}" y="${logoY}" width="${logoSize}" height="${logoSize}"
-          style="fill:none;stroke:#000000;stroke-width:0.5;stroke-dasharray:2,2"/>
-    <text x="${logoX + logoSize/2}" y="${logoY + logoSize/2 + 3}"
-          font-family="Arial" font-size="7" text-anchor="middle">LOGO</text>\n`
-      }
-    }
-
-    svg += `  </g>
-</svg>`
-
-    return svg
-  }, [cardData, selectedFont, logoImage])
-
-  // Download SVG file
-  const downloadSVG = useCallback(() => {
-    const svg = generateSVG()
-    const blob = new Blob([svg], { type: 'image/svg+xml' })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = `business-card-${cardData.name?.replace(/\s+/g, '-').toLowerCase() || 'design'}.svg`
-    document.body.appendChild(a)
-    a.click()
-    document.body.removeChild(a)
-    URL.revokeObjectURL(url)
-  }, [generateSVG, cardData.name])
-
-  // Helper to escape XML special characters
-  function escapeXml(str: string): string {
-    return str
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&apos;')
-  }
-
   return (
-    <div className="bg-white rounded-2xl shadow-xl overflow-hidden" style={{ boxShadow: '0 8px 40px rgba(106,140,140,0.12)' }}>
-      {/* Premium Header */}
-      <div className="relative bg-gradient-to-r from-vurmz-dark via-gray-800 to-vurmz-dark px-6 py-5">
-        <div className="absolute inset-0 bg-gradient-to-r from-vurmz-teal/5 via-transparent to-vurmz-teal/5" />
-        <h3 className="relative text-white font-bold text-lg tracking-tight">Metal Business Card Designer</h3>
-        <p className="relative text-gray-400 text-sm mt-1">Premium laser-engraved metal cards that people keep</p>
-      </div>
+    <div className="bg-gray-50 border border-gray-200 p-6 mt-4">
+      <h3 className="font-bold text-lg mb-4">Design Your Metal Business Card</h3>
 
-      {/* Live Preview - Clean background */}
-      <div className="relative p-6 border-b border-gray-100" style={{ background: 'linear-gradient(180deg, rgba(250,251,250,0.98) 0%, rgba(245,247,246,0.95) 100%)' }}>
-        <div className="text-xs text-gray-400 uppercase tracking-wider mb-4 text-center font-medium">Live Preview</div>
-        <div className="flex justify-center">
-          <div
-            className={`relative rounded-lg shadow-xl ${colors.bg} ${colors.border} border overflow-hidden transition-all duration-300 ${
-              cardData.layout === 'portrait' ? 'w-[160px] h-[272px]' : 'w-[272px] h-[160px]'
-            }`}
-            style={{ background: colors.gradient }}
-          >
-            <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-black/10 pointer-events-none" />
-            <div className={`relative h-full p-4 flex flex-col ${cardData.layout === 'portrait' ? 'justify-start pt-6' : 'justify-between'}`}>
-              {cardData.logoEnabled && (
-                <div className={`${cardData.layout === 'portrait' ? 'mx-auto mb-3' : 'absolute top-3 right-3'} w-8 h-8 flex items-center justify-center`}>
-                  {logoImage ? (
-                    <img src={logoImage} alt="Logo" className="max-w-full max-h-full object-contain" style={{ filter: cardData.cardColor === 'gloss-white' || cardData.cardColor === 'stainless-steel' ? 'none' : 'brightness(1.5) contrast(0.9)' }} />
-                  ) : (
-                    <div className={`w-full h-full border border-dashed ${colors.accent} rounded flex items-center justify-center`}>
-                      <span className={`text-[8px] ${colors.accent}`}>LOGO</span>
-                    </div>
-                  )}
-                </div>
-              )}
-              <div className={`flex-1 flex flex-col ${cardData.layout === 'portrait' ? 'items-center text-center justify-start' : 'justify-center'}`}>
-                {cardData.business && <p className={`text-[9px] font-medium ${colors.accent} tracking-wider uppercase mb-0.5`} style={selectedFont?.style}>{cardData.business}</p>}
-                <h4 className={`${cardData.layout === 'portrait' ? 'text-sm' : 'text-base'} font-bold ${colors.text} tracking-wide`} style={selectedFont?.style}>{cardData.name || 'Your Name'}</h4>
-                {cardData.title && <p className={`text-[10px] ${colors.accent} mt-0.5`} style={selectedFont?.style}>{cardData.title}</p>}
-              </div>
-              <div className={`flex ${cardData.layout === 'portrait' ? 'flex-col items-center mt-auto' : 'items-end justify-between'}`}>
-                <div className={`text-[8px] ${colors.accent} space-y-0.5 ${cardData.layout === 'portrait' ? 'text-center mb-2' : ''}`} style={selectedFont?.style}>
-                  {cardData.phone && <p>{cardData.phone}</p>}
-                  {cardData.email && <p>{cardData.email}</p>}
-                  {cardData.website && <p>{cardData.website}</p>}
-                </div>
-                {cardData.qrEnabled && getQrCodeUrl() && (
-                  <div className={`bg-white/90 rounded p-0.5 ${cardData.layout === 'portrait' ? 'w-10 h-10' : 'w-12 h-12'}`}>
-                    <img src={getQrCodeUrl()!} alt="QR Code" className="w-full h-full" />
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="text-center text-xs text-gray-500 mt-3">
-          {colorOptions.find(c => c.value === cardData.cardColor)?.label} • {cardData.layout === 'portrait' ? 'Portrait' : 'Horizontal'}
-          {cardData.backSideEnabled && ' • Double-sided'}
-        </div>
-      </div>
-
-      <div className="p-6 space-y-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Input Fields */}
         <div className="space-y-4">
           <div className="grid grid-cols-2 gap-3">
@@ -452,12 +263,65 @@ export default function MetalBusinessCardPreview({ onChange }: MetalBusinessCard
             />
           </div>
 
-          {/* Font Selection - Tiles */}
-          <FontSelector
-            value={cardData.font}
-            onChange={(value) => updateField('font', value)}
-            previewText={cardData.name || 'Abc'}
-          />
+          {/* Font Selection - with Spacetime exclusive */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Font Style</label>
+            {/* Spacetime - Business Card Exclusive */}
+            <button
+              type="button"
+              onClick={() => updateField('font', 'spacetime')}
+              className={`w-full mb-2 p-3 border-2 rounded-lg text-left transition-all ${
+                cardData.font === 'spacetime'
+                  ? 'border-vurmz-teal bg-vurmz-teal/10'
+                  : 'border-gray-200 hover:border-gray-300'
+              }`}
+            >
+              <div className="flex items-center justify-between">
+                <div>
+                  <span className="font-medium" style={SPACETIME_FONT.style}>Spacetime</span>
+                  <span className="ml-2 text-xs bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded">Exclusive</span>
+                </div>
+                <span className="text-sm" style={SPACETIME_FONT.style}>{cardData.name || 'Abc'}</span>
+              </div>
+            </button>
+            {/* Regular font selector */}
+            <FontSelector
+              value={cardData.font === 'spacetime' ? 'arial' : cardData.font}
+              onChange={(value) => updateField('font', value)}
+              previewText={cardData.name || 'Abc'}
+            />
+          </div>
+
+          {/* Marking Style - Deep vs Surface */}
+          <div className="pt-2 border-t border-gray-200">
+            <label className="block text-sm font-medium text-gray-700 mb-2">Marking Style</label>
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                onClick={() => updateField('markingStyle', 'deep')}
+                className={`p-3 border-2 rounded-lg text-center transition-all ${
+                  cardData.markingStyle === 'deep'
+                    ? 'border-vurmz-teal bg-vurmz-teal/10'
+                    : 'border-gray-200 hover:border-gray-300'
+                }`}
+              >
+                <div className="font-medium text-sm">Deep Engraving</div>
+                <div className="text-xs text-gray-500">Dark, permanent, premium</div>
+              </button>
+              <button
+                type="button"
+                onClick={() => updateField('markingStyle', 'surface')}
+                className={`p-3 border-2 rounded-lg text-center transition-all ${
+                  cardData.markingStyle === 'surface'
+                    ? 'border-vurmz-teal bg-vurmz-teal/10'
+                    : 'border-gray-200 hover:border-gray-300'
+                }`}
+              >
+                <div className="font-medium text-sm">Surface Marking</div>
+                <div className="text-xs text-gray-500">Frosted, subtle, elegant</div>
+              </button>
+            </div>
+          </div>
 
           {/* Card Color */}
           <div className="pt-2 border-t border-gray-200">
@@ -520,6 +384,28 @@ export default function MetalBusinessCardPreview({ onChange }: MetalBusinessCard
             </div>
           </div>
 
+          {/* Template Selection */}
+          <div className="pt-2 border-t border-gray-200">
+            <label className="block text-sm font-medium text-gray-700 mb-2">Template Style</label>
+            <div className="grid grid-cols-3 gap-2">
+              {templateOptions.map((option) => (
+                <button
+                  key={option.value}
+                  type="button"
+                  onClick={() => updateField('template', option.value)}
+                  className={`px-2 py-2 text-xs font-medium border-2 transition-all text-center ${
+                    cardData.template === option.value
+                      ? 'border-vurmz-teal bg-vurmz-teal/10'
+                      : 'border-gray-200 hover:border-gray-300'
+                  }`}
+                >
+                  <div className="font-medium">{option.label}</div>
+                  <div className="text-[10px] text-gray-500 mt-0.5">{option.description}</div>
+                </button>
+              ))}
+            </div>
+          </div>
+
           {/* Extras */}
           <div className="pt-2 border-t border-gray-200 space-y-3">
             <label className="block text-sm font-medium text-gray-700">Add-ons <span className="font-normal text-gray-500">(+$1 each per card)</span></label>
@@ -560,30 +446,6 @@ export default function MetalBusinessCardPreview({ onChange }: MetalBusinessCard
               <span className="text-sm">Custom Logo</span>
               <span className="text-xs text-vurmz-teal font-medium">+$1</span>
             </label>
-
-            {cardData.logoEnabled && (
-              <div className="ml-7 space-y-2">
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleLogoUpload}
-                  className="w-full text-sm text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-medium file:bg-vurmz-teal file:text-white hover:file:bg-vurmz-teal-dark"
-                />
-                {logoImage && (
-                  <div className="flex items-center gap-2">
-                    <img src={logoImage} alt="Logo preview" className="h-10 w-auto object-contain bg-gray-100 rounded p-1" />
-                    <button
-                      type="button"
-                      onClick={() => setLogoImage(null)}
-                      className="text-xs text-red-500 hover:text-red-700"
-                    >
-                      Remove
-                    </button>
-                  </div>
-                )}
-                <p className="text-xs text-gray-500">PNG or SVG with transparent background works best</p>
-              </div>
-            )}
 
             <label className="flex items-center gap-3 cursor-pointer">
               <input
@@ -645,48 +507,46 @@ export default function MetalBusinessCardPreview({ onChange }: MetalBusinessCard
             )}
           </div>
 
-          {/* Premium Price Calculator */}
-          <div className="pt-4 border-t border-gray-100">
-            <div className="relative overflow-hidden rounded-2xl" style={{ background: 'linear-gradient(135deg, #2C3533 0%, #1E2422 100%)', boxShadow: '0 8px 32px rgba(0,0,0,0.15)' }}>
-              {/* Subtle glow */}
-              <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-vurmz-teal/30 to-transparent" />
-
-              <div className="p-5 text-white">
-                <div className="flex justify-between items-center mb-3">
-                  <span className="text-sm text-gray-400 uppercase tracking-wide">Price per card</span>
-                  <span className="text-2xl font-bold text-vurmz-teal">
-                    ${cardData.cardColor === 'stainless-steel'
-                      ? (15 + (cardData.qrEnabled ? 1 : 0) + (cardData.logoEnabled ? 1 : 0) + (cardData.backSideEnabled ? 1 : 0)).toFixed(2)
-                      : (3 + (cardData.qrEnabled ? 1 : 0) + (cardData.logoEnabled ? 1 : 0) + (cardData.backSideEnabled ? 1 : 0)).toFixed(2)
-                    }
-                  </span>
+          {/* Price Calculator */}
+          <div className="pt-3 border-t border-gray-200">
+            <div className="bg-vurmz-dark text-white p-4 rounded">
+              <div className="flex justify-between items-center mb-2">
+                <span className="text-sm text-gray-300">Price per card:</span>
+                <span className="text-xl font-bold">
+                  ${cardData.cardColor === 'stainless-steel'
+                    ? (15 + (cardData.qrEnabled ? 1 : 0) + (cardData.logoEnabled ? 1 : 0) + (cardData.backSideEnabled ? 1 : 0)).toFixed(2)
+                    : (3 + (cardData.qrEnabled ? 1 : 0) + (cardData.logoEnabled ? 1 : 0) + (cardData.backSideEnabled ? 1 : 0)).toFixed(2)
+                  }
+                </span>
+              </div>
+              <div className="text-xs text-gray-400 space-y-0.5">
+                <div className="flex justify-between">
+                  <span>{cardData.cardColor === 'stainless-steel' ? 'Stainless Steel' : 'Metal Card'}</span>
+                  <span>${cardData.cardColor === 'stainless-steel' ? '15.00' : '3.00'}</span>
                 </div>
-                <div className="text-xs text-gray-500 space-y-1 border-t border-white/10 pt-3">
+                {cardData.qrEnabled && (
                   <div className="flex justify-between">
-                    <span>{cardData.cardColor === 'stainless-steel' ? 'Stainless Steel' : 'Metal Card'}</span>
-                    <span className="text-gray-400">${cardData.cardColor === 'stainless-steel' ? '15.00' : '3.00'}</span>
+                    <span>+ QR Code</span>
+                    <span>$1.00</span>
                   </div>
-                  {cardData.qrEnabled && (
-                    <div className="flex justify-between">
-                      <span>+ QR Code</span>
-                      <span className="text-gray-400">$1.00</span>
-                    </div>
-                  )}
-                  {cardData.logoEnabled && (
-                    <div className="flex justify-between">
-                      <span>+ Custom Logo</span>
-                      <span className="text-gray-400">$1.00</span>
-                    </div>
-                  )}
-                  {cardData.backSideEnabled && (
-                    <div className="flex justify-between">
-                      <span>+ Back Side</span>
-                      <span className="text-gray-400">$1.00</span>
-                    </div>
-                  )}
-                </div>
+                )}
+                {cardData.logoEnabled && (
+                  <div className="flex justify-between">
+                    <span>+ Custom Logo</span>
+                    <span>$1.00</span>
+                  </div>
+                )}
+                {cardData.backSideEnabled && (
+                  <div className="flex justify-between">
+                    <span>+ Back Side</span>
+                    <span>$1.00</span>
+                  </div>
+                )}
               </div>
             </div>
+            <p className="text-xs text-gray-500 mt-2 text-center">
+              Price shown at checkout
+            </p>
           </div>
         </div>
 
@@ -705,75 +565,192 @@ export default function MetalBusinessCardPreview({ onChange }: MetalBusinessCard
               {/* Metallic shine effect */}
               <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-black/10 pointer-events-none" />
 
-              {/* Front Side */}
-              <div className={`relative h-full p-5 flex flex-col ${cardData.layout === 'portrait' ? 'justify-start pt-8' : 'justify-between'}`}>
-                {/* Logo */}
-                {cardData.logoEnabled && (
-                  <div className={`${cardData.layout === 'portrait' ? 'mx-auto mb-4' : 'absolute top-4 right-4'} w-12 h-12 flex items-center justify-center`}>
-                    {logoImage ? (
-                      <img
-                        src={logoImage}
-                        alt="Logo"
-                        className="max-w-full max-h-full object-contain"
-                        style={{ filter: cardData.cardColor === 'gloss-white' || cardData.cardColor === 'stainless-steel' ? 'none' : 'brightness(1.5) contrast(0.9)' }}
-                      />
-                    ) : (
-                      <div className={`w-full h-full border-2 border-dashed ${colors.accent} rounded flex items-center justify-center`}>
-                        <span className={`text-xs ${colors.accent}`}>LOGO</span>
+              {/* Template: Classic */}
+              {cardData.template === 'classic' && (
+                <div className={`relative h-full p-5 flex flex-col ${cardData.layout === 'portrait' ? 'justify-start pt-8' : 'justify-between'}`}>
+                  {cardData.logoEnabled && (
+                    <div className={`${cardData.layout === 'portrait' ? 'mx-auto mb-4' : 'absolute top-4 right-4'} w-12 h-12 border-2 border-dashed ${colors.accent} rounded flex items-center justify-center`}>
+                      <span className={`text-xs ${colors.accent}`}>LOGO</span>
+                    </div>
+                  )}
+                  <div className={`flex-1 flex flex-col ${cardData.layout === 'portrait' ? 'items-center text-center justify-start' : 'justify-center'}`}>
+                    {cardData.business && (
+                      <p className={`text-sm font-medium ${colors.accent} tracking-wider uppercase mb-1`} style={selectedFont?.style}>
+                        {cardData.business}
+                      </p>
+                    )}
+                    <h4 className={`${cardData.layout === 'portrait' ? 'text-lg' : 'text-xl'} font-bold ${colors.text} tracking-wide`} style={selectedFont?.style}>
+                      {cardData.name || 'Your Name'}
+                    </h4>
+                    {cardData.title && (
+                      <p className={`text-sm ${colors.accent} mt-0.5`} style={selectedFont?.style}>
+                        {cardData.title}
+                      </p>
+                    )}
+                  </div>
+                  <div className={`flex ${cardData.layout === 'portrait' ? 'flex-col items-center mt-auto' : 'items-end justify-between'}`}>
+                    <div className={`text-xs ${colors.accent} space-y-0.5 ${cardData.layout === 'portrait' ? 'text-center mb-3' : ''}`} style={selectedFont?.style}>
+                      {cardData.phone && <p>{cardData.phone}</p>}
+                      {cardData.email && <p>{cardData.email}</p>}
+                      {cardData.website && <p>{cardData.website}</p>}
+                    </div>
+                    {cardData.qrEnabled && getQrCodeUrl() && (
+                      <div className={`bg-white/90 rounded p-1 ${cardData.layout === 'portrait' ? 'w-14 h-14' : 'w-16 h-16'}`}>
+                        <img src={getQrCodeUrl()!} alt="QR Code" className="w-full h-full" />
                       </div>
                     )}
                   </div>
-                )}
+                </div>
+              )}
 
-                {/* Main content */}
-                <div className={`flex-1 flex flex-col ${cardData.layout === 'portrait' ? 'items-center text-center justify-start' : 'justify-center'}`}>
+              {/* Template: Centered */}
+              {cardData.template === 'centered' && (
+                <div className="relative h-full p-5 flex flex-col items-center justify-center text-center">
+                  {cardData.logoEnabled && (
+                    <div className="w-10 h-10 border-2 border-dashed rounded flex items-center justify-center mb-3" style={{ borderColor: colors.accent.includes('text-') ? undefined : colors.accent }}>
+                      <span className={`text-xs ${colors.accent}`}>LOGO</span>
+                    </div>
+                  )}
                   {cardData.business && (
-                    <p
-                      className={`text-sm font-medium ${colors.accent} tracking-wider uppercase mb-1`}
-                      style={selectedFont?.style}
-                    >
+                    <p className={`text-xs font-medium ${colors.accent} tracking-wider uppercase mb-1`} style={selectedFont?.style}>
                       {cardData.business}
                     </p>
                   )}
-                  <h4
-                    className={`${cardData.layout === 'portrait' ? 'text-lg' : 'text-xl'} font-bold ${colors.text} tracking-wide`}
-                    style={selectedFont?.style}
-                  >
+                  <h4 className={`text-xl font-bold ${colors.text} tracking-wide`} style={selectedFont?.style}>
                     {cardData.name || 'Your Name'}
                   </h4>
                   {cardData.title && (
-                    <p
-                      className={`text-sm ${colors.accent} mt-0.5`}
-                      style={selectedFont?.style}
-                    >
+                    <p className={`text-sm ${colors.accent} mt-1`} style={selectedFont?.style}>
                       {cardData.title}
                     </p>
                   )}
-                </div>
-
-                {/* Contact info */}
-                <div className={`flex ${cardData.layout === 'portrait' ? 'flex-col items-center mt-auto' : 'items-end justify-between'}`}>
-                  <div
-                    className={`text-xs ${colors.accent} space-y-0.5 ${cardData.layout === 'portrait' ? 'text-center mb-3' : ''}`}
-                    style={selectedFont?.style}
-                  >
+                  <div className={`text-xs ${colors.accent} space-y-0.5 mt-3`} style={selectedFont?.style}>
                     {cardData.phone && <p>{cardData.phone}</p>}
                     {cardData.email && <p>{cardData.email}</p>}
                     {cardData.website && <p>{cardData.website}</p>}
                   </div>
-
-                  {/* QR Code */}
                   {cardData.qrEnabled && getQrCodeUrl() && (
-                    <div className={`bg-white/90 rounded p-1 ${cardData.layout === 'portrait' ? 'w-14 h-14' : 'w-16 h-16'}`}>
-                      <img
-                        src={getQrCodeUrl()!}
-                        alt="QR Code"
-                        className="w-full h-full"
-                      />
+                    <div className="bg-white/90 rounded p-1 w-12 h-12 mt-2">
+                      <img src={getQrCodeUrl()!} alt="QR Code" className="w-full h-full" />
                     </div>
                   )}
                 </div>
-              </div>
+              )}
+
+              {/* Template: Minimal */}
+              {cardData.template === 'minimal' && (
+                <div className="relative h-full p-6 flex flex-col justify-center">
+                  <h4 className={`text-2xl font-bold ${colors.text} tracking-wide mb-4`} style={selectedFont?.style}>
+                    {cardData.name || 'Your Name'}
+                  </h4>
+                  <div className={`text-xs ${colors.accent} space-y-1`} style={selectedFont?.style}>
+                    {cardData.phone && <p>{cardData.phone}</p>}
+                    {cardData.email && <p>{cardData.email}</p>}
+                  </div>
+                  {cardData.qrEnabled && getQrCodeUrl() && (
+                    <div className="absolute bottom-4 right-4 bg-white/90 rounded p-1 w-12 h-12">
+                      <img src={getQrCodeUrl()!} alt="QR Code" className="w-full h-full" />
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Template: Bold */}
+              {cardData.template === 'bold' && (
+                <div className="relative h-full p-5 flex flex-col justify-center">
+                  <h4 className={`text-3xl font-black ${colors.text} tracking-tight leading-tight`} style={selectedFont?.style}>
+                    {cardData.name || 'Your Name'}
+                  </h4>
+                  {cardData.title && (
+                    <p className={`text-base ${colors.accent} mt-1 font-medium`} style={selectedFont?.style}>
+                      {cardData.title}
+                    </p>
+                  )}
+                  <div className="flex items-end justify-between mt-auto pt-4">
+                    <div className={`text-xs ${colors.accent} space-y-0.5`} style={selectedFont?.style}>
+                      {cardData.phone && <p>{cardData.phone}</p>}
+                      {cardData.email && <p>{cardData.email}</p>}
+                    </div>
+                    {cardData.qrEnabled && getQrCodeUrl() && (
+                      <div className="bg-white/90 rounded p-1 w-14 h-14">
+                        <img src={getQrCodeUrl()!} alt="QR Code" className="w-full h-full" />
+                      </div>
+                    )}
+                  </div>
+                  {cardData.logoEnabled && (
+                    <div className={`absolute top-4 right-4 w-10 h-10 border-2 border-dashed rounded flex items-center justify-center ${colors.accent.replace('text-', 'border-')}`}>
+                      <span className={`text-xs ${colors.accent}`}>LOGO</span>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Template: Logo Focus */}
+              {cardData.template === 'logo-focus' && (
+                <div className="relative h-full p-5 flex flex-col items-center justify-center text-center">
+                  <div className={`w-20 h-20 border-2 border-dashed rounded-lg flex items-center justify-center mb-3 ${colors.accent.replace('text-', 'border-')}`}>
+                    <span className={`text-sm ${colors.accent}`}>LOGO</span>
+                  </div>
+                  {cardData.business && (
+                    <p className={`text-sm font-bold ${colors.text} tracking-wider uppercase`} style={selectedFont?.style}>
+                      {cardData.business}
+                    </p>
+                  )}
+                  <p className={`text-xs ${colors.accent} mt-2`} style={selectedFont?.style}>
+                    {cardData.name || 'Your Name'}
+                  </p>
+                  <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-4">
+                    <span className={`text-[10px] ${colors.accent}`} style={selectedFont?.style}>{cardData.phone}</span>
+                    <span className={`text-[10px] ${colors.accent}`} style={selectedFont?.style}>{cardData.website}</span>
+                  </div>
+                  {cardData.qrEnabled && getQrCodeUrl() && (
+                    <div className="absolute bottom-3 right-3 bg-white/90 rounded p-0.5 w-10 h-10">
+                      <img src={getQrCodeUrl()!} alt="QR Code" className="w-full h-full" />
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Template: Modern */}
+              {cardData.template === 'modern' && (
+                <div className="relative h-full">
+                  <div className={`absolute top-0 left-0 w-1/3 h-full ${cardData.cardColor === 'gloss-white' || cardData.cardColor === 'stainless-steel' ? 'bg-black/10' : 'bg-white/5'}`} />
+                  <div className="relative h-full p-5 flex">
+                    <div className="w-1/3 flex flex-col justify-center items-center">
+                      {cardData.logoEnabled && (
+                        <div className={`w-14 h-14 border-2 border-dashed rounded flex items-center justify-center ${colors.accent.replace('text-', 'border-')}`}>
+                          <span className={`text-xs ${colors.accent}`}>LOGO</span>
+                        </div>
+                      )}
+                      {cardData.qrEnabled && getQrCodeUrl() && (
+                        <div className="bg-white/90 rounded p-1 w-12 h-12 mt-2">
+                          <img src={getQrCodeUrl()!} alt="QR Code" className="w-full h-full" />
+                        </div>
+                      )}
+                    </div>
+                    <div className="w-2/3 flex flex-col justify-center pl-4">
+                      <h4 className={`text-xl font-bold ${colors.text} tracking-wide`} style={selectedFont?.style}>
+                        {cardData.name || 'Your Name'}
+                      </h4>
+                      {cardData.title && (
+                        <p className={`text-sm ${colors.accent} mt-0.5`} style={selectedFont?.style}>
+                          {cardData.title}
+                        </p>
+                      )}
+                      {cardData.business && (
+                        <p className={`text-xs ${colors.accent} mt-2 font-medium tracking-wider uppercase`} style={selectedFont?.style}>
+                          {cardData.business}
+                        </p>
+                      )}
+                      <div className={`text-xs ${colors.accent} space-y-0.5 mt-3`} style={selectedFont?.style}>
+                        {cardData.phone && <p>{cardData.phone}</p>}
+                        {cardData.email && <p>{cardData.email}</p>}
+                        {cardData.website && <p>{cardData.website}</p>}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 
@@ -814,21 +791,10 @@ export default function MetalBusinessCardPreview({ onChange }: MetalBusinessCard
 
                     {cardData.backSideOption === 'large-logo' && (
                       <div className="text-center">
-                        {logoImage ? (
-                          <div className="w-28 h-28 flex items-center justify-center mx-auto">
-                            <img
-                              src={logoImage}
-                              alt="Logo"
-                              className="max-w-full max-h-full object-contain"
-                              style={{ filter: cardData.cardColor === 'gloss-white' || cardData.cardColor === 'stainless-steel' ? 'none' : 'brightness(1.5) contrast(0.9)' }}
-                            />
-                          </div>
-                        ) : (
-                          <div className={`w-24 h-24 border-2 border-dashed ${colors.accent} rounded flex items-center justify-center mx-auto`}>
-                            <PhotoIcon className={`w-12 h-12 ${colors.accent}`} />
-                          </div>
-                        )}
-                        <p className={`text-xs ${colors.accent} mt-2`}>{logoImage ? '' : 'Upload logo above'}</p>
+                        <div className={`w-24 h-24 border-2 border-dashed ${colors.accent} rounded flex items-center justify-center mx-auto`}>
+                          <PhotoIcon className={`w-12 h-12 ${colors.accent}`} />
+                        </div>
+                        <p className={`text-xs ${colors.accent} mt-2`}>Your Logo</p>
                       </div>
                     )}
 
@@ -853,7 +819,6 @@ export default function MetalBusinessCardPreview({ onChange }: MetalBusinessCard
             <p>Standard size: 3.5&quot; x 2&quot; (89mm x 51mm)</p>
             <p>Laser engraved on metal</p>
           </div>
-
         </div>
       </div>
     </div>

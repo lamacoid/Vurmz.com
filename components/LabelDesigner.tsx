@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
-import { SafetyIcon, iconDefinitions, type SafetyIconId } from './builder/icons/SafetyIcons'
+import { SafetyIcon, type SafetyIconId, categorizedIcons as safetyCategorizedIcons, iconCategories as safetyIconCategories } from './builder/icons/SafetyIcons'
+import { IndustrialIcon, industrialCategorizedIcons, industrialIconCategories } from './builder/icons/IndustrialIcons'
 
 // Photorealistic 3D preview - dynamically imported to avoid SSR issues
 const PlasticSign3D = dynamic(() => import('./builder/visualizers/PlasticSign3D'), {
@@ -41,26 +42,26 @@ const SIGN_MATERIALS = [
 ]
 
 const TAG_SIZES = [
-  { id: '1x0.5', name: '1" × ½"', width: 1, height: 0.5 },
-  { id: '1.5x0.75', name: '1½" × ¾"', width: 1.5, height: 0.75 },
-  { id: '2x1', name: '2" × 1"', width: 2, height: 1 },
-  { id: '3x1', name: '3" × 1"', width: 3, height: 1 },
-  { id: '3x1.5', name: '3" × 1½"', width: 3, height: 1.5 },
-  { id: '1-round', name: '1" Round', width: 1, height: 1 },
-  { id: '1.5-round', name: '1½" Round', width: 1.5, height: 1.5 },
-  { id: '2-round', name: '2" Round', width: 2, height: 2 },
+  { id: '1x0.5', name: '1" × ½"', width: 1, height: 0.5, price: 3 },
+  { id: '1.5x0.75', name: '1½" × ¾"', width: 1.5, height: 0.75, price: 3 },
+  { id: '2x1', name: '2" × 1"', width: 2, height: 1, price: 4 },
+  { id: '3x1', name: '3" × 1"', width: 3, height: 1, price: 5 },
+  { id: '3x1.5', name: '3" × 1½"', width: 3, height: 1.5, price: 6 },
+  { id: '1-round', name: '1" Round', width: 1, height: 1, price: 3 },
+  { id: '1.5-round', name: '1½" Round', width: 1.5, height: 1.5, price: 4 },
+  { id: '2-round', name: '2" Round', width: 2, height: 2, price: 5 },
 ]
 
 const SIGN_SIZES = [
-  { id: '4x2', name: '4" × 2"', width: 4, height: 2 },
-  { id: '6x2', name: '6" × 2"', width: 6, height: 2 },
-  { id: '6x4', name: '6" × 4"', width: 6, height: 4 },
-  { id: '8x4', name: '8" × 4"', width: 8, height: 4 },
-  { id: '8x6', name: '8" × 6"', width: 8, height: 6 },
-  { id: '10x6', name: '10" × 6"', width: 10, height: 6 },
-  { id: '12x8', name: '12" × 8"', width: 12, height: 8 },
-  { id: '12x12', name: '12" × 12"', width: 12, height: 12 },
-  { id: 'custom', name: 'Custom (up to 12"×12")', width: 0, height: 0 },
+  { id: '4x2', name: '4" × 2"', width: 4, height: 2, price: 8 },
+  { id: '6x2', name: '6" × 2"', width: 6, height: 2, price: 10 },
+  { id: '6x4', name: '6" × 4"', width: 6, height: 4, price: 14 },
+  { id: '8x4', name: '8" × 4"', width: 8, height: 4, price: 18 },
+  { id: '8x6', name: '8" × 6"', width: 8, height: 6, price: 24 },
+  { id: '10x6', name: '10" × 6"', width: 10, height: 6, price: 30 },
+  { id: '12x8', name: '12" × 8"', width: 12, height: 8, price: 40 },
+  { id: '12x12', name: '12" × 12"', width: 12, height: 12, price: 50 },
+  { id: 'custom', name: 'Custom (up to 12"×12")', width: 0, height: 0, price: 0 },
 ]
 
 const MOUNTING_OPTIONS = [
@@ -71,24 +72,56 @@ const MOUNTING_OPTIONS = [
   { id: 'adhesive', name: 'Adhesive backing (+$0.50/ea)' },
 ]
 
-// Map icon IDs for the label designer (subset of available icons)
-const LABEL_ICONS = [
-  { id: 'none', name: 'No icon', isoId: null },
-  { id: 'warning', name: 'Warning', isoId: 'warning-general' as SafetyIconId },
-  { id: 'electrical', name: 'Electrical', isoId: 'warning-electric' as SafetyIconId },
-  { id: 'hot', name: 'Hot Surface', isoId: 'warning-hot' as SafetyIconId },
-  { id: 'toxic', name: 'Toxic', isoId: 'warning-toxic' as SafetyIconId },
-  { id: 'biohazard', name: 'Biohazard', isoId: 'warning-biohazard' as SafetyIconId },
-  { id: 'radiation', name: 'Radiation', isoId: 'warning-radiation' as SafetyIconId },
-  { id: 'laser', name: 'Laser', isoId: 'warning-laser' as SafetyIconId },
-  { id: 'no-entry', name: 'No Entry', isoId: 'no-entry' as SafetyIconId },
-  { id: 'no-smoking', name: 'No Smoking', isoId: 'no-smoking' as SafetyIconId },
-  { id: 'eye-protection', name: 'Eye Protection', isoId: 'wear-eye' as SafetyIconId },
-  { id: 'hard-hat', name: 'Hard Hat', isoId: 'wear-helmet' as SafetyIconId },
-  { id: 'first-aid', name: 'First Aid', isoId: 'first-aid' as SafetyIconId },
-  { id: 'exit', name: 'Exit', isoId: 'exit' as SafetyIconId },
-  { id: 'fire-extinguisher', name: 'Fire Extinguisher', isoId: 'fire-extinguisher' as SafetyIconId },
-]
+// Combined icon categories for the picker
+const ICON_CATEGORIES = {
+  none: { label: 'None', color: '#666', bgColor: '#f5f5f5', description: 'No symbol' },
+  // Safety categories (ISO 7010)
+  ...safetyIconCategories,
+  // Industrial categories
+  ...industrialIconCategories,
+}
+
+// Icon type for unified handling
+type IconType = 'none' | 'safety' | 'industrial'
+interface SelectedIcon {
+  type: IconType
+  id: string
+  name: string
+}
+
+// Get name for an icon ID
+function getIconName(iconType: IconType, iconId: string): string {
+  if (iconType === 'none') return 'No icon'
+  if (iconType === 'safety') {
+    for (const icons of Object.values(safetyCategorizedIcons)) {
+      const found = icons.find(i => i.id === iconId)
+      if (found) return found.name
+    }
+  }
+  if (iconType === 'industrial') {
+    for (const icons of Object.values(industrialCategorizedIcons)) {
+      const found = icons.find(i => i.id === iconId)
+      if (found) return found.name
+    }
+  }
+  return ''
+}
+
+// Add-on pricing configuration
+const ADD_ON_PRICING = {
+  tag: {
+    icon: 0.50,      // Safety/warning symbol
+    qrCode: 1.00,    // QR code
+    logo: 1.50,      // Custom logo/graphic
+    extraLine: 0.50, // Additional line of text
+  },
+  sign: {
+    icon: 1.00,
+    qrCode: 2.00,
+    logo: 3.00,
+    extraLine: 0,    // Free on signs (more space)
+  },
+}
 
 export interface LabelDesignData {
   productType: 'tag' | 'sign'
@@ -100,6 +133,16 @@ export interface LabelDesignData {
   icon: string
   text: string
   quantity: number
+  // Add-ons
+  hasQrCode: boolean
+  hasLogo: boolean
+  hasExtraLine: boolean
+  extraLineText: string
+  // Delivery
+  deliveryMethod: 'pickup' | 'delivery'
+  deliveryAddress: string
+  deliveryFee: number
+  // Pricing
   pricePerUnit: number
   totalPrice: number
 }
@@ -116,9 +159,23 @@ export default function LabelDesigner({ onChange, initialQuantity = 1 }: Props) 
   const [customWidth, setCustomWidth] = useState(6)
   const [customHeight, setCustomHeight] = useState(4)
   const [mounting, setMounting] = useState('none')
-  const [icon, setIcon] = useState('none')
+  const [iconType, setIconType] = useState<IconType>('none')
+  const [iconId, setIconId] = useState('none')
+  const [iconCategory, setIconCategory] = useState<string>('none')
+  const [showIconPicker, setShowIconPicker] = useState(false)
   const [text, setText] = useState('')
-  const [quantity, setQuantity] = useState(initialQuantity)
+  const [quantity, setQuantity] = useState(Math.max(10, initialQuantity))
+  // Add-ons
+  const [hasQrCode, setHasQrCode] = useState(false)
+  const [hasLogo, setHasLogo] = useState(false)
+  const [hasExtraLine, setHasExtraLine] = useState(false)
+  const [extraLineText, setExtraLineText] = useState('')
+  // Delivery
+  const [deliveryMethod, setDeliveryMethod] = useState<'pickup' | 'delivery'>('pickup')
+  const [deliveryAddress, setDeliveryAddress] = useState('')
+
+  // For backward compatibility
+  const icon = iconType === 'none' ? 'none' : `${iconType}:${iconId}`
 
   const materials = productType === 'tag' ? TAG_MATERIALS : SIGN_MATERIALS
   const sizes = productType === 'tag' ? TAG_SIZES : SIGN_SIZES
@@ -141,18 +198,25 @@ export default function LabelDesigner({ onChange, initialQuantity = 1 }: Props) 
   const height = size === 'custom' ? customHeight : (selectedSize?.height || 1.5)
   const area = width * height
 
-  // Calculate price
+  // Calculate price - $0.77/sq.in with minimum
   const calculatePrice = () => {
-    let basePrice = productType === 'tag' ? 3 : 5 // Minimum prices
+    const addOns = ADD_ON_PRICING[productType]
+    const PRICE_PER_SQ_IN = 0.77
+    const minPrice = productType === 'tag' ? 2 : 5
 
-    // Area-based pricing
-    const areaPrice = area * (productType === 'tag' ? 0.50 : 0.35)
-    basePrice = Math.max(basePrice, areaPrice)
+    // Area-based pricing: $0.77/sq.in
+    let basePrice = Math.max(minPrice, Math.round(area * PRICE_PER_SQ_IN * 100) / 100)
 
     // Mounting add-on
     if (mounting === 'adhesive') basePrice += 0.50
 
-    // Volume discount
+    // Optional add-ons
+    if (iconType !== 'none') basePrice += addOns.icon
+    if (hasQrCode) basePrice += addOns.qrCode
+    if (hasLogo) basePrice += addOns.logo
+    if (hasExtraLine && extraLineText.trim()) basePrice += addOns.extraLine
+
+    // Volume discount (applied after add-ons)
     if (quantity >= 100) basePrice *= 0.80
     else if (quantity >= 50) basePrice *= 0.85
     else if (quantity >= 25) basePrice *= 0.90
@@ -162,7 +226,10 @@ export default function LabelDesigner({ onChange, initialQuantity = 1 }: Props) 
   }
 
   const pricePerUnit = calculatePrice()
-  const totalPrice = Math.round(pricePerUnit * quantity * 100) / 100
+  const subtotal = Math.round(pricePerUnit * quantity * 100) / 100
+  // Delivery: free over $100, $15 flat fee under
+  const deliveryFee = deliveryMethod === 'delivery' && subtotal < 100 ? 15 : 0
+  const totalPrice = Math.round((subtotal + deliveryFee) * 100) / 100
 
   // Notify parent of changes
   useEffect(() => {
@@ -176,10 +243,17 @@ export default function LabelDesigner({ onChange, initialQuantity = 1 }: Props) 
       icon,
       text,
       quantity,
+      hasQrCode,
+      hasLogo,
+      hasExtraLine,
+      extraLineText,
+      deliveryMethod,
+      deliveryAddress,
+      deliveryFee,
       pricePerUnit,
       totalPrice
     })
-  }, [productType, material, size, customWidth, customHeight, mounting, icon, text, quantity, pricePerUnit, totalPrice, onChange])
+  }, [productType, material, size, customWidth, customHeight, mounting, icon, text, quantity, hasQrCode, hasLogo, hasExtraLine, extraLineText, deliveryMethod, deliveryAddress, deliveryFee, pricePerUnit, totalPrice, onChange])
 
   return (
     <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
@@ -284,7 +358,13 @@ export default function LabelDesigner({ onChange, initialQuantity = 1 }: Props) 
                     : 'border-gray-200 hover:border-gray-300'
                 }`}
               >
-                <span className="text-sm font-medium text-gray-700">{s.name}</span>
+                <div className="text-sm font-medium text-gray-700">{s.name}</div>
+                {s.price > 0 && (
+                  <div className="text-xs text-gray-500 mt-0.5">${s.price}/ea</div>
+                )}
+                {s.id === 'custom' && (
+                  <div className="text-xs text-gray-500 mt-0.5">Quote</div>
+                )}
               </button>
             ))}
           </div>
@@ -336,32 +416,165 @@ export default function LabelDesigner({ onChange, initialQuantity = 1 }: Props) 
         {/* Safety/Warning Icon */}
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-2">
-            Safety/Warning Icon <span className="font-normal text-gray-500">(optional)</span>
+            Safety/Warning Symbol <span className="font-normal text-gray-500">(optional)</span>
           </label>
-          <div className="grid grid-cols-5 sm:grid-cols-8 gap-2">
-            {LABEL_ICONS.map((ico) => (
-              <button
-                key={ico.id}
-                type="button"
-                onClick={() => setIcon(ico.id)}
-                className={`p-2 border-2 rounded-lg flex items-center justify-center transition-all ${
-                  icon === ico.id
-                    ? 'border-vurmz-teal bg-vurmz-teal/10'
-                    : 'border-gray-200 hover:border-gray-300'
-                }`}
-                title={ico.name}
-              >
-                {ico.isoId ? (
-                  <SafetyIcon icon={ico.isoId} size={28} />
+
+          {/* Current selection display / toggle button */}
+          <button
+            type="button"
+            onClick={() => setShowIconPicker(!showIconPicker)}
+            className={`w-full p-4 border-2 rounded-xl flex items-center gap-4 text-left transition-all ${
+              iconType !== 'none'
+                ? 'border-vurmz-teal bg-vurmz-teal/5'
+                : 'border-gray-200 hover:border-gray-300 bg-gray-50'
+            }`}
+          >
+            <div className="w-12 h-12 rounded-lg bg-white border border-gray-200 flex items-center justify-center">
+              {iconType === 'none' ? (
+                <span className="text-gray-400 text-xs">None</span>
+              ) : iconType === 'safety' ? (
+                <SafetyIcon icon={iconId as SafetyIconId} size={36} />
+              ) : (
+                <IndustrialIcon icon={iconId} size={36} />
+              )}
+            </div>
+            <div className="flex-1">
+              <div className="font-medium text-gray-800">
+                {iconType === 'none' ? 'No symbol selected' : getIconName(iconType, iconId)}
+              </div>
+              <div className="text-xs text-gray-500">
+                {showIconPicker ? 'Click to close' : 'Click to choose from 50+ industrial symbols'}
+              </div>
+            </div>
+            <svg className={`w-5 h-5 text-gray-400 transition-transform ${showIconPicker ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+
+          {/* Icon Picker Panel */}
+          {showIconPicker && (
+            <div className="mt-3 border border-gray-200 rounded-xl overflow-hidden bg-white">
+              {/* Category Tabs */}
+              <div className="flex flex-wrap gap-1 p-2 bg-gray-50 border-b border-gray-200">
+                <button
+                  type="button"
+                  onClick={() => { setIconCategory('none'); setIconType('none'); setIconId('none'); }}
+                  className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-all ${
+                    iconCategory === 'none'
+                      ? 'bg-gray-600 text-white'
+                      : 'bg-white text-gray-600 hover:bg-gray-100'
+                  }`}
+                >
+                  None
+                </button>
+
+                {/* Safety Icon Categories */}
+                <div className="w-full text-[10px] font-semibold text-gray-400 uppercase tracking-wide px-2 pt-2">ISO 7010 Safety</div>
+                {Object.entries(safetyIconCategories).map(([key, cat]) => (
+                  <button
+                    key={key}
+                    type="button"
+                    onClick={() => setIconCategory(key)}
+                    className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-all ${
+                      iconCategory === key
+                        ? 'text-white'
+                        : 'bg-white hover:bg-gray-100'
+                    }`}
+                    style={{
+                      backgroundColor: iconCategory === key ? cat.color : undefined,
+                      color: iconCategory === key ? 'white' : cat.color,
+                    }}
+                  >
+                    {cat.label}
+                  </button>
+                ))}
+
+                {/* Industrial Icon Categories */}
+                <div className="w-full text-[10px] font-semibold text-gray-400 uppercase tracking-wide px-2 pt-2">Industrial</div>
+                {Object.entries(industrialIconCategories).map(([key, cat]) => (
+                  <button
+                    key={key}
+                    type="button"
+                    onClick={() => setIconCategory(key)}
+                    className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-all ${
+                      iconCategory === key
+                        ? 'text-white'
+                        : 'bg-white hover:bg-gray-100'
+                    }`}
+                    style={{
+                      backgroundColor: iconCategory === key ? cat.color : undefined,
+                      color: iconCategory === key ? 'white' : cat.color,
+                    }}
+                  >
+                    {cat.label}
+                  </button>
+                ))}
+              </div>
+
+              {/* Icon Grid */}
+              <div className="p-3">
+                {iconCategory === 'none' ? (
+                  <div className="text-center text-gray-500 py-6">
+                    <div className="text-4xl mb-2">✓</div>
+                    <div className="font-medium">No symbol selected</div>
+                    <div className="text-sm">Choose a category above to browse symbols</div>
+                  </div>
+                ) : safetyCategorizedIcons[iconCategory as keyof typeof safetyCategorizedIcons] ? (
+                  <div className="grid grid-cols-4 sm:grid-cols-6 gap-2">
+                    {safetyCategorizedIcons[iconCategory as keyof typeof safetyCategorizedIcons].map((ico) => (
+                      <button
+                        key={ico.id}
+                        type="button"
+                        onClick={() => {
+                          setIconType('safety')
+                          setIconId(ico.id)
+                          setShowIconPicker(false)
+                        }}
+                        className={`p-2 border-2 rounded-lg flex flex-col items-center gap-1 transition-all ${
+                          iconType === 'safety' && iconId === ico.id
+                            ? 'border-vurmz-teal bg-vurmz-teal/10'
+                            : 'border-gray-200 hover:border-gray-300'
+                        }`}
+                        title={ico.name}
+                      >
+                        <SafetyIcon icon={ico.id as SafetyIconId} size={32} />
+                        <span className="text-[10px] text-gray-600 text-center leading-tight">{ico.name}</span>
+                      </button>
+                    ))}
+                  </div>
+                ) : industrialCategorizedIcons[iconCategory as keyof typeof industrialCategorizedIcons] ? (
+                  <div className="grid grid-cols-4 sm:grid-cols-6 gap-2">
+                    {industrialCategorizedIcons[iconCategory as keyof typeof industrialCategorizedIcons].map((ico) => (
+                      <button
+                        key={ico.id}
+                        type="button"
+                        onClick={() => {
+                          setIconType('industrial')
+                          setIconId(ico.id)
+                          setShowIconPicker(false)
+                        }}
+                        className={`p-2 border-2 rounded-lg flex flex-col items-center gap-1 transition-all ${
+                          iconType === 'industrial' && iconId === ico.id
+                            ? 'border-vurmz-teal bg-vurmz-teal/10'
+                            : 'border-gray-200 hover:border-gray-300'
+                        }`}
+                        title={ico.name}
+                      >
+                        <ico.Component size={32} />
+                        <span className="text-[10px] text-gray-600 text-center leading-tight">{ico.name}</span>
+                      </button>
+                    ))}
+                  </div>
                 ) : (
-                  <span className="text-gray-400 text-sm">None</span>
+                  <div className="text-center text-gray-500 py-6">Select a category</div>
                 )}
-              </button>
-            ))}
-          </div>
-          {icon !== 'none' && (
+              </div>
+            </div>
+          )}
+
+          {iconType !== 'none' && !showIconPicker && (
             <p className="text-xs text-vurmz-teal mt-2 font-medium">
-              {LABEL_ICONS.find(i => i.id === icon)?.name} icon will be engraved on your {productType}
+              {getIconName(iconType, iconId)} symbol will be engraved on your {productType}
             </p>
           )}
         </div>
@@ -386,24 +599,151 @@ export default function LabelDesigner({ onChange, initialQuantity = 1 }: Props) 
           </p>
         </div>
 
+        {/* Optional Add-ons */}
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-2">
+            Optional Extras
+          </label>
+          <div className="space-y-2">
+            {/* QR Code */}
+            <label className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:border-vurmz-teal/50 cursor-pointer transition-all">
+              <input
+                type="checkbox"
+                checked={hasQrCode}
+                onChange={(e) => setHasQrCode(e.target.checked)}
+                className="w-5 h-5 rounded border-gray-300 text-vurmz-teal focus:ring-vurmz-teal"
+              />
+              <div className="flex-1">
+                <div className="font-medium text-gray-800">QR Code</div>
+                <div className="text-xs text-gray-500">Link to website, contact info, etc.</div>
+              </div>
+              <span className="text-sm font-medium text-vurmz-teal">
+                +${ADD_ON_PRICING[productType].qrCode.toFixed(2)}
+              </span>
+            </label>
+
+            {/* Custom Logo */}
+            <label className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:border-vurmz-teal/50 cursor-pointer transition-all">
+              <input
+                type="checkbox"
+                checked={hasLogo}
+                onChange={(e) => setHasLogo(e.target.checked)}
+                className="w-5 h-5 rounded border-gray-300 text-vurmz-teal focus:ring-vurmz-teal"
+              />
+              <div className="flex-1">
+                <div className="font-medium text-gray-800">Custom Logo/Graphic</div>
+                <div className="text-xs text-gray-500">Upload your logo after ordering</div>
+              </div>
+              <span className="text-sm font-medium text-vurmz-teal">
+                +${ADD_ON_PRICING[productType].logo.toFixed(2)}
+              </span>
+            </label>
+
+            {/* Extra Line (only for tags where it costs extra) */}
+            {ADD_ON_PRICING[productType].extraLine > 0 && (
+              <div className="border border-gray-200 rounded-lg overflow-hidden">
+                <label className="flex items-center gap-3 p-3 hover:bg-gray-50 cursor-pointer transition-all">
+                  <input
+                    type="checkbox"
+                    checked={hasExtraLine}
+                    onChange={(e) => setHasExtraLine(e.target.checked)}
+                    className="w-5 h-5 rounded border-gray-300 text-vurmz-teal focus:ring-vurmz-teal"
+                  />
+                  <div className="flex-1">
+                    <div className="font-medium text-gray-800">Additional Text Line</div>
+                    <div className="text-xs text-gray-500">Second line of text</div>
+                  </div>
+                  <span className="text-sm font-medium text-vurmz-teal">
+                    +${ADD_ON_PRICING[productType].extraLine.toFixed(2)}
+                  </span>
+                </label>
+                {hasExtraLine && (
+                  <div className="px-3 pb-3">
+                    <input
+                      type="text"
+                      value={extraLineText}
+                      onChange={(e) => setExtraLineText(e.target.value)}
+                      placeholder="Enter second line text..."
+                      className="w-full border border-gray-300 rounded px-3 py-2 text-sm"
+                    />
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* Show icon pricing note */}
+          {iconType !== 'none' && (
+            <p className="text-xs text-gray-500 mt-2">
+              ISO 7010 safety symbol: +${ADD_ON_PRICING[productType].icon.toFixed(2)}/ea
+            </p>
+          )}
+        </div>
+
         {/* Quantity */}
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-2">Quantity</label>
           <input
             type="number"
-            min="1"
+            min="10"
             max="10000"
             value={quantity}
-            onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
+            onChange={(e) => setQuantity(Math.max(10, parseInt(e.target.value) || 10))}
             className="w-full border border-gray-300 rounded-lg px-4 py-3 text-lg font-medium"
           />
-          {quantity >= 10 && (
+          <p className="text-xs text-gray-500 mt-1">Minimum order: 10 pieces</p>
+          {quantity >= 25 && (
             <p className="text-xs text-green-600 mt-1 font-medium">
               {quantity >= 100 ? '20% volume discount!' :
                quantity >= 50 ? '15% volume discount!' :
-               quantity >= 25 ? '10% volume discount!' :
-               '5% volume discount!'}
+               '10% volume discount!'}
             </p>
+          )}
+        </div>
+
+        {/* Delivery Method */}
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-2">Pickup or Delivery</label>
+          <div className="grid grid-cols-2 gap-2">
+            <button
+              type="button"
+              onClick={() => setDeliveryMethod('pickup')}
+              className={`px-4 py-3 rounded-lg text-sm font-medium border-2 transition-all ${
+                deliveryMethod === 'pickup'
+                  ? 'border-vurmz-teal bg-vurmz-teal/10 text-vurmz-teal'
+                  : 'border-gray-200 hover:border-gray-300'
+              }`}
+            >
+              Pickup (Free)
+            </button>
+            <button
+              type="button"
+              onClick={() => setDeliveryMethod('delivery')}
+              className={`px-4 py-3 rounded-lg text-sm font-medium border-2 transition-all ${
+                deliveryMethod === 'delivery'
+                  ? 'border-vurmz-teal bg-vurmz-teal/10 text-vurmz-teal'
+                  : 'border-gray-200 hover:border-gray-300'
+              }`}
+            >
+              Local Delivery
+            </button>
+          </div>
+          {deliveryMethod === 'pickup' && (
+            <p className="text-xs text-gray-500 mt-2">Pickup in Centennial, CO - address provided after order</p>
+          )}
+          {deliveryMethod === 'delivery' && (
+            <>
+              <p className="text-xs text-gray-500 mt-2">
+                {subtotal >= 100 ? 'Free delivery!' : `$15 delivery fee (free over $100)`}
+              </p>
+              <input
+                type="text"
+                placeholder="Delivery address (Denver metro)"
+                value={deliveryAddress}
+                onChange={(e) => setDeliveryAddress(e.target.value)}
+                className="w-full border border-gray-300 rounded-lg px-4 py-2 mt-2 text-sm"
+              />
+            </>
           )}
         </div>
 
@@ -419,6 +759,16 @@ export default function LabelDesigner({ onChange, initialQuantity = 1 }: Props) 
             <span className="text-sm text-gray-600">Quantity</span>
             <span className="font-medium">× {quantity}</span>
           </div>
+          <div className="flex justify-between items-center mb-2">
+            <span className="text-sm text-gray-600">Subtotal</span>
+            <span className="font-medium">${subtotal.toFixed(2)}</span>
+          </div>
+          {deliveryMethod === 'delivery' && (
+            <div className="flex justify-between items-center mb-2">
+              <span className="text-sm text-gray-600">Delivery</span>
+              <span className="font-medium">{deliveryFee > 0 ? `$${deliveryFee.toFixed(2)}` : 'Free'}</span>
+            </div>
+          )}
           <div className="flex justify-between items-center pt-2 border-t border-gray-300">
             <span className="font-semibold text-gray-800">Estimated Total</span>
             <span className="text-2xl font-bold text-vurmz-teal">${totalPrice.toFixed(2)}</span>
@@ -439,25 +789,49 @@ export function generateLabelDescription(data: LabelDesignData): string {
   const materials = data.productType === 'tag' ? TAG_MATERIALS : SIGN_MATERIALS
   const materialName = materials.find(m => m.id === data.material)?.name || data.material
 
-  const iconInfo = LABEL_ICONS.find(i => i.id === data.icon)
+  // Parse icon info from the new format: "type:id" or "none"
+  let iconName = ''
+  if (data.icon && data.icon !== 'none') {
+    const [iconType, iconId] = data.icon.includes(':') ? data.icon.split(':') : ['', data.icon]
+    iconName = getIconName(iconType as IconType || 'safety', iconId)
+  }
 
   let desc = `=== ${data.productType === 'tag' ? 'Tag' : 'Sign'} Order ===\n`
   desc += `Type: ${data.productType === 'tag' ? 'Tag/Label' : 'Sign'}\n`
   desc += `Material: ${materialName}\n`
   desc += `Size: ${width}" × ${height}"\n`
   desc += `Mounting: ${MOUNTING_OPTIONS.find(m => m.id === data.mounting)?.name || 'None'}\n`
-  if (data.icon && data.icon !== 'none' && iconInfo) {
-    desc += `Safety Icon: ${iconInfo.name}\n`
+
+  // Add-ons
+  const addOns: string[] = []
+  if (iconName) addOns.push(`ISO 7010 Symbol: ${iconName}`)
+  if (data.hasQrCode) addOns.push('QR Code')
+  if (data.hasLogo) addOns.push('Custom Logo')
+  if (data.hasExtraLine && data.extraLineText) addOns.push(`Extra Line: "${data.extraLineText}"`)
+
+  if (addOns.length > 0) {
+    desc += `Add-ons: ${addOns.join(', ')}\n`
   }
+
   desc += `Quantity: ${data.quantity}\n`
+
+  // Delivery info
+  desc += `\nFulfillment: ${data.deliveryMethod === 'delivery' ? 'Local Delivery' : 'Pickup'}\n`
+  if (data.deliveryMethod === 'delivery' && data.deliveryAddress) {
+    desc += `Delivery Address: ${data.deliveryAddress}\n`
+  }
+
   desc += `\nText/Content:\n${data.text || '(Not specified)'}\n`
   desc += `\nPrice per unit: $${data.pricePerUnit.toFixed(2)}\n`
+  if (data.deliveryFee > 0) {
+    desc += `Delivery Fee: $${data.deliveryFee.toFixed(2)}\n`
+  }
   desc += `Total: $${data.totalPrice.toFixed(2)}\n`
 
   return desc
 }
 
 // Simplified - no SVG export needed for this version
-export function generateLabelSVG(data: LabelDesignData): string {
+export function generateLabelSVG(): string {
   return `<!-- Tag/Sign order - SVG will be created during production -->`
 }

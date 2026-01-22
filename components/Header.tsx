@@ -4,15 +4,20 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
-import { Bars3Icon, XMarkIcon, PhoneIcon, SparklesIcon } from '@heroicons/react/24/outline'
+import { Bars3Icon, XMarkIcon, PhoneIcon, SparklesIcon, MapPinIcon } from '@heroicons/react/24/outline'
+import { useSiteConfig } from '@/components/SiteConfigProvider'
 
-const navigation = [
-  { name: 'Services', href: '/services' },
-  { name: 'Portfolio', href: '/portfolio' },
-  { name: 'Pricing', href: '/pricing' },
-  { name: 'About', href: '/about' },
-  { name: 'Contact', href: '/contact' },
-]
+// Weather icons mapping
+const weatherIcons: Record<number, string> = {
+  0: '☀️', // Clear
+  1: '🌤️', 2: '⛅', 3: '☁️', // Partly cloudy
+  45: '🌫️', 48: '🌫️', // Fog
+  51: '🌧️', 53: '🌧️', 55: '🌧️', // Drizzle
+  61: '🌧️', 63: '🌧️', 65: '🌧️', // Rain
+  71: '🌨️', 73: '🌨️', 75: '🌨️', // Snow
+  80: '🌧️', 81: '🌧️', 82: '🌧️', // Showers
+  95: '⛈️', 96: '⛈️', 99: '⛈️', // Thunderstorm
+}
 
 // Premium easing
 const glassSpring = { type: 'spring' as const, stiffness: 300, damping: 30 }
@@ -20,7 +25,16 @@ const glassSpring = { type: 'spring' as const, stiffness: 300, damping: 30 }
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [weather, setWeather] = useState<{ temp: number; code: number } | null>(null)
   const { scrollY } = useScroll()
+  const config = useSiteConfig()
+  const { contact, header } = config
+
+  // Get enabled nav items sorted by order
+  const navigation = (header?.navItems || [])
+    .filter(item => item.enabled)
+    .sort((a, b) => a.order - b.order)
+    .map(item => ({ name: item.label, href: item.href }))
 
   // Track scroll for glass intensity
   useEffect(() => {
@@ -29,13 +43,84 @@ export default function Header() {
     return () => window.removeEventListener('scroll', updateScroll)
   }, [])
 
+  // Fetch weather for Centennial, CO (39.58, -104.87)
+  useEffect(() => {
+    const fetchWeather = async () => {
+      try {
+        const res = await fetch(
+          'https://api.open-meteo.com/v1/forecast?latitude=39.58&longitude=-104.87&current=temperature_2m,weather_code&temperature_unit=fahrenheit&timezone=America/Denver'
+        )
+        const data = await res.json() as { current?: { temperature_2m: number; weather_code: number } }
+        if (data.current) {
+          setWeather({
+            temp: Math.round(data.current.temperature_2m),
+            code: data.current.weather_code,
+          })
+        }
+      } catch {
+        // Weather fetch failed, that's fine
+      }
+    }
+    fetchWeather()
+  }, [])
+
+  // Format today's date
+  const today = new Date()
+  const dateStr = today.toLocaleDateString('en-US', {
+    weekday: 'short',
+    month: 'short',
+    day: 'numeric',
+  })
+
   const headerOpacity = useTransform(scrollY, [0, 100], [0.7, 0.95])
 
   return (
     <>
+      {/* Top info bar - dark blue */}
+      <div className="fixed top-0 left-0 right-0 z-50 bg-slate-700 text-white py-2">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Desktop top bar */}
+          <div className="hidden sm:flex justify-between items-center text-sm">
+            <div className="flex items-center gap-6">
+              <span className="flex items-center gap-1.5">
+                <MapPinIcon className="h-4 w-4 text-slate-300" />
+                {contact.city}, {contact.state}
+              </span>
+              <span className="text-white/70">{dateStr}</span>
+              {weather && (
+                <span className="flex items-center gap-1">
+                  <span>{weatherIcons[weather.code] || '🌤️'}</span>
+                  <span>{weather.temp}°F</span>
+                </span>
+              )}
+            </div>
+            <a href={`sms:${contact.phone.replace(/[^0-9]/g, '')}`} className="flex items-center gap-1.5 hover:text-slate-300 transition-colors font-medium">
+              <PhoneIcon className="h-4 w-4" />
+              Text: {contact.phone}
+            </a>
+          </div>
+          {/* Mobile top bar */}
+          <div className="sm:hidden flex justify-between items-center text-sm">
+            <div className="flex items-center gap-3">
+              <span>{dateStr}</span>
+              {weather && (
+                <span className="flex items-center gap-1">
+                  <span>{weatherIcons[weather.code] || '🌤️'}</span>
+                  <span>{weather.temp}°</span>
+                </span>
+              )}
+            </div>
+            <a href={`sms:${contact.phone.replace(/[^0-9]/g, '')}`} className="flex items-center gap-1">
+              <PhoneIcon className="h-4 w-4" />
+              {contact.phone}
+            </a>
+          </div>
+        </div>
+      </div>
+
       {/* Tempered Glass Header */}
       <motion.header
-        className="fixed top-0 left-0 right-0 z-50"
+        className="fixed top-[36px] left-0 right-0 z-50"
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
@@ -91,7 +176,7 @@ export default function Header() {
                   }}
                 />
                 <Image
-                  src="/images/vurmz-logo-full.svg"
+                  src={header?.logoUrl || '/images/vurmz-logo-full.svg'}
                   alt="VURMZ LLC - Laser Engraving"
                   width={160}
                   height={45}
@@ -135,7 +220,7 @@ export default function Header() {
                   transition={{ delay: 0.5, duration: 0.4 }}
                 >
                   <Link
-                    href="/order"
+                    href={header?.ctaLink || '/order'}
                     className="relative ml-4 group"
                   >
                     <motion.div
@@ -166,7 +251,7 @@ export default function Header() {
                       />
                       <span className="relative text-white font-semibold text-sm flex items-center gap-2">
                         <SparklesIcon className="w-4 h-4" />
-                        Start Order
+                        {header?.ctaText || 'Start Order'}
                       </span>
                     </motion.div>
                   </Link>
@@ -238,7 +323,7 @@ export default function Header() {
 
             {/* Menu panel */}
             <motion.div
-              className="fixed top-[82px] left-4 right-4 z-50 rounded-3xl overflow-hidden"
+              className="fixed top-[118px] left-4 right-4 z-50 rounded-3xl overflow-hidden"
               initial={{ opacity: 0, y: -20, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -20, scale: 0.95 }}
@@ -294,7 +379,7 @@ export default function Header() {
                     className="mt-4"
                   >
                     <Link
-                      href="/order"
+                      href={header?.ctaLink || '/order'}
                       className="block text-center px-6 py-4 rounded-2xl text-white font-semibold"
                       onClick={() => setMobileMenuOpen(false)}
                       style={{
@@ -302,7 +387,7 @@ export default function Header() {
                         boxShadow: '0 4px 20px rgba(106,140,140,0.3), inset 0 1px 0 rgba(255,255,255,0.2)',
                       }}
                     >
-                      Start Order
+                      {header?.ctaText || 'Start Order'}
                     </Link>
                   </motion.div>
                 </div>
@@ -328,8 +413,8 @@ export default function Header() {
         )}
       </AnimatePresence>
 
-      {/* Spacer for fixed header */}
-      <div className="h-20" />
+      {/* Spacer for fixed header + info bar */}
+      <div className="h-[116px]" />
     </>
   )
 }

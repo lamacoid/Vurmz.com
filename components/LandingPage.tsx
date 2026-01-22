@@ -8,7 +8,7 @@ import Image from 'next/image'
 export default function LandingPage() {
   const [isHovered, setIsHovered] = useState(false)
   const [isTransitioning, setIsTransitioning] = useState(false)
-  const router = useRouter()
+  useRouter() // Navigation hook available for future use
 
   // Animated ripple effect for reflection
   const ripple = useMotionValue(0)

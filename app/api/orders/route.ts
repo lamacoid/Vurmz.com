@@ -97,7 +97,7 @@ export async function GET(request: NextRequest) {
     const limit = parseInt(searchParams.get('limit') || '50')
 
     let query = `
-      SELECT o.*, c.name as customer_name, c.email as customer_email, c.company as customer_company
+      SELECT o.*, c.name as customer_name, c.email as customer_email, c.business_name as customer_company
       FROM orders o
       LEFT JOIN customers c ON o.customer_id = c.id
     `

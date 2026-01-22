@@ -2,7 +2,7 @@
 
 export const runtime = 'edge'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import { useParams } from 'next/navigation'
 import AdminShell from '@/components/AdminShell'
 import { motion } from 'framer-motion'
@@ -16,7 +16,16 @@ import {
   ClipboardDocumentCheckIcon,
   PhoneIcon,
   EnvelopeIcon,
-  ChatBubbleLeftRightIcon
+  ChatBubbleLeftRightIcon,
+  CreditCardIcon,
+  SwatchIcon,
+  QrCodeIcon,
+  PhotoIcon,
+  RectangleStackIcon,
+  TagIcon,
+  CubeIcon,
+  SparklesIcon,
+  BoltIcon
 } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 import { format } from 'date-fns'
@@ -42,6 +51,169 @@ interface Quote {
     phone: string
     business: string | null
   }
+}
+
+// Parse structured product data from description
+interface ParsedProductData {
+  baseDescription: string
+  deliveryAddress?: string
+  cardDetails?: {
+    nameOnCard?: string
+    title?: string
+    business?: string
+    phone?: string
+    email?: string
+    website?: string
+    cardColor?: string
+    layout?: string
+    addons: string[]
+    backSide?: string
+    backSideText?: string
+    qrLink?: string
+    pricePerCard?: string
+    markingStyle?: string
+  }
+  penDetails?: {
+    textStyle?: string
+    line1?: string
+    line2?: string
+    font?: string
+    penColor?: string
+    addons: string[]
+    pricePerPen?: string
+  }
+  labelDetails?: {
+    type?: string
+    size?: string
+    material?: string
+    textLines: string[]
+    icon?: string
+    hasQrCode?: boolean
+    hasLogo?: boolean
+    priceEach?: string
+  }
+  uploadedFiles: string[]
+  hasSvgDesign: boolean
+  svgSize?: string
+}
+
+function parseDescription(description: string): ParsedProductData {
+  const result: ParsedProductData = {
+    baseDescription: '',
+    uploadedFiles: [],
+    hasSvgDesign: false
+  }
+
+  const lines = description.split('\n')
+  let section = 'base'
+  const currentCardDetails: ParsedProductData['cardDetails'] = { addons: [] }
+  const currentPenDetails: ParsedProductData['penDetails'] = { addons: [] }
+  const currentLabelDetails: ParsedProductData['labelDetails'] = { textLines: [] }
+  const baseLines: string[] = []
+
+  for (const line of lines) {
+    const trimmed = line.trim()
+
+    if (trimmed.startsWith('Delivery Address:')) {
+      result.deliveryAddress = trimmed.replace('Delivery Address:', '').trim()
+      continue
+    }
+
+    if (trimmed.includes('--- Metal Business Card Details ---')) {
+      section = 'card'
+      continue
+    }
+    if (trimmed.includes('--- Branded Pen Details ---')) {
+      section = 'pen'
+      continue
+    }
+    if (trimmed.includes('--- Tag Design ---') || trimmed.includes('--- Sign Design ---')) {
+      section = 'label'
+      currentLabelDetails.type = trimmed.includes('Tag') ? 'Tag' : 'Sign'
+      continue
+    }
+    if (trimmed.includes('--- Uploaded Files ---')) {
+      section = 'files'
+      continue
+    }
+    if (trimmed.includes('[Lightburn-ready SVG design file included')) {
+      result.hasSvgDesign = true
+      const sizeMatch = trimmed.match(/(\d+\.?\d*KB)/)
+      if (sizeMatch) result.svgSize = sizeMatch[1]
+      continue
+    }
+
+    if (section === 'card' && trimmed) {
+      if (trimmed.startsWith('Name on Card:')) currentCardDetails.nameOnCard = trimmed.split(':')[1]?.trim()
+      else if (trimmed.startsWith('Title:')) currentCardDetails.title = trimmed.split(':')[1]?.trim()
+      else if (trimmed.startsWith('Business:')) currentCardDetails.business = trimmed.split(':')[1]?.trim()
+      else if (trimmed.startsWith('Phone:')) currentCardDetails.phone = trimmed.split(':')[1]?.trim()
+      else if (trimmed.startsWith('Email:')) currentCardDetails.email = trimmed.split(':')[1]?.trim()
+      else if (trimmed.startsWith('Website:')) currentCardDetails.website = trimmed.split(':')[1]?.trim()
+      else if (trimmed.startsWith('Card Color:')) currentCardDetails.cardColor = trimmed.split(':')[1]?.trim()
+      else if (trimmed.startsWith('Layout:')) currentCardDetails.layout = trimmed.split(':')[1]?.trim()
+      else if (trimmed.startsWith('Marking Style:')) currentCardDetails.markingStyle = trimmed.split(':')[1]?.trim()
+      else if (trimmed.startsWith('Add-ons:')) {
+        const addons = trimmed.split(':')[1]?.trim()
+        if (addons && addons !== 'None') currentCardDetails.addons = addons.split(',').map(a => a.trim())
+      }
+      else if (trimmed.startsWith('Back Side:')) {
+        const backInfo = trimmed.split(':').slice(1).join(':').trim()
+        const dashIndex = backInfo.indexOf(' - "')
+        if (dashIndex > -1) {
+          currentCardDetails.backSide = backInfo.substring(0, dashIndex)
+          currentCardDetails.backSideText = backInfo.substring(dashIndex + 4).replace('"', '')
+        } else {
+          currentCardDetails.backSide = backInfo
+        }
+      }
+      else if (trimmed.startsWith('QR Link:')) currentCardDetails.qrLink = trimmed.split(':').slice(1).join(':').trim()
+      else if (trimmed.startsWith('Price per Card:')) currentCardDetails.pricePerCard = trimmed.split(':')[1]?.trim()
+    }
+
+    if (section === 'pen' && trimmed) {
+      if (trimmed.startsWith('Text Style:')) currentPenDetails.textStyle = trimmed.split(':')[1]?.trim()
+      else if (trimmed.startsWith('Line 1:')) currentPenDetails.line1 = trimmed.split(':')[1]?.trim()
+      else if (trimmed.startsWith('Line 2:')) currentPenDetails.line2 = trimmed.split(':')[1]?.trim()
+      else if (trimmed.startsWith('Font:')) currentPenDetails.font = trimmed.split(':')[1]?.trim()
+      else if (trimmed.startsWith('Pen Color:')) currentPenDetails.penColor = trimmed.split(':')[1]?.trim()
+      else if (trimmed.startsWith('Add-ons:')) {
+        const addons = trimmed.split(':')[1]?.trim()
+        if (addons && addons !== 'None') currentPenDetails.addons = addons.split(',').map(a => a.trim())
+      }
+      else if (trimmed.startsWith('Price per Pen:')) currentPenDetails.pricePerPen = trimmed.split(':')[1]?.trim()
+    }
+
+    if (section === 'label' && trimmed) {
+      if (trimmed.startsWith('Size:')) currentLabelDetails.size = trimmed.split(':')[1]?.trim()
+      else if (trimmed.startsWith('Material:')) currentLabelDetails.material = trimmed.split(':')[1]?.trim()
+      else if (trimmed.startsWith('Line ')) {
+        const text = trimmed.split(':').slice(1).join(':').trim()
+        if (text) currentLabelDetails.textLines.push(text)
+      }
+      else if (trimmed.startsWith('Icon:')) currentLabelDetails.icon = trimmed.split(':')[1]?.trim()
+      else if (trimmed.startsWith('QR Code:')) currentLabelDetails.hasQrCode = trimmed.includes('Yes')
+      else if (trimmed.startsWith('Logo:')) currentLabelDetails.hasLogo = trimmed.includes('Yes')
+      else if (trimmed.startsWith('Price Each:')) currentLabelDetails.priceEach = trimmed.split(':')[1]?.trim()
+    }
+
+    if (section === 'files' && trimmed && !trimmed.startsWith('NOTE:')) {
+      if (trimmed.match(/\.\w+\s*\(/)) {
+        result.uploadedFiles.push(trimmed)
+      }
+    }
+
+    if (section === 'base' && trimmed) {
+      baseLines.push(trimmed)
+    }
+  }
+
+  result.baseDescription = baseLines.join('\n')
+  if (currentCardDetails.nameOnCard || currentCardDetails.cardColor) result.cardDetails = currentCardDetails
+  if (currentPenDetails.line1 || currentPenDetails.penColor) result.penDetails = currentPenDetails
+  if (currentLabelDetails.textLines.length > 0 || currentLabelDetails.size) result.labelDetails = currentLabelDetails
+
+  return result
 }
 
 const statusConfig: Record<string, { label: string; bg: string; text: string; border: string }> = {
@@ -109,6 +281,12 @@ export default function QuoteDetailPage() {
   const [adminNotes, setAdminNotes] = useState('')
   const [quoteLink, setQuoteLink] = useState('')
   const [copied, setCopied] = useState(false)
+
+  // Parse product details from description
+  const parsedData = useMemo(() => {
+    if (!quote?.description) return null
+    return parseDescription(quote.description)
+  }, [quote?.description])
 
   useEffect(() => {
     fetch(`/api/quotes/${params.id}`)
@@ -286,6 +464,56 @@ export default function QuoteDetailPage() {
       }
     } catch {
       setError('Failed to complete order')
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  // Quick approve: for quotes that already have a calculated price, skip the quote-send step
+  const handleQuickApprove = async () => {
+    if (!quote?.price) {
+      setError('No price calculated for this order')
+      return
+    }
+
+    if (!quote.customer.email) {
+      setError('Customer email is required to send invoice')
+      return
+    }
+
+    setSaving(true)
+    setError('')
+
+    try {
+      // First, set status to pending-approval
+      const statusRes = await fetch(`/api/quotes/${params.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: 'pending-approval' })
+      })
+
+      if (!statusRes.ok) {
+        throw new Error('Failed to update status')
+      }
+
+      // Then call the accept endpoint to create invoice and start order
+      const res = await fetch(`/api/quotes/${params.id}/accept`, {
+        method: 'POST'
+      })
+
+      if (res.ok) {
+        const data = await res.json() as Quote & { orderNumber?: string; invoiceUrl?: string; message?: string }
+        setQuote(data)
+        setSuccess(data.message || 'Order approved! Invoice sent to customer.')
+        if (data.invoiceUrl) {
+          window.open(data.invoiceUrl, '_blank')
+        }
+      } else {
+        const data = await res.json() as { error?: string }
+        setError(data.error || 'Failed to approve order')
+      }
+    } catch {
+      setError('Failed to approve order')
     } finally {
       setSaving(false)
     }
@@ -483,7 +711,7 @@ export default function QuoteDetailPage() {
               </div>
             </motion.div>
 
-            {/* Request Details Card */}
+            {/* Order Summary Card */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -491,29 +719,382 @@ export default function QuoteDetailPage() {
               className="rounded-2xl p-6"
               style={glassCard}
             >
-              <h3 className="font-semibold text-gray-800 mb-4">Request Details</h3>
-              <div className="grid grid-cols-2 gap-4 text-sm mb-5">
-                <div>
-                  <span className="text-gray-500">Product</span>
-                  <p className="font-medium text-gray-800 mt-0.5">{quote.productType}</p>
-                </div>
-                <div>
-                  <span className="text-gray-500">Quantity</span>
-                  <p className="font-medium text-gray-800 mt-0.5">{quote.quantity}</p>
-                </div>
-                <div>
-                  <span className="text-gray-500">Turnaround</span>
-                  <p className="font-medium text-gray-800 mt-0.5">{quote.turnaround}</p>
-                </div>
-                <div>
-                  <span className="text-gray-500">Delivery</span>
-                  <p className="font-medium text-gray-800 mt-0.5">{quote.deliveryMethod}</p>
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="font-semibold text-gray-800">Order Summary</h3>
+                <div className="flex items-center gap-2">
+                  <CubeIcon className="h-5 w-5 text-[#6a8c8c]" />
+                  <span className="font-bold text-lg text-gray-800">{quote.quantity}x</span>
                 </div>
               </div>
-              <div>
-                <span className="text-gray-500 text-sm">Description</span>
+
+              {/* Product Type Badge */}
+              <div className="mb-4">
+                <span
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(106,140,140,0.15) 0%, rgba(106,140,140,0.08) 100%)',
+                    border: '1px solid rgba(106,140,140,0.2)',
+                    color: '#5a7a7a',
+                  }}
+                >
+                  {quote.productType.toLowerCase().includes('card') && <CreditCardIcon className="h-4 w-4" />}
+                  {quote.productType.toLowerCase().includes('pen') && <SparklesIcon className="h-4 w-4" />}
+                  {(quote.productType.toLowerCase().includes('tag') || quote.productType.toLowerCase().includes('sign')) && <TagIcon className="h-4 w-4" />}
+                  {quote.productType}
+                </span>
+              </div>
+
+              {/* Turnaround & Delivery */}
+              <div className="grid grid-cols-2 gap-3 mb-5">
+                <div className="p-3 rounded-xl" style={{ background: 'rgba(106,140,140,0.04)', border: '1px solid rgba(106,140,140,0.08)' }}>
+                  <span className="text-xs text-gray-500 uppercase tracking-wide">Turnaround</span>
+                  <p className="font-medium text-gray-800 mt-0.5 capitalize">{quote.turnaround}</p>
+                </div>
+                <div className="p-3 rounded-xl" style={{ background: 'rgba(106,140,140,0.04)', border: '1px solid rgba(106,140,140,0.08)' }}>
+                  <span className="text-xs text-gray-500 uppercase tracking-wide">Delivery</span>
+                  <p className="font-medium text-gray-800 mt-0.5 capitalize">{quote.deliveryMethod}</p>
+                </div>
+              </div>
+
+              {/* Delivery Address if present */}
+              {parsedData?.deliveryAddress && (
+                <div className="mb-5 p-3 rounded-xl" style={{ background: 'rgba(59,130,246,0.05)', border: '1px solid rgba(59,130,246,0.15)' }}>
+                  <span className="text-xs text-blue-600 uppercase tracking-wide font-medium">Delivery Address</span>
+                  <p className="text-sm text-gray-700 mt-1">{parsedData.deliveryAddress}</p>
+                </div>
+              )}
+
+              {/* Base Description */}
+              {parsedData?.baseDescription && (
+                <div className="mb-5">
+                  <span className="text-xs text-gray-500 uppercase tracking-wide">Notes</span>
+                  <p className="text-sm text-gray-700 mt-1">{parsedData.baseDescription}</p>
+                </div>
+              )}
+            </motion.div>
+
+            {/* Metal Business Card Details */}
+            {parsedData?.cardDetails && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.25, ease: liquidEase }}
+                className="rounded-2xl p-6"
+                style={glassCard}
+              >
+                <div className="flex items-center gap-2 mb-4">
+                  <CreditCardIcon className="h-5 w-5 text-[#6a8c8c]" />
+                  <h3 className="font-semibold text-gray-800">Metal Business Card</h3>
+                </div>
+
+                {/* Card Info Grid */}
+                <div className="space-y-3">
+                  {parsedData.cardDetails.nameOnCard && (
+                    <div className="p-3 rounded-xl" style={{ background: 'linear-gradient(135deg, rgba(106,140,140,0.08) 0%, rgba(106,140,140,0.03) 100%)', border: '1px solid rgba(106,140,140,0.12)' }}>
+                      <span className="text-lg font-bold text-gray-800">{parsedData.cardDetails.nameOnCard}</span>
+                      {parsedData.cardDetails.title && <p className="text-sm text-gray-600">{parsedData.cardDetails.title}</p>}
+                      {parsedData.cardDetails.business && <p className="text-sm text-[#6a8c8c] font-medium">{parsedData.cardDetails.business}</p>}
+                    </div>
+                  )}
+
+                  <div className="grid grid-cols-2 gap-2 text-sm">
+                    {parsedData.cardDetails.phone && (
+                      <div className="flex items-center gap-2 text-gray-600">
+                        <PhoneIcon className="h-4 w-4 text-gray-400" />
+                        {parsedData.cardDetails.phone}
+                      </div>
+                    )}
+                    {parsedData.cardDetails.email && (
+                      <div className="flex items-center gap-2 text-gray-600">
+                        <EnvelopeIcon className="h-4 w-4 text-gray-400" />
+                        {parsedData.cardDetails.email}
+                      </div>
+                    )}
+                    {parsedData.cardDetails.website && (
+                      <div className="col-span-2 flex items-center gap-2 text-gray-600">
+                        <DocumentTextIcon className="h-4 w-4 text-gray-400" />
+                        {parsedData.cardDetails.website}
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="pt-3 border-t border-gray-100 grid grid-cols-2 gap-3">
+                    {parsedData.cardDetails.cardColor && (
+                      <div>
+                        <span className="text-xs text-gray-500 uppercase tracking-wide">Card Color</span>
+                        <div className="flex items-center gap-2 mt-1">
+                          <SwatchIcon className="h-4 w-4 text-gray-400" />
+                          <span className="text-sm font-medium text-gray-700">{parsedData.cardDetails.cardColor}</span>
+                        </div>
+                      </div>
+                    )}
+                    {parsedData.cardDetails.layout && (
+                      <div>
+                        <span className="text-xs text-gray-500 uppercase tracking-wide">Layout</span>
+                        <div className="flex items-center gap-2 mt-1">
+                          <RectangleStackIcon className="h-4 w-4 text-gray-400" />
+                          <span className="text-sm font-medium text-gray-700">{parsedData.cardDetails.layout}</span>
+                        </div>
+                      </div>
+                    )}
+                    {parsedData.cardDetails.markingStyle && (
+                      <div className="col-span-2">
+                        <span className="text-xs text-gray-500 uppercase tracking-wide">Marking Style</span>
+                        <div className="flex items-center gap-2 mt-1">
+                          <BoltIcon className="h-4 w-4 text-gray-400" />
+                          <span className="text-sm font-medium text-gray-700">{parsedData.cardDetails.markingStyle}</span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Addons */}
+                  {parsedData.cardDetails.addons.length > 0 && (
+                    <div className="pt-3 border-t border-gray-100">
+                      <span className="text-xs text-gray-500 uppercase tracking-wide">Add-ons</span>
+                      <div className="flex flex-wrap gap-2 mt-2">
+                        {parsedData.cardDetails.addons.map((addon, i) => (
+                          <span key={i} className="px-2.5 py-1 rounded-lg text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+                            {addon.includes('QR') && <QrCodeIcon className="h-3 w-3 inline mr-1" />}
+                            {addon.includes('Logo') && <PhotoIcon className="h-3 w-3 inline mr-1" />}
+                            {addon}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* QR Link */}
+                  {parsedData.cardDetails.qrLink && (
+                    <div className="pt-3 border-t border-gray-100">
+                      <span className="text-xs text-gray-500 uppercase tracking-wide">QR Code Links To</span>
+                      <a href={parsedData.cardDetails.qrLink} target="_blank" rel="noopener noreferrer" className="block mt-1 text-sm text-[#6a8c8c] hover:underline truncate">
+                        {parsedData.cardDetails.qrLink}
+                      </a>
+                    </div>
+                  )}
+
+                  {/* Back Side */}
+                  {parsedData.cardDetails.backSide && (
+                    <div className="pt-3 border-t border-gray-100">
+                      <span className="text-xs text-gray-500 uppercase tracking-wide">Back Side Design</span>
+                      <p className="text-sm font-medium text-gray-700 mt-1">{parsedData.cardDetails.backSide}</p>
+                      {parsedData.cardDetails.backSideText && (
+                        <p className="text-sm text-gray-600 mt-0.5 italic">&ldquo;{parsedData.cardDetails.backSideText}&rdquo;</p>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Price per card */}
+                  {parsedData.cardDetails.pricePerCard && (
+                    <div className="pt-3 border-t border-gray-100 text-right">
+                      <span className="text-sm text-gray-500">Unit Price:</span>
+                      <span className="ml-2 font-bold text-[#6a8c8c]">{parsedData.cardDetails.pricePerCard}</span>
+                    </div>
+                  )}
+                </div>
+              </motion.div>
+            )}
+
+            {/* Branded Pen Details */}
+            {parsedData?.penDetails && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.25, ease: liquidEase }}
+                className="rounded-2xl p-6"
+                style={glassCard}
+              >
+                <div className="flex items-center gap-2 mb-4">
+                  <SparklesIcon className="h-5 w-5 text-[#6a8c8c]" />
+                  <h3 className="font-semibold text-gray-800">Branded Pen</h3>
+                </div>
+
+                <div className="space-y-3">
+                  {/* Text Preview */}
+                  <div className="p-4 rounded-xl text-center" style={{ background: 'linear-gradient(135deg, rgba(106,140,140,0.08) 0%, rgba(106,140,140,0.03) 100%)', border: '1px solid rgba(106,140,140,0.12)' }}>
+                    <p className="font-bold text-gray-800">{parsedData.penDetails.line1}</p>
+                    {parsedData.penDetails.line2 && (
+                      <p className="text-sm text-gray-600 mt-1">{parsedData.penDetails.line2}</p>
+                    )}
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    {parsedData.penDetails.penColor && (
+                      <div>
+                        <span className="text-xs text-gray-500 uppercase tracking-wide">Pen Color</span>
+                        <div className="flex items-center gap-2 mt-1">
+                          <SwatchIcon className="h-4 w-4 text-gray-400" />
+                          <span className="text-sm font-medium text-gray-700 capitalize">{parsedData.penDetails.penColor}</span>
+                        </div>
+                      </div>
+                    )}
+                    {parsedData.penDetails.font && (
+                      <div>
+                        <span className="text-xs text-gray-500 uppercase tracking-wide">Font</span>
+                        <p className="text-sm font-medium text-gray-700 mt-1 capitalize">{parsedData.penDetails.font}</p>
+                      </div>
+                    )}
+                  </div>
+
+                  {parsedData.penDetails.addons.length > 0 && (
+                    <div className="pt-3 border-t border-gray-100">
+                      <span className="text-xs text-gray-500 uppercase tracking-wide">Add-ons</span>
+                      <div className="flex flex-wrap gap-2 mt-2">
+                        {parsedData.penDetails.addons.map((addon, i) => (
+                          <span key={i} className="px-2.5 py-1 rounded-lg text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+                            {addon}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {parsedData.penDetails.pricePerPen && (
+                    <div className="pt-3 border-t border-gray-100 text-right">
+                      <span className="text-sm text-gray-500">Unit Price:</span>
+                      <span className="ml-2 font-bold text-[#6a8c8c]">{parsedData.penDetails.pricePerPen}</span>
+                    </div>
+                  )}
+                </div>
+              </motion.div>
+            )}
+
+            {/* Tag/Sign Details */}
+            {parsedData?.labelDetails && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.25, ease: liquidEase }}
+                className="rounded-2xl p-6"
+                style={glassCard}
+              >
+                <div className="flex items-center gap-2 mb-4">
+                  <TagIcon className="h-5 w-5 text-[#6a8c8c]" />
+                  <h3 className="font-semibold text-gray-800">{parsedData.labelDetails.type || 'Label'} Design</h3>
+                </div>
+
+                <div className="space-y-3">
+                  {/* Text Preview */}
+                  {parsedData.labelDetails.textLines.length > 0 && (
+                    <div className="p-4 rounded-xl" style={{ background: 'linear-gradient(135deg, rgba(106,140,140,0.08) 0%, rgba(106,140,140,0.03) 100%)', border: '1px solid rgba(106,140,140,0.12)' }}>
+                      {parsedData.labelDetails.textLines.map((line, i) => (
+                        <p key={i} className={i === 0 ? "font-bold text-gray-800" : "text-sm text-gray-600 mt-1"}>{line}</p>
+                      ))}
+                    </div>
+                  )}
+
+                  <div className="grid grid-cols-2 gap-3">
+                    {parsedData.labelDetails.size && (
+                      <div>
+                        <span className="text-xs text-gray-500 uppercase tracking-wide">Size</span>
+                        <p className="text-sm font-medium text-gray-700 mt-1">{parsedData.labelDetails.size}</p>
+                      </div>
+                    )}
+                    {parsedData.labelDetails.material && (
+                      <div>
+                        <span className="text-xs text-gray-500 uppercase tracking-wide">Material</span>
+                        <p className="text-sm font-medium text-gray-700 mt-1">{parsedData.labelDetails.material}</p>
+                      </div>
+                    )}
+                    {parsedData.labelDetails.icon && (
+                      <div>
+                        <span className="text-xs text-gray-500 uppercase tracking-wide">Icon</span>
+                        <p className="text-sm font-medium text-gray-700 mt-1">{parsedData.labelDetails.icon}</p>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Extras */}
+                  {(parsedData.labelDetails.hasQrCode || parsedData.labelDetails.hasLogo) && (
+                    <div className="pt-3 border-t border-gray-100">
+                      <span className="text-xs text-gray-500 uppercase tracking-wide">Extras</span>
+                      <div className="flex flex-wrap gap-2 mt-2">
+                        {parsedData.labelDetails.hasQrCode && (
+                          <span className="px-2.5 py-1 rounded-lg text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+                            <QrCodeIcon className="h-3 w-3 inline mr-1" />QR Code
+                          </span>
+                        )}
+                        {parsedData.labelDetails.hasLogo && (
+                          <span className="px-2.5 py-1 rounded-lg text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+                            <PhotoIcon className="h-3 w-3 inline mr-1" />Logo
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {parsedData.labelDetails.priceEach && (
+                    <div className="pt-3 border-t border-gray-100 text-right">
+                      <span className="text-sm text-gray-500">Unit Price:</span>
+                      <span className="ml-2 font-bold text-[#6a8c8c]">{parsedData.labelDetails.priceEach}</span>
+                    </div>
+                  )}
+                </div>
+              </motion.div>
+            )}
+
+            {/* SVG Design Indicator */}
+            {parsedData?.hasSvgDesign && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3, ease: liquidEase }}
+                className="rounded-2xl p-4"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(34,197,94,0.1) 0%, rgba(34,197,94,0.05) 100%)',
+                  border: '1px solid rgba(34,197,94,0.2)',
+                }}
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center">
+                    <DocumentTextIcon className="h-5 w-5 text-emerald-600" />
+                  </div>
+                  <div>
+                    <p className="font-medium text-emerald-800">Lightburn-Ready SVG Included</p>
+                    <p className="text-sm text-emerald-600">{parsedData.svgSize || 'Design file'} ready for production</p>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+
+            {/* Uploaded Files */}
+            {parsedData && parsedData.uploadedFiles.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.35, ease: liquidEase }}
+                className="rounded-2xl p-6"
+                style={glassCard}
+              >
+                <div className="flex items-center gap-2 mb-4">
+                  <PhotoIcon className="h-5 w-5 text-[#6a8c8c]" />
+                  <h3 className="font-semibold text-gray-800">Uploaded Files</h3>
+                </div>
+                <div className="space-y-2">
+                  {parsedData.uploadedFiles.map((file, i) => (
+                    <div key={i} className="flex items-center gap-3 p-3 rounded-xl" style={{ background: 'rgba(106,140,140,0.04)', border: '1px solid rgba(106,140,140,0.08)' }}>
+                      <DocumentTextIcon className="h-5 w-5 text-gray-400" />
+                      <span className="text-sm text-gray-700">{file}</span>
+                    </div>
+                  ))}
+                  <p className="text-xs text-amber-600 mt-2">Note: Contact customer to retrieve files (R2 storage pending setup)</p>
+                </div>
+              </motion.div>
+            )}
+
+            {/* Raw Description Fallback */}
+            {(!parsedData?.cardDetails && !parsedData?.penDetails && !parsedData?.labelDetails) && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.25, ease: liquidEase }}
+                className="rounded-2xl p-6"
+                style={glassCard}
+              >
+                <h3 className="font-semibold text-gray-800 mb-4">Request Details</h3>
                 <div
-                  className="mt-2 p-4 rounded-xl text-sm whitespace-pre-wrap"
+                  className="p-4 rounded-xl text-sm whitespace-pre-wrap"
                   style={{
                     background: 'rgba(106,140,140,0.04)',
                     border: '1px solid rgba(106,140,140,0.08)',
@@ -521,8 +1102,8 @@ export default function QuoteDetailPage() {
                 >
                   {quote.description}
                 </div>
-              </div>
-            </motion.div>
+              </motion.div>
+            )}
           </div>
 
           {/* Sidebar */}
@@ -596,6 +1177,41 @@ export default function QuoteDetailPage() {
               <div className="space-y-3">
                 {quote.status === 'new' && (
                   <>
+                    {/* Quick Approve - shown when price is pre-calculated and customer has email */}
+                    {quote.price && quote.customer.email && (
+                      <>
+                        <div
+                          className="p-4 rounded-xl mb-2"
+                          style={{
+                            background: 'linear-gradient(135deg, rgba(34,197,94,0.1) 0%, rgba(34,197,94,0.05) 100%)',
+                            border: '1px solid rgba(34,197,94,0.2)',
+                          }}
+                        >
+                          <p className="font-medium text-emerald-700">Pre-Calculated Order</p>
+                          <p className="text-xs text-emerald-600 mt-1">
+                            Customer designed for ${quote.price.toFixed(2)}. Quick approve to send invoice immediately.
+                          </p>
+                        </div>
+                        <button
+                          onClick={handleQuickApprove}
+                          disabled={saving}
+                          className="w-full py-3.5 rounded-xl text-white font-medium flex items-center justify-center gap-2 transition-all hover:scale-[1.01]"
+                          style={{
+                            background: 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)',
+                            boxShadow: '0 4px 12px rgba(34,197,94,0.25)',
+                          }}
+                        >
+                          <BoltIcon className="h-5 w-5" />
+                          Quick Approve & Send Invoice
+                        </button>
+                        <div className="relative flex items-center py-2">
+                          <div className="flex-grow border-t border-gray-200"></div>
+                          <span className="flex-shrink mx-3 text-xs text-gray-400">or send quote for review</span>
+                          <div className="flex-grow border-t border-gray-200"></div>
+                        </div>
+                      </>
+                    )}
+
                     <button
                       onClick={handleSendQuote}
                       disabled={saving || !price}

@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import { signOut } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 import {
   HomeIcon,
@@ -14,7 +14,8 @@ import {
   Cog6ToothIcon,
   ArrowLeftOnRectangleIcon,
   GlobeAltIcon,
-  CurrencyDollarIcon
+  CurrencyDollarIcon,
+  WrenchScrewdriverIcon
 } from '@heroicons/react/24/outline'
 
 const navigation = [
@@ -24,6 +25,7 @@ const navigation = [
   { name: 'Orders', href: '/admin/orders', icon: ClipboardDocumentListIcon },
   { name: 'Customers', href: '/admin/customers', icon: UserGroupIcon },
   { name: 'Materials', href: '/admin/materials', icon: SwatchIcon },
+  { name: 'Site Manager', href: '/admin/site-manager', icon: WrenchScrewdriverIcon },
   { name: 'Settings', href: '/admin/settings', icon: Cog6ToothIcon },
 ]
 
@@ -31,6 +33,16 @@ const liquidEase = [0.23, 1, 0.32, 1] as const
 
 export default function AdminSidebar() {
   const pathname = usePathname()
+  const router = useRouter()
+
+  const handleSignOut = async () => {
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' })
+    } catch {
+      // Continue with redirect even if API fails
+    }
+    router.push('/admin/login')
+  }
 
   return (
     <aside
@@ -159,7 +171,7 @@ export default function AdminSidebar() {
         </Link>
 
         <button
-          onClick={() => signOut({ callbackUrl: '/admin/login' })}
+          onClick={handleSignOut}
           className="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-400 hover:text-white hover:bg-white/5 transition-all duration-300 w-full"
         >
           <ArrowLeftOnRectangleIcon className="h-5 w-5" />

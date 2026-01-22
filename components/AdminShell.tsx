@@ -1,10 +1,10 @@
 'use client'
 
-import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import AdminSidebar from './AdminSidebar'
+import { useAdminAuth } from '@/hooks/useAuth'
 
 interface AdminShellProps {
   children: React.ReactNode
@@ -14,16 +14,16 @@ interface AdminShellProps {
 const liquidEase = [0.23, 1, 0.32, 1] as const
 
 export default function AdminShell({ children, title }: AdminShellProps) {
-  const { data: session, status } = useSession()
+  const { user, isAuthenticated, isLoading } = useAdminAuth()
   const router = useRouter()
 
   useEffect(() => {
-    if (status === 'unauthenticated') {
+    if (!isLoading && !isAuthenticated) {
       router.push('/admin/login')
     }
-  }, [status, router])
+  }, [isLoading, isAuthenticated, router])
 
-  if (status === 'loading') {
+  if (isLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 flex items-center justify-center">
         <motion.div
@@ -41,7 +41,7 @@ export default function AdminShell({ children, title }: AdminShellProps) {
     )
   }
 
-  if (!session) {
+  if (!isAuthenticated || !user) {
     return null
   }
 
@@ -90,7 +90,7 @@ export default function AdminShell({ children, title }: AdminShellProps) {
                   border: '1px solid rgba(106,140,140,0.1)',
                 }}
               >
-                <span className="text-gray-600">{session.user?.name || session.user?.email}</span>
+                <span className="text-gray-600">{user.name || user.email}</span>
               </div>
             </motion.div>
           </div>

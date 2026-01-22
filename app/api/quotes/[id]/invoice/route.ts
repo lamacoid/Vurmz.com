@@ -123,9 +123,47 @@ export async function POST(
       return NextResponse.json({ error: 'Failed to create Square customer' }, { status: 500 })
     }
 
-    // Create invoice
+    // Create Square Order first (required for invoices with line items)
     const description = `${quote.product_type} - Qty: ${quote.quantity}`
+    const priceInCents = Math.round(quote.price * 100)
 
+    const orderResponse = await fetch(`${SQUARE_API_URL}/v2/orders`, {
+      method: 'POST',
+      headers: {
+        'Square-Version': '2024-01-18',
+        'Authorization': `Bearer ${SQUARE_ACCESS_TOKEN}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        idempotency_key: crypto.randomUUID(),
+        order: {
+          location_id: locationId,
+          customer_id: customerId,
+          line_items: [
+            {
+              name: description,
+              quantity: '1',
+              note: quote.admin_notes || '',
+              base_price_money: {
+                amount: priceInCents,
+                currency: 'USD'
+              }
+            }
+          ]
+        }
+      })
+    })
+    const orderData = await orderResponse.json() as { order?: { id: string }, errors?: Array<{ detail: string }> }
+
+    if (!orderData.order?.id) {
+      console.error('Order creation failed:', orderData)
+      return NextResponse.json({
+        error: 'Failed to create order',
+        details: orderData.errors?.[0]?.detail || 'Unknown error'
+      }, { status: 500 })
+    }
+
+    // Now create invoice linked to the order
     const invoiceResponse = await fetch(`${SQUARE_API_URL}/v2/invoices`, {
       method: 'POST',
       headers: {
@@ -137,20 +175,20 @@ export async function POST(
         idempotency_key: crypto.randomUUID(),
         invoice: {
           location_id: locationId,
+          order_id: orderData.order.id,
           primary_recipient: {
             customer_id: customerId
           },
           payment_requests: [
             {
               request_type: 'BALANCE',
-              due_date: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // 30 days
+              due_date: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
               automatic_payment_source: 'NONE'
             }
           ],
           delivery_method: 'EMAIL',
           invoice_number: `VURMZ-${quote.id}`,
           title: 'VURMZ Laser Engraving',
-          description: quote.admin_notes || description,
           accepted_payment_methods: {
             card: true,
             square_gift_card: false,
@@ -164,36 +202,13 @@ export async function POST(
 
     if (!invoiceData.invoice?.id) {
       console.error('Invoice creation failed:', invoiceData)
-      return NextResponse.json({ error: 'Failed to create invoice' }, { status: 500 })
+      return NextResponse.json({
+        error: 'Failed to create invoice',
+        details: (invoiceData as { errors?: Array<{ detail: string }> }).errors?.[0]?.detail || 'Unknown error'
+      }, { status: 500 })
     }
 
-    // Add line item to invoice
-    await fetch(`${SQUARE_API_URL}/v2/invoices/${invoiceData.invoice.id}`, {
-      method: 'PUT',
-      headers: {
-        'Square-Version': '2024-01-18',
-        'Authorization': `Bearer ${SQUARE_ACCESS_TOKEN}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        idempotency_key: crypto.randomUUID(),
-        invoice: {
-          version: 0,
-          line_items: [
-            {
-              name: description,
-              quantity: '1',
-              base_price_money: {
-                amount: Math.round(quote.price * 100),
-                currency: 'USD'
-              }
-            }
-          ]
-        }
-      })
-    })
-
-    // Publish (send) the invoice
+    // Publish (send) the invoice - version is 0 for newly created invoice
     const publishResponse = await fetch(`${SQUARE_API_URL}/v2/invoices/${invoiceData.invoice.id}/publish`, {
       method: 'POST',
       headers: {
@@ -203,16 +218,30 @@ export async function POST(
       },
       body: JSON.stringify({
         idempotency_key: crypto.randomUUID(),
-        version: 1
+        version: 0
       })
     })
     const publishData = await publishResponse.json() as SquareInvoiceResponse
+
+    if (!publishData.invoice) {
+      console.error('Publish failed:', publishData)
+      return NextResponse.json({
+        error: 'Invoice created but failed to send',
+        invoiceId: invoiceData.invoice.id,
+        details: (publishData as { errors?: Array<{ detail: string }> }).errors?.[0]?.detail || 'Unknown error'
+      }, { status: 500 })
+    }
+
+    // Update quote with invoice URL
+    await db.prepare('UPDATE quotes SET invoice_url = ?, status = ? WHERE id = ?')
+      .bind(publishData.invoice.public_url, 'invoiced', id)
+      .run()
 
     return NextResponse.json({
       success: true,
       invoiceId: invoiceData.invoice.id,
       invoiceNumber: invoiceData.invoice.invoice_number,
-      invoiceUrl: publishData.invoice?.public_url || invoiceData.invoice.public_url
+      invoiceUrl: publishData.invoice.public_url
     })
   } catch (error) {
     console.error('Error creating invoice:', error)

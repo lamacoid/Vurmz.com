@@ -213,7 +213,6 @@ export function CountUp({
 }) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true })
-  const count = useRef(0)
 
   return (
     <motion.span
@@ -252,7 +251,6 @@ function CountUpNumber({ end, duration }: { end: number; duration: number }) {
       animate={{ opacity: 1 }}
       onAnimationStart={() => {
         if (!ref.current) return
-        const start = 0
         const startTime = Date.now()
         const animate = () => {
           const elapsed = Date.now() - startTime

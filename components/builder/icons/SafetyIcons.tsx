@@ -1122,7 +1122,7 @@ export function IconPicker({ value, onChange, showCategories = true }: IconPicke
 // Default Export - All Icons and Utilities
 // ============================================================================
 
-export default {
+const SafetyIconsExports = {
   // Individual icon components
   NoSmokingIcon,
   NoEntryIcon,
@@ -1158,3 +1158,5 @@ export default {
   categorizedIcons,
   safetyIcons,
 }
+
+export default SafetyIconsExports

@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
+import { EnvelopeIcon } from '@heroicons/react/24/outline'
 
 const liquidEase = [0.23, 1, 0.32, 1] as const
 
@@ -14,8 +15,35 @@ export default function LoginPage() {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const [focused, setFocused] = useState<string | null>(null)
+  const [mode, setMode] = useState<'magic' | 'password'>('magic')
+  const [sent, setSent] = useState(false)
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleMagicLink = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setLoading(true)
+    setError('')
+
+    try {
+      const res = await fetch('/api/admin/auth/send-link', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      })
+
+      if (res.ok) {
+        setSent(true)
+      } else {
+        const data = await res.json() as { error?: string }
+        setError(data.error || 'Failed to send link')
+      }
+    } catch {
+      setError('An error occurred. Please try again.')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handlePassword = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
     setError('')
@@ -34,12 +62,14 @@ export default function LoginPage() {
       } else {
         router.push('/admin/dashboard')
       }
-    } catch (err) {
+    } catch {
       setError('An error occurred. Please try again.')
     } finally {
       setLoading(false)
     }
   }
+
+  const handleSubmit = mode === 'magic' ? handleMagicLink : handlePassword
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 flex items-center justify-center px-4 relative overflow-hidden">
@@ -101,12 +131,39 @@ export default function LoginPage() {
                 className="mx-auto mb-6"
                 priority
               />
-              <h1 className="text-xl font-semibold text-gray-800 tracking-tight">Customer Portal</h1>
-              <p className="text-gray-500 text-sm mt-1">Sign in to manage your account</p>
+              <h1 className="text-xl font-semibold text-gray-800 tracking-tight">Admin</h1>
+              <p className="text-gray-500 text-sm mt-1">Sign in to manage orders</p>
             </motion.div>
 
+            {/* Email sent confirmation */}
+            {sent && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mb-6 p-6 rounded-xl text-center"
+                style={{
+                  background: 'rgba(34, 197, 94, 0.08)',
+                  border: '1px solid rgba(34, 197, 94, 0.2)',
+                }}
+              >
+                <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <EnvelopeIcon className="h-6 w-6 text-green-600" />
+                </div>
+                <h2 className="font-semibold text-gray-900 mb-1">Check Your Email</h2>
+                <p className="text-sm text-gray-600">
+                  Login link sent to <strong>{email}</strong>
+                </p>
+                <button
+                  onClick={() => { setSent(false); setEmail('') }}
+                  className="mt-3 text-sm text-[#6a8c8c] hover:underline"
+                >
+                  Use different email
+                </button>
+              </motion.div>
+            )}
+
             {/* Error */}
-            {error && (
+            {error && !sent && (
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -122,6 +179,7 @@ export default function LoginPage() {
             )}
 
             {/* Form */}
+            {!sent && (
             <motion.form
               onSubmit={handleSubmit}
               className="space-y-5"
@@ -161,7 +219,8 @@ export default function LoginPage() {
                 </motion.div>
               </div>
 
-              {/* Password field */}
+              {/* Password field - only show in password mode */}
+              {mode === 'password' && (
               <div>
                 <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
                   Password
@@ -191,6 +250,7 @@ export default function LoginPage() {
                   />
                 </motion.div>
               </div>
+              )}
 
               {/* Submit button */}
               <motion.button
@@ -222,12 +282,24 @@ export default function LoginPage() {
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                       </svg>
-                      Signing in...
+                      {mode === 'magic' ? 'Sending...' : 'Signing in...'}
                     </span>
-                  ) : 'Sign In'}
+                  ) : mode === 'magic' ? 'Send Login Link' : 'Sign In'}
                 </span>
               </motion.button>
+
+              {/* Mode toggle */}
+              <div className="text-center">
+                <button
+                  type="button"
+                  onClick={() => setMode(mode === 'magic' ? 'password' : 'magic')}
+                  className="text-sm text-gray-500 hover:text-[#6a8c8c] transition-colors"
+                >
+                  {mode === 'magic' ? 'Use password instead' : 'Send magic link instead'}
+                </button>
+              </div>
             </motion.form>
+            )}
 
             {/* Footer */}
             <motion.div

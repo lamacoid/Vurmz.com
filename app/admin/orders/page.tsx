@@ -9,7 +9,8 @@ import {
   EyeIcon,
   MagnifyingGlassIcon,
   FunnelIcon,
-  ClipboardDocumentListIcon
+  ClipboardDocumentListIcon,
+  ArrowDownTrayIcon
 } from '@heroicons/react/24/outline'
 
 interface Order {
@@ -71,6 +72,32 @@ export default function OrdersPage() {
   const [loading, setLoading] = useState(true)
   const [filter, setFilter] = useState('')
   const [search, setSearch] = useState('')
+  const [exporting, setExporting] = useState(false)
+
+  const handleExport = async () => {
+    setExporting(true)
+    try {
+      const params = new URLSearchParams()
+      if (filter) params.set('status', filter)
+      const url = `/api/orders/export${params.toString() ? `?${params}` : ''}`
+      const res = await fetch(url)
+      if (!res.ok) throw new Error('Export failed')
+      const blob = await res.blob()
+      const downloadUrl = window.URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = downloadUrl
+      a.download = `vurmz-orders-${new Date().toISOString().slice(0, 10)}.csv`
+      document.body.appendChild(a)
+      a.click()
+      a.remove()
+      window.URL.revokeObjectURL(downloadUrl)
+    } catch (err) {
+      console.error('Export error:', err)
+      alert('Export failed')
+    } finally {
+      setExporting(false)
+    }
+  }
 
   useEffect(() => {
     const url = filter ? `/api/orders?status=${filter}` : '/api/orders'
@@ -155,6 +182,21 @@ export default function OrdersPage() {
               </svg>
             </div>
           </div>
+
+          {/* Export Button */}
+          <button
+            onClick={handleExport}
+            disabled={exporting}
+            className="inline-flex items-center gap-2 px-4 py-3 rounded-xl font-medium text-sm transition-all disabled:opacity-50"
+            style={{
+              background: 'rgba(106, 140, 140, 0.08)',
+              color: '#5a7a7a',
+              border: '1px solid rgba(106, 140, 140, 0.15)',
+            }}
+          >
+            <ArrowDownTrayIcon className="h-5 w-5" />
+            {exporting ? 'Exporting...' : 'Export CSV'}
+          </button>
         </motion.div>
 
         {/* Orders List */}

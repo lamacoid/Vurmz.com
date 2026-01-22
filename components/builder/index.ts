@@ -1,9 +1,10 @@
-// ============================================================================
-// PREMIUM BUILDER COMPONENTS
-// Enterprise-grade UI components for the VURMZ builder system
-// ============================================================================
+/*
+ * Builder Components
+ *
+ * Unified product builder system with premium styling and liquid transitions.
+ */
 
-// Core Shell
+// Core Shell - Main wrapper with two-column layout
 export { default as BuilderShell } from './BuilderShell'
 export {
   BuilderSection,
@@ -13,7 +14,7 @@ export {
   BuilderDivider,
 } from './BuilderShell'
 
-// Product Selection
+// Product Selection Cards
 export { default as ProductCard } from './ProductCard'
 export { ProductGrid, ProductCardSkeleton } from './ProductCard'
 
@@ -33,13 +34,13 @@ export {
   LoadingOverlay,
 } from './LoadingStates'
 
-// 3D Visualizers
-export { default as Pen3D } from './visualizers/Pen3D'
-export { default as Knife3D } from './visualizers/Knife3D'
-export { default as BusinessCard3D } from './visualizers/BusinessCard3D'
-export { default as Keychain3D } from './visualizers/Keychain3D'
-export { default as Tool3D } from './visualizers/Tool3D'
-export { default as PlasticSign3D } from './visualizers/PlasticSign3D'
-
-// Safety Icons
+// Safety Icons (ISO 7010 compliant)
 export { SafetyIcon, iconDefinitions } from './icons/SafetyIcons'
+
+// Industrial Icons (Electrical, Machine Safety, LOTO, GHS, Pipe Marking)
+export {
+  IndustrialIcon,
+  industrialIconDefinitions,
+  industrialCategorizedIcons,
+  industrialIconCategories,
+} from './icons/IndustrialIcons'

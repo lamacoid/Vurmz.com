@@ -7,6 +7,8 @@ CREATE TABLE IF NOT EXISTS users (
   password TEXT NOT NULL,
   name TEXT,
   role TEXT DEFAULT 'EMPLOYEE',
+  magic_token TEXT,
+  magic_token_expires TEXT,
   created_at TEXT DEFAULT (datetime('now')),
   updated_at TEXT DEFAULT (datetime('now'))
 );
@@ -160,3 +162,13 @@ INSERT OR IGNORE INTO settings (id, business_name) VALUES ('default', 'VURMZ LLC
 -- Insert default admin user (password: admin123)
 INSERT OR IGNORE INTO users (id, email, password, name, role)
 VALUES ('admin', 'admin@vurmz.com', '$2a$10$rQZQ9xH8F5K5K5K5K5K5KuK5K5K5K5K5K5K5K5K5K5K5K5K5K5K5K', 'Admin', 'ADMIN');
+
+-- Site configuration table (stores JSON config)
+CREATE TABLE IF NOT EXISTS site_config (
+  id TEXT PRIMARY KEY DEFAULT 'main',
+  config TEXT NOT NULL,
+  updated_at TEXT DEFAULT (datetime('now'))
+);
+
+-- Insert empty config
+INSERT OR IGNORE INTO site_config (id, config) VALUES ('main', '{}');

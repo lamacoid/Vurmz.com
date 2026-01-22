@@ -17,7 +17,7 @@ export async function GET() {
 
     // Get recent quotes with customer info
     const recentQuotesResult = await db.prepare(`
-      SELECT q.*, c.name as customer_name, c.email as customer_email
+      SELECT q.*, c.name as customer_name, c.business_name as customer_company
       FROM quotes q
       LEFT JOIN customers c ON q.customer_id = c.id
       ORDER BY q.created_at DESC LIMIT 5
@@ -25,7 +25,7 @@ export async function GET() {
 
     // Get recent orders with customer info
     const recentOrdersResult = await db.prepare(`
-      SELECT o.*, c.name as customer_name, c.email as customer_email
+      SELECT o.*, c.name as customer_name, c.business_name as customer_company
       FROM orders o
       LEFT JOIN customers c ON o.customer_id = c.id
       ORDER BY o.created_at DESC LIMIT 5
@@ -46,7 +46,7 @@ export async function GET() {
       projectDescription: row.project_description,
       status: row.status,
       createdAt: row.created_at,
-      customer: { name: row.customer_name, email: row.customer_email }
+      customer: { name: row.customer_name || 'Unknown', company: row.customer_company || null }
     }))
 
     const recentOrders = (recentOrdersResult.results || []).map((row: any) => ({
@@ -54,9 +54,9 @@ export async function GET() {
       orderNumber: row.order_number,
       projectDescription: row.project_description,
       status: row.status,
-      price: row.price,
+      price: row.price || 0,
       createdAt: row.created_at,
-      customer: { name: row.customer_name, email: row.customer_email }
+      customer: { name: row.customer_name || 'Unknown', company: row.customer_company || null }
     }))
 
     return NextResponse.json({

@@ -202,7 +202,7 @@ function WrenchTool({ text, textLine2 }: { text?: string; textLine2?: string }) 
   )
 }
 
-function ScrewdriverTool({ text, textLine2 }: { text?: string; textLine2?: string }) {
+function ScrewdriverTool({ text }: { text?: string; textLine2?: string }) {
   const groupRef = useRef<THREE.Group>(null)
 
   useFrame((state) => {

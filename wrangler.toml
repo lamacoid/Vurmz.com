@@ -12,6 +12,11 @@ binding = "DB"
 database_name = "vurmz-quotes"
 database_id = "b57e42c9-229c-436c-8109-fa3362e52b60"
 
+# R2 Storage for customer files
+[[r2_buckets]]
+binding = "FILES"
+bucket_name = "customer-files"
+
 # Environment variables
 [vars]
 SITE_URL = "https://vurmz.com"

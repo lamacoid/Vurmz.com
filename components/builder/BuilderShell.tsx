@@ -1,7 +1,7 @@
 'use client'
 
-import { ReactNode, useState, useRef, useEffect } from 'react'
-import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion'
+import { ReactNode, useState, useRef } from 'react'
+import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion'
 
 // ============================================================================
 // PREMIUM BUILDER SHELL v2.0
@@ -393,8 +393,8 @@ export function BuilderOption({
         relative px-4 py-2.5 rounded-xl text-sm font-medium
         border-2 transition-all duration-200 text-left
         ${selected
-          ? 'border-vurmz-teal bg-vurmz-teal/5 text-vurmz-teal'
-          : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300 hover:bg-gray-50'
+          ? 'border-[var(--color-primary)] bg-[var(--color-primary-wash)] text-[var(--color-primary)]'
+          : 'border-[rgba(106,140,140,0.15)] bg-white text-[var(--color-dark)] hover:border-[rgba(106,140,140,0.3)] hover:bg-[var(--color-light)]'
         }
         ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
         ${className}
@@ -547,8 +547,8 @@ export function BuilderInput({
             w-full px-4 py-3 rounded-xl text-sm
             border-2 transition-all duration-200
             ${isFocused
-              ? 'border-vurmz-teal ring-4 ring-vurmz-teal/10'
-              : 'border-gray-200 hover:border-gray-300'
+              ? 'border-[var(--color-primary)] ring-4 ring-[var(--color-primary-wash)]'
+              : 'border-[rgba(106,140,140,0.15)] hover:border-[rgba(106,140,140,0.3)]'
             }
             outline-none
           `}

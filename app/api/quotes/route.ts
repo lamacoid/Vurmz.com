@@ -84,7 +84,7 @@ export async function POST(request: NextRequest) {
       data = await request.json() as QuoteInput
     }
 
-    const { name, email, phone, businessName, businessType, productType, quantity, description, turnaround, deliveryMethod, deliveryAddress, howHeardAboutUs, cardData, penData, labelDesignData, labelDescription, designFileSvg, calculatedPrice, isOrder, uploadedFiles } = data
+    const { name, email, phone, businessName, businessType, productType, quantity, description, turnaround, deliveryMethod, deliveryAddress, howHeardAboutUs, cardData, penData, labelDescription, designFileSvg, calculatedPrice, isOrder, uploadedFiles } = data
 
     if (!name || !phone || !productType || !description) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
@@ -133,7 +133,7 @@ export async function POST(request: NextRequest) {
         }
         if (card.qrValue) fullDescription += `\nQR Link: ${card.qrValue}`
         fullDescription += `\nPrice per Card: $${card.pricePerCard?.toFixed(2)}`
-      } catch (e) {
+      } catch {
         // If JSON parsing fails, just append the raw data
         fullDescription += `\n\nCard Data: ${cardData}`
       }
@@ -154,7 +154,7 @@ export async function POST(request: NextRequest) {
           pen.bothSides && 'Both Sides'
         ].filter(Boolean).join(', ') || 'None'}`
         fullDescription += `\nPrice per Pen: $${pen.pricePerPen?.toFixed(2)}`
-      } catch (e) {
+      } catch {
         // If JSON parsing fails, just append the raw data
         fullDescription += `\n\nPen Data: ${penData}`
       }

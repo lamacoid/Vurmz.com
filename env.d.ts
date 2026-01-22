@@ -1,15 +1,12 @@
-import type { D1Database } from '@cloudflare/workers-types'
+/// <reference types="@cloudflare/workers-types" />
+/// <reference types="@types/google.maps" />
 
-declare module '@cloudflare/next-on-pages' {
-  interface CloudflareEnv {
-    DB: D1Database
-  }
+interface CloudflareEnv {
+  DB: D1Database
+  FILES: R2Bucket
+  SITE_URL: string
+  SQUARE_ACCESS_TOKEN: string
+  SQUARE_APPLICATION_ID: string
+  SQUARE_ENVIRONMENT: string
+  RESEND_API_KEY: string
 }
-
-declare global {
-  interface CloudflareEnv {
-    DB: D1Database
-  }
-}
-
-export {}

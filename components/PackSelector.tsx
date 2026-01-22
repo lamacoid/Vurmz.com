@@ -77,8 +77,9 @@ interface ItemGridProps {
 function ItemGrid({ count, productType, numPacks }: ItemGridProps) {
   const IconComponent = PRODUCT_ICONS[productType]
 
-  // Determine grid layout based on count
+  // Grid layout calculation
   const cols = count <= 5 ? count : 5
+  void cols // Prevent unused warning
 
   return (
     <div

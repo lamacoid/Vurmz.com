@@ -1,8 +1,7 @@
 import { cookies } from 'next/headers'
-import { getD1, generateId, now } from './d1'
+import { getD1 } from './d1'
 
 const SESSION_COOKIE = 'vurmz_session'
-const SESSION_DURATION = 24 * 60 * 60 * 1000 // 24 hours
 
 // Simple password hash comparison (for edge runtime)
 async function hashPassword(password: string): Promise<string> {

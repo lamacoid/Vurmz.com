@@ -340,31 +340,6 @@ export default function IndustrialTagPreview({ onChange, quantity = 1 }: Props) 
     return Object.entries(MATERIALS).filter(([key]) => type.materials.includes(key))
   }
 
-  // Preview scale
-  const maxPreviewWidth = 320
-  const maxPreviewHeight = 200
-  const scale = Math.min(maxPreviewWidth / width, maxPreviewHeight / height, 100)
-
-  // Get shape path for nametag
-  const getNametagPath = (w: number, h: number, shape: string) => {
-    const shapeInfo = NAMETAG_SHAPES[shape as keyof typeof NAMETAG_SHAPES]
-    if (!shapeInfo) return `M 2 2 h ${w - 4} v ${h - 4} h -${w - 4} Z`
-
-    if (shapeInfo.corners === 'oval') {
-      return `M ${w/2} 2 a ${w/2 - 2} ${h/2 - 2} 0 1 1 0 ${h - 4} a ${w/2 - 2} ${h/2 - 2} 0 1 1 0 -${h - 4}`
-    }
-    if (shapeInfo.corners === 'arch') {
-      const archHeight = Math.min(h * 0.3, w * 0.15)
-      return `M 4 ${h - 2} v -${h - archHeight - 4} q 0 -${archHeight} ${w/2 - 4} -${archHeight} q ${w/2 - 4} 0 ${w/2 - 4} ${archHeight} v ${h - archHeight - 4} Z`
-    }
-    if (shapeInfo.corners === 'clip') {
-      const clip = 8
-      return `M ${clip + 2} 2 h ${w - clip*2 - 4} l ${clip} ${clip} v ${h - clip - 4} h -${w - 4} v -${h - clip - 4} Z`
-    }
-    const r = typeof shapeInfo.corners === 'number' ? shapeInfo.corners : 4
-    return `M ${r + 2} 2 h ${w - r*2 - 4} a ${r} ${r} 0 0 1 ${r} ${r} v ${h - r*2 - 4} a ${r} ${r} 0 0 1 -${r} ${r} h -${w - r*2 - 4} a ${r} ${r} 0 0 1 -${r} -${r} v -${h - r*2 - 4} a ${r} ${r} 0 0 1 ${r} -${r}`
-  }
-
   return (
     <div className="bg-white rounded-2xl shadow-xl overflow-hidden mt-4">
       {/* Premium Header */}

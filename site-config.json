@@ -1,0 +1,182 @@
+{
+  "colors": {
+    "primary": "#6A8C8C",
+    "primaryDark": "#5A7A7A",
+    "secondary": "#8BA888",
+    "accent": "#A8C8C8",
+    "dark": "#3D4441",
+    "light": "#FAFBF9"
+  },
+  "content": {
+    "heroTitle": "Equipment Nameplates, Data Plates & Industrial Engraving",
+    "heroSubtitle": "Laser engraved ABS panel labels, asset identification tags, valve tags, and safety placards. Fast turnaround for electrical contractors, HVAC technicians, and facilities management.",
+    "tagline": "Same-day service. Local pickup or delivery. Text me directly.",
+    "ctaText": "Start Your Order",
+    "footerText": "© VURMZ Laser Engraving. Centennial, Colorado."
+  },
+  "contact": {
+    "phone": "(719) 257-3834",
+    "email": "zach@vurmz.com",
+    "address": "Centennial",
+    "city": "Centennial",
+    "state": "Colorado"
+  },
+  "products": [
+    {
+      "id": "tags-labels",
+      "name": "Industrial Labels",
+      "description": "Nameplates, panel labels, valve tags, safety signage",
+      "price": "Quote per job",
+      "enabled": true,
+      "hasDesigner": false,
+      "isIndustrial": true,
+      "order": 0
+    },
+    {
+      "id": "pens",
+      "name": "Branded Pens",
+      "description": "Metal stylus pens with your logo",
+      "price": "Pack of 15 from $45",
+      "enabled": true,
+      "hasDesigner": true,
+      "order": 1
+    },
+    {
+      "id": "nameplates",
+      "name": "Name Plates",
+      "description": "Desk & door name plates",
+      "price": "Pack of 5 from $40",
+      "enabled": true,
+      "hasDesigner": true,
+      "order": 2
+    },
+    {
+      "id": "tools",
+      "name": "Tool Marking",
+      "description": "Power tools & equipment",
+      "price": "From $4/item",
+      "enabled": true,
+      "hasDesigner": true,
+      "order": 3
+    },
+    {
+      "id": "business-cards",
+      "name": "Metal Business Cards",
+      "description": "Premium anodized aluminum cards",
+      "price": "Pack of 15 from $75",
+      "enabled": true,
+      "hasDesigner": true,
+      "order": 4
+    },
+    {
+      "id": "coasters",
+      "name": "Custom Coasters",
+      "description": "Wood, slate, or stainless steel",
+      "price": "Pack of 15 from $60",
+      "enabled": true,
+      "hasDesigner": true,
+      "order": 5
+    },
+    {
+      "id": "knives",
+      "name": "Knife Engraving",
+      "description": "Chef & pocket knives",
+      "price": "From $15/knife",
+      "enabled": true,
+      "hasDesigner": true,
+      "order": 6
+    },
+    {
+      "id": "keychains",
+      "name": "Keychains",
+      "description": "Custom branded keychains",
+      "price": "From $4/unit",
+      "enabled": true,
+      "hasDesigner": true,
+      "order": 7
+    },
+    {
+      "id": "other",
+      "name": "Something Else",
+      "description": "Custom projects welcome",
+      "price": "Quote based",
+      "enabled": true,
+      "hasDesigner": false,
+      "isCustom": true,
+      "order": 8
+    }
+  ],
+  "photos": [
+    {
+      "id": "pens",
+      "name": "Branded Pens",
+      "description": "Metal stylus pens with engraving",
+      "filename": null,
+      "uploadedAt": null
+    },
+    {
+      "id": "cards",
+      "name": "Metal Business Cards",
+      "description": "Stack of black anodized cards",
+      "filename": null,
+      "uploadedAt": null
+    },
+    {
+      "id": "nameplates",
+      "name": "Name Plates",
+      "description": "Desk nameplate with stand",
+      "filename": null,
+      "uploadedAt": null
+    },
+    {
+      "id": "coasters",
+      "name": "Custom Coasters",
+      "description": "Wood, slate, or stainless steel",
+      "filename": null,
+      "uploadedAt": null
+    },
+    {
+      "id": "industrial",
+      "name": "Industrial Labels",
+      "description": "Panel label or valve tag",
+      "filename": null,
+      "uploadedAt": null
+    },
+    {
+      "id": "knives",
+      "name": "Knife Engraving",
+      "description": "Chef or pocket knife with engraving",
+      "filename": null,
+      "uploadedAt": null
+    },
+    {
+      "id": "tools",
+      "name": "Tool Marking",
+      "description": "Power tool with company name",
+      "filename": null,
+      "uploadedAt": null
+    },
+    {
+      "id": "keychains",
+      "name": "Keychains",
+      "description": "Assorted engraved keychains",
+      "filename": null,
+      "uploadedAt": null
+    },
+    {
+      "id": "closeup",
+      "name": "Engraving Close-up",
+      "description": "Shows precision quality",
+      "filename": null,
+      "uploadedAt": null
+    },
+    {
+      "id": "qr",
+      "name": "QR Code",
+      "description": "Scannable QR on product",
+      "filename": null,
+      "uploadedAt": null
+    }
+  ],
+  "updatedAt": "2026-01-19T01:26:24.388Z"
+}
