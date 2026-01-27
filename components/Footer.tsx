@@ -11,7 +11,22 @@ import {
   SparklesIcon,
   ArrowUpRightIcon,
 } from '@heroicons/react/24/outline'
-import { useSiteConfig } from '@/components/SiteConfigProvider'
+
+// Hardcoded site config
+const contact = {
+  phone: '(719) 257-3834',
+  email: 'zach@vurmz.com',
+  city: 'Centennial',
+  state: 'Colorado',
+}
+
+const header = {
+  logoUrl: '/images/vurmz-logo-full.svg',
+}
+
+const footer = {
+  copyrightText: '© VURMZ Laser Engraving. Centennial, Colorado.',
+}
 
 const serviceAreas = [
   'Centennial',
@@ -24,7 +39,7 @@ const serviceAreas = [
   'Denver Metro',
 ]
 
-const defaultQuickLinks = [
+const quickLinks = [
   { name: 'Services', href: '/services' },
   { name: 'Portfolio', href: '/portfolio' },
   { name: 'Pricing', href: '/pricing' },
@@ -58,15 +73,6 @@ const itemVariants = {
 }
 
 export default function Footer() {
-  const config = useSiteConfig()
-  const { contact, header, footer, social } = config
-
-  // Use footer links if available, otherwise use defaults
-  const quickLinks = (footer?.links || [])
-    .filter(link => link.enabled)
-    .map(link => ({ name: link.label, href: link.href }))
-  const displayLinks = quickLinks.length > 0 ? quickLinks : defaultQuickLinks
-
   return (
     <footer className="relative overflow-hidden">
       {/* Glass background */}
@@ -125,22 +131,22 @@ export default function Footer() {
               }}
             >
               <Image
-                src={header?.logoUrl || '/images/vurmz-logo-full.svg'}
+                src={header.logoUrl}
                 alt="VURMZ LLC"
                 width={140}
                 height={35}
                 className="h-9 w-auto brightness-0 invert mb-4"
               />
               <p className="text-gray-400 text-sm leading-relaxed">
-                Premium laser engraving for small businesses in Centennial and Denver metro.
+                Laser engraving for small businesses. Branded products, tool marking, knife engraving, and custom goods.
               </p>
             </div>
 
             <div className="space-y-4">
               {[
-                { icon: MapPinIcon, text: `${contact?.city || 'Centennial'}, ${contact?.state || 'Colorado'}`, color: 'vurmz-teal' },
-                { icon: PhoneIcon, text: contact?.phone || '(719) 257-3834', href: `sms:${(contact?.phone || '').replace(/[^0-9]/g, '')}`, color: 'vurmz-powder' },
-                { icon: EnvelopeIcon, text: contact?.email || 'zach@vurmz.com', href: `mailto:${contact?.email || 'zach@vurmz.com'}`, color: 'vurmz-teal' },
+                { icon: MapPinIcon, text: `${contact.city}, ${contact.state}`, color: 'vurmz-teal' },
+                { icon: PhoneIcon, text: contact.phone, href: `sms:${contact.phone.replace(/[^0-9]/g, '')}`, color: 'vurmz-powder' },
+                { icon: EnvelopeIcon, text: contact.email, href: `mailto:${contact.email}`, color: 'vurmz-teal' },
                 { icon: ClockIcon, text: 'Flexible hours', color: 'vurmz-sage' },
               ].map((item, i) => (
                 <motion.div
@@ -180,7 +186,7 @@ export default function Footer() {
               Quick Links
             </h3>
             <ul className="space-y-3">
-              {displayLinks.map((link) => (
+              {quickLinks.map((link) => (
                 <li key={link.name}>
                   <Link
                     href={link.href}
@@ -307,7 +313,7 @@ export default function Footer() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-gray-500 text-sm">
-              {footer?.copyrightText || `© ${new Date().getFullYear()} VURMZ LLC. All rights reserved.`}
+              {footer.copyrightText}
             </p>
             <div className="flex gap-6 text-sm">
               <Link

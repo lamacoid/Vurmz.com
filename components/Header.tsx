@@ -5,7 +5,28 @@ import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
 import { Bars3Icon, XMarkIcon, PhoneIcon, SparklesIcon, MapPinIcon } from '@heroicons/react/24/outline'
-import { useSiteConfig } from '@/components/SiteConfigProvider'
+
+// Hardcoded site config
+const contact = {
+  phone: '(719) 257-3834',
+  email: 'zach@vurmz.com',
+  city: 'Centennial',
+  state: 'Colorado',
+}
+
+const header = {
+  logoUrl: '/images/vurmz-logo-full.svg',
+  ctaText: 'Start Order',
+  ctaLink: '/order',
+}
+
+const navigation = [
+  { name: 'Services', href: '/services' },
+  { name: 'Portfolio', href: '/portfolio' },
+  { name: 'Pricing', href: '/pricing' },
+  { name: 'About', href: '/about' },
+  { name: 'Contact', href: '/contact' },
+]
 
 // Weather icons mapping
 const weatherIcons: Record<number, string> = {
@@ -27,14 +48,6 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false)
   const [weather, setWeather] = useState<{ temp: number; code: number } | null>(null)
   const { scrollY } = useScroll()
-  const config = useSiteConfig()
-  const { contact, header } = config
-
-  // Get enabled nav items sorted by order
-  const navigation = (header?.navItems || [])
-    .filter(item => item.enabled)
-    .sort((a, b) => a.order - b.order)
-    .map(item => ({ name: item.label, href: item.href }))
 
   // Track scroll for glass intensity
   useEffect(() => {
@@ -76,8 +89,8 @@ export default function Header() {
 
   return (
     <>
-      {/* Top info bar - dark blue */}
-      <div className="fixed top-0 left-0 right-0 z-50 bg-slate-700 text-white py-2">
+      {/* Top info bar */}
+      <div className="fixed top-0 left-0 right-0 z-50 bg-vurmz-dark text-white py-2">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Desktop top bar */}
           <div className="hidden sm:flex justify-between items-center text-sm">
@@ -128,13 +141,13 @@ export default function Header() {
         {/* Top accent bar - thin glass line */}
         <div className="h-[2px] bg-gradient-to-r from-transparent via-vurmz-teal/60 to-transparent" />
 
-        {/* Main header glass panel */}
+        {/* Main header glass panel - dark */}
         <motion.div
           className="relative"
           style={{
             background: scrolled
-              ? 'linear-gradient(180deg, rgba(106,140,140,0.12) 0%, rgba(106,140,140,0.08) 100%)'
-              : 'linear-gradient(180deg, rgba(106,140,140,0.08) 0%, rgba(106,140,140,0.04) 100%)',
+              ? 'linear-gradient(180deg, rgba(44,53,51,0.95) 0%, rgba(44,53,51,0.9) 100%)'
+              : 'linear-gradient(180deg, rgba(44,53,51,0.85) 0%, rgba(44,53,51,0.8) 100%)',
           }}
         >
           {/* Glass effect layers */}
@@ -142,8 +155,8 @@ export default function Header() {
             className="absolute inset-0 backdrop-blur-2xl"
             style={{
               background: scrolled
-                ? 'rgba(255,255,255,0.75)'
-                : 'rgba(255,255,255,0.6)',
+                ? 'rgba(44,53,51,0.9)'
+                : 'rgba(44,53,51,0.8)',
             }}
           />
 
@@ -151,7 +164,7 @@ export default function Header() {
           <div
             className="absolute inset-x-0 top-0 h-[1px]"
             style={{
-              background: 'linear-gradient(90deg, transparent 10%, rgba(255,255,255,0.8) 50%, transparent 90%)',
+              background: 'linear-gradient(90deg, transparent 10%, rgba(106,140,140,0.4) 50%, transparent 90%)',
             }}
           />
 
@@ -159,7 +172,7 @@ export default function Header() {
           <div
             className="absolute inset-0 pointer-events-none"
             style={{
-              background: 'linear-gradient(180deg, rgba(106,140,140,0.03) 0%, transparent 100%)',
+              background: 'linear-gradient(180deg, rgba(106,140,140,0.08) 0%, transparent 100%)',
             }}
           />
 
@@ -176,11 +189,11 @@ export default function Header() {
                   }}
                 />
                 <Image
-                  src={header?.logoUrl || '/images/vurmz-logo-full.svg'}
+                  src={header.logoUrl}
                   alt="VURMZ LLC - Laser Engraving"
                   width={160}
                   height={45}
-                  className="h-10 w-auto relative"
+                  className="h-10 w-auto relative brightness-0 invert"
                   priority
                 />
               </Link>
@@ -196,14 +209,14 @@ export default function Header() {
                   >
                     <Link
                       href={item.href}
-                      className="relative px-5 py-2.5 text-sm font-medium text-gray-700 hover:text-vurmz-teal transition-colors group"
+                      className="relative px-5 py-2.5 text-sm font-medium text-gray-300 hover:text-white transition-colors group"
                     >
                       {/* Hover glass pill */}
                       <motion.span
                         className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100"
                         style={{
-                          background: 'linear-gradient(180deg, rgba(106,140,140,0.1) 0%, rgba(106,140,140,0.05) 100%)',
-                          boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.5), 0 1px 3px rgba(106,140,140,0.1)',
+                          background: 'linear-gradient(180deg, rgba(106,140,140,0.2) 0%, rgba(106,140,140,0.1) 100%)',
+                          boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.1), 0 1px 3px rgba(0,0,0,0.2)',
                         }}
                         layoutId="nav-pill"
                         transition={glassSpring}
@@ -220,7 +233,7 @@ export default function Header() {
                   transition={{ delay: 0.5, duration: 0.4 }}
                 >
                   <Link
-                    href={header?.ctaLink || '/order'}
+                    href={header.ctaLink}
                     className="relative ml-4 group"
                   >
                     <motion.div
@@ -251,7 +264,7 @@ export default function Header() {
                       />
                       <span className="relative text-white font-semibold text-sm flex items-center gap-2">
                         <SparklesIcon className="w-4 h-4" />
-                        {header?.ctaText || 'Start Order'}
+                        {header.ctaText}
                       </span>
                     </motion.div>
                   </Link>
@@ -265,8 +278,8 @@ export default function Header() {
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 whileTap={{ scale: 0.95 }}
                 style={{
-                  background: 'linear-gradient(180deg, rgba(106,140,140,0.1) 0%, rgba(106,140,140,0.05) 100%)',
-                  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.5)',
+                  background: 'linear-gradient(180deg, rgba(106,140,140,0.2) 0%, rgba(106,140,140,0.1) 100%)',
+                  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.1)',
                 }}
               >
                 <AnimatePresence mode="wait">
@@ -278,7 +291,7 @@ export default function Header() {
                       exit={{ rotate: 90, opacity: 0 }}
                       transition={{ duration: 0.2 }}
                     >
-                      <XMarkIcon className="h-6 w-6 text-vurmz-teal" />
+                      <XMarkIcon className="h-6 w-6 text-white" />
                     </motion.div>
                   ) : (
                     <motion.div
@@ -288,7 +301,7 @@ export default function Header() {
                       exit={{ rotate: -90, opacity: 0 }}
                       transition={{ duration: 0.2 }}
                     >
-                      <Bars3Icon className="h-6 w-6 text-gray-700" />
+                      <Bars3Icon className="h-6 w-6 text-gray-300" />
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -296,13 +309,11 @@ export default function Header() {
             </div>
           </nav>
 
-          {/* Bottom edge - subtle shadow line */}
+          {/* Bottom edge - subtle teal line */}
           <div
             className="absolute inset-x-0 bottom-0 h-[1px]"
             style={{
-              background: scrolled
-                ? 'linear-gradient(90deg, transparent 5%, rgba(106,140,140,0.15) 50%, transparent 95%)'
-                : 'transparent',
+              background: 'linear-gradient(90deg, transparent 5%, rgba(106,140,140,0.3) 50%, transparent 95%)',
             }}
           />
         </motion.div>
@@ -379,7 +390,7 @@ export default function Header() {
                     className="mt-4"
                   >
                     <Link
-                      href={header?.ctaLink || '/order'}
+                      href={header.ctaLink}
                       className="block text-center px-6 py-4 rounded-2xl text-white font-semibold"
                       onClick={() => setMobileMenuOpen(false)}
                       style={{
@@ -387,7 +398,7 @@ export default function Header() {
                         boxShadow: '0 4px 20px rgba(106,140,140,0.3), inset 0 1px 0 rgba(255,255,255,0.2)',
                       }}
                     >
-                      {header?.ctaText || 'Start Order'}
+                      {header.ctaText}
                     </Link>
                   </motion.div>
                 </div>

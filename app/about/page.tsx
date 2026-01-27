@@ -20,37 +20,37 @@ export default function AboutPage() {
               <span>Centennial, Colorado</span>
             </div>
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
-              About Me
+              About
             </h1>
             <p className="text-xl text-gray-300">
-              I am Zach. Colorado native, chef, husband, dad. I run VURMZ out of Centennial.
+              I&apos;m Zach. Chef, dad, Colorado native. Based in Centennial.
             </p>
           </div>
         </div>
       </section>
 
       {/* Story */}
-      <section className="py-16">
+      <section className="py-16 bg-[#1f2523]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             <div>
-              <h2 className="text-3xl font-bold text-vurmz-dark mb-6">My Story</h2>
-              <div className="space-y-4 text-gray-600">
+              <h2 className="text-3xl font-bold text-white mb-6">The Short Version</h2>
+              <div className="space-y-4 text-gray-400">
                 <p>
-                  Born and raised in Colorado. Been in Centennial since it was still unincorporated Arapahoe County. This is home.
+                  I fell into laser engraving while working on another business idea. Needed some custom pieces made and realized there was no good local option for small quantities. Either pay a fortune, wait weeks for shipping, or order way more than you need.
                 </p>
                 <p>
-                  I&apos;ve spent 15+ years as a chef in Denver kitchens. Great work, and I&apos;ve learned something valuable along the way: it matters when someone actually knows your name. When they remember what you need. When you&apos;re not just another ticket.
+                  So I bought a laser. Then another. And another. Five lasers later, I&apos;ve got systems that can handle pretty much any material.
                 </p>
                 <p>
-                  That&apos;s why I started VURMZ. Too many businesses are stuck ordering from massive companies that don&apos;t know them, don&apos;t care about their timeline, and require minimum orders of 100 when you only need 12. I wanted to offer something different.
+                  The bigger dream is a full makerspace where small businesses can access all kinds of equipment they wouldn&apos;t normally have—lasers, large format printing, CNC, the works. That&apos;s still the goal. But you have to start somewhere, and this is where I&apos;m starting.
                 </p>
                 <p>
-                  I taught myself laser engraving and quickly developed a genuine appreciation for the craft. I operate three laser systems with different technologies so I can handle any surface—and I continue to expand my capabilities as I grow. Now I get to do work I enjoy, for people I actually know, right here where I live with my wife and son.
+                  I&apos;m also a chef. Been cooking in Denver for over 15 years. Between that and this, I stay pretty busy. But I like it that way.
                 </p>
               </div>
             </div>
-            <div className="relative aspect-square overflow-hidden">
+            <div className="relative aspect-square overflow-hidden rounded-lg">
               <Image
                 src="/images/zach.jpeg"
                 alt="Zach and his son in the Colorado mountains"
@@ -63,9 +63,9 @@ export default function AboutPage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-vurmz-teal text-white py-16">
+      <section className="bg-vurmz-teal py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold mb-4">
+          <h2 className="text-3xl font-bold text-white mb-4">
             Ready to Order?
           </h2>
           <p className="text-xl text-white/80 mb-8">
@@ -74,14 +74,14 @@ export default function AboutPage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/order"
-              className="bg-white text-vurmz-dark px-8 py-4 font-semibold text-lg hover:bg-gray-100 transition-colors inline-flex items-center justify-center gap-2"
+              className="bg-vurmz-dark text-white px-8 py-4 font-semibold text-lg hover:bg-vurmz-dark/80 transition-colors inline-flex items-center justify-center gap-2 rounded-xl"
             >
               Start Your Order
               <ArrowRightIcon className="h-5 w-5" />
             </Link>
             <a
               href="sms:+17192573834"
-              className="border-2 border-white text-white px-8 py-4 font-semibold text-lg hover:bg-white hover:text-vurmz-teal transition-colors inline-flex items-center justify-center"
+              className="border-2 border-white/30 text-white px-8 py-4 font-semibold text-lg hover:bg-white/10 transition-colors inline-flex items-center justify-center rounded-xl"
             >
               Text (719) 257-3834
             </a>

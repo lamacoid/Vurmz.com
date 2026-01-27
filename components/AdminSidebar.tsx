@@ -15,7 +15,6 @@ import {
   ArrowLeftOnRectangleIcon,
   GlobeAltIcon,
   CurrencyDollarIcon,
-  WrenchScrewdriverIcon
 } from '@heroicons/react/24/outline'
 
 const navigation = [
@@ -25,7 +24,6 @@ const navigation = [
   { name: 'Orders', href: '/admin/orders', icon: ClipboardDocumentListIcon },
   { name: 'Customers', href: '/admin/customers', icon: UserGroupIcon },
   { name: 'Materials', href: '/admin/materials', icon: SwatchIcon },
-  { name: 'Site Manager', href: '/admin/site-manager', icon: WrenchScrewdriverIcon },
   { name: 'Settings', href: '/admin/settings', icon: Cog6ToothIcon },
 ]
 
