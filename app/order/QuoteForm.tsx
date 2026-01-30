@@ -10,6 +10,7 @@ import IndustrialLabelPreview from '@/components/IndustrialLabelPreview'
 import NametagPreview from '@/components/NametagPreview'
 import KnifeEngravingPreview from '@/components/KnifeEngravingPreview'
 import ProductSelector from '@/components/ProductSelector'
+import { siteInfo, getSmsLink } from '@/lib/site-info'
 
 const businessTypes = [
   { value: 'restaurant', label: 'Restaurant / Culinary' },
@@ -855,8 +856,8 @@ export default function QuoteForm() {
         ) : !requiresPricing ? (
           <>
             I&apos;ll respond same-day with pricing. For urgent requests, text me at{' '}
-            <a href="sms:+17192573834" className="text-vurmz-teal font-medium hover:underline">
-              (719) 257-3834
+            <a href={getSmsLink()} className="text-vurmz-teal font-medium hover:underline">
+              {siteInfo.phone}
             </a>
           </>
         ) : null}

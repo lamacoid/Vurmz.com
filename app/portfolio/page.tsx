@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowRightIcon, WrenchScrewdriverIcon, CreditCardIcon, SparklesIcon } from '@heroicons/react/24/outline'
+import { siteInfo, getSmsLink } from '@/lib/site-info'
 
 export const metadata: Metadata = {
   title: 'Portfolio',
@@ -103,10 +104,10 @@ export default function PortfolioPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
             <a
-              href="sms:+17192573834"
+              href={getSmsLink()}
               className="bg-vurmz-dark text-white px-6 py-3 sm:px-8 sm:py-4 font-semibold text-base sm:text-lg hover:bg-vurmz-dark/80 transition-colors inline-flex items-center justify-center gap-2 rounded-xl"
             >
-              Text (719) 257-3834
+              Text {siteInfo.phone}
             </a>
             <Link
               href="/order"

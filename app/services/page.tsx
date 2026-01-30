@@ -4,43 +4,45 @@ import {
   ArrowRightIcon,
   CheckIcon,
 } from '@heroicons/react/24/outline'
+import { PRODUCTS, PROMO_PACK_SIZE } from '@/lib/products'
+import { siteInfo } from '@/lib/site-info'
 
 export const metadata: Metadata = {
   title: 'Laser Engraving Services',
-  description: 'Laser engraving for small businesses in South Denver metro. Branded pens, metal cards, tool marking, knife engraving, and custom products. Fast turnaround in Centennial.',
+  description: `Laser engraving for small businesses in South Denver metro. Branded pens, metal cards, tool marking, knife engraving, and custom products. Fast turnaround in ${siteInfo.city}.`,
 }
 
-// Hardcoded products
+// Products from centralized data
 const products = [
   {
     id: '1',
-    name: 'Branded Pens',
+    name: PRODUCTS.pens.name,
     description: 'Metal stylus pens with your logo. Perfect for clients, trade shows, and staff gifts.',
-    price: '$7.50/pen (pack of 15)',
+    price: `$${PRODUCTS.pens.fullyLoaded}/pen (pack of ${PROMO_PACK_SIZE})`,
   },
   {
     id: '2',
-    name: 'Metal Business Cards',
-    description: 'Anodized aluminum or stainless steel cards that make a lasting impression.',
-    price: 'From $6/card',
+    name: PRODUCTS.businessCards.name,
+    description: PRODUCTS.businessCards.description,
+    price: `From $${PRODUCTS.businessCards.matteBlackLoaded}/card`,
   },
   {
     id: '3',
-    name: 'Tool Marking',
+    name: PRODUCTS.tools.name,
     description: 'Permanent marking on power tools and equipment. Prevent theft, identify your gear.',
-    price: 'From $10/tool',
+    price: `From $${PRODUCTS.tools.base}/tool`,
   },
   {
     id: '4',
-    name: 'Knife Engraving',
-    description: 'Personal chef knives, kitchen tools, restaurant equipment marking.',
-    price: 'From $15/knife',
+    name: PRODUCTS.knives.name,
+    description: PRODUCTS.knives.description,
+    price: `From $${PRODUCTS.knives.base}/knife`,
   },
   {
     id: '5',
-    name: 'Coasters & Keychains',
+    name: `${PRODUCTS.coasters.name} & ${PRODUCTS.keychains.name}`,
     description: 'Bamboo coasters, metal keychains, and other promotional items with your logo.',
-    price: 'From $4/piece',
+    price: `From $${PRODUCTS.coasters.materials.wood}/piece`,
   },
   {
     id: '6',
@@ -128,7 +130,7 @@ export default function ServicesPage() {
               </div>
               <h3 className="font-semibold text-sm sm:text-base md:text-lg text-white mb-1 sm:mb-2">Pickup or Delivery</h3>
               <p className="text-gray-400 text-xs sm:text-sm">
-                Centennial pickup or delivery.
+                {siteInfo.city} pickup or delivery.
               </p>
             </div>
           </div>

@@ -2,10 +2,11 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 import { MapPinIcon, PhoneIcon, EnvelopeIcon, ClockIcon, ArrowRightIcon } from '@heroicons/react/24/outline'
 import ServiceAreaMap from '@/components/ServiceAreaMap'
+import { siteInfo, getSmsLink } from '@/lib/site-info'
 
 export const metadata: Metadata = {
   title: 'Contact',
-  description: 'Contact Zach at VURMZ for laser engraving in Centennial and Denver metro. Text (719) 257-3834 or email. Same-day response.',
+  description: `Contact ${siteInfo.founder.name} at ${siteInfo.name} for laser engraving in ${siteInfo.city} and Denver metro. Text ${siteInfo.phone} or email. Same-day response.`,
 }
 
 export default function ContactPage() {
@@ -40,8 +41,8 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-lg text-white">Text</h3>
-                    <a href="sms:+17192573834" className="text-vurmz-teal text-xl font-semibold hover:underline">
-                      (719) 257-3834
+                    <a href={getSmsLink()} className="text-vurmz-teal text-xl font-semibold hover:underline">
+                      {siteInfo.phone}
                     </a>
                   </div>
                 </div>
@@ -52,8 +53,8 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-lg text-white">Email</h3>
-                    <a href="mailto:zach@vurmz.com" className="text-gray-400 hover:text-vurmz-teal">
-                      zach@vurmz.com
+                    <a href={`mailto:${siteInfo.email}`} className="text-gray-400 hover:text-vurmz-teal">
+                      {siteInfo.email}
                     </a>
                   </div>
                 </div>
@@ -206,10 +207,10 @@ export default function ContactPage() {
               <ArrowRightIcon className="h-5 w-5" />
             </Link>
             <a
-              href="sms:+17192573834"
+              href={getSmsLink()}
               className="border-2 border-white/30 text-white px-8 py-4 font-semibold text-lg hover:bg-white/10 transition-colors inline-flex items-center justify-center rounded-xl"
             >
-              Text (719) 257-3834
+              Text {siteInfo.phone}
             </a>
           </div>
         </div>

@@ -2,10 +2,11 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRightIcon, MapPinIcon } from '@heroicons/react/24/outline'
+import { siteInfo, getSmsLink } from '@/lib/site-info'
 
 export const metadata: Metadata = {
   title: 'About',
-  description: 'Meet Zach, owner of VURMZ LLC. Colorado native, Centennial local, chef, and laser engraver serving the Denver metro area.',
+  description: `Meet ${siteInfo.founder.name}, owner of ${siteInfo.legalName}. Colorado native, ${siteInfo.city} local, chef, and laser engraver serving the Denver metro area.`,
 }
 
 export default function AboutPage() {
@@ -80,10 +81,10 @@ export default function AboutPage() {
               <ArrowRightIcon className="h-5 w-5" />
             </Link>
             <a
-              href="sms:+17192573834"
+              href={getSmsLink()}
               className="border-2 border-white/30 text-white px-8 py-4 font-semibold text-lg hover:bg-white/10 transition-colors inline-flex items-center justify-center rounded-xl"
             >
-              Text (719) 257-3834
+              Text {siteInfo.phone}
             </a>
           </div>
         </div>

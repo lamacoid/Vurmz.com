@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { HomeIcon, PhoneIcon } from '@heroicons/react/24/outline'
+import { getSmsLink } from '@/lib/site-info'
 
 export default function NotFound() {
   return (
@@ -30,7 +31,7 @@ export default function NotFound() {
             Start an Order
           </Link>
           <a
-            href="sms:+17192573834"
+            href={getSmsLink()}
             className="inline-flex items-center justify-center gap-2 text-gray-600 hover:text-vurmz-teal px-6 py-3 font-medium transition-colors"
           >
             <PhoneIcon className="w-5 h-5" />

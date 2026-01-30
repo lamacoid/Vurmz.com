@@ -1,0 +1,78 @@
+/**
+ * VURMZ Site Information - Single Source of Truth
+ *
+ * All contact info, business details, and navigation should reference this file.
+ * Never hardcode phone numbers, emails, or addresses elsewhere.
+ */
+
+export const siteInfo = {
+  // Business Identity
+  name: 'VURMZ',
+  legalName: 'VURMZ LLC',
+  tagline: 'Laser engraving for small business.',
+  description: 'Premium laser engraving services in Centennial, Colorado. Branded pens, metal business cards, industrial labels, knife engraving, and more.',
+
+  // Contact
+  phone: '(719) 257-3834',
+  phoneClean: '7192573834',
+  email: 'zach@vurmz.com',
+
+  // Location
+  city: 'Centennial',
+  state: 'Colorado',
+  stateAbbr: 'CO',
+  address: 'Centennial, CO', // For display purposes
+
+  // Coordinates (for weather API, maps)
+  coordinates: {
+    lat: 39.58,
+    lng: -104.87,
+  },
+
+  // URLs
+  url: 'https://vurmz.com',
+
+  // Social (add when available)
+  social: {
+    instagram: '',
+    facebook: '',
+    linkedin: '',
+  },
+
+  // Founder
+  founder: {
+    name: 'Zach',
+    fullName: 'Zach DeMillo',
+  },
+
+  // Service Areas
+  serviceAreas: [
+    'Centennial',
+    'Littleton',
+    'Lone Tree',
+    'Parker',
+    'Highlands Ranch',
+    'Englewood',
+    'Castle Rock',
+    'Aurora',
+    'Greenwood Village',
+    'Cherry Hills',
+    'Denver',
+  ],
+} as const
+
+// Navigation items - used in Header and Footer
+export const navigation = [
+  { name: 'Services', href: '/services' },
+  { name: 'Events & Gifts', href: '/gifts' },
+  { name: 'Portfolio', href: '/portfolio' },
+  { name: 'Pricing', href: '/pricing' },
+  { name: 'About', href: '/about' },
+  { name: 'Contact', href: '/contact' },
+] as const
+
+// Quick helper functions
+export const getSmsLink = (message?: string) =>
+  message ? `sms:${siteInfo.phoneClean}?body=${encodeURIComponent(message)}` : `sms:${siteInfo.phoneClean}`
+export const getPhoneLink = () => `tel:${siteInfo.phoneClean}`
+export const getEmailLink = () => `mailto:${siteInfo.email}`

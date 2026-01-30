@@ -8,46 +8,45 @@ import {
   CubeIcon,
   TruckIcon,
 } from '@heroicons/react/24/outline'
+import { PRODUCTS, PRICING_DETAILS, PROMO_PACK_SIZE } from '@/lib/products'
+import { siteInfo, getSmsLink } from '@/lib/site-info'
 
 export const metadata: Metadata = {
   title: 'Pricing',
-  description: 'Transparent laser engraving pricing for Centennial and Denver metro businesses. Premium service at fair prices. No hidden fees, no surprises.',
+  description: `Transparent laser engraving pricing for ${siteInfo.city} and Denver metro businesses. Premium service at fair prices. No hidden fees, no surprises.`,
 }
 
-// Hardcoded pricing
+// Pricing categories from centralized products
 const pricingCategories = [
   {
-    category: 'Branded Pens',
-    items: [
-      { name: 'Metal Stylus Pen', price: '$7.50/pen', note: 'Fully loaded: logo, 2 lines text, both sides' },
-      { name: 'Pack of 15', price: '$112.50', note: 'Most popular for small businesses' },
-      { name: 'Pack of 30', price: '$210', note: '$7/pen - volume discount' },
-    ],
+    category: PRICING_DETAILS.pens.category,
+    packNote: PRICING_DETAILS.pens.packNote,
+    items: PRICING_DETAILS.pens.items,
   },
   {
-    category: 'Metal Business Cards',
-    items: [
-      { name: 'Matte Black Aluminum', price: '$6/card', note: 'Logo + text, single side' },
-      { name: 'Matte Black (both sides)', price: '$9/card', note: 'Logo + text + QR code' },
-      { name: 'Stainless Steel', price: '$18/card', note: 'Premium finish, both sides' },
-    ],
+    category: PRICING_DETAILS.businessCards.category,
+    packNote: PRICING_DETAILS.businessCards.packNote,
+    items: PRICING_DETAILS.businessCards.items,
   },
   {
-    category: 'Tool & Knife Marking',
-    items: [
-      { name: 'Chef Knife', price: '$15-25', note: 'Name, logo, or custom text' },
-      { name: 'Power Tool', price: '$10-20', note: 'Company name + phone for theft prevention' },
-      { name: 'Hand Tool Set', price: '$5/tool', note: 'Minimum 5 tools' },
-    ],
+    category: PRICING_DETAILS.coasters.category,
+    packNote: PRICING_DETAILS.coasters.packNote,
+    items: PRICING_DETAILS.coasters.items,
   },
   {
-    category: 'Custom Projects',
-    items: [
-      { name: 'Coasters (bamboo)', price: '$4/each', note: 'Pack of 15 = $60' },
-      { name: 'Keychains', price: '$5/each', note: 'Metal or wood options' },
-      { name: 'Awards & Plaques', price: 'Quote', note: 'Depends on size and material' },
-      { name: 'Industrial Labels', price: 'Quote', note: 'ABS, aluminum, stainless' },
-    ],
+    category: PRICING_DETAILS.keychains.category,
+    packNote: PRICING_DETAILS.keychains.packNote,
+    items: PRICING_DETAILS.keychains.items,
+  },
+  {
+    category: PRICING_DETAILS.knives.category,
+    packNote: PRICING_DETAILS.knives.packNote,
+    items: PRICING_DETAILS.knives.items,
+  },
+  {
+    category: PRICING_DETAILS.industrial.category,
+    packNote: PRICING_DETAILS.industrial.packNote,
+    items: PRICING_DETAILS.industrial.items,
   },
 ]
 
@@ -59,7 +58,7 @@ const comparison = [
   },
   {
     factor: 'Order Size',
-    vurmz: 'Packs of 15 for promo items',
+    vurmz: `Packs of ${PROMO_PACK_SIZE} for promo items`,
     online: '50-250 pieces typical',
   },
   {
@@ -119,7 +118,7 @@ export default function PricingPage() {
             <div className="bg-vurmz-dark p-4 sm:p-6 border border-gray-700 border-t-4 border-t-vurmz-teal text-center rounded-lg">
               <CubeIcon className="h-8 w-8 sm:h-10 sm:w-10 text-vurmz-teal mx-auto mb-2 sm:mb-4" />
               <h3 className="font-semibold text-white mb-1 sm:mb-2 text-sm sm:text-base">Buy What You Use</h3>
-              <p className="text-gray-400 text-xs sm:text-sm">Packs of 15. No 100+ forced bulk.</p>
+              <p className="text-gray-400 text-xs sm:text-sm">Packs of {PROMO_PACK_SIZE}. No 100+ forced bulk.</p>
             </div>
             <div className="bg-vurmz-dark p-4 sm:p-6 border border-gray-700 border-t-4 border-t-vurmz-teal text-center rounded-lg">
               <UserIcon className="h-8 w-8 sm:h-10 sm:w-10 text-vurmz-teal mx-auto mb-2 sm:mb-4" />
@@ -178,18 +177,18 @@ export default function PricingPage() {
               </div>
 
               <div className="border-2 border-vurmz-teal p-4 sm:p-6 bg-vurmz-dark rounded-lg">
-                <h4 className="font-semibold text-vurmz-teal mb-3 sm:mb-4 text-sm sm:text-base">VURMZ</h4>
+                <h4 className="font-semibold text-vurmz-teal mb-3 sm:mb-4 text-sm sm:text-base">{siteInfo.name}</h4>
                 <ul className="space-y-2 text-gray-300 text-sm sm:text-base">
                   <li className="flex justify-between">
-                    <span>15 fully loaded pens (logo, 2 lines, both sides)</span>
-                    <span>$112.50</span>
+                    <span>{PROMO_PACK_SIZE} fully loaded pens (logo, 2 lines, both sides)</span>
+                    <span>${PRODUCTS.pens.fullyLoadedPackPrice}</span>
                   </li>
                   <li className="flex justify-between">
                     <span>Setup fee</span>
                     <span>$0</span>
                   </li>
                   <li className="flex justify-between">
-                    <span>Pickup in Centennial</span>
+                    <span>Pickup in {siteInfo.city}</span>
                     <span>$0</span>
                   </li>
                   <li className="flex justify-between">
@@ -204,13 +203,13 @@ export default function PricingPage() {
                 <div className="border-t border-vurmz-teal mt-4 pt-4">
                   <p className="flex justify-between font-semibold text-vurmz-teal">
                     <span>Total</span>
-                    <span>$112.50</span>
+                    <span>${PRODUCTS.pens.fullyLoadedPackPrice}</span>
                   </p>
                 </div>
               </div>
             </div>
             <p className="text-center text-gray-400 mt-4 sm:mt-6 text-sm sm:text-base">
-              <span className="font-semibold text-white">Result:</span> 15 fully loaded pens, same day, $112.50. When you run out, order 15 more.
+              <span className="font-semibold text-white">Result:</span> {PROMO_PACK_SIZE} fully loaded pens, same day, ${PRODUCTS.pens.fullyLoadedPackPrice}. When you run out, order {PROMO_PACK_SIZE} more.
             </p>
           </div>
         </div>
@@ -228,6 +227,7 @@ export default function PricingPage() {
               <div key={category.category} className="bg-vurmz-dark border border-gray-700 rounded-lg overflow-hidden">
                 <div className="bg-vurmz-teal text-white px-4 sm:px-6 py-3 sm:py-4">
                   <h3 className="text-base sm:text-lg font-semibold">{category.category}</h3>
+                  {category.packNote && <p className="text-xs sm:text-sm text-white/80">{category.packNote}</p>}
                 </div>
                 <div className="p-4 sm:p-6">
                   <table className="w-full">
@@ -265,10 +265,10 @@ export default function PricingPage() {
               If you can describe it, I can probably engrave it. Let&apos;s figure it out together.
             </p>
             <a
-              href="sms:+17192573834"
+              href={getSmsLink()}
               className="inline-flex items-center gap-2 text-vurmz-teal font-semibold hover:underline"
             >
-              Text (719) 257-3834
+              Text {siteInfo.phone}
               <ArrowRightIcon className="h-4 w-4" />
             </a>
           </div>
@@ -347,10 +347,10 @@ export default function PricingPage() {
               <ArrowRightIcon className="h-4 w-4 sm:h-5 sm:w-5" />
             </Link>
             <a
-              href="sms:+17192573834"
+              href={getSmsLink()}
               className="border-2 border-white/30 text-white px-6 py-3 sm:px-8 sm:py-4 font-semibold text-base sm:text-lg hover:bg-white/10 transition-colors inline-flex items-center justify-center rounded-xl"
             >
-              Text (719) 257-3834
+              Text {siteInfo.phone}
             </a>
           </div>
         </div>

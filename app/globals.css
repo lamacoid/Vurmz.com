@@ -1,30 +1,39 @@
 @import "tailwindcss";
 
 :root {
-  /* VURMZ Brand Colors - Muted Scandinavian */
-  --vurmz-teal: #6A8C8C;
-  --vurmz-teal-dark: #5A7A7A;
-  --vurmz-teal-light: #7A9C9C;
-  --vurmz-powder: #B5C9D4;
-  --vurmz-powder-light: #C8D8E0;
-  --vurmz-sage: #6A8E6A;
-  --vurmz-sage-light: #7DA07D;
-  --vurmz-dark: #2C3533;
-  --vurmz-light: #F5F7F6;
+  /* VURMZ Brand Colors - Tempered Glass Aesthetic */
+  --vurmz-teal: #3CB9B2;           /* Vibrant tempered glass green */
+  --vurmz-teal-dark: #2A9D97;      /* Deeper glass edge */
+  --vurmz-teal-light: #5CD4CD;     /* Light reflection */
+  --vurmz-teal-glow: #4ECDC4;      /* Glare highlight */
+  --vurmz-powder: #B5D8E0;         /* Frosted glass blue */
+  --vurmz-powder-light: #D0E8ED;   /* Light frost */
+  --vurmz-sky: #7BC8D4;            /* Clear sky through glass */
+  --vurmz-sky-light: #A3D9E3;
+  --vurmz-sky-dark: #5BB8C4;
+  --vurmz-sage: #7DAA8C;           /* Soft green tint */
+  --vurmz-sage-light: #9DBDA8;
+  --vurmz-dark: #1A2F2E;           /* Deep glass edge shadow */
+  --vurmz-light: #F5FAFA;          /* Clean glass surface */
 
   /* Semantic Colors */
   --background: #ffffff;
-  --foreground: #1C2321;
-  --primary: #5B8A8A;
-  --primary-dark: #4A7272;
-  --primary-light: #6B9A9A;
-  --secondary: #A8C5D9;
-  --accent: #8B9A8B;
+  --foreground: #1A2F2E;
+  --primary: #3CB9B2;
+  --primary-dark: #2A9D97;
+  --primary-light: #5CD4CD;
+  --secondary: #7BC8D4;
+  --accent: #4ECDC4;
 
   /* Status Colors */
-  --success: #4A7C6F;
-  --warning: #C9A66B;
-  --error: #A65D57;
+  --success: #3DAA7D;
+  --warning: #D4A654;
+  --error: #C75B55;
+
+  /* Glass effects */
+  --glass-shine: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 50%);
+  --glass-reflection: linear-gradient(180deg, rgba(60,185,178,0.1) 0%, transparent 30%);
+  --glass-border: rgba(60,185,178,0.2);
 }
 
 body {
@@ -33,353 +42,176 @@ body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
+/* Global tempered glass ambient glow */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 9999;
+  background:
+    radial-gradient(ellipse 150% 80% at 10% 5%, rgba(60, 185, 178, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse 120% 60% at 90% 95%, rgba(123, 200, 212, 0.06) 0%, transparent 45%),
+    radial-gradient(ellipse 100% 50% at 50% -10%, rgba(60, 185, 178, 0.05) 0%, transparent 40%);
+}
 
-/* Theme modes */
+/* Glass tint on white surfaces */
+.bg-white {
+  background-color: rgba(250, 253, 253, 1) !important;
+}
+
+/* Glass edge highlight on cards */
+.bg-white::after,
+[class*="bg-gray-50"]::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(60, 185, 178, 0.25) 50%, transparent 100%);
+  pointer-events: none;
+}
+
+/* Force light mode */
 html {
   color-scheme: light;
 }
 
-/* Dark Mode */
-html.dark {
-  color-scheme: dark;
-  --background: #1a1a1a;
-  --foreground: #e5e5e5;
-  --vurmz-light: #2a2a2a;
-}
+/* ========================================
+   GLASS EFFECT UTILITIES
+======================================== */
 
-html.dark body {
-  background: #1a1a1a;
-  color: #e5e5e5;
-}
-
-html.dark .bg-white {
-  background-color: #222 !important;
-}
-
-html.dark .bg-gray-50,
-html.dark .bg-gray-100 {
-  background-color: #2a2a2a !important;
-}
-
-html.dark .bg-vurmz-light {
-  background-color: #1f1f1f !important;
-}
-
-html.dark .text-gray-900,
-html.dark .text-vurmz-dark {
-  color: #e5e5e5 !important;
-}
-
-html.dark .text-gray-700,
-html.dark .text-gray-800 {
-  color: #d0d0d0 !important;
-}
-
-html.dark .text-gray-600 {
-  color: #a0a0a0 !important;
-}
-
-html.dark .text-gray-500 {
-  color: #888 !important;
-}
-
-html.dark .border-gray-200,
-html.dark .border-gray-100 {
-  border-color: #333 !important;
-}
-
-html.dark header,
-html.dark footer {
-  background-color: #1a1a1a !important;
-}
-
-/* Trippy Prismatic Mode - Each element is made of iridescent acrylic */
-html.trippy body {
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
-}
-
-/* Cards and containers - prismatic acrylic material */
-html.trippy .bg-white,
-html.trippy .bg-gray-50,
-html.trippy .bg-gray-100,
-html.trippy .bg-vurmz-light,
-html.trippy [class*="rounded-lg"],
-html.trippy [class*="rounded-xl"] {
-  background:
-    /* Base translucent layer */
-    linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.1) 0%,
-      rgba(255, 255, 255, 0.05) 100%
-    ),
-    /* Prismatic color bands that shift */
-    linear-gradient(
-      var(--prism-angle, 135deg),
-      rgba(255, 100, 150, 0.15) 0%,
-      rgba(255, 200, 100, 0.1) 15%,
-      rgba(100, 255, 150, 0.12) 30%,
-      rgba(100, 200, 255, 0.15) 45%,
-      rgba(150, 100, 255, 0.12) 60%,
-      rgba(255, 100, 200, 0.1) 75%,
-      rgba(255, 150, 100, 0.15) 90%,
-      rgba(100, 255, 200, 0.1) 100%
-    ) !important;
-  background-size: 100% 100%, 300% 300% !important;
-  animation: prism-shift 8s ease-in-out infinite !important;
-  backdrop-filter: blur(10px) saturate(120%);
-  -webkit-backdrop-filter: blur(10px) saturate(120%);
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  box-shadow:
-    0 4px 30px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.1),
-    /* Prismatic edge glow */
-    0 0 20px rgba(255, 100, 200, 0.1),
-    0 0 40px rgba(100, 200, 255, 0.05) !important;
-  position: relative;
-  overflow: hidden;
-}
-
-/* Light refraction effect on cards */
-html.trippy .bg-white::before,
-html.trippy .bg-gray-50::before,
-html.trippy .bg-gray-100::before,
-html.trippy [class*="rounded-lg"]::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.1) 50%,
-    transparent 100%
-  );
-  animation: prism-glare 6s ease-in-out infinite;
-  pointer-events: none;
-}
-
-/* Sections - larger acrylic panels */
-html.trippy section {
-  background:
-    linear-gradient(
-      var(--prism-angle, 120deg),
-      rgba(255, 80, 120, 0.08) 0%,
-      rgba(255, 180, 80, 0.05) 20%,
-      rgba(80, 255, 120, 0.06) 40%,
-      rgba(80, 180, 255, 0.08) 60%,
-      rgba(180, 80, 255, 0.05) 80%,
-      rgba(255, 80, 180, 0.06) 100%
-    ) !important;
-  background-size: 400% 400% !important;
-  animation: prism-section 12s ease-in-out infinite !important;
-}
-
-/* Header and Footer - polished acrylic bar */
-html.trippy header,
-html.trippy footer {
-  background:
-    linear-gradient(
-      90deg,
-      rgba(30, 30, 50, 0.95) 0%,
-      rgba(40, 30, 60, 0.95) 25%,
-      rgba(30, 40, 60, 0.95) 50%,
-      rgba(40, 40, 50, 0.95) 75%,
-      rgba(30, 30, 50, 0.95) 100%
-    ) !important;
-  background-size: 200% 100% !important;
-  animation: prism-header 10s linear infinite !important;
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
-  box-shadow:
-    0 4px 20px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1),
-    0 0 30px rgba(100, 150, 255, 0.1) !important;
-}
-
-/* Buttons - small prismatic gems */
-html.trippy button,
-html.trippy a[class*="bg-vurmz"],
-html.trippy .bg-vurmz-teal {
-  background:
-    linear-gradient(
-      135deg,
-      rgba(100, 180, 255, 0.9) 0%,
-      rgba(180, 100, 255, 0.9) 25%,
-      rgba(255, 100, 180, 0.9) 50%,
-      rgba(255, 180, 100, 0.9) 75%,
-      rgba(100, 255, 180, 0.9) 100%
-    ) !important;
-  background-size: 300% 300% !important;
-  animation: prism-button 4s ease infinite !important;
-  border: 1px solid rgba(255, 255, 255, 0.3) !important;
-  box-shadow:
-    0 4px 15px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.4),
-    0 0 20px rgba(150, 100, 255, 0.3) !important;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-  position: relative;
-  overflow: hidden;
-}
-
-html.trippy button::after,
-html.trippy a[class*="bg-vurmz"]::after {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -100%;
-  width: 60%;
-  height: 200%;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.4) 50%,
-    transparent 100%
-  );
-  transform: skewX(-20deg);
-  animation: prism-button-shine 3s ease-in-out infinite;
-  pointer-events: none;
-}
-
-/* Text - iridescent ink effect */
-html.trippy h1,
-html.trippy h2,
-html.trippy h3 {
-  background: linear-gradient(
-    90deg,
-    #ff6b9d 0%,
-    #ffa36b 15%,
-    #ffe66b 30%,
-    #6bff9d 45%,
-    #6bc5ff 60%,
-    #a36bff 75%,
-    #ff6ba3 90%,
-    #ff6b9d 100%
-  ) !important;
-  background-size: 200% auto !important;
-  -webkit-background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  background-clip: text !important;
-  animation: prism-text 5s linear infinite !important;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
-}
-
-html.trippy .text-gray-900,
-html.trippy .text-gray-800,
-html.trippy .text-vurmz-dark {
-  color: rgba(255, 255, 255, 0.95) !important;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-}
-
-html.trippy .text-gray-700,
-html.trippy .text-gray-600 {
-  color: rgba(255, 255, 255, 0.8) !important;
-}
-
-html.trippy .text-gray-500 {
-  color: rgba(255, 255, 255, 0.6) !important;
-}
-
-/* Icons - small prismatic elements */
-html.trippy svg {
-  filter: drop-shadow(0 0 3px rgba(150, 100, 255, 0.5));
-}
-
-/* Input fields - frosted acrylic */
-html.trippy input,
-html.trippy textarea,
-html.trippy select {
-  background: rgba(255, 255, 255, 0.1) !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  color: white !important;
-  backdrop-filter: blur(5px);
-}
-
-html.trippy input::placeholder,
-html.trippy textarea::placeholder {
-  color: rgba(255, 255, 255, 0.5) !important;
-}
-
-/* Border colors */
-html.trippy .border-gray-200,
-html.trippy .border-gray-100 {
-  border-color: rgba(255, 255, 255, 0.15) !important;
-}
-
-html.trippy [class*="border-t-"] {
-  border-top-color: rgba(150, 100, 255, 0.5) !important;
-}
-
-/* Animations */
-@keyframes prism-shift {
-  0%, 100% {
-    background-position: 0% 0%, 0% 0%;
-    --prism-angle: 135deg;
-  }
-  25% {
-    background-position: 0% 0%, 50% 100%;
-    --prism-angle: 180deg;
-  }
-  50% {
-    background-position: 0% 0%, 100% 50%;
-    --prism-angle: 225deg;
-  }
-  75% {
-    background-position: 0% 0%, 50% 0%;
-    --prism-angle: 270deg;
-  }
-}
-
-@keyframes prism-glare {
-  0%, 100% { left: -100%; opacity: 0; }
-  50% { left: 200%; opacity: 1; }
-}
-
-@keyframes prism-section {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-
-@keyframes prism-header {
-  0% { background-position: 0% 0%; }
-  100% { background-position: 200% 0%; }
-}
-
-@keyframes prism-button {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-
-@keyframes prism-button-shine {
-  0%, 100% { left: -100%; }
-  50% { left: 150%; }
-}
-
-@keyframes prism-text {
-  0% { background-position: 0% center; }
-  100% { background-position: 200% center; }
-}
-
-@keyframes trippy-button {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-.animate-trippy-button {
-  background-size: 200% 200%;
-  animation: trippy-button 1s ease infinite;
-}
-
-/* Custom utility classes for brand colors */
 @layer utilities {
+  /* Glassmorphism base */
+  .glass {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(60, 185, 178, 0.15);
+  }
+
+  .glass-dark {
+    background: rgba(26, 47, 46, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(60, 185, 178, 0.2);
+  }
+
+  .glass-teal {
+    background: rgba(60, 185, 178, 0.1);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(60, 185, 178, 0.2);
+  }
+
+  /* Glass shine overlay */
+  .glass-shine {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .glass-shine::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 100%);
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  /* Animated glare effect */
+  .glass-glare {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .glass-glare::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      135deg,
+      transparent 40%,
+      rgba(255, 255, 255, 0.1) 45%,
+      rgba(255, 255, 255, 0.2) 50%,
+      rgba(255, 255, 255, 0.1) 55%,
+      transparent 60%
+    );
+    transform: translateX(-100%);
+    animation: glare 8s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  @keyframes glare {
+    0%, 100% { transform: translateX(-100%); }
+    50% { transform: translateX(100%); }
+  }
+
+  /* Glass button */
+  .glass-button {
+    background: linear-gradient(135deg, rgba(60, 185, 178, 0.9) 0%, rgba(42, 157, 151, 0.95) 100%);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow:
+      0 4px 24px rgba(60, 185, 178, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+
+  .glass-button:hover {
+    background: linear-gradient(135deg, rgba(78, 205, 196, 0.95) 0%, rgba(60, 185, 178, 1) 100%);
+    box-shadow:
+      0 6px 32px rgba(60, 185, 178, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+
+  /* Glass card with reflection */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(60, 185, 178, 0.12);
+    box-shadow:
+      0 8px 32px rgba(60, 185, 178, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  }
+
+  /* Shimmer animation */
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      rgba(60, 185, 178, 0.05) 0%,
+      rgba(60, 185, 178, 0.15) 50%,
+      rgba(60, 185, 178, 0.05) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 3s ease-in-out infinite;
+  }
+
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  /* Brand color utilities */
   .bg-vurmz-teal {
     background-color: var(--vurmz-teal);
   }
   .bg-vurmz-teal-dark {
     background-color: var(--vurmz-teal-dark);
+  }
+  .bg-vurmz-teal-light {
+    background-color: var(--vurmz-teal-light);
   }
   .bg-vurmz-powder {
     background-color: var(--vurmz-powder);
@@ -398,6 +230,9 @@ html.trippy [class*="border-t-"] {
   }
   .text-vurmz-teal-dark {
     color: var(--vurmz-teal-dark);
+  }
+  .text-vurmz-teal-light {
+    color: var(--vurmz-teal-light);
   }
   .text-vurmz-powder {
     color: var(--vurmz-powder);
@@ -432,109 +267,39 @@ html.trippy [class*="border-t-"] {
   .border-t-vurmz-sage {
     border-top-color: var(--vurmz-sage);
   }
-
-  /* Prismatic Acrylic Logo Effect */
-  .logo-prismatic {
-    position: relative;
-    display: inline-block;
+  .bg-vurmz-sky {
+    background-color: var(--vurmz-sky);
+  }
+  .bg-vurmz-sky-light {
+    background-color: var(--vurmz-sky-light);
+  }
+  .text-vurmz-sky {
+    color: var(--vurmz-sky);
+  }
+  .border-vurmz-sky {
+    border-color: var(--vurmz-sky);
+  }
+  .border-t-vurmz-sky {
+    border-top-color: var(--vurmz-sky);
+  }
+  .hover\:bg-vurmz-sky-dark:hover {
+    background-color: var(--vurmz-sky-dark);
   }
 
-  .logo-prismatic img {
-    position: relative;
-    z-index: 1;
+  /* Glass gradient text */
+  .text-glass-gradient {
+    background: linear-gradient(135deg, var(--vurmz-teal) 0%, var(--vurmz-teal-light) 50%, var(--vurmz-sky) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
-  /* Rainbow gradient overlay with soft organic edges */
-  .logo-prismatic::before {
-    content: '';
-    position: absolute;
-    top: -30%;
-    left: -20%;
-    width: 140%;
-    height: 160%;
-    background: radial-gradient(
-      ellipse 70% 60% at 50% 50%,
-      rgba(255, 100, 100, 0.35) 0%,
-      rgba(255, 200, 120, 0.3) 20%,
-      rgba(180, 255, 180, 0.3) 40%,
-      rgba(100, 200, 255, 0.35) 60%,
-      rgba(180, 140, 255, 0.25) 80%,
-      transparent 100%
-    );
-    background-size: 300% 300%;
-    animation: prismatic-shift 6s ease-in-out infinite;
-    mix-blend-mode: overlay;
-    z-index: 2;
-    pointer-events: none;
-    filter: blur(2px);
+  /* Glow effects */
+  .glow-teal {
+    box-shadow: 0 0 20px rgba(60, 185, 178, 0.3), 0 0 40px rgba(60, 185, 178, 0.15);
   }
 
-  @keyframes prismatic-shift {
-    0%, 100% {
-      background-position: 0% 50%;
-    }
-    33% {
-      background-position: 100% 0%;
-    }
-    66% {
-      background-position: 50% 100%;
-    }
-  }
-
-  /* Glass/Frosted effects */
-  .glass {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-  }
-
-  .glass-subtle {
-    background: rgba(255, 255, 255, 0.5);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-  }
-
-  .glass-dark {
-    background: rgba(44, 53, 51, 0.8);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
-  .glass-teal {
-    background: rgba(106, 140, 140, 0.15);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(106, 140, 140, 0.2);
-  }
-
-  /* Smooth shadow for cards */
-  .shadow-smooth {
-    box-shadow:
-      0 4px 6px -1px rgba(0, 0, 0, 0.05),
-      0 10px 20px -5px rgba(0, 0, 0, 0.08),
-      0 0 0 1px rgba(0, 0, 0, 0.02);
-  }
-
-  .shadow-smooth-lg {
-    box-shadow:
-      0 8px 16px -4px rgba(0, 0, 0, 0.06),
-      0 20px 40px -10px rgba(0, 0, 0, 0.1),
-      0 0 0 1px rgba(0, 0, 0, 0.02);
-  }
-
-  /* Smooth rounded corners */
-  .rounded-smooth {
-    border-radius: 1rem;
-  }
-
-  .rounded-smooth-lg {
-    border-radius: 1.5rem;
-  }
-
-  .rounded-smooth-xl {
-    border-radius: 2rem;
+  .glow-teal-intense {
+    box-shadow: 0 0 30px rgba(60, 185, 178, 0.5), 0 0 60px rgba(60, 185, 178, 0.25);
   }
 }

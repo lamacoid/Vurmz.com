@@ -1,63 +1,34 @@
 'use client'
 
 import Link from 'next/link'
-import Image from 'next/image'
-import { ArrowRightIcon, MapPinIcon, ClockIcon, CubeIcon, UserIcon, TruckIcon, StarIcon, ChatBubbleLeftRightIcon } from '@heroicons/react/24/outline'
-import { StarIcon as StarSolid } from '@heroicons/react/24/solid'
-
-// Hardcoded site config
-const contact = {
-  phone: '(719) 257-3834',
-  email: 'zach@vurmz.com',
-  city: 'Centennial',
-  state: 'Colorado',
-}
+import { ArrowRightIcon, MapPinIcon, ClockIcon, CubeIcon, UserIcon, TruckIcon, ChatBubbleLeftRightIcon } from '@heroicons/react/24/outline'
+import { siteInfo, getSmsLink } from '@/lib/site-info'
+import { PRODUCTS } from '@/lib/products'
 
 const products = [
   {
-    name: 'Branded Pens',
-    price: '$7.50',
+    name: PRODUCTS.pens.name,
+    price: `$${PRODUCTS.pens.fullyLoaded}`,
     unit: '/pen',
-    description: 'Metal stylus pens with your logo. Pack of 15 = $112.50',
+    description: `Metal stylus pens with your logo. Pack of ${PRODUCTS.pens.packSize} = $${PRODUCTS.pens.fullyLoadedPackPrice}`,
   },
   {
-    name: 'Metal Business Cards',
-    price: '$6',
+    name: PRODUCTS.businessCards.name,
+    price: `$${PRODUCTS.businessCards.matteBlackLoaded}`,
     unit: '/card',
-    description: 'Matte black aluminum. Stainless steel from $18.',
+    description: `Matte black aluminum. Stainless steel from $${PRODUCTS.businessCards.stainlessBase}.`,
   },
   {
-    name: 'Knife Engraving',
-    price: '$15',
+    name: PRODUCTS.knives.name,
+    price: `$${PRODUCTS.knives.base}`,
     unit: '+',
-    description: 'Chef knives, kitchen tools, restaurant equipment.',
+    description: PRODUCTS.knives.description,
   },
   {
-    name: 'Tool Marking',
-    price: '$10',
+    name: PRODUCTS.tools.name,
+    price: `$${PRODUCTS.tools.base}`,
     unit: '+',
-    description: 'Power tools, hand tools. Prevent theft.',
-  },
-]
-
-const testimonials = [
-  {
-    name: 'Mike R.',
-    business: 'Electrical Contractor',
-    text: 'Ordered 30 pens for a trade show. Had them the next day. Way better than waiting 2 weeks from an online shop.',
-    rating: 5,
-  },
-  {
-    name: 'Sarah K.',
-    business: 'Real Estate Agent',
-    text: 'The metal business cards are a conversation starter at every showing. Clients always comment on them.',
-    rating: 5,
-  },
-  {
-    name: 'Chef Daniel',
-    business: 'Private Chef',
-    text: 'Got my knife collection engraved. Zach was easy to work with and the quality is perfect.',
-    rating: 5,
+    description: PRODUCTS.tools.description,
   },
 ]
 
@@ -65,7 +36,7 @@ const valueProps = [
   { title: 'Fast Turnaround', description: 'Most orders ready same-day or next-day.', icon: ClockIcon },
   { title: 'No Minimums', description: 'Order 1 or 100. No forced bulk.', icon: CubeIcon },
   { title: 'Text Me Directly', description: 'One person. Quick answers, no runaround.', icon: UserIcon },
-  { title: 'Local Pickup', description: 'Centennial pickup or delivery over $100.', icon: TruckIcon },
+  { title: 'Local Pickup', description: `${siteInfo.city} pickup or delivery over $100.`, icon: TruckIcon },
 ]
 
 export default function HomePage() {
@@ -88,7 +59,7 @@ export default function HomePage() {
             <div>
               <div className="inline-flex items-center gap-2 bg-vurmz-teal/20 border border-vurmz-teal/30 rounded-full px-4 py-2 sm:px-5 sm:py-2.5 mb-6">
                 <MapPinIcon className="h-4 w-4 text-vurmz-teal" />
-                <span className="text-xs sm:text-sm font-medium text-gray-300">{contact.city}, {contact.state}</span>
+                <span className="text-xs sm:text-sm font-medium text-gray-300">{siteInfo.city}, {siteInfo.state}</span>
               </div>
 
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6 tracking-tight text-white leading-tight">
@@ -102,19 +73,19 @@ export default function HomePage() {
               {/* Starting prices */}
               <div className="flex flex-wrap gap-3 mb-8">
                 <span className="bg-vurmz-teal/20 border border-vurmz-teal/30 text-white px-3 py-1.5 rounded-full text-sm">
-                  Pens from <strong>$7.50</strong>
+                  Pens from <strong>${PRODUCTS.pens.basePerItem}</strong>
                 </span>
                 <span className="bg-vurmz-teal/20 border border-vurmz-teal/30 text-white px-3 py-1.5 rounded-full text-sm">
-                  Cards from <strong>$6</strong>
+                  Cards from <strong>${PRODUCTS.businessCards.matteBlackBase}</strong>
                 </span>
                 <span className="bg-vurmz-teal/20 border border-vurmz-teal/30 text-white px-3 py-1.5 rounded-full text-sm">
-                  Knives from <strong>$15</strong>
+                  Knives from <strong>${PRODUCTS.knives.base}</strong>
                 </span>
               </div>
 
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                 <a
-                  href={`sms:${contact.phone.replace(/[^0-9]/g, '')}`}
+                  href={getSmsLink()}
                   className="inline-flex items-center justify-center gap-2 sm:gap-3 bg-vurmz-teal text-white px-6 py-4 sm:px-8 sm:py-5 rounded-xl sm:rounded-2xl font-semibold text-base sm:text-lg hover:bg-vurmz-teal-dark transition-all"
                 >
                   <ChatBubbleLeftRightIcon className="h-5 w-5" />
@@ -195,31 +166,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="bg-[#1f2523] py-12 sm:py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-8 sm:mb-12 text-center">
-            What Customers Say
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {testimonials.map((testimonial) => (
-              <div key={testimonial.name} className="bg-vurmz-dark p-6 rounded-lg border border-gray-700">
-                <div className="flex gap-1 mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <StarSolid key={i} className="h-5 w-5 text-yellow-500" />
-                  ))}
-                </div>
-                <p className="text-gray-300 mb-4 text-sm sm:text-base">&ldquo;{testimonial.text}&rdquo;</p>
-                <div>
-                  <p className="font-semibold text-white">{testimonial.name}</p>
-                  <p className="text-sm text-gray-400">{testimonial.business}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* CTA */}
       <section className="bg-vurmz-teal py-12 sm:py-16 md:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -229,11 +175,11 @@ export default function HomePage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
             <a
-              href={`sms:${contact.phone.replace(/[^0-9]/g, '')}`}
+              href={getSmsLink()}
               className="bg-vurmz-dark text-white px-6 py-3 sm:px-8 sm:py-4 font-semibold text-base sm:text-lg hover:bg-vurmz-dark/80 transition-colors inline-flex items-center justify-center gap-2 rounded-xl"
             >
               <ChatBubbleLeftRightIcon className="h-5 w-5" />
-              Text {contact.phone}
+              Text {siteInfo.phone}
             </a>
             <Link
               href="/order"
