@@ -42,7 +42,7 @@ body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-/* Global tempered glass ambient glow */
+/* Subtle ambient glow — non-blocking z-index */
 body::before {
   content: '';
   position: fixed;
@@ -51,29 +51,10 @@ body::before {
   right: 0;
   bottom: 0;
   pointer-events: none;
-  z-index: 9999;
+  z-index: 0;
   background:
-    radial-gradient(ellipse 150% 80% at 10% 5%, rgba(60, 185, 178, 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse 120% 60% at 90% 95%, rgba(123, 200, 212, 0.06) 0%, transparent 45%),
-    radial-gradient(ellipse 100% 50% at 50% -10%, rgba(60, 185, 178, 0.05) 0%, transparent 40%);
-}
-
-/* Glass tint on white surfaces */
-.bg-white {
-  background-color: rgba(250, 253, 253, 1) !important;
-}
-
-/* Glass edge highlight on cards */
-.bg-white::after,
-[class*="bg-gray-50"]::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent 0%, rgba(60, 185, 178, 0.25) 50%, transparent 100%);
-  pointer-events: none;
+    radial-gradient(ellipse 80% 50% at 20% 10%, rgba(60, 185, 178, 0.04) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 40% at 80% 90%, rgba(123, 200, 212, 0.03) 0%, transparent 45%);
 }
 
 /* Force light mode */
@@ -453,18 +434,13 @@ html.light [class*="rounded-2xl"] {
     0 1px 3px rgba(0,0,0,0.06);
 }
 
-/* ── Header: Aero-style frosted top bar ── */
+/* ── Header: Aero-style frosted bar ── */
 html.light header {
-  background: linear-gradient(180deg,
-    rgba(255, 255, 255, 0.82) 0%,
-    rgba(245, 252, 252, 0.75) 100%
-  ) !important;
+  background: rgba(255, 255, 255, 0.75) !important;
   backdrop-filter: blur(24px) saturate(1.4) !important;
   -webkit-backdrop-filter: blur(24px) saturate(1.4) !important;
-  border-bottom: 1px solid rgba(60, 185, 178, 0.1) !important;
-  box-shadow:
-    0 1px 0 rgba(255,255,255,0.6) inset,
-    0 2px 12px rgba(0,0,0,0.04);
+  border-bottom: 1px solid rgba(60, 185, 178, 0.08) !important;
+  box-shadow: 0 1px 8px rgba(0,0,0,0.04);
 }
 
 html.light header a {
@@ -473,20 +449,13 @@ html.light header a {
 
 html.light header a:hover {
   color: #2A9D97 !important;
-  background: rgba(60, 185, 178, 0.06) !important;
 }
 
 html.light header img {
   filter: none !important;
 }
 
-/* ── Top bar ── */
-html.light .bg-vurmz-dark.text-white.py-2 {
-  background: linear-gradient(180deg,
-    rgba(240, 252, 252, 0.9) 0%,
-    rgba(228, 244, 248, 0.85) 100%
-  ) !important;
-}
+/* ── Top bar (removed, kept for backward compat) ── */
 
 /* ── Footer ── */
 html.light footer {
