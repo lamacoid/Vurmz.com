@@ -7,7 +7,7 @@ export const PRODUCTS = {
     packSize: 15,
     basePerItem: 3,      // 1 line of text
     withLogo: 5,         // base + logo ($2)
-    fullyLoaded: 7.50,   // logo + 2 lines + both sides
+    fullyLoaded: 7.50,   // logo + 2nd line + both sides
     get basePackPrice() { return this.basePerItem * this.packSize },      // $45
     get logoPackPrice() { return this.withLogo * this.packSize },         // $75
     get fullyLoadedPackPrice() { return this.fullyLoaded * this.packSize }, // $112.50
@@ -211,11 +211,11 @@ export const PRICING_DETAILS = {
     category: PRODUCTS.pens.name,
     packNote: `Sold in packs of ${PRODUCTS.pens.packSize}`,
     items: [
-      { name: 'Base pen (1 line)', price: `$${PRODUCTS.pens.basePerItem}`, note: `= $${PRODUCTS.pens.basePackPrice}/pack` },
+      { name: 'Base pen (text only)', price: `$${PRODUCTS.pens.basePerItem}`, note: `= $${PRODUCTS.pens.basePackPrice}/pack` },
       { name: '+ Second line', price: `+$${PRODUCTS.pens.addOns.secondLine}`, note: '' },
       { name: '+ Logo', price: `+$${PRODUCTS.pens.addOns.logo}`, note: '' },
       { name: '+ Both sides', price: `+$${PRODUCTS.pens.addOns.bothSides}`, note: '' },
-      { name: 'Fully loaded', price: `$${PRODUCTS.pens.fullyLoaded}`, note: `= $${PRODUCTS.pens.fullyLoadedPackPrice}/pack` },
+      { name: 'Fully loaded (logo + 2nd line + both sides)', price: `$${PRODUCTS.pens.fullyLoaded}`, note: `= $${PRODUCTS.pens.fullyLoadedPackPrice}/pack` },
     ],
   },
   businessCards: {
