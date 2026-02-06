@@ -48,6 +48,21 @@ export function middleware(request: NextRequest) {
     return NextResponse.next()
   }
 
+  // Settings GET is public (PATCH requires auth)
+  if (method === 'GET' && pathname === '/api/settings') {
+    return NextResponse.next()
+  }
+
+  // Pages GET is public (POST requires auth)
+  if (method === 'GET' && pathname === '/api/pages') {
+    return NextResponse.next()
+  }
+
+  // Portfolio GET is public (POST requires auth)
+  if (method === 'GET' && pathname === '/api/portfolio') {
+    return NextResponse.next()
+  }
+
   // --- Protected routes: require admin session ---
 
   const sessionCookie = request.cookies.get(SESSION_COOKIE)
@@ -90,5 +105,8 @@ export const config = {
     '/api/materials/:path*',
     '/api/files/:path*',
     '/api/webhooks/:path*',
+    '/api/settings/:path*',
+    '/api/pages/:path*',
+    '/api/portfolio/:path*',
   ]
 }

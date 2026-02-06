@@ -5,22 +5,83 @@ import ServiceAreaMap from '@/components/ServiceAreaMap'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 
 export const metadata: Metadata = {
-  title: 'Contact',
+  title: 'Contact VURMZ | Same-Day Response | Centennial CO Laser Engraving',
   description: `Contact ${siteInfo.founder.name} at ${siteInfo.name} for laser engraving in ${siteInfo.city} and Denver metro. Text ${siteInfo.phone} or email. Same-day response.`,
 }
 
 export default function ContactPage() {
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How fast can you turn around an order?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Same-day and next-day are often possible for local businesses. Standard orders are 3-5 days. Rush orders may have an additional fee, but we are flexible."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How are orders structured?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Promotional items like pens and coasters come in packs of 15. Industrial labels and custom work are quoted per job."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I bring my own items to engrave?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Absolutely. You can engrave your existing kitchen pans, tools, or other items. Just let us know what you have and we will tell you if it will work."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What file formats do you need for logos?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Vector files (SVG, AI, EPS) work best. High-resolution PNG or JPG can work too. If you only have a basic image, we can often work with it."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I pay?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "We accept all major payment methods. For business orders, we can invoice through Square. Payment is typically due upon completion."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do you set up recurring orders?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Many businesses order pens quarterly. We can set up automatic reorders so you never run low."
+        }
+      }
+    ]
+  };
+
   return (
     <div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(faqSchema)
+        }}
+      />
       {/* Hero */}
       <section className="bg-vurmz-dark text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
-              Contact
+              Text Zach — Same-Day Response
             </h1>
             <p className="text-xl text-gray-300">
-              Text or email. I respond the same day.
+              Direct message. No call centers, no hold times, no form requests.
             </p>
           </div>
         </div>

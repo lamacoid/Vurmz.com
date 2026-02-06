@@ -52,6 +52,44 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "LocalBusiness",
+              "name": "VURMZ LLC",
+              "description": "Professional laser engraving services for businesses in the Denver metro area. Same-day turnaround, no minimums, hand-delivered.",
+              "url": "https://www.vurmz.com",
+              "telephone": "(719) 257-3834",
+              "email": "zach@vurmz.com",
+              "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Centennial",
+                "addressRegion": "CO",
+                "addressCountry": "US"
+              },
+              "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": 39.58,
+                "longitude": -104.87
+              },
+              "areaServed": [
+                "Centennial", "Littleton", "Lone Tree", "Parker", "Highlands Ranch",
+                "Englewood", "Castle Rock", "Aurora", "Greenwood Village", "Cherry Hills", "Denver"
+              ],
+              "priceRange": "$$",
+              "openingHours": "Mo-Fr 08:00-18:00",
+              "founder": {
+                "@type": "Person",
+                "name": "Zach DeMillo"
+              },
+              "sameAs": []
+            })
+          }}
+        />
+      </head>
       <body className={`${inter.className} bg-white text-gray-900`}>
         <Header />
         <main className="min-h-screen">

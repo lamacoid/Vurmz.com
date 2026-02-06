@@ -2,6 +2,7 @@ export const runtime = 'edge'
 
 import { NextRequest, NextResponse } from 'next/server'
 import { getD1 } from '@/lib/d1'
+import { siteInfo } from '@/lib/site-info'
 
 // POST - Send quote to customer (generates a link)
 export async function POST(
@@ -40,7 +41,7 @@ export async function POST(
     }
 
     // Generate the quote link for the customer
-    const quoteLink = `https://www.vurmz.com/view-quote/${token}`
+    const quoteLink = `${siteInfo.url}/view-quote/${token}`
 
     // Return the quote info and the link to share
     return NextResponse.json({

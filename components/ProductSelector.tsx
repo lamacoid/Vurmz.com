@@ -1,7 +1,5 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-
 // Custom SVG icon for pen with accurate details (chrome tip, accent rings, stylus tip)
 function PenIcon({ className }: { className?: string }) {
   return (

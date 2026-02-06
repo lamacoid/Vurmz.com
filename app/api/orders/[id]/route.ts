@@ -52,7 +52,8 @@ export async function GET(
       deliveryNotes: row.delivery_notes,
       productionNotes: row.production_notes,
       laserType: row.laser_type,
-      receiptSent: row.receipt_sent,
+      receiptSent: row.receipt_sent_at !== null, // Check if receipt_sent_at is not null to determine if receipt was sent
+      receiptSentAt: row.receipt_sent_at,
       createdAt: row.created_at,
       updatedAt: row.updated_at,
       completedAt: row.completed_at,

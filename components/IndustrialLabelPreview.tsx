@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { fontOptions, ENGRAVING_COLOR } from '@/lib/fonts'
+import { fontOptions } from '@/lib/fonts'
 import FontSelector from './FontSelector'
 
 interface IndustrialLabelData {

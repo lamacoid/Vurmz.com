@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 import PremiumBuilder from '@/components/PremiumBuilder'
 
 export const metadata: Metadata = {
-  title: 'Start Your Order',
+  title: 'Start Your Order | VURMZ Laser Engraving | Centennial CO',
   description: 'Build your custom laser engraving order online. Metal business cards, branded pens, industrial labels, and more. Same-day turnaround in Denver metro.',
   keywords: [
     'laser engraving order Denver',
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     'Denver metro custom engraving',
   ],
   openGraph: {
-    title: 'Start Your Order | VURMZ Laser Engraving',
+    title: 'Start Your Order | VURMZ Laser Engraving | Centennial CO',
     description: 'Build your custom laser engraving order. Metal business cards, branded pens, industrial labels. Same-day service in Denver metro.',
     type: 'website',
     url: 'https://www.vurmz.com/order',

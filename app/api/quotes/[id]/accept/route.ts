@@ -299,7 +299,7 @@ export async function POST(
     `).bind(orderNumber, invoiceUrl, id).run()
 
     // Create an order from the accepted quote using shared helper
-    const createdOrder = await createOrder({
+    await createOrder({
       db,
       customerId: String(quote.customer_id),
       quoteId: String(id),

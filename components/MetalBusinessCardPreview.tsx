@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { QrCodeIcon, PhotoIcon, ArrowPathIcon } from '@heroicons/react/24/outline'
-import { fontOptions, ENGRAVING_COLOR } from '@/lib/fonts'
+import { fontOptions } from '@/lib/fonts'
 import FontSelector from './FontSelector'
 import { PRODUCTS } from '@/lib/products'
 

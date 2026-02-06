@@ -5,7 +5,7 @@ import { ArrowRightIcon, MapPinIcon } from '@heroicons/react/24/outline'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 
 export const metadata: Metadata = {
-  title: 'About',
+  title: 'About VURMZ | Local Laser Engraving | Centennial Colorado',
   description: `Meet ${siteInfo.founder.name}, owner of ${siteInfo.legalName}. Colorado native, ${siteInfo.city} local, chef, and laser engraver serving the Denver metro area.`,
 }
 
@@ -38,13 +38,16 @@ export default function AboutPage() {
               <h2 className="text-3xl font-bold text-white mb-6">The Short Version</h2>
               <div className="space-y-4 text-gray-400">
                 <p>
-                  I fell into laser engraving while working on another business idea. Needed some custom pieces made and realized there was no good local option for small quantities. Either pay a fortune, wait weeks for shipping, or order way more than you need.
+                  I fell into laser engraving while working on another business idea. Needed some custom pieces made and realized there was no good local option for small quantities. Either pay a fortune, wait weeks for shipping, or order way more than you need. That&apos;s broken.
                 </p>
                 <p>
-                  So I bought a laser. Then another. And another. Five lasers later, I&apos;ve got systems that can handle pretty much any material.
+                  So I bought a laser. Then another. And another. Five lasers later, I&apos;ve built a hyperlocal shop right here in Centennial that serves my neighbors the way they deserve: same-day turnaround, hand-delivered, no minimums, and direct access to the owner.
                 </p>
                 <p>
-                  The bigger dream is a full makerspace where small businesses can access all kinds of equipment they wouldn&apos;t normally have—lasers, large format printing, CNC, the works. That&apos;s still the goal. But you have to start somewhere, and this is where I&apos;m starting.
+                  The strategy is density over distance. I&apos;m not trying to be the cheapest nationwide. I&apos;m trying to be the default shop for every office park, law firm, restaurant, and contractor within a 10-minute drive. The dentist recommends me to the accountant next door. They tell the restaurant downstairs. I become the standard—not because I&apos;m the cheapest, but because I&apos;m right here, fast, and the quality is clean.
+                </p>
+                <p>
+                  The bigger dream is a full makerspace where small businesses can access all kinds of equipment they wouldn&apos;t normally have—lasers, large format printing, CNC, the works. That&apos;s still the goal. But you have to start somewhere.
                 </p>
                 <p>
                   I&apos;m also a chef. Been cooking in Denver for over 15 years. Between that and this, I stay pretty busy. But I like it that way.

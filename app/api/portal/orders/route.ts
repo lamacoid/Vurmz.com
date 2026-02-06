@@ -35,30 +35,32 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    // Get quotes/orders for this customer
+    // Get quotes/orders for this customer with order numbers
     const quotes = await db.prepare(`
       SELECT
-        id,
-        product_type as productType,
-        quantity,
-        description,
-        status,
-        price,
-        turnaround,
-        delivery_method as deliveryMethod,
-        created_at as createdAt,
-        response_sent_at as responseSentAt,
-        accepted_at as acceptedAt,
-        completed_at as completedAt
-      FROM quotes
-      WHERE customer_id = ?
-      ORDER BY created_at DESC
+        q.id,
+        q.product_type as productType,
+        q.quantity,
+        q.description,
+        q.status,
+        q.price,
+        q.turnaround,
+        q.delivery_method as deliveryMethod,
+        q.created_at as createdAt,
+        q.response_sent_at as responseSentAt,
+        q.accepted_at as acceptedAt,
+        q.completed_at as completedAt,
+        o.order_number as orderNumber
+      FROM quotes q
+      LEFT JOIN orders o ON q.id = o.quote_id
+      WHERE q.customer_id = ?
+      ORDER BY q.created_at DESC
     `).bind(customerId).all()
 
     // Map to order format
-    const orders = (quotes.results || []).map((q: any, index: number) => ({
+    const orders = (quotes.results || []).map((q: any) => ({
       id: q.id,
-      orderNumber: `VURMZ-${String(index + 1).padStart(4, '0')}`,
+      orderNumber: q.orderNumber || `Q-${q.id}`,
       productType: q.productType,
       quantity: q.quantity,
       description: q.description,

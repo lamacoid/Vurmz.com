@@ -91,12 +91,16 @@ export default function DashboardPage() {
 
   useEffect(() => {
     Promise.all([
-      fetch('/api/dashboard').then(res => res.json() as Promise<DashboardData>),
+      fetch('/api/dashboard').then(res => res.json() as Promise<DashboardData>).catch(() => null),
       fetch('/api/admin/stats').then(res => res.json() as Promise<AnalyticsData>).catch(() => null)
     ])
       .then(([dashData, analyticsData]) => {
-        setData(dashData)
-        setAnalytics(analyticsData)
+        if (dashData) {
+          setData(dashData)
+        }
+        if (analyticsData) {
+          setAnalytics(analyticsData)
+        }
         setLoading(false)
       })
       .catch(err => {
@@ -166,7 +170,7 @@ export default function DashboardPage() {
             transition={{ duration: 0.5, delay: 0.35, ease: liquidEase }}
           >
             <Link
-              href="/admin/site-manager"
+              href="/admin/settings"
               className="flex items-center justify-between p-5 rounded-2xl transition-all hover:scale-[1.01]"
               style={{
                 background: 'linear-gradient(135deg, rgba(106,140,140,0.1) 0%, rgba(140,174,196,0.08) 100%)',

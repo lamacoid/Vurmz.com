@@ -1,13 +1,14 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
-import { ArrowRightIcon } from '@heroicons/react/24/outline'
+import Image from 'next/image'
+import { ArrowRightIcon, ChatBubbleLeftIcon } from '@heroicons/react/24/outline'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 
 export const metadata: Metadata = {
-  title: `Custom Gifts & Awards | ${siteInfo.name}`,
+  title: 'Personalized Gifts & Awards | Laser Engraving | VURMZ Centennial CO',
   description: `Custom laser engraved gifts, trophies, team items, and awards. Baseball bats, pens, plaques, and personalized gifts for any occasion in ${siteInfo.city}.`,
   openGraph: {
-    title: `Custom Gifts & Awards | ${siteInfo.name}`,
+    title: 'Personalized Gifts & Awards | Laser Engraving | VURMZ Centennial CO',
     description: `Custom laser engraved gifts, trophies, team items, and awards.`,
     url: `${siteInfo.url}/gifts`,
     siteName: siteInfo.name,
@@ -75,11 +76,11 @@ export default function GiftsPage() {
             Custom Engraved
           </p>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-light text-[#3D3428] tracking-tight mb-6" style={{ fontFamily: 'Georgia, serif' }}>
-            Gifts, Awards &<br />Team Items
+            Personalized Gifts<br />They&apos;ll Actually Keep
           </h1>
           <p className="text-lg text-[#6B5A48]/80 max-w-xl mx-auto mb-10 leading-relaxed">
             Baseball bats, trophies, corporate gifts, personal keepsakes.
-            Single items or bulk orders. Fast local turnaround.
+            Rush orders welcome. Same-day turnaround often possible.
           </p>
 
           {/* Category tags */}
@@ -106,6 +107,66 @@ export default function GiftsPage() {
       </section>
 
       <div className="max-w-xs mx-auto border-t border-[#E0D6C8]" />
+
+      {/* Portfolio Showcase for Gifts */}
+      <section className="py-20 lg:py-24">
+        <div className="max-w-5xl mx-auto px-6 lg:px-8">
+          <div className="text-center mb-14">
+            <p className="text-[#A08060] font-medium tracking-[0.15em] text-sm mb-3 uppercase">Examples</p>
+            <h2 className="text-3xl sm:text-4xl font-light text-[#3D3428]" style={{ fontFamily: 'Georgia, serif' }}>
+              See what we can engrave
+            </h2>
+            <p className="text-[#6B5A48]/70 mt-3">Real examples from actual client projects.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+            {/* Real metal business card images (can be gifts too) */}
+            <div className="group rounded-2xl overflow-hidden border border-[#E8E0D8] bg-white hover:shadow-lg transition-all">
+              <div className="aspect-[4/3] relative bg-[#F0EBE6]">
+                <Image
+                  src="/portfolio/metal-business-card-original.png"
+                  alt="Metal Business Card Gift"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              <div className="p-6">
+                <h3 className="font-semibold text-[#3D3428] mb-2">Premium Metal Cards</h3>
+                <p className="text-[#6B5A48]/70 text-sm">Perfect corporate gifts that clients keep and use.</p>
+              </div>
+            </div>
+
+            <div className="group rounded-2xl overflow-hidden border border-[#E8E0D8] bg-white hover:shadow-lg transition-all">
+              <div className="aspect-[4/3] relative bg-[#F0EBE6]">
+                <Image
+                  src="/portfolio/metal-business-card.png"
+                  alt="Metal Business Card Samples"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              <div className="p-6">
+                <h3 className="font-semibold text-[#3D3428] mb-2">Precision Engraving</h3>
+                <p className="text-[#6B5A48]/70 text-sm">Sharp details on wood, metal, acrylic, leather, and more.</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="text-center">
+            <p className="text-[#6B5A48]/80 text-lg mb-6">
+              Don&apos;t see what you&apos;re looking for? <br className="hidden sm:inline" />
+              <span className="text-[#3D3428] font-medium">Text me for custom samples.</span>
+            </p>
+            <a
+              href={getSmsLink("Can you show me examples of [your item]?")}
+              className="inline-flex items-center gap-3 px-8 py-4 bg-[#3D3428] text-white rounded-full font-medium hover:bg-[#2D2418] transition-all shadow-lg shadow-[#3D3428]/20"
+            >
+              <ChatBubbleLeftIcon className="w-4 h-4" />
+              Text for samples
+            </a>
+          </div>
+        </div>
+      </section>
 
       {/* Sports Teams Section */}
       <section id="sports" className="py-20 lg:py-24 scroll-mt-20">

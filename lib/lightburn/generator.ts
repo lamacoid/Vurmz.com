@@ -44,31 +44,8 @@ export interface LightBurnProject {
 // Standard industrial font - Arial Bold is universally readable
 const DEFAULT_FONT = 'Arial,-1,100,5,75,0,0,0,0,0'
 
-// Generate unique ID for shapes
-let shapeIdCounter = 0
-function generateShapeId(): number {
-  return shapeIdCounter++
-}
-
-// Reset counter for new project
-function resetShapeCounter(): void {
-  shapeIdCounter = 0
-}
-
 // Generate CutSetting XML
 function generateCutSettingXml(settings: CutSetting, index: number): string {
-  const layerColors = [
-    '0', // Black (C00)
-    '255', // Red (C01)
-    '65280', // Green (C02)
-    '16776960', // Yellow (C03)
-    '16711680', // Blue (C04)
-    '16711935', // Magenta (C05)
-    '65535', // Cyan (C06)
-  ]
-
-  const color = layerColors[index % layerColors.length]
-
   let xml = `    <CutSetting type="${settings.type}">\n`
   xml += `        <index Value="${index}"/>\n`
   xml += `        <name Value="C0${index}"/>\n`
@@ -192,8 +169,6 @@ function generateBarcodeXml(element: BarcodeElement, cutIndex: number): string {
 
 // Main generator function
 export function generateLightBurnFile(project: LightBurnProject): string {
-  resetShapeCounter()
-
   // Get material settings
   const settings = project.cutSettings || getSettingsForWebMaterial(project.material)
 
@@ -254,7 +229,7 @@ export function generateIndustrialLabel(config: IndustrialLabelConfig): string {
   let currentY = config.height - margin - lineHeight
 
   // Add text fields
-  Object.entries(config.fields).forEach(([key, value]) => {
+  Object.entries(config.fields).forEach(([, value]) => {
     if (value && value.trim()) {
       elements.push({
         text: value,

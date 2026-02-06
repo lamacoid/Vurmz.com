@@ -3,7 +3,7 @@ export const runtime = 'edge'
 import { NextRequest, NextResponse } from 'next/server'
 import { getD1, generateId, now } from '@/lib/d1'
 import { sendEmail } from '@/lib/resend-edge'
-import { createOrder, generateOrderNumber, generateReceiptNumber } from '@/lib/order-helpers'
+import { createOrder, generateReceiptNumber } from '@/lib/order-helpers'
 
 const SQUARE_WEBHOOK_SIGNATURE_KEY = process.env.SQUARE_WEBHOOK_SIGNATURE_KEY
 
@@ -60,8 +60,6 @@ async function verifySignature(body: string, signature: string, url: string): Pr
     return false
   }
 }
-
-// generateOrderNumber and generateReceiptNumber imported from @/lib/order-helpers
 
 // Send receipt email
 async function sendReceiptEmailToCustomer(data: {

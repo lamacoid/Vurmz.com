@@ -4,7 +4,6 @@ import { useState, useMemo } from 'react'
 import {
   templateCategories,
   getTemplatesByCategory,
-  getTemplateById,
   getComplianceInfo,
   complianceStandards,
   type Template,
@@ -16,7 +15,6 @@ import {
   CheckIcon,
   InformationCircleIcon,
   ShieldCheckIcon,
-  DocumentTextIcon,
   QrCodeIcon,
   PhotoIcon,
   XMarkIcon,
@@ -104,7 +102,6 @@ export default function IndustrialBuilder() {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
-  const [submitSuccess, setSubmitSuccess] = useState(false)
 
   const categoryTemplates = useMemo(() => {
     if (!selectedCategory) return []
@@ -270,7 +267,6 @@ export default function IndustrialBuilder() {
         throw new Error(data.error || 'Failed to submit order')
       }
 
-      setSubmitSuccess(true)
       setStep('review')
     } catch (error) {
       setSubmitError(error instanceof Error ? error.message : 'Failed to submit order')
@@ -1018,7 +1014,6 @@ export default function IndustrialBuilder() {
                     setSequentialConfig({ startNumber: 1, prefix: '', suffix: '', padding: 3, fieldId: '' })
                     setCustomVariableConfig({ fieldId: '', values: [] })
                     setQuantity(1)
-                    setSubmitSuccess(false)
                   }}
                   className="px-6 py-3 border border-gray-300 rounded-lg font-medium hover:bg-gray-50 transition-colors"
                 >

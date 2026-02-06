@@ -148,7 +148,7 @@ export default function Footer() {
                 { icon: PhoneIcon, text: contact.phone, href: `sms:${contact.phone.replace(/[^0-9]/g, '')}`, color: 'vurmz-powder' },
                 { icon: EnvelopeIcon, text: contact.email, href: `mailto:${contact.email}`, color: 'vurmz-teal' },
                 { icon: ClockIcon, text: 'Flexible hours', color: 'vurmz-sage' },
-              ].map((item, i) => (
+              ].map((item) => (
                 <motion.div
                   key={item.text}
                   className="flex items-center gap-3 group"
@@ -210,7 +210,7 @@ export default function Footer() {
               Why VURMZ?
             </h3>
             <div className="flex flex-wrap gap-2">
-              {benefits.map((benefit, i) => (
+              {benefits.map((benefit) => (
                 <motion.span
                   key={benefit}
                   className="px-4 py-2 rounded-full text-xs text-gray-300"
@@ -237,16 +237,16 @@ export default function Footer() {
               Service Area
             </h3>
             <div className="flex flex-wrap gap-2">
-              {serviceAreas.map((area, i) => (
+              {serviceAreas.map((area, idx) => (
                 <motion.span
                   key={area}
                   className="px-3 py-1.5 rounded-lg text-xs"
                   style={{
-                    background: i === 0
+                    background: idx === 0
                       ? 'linear-gradient(135deg, rgba(106,140,140,0.3) 0%, rgba(106,140,140,0.2) 100%)'
                       : 'rgba(255,255,255,0.05)',
-                    color: i === 0 ? '#ffffff' : '#9ca3af',
-                    boxShadow: i === 0 ? 'inset 0 1px 0 rgba(255,255,255,0.15)' : 'none',
+                    color: idx === 0 ? '#ffffff' : '#9ca3af',
+                    boxShadow: idx === 0 ? 'inset 0 1px 0 rgba(255,255,255,0.15)' : 'none',
                   }}
                   whileHover={{ scale: 1.05 }}
                 >

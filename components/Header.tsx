@@ -4,28 +4,13 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { Bars3Icon, XMarkIcon, PhoneIcon, SparklesIcon, MapPinIcon } from '@heroicons/react/24/outline'
-
-const contact = {
-  phone: '(719) 257-3834',
-  email: 'zach@vurmz.com',
-  city: 'Centennial',
-  state: 'Colorado',
-}
+import { siteInfo, navigation, getSmsLink } from '@/lib/site-info'
 
 const header = {
   logoUrl: '/images/vurmz-logo-full.svg',
   ctaText: 'Start Order',
   ctaLink: '/order',
 }
-
-const navigation = [
-  { name: 'Services', href: '/services' },
-  { name: 'Gifts & Awards', href: '/gifts' },
-  { name: 'Portfolio', href: '/portfolio' },
-  { name: 'Pricing', href: '/pricing' },
-  { name: 'About', href: '/about' },
-  { name: 'Contact', href: '/contact' },
-]
 
 const weatherIcons: Record<number, string> = {
   0: '☀️',
@@ -78,7 +63,7 @@ export default function Header() {
             <div className="flex items-center gap-6">
               <span className="flex items-center gap-1.5">
                 <MapPinIcon className="h-4 w-4 text-slate-300" />
-                {contact.city}, {contact.state}
+                {siteInfo.city}, {siteInfo.state}
               </span>
               <span className="text-white/70">{dateStr}</span>
               {weather && (
@@ -88,9 +73,9 @@ export default function Header() {
                 </span>
               )}
             </div>
-            <a href={`sms:${contact.phone.replace(/[^0-9]/g, '')}`} className="flex items-center gap-1.5 hover:text-slate-300 transition-colors font-medium">
+            <a href={getSmsLink()} className="flex items-center gap-1.5 hover:text-slate-300 transition-colors font-medium">
               <PhoneIcon className="h-4 w-4" />
-              Text: {contact.phone}
+              Text: {siteInfo.phone}
             </a>
           </div>
           <div className="sm:hidden flex justify-between items-center text-sm">
@@ -103,9 +88,9 @@ export default function Header() {
                 </span>
               )}
             </div>
-            <a href={`sms:${contact.phone.replace(/[^0-9]/g, '')}`} className="flex items-center gap-1">
+            <a href={getSmsLink()} className="flex items-center gap-1">
               <PhoneIcon className="h-4 w-4" />
-              {contact.phone}
+              {siteInfo.phone}
             </a>
           </div>
         </div>
@@ -192,11 +177,11 @@ export default function Header() {
             </div>
             <div className="mt-6 pt-6 border-t border-gray-200">
               <a
-                href="sms:+17192573834"
+                href={getSmsLink()}
                 className="flex items-center justify-center gap-2 text-vurmz-teal font-medium"
               >
                 <PhoneIcon className="w-5 h-5" />
-                Text: (719) 257-3834
+                Text: {siteInfo.phone}
               </a>
             </div>
           </div>

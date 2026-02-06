@@ -122,22 +122,8 @@ const MOUNTING_OPTIONS = [
   { id: 'adhesive', name: 'Adhesive backing (+$0.50/ea)' },
 ]
 
-// Combined icon categories for the picker
-const ICON_CATEGORIES = {
-  none: { label: 'None', color: '#666', bgColor: '#f5f5f5', description: 'No symbol' },
-  // Safety categories (ISO 7010)
-  ...safetyIconCategories,
-  // Industrial categories
-  ...industrialIconCategories,
-}
-
 // Icon type for unified handling
 type IconType = 'none' | 'safety' | 'industrial'
-interface SelectedIcon {
-  type: IconType
-  id: string
-  name: string
-}
 
 // Get name for an icon ID
 function getIconName(iconType: IconType, iconId: string): string {

@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { EnvelopeIcon } from '@heroicons/react/24/outline'
@@ -9,7 +8,6 @@ import { EnvelopeIcon } from '@heroicons/react/24/outline'
 const liquidEase = [0.23, 1, 0.32, 1] as const
 
 export default function LoginPage() {
-  const router = useRouter()
   const [email, setEmail] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)

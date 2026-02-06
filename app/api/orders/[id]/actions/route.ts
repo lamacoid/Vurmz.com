@@ -147,9 +147,18 @@ export async function POST(
           `
         })
 
-        await db.prepare(`
-          UPDATE orders SET receipt_sent = 1, receipt_sent_at = ? WHERE id = ?
-        `).bind(timestamp, id).run()
+        // Update receipt sent flags - wrapped in try/catch as receipt_sent column may not exist in all deployments
+        try {
+          await db.prepare(`
+            UPDATE orders SET receipt_sent = 1, receipt_sent_at = ? WHERE id = ?
+          `).bind(timestamp, id).run()
+        } catch (updateError) {
+          console.warn('Could not update receipt_sent column (may not exist in schema):', updateError)
+          // Fallback: just update receipt_sent_at if receipt_sent column doesn't exist
+          await db.prepare(`
+            UPDATE orders SET receipt_sent_at = ? WHERE id = ?
+          `).bind(timestamp, id).run().catch(err => console.error('Failed to update receipt_sent_at:', err))
+        }
 
         return NextResponse.json({ success: true, message: 'Receipt resent' })
       }

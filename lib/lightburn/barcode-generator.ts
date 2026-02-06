@@ -152,7 +152,7 @@ export async function generateBarcodeShapeXml(
   xml += `        <Children>\n`
 
   // Add each path as a shape
-  barcode.paths.forEach((pathData, index) => {
+  barcode.paths.forEach((pathData) => {
     xml += `            <Shape Type="Path" CutIndex="${cutIndex}">\n`
     xml += `                <XForm>1 0 0 1 0 0</XForm>\n`
     xml += `                <VertList>${convertSvgPathToLightBurnVerts(pathData)}</VertList>\n`

@@ -8,7 +8,7 @@ import { PRODUCTS, PROMO_PACK_SIZE } from '@/lib/products'
 import { siteInfo } from '@/lib/site-info'
 
 export const metadata: Metadata = {
-  title: 'Laser Engraving Services',
+  title: 'Laser Engraving Services | Pens, Cards, Labels | VURMZ Centennial CO',
   description: `Laser engraving for small businesses in South Denver metro. Branded pens, metal cards, tool marking, knife engraving, and custom products. Fast turnaround in ${siteInfo.city}.`,
 }
 
@@ -63,10 +63,10 @@ export default function ServicesPage() {
         }} />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6">
-            Laser Engraving for Your Small Business
+            Professional Engraving Services — Right in Your Neighborhood
           </h1>
           <p className="text-base sm:text-lg md:text-xl text-gray-400 max-w-3xl">
-            Branded pens, metal cards, tool marking, knife engraving, and custom goods. Fast turnaround in South Denver metro.
+            Same-day turnaround on branded pens, metal business cards, tool marking, knife engraving, and custom projects. Local pickup or hand-delivered to your office.
           </p>
         </div>
       </section>
@@ -101,18 +101,18 @@ export default function ServicesPage() {
               <div className="w-12 h-12 sm:w-16 sm:h-16 bg-vurmz-teal text-white flex items-center justify-center text-xl sm:text-2xl font-bold mx-auto mb-3 sm:mb-4 rounded-lg">
                 1
               </div>
-              <h3 className="font-semibold text-sm sm:text-base md:text-lg text-white mb-1 sm:mb-2">Start Your Order</h3>
+              <h3 className="font-semibold text-sm sm:text-base md:text-lg text-white mb-1 sm:mb-2">Text or Email Your Project</h3>
               <p className="text-gray-400 text-xs sm:text-sm">
-                Tell me what you need.
+                Direct message to Zach. No forms, no runaround.
               </p>
             </div>
             <div className="text-center">
               <div className="w-12 h-12 sm:w-16 sm:h-16 bg-vurmz-teal text-white flex items-center justify-center text-xl sm:text-2xl font-bold mx-auto mb-3 sm:mb-4 rounded-lg">
                 2
               </div>
-              <h3 className="font-semibold text-sm sm:text-base md:text-lg text-white mb-1 sm:mb-2">Get Pricing</h3>
+              <h3 className="font-semibold text-sm sm:text-base md:text-lg text-white mb-1 sm:mb-2">Same-Day Quote</h3>
               <p className="text-gray-400 text-xs sm:text-sm">
-                Same day response.
+                Exact pricing by end of business.
               </p>
             </div>
             <div className="text-center">

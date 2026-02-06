@@ -75,7 +75,7 @@ export async function POST(
     // Update order status too
     await db.prepare(`
       UPDATE orders
-      SET status = 'COMPLETE', completed_at = datetime('now'), updated_at = datetime('now')
+      SET status = 'completed', completed_at = datetime('now'), updated_at = datetime('now')
       WHERE quote_id = ?
     `).bind(id).run()
 

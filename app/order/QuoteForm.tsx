@@ -20,18 +20,6 @@ const businessTypes = [
   { value: 'personal', label: 'Personal / Gift' },
 ]
 
-const productTypes = [
-  { value: 'pens', label: 'Branded Pens' },
-  { value: 'business-cards', label: 'Metal Business Cards' },
-  { value: 'nametags', label: 'Nametags' },
-  { value: 'knives', label: 'Knife Engraving' },
-  { value: 'tools', label: 'Tool Marking' },
-  { value: 'keychains', label: 'Keychains' },
-  { value: 'keys', label: 'Key Marking' },
-  { value: 'industrial-labels', label: 'Industrial Labels & Tags' },
-  { value: 'other', label: 'Something Else' },
-]
-
 const turnaroundOptions = [
   { value: 'rush', label: 'Rush (Next Day)', description: 'Rush fee may apply' },
   { value: 'standard', label: 'Standard (2 Days)', description: 'Most common' },
@@ -66,7 +54,6 @@ export default function QuoteForm() {
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [loading, setLoading] = useState(false)
   const [submitted, setSubmitted] = useState(false)
-  const [wasOrder, setWasOrder] = useState(false)
   const [orderInfo, setOrderInfo] = useState<{
     orderNumber: string
     paymentUrl: string
@@ -104,9 +91,6 @@ export default function QuoteForm() {
     penColor: string
     pricePerPen: number
   } | null>(null)
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [industrialLabelData, setIndustrialLabelData] = useState<any>(null)
 
   const [nametagData, setNametagData] = useState<{
     name: string
@@ -152,29 +136,20 @@ export default function QuoteForm() {
     setFormData(prev => ({ ...prev, [name]: value }))
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleCardDataChange = useCallback((data: any) => {
-    setCardData(data)
+  const handleCardDataChange = useCallback((data: unknown) => {
+    setCardData(data as typeof cardData)
   }, [])
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handlePenDataChange = useCallback((data: any) => {
-    setPenData(data)
+  const handlePenDataChange = useCallback((data: unknown) => {
+    setPenData(data as typeof penData)
   }, [])
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleIndustrialLabelDataChange = useCallback((data: any) => {
-    setIndustrialLabelData(data)
+  const handleNametagDataChange = useCallback((data: unknown) => {
+    setNametagData(data as typeof nametagData)
   }, [])
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleNametagDataChange = useCallback((data: any) => {
-    setNametagData(data)
-  }, [])
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleKnifeDataChange = useCallback((data: any) => {
-    setKnifeData(data)
+  const handleKnifeDataChange = useCallback((data: unknown) => {
+    setKnifeData(data as typeof knifeData)
   }, [])
 
   // Calculate order total for products with known pricing
@@ -349,7 +324,6 @@ export default function QuoteForm() {
       if (orderTotal) {
         submitData.append('calculatedPrice', orderTotal.total.toString())
         submitData.append('isOrder', 'true')
-        setWasOrder(true)
       }
 
       const response = await fetch('/api/quotes', {
@@ -378,7 +352,7 @@ export default function QuoteForm() {
       }
 
       setSubmitted(true)
-    } catch (err) {
+    } catch {
       setError('Something went wrong. Please try again or text me directly at (719) 257-3834.')
     } finally {
       setLoading(false)
@@ -607,7 +581,7 @@ export default function QuoteForm() {
             <IndustrialLabelPreview
               labelType={formData.industrialType as 'control-panels' | 'asset-tags' | 'valve-tags'}
               material={formData.industrialMaterial as 'brass' | 'anodized-aluminum' | 'plastic'}
-              onChange={handleIndustrialLabelDataChange}
+              onChange={() => {}}
             />
           )}
 

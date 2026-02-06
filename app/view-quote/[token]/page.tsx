@@ -136,7 +136,7 @@ export default function ViewQuotePage() {
         <div className="bg-vurmz-dark text-white py-4">
           <div className="max-w-2xl mx-auto px-4">
             <Link href="/" className="flex items-center gap-2">
-              <Image src="/logo.png" alt="VURMZ" width={40} height={40} />
+              <Image src="/images/vurmz-logo-full.svg" alt="VURMZ" width={40} height={40} />
               <span className="font-bold text-xl tracking-wider">VURMZ</span>
             </Link>
           </div>

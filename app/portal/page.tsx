@@ -81,7 +81,7 @@ export default function PortalDashboard() {
     const configs: Record<string, { bg: string; text: string; icon: typeof ClockIcon }> = {
       'new': { bg: 'bg-blue-100', text: 'text-blue-700', icon: ClockIcon },
       'quoted': { bg: 'bg-yellow-100', text: 'text-yellow-700', icon: ClockIcon },
-      'pending-approval': { bg: 'bg-orange-100', text: 'text-orange-700', icon: ClockIcon },
+      'pending_approval': { bg: 'bg-orange-100', text: 'text-orange-700', icon: ClockIcon },
       'in_progress': { bg: 'bg-purple-100', text: 'text-purple-700', icon: ClockIcon },
       'complete': { bg: 'bg-green-100', text: 'text-green-700', icon: CheckCircleIcon },
       'delivered': { bg: 'bg-teal-100', text: 'text-teal-700', icon: TruckIcon },
@@ -151,7 +151,7 @@ export default function PortalDashboard() {
               </div>
               <div>
                 <p className="text-2xl font-bold text-gray-900">
-                  {orders.filter(o => ['in_progress', 'pending-approval'].includes(o.status)).length}
+                  {orders.filter(o => ['in_progress', 'pending_approval'].includes(o.status)).length}
                 </p>
                 <p className="text-sm text-gray-500">In Progress</p>
               </div>

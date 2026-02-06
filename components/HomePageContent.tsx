@@ -1,11 +1,11 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import {
   ArrowRightIcon,
   SparklesIcon,
   CubeIcon,
-  CheckIcon,
   MapPinIcon,
   ClockIcon,
   TruckIcon,
@@ -22,62 +22,18 @@ import {
 import { TiltCard, SpotlightCard } from '@/components/PremiumAnimations'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
+import { getSmsLink } from '@/lib/site-info'
 
 // Premium easing
 const easing = {
   liquid: [0.23, 1, 0.32, 1] as const,
 }
 
-const products = [
-  {
-    name: 'Branded Pens',
-    description: 'Metal stylus pens with your logo. Perfect for client gifts, trade shows, and employee onboarding.',
-    price: '$3-$7',
-    unit: 'per pen',
-    gradient: 'from-vurmz-teal to-vurmz-teal-light',
-  },
-  {
-    name: 'Metal Business Cards',
-    description: 'Anodized aluminum cards that people keep. Make an impression that lasts.',
-    price: 'From $5',
-    unit: 'per card',
-    gradient: 'from-gray-600 to-gray-800',
-  },
-  {
-    name: 'Tool & Equipment',
-    description: 'Kitchen pans, knives, power tools. Permanent marking that identifies your stuff.',
-    price: '$3-$75',
-    unit: 'per item',
-    gradient: 'from-vurmz-sage to-emerald-400',
-  },
-  {
-    name: 'Industrial Labels',
-    description: 'ABS plastic signs for electrical panels, control boxes, equipment.',
-    price: 'From $8',
-    unit: 'per sign',
-    gradient: 'from-amber-400 to-orange-400',
-  },
-  {
-    name: 'Cutting Boards',
-    description: 'Hardwood boards with custom engraving. Walnut, maple, cherry.',
-    price: '$40-$50',
-    unit: 'each',
-    gradient: 'from-vurmz-powder to-amber-300',
-  },
-  {
-    name: 'Custom Projects',
-    description: 'Something else? Tell me what you need.',
-    price: 'Quote',
-    unit: 'based',
-    gradient: 'from-vurmz-sky to-blue-400',
-  },
-]
-
 const trustMetrics = [
-  { value: '48hr', label: 'Average Turnaround', icon: ClockIcon },
+  { value: '24hr', label: 'Same-Day Turnaround', icon: ClockIcon },
   { value: '100%', label: 'Local Ownership', icon: MapPinIcon },
-  { value: '$100+', label: 'Free Delivery', icon: TruckIcon },
-  { value: '1-on-1', label: 'Direct Communication', icon: ChatBubbleLeftRightIcon },
+  { value: 'Free', label: 'Hand-Delivered', icon: TruckIcon },
+  { value: '1', label: 'One Person, Not a Callcenter', icon: ChatBubbleLeftRightIcon },
 ]
 
 const serviceAreas = [
@@ -145,9 +101,9 @@ export default function HomePageContent() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2, ease: easing.liquid }}
           >
-            <span className="block">Equipment Labels</span>
+            <span className="block">Your Neighborhood</span>
             <span className="block mt-2 bg-gradient-to-r from-vurmz-teal via-vurmz-teal-light to-vurmz-powder bg-clip-text text-transparent">
-              &amp; Industrial Engraving
+              Laser Engraving Shop
             </span>
           </motion.h1>
 
@@ -157,7 +113,7 @@ export default function HomePageContent() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4, ease: easing.liquid }}
           >
-            Pens, business cards, knives, signs, and more. No minimum orders. Fast turnaround for Denver metro businesses.
+            Same-day turnaround. Hand-delivered to your desk. No minimums, no runaround.
           </motion.p>
 
           <motion.div
@@ -194,7 +150,7 @@ export default function HomePageContent() {
       </section>
 
       {/* ================================================================
-          MEDIA SHOWCASE - For photos/videos
+          MEDIA SHOWCASE - Portfolio examples
       ================================================================ */}
       <section className="py-32 bg-gradient-to-b from-white to-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -207,16 +163,134 @@ export default function HomePageContent() {
             </p>
           </BlurIn>
 
-          {/* Placeholder grid for photos/videos - replace with actual media */}
+          {/* Portfolio grid with actual images and product categories */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[1, 2, 3, 4, 5, 6].map((i) => (
-              <FadeIn key={i} delay={i * 0.1}>
-                <div className="aspect-[4/3] rounded-2xl bg-gray-100 border border-gray-200 flex items-center justify-center">
-                  <span className="text-gray-400 text-sm">Photo/Video {i}</span>
+            {/* Metal Business Cards - Real Images */}
+            <FadeIn delay={0.1}>
+              <div className="group h-full rounded-2xl overflow-hidden border border-gray-200 bg-white hover:shadow-xl transition-all">
+                <div className="aspect-[4/3] relative bg-gray-100">
+                  <Image
+                    src="/portfolio/metal-business-card-original.png"
+                    alt="Metal Business Card Original"
+                    fill
+                    className="object-cover"
+                  />
                 </div>
-              </FadeIn>
-            ))}
+                <div className="p-6">
+                  <h3 className="font-semibold text-vurmz-dark mb-2">Metal Business Cards</h3>
+                  <p className="text-gray-600 text-sm">Anodized aluminum. Stand out from the stack.</p>
+                </div>
+              </div>
+            </FadeIn>
+
+            <FadeIn delay={0.2}>
+              <div className="group h-full rounded-2xl overflow-hidden border border-gray-200 bg-white hover:shadow-xl transition-all">
+                <div className="aspect-[4/3] relative bg-gray-100">
+                  <Image
+                    src="/portfolio/metal-business-card.png"
+                    alt="Metal Business Card"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="font-semibold text-vurmz-dark mb-2">Metal Business Cards</h3>
+                  <p className="text-gray-600 text-sm">Precision engraving on premium metals.</p>
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* Product Category Placeholders */}
+            <FadeIn delay={0.3}>
+              <Link href="/portfolio" className="group h-full rounded-2xl overflow-hidden border border-gray-200 bg-white hover:shadow-xl hover:border-vurmz-teal transition-all flex flex-col">
+                <div className="aspect-[4/3] bg-gradient-to-br from-vurmz-teal/10 to-vurmz-teal/5 flex items-center justify-center">
+                  <div className="text-center">
+                    <SparklesIcon className="h-12 w-12 text-vurmz-teal/50 mx-auto mb-2" />
+                    <span className="text-gray-400 text-sm">Branded Pens</span>
+                  </div>
+                </div>
+                <div className="p-6 flex-1 flex flex-col justify-between">
+                  <div>
+                    <h3 className="font-semibold text-vurmz-dark mb-2">Branded Pens</h3>
+                    <p className="text-gray-600 text-sm">Metal stylus pens with your logo.</p>
+                  </div>
+                  <div className="text-vurmz-teal text-sm font-medium group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
+                    See examples →
+                  </div>
+                </div>
+              </Link>
+            </FadeIn>
+
+            <FadeIn delay={0.4}>
+              <a href={getSmsLink("Can you show me examples of industrial labels?")} className="group h-full rounded-2xl overflow-hidden border border-gray-200 bg-white hover:shadow-xl hover:border-vurmz-teal transition-all flex flex-col">
+                <div className="aspect-[4/3] bg-gradient-to-br from-amber-100/50 to-orange-100/30 flex items-center justify-center">
+                  <div className="text-center">
+                    <CubeIcon className="h-12 w-12 text-amber-600/50 mx-auto mb-2" />
+                    <span className="text-gray-400 text-sm">Industrial Labels</span>
+                  </div>
+                </div>
+                <div className="p-6 flex-1 flex flex-col justify-between">
+                  <div>
+                    <h3 className="font-semibold text-vurmz-dark mb-2">Industrial Labels</h3>
+                    <p className="text-gray-600 text-sm">Panels, control boxes, equipment marking.</p>
+                  </div>
+                  <div className="text-vurmz-teal text-sm font-medium group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
+                    Text for samples →
+                  </div>
+                </div>
+              </a>
+            </FadeIn>
+
+            <FadeIn delay={0.5}>
+              <a href={getSmsLink("Can you show me examples of knife engraving?")} className="group h-full rounded-2xl overflow-hidden border border-gray-200 bg-white hover:shadow-xl hover:border-vurmz-teal transition-all flex flex-col">
+                <div className="aspect-[4/3] bg-gradient-to-br from-slate-100/50 to-gray-100/30 flex items-center justify-center">
+                  <div className="text-center">
+                    <SparklesIcon className="h-12 w-12 text-slate-600/50 mx-auto mb-2" />
+                    <span className="text-gray-400 text-sm">Knife Engraving</span>
+                  </div>
+                </div>
+                <div className="p-6 flex-1 flex flex-col justify-between">
+                  <div>
+                    <h3 className="font-semibold text-vurmz-dark mb-2">Knife Engraving</h3>
+                    <p className="text-gray-600 text-sm">Chef knives, kitchen tools, cutlery.</p>
+                  </div>
+                  <div className="text-vurmz-teal text-sm font-medium group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
+                    Text for samples →
+                  </div>
+                </div>
+              </a>
+            </FadeIn>
+
+            <FadeIn delay={0.6}>
+              <Link href="/portfolio" className="group h-full rounded-2xl overflow-hidden border border-gray-200 bg-white hover:shadow-xl hover:border-vurmz-teal transition-all flex flex-col">
+                <div className="aspect-[4/3] bg-gradient-to-br from-emerald-100/50 to-green-100/30 flex items-center justify-center">
+                  <div className="text-center">
+                    <CubeIcon className="h-12 w-12 text-emerald-600/50 mx-auto mb-2" />
+                    <span className="text-gray-400 text-sm">Tool Marking</span>
+                  </div>
+                </div>
+                <div className="p-6 flex-1 flex flex-col justify-between">
+                  <div>
+                    <h3 className="font-semibold text-vurmz-dark mb-2">Tool Marking</h3>
+                    <p className="text-gray-600 text-sm">Identify your equipment and tools.</p>
+                  </div>
+                  <div className="text-vurmz-teal text-sm font-medium group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
+                    See examples →
+                  </div>
+                </div>
+              </Link>
+            </FadeIn>
           </div>
+
+          <FadeIn delay={0.7} className="mt-12 text-center">
+            <Link
+              href="/portfolio"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-vurmz-teal text-white rounded-xl font-semibold hover:bg-vurmz-teal-dark transition-colors"
+            >
+              View Full Portfolio
+              <ArrowRightIcon className="h-5 w-5" />
+            </Link>
+          </FadeIn>
         </div>
       </section>
 
@@ -235,7 +309,7 @@ export default function HomePageContent() {
               <span>Why Local</span>
             </motion.div>
             <h2 className="text-4xl md:text-5xl font-bold text-vurmz-dark tracking-tight">
-              The VURMZ Difference
+              Why Local Beats Online
             </h2>
           </BlurIn>
 

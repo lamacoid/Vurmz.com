@@ -12,7 +12,7 @@ import { PRODUCTS, PRICING_DETAILS, PROMO_PACK_SIZE } from '@/lib/products'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 
 export const metadata: Metadata = {
-  title: 'Pricing',
+  title: 'Laser Engraving Pricing | Fair & Transparent | VURMZ Centennial CO',
   description: `Transparent laser engraving pricing for ${siteInfo.city} and Denver metro businesses. Premium service at fair prices. No hidden fees, no surprises.`,
 }
 
@@ -91,7 +91,7 @@ export default function PricingPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6">
-              What Things Cost
+              Fair Pricing, No Surprises
             </h1>
             <p className="text-base sm:text-lg md:text-xl text-gray-300">
               I charge more per item than online wholesalers. Here is why that ends up costing you less.
@@ -279,7 +279,7 @@ export default function PricingPage() {
       <section className="py-10 sm:py-12 md:py-16 bg-vurmz-dark">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-6 sm:mb-8 text-center">
-            VURMZ vs Online Wholesalers
+            See Why Local Costs Less
           </h2>
 
           <div className="overflow-x-auto -mx-4 sm:mx-0">
