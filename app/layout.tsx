@@ -4,6 +4,7 @@ import './globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import ThemeSwitcher from '@/components/ThemeSwitcher'
+import TrippyEffects from '@/components/TrippyEffects'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -97,6 +98,7 @@ export default function RootLayout({
         </main>
         <Footer />
         <ThemeSwitcher />
+        <TrippyEffects />
       </body>
     </html>
   )

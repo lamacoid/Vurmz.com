@@ -14,17 +14,15 @@ export default function ThemeSwitcher() {
     if (saved) {
       setTheme(saved)
       applyTheme(saved)
+    } else {
+      applyTheme('dark')
     }
   }, [])
 
   const applyTheme = (t: Theme) => {
     const html = document.documentElement
-    html.classList.remove('dark', 'trippy')
-    if (t === 'dark') {
-      html.classList.add('dark')
-    } else if (t === 'trippy') {
-      html.classList.add('trippy')
-    }
+    html.classList.remove('dark', 'trippy', 'light')
+    html.classList.add(t)
   }
 
   const handleThemeChange = (t: Theme) => {

@@ -303,3 +303,522 @@ html {
     box-shadow: 0 0 30px rgba(60, 185, 178, 0.5), 0 0 60px rgba(60, 185, 178, 0.25);
   }
 }
+
+/* ========================================
+   LIGHT MODE — LIQUID GLASS ON STEROIDS
+   Activated when html.light is set
+======================================== */
+
+/* Invert the dark backgrounds to glassy whites */
+html.light .bg-vurmz-dark {
+  background-color: rgba(240, 252, 252, 0.7) !important;
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+}
+
+html.light .bg-\[\\#1f2523\] {
+  background-color: rgba(255, 255, 255, 0.5) !important;
+  backdrop-filter: blur(20px) saturate(1.3);
+  -webkit-backdrop-filter: blur(20px) saturate(1.3);
+}
+
+/* Body background — subtle animated gradient like light refracting */
+html.light body {
+  background:
+    linear-gradient(135deg,
+      #f0fdfc 0%,
+      #e8faf8 15%,
+      #f0f4ff 30%,
+      #fdf0fd 45%,
+      #f0fdfc 60%,
+      #eef8ff 75%,
+      #f5f0ff 90%,
+      #f0fdfc 100%
+    ) !important;
+  background-size: 400% 400% !important;
+  animation: light-bg-shift 20s ease-in-out infinite;
+}
+
+@keyframes light-bg-shift {
+  0%, 100% { background-position: 0% 50%; }
+  25%      { background-position: 100% 0%; }
+  50%      { background-position: 100% 100%; }
+  75%      { background-position: 0% 100%; }
+}
+
+/* Glass body overlay — prismatic refraction */
+html.light body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 60% 40% at 20% 20%, rgba(60, 185, 178, 0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 50% at 80% 30%, rgba(123, 200, 212, 0.1) 0%, transparent 50%),
+    radial-gradient(ellipse 70% 30% at 50% 80%, rgba(168, 85, 247, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse 40% 60% at 10% 70%, rgba(236, 72, 153, 0.04) 0%, transparent 45%);
+  animation: light-refract 12s ease-in-out infinite;
+}
+
+@keyframes light-refract {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.8; transform: scale(1.05); }
+}
+
+/* Glare sweep across the entire viewport */
+html.light body::after {
+  content: '';
+  position: fixed;
+  top: -100%;
+  left: -100%;
+  width: 300%;
+  height: 300%;
+  pointer-events: none;
+  z-index: 1;
+  background: linear-gradient(
+    135deg,
+    transparent 42%,
+    rgba(255, 255, 255, 0.5) 45%,
+    rgba(255, 255, 255, 0.8) 48%,
+    rgba(60, 185, 178, 0.15) 50%,
+    rgba(255, 255, 255, 0.5) 52%,
+    transparent 55%
+  );
+  animation: light-glare-sweep 8s ease-in-out infinite;
+}
+
+@keyframes light-glare-sweep {
+  0%   { transform: translateX(-30%) translateY(-30%) rotate(0deg); }
+  100% { transform: translateX(30%) translateY(30%) rotate(0deg); }
+}
+
+/* White text becomes dark in light mode */
+html.light .text-white {
+  color: #1A2F2E !important;
+}
+
+html.light .text-gray-300,
+html.light .text-gray-400 {
+  color: #4B5563 !important;
+}
+
+html.light .text-gray-500 {
+  color: #6B7280 !important;
+}
+
+/* Teal stays vibrant but glows */
+html.light .text-vurmz-teal {
+  color: #2A9D97 !important;
+  text-shadow: 0 0 12px rgba(60, 185, 178, 0.3);
+}
+
+html.light .bg-vurmz-teal {
+  background-color: rgba(60, 185, 178, 0.85) !important;
+  box-shadow:
+    0 8px 32px rgba(60, 185, 178, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* CTA section text stays white on teal bg */
+html.light .bg-vurmz-teal .text-white,
+html.light .bg-vurmz-teal h2,
+html.light .bg-vurmz-teal p {
+  color: #ffffff !important;
+}
+
+/* Cards become frosted glass */
+html.light [class*="border-gray"] {
+  border-color: rgba(60, 185, 178, 0.15) !important;
+}
+
+html.light .border-gray-700 {
+  border-color: rgba(60, 185, 178, 0.12) !important;
+}
+
+html.light [class*="rounded-lg"],
+html.light [class*="rounded-xl"],
+html.light [class*="rounded-2xl"] {
+  box-shadow:
+    0 8px 32px rgba(60, 185, 178, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+/* Header becomes frosted glass bar */
+html.light header {
+  background: rgba(255, 255, 255, 0.7) !important;
+  backdrop-filter: blur(24px) saturate(1.5) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(1.5) !important;
+  border-bottom: 1px solid rgba(60, 185, 178, 0.15) !important;
+  box-shadow: 0 4px 30px rgba(60, 185, 178, 0.08);
+}
+
+html.light header a {
+  color: #374151 !important;
+}
+
+html.light header a:hover {
+  color: #2A9D97 !important;
+  background: rgba(60, 185, 178, 0.08) !important;
+}
+
+html.light header img {
+  filter: none !important;
+}
+
+/* Top bar inverts */
+html.light .bg-vurmz-dark.text-white.py-2 {
+  background-color: rgba(240, 252, 252, 0.9) !important;
+}
+
+/* Footer glass */
+html.light footer {
+  background: rgba(240, 252, 252, 0.8) !important;
+  backdrop-filter: blur(20px) !important;
+}
+
+html.light footer .text-gray-400,
+html.light footer .text-gray-500 {
+  color: #6B7280 !important;
+}
+
+html.light footer .text-white {
+  color: #1A2F2E !important;
+}
+
+/* Logo un-invert in light mode */
+html.light img[alt*="VURMZ"] {
+  filter: none !important;
+}
+
+/* Price pills become glass */
+html.light .bg-vurmz-teal\/20 {
+  background: rgba(60, 185, 178, 0.12) !important;
+  backdrop-filter: blur(8px);
+  border-color: rgba(60, 185, 178, 0.2) !important;
+}
+
+html.light .bg-vurmz-teal\/20 .text-white,
+html.light .bg-vurmz-teal\/20 strong {
+  color: #1A2F2E !important;
+}
+
+/* Product cards in light mode */
+html.light .bg-vurmz-dark.rounded-lg,
+html.light .bg-vurmz-dark.p-4 {
+  background: rgba(255, 255, 255, 0.6) !important;
+  backdrop-filter: blur(16px);
+  border-color: rgba(60, 185, 178, 0.12) !important;
+}
+
+/* Keep CTA buttons readable */
+html.light a[class*="bg-vurmz-dark"] {
+  background-color: #1A2F2E !important;
+  color: #ffffff !important;
+}
+
+html.light a[class*="border-gray-600"],
+html.light a[class*="border-white"] {
+  border-color: rgba(60, 185, 178, 0.4) !important;
+  color: #1A2F2E !important;
+}
+
+/* Sections breathe subtly in light mode too */
+html.light section {
+  position: relative;
+}
+
+/* ========================================
+   TRIPPY MODE
+   Activated when html.trippy is set
+======================================== */
+
+/* Breathing hue shift on the entire page */
+html.trippy {
+  animation: trippy-hue 12s ease-in-out infinite;
+}
+
+@keyframes trippy-hue {
+  0%   { filter: hue-rotate(0deg) saturate(1.3); }
+  25%  { filter: hue-rotate(15deg) saturate(1.5); }
+  50%  { filter: hue-rotate(-10deg) saturate(1.4); }
+  75%  { filter: hue-rotate(8deg) saturate(1.6); }
+  100% { filter: hue-rotate(0deg) saturate(1.3); }
+}
+
+/* All sections breathe — slow scale pulse */
+html.trippy section {
+  animation: trippy-breathe 6s ease-in-out infinite;
+  transform-origin: center center;
+}
+html.trippy section:nth-child(2n) {
+  animation-delay: -2s;
+  animation-duration: 7s;
+}
+html.trippy section:nth-child(3n) {
+  animation-delay: -4s;
+  animation-duration: 8s;
+}
+
+@keyframes trippy-breathe {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.008); }
+}
+
+/* Text breathes independently */
+html.trippy h1,
+html.trippy h2,
+html.trippy h3 {
+  animation: trippy-text-breathe 4s ease-in-out infinite;
+}
+html.trippy h1 { animation-duration: 5s; }
+html.trippy h2 { animation-delay: -1.5s; animation-duration: 4.5s; }
+html.trippy h3 { animation-delay: -3s; animation-duration: 5.5s; }
+
+@keyframes trippy-text-breathe {
+  0%, 100% {
+    transform: scale(1);
+    letter-spacing: 0em;
+    filter: blur(0px);
+  }
+  50% {
+    transform: scale(1.015);
+    letter-spacing: 0.01em;
+    filter: blur(0.3px);
+  }
+}
+
+/* Cards and bordered elements warp slightly */
+html.trippy [class*="rounded"],
+html.trippy [class*="border"] {
+  animation: trippy-warp 8s ease-in-out infinite;
+}
+html.trippy [class*="rounded"]:nth-child(2n) { animation-delay: -3s; }
+html.trippy [class*="rounded"]:nth-child(3n) { animation-delay: -5s; animation-duration: 9s; }
+
+@keyframes trippy-warp {
+  0%, 100% {
+    transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
+    border-radius: inherit;
+  }
+  25% {
+    transform: perspective(1000px) rotateX(0.4deg) rotateY(-0.3deg);
+  }
+  50% {
+    transform: perspective(1000px) rotateX(-0.3deg) rotateY(0.4deg);
+  }
+  75% {
+    transform: perspective(1000px) rotateX(0.2deg) rotateY(-0.2deg);
+  }
+}
+
+/* Images and icons pulse with color */
+html.trippy img {
+  animation: trippy-image 7s ease-in-out infinite;
+}
+
+@keyframes trippy-image {
+  0%, 100% { filter: brightness(1) contrast(1); }
+  33%      { filter: brightness(1.1) contrast(1.05); }
+  66%      { filter: brightness(0.95) contrast(1.1); }
+}
+
+html.trippy svg {
+  animation: trippy-icon-glow 3s ease-in-out infinite;
+}
+
+@keyframes trippy-icon-glow {
+  0%, 100% { filter: drop-shadow(0 0 0px transparent); }
+  50%      { filter: drop-shadow(0 0 6px currentColor); }
+}
+
+/* Backgrounds shift color temperature */
+html.trippy .bg-vurmz-dark {
+  animation: trippy-bg-shift 10s ease-in-out infinite;
+}
+
+@keyframes trippy-bg-shift {
+  0%, 100% { background-color: #1A2F2E; }
+  25%      { background-color: #1E2A35; }
+  50%      { background-color: #251A2F; }
+  75%      { background-color: #1A2F24; }
+}
+
+html.trippy .bg-vurmz-teal {
+  animation: trippy-teal-shift 8s ease-in-out infinite;
+}
+
+@keyframes trippy-teal-shift {
+  0%, 100% { background-color: #3CB9B2; }
+  25%      { background-color: #B23CB9; }
+  50%      { background-color: #B9823C; }
+  75%      { background-color: #3C6FB9; }
+}
+
+/* Border colors breathe */
+html.trippy [class*="border-gray"] {
+  animation: trippy-border 6s ease-in-out infinite;
+}
+
+@keyframes trippy-border {
+  0%, 100% { border-color: rgba(75, 85, 99, 0.6); }
+  33%      { border-color: rgba(139, 92, 246, 0.4); }
+  66%      { border-color: rgba(59, 130, 246, 0.4); }
+}
+
+/* The teal accent text color-cycles */
+html.trippy .text-vurmz-teal {
+  animation: trippy-accent-text 5s ease-in-out infinite;
+}
+
+@keyframes trippy-accent-text {
+  0%, 100% { color: #3CB9B2; }
+  25%      { color: #C084FC; }
+  50%      { color: #FB923C; }
+  75%      { color: #34D399; }
+}
+
+/* Scrollbar goes psychedelic */
+html.trippy::-webkit-scrollbar {
+  width: 10px;
+}
+html.trippy::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+html.trippy::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3, #54a0ff);
+  background-size: 100% 300%;
+  animation: trippy-scrollbar 4s ease-in-out infinite;
+  border-radius: 5px;
+}
+
+@keyframes trippy-scrollbar {
+  0%, 100% { background-position: 0% 0%; }
+  50%      { background-position: 0% 100%; }
+}
+
+/* Fractal-like background overlay on body */
+html.trippy body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.04;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(168, 85, 247, 0.8) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(59, 130, 246, 0.8) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.6) 0%, transparent 40%),
+    radial-gradient(circle at 30% 80%, rgba(52, 211, 153, 0.6) 0%, transparent 45%),
+    radial-gradient(circle at 70% 20%, rgba(251, 146, 60, 0.6) 0%, transparent 45%);
+  animation: trippy-fractal 15s ease-in-out infinite;
+  mix-blend-mode: screen;
+}
+
+@keyframes trippy-fractal {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.04;
+  }
+  25% {
+    transform: scale(1.1) rotate(1deg);
+    opacity: 0.07;
+  }
+  50% {
+    transform: scale(1.05) rotate(-0.5deg);
+    opacity: 0.05;
+  }
+  75% {
+    transform: scale(1.15) rotate(0.8deg);
+    opacity: 0.08;
+  }
+}
+
+/* Subtle background pattern that drifts */
+html.trippy body::before {
+  content: '';
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.025;
+  background-image:
+    repeating-conic-gradient(
+      from 0deg at 50% 50%,
+      rgba(168, 85, 247, 0.5) 0deg 10deg,
+      transparent 10deg 20deg,
+      rgba(59, 130, 246, 0.5) 20deg 30deg,
+      transparent 30deg 40deg,
+      rgba(236, 72, 153, 0.4) 40deg 50deg,
+      transparent 50deg 60deg
+    );
+  animation: trippy-mandala 60s linear infinite;
+}
+
+@keyframes trippy-mandala {
+  0%   { transform: rotate(0deg) scale(1); }
+  50%  { transform: rotate(180deg) scale(1.2); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+/* Links shimmer */
+html.trippy a {
+  transition: text-shadow 0.3s ease;
+}
+html.trippy a:hover {
+  text-shadow:
+    0 0 8px currentColor,
+    0 0 16px currentColor;
+}
+
+/* Buttons glow and pulse */
+html.trippy button,
+html.trippy [class*="bg-vurmz-teal"][href] {
+  transition: box-shadow 0.3s ease;
+}
+html.trippy button:hover,
+html.trippy [class*="bg-vurmz-teal"][href]:hover {
+  box-shadow:
+    0 0 15px rgba(168, 85, 247, 0.4),
+    0 0 30px rgba(59, 130, 246, 0.2),
+    0 0 45px rgba(236, 72, 153, 0.1);
+}
+
+/* ThemeSwitcher button animation */
+@keyframes trippy-button {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* White text gets a subtle rainbow shimmer in trippy */
+html.trippy .text-white {
+  animation: trippy-white-shimmer 8s ease-in-out infinite;
+}
+
+@keyframes trippy-white-shimmer {
+  0%, 100% { color: #ffffff; }
+  25%      { color: #f0e6ff; }
+  50%      { color: #e6f0ff; }
+  75%      { color: #f0ffe6; }
+}
+
+/* Gray text gets warmer/cooler */
+html.trippy .text-gray-400 {
+  animation: trippy-gray-shift 6s ease-in-out infinite;
+}
+
+@keyframes trippy-gray-shift {
+  0%, 100% { color: #9ca3af; }
+  33%      { color: #a89cb8; }
+  66%      { color: #9caab8; }
+}
