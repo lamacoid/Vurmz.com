@@ -33,10 +33,10 @@ const products = [
 ]
 
 const valueProps = [
-  { title: 'Fast Turnaround', description: 'Most orders ready same-day or next-day.', icon: ClockIcon },
-  { title: 'No Minimums', description: 'Order 1 or 100. No forced bulk.', icon: CubeIcon },
-  { title: 'Text Me Directly', description: 'One person. Quick answers, no runaround.', icon: UserIcon },
-  { title: 'Local Pickup', description: `${siteInfo.city} pickup or delivery over $100.`, icon: TruckIcon },
+  { title: '24hr Same-Day Turnaround', description: 'Morning order, afternoon pickup. No waiting weeks for an online shop to ship.', icon: ClockIcon },
+  { title: 'No Minimums', description: 'Need 1 pen or 500? Same quality, same speed. No forced bulk orders.', icon: CubeIcon },
+  { title: 'One Person, Not a Callcenter', description: 'Text Zach directly. Fast answers, no ticket numbers, no runaround.', icon: UserIcon },
+  { title: 'Free Hand-Delivery', description: `Delivered to your desk in ${siteInfo.city} and surrounding areas. No shipping fees.`, icon: TruckIcon },
 ]
 
 export default function HomePage() {
@@ -63,11 +63,11 @@ export default function HomePage() {
               </div>
 
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6 tracking-tight text-white leading-tight">
-                Laser Engraving for Your Small Business
+                Your Neighborhood Laser Engraving Shop
               </h1>
 
               <p className="text-base sm:text-lg md:text-xl text-gray-400 max-w-xl leading-relaxed mb-6">
-                Branded pens, metal cards, tool marking, knife engraving. No minimums. Fast turnaround in South Denver metro.
+                Branded pens, metal business cards, tool marking, knife engraving &mdash; hand-delivered to your office in the South Denver metro. Same-day turnaround. No minimums.
               </p>
 
               {/* Starting prices */}
@@ -152,7 +152,7 @@ export default function HomePage() {
       <section className="bg-vurmz-dark py-12 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-8 sm:mb-12 text-center">
-            Why Local Beats Online
+            Why the Shop Next Door Beats the Website Far Away
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 md:gap-8">
             {valueProps.map((prop) => (
@@ -169,9 +169,9 @@ export default function HomePage() {
       {/* CTA */}
       <section className="bg-vurmz-teal py-12 sm:py-16 md:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4">Ready to Get Started?</h2>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4">Text Zach. Get a Quote in Minutes.</h2>
           <p className="text-base sm:text-lg md:text-xl text-white/80 mb-6 sm:mb-8 max-w-2xl mx-auto">
-            Text me your project details. Same-day response, no obligation.
+            Send a quick text with what you need. Same-day response, no obligation, no sales pitch.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
             <a
