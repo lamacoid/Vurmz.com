@@ -1,32 +1,8 @@
 export const runtime = 'edge'
 
 import { NextRequest, NextResponse } from 'next/server'
-import { getD1, generateId, now } from '@/lib/d1'
-
-// Helper to generate order number in format V-{letter}{YY}####
-// Month letters: A=Jan, B=Feb, C=Mar, D=Apr, E=May, F=Jun, G=Jul, H=Aug, I=Sep, J=Oct, K=Nov, L=Dec
-// Example: V-B260001 = February 2026, order 1
-async function generateOrderNumber(db: D1Database): Promise<string> {
-  const monthLetters = 'ABCDEFGHIJKL'
-  const now = new Date()
-  const monthLetter = monthLetters[now.getMonth()] // A-L for Jan-Dec
-  const year = String(now.getFullYear()).slice(-2) // Last 2 digits of year
-  const prefix = `V-${monthLetter}${year}`
-
-  // Get the highest order number for this month/year prefix
-  const lastOrder = await db.prepare(
-    'SELECT order_number FROM orders WHERE order_number LIKE ? ORDER BY order_number DESC LIMIT 1'
-  ).bind(`${prefix}%`).first()
-
-  if (!lastOrder) {
-    return `${prefix}0001`
-  }
-
-  // Extract the sequential number (last 4 digits) and increment
-  const lastNum = parseInt((lastOrder as any).order_number.slice(-4))
-  const nextNum = String(lastNum + 1).padStart(4, '0')
-  return `${prefix}${nextNum}`
-}
+import { getD1, now } from '@/lib/d1'
+import { createOrder } from '@/lib/order-helpers'
 
 interface OrderInput {
   customerId: string
@@ -48,40 +24,30 @@ export async function POST(request: NextRequest) {
   try {
     const db = getD1()
     const data = await request.json() as OrderInput
-    const id = generateId()
-    const timestamp = now()
-    const orderNumber = await generateOrderNumber(db)
 
-    await db.prepare(`
-      INSERT INTO orders (id, order_number, customer_id, quote_id, project_description, material, quantity, price, status, due_date, delivery_method, delivery_notes, production_notes, laser_type, created_at, updated_at)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `).bind(
-      id,
-      orderNumber,
-      data.customerId,
-      data.quoteId || null,
-      data.projectDescription,
-      data.material,
-      data.quantity,
-      data.price,
-      data.status || 'PENDING',
-      data.dueDate || null,
-      data.deliveryMethod || 'PICKUP',
-      data.deliveryNotes || null,
-      data.productionNotes || null,
-      data.laserType || null,
-      timestamp,
-      timestamp
-    ).run()
+    const order = await createOrder({
+      db,
+      customerId: data.customerId,
+      quoteId: data.quoteId,
+      projectDescription: data.projectDescription,
+      material: data.material,
+      quantity: data.quantity,
+      price: data.price,
+      status: data.status,
+      deliveryMethod: data.deliveryMethod,
+      deliveryNotes: data.deliveryNotes,
+      productionNotes: data.productionNotes,
+      laserType: data.laserType,
+    })
 
     // Update quote status if linked
     if (data.quoteId) {
       await db.prepare('UPDATE quotes SET status = ?, updated_at = ? WHERE id = ?')
-        .bind('APPROVED', timestamp, data.quoteId).run()
+        .bind('APPROVED', now(), data.quoteId).run()
     }
 
-    const order = await db.prepare('SELECT * FROM orders WHERE id = ?').bind(id).first()
-    return NextResponse.json(order, { status: 201 })
+    const result = await db.prepare('SELECT * FROM orders WHERE id = ?').bind(order.id).first()
+    return NextResponse.json(result, { status: 201 })
   } catch (error) {
     console.error('Error creating order:', error)
     return NextResponse.json({ error: 'Failed to create order' }, { status: 500 })

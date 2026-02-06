@@ -28,5 +28,9 @@ export const metadata: Metadata = {
 }
 
 export default function IndustrialOrderPage() {
-  return <IndustrialBuilder />
+  return (
+    <div data-order-page className="min-h-screen">
+      <IndustrialBuilder />
+    </div>
+  )
 }

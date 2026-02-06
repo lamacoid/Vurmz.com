@@ -1,22 +1,72 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import dynamic from 'next/dynamic'
 import { SafetyIcon, type SafetyIconId, categorizedIcons as safetyCategorizedIcons, iconCategories as safetyIconCategories } from './builder/icons/SafetyIcons'
 import { IndustrialIcon, industrialCategorizedIcons, industrialIconCategories } from './builder/icons/IndustrialIcons'
 
-// Photorealistic 3D preview - dynamically imported to avoid SSR issues
-const PlasticSign3D = dynamic(() => import('./builder/visualizers/PlasticSign3D'), {
-  ssr: false,
-  loading: () => (
-    <div className="w-full h-[260px] flex items-center justify-center">
-      <div className="flex flex-col items-center gap-3">
-        <div className="w-8 h-8 border-2 border-vurmz-teal/30 border-t-vurmz-teal rounded-full animate-spin" />
-        <div className="text-gray-400 text-sm">Loading 3D Preview...</div>
-      </div>
-    </div>
-  ),
-})
+// Simple 2D Tag/Sign Preview
+function TagSignPreview({
+  type,
+  width,
+  height,
+  material,
+  text,
+  isRound,
+}: {
+  type: 'tag' | 'sign'
+  width: number
+  height: number
+  material: { color: string; engraveColor: string }
+  text: string
+  isRound: boolean
+}) {
+  // Scale dimensions for SVG (max 200px wide)
+  const scale = Math.min(200 / width, 150 / height, 40)
+  const svgWidth = width * scale
+  const svgHeight = height * scale
+
+  return (
+    <svg
+      viewBox={`0 0 ${svgWidth + 20} ${svgHeight + 20}`}
+      className="w-full max-w-xs mx-auto"
+      style={{ maxHeight: '180px' }}
+    >
+      {isRound ? (
+        <circle
+          cx={(svgWidth + 20) / 2}
+          cy={(svgHeight + 20) / 2}
+          r={Math.min(svgWidth, svgHeight) / 2}
+          fill={material.color}
+          stroke="#555"
+          strokeWidth="1"
+        />
+      ) : (
+        <rect
+          x="10"
+          y="10"
+          width={svgWidth}
+          height={svgHeight}
+          rx="4"
+          fill={material.color}
+          stroke="#555"
+          strokeWidth="1"
+        />
+      )}
+      <text
+        x={(svgWidth + 20) / 2}
+        y={(svgHeight + 20) / 2}
+        textAnchor="middle"
+        dominantBaseline="middle"
+        fill={material.engraveColor}
+        fontSize={Math.min(14, svgHeight / 3)}
+        fontFamily="Arial, sans-serif"
+        fontWeight="500"
+      >
+        {text || (type === 'tag' ? 'YOUR TEXT' : 'YOUR SIGN')}
+      </text>
+    </svg>
+  )
+}
 
 // ============================================================================
 // Tag & Sign Designer
@@ -265,17 +315,15 @@ export default function LabelDesigner({ onChange, initialQuantity = 1 }: Props) 
         <p className="text-gray-400 text-sm mt-1">Custom engraved tags & signs</p>
       </div>
 
-      {/* Live 3D Preview */}
+      {/* Live Preview */}
       <div className="p-4 border-b border-gray-200">
-        <PlasticSign3D
+        <TagSignPreview
           type={productType}
-          shape={size.includes('round') ? 'round' : 'rectangle'}
           width={width}
           height={height}
-          material={material}
-          line1={text || (productType === 'tag' ? 'YOUR TEXT' : 'YOUR SIGN')}
-          hasHole={mounting !== 'none' && mounting !== 'adhesive'}
-          holePosition={mounting === '1-hole' ? 'top-center' : mounting === '2-holes' || mounting === '4-holes' ? 'top' : 'none'}
+          material={selectedMaterial}
+          text={text}
+          isRound={size.includes('round')}
         />
         <div className="text-center mt-2 text-xs text-gray-500">
           {width}&quot; × {height}&quot; • {selectedMaterial.name}

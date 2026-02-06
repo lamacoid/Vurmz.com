@@ -2,7 +2,8 @@ export const runtime = 'edge'
 
 import { NextRequest, NextResponse } from 'next/server'
 import { getD1, generateId, now } from '@/lib/d1'
-import { Resend } from 'resend'
+import { sendEmail } from '@/lib/resend-edge'
+import { createOrder, generateOrderNumber, generateReceiptNumber } from '@/lib/order-helpers'
 
 const SQUARE_WEBHOOK_SIGNATURE_KEY = process.env.SQUARE_WEBHOOK_SIGNATURE_KEY
 
@@ -60,36 +61,10 @@ async function verifySignature(body: string, signature: string, url: string): Pr
   }
 }
 
-// Generate order number
-async function generateOrderNumber(db: D1Database): Promise<string> {
-  const monthLetters = 'ABCDEFGHIJKL'
-  const today = new Date()
-  const monthLetter = monthLetters[today.getMonth()]
-  const year = String(today.getFullYear()).slice(-2)
-  const prefix = `V-${monthLetter}${year}`
-
-  const lastOrder = await db.prepare(
-    'SELECT order_number FROM orders WHERE order_number LIKE ? ORDER BY order_number DESC LIMIT 1'
-  ).bind(`${prefix}%`).first()
-
-  if (!lastOrder) {
-    return `${prefix}0001`
-  }
-
-  const lastNum = parseInt((lastOrder as { order_number: string }).order_number.slice(-4))
-  return `${prefix}${String(lastNum + 1).padStart(4, '0')}`
-}
-
-// Generate receipt number
-function generateReceiptNumber(): string {
-  const today = new Date()
-  const dateStr = today.toISOString().slice(0, 10).replace(/-/g, '')
-  const random = Math.random().toString(36).substring(2, 6).toUpperCase()
-  return `R-${dateStr}-${random}`
-}
+// generateOrderNumber and generateReceiptNumber imported from @/lib/order-helpers
 
 // Send receipt email
-async function sendReceiptEmail(data: {
+async function sendReceiptEmailToCustomer(data: {
   customerEmail: string
   customerName: string
   orderNumber: string
@@ -98,9 +73,7 @@ async function sendReceiptEmail(data: {
   description: string
   squareReceiptUrl?: string
 }) {
-  const resend = new Resend(process.env.RESEND_API_KEY)
-
-  await resend.emails.send({
+  await sendEmail({
     from: 'VURMZ <noreply@vurmz.com>',
     to: data.customerEmail,
     subject: `Receipt for Order ${data.orderNumber} - VURMZ`,
@@ -167,10 +140,9 @@ async function notifyAdmin(data: {
   amount: number
   description: string
 }) {
-  const resend = new Resend(process.env.RESEND_API_KEY)
   const adminEmail = process.env.ADMIN_EMAIL || 'zach@vurmz.com'
 
-  await resend.emails.send({
+  await sendEmail({
     from: 'VURMZ System <noreply@vurmz.com>',
     to: adminEmail,
     subject: `Payment Received - ${data.orderNumber}`,
@@ -292,27 +264,23 @@ export async function POST(request: NextRequest) {
         WHERE id = ?
       `).bind(squarePaymentId, now(), quoteData.id).run()
 
-      // 3. Create order in orders table
-      const orderNumber = quoteData.order_number || await generateOrderNumber(db)
-      const orderId = generateId()
-
-      await db.prepare(`
-        INSERT INTO orders (id, order_number, customer_id, quote_id, project_description, material, quantity, price, status, delivery_method, payment_status, square_payment_id, created_at, updated_at)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'PENDING', ?, 'paid', ?, ?, ?)
-      `).bind(
-        orderId,
-        orderNumber,
-        quoteData.customer_id,
-        quoteData.id,
-        quoteData.description,
-        quoteData.product_type,
-        parseInt(quoteData.quantity) || 1,
-        amount,
-        quoteData.delivery_method || 'PICKUP',
+      // 3. Create order in orders table using shared helper
+      const order = await createOrder({
+        db,
+        customerId: quoteData.customer_id,
+        quoteId: quoteData.id,
+        projectDescription: quoteData.description,
+        material: quoteData.product_type,
+        quantity: parseInt(quoteData.quantity) || 1,
+        price: amount,
+        deliveryMethod: quoteData.delivery_method || 'PICKUP',
+        paymentStatus: 'paid',
         squarePaymentId,
-        now(),
-        now()
-      ).run()
+        orderNumber: quoteData.order_number || undefined,
+      })
+
+      const orderId = order.id
+      const orderNumber = order.orderNumber
 
       // 4. Update payment with order_id
       await db.prepare('UPDATE payments SET order_id = ? WHERE id = ?').bind(orderId, paymentId).run()
@@ -329,7 +297,7 @@ export async function POST(request: NextRequest) {
       // 6. Send receipt email to customer
       if (quoteData.customer_email) {
         try {
-          await sendReceiptEmail({
+          await sendReceiptEmailToCustomer({
             customerEmail: quoteData.customer_email,
             customerName: quoteData.customer_name,
             orderNumber,

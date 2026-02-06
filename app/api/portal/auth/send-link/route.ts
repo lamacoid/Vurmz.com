@@ -2,7 +2,7 @@ export const runtime = 'edge'
 
 import { NextRequest, NextResponse } from 'next/server'
 import { getD1 } from '@/lib/d1'
-import { Resend } from 'resend'
+import { sendEmail } from '@/lib/resend-edge'
 
 function generateToken(): string {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
@@ -56,8 +56,7 @@ export async function POST(request: NextRequest) {
     const siteUrl = process.env.SITE_URL || 'https://vurmz.com'
     const loginUrl = `${siteUrl}/portal/verify?token=${token}&email=${encodeURIComponent(email)}`
 
-    const resend = new Resend(process.env.RESEND_API_KEY)
-    await resend.emails.send({
+    await sendEmail({
       from: 'VURMZ <noreply@vurmz.com>',
       to: email,
       subject: 'Your VURMZ Login Link',

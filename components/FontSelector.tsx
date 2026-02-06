@@ -13,11 +13,11 @@ export default function FontSelector({ value, onChange, previewText = 'Abc' }: F
 
   return (
     <div>
-      <label className="block text-sm font-medium text-gray-700 mb-2">Font Style</label>
+      <label className="block text-sm font-medium text-[#5C4A3A] mb-2">Font Style</label>
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full border border-gray-300 px-3 py-2 text-sm focus:border-vurmz-teal focus:ring-1 focus:ring-vurmz-teal outline-none bg-white"
+        className="w-full border border-[#D4C8B8] px-3 py-2 text-sm text-[#5C4A3A] focus:border-[#7EB8C9] focus:ring-1 focus:ring-[#7EB8C9] outline-none bg-white"
       >
         {Object.entries(fontsByCategory).map(([category, fonts]) => (
           <optgroup key={category} label={categoryLabels[category as keyof typeof categoryLabels]}>
@@ -32,7 +32,7 @@ export default function FontSelector({ value, onChange, previewText = 'Abc' }: F
       </select>
       {/* Font Preview */}
       <div
-        className="mt-2 p-2 bg-gray-100 text-center text-sm border border-gray-200"
+        className="mt-2 p-2 bg-[#D4C8B8]/10 text-center text-sm text-[#6B5A48] border border-[#D4C8B8]"
         style={selectedFont?.style}
       >
         {previewText}

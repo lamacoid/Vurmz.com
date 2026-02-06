@@ -9,7 +9,6 @@ import {
   TruckIcon,
   LockClosedIcon,
   CheckIcon,
-  ExclamationCircleIcon
 } from '@heroicons/react/24/outline'
 
 interface Settings {
@@ -47,11 +46,6 @@ export default function SettingsPage() {
   const [saving, setSaving] = useState(false)
   const [saveSuccess, setSaveSuccess] = useState(false)
 
-  const [currentPassword, setCurrentPassword] = useState('')
-  const [newPassword, setNewPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
-  const [passwordSaving, setPasswordSaving] = useState(false)
-  const [passwordMessage, setPasswordMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null)
 
   useEffect(() => {
     fetch('/api/settings')
@@ -93,45 +87,6 @@ export default function SettingsPage() {
       alert('Failed to save settings')
     } finally {
       setSaving(false)
-    }
-  }
-
-  const handlePasswordChange = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setPasswordMessage(null)
-
-    if (newPassword !== confirmPassword) {
-      setPasswordMessage({ type: 'error', text: 'New passwords do not match' })
-      return
-    }
-
-    if (newPassword.length < 6) {
-      setPasswordMessage({ type: 'error', text: 'New password must be at least 6 characters' })
-      return
-    }
-
-    setPasswordSaving(true)
-    try {
-      const res = await fetch('/api/auth/change-password', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ currentPassword, newPassword })
-      })
-
-      const data = await res.json() as { success?: boolean; error?: string; message?: string }
-
-      if (!res.ok) {
-        setPasswordMessage({ type: 'error', text: data.error || 'Failed to change password' })
-      } else {
-        setPasswordMessage({ type: 'success', text: 'Password changed successfully!' })
-        setCurrentPassword('')
-        setNewPassword('')
-        setConfirmPassword('')
-      }
-    } catch {
-      setPasswordMessage({ type: 'error', text: 'An error occurred' })
-    } finally {
-      setPasswordSaving(false)
     }
   }
 
@@ -396,97 +351,27 @@ export default function SettingsPage() {
           </motion.div>
         </form>
 
-        {/* Password Change */}
-        <form onSubmit={handlePasswordChange}>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4, ease: liquidEase }}
-            className="rounded-2xl p-6"
-            style={glassCard}
-          >
-            <div className="flex items-center gap-3 mb-5">
-              <div
-                className="p-2.5 rounded-xl"
-                style={{ background: 'rgba(251,191,36,0.1)', border: '1px solid rgba(251,191,36,0.15)' }}
-              >
-                <LockClosedIcon className="h-5 w-5 text-amber-600" />
-              </div>
-              <h2 className="font-semibold text-gray-800">Change Password</h2>
-            </div>
-
-            {passwordMessage && (
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="mb-5 p-4 rounded-xl flex items-center gap-3"
-                style={{
-                  background: passwordMessage.type === 'success' ? 'rgba(34,197,94,0.08)' : 'rgba(239,68,68,0.08)',
-                  border: `1px solid ${passwordMessage.type === 'success' ? 'rgba(34,197,94,0.2)' : 'rgba(239,68,68,0.2)'}`,
-                  color: passwordMessage.type === 'success' ? '#15803d' : '#dc2626',
-                }}
-              >
-                {passwordMessage.type === 'success' ? (
-                  <CheckIcon className="h-5 w-5" />
-                ) : (
-                  <ExclamationCircleIcon className="h-5 w-5" />
-                )}
-                {passwordMessage.text}
-              </motion.div>
-            )}
-
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-600 mb-2">Current Password</label>
-                <input
-                  type="password"
-                  value={currentPassword}
-                  onChange={(e) => setCurrentPassword(e.target.value)}
-                  required
-                  className="w-full px-4 py-3 rounded-xl outline-none transition-all focus:ring-2 focus:ring-[#6a8c8c]/20"
-                  style={inputStyle}
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-600 mb-2">New Password</label>
-                <input
-                  type="password"
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
-                  required
-                  minLength={6}
-                  className="w-full px-4 py-3 rounded-xl outline-none transition-all focus:ring-2 focus:ring-[#6a8c8c]/20"
-                  style={inputStyle}
-                />
-                <p className="text-xs text-gray-400 mt-1.5">Minimum 6 characters</p>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-600 mb-2">Confirm New Password</label>
-                <input
-                  type="password"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  required
-                  className="w-full px-4 py-3 rounded-xl outline-none transition-all focus:ring-2 focus:ring-[#6a8c8c]/20"
-                  style={inputStyle}
-                />
-              </div>
-            </div>
-
-            <button
-              type="submit"
-              disabled={passwordSaving}
-              className="mt-5 px-6 py-3 rounded-xl font-medium transition-all hover:scale-[1.02]"
-              style={{
-                background: 'rgba(106,140,140,0.1)',
-                border: '1px solid rgba(106,140,140,0.2)',
-                color: '#5a7a7a',
-              }}
+        {/* Authentication Info */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4, ease: liquidEase }}
+          className="rounded-2xl p-6"
+          style={glassCard}
+        >
+          <div className="flex items-center gap-3 mb-5">
+            <div
+              className="p-2.5 rounded-xl"
+              style={{ background: 'rgba(251,191,36,0.1)', border: '1px solid rgba(251,191,36,0.15)' }}
             >
-              {passwordSaving ? 'Changing...' : 'Change Password'}
-            </button>
-          </motion.div>
-        </form>
+              <LockClosedIcon className="h-5 w-5 text-amber-600" />
+            </div>
+            <h2 className="font-semibold text-gray-800">Authentication</h2>
+          </div>
+          <p className="text-sm text-gray-600">
+            Admin login uses magic links sent to your email. No password required — just enter your admin email at the login screen and check your inbox for a secure link.
+          </p>
+        </motion.div>
       </div>
     </AdminShell>
   )

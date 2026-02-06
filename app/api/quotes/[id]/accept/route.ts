@@ -1,30 +1,10 @@
 export const runtime = 'edge'
 
 import { NextRequest, NextResponse } from 'next/server'
-import { getD1, generateId } from '@/lib/d1'
+import { getD1 } from '@/lib/d1'
+import { createOrder, generateOrderNumber } from '@/lib/order-helpers'
 
 const SQUARE_API_URL = 'https://connect.squareup.com'
-
-// Helper to generate order number in format V-{letter}{YY}####
-async function generateOrderNumber(db: D1Database): Promise<string> {
-  const monthLetters = 'ABCDEFGHIJKL'
-  const now = new Date()
-  const monthLetter = monthLetters[now.getMonth()]
-  const year = String(now.getFullYear()).slice(-2)
-  const prefix = `V-${monthLetter}${year}`
-
-  const lastOrder = await db.prepare(
-    'SELECT order_number FROM orders WHERE order_number LIKE ? ORDER BY order_number DESC LIMIT 1'
-  ).bind(`${prefix}%`).first()
-
-  if (!lastOrder) {
-    return `${prefix}0001`
-  }
-
-  const lastNum = parseInt((lastOrder as any).order_number.slice(-4))
-  const nextNum = String(lastNum + 1).padStart(4, '0')
-  return `${prefix}${nextNum}`
-}
 
 interface SquareCustomerResponse {
   customer?: { id: string }
@@ -77,8 +57,7 @@ export async function POST(
       return NextResponse.json({ error: 'Customer email required for invoice' }, { status: 400 })
     }
 
-    // Generate order number first
-    const orderId = generateId()
+    // Generate order number
     const orderNumber = await generateOrderNumber(db)
 
     // Create Square Invoice
@@ -319,21 +298,19 @@ export async function POST(
       WHERE id = ?
     `).bind(orderNumber, invoiceUrl, id).run()
 
-    // Create an order from the accepted quote
-    await db.prepare(`
-      INSERT INTO orders (id, order_number, customer_id, quote_id, project_description, material, quantity, price, status, delivery_method, created_at, updated_at)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'IN_PROGRESS', ?, datetime('now'), datetime('now'))
-    `).bind(
-      orderId,
+    // Create an order from the accepted quote using shared helper
+    const createdOrder = await createOrder({
+      db,
+      customerId: String(quote.customer_id),
+      quoteId: String(id),
+      projectDescription: quote.description || `${quote.product_type} order`,
+      material: quote.product_type,
+      quantity: parseInt(quote.quantity) || 1,
+      price: quote.price,
+      status: 'IN_PROGRESS',
+      deliveryMethod: quote.delivery_method || 'PICKUP',
       orderNumber,
-      String(quote.customer_id),
-      String(id),
-      quote.description || `${quote.product_type} order`,
-      quote.product_type,
-      parseInt(quote.quantity) || 1,
-      quote.price,
-      quote.delivery_method || 'PICKUP'
-    ).run()
+    })
 
     // Fetch updated quote
     const updatedQuote = await db.prepare(`

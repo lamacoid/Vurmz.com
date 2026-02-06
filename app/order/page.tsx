@@ -24,5 +24,9 @@ export const metadata: Metadata = {
 }
 
 export default function OrderPage() {
-  return <PremiumBuilder />
+  return (
+    <div data-order-page className="min-h-screen">
+      <PremiumBuilder />
+    </div>
+  )
 }

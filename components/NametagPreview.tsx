@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { fontOptions, ENGRAVING_COLOR } from '@/lib/fonts'
 import FontSelector from './FontSelector'
+import { PRODUCTS } from '@/lib/products'
 
 interface NametagData {
   name: string
@@ -42,14 +43,14 @@ const shapes = [
 ]
 
 const sizes = [
-  { value: 'standard', label: 'Standard (3" x 1")', multiplier: 1 },
-  { value: 'large', label: 'Large (3.5" x 1.5")', multiplier: 1.25 },
+  { value: 'standard', label: 'Standard (3" x 1")', basePrice: PRODUCTS.namePlates.sizes.standard },
+  { value: 'large', label: 'Large (3.5" x 1.5")', basePrice: PRODUCTS.namePlates.sizes.large },
 ]
 
 const attachments = [
-  { value: 'pin', label: 'Safety Pin', price: 0 },
-  { value: 'magnetic', label: 'Magnetic', price: 2 },
-  { value: 'clip', label: 'Swivel Clip', price: 1 },
+  { value: 'pin', label: 'Safety Pin', price: PRODUCTS.namePlates.attachments.pin },
+  { value: 'magnetic', label: 'Magnetic', price: PRODUCTS.namePlates.attachments.magnetic },
+  { value: 'clip', label: 'Swivel Clip', price: PRODUCTS.namePlates.attachments.clip },
 ]
 
 export default function NametagPreview({ onChange }: NametagPreviewProps) {
@@ -66,11 +67,10 @@ export default function NametagPreview({ onChange }: NametagPreviewProps) {
   })
 
   const calculatePrice = (d: Omit<NametagData, 'pricePerTag'>) => {
-    let price = 6 // Base price
-    const sizeMultiplier = sizes.find(s => s.value === d.size)?.multiplier || 1
+    const sizeConfig = sizes.find(s => s.value === d.size)
+    const basePrice = sizeConfig?.basePrice || PRODUCTS.namePlates.sizes.standard
     const attachmentPrice = attachments.find(a => a.value === d.attachment)?.price || 0
-    price = price * sizeMultiplier + attachmentPrice
-    return Math.round(price * 100) / 100
+    return Math.round((basePrice + attachmentPrice) * 100) / 100
   }
 
   useEffect(() => {

@@ -2,8 +2,7 @@ export const runtime = 'edge'
 
 import { NextRequest, NextResponse } from 'next/server'
 import { getD1 } from '@/lib/d1'
-
-const SESSION_COOKIE = 'vurmz_session'
+import { SESSION_COOKIE, SESSION_MAX_AGE, encodeSession } from '@/lib/auth-helpers'
 
 export async function POST(request: NextRequest) {
   try {
@@ -47,15 +46,14 @@ export async function POST(request: NextRequest) {
       'UPDATE users SET magic_token = NULL, magic_token_expires = NULL WHERE id = ?'
     ).bind(user.id).run()
 
-    // Create session
-    const sessionId = crypto.randomUUID()
+    // Create session using unified helper
     const response = NextResponse.json({ success: true })
 
-    response.cookies.set(SESSION_COOKIE, `${user.id}:${sessionId}`, {
+    response.cookies.set(SESSION_COOKIE, encodeSession(user.id, 'admin'), {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
-      maxAge: 7 * 24 * 60 * 60, // 7 days
+      maxAge: SESSION_MAX_AGE,
       path: '/'
     })
 

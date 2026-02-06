@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { PhotoIcon } from '@heroicons/react/24/outline'
 import { fontOptions } from '@/lib/fonts'
 import FontSelector from './FontSelector'
+import { PRODUCTS } from '@/lib/products'
 
 export interface CoasterData {
   material: 'wood' | 'slate' | 'steel-gold' | 'steel-silver'
@@ -24,7 +25,7 @@ const materials = [
   {
     value: 'wood',
     label: 'Natural Wood',
-    basePrice: 4,
+    basePrice: PRODUCTS.coasters.materials.wood,
     bg: '#8B5A2B',
     engravingColor: '#3d2817',
     shapes: ['round', 'square'],
@@ -33,7 +34,7 @@ const materials = [
   {
     value: 'slate',
     label: 'Natural Slate',
-    basePrice: 5,
+    basePrice: PRODUCTS.coasters.materials.slate,
     bg: '#4a5568',
     engravingColor: '#a0aec0',
     shapes: ['round', 'square'],
@@ -42,7 +43,7 @@ const materials = [
   {
     value: 'steel-gold',
     label: 'Steel (Gold)',
-    basePrice: 6,
+    basePrice: PRODUCTS.coasters.materials.steel,
     bg: '#d4af37',
     engravingColor: '#1a1a1a',
     shapes: ['round'],
@@ -51,7 +52,7 @@ const materials = [
   {
     value: 'steel-silver',
     label: 'Steel (Silver)',
-    basePrice: 6,
+    basePrice: PRODUCTS.coasters.materials.steel,
     bg: '#c0c0c0',
     engravingColor: '#1a1a1a',
     shapes: ['round'],
@@ -113,15 +114,15 @@ export default function CoasterDesigner({ onChange }: CoasterDesignerProps) {
   const center = size / 2
 
   return (
-    <div className="bg-gray-50 rounded-2xl border border-gray-200 p-6">
-      <h3 className="font-bold text-lg mb-4 text-vurmz-dark">Design Your Coasters</h3>
+    <div className="bg-[#FAF7F2] rounded-2xl shadow-sm p-6">
+      <h3 className="font-bold text-lg mb-4 text-[#3D3428]">Design Your Coasters</h3>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Input Fields */}
         <div className="space-y-4">
           {/* Material Selector */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Material</label>
+            <label className="block text-sm font-medium text-[#5C4A3A] mb-2">Material</label>
             <div className="grid grid-cols-2 gap-2">
               {materials.map(mat => (
                 <button
@@ -130,18 +131,18 @@ export default function CoasterDesigner({ onChange }: CoasterDesignerProps) {
                   onClick={() => updateField('material', mat.value)}
                   className={`p-3 text-left border-2 rounded-xl transition-all ${
                     data.material === mat.value
-                      ? 'border-vurmz-teal bg-vurmz-teal/10'
-                      : 'border-gray-200 hover:border-gray-300'
+                      ? 'border-[#7EB8C9] bg-[#7EB8C9]/10'
+                      : 'border-[#D4C8B8] hover:border-[#E0D6C8]'
                   }`}
                 >
                   <div className="flex items-center gap-2">
                     <div
-                      className="w-6 h-6 rounded-full border border-gray-300"
+                      className="w-6 h-6 rounded-full border border-[#D4C8B8]"
                       style={{ backgroundColor: mat.bg }}
                     />
                     <div>
-                      <div className="font-medium text-sm">{mat.label}</div>
-                      <div className="text-xs text-gray-500">${mat.basePrice}/ea</div>
+                      <div className="font-medium text-sm text-[#3D3428]">{mat.label}</div>
+                      <div className="text-xs text-[#8B7355]">${mat.basePrice}/ea</div>
                     </div>
                   </div>
                 </button>
@@ -151,7 +152,7 @@ export default function CoasterDesigner({ onChange }: CoasterDesignerProps) {
 
           {/* Shape Selector */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Shape</label>
+            <label className="block text-sm font-medium text-[#5C4A3A] mb-2">Shape</label>
             <div className="flex gap-2">
               {availableShapes.map(shape => (
                 <button
@@ -160,8 +161,8 @@ export default function CoasterDesigner({ onChange }: CoasterDesignerProps) {
                   onClick={() => updateField('shape', shape.value)}
                   className={`flex-1 px-4 py-3 text-sm font-medium border-2 rounded-xl transition-all flex items-center justify-center gap-2 ${
                     data.shape === shape.value
-                      ? 'border-vurmz-teal bg-vurmz-teal/10'
-                      : 'border-gray-200 hover:border-gray-300'
+                      ? 'border-[#7EB8C9] bg-[#7EB8C9]/10 text-[#3D3428]'
+                      : 'border-[#D4C8B8] hover:border-[#E0D6C8] text-[#5C4A3A]'
                   }`}
                 >
                   <span className="text-lg">{shape.icon}</span>
@@ -170,7 +171,7 @@ export default function CoasterDesigner({ onChange }: CoasterDesignerProps) {
               ))}
             </div>
             {selectedMaterial.shapes.length === 1 && (
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-[#8B7355] mt-1">
                 Stainless steel is only available in round
               </p>
             )}
@@ -178,7 +179,7 @@ export default function CoasterDesigner({ onChange }: CoasterDesignerProps) {
 
           {/* Text Input */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-[#5C4A3A] mb-1">
               Text / Monogram
             </label>
             <input
@@ -186,9 +187,9 @@ export default function CoasterDesigner({ onChange }: CoasterDesignerProps) {
               value={data.text}
               onChange={(e) => updateField('text', e.target.value.slice(0, MAX_CHARS))}
               placeholder="JDS or THE SMITHS"
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:border-vurmz-teal focus:ring-1 focus:ring-vurmz-teal outline-none"
+              className="w-full border border-[#D4C8B8] rounded-lg px-3 py-2 text-sm text-[#3D3428] placeholder:text-[#9A8F82] focus:border-[#7EB8C9] focus:ring-1 focus:ring-[#7EB8C9] outline-none bg-white"
             />
-            <p className="text-xs text-gray-500 mt-1">{data.text.length}/{MAX_CHARS} characters</p>
+            <p className="text-xs text-[#8B7355] mt-1">{data.text.length}/{MAX_CHARS} characters</p>
           </div>
 
           {/* Font Selection */}
@@ -200,31 +201,31 @@ export default function CoasterDesigner({ onChange }: CoasterDesignerProps) {
 
           {/* Logo Option */}
           <div>
-            <label className="flex items-center gap-3 cursor-pointer p-3 border border-gray-200 rounded-lg hover:border-vurmz-teal/50 transition-all">
+            <label className="flex items-center gap-3 cursor-pointer p-3 border border-[#D4C8B8] rounded-lg hover:border-[#7EB8C9]/50 transition-all bg-white">
               <input
                 type="checkbox"
                 checked={data.logoEnabled}
                 onChange={(e) => updateField('logoEnabled', e.target.checked)}
-                className="w-5 h-5 rounded border-gray-300 text-vurmz-teal focus:ring-vurmz-teal"
+                className="w-5 h-5 rounded border-[#D4C8B8] text-[#7EB8C9] focus:ring-[#7EB8C9]"
               />
               <div className="flex-1">
-                <div className="font-medium text-gray-800">Custom Logo/Design</div>
-                <div className="text-xs text-gray-500">Upload your design after ordering</div>
+                <div className="font-medium text-[#3D3428]">Custom Logo/Design</div>
+                <div className="text-xs text-[#8B7355]">Upload your design after ordering</div>
               </div>
-              <PhotoIcon className="w-6 h-6 text-gray-400" />
+              <PhotoIcon className="w-6 h-6 text-[#9A8F82]" />
             </label>
           </div>
 
           {/* Price Display */}
-          <div className="bg-vurmz-teal/10 rounded-xl p-4 border border-vurmz-teal/20">
+          <div className="bg-[#7EB8C9]/10 rounded-xl p-4 border border-[#7EB8C9]/20">
             <div className="flex justify-between items-center">
               <div>
-                <span className="text-gray-700">Price per coaster:</span>
-                <div className="text-xs text-gray-500">{selectedMaterial.label}</div>
+                <span className="text-[#5C4A3A]">Price per coaster:</span>
+                <div className="text-xs text-[#8B7355]">{selectedMaterial.label}</div>
               </div>
-              <span className="text-2xl font-bold text-vurmz-teal">${data.pricePerCoaster}</span>
+              <span className="text-2xl font-bold text-[#5A9BB0]">${data.pricePerCoaster}</span>
             </div>
-            <div className="text-xs text-vurmz-teal/70 mt-2 font-medium">
+            <div className="text-xs text-[#5A9BB0]/70 mt-2 font-medium">
               Pack of 15 = ${data.pricePerCoaster * 15}
             </div>
           </div>
@@ -232,8 +233,8 @@ export default function CoasterDesigner({ onChange }: CoasterDesignerProps) {
 
         {/* Preview */}
         <div className="flex flex-col items-center justify-center">
-          <p className="text-sm text-gray-500 mb-3">Preview (4&quot; coaster)</p>
-          <div className="bg-white rounded-xl p-8 shadow-inner border border-gray-100">
+          <p className="text-sm text-[#6B5A48] mb-3">Preview (4&quot; coaster)</p>
+          <div className="bg-[#F5F0E8] rounded-xl p-8 shadow-inner border border-[#E0D6C8]">
             <svg
               width={size}
               height={size}
@@ -331,7 +332,7 @@ export default function CoasterDesigner({ onChange }: CoasterDesignerProps) {
               )}
             </svg>
           </div>
-          <p className="text-xs text-gray-400 mt-3">Actual size: 4&quot; diameter</p>
+          <p className="text-xs text-[#9A8F82] mt-3">Actual size: 4&quot; diameter</p>
         </div>
       </div>
     </div>

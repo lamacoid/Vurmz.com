@@ -204,7 +204,7 @@ const products = [
     price: 'Quote based',
     hasDesigner: false,
     icon: (
-      <span className="text-4xl font-serif text-amber-700">?</span>
+      <span className="text-4xl font-serif" style={{ color: '#A89070' }}>?</span>
     ),
     isCustom: true,
   },
@@ -500,19 +500,23 @@ export default function PremiumBuilder() {
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ type: 'spring', stiffness: 200, delay: 0.2 }}
-            className="w-20 h-20 bg-vurmz-teal/20 rounded-full flex items-center justify-center mx-auto mb-6"
+            className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6"
+            style={{ backgroundColor: 'rgba(126, 184, 201, 0.2)' }}
           >
-            <CheckIcon className="w-10 h-10 text-vurmz-teal" />
+            <CheckIcon className="w-10 h-10" style={{ color: '#7EB8C9' }} />
           </motion.div>
-          <h2 className="text-3xl font-bold text-vurmz-dark mb-4">
+          <h2 className="text-3xl font-bold mb-4" style={{ color: '#5C4A3A' }}>
             Order Received!
           </h2>
-          <p className="text-gray-600 mb-8">
+          <p className="mb-8" style={{ color: '#6B5A48' }}>
             I&apos;ll review your request and get back to you today with confirmation.
           </p>
           <button
             onClick={() => router.push('/')}
-            className="bg-vurmz-teal text-white px-8 py-4 font-semibold hover:bg-vurmz-teal-dark transition-all"
+            className="text-white px-8 py-4 font-semibold transition-all"
+            style={{ backgroundColor: '#7EB8C9' }}
+            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#5A9BB0'}
+            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#7EB8C9'}
           >
             Return Home
           </button>
@@ -522,9 +526,9 @@ export default function PremiumBuilder() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <div className="min-h-screen" style={{ background: 'linear-gradient(to bottom, #FAF7F2, #FFFFFF)' }}>
       {/* Progress Header - Premium */}
-      <div className="sticky top-0 z-50 bg-white/90 backdrop-blur-2xl border-b border-gray-100 shadow-sm">
+      <div className="sticky top-0 z-50 backdrop-blur-2xl" style={{ backgroundColor: 'rgba(250, 247, 242, 0.9)', borderBottom: '1px solid #E0D6C8', boxShadow: '0 2px 8px rgba(139, 115, 85, 0.06)' }}>
         <div className="max-w-5xl mx-auto px-4 py-5">
           <div className="flex items-center justify-between gap-8">
             {/* Premium Step Indicator */}
@@ -542,14 +546,15 @@ export default function PremiumBuilder() {
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="hidden md:flex items-center gap-4 bg-gradient-to-r from-vurmz-dark via-gray-800 to-vurmz-dark text-white px-6 py-3 rounded-2xl shadow-xl"
+                className="hidden md:flex items-center gap-4 text-white px-6 py-3 rounded-2xl"
                 style={{
-                  boxShadow: '0 10px 40px rgba(0,0,0,0.15), 0 0 0 1px rgba(255,255,255,0.05) inset',
+                  background: '#3D3428',
+                  boxShadow: '0 2px 8px rgba(139, 115, 85, 0.06)',
                 }}
               >
                 <div className="flex flex-col items-end">
-                  <span className="text-[10px] uppercase tracking-wider text-gray-400">Order Total</span>
-                  <span className="text-2xl font-bold bg-gradient-to-r from-vurmz-teal to-vurmz-teal-light bg-clip-text text-transparent">
+                  <span className="text-[10px] uppercase tracking-wider" style={{ color: '#9A8F82' }}>Order Total</span>
+                  <span className="text-2xl font-bold" style={{ color: '#7EB8C9' }}>
                     ${orderTotal.total.toFixed(2)}
                   </span>
                 </div>
@@ -573,7 +578,8 @@ export default function PremiumBuilder() {
             >
               <div className="text-center mb-14">
                 <motion.h1
-                  className="text-4xl md:text-5xl lg:text-6xl font-bold text-vurmz-dark mb-4 tracking-tight"
+                  className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 tracking-tight"
+                  style={{ color: '#5C4A3A' }}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
@@ -581,7 +587,8 @@ export default function PremiumBuilder() {
                   What can I make for you?
                 </motion.h1>
                 <motion.p
-                  className="text-xl text-gray-500 max-w-lg mx-auto"
+                  className="text-xl max-w-lg mx-auto"
+                  style={{ color: '#8B7355' }}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1], delay: 0.1 }}
@@ -630,18 +637,18 @@ export default function PremiumBuilder() {
               exit="exit"
             >
               <div className="text-center mb-8">
-                <h1 className="text-3xl md:text-4xl font-bold text-vurmz-dark mb-2">
+                <h1 className="text-3xl md:text-4xl font-bold mb-2" style={{ color: '#5C4A3A' }}>
                   Design Your {selectedProductData?.label}
                 </h1>
-                <p className="text-gray-500">Customize your order below</p>
+                <p style={{ color: '#8B7355' }}>Customize your order below</p>
               </div>
 
               {/* Pack selector for pack-based products */}
               {(selectedProduct === 'pens' || selectedProduct === 'business-cards' || selectedProduct === 'nameplates' || selectedProduct === 'coasters') && (
                 <div className="max-w-md mx-auto mb-8">
-                  <div className="bg-gradient-to-br from-vurmz-light to-white border-2 border-vurmz-teal/20 rounded-2xl p-6">
+                  <div className="rounded-2xl p-6" style={{ background: 'linear-gradient(to bottom right, #FAF7F2, #FFFFFF)', border: '2px solid #D4C8B8', boxShadow: '0 2px 8px rgba(139, 115, 85, 0.06)' }}>
                     <div className="text-center mb-4">
-                      <span className="text-sm font-medium text-vurmz-teal uppercase tracking-wide">
+                      <span className="text-sm font-medium uppercase tracking-wide" style={{ color: '#7EB8C9' }}>
                         Sold in packs of {PACK_CONFIG[selectedProduct as 'pens' | 'business-cards' | 'nameplates' | 'coasters'].itemsPerPack}
                       </span>
                     </div>
@@ -651,39 +658,45 @@ export default function PremiumBuilder() {
                         type="button"
                         onClick={() => setNumPacks(Math.max(1, numPacks - 1))}
                         disabled={numPacks <= 1}
-                        className="w-12 h-12 rounded-xl bg-vurmz-teal text-white font-bold text-xl disabled:opacity-40 disabled:cursor-not-allowed hover:bg-vurmz-dark transition-colors flex items-center justify-center"
+                        className="w-12 h-12 rounded-xl text-white font-bold text-xl disabled:opacity-40 disabled:cursor-not-allowed transition-colors flex items-center justify-center"
+                        style={{ backgroundColor: '#7EB8C9' }}
+                        onMouseEnter={(e) => !e.currentTarget.disabled && (e.currentTarget.style.backgroundColor = '#5A9BB0')}
+                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#7EB8C9'}
                       >
                         -
                       </button>
                       <div className="text-center min-w-[100px]">
-                        <div className="text-4xl font-bold text-vurmz-dark">{numPacks}</div>
-                        <div className="text-sm text-gray-500">{numPacks === 1 ? 'pack' : 'packs'}</div>
+                        <div className="text-4xl font-bold" style={{ color: '#5C4A3A' }}>{numPacks}</div>
+                        <div className="text-sm" style={{ color: '#8B7355' }}>{numPacks === 1 ? 'pack' : 'packs'}</div>
                       </div>
                       <button
                         type="button"
                         onClick={() => setNumPacks(Math.min(selectedProduct === 'nameplates' ? 20 : 10, numPacks + 1))}
                         disabled={numPacks >= (selectedProduct === 'nameplates' ? 20 : 10)}
-                        className="w-12 h-12 rounded-xl bg-vurmz-teal text-white font-bold text-xl disabled:opacity-40 disabled:cursor-not-allowed hover:bg-vurmz-dark transition-colors flex items-center justify-center"
+                        className="w-12 h-12 rounded-xl text-white font-bold text-xl disabled:opacity-40 disabled:cursor-not-allowed transition-colors flex items-center justify-center"
+                        style={{ backgroundColor: '#7EB8C9' }}
+                        onMouseEnter={(e) => !e.currentTarget.disabled && (e.currentTarget.style.backgroundColor = '#5A9BB0')}
+                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#7EB8C9'}
                       >
                         +
                       </button>
                     </div>
 
                     <div className="text-center">
-                      <div className="text-lg text-gray-700">
-                        = <span className="font-bold text-vurmz-dark">{numPacks * PACK_CONFIG[selectedProduct as 'pens' | 'business-cards' | 'nameplates' | 'coasters'].itemsPerPack}</span> {
+                      <div className="text-lg" style={{ color: '#6B5A48' }}>
+                        = <span className="font-bold" style={{ color: '#5C4A3A' }}>{numPacks * PACK_CONFIG[selectedProduct as 'pens' | 'business-cards' | 'nameplates' | 'coasters'].itemsPerPack}</span> {
                           selectedProduct === 'pens' ? 'pens' :
                           selectedProduct === 'business-cards' ? 'cards' :
                           selectedProduct === 'nameplates' ? 'plates' : 'coasters'
                         }
                       </div>
                       {orderTotal && (
-                        <div className="text-2xl font-bold text-vurmz-teal mt-2">
+                        <div className="text-2xl font-bold mt-2" style={{ color: '#7EB8C9' }}>
                           ${orderTotal.total.toFixed(2)}
                         </div>
                       )}
                       {orderTotal && (
-                        <div className="text-xs text-gray-500 mt-1">
+                        <div className="text-xs mt-1" style={{ color: '#8B7355' }}>
                           ${orderTotal.pricePerUnit.toFixed(2)} each × {orderTotal.quantity}
                         </div>
                       )}
@@ -695,7 +708,7 @@ export default function PremiumBuilder() {
               {/* Quantity for non-designer products */}
               {!selectedProductData?.hasDesigner && (
                 <div className="max-w-xs mx-auto mb-8">
-                  <label className="block text-sm font-medium text-vurmz-dark mb-2">
+                  <label className="block text-sm font-medium mb-2" style={{ color: '#5C4A3A' }}>
                     Quantity
                   </label>
                   <input
@@ -704,7 +717,10 @@ export default function PremiumBuilder() {
                     value={quantity}
                     onChange={(e) => setQuantity(e.target.value)}
                     placeholder="How many?"
-                    className="w-full border-2 border-gray-200 px-4 py-3 text-center text-lg font-medium rounded-xl focus:border-vurmz-teal focus:ring-0 outline-none transition-all"
+                    className="w-full px-4 py-3 text-center text-lg font-medium rounded-xl focus:ring-0 outline-none transition-all"
+                    style={{ border: '2px solid #D4C8B8' }}
+                    onFocus={(e) => e.currentTarget.style.borderColor = '#7EB8C9'}
+                    onBlur={(e) => e.currentTarget.style.borderColor = '#D4C8B8'}
                   />
                 </div>
               )}
@@ -763,7 +779,7 @@ export default function PremiumBuilder() {
                 {!selectedProductData?.hasDesigner && (
                   <motion.div key="description" variants={cardVariants} initial="initial" animate="animate" exit="exit">
                     <div className="max-w-2xl mx-auto">
-                      <label className="block text-sm font-medium text-vurmz-dark mb-2">
+                      <label className="block text-sm font-medium mb-2" style={{ color: '#5C4A3A' }}>
                         Describe Your Project
                       </label>
                       <textarea
@@ -772,12 +788,15 @@ export default function PremiumBuilder() {
                         value={formData.description}
                         onChange={handleChange}
                         placeholder="What do you want engraved? Include details about size, material, and any specific requirements."
-                        className="w-full border-2 border-gray-200 px-4 py-3 rounded-xl focus:border-vurmz-teal focus:ring-0 outline-none transition-all resize-none"
+                        className="w-full px-4 py-3 rounded-xl focus:ring-0 outline-none transition-all resize-none"
+                        style={{ border: '2px solid #D4C8B8' }}
+                        onFocus={(e) => e.currentTarget.style.borderColor = '#7EB8C9'}
+                        onBlur={(e) => e.currentTarget.style.borderColor = '#D4C8B8'}
                       />
 
                       {/* File upload */}
                       <div className="mt-6">
-                        <p className="text-sm text-gray-600 mb-3">
+                        <p className="text-sm mb-3" style={{ color: '#6B5A48' }}>
                           Have a logo or reference image? Upload it here.
                         </p>
                         <div
@@ -785,27 +804,29 @@ export default function PremiumBuilder() {
                           onDragOver={(e) => { e.preventDefault(); setIsDragging(true) }}
                           onDragLeave={() => setIsDragging(false)}
                           onClick={() => fileInputRef.current?.click()}
-                          className={`border-2 border-dashed p-8 text-center cursor-pointer transition-all rounded-xl ${
-                            isDragging ? 'border-vurmz-teal bg-vurmz-teal/5' : 'border-gray-300 hover:border-vurmz-teal'
-                          }`}
+                          className="border-2 border-dashed p-8 text-center cursor-pointer transition-all rounded-xl"
+                          style={{
+                            borderColor: isDragging ? '#7EB8C9' : '#D4C8B8',
+                            backgroundColor: isDragging ? 'rgba(126, 184, 201, 0.05)' : 'transparent'
+                          }}
                         >
-                          <CloudArrowUpIcon className="h-10 w-10 text-gray-400 mx-auto mb-3" />
-                          <p className="text-gray-600">Drop files here or click to browse</p>
+                          <CloudArrowUpIcon className="h-10 w-10 mx-auto mb-3" style={{ color: '#9A8F82' }} />
+                          <p style={{ color: '#6B5A48' }}>Drop files here or click to browse</p>
                           <input ref={fileInputRef} type="file" multiple accept=".jpg,.jpeg,.png,.svg,.pdf,.webp" onChange={(e) => handleFileSelect(e.target.files)} className="hidden" />
                         </div>
 
                         {uploadedFiles.length > 0 && (
                           <div className="mt-4 space-y-2">
                             {uploadedFiles.map((file, i) => (
-                              <div key={i} className="flex items-center justify-between bg-gray-50 px-4 py-3 rounded-lg">
+                              <div key={i} className="flex items-center justify-between px-4 py-3 rounded-lg" style={{ backgroundColor: '#F5F0E8' }}>
                                 <div className="flex items-center gap-3">
-                                  <DocumentIcon className="h-5 w-5 text-gray-400" />
+                                  <DocumentIcon className="h-5 w-5" style={{ color: '#9A8F82' }} />
                                   <div>
-                                    <p className="text-sm font-medium text-vurmz-dark">{file.name}</p>
-                                    <p className="text-xs text-gray-500">{formatFileSize(file.size)}</p>
+                                    <p className="text-sm font-medium" style={{ color: '#5C4A3A' }}>{file.name}</p>
+                                    <p className="text-xs" style={{ color: '#8B7355' }}>{formatFileSize(file.size)}</p>
                                   </div>
                                 </div>
-                                <button type="button" onClick={() => setUploadedFiles(prev => prev.filter((_, idx) => idx !== i))} className="text-gray-400 hover:text-red-500">
+                                <button type="button" onClick={() => setUploadedFiles(prev => prev.filter((_, idx) => idx !== i))} className="hover:text-red-500" style={{ color: '#9A8F82' }}>
                                   <XMarkIcon className="h-5 w-5" />
                                 </button>
                               </div>
@@ -830,37 +851,37 @@ export default function PremiumBuilder() {
               exit="exit"
             >
               <div className="text-center mb-10">
-                <h1 className="text-3xl md:text-4xl font-bold text-vurmz-dark mb-2">
+                <h1 className="text-3xl md:text-4xl font-bold mb-2" style={{ color: '#5C4A3A' }}>
                   Your Details
                 </h1>
-                <p className="text-gray-500">How can I reach you?</p>
+                <p style={{ color: '#8B7355' }}>How can I reach you?</p>
               </div>
 
               <div className="max-w-2xl mx-auto space-y-8">
                 {/* Contact Info */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-vurmz-dark mb-2">Your Name *</label>
-                    <input type="text" name="name" required value={formData.name} onChange={handleChange} className="w-full border-2 border-gray-200 px-4 py-3 rounded-xl focus:border-vurmz-teal outline-none transition-all" />
+                    <label className="block text-sm font-medium mb-2" style={{ color: '#5C4A3A' }}>Your Name *</label>
+                    <input type="text" name="name" required value={formData.name} onChange={handleChange} className="w-full px-4 py-3 rounded-xl outline-none transition-all" style={{ border: '2px solid #D4C8B8' }} onFocus={(e) => e.currentTarget.style.borderColor = '#7EB8C9'} onBlur={(e) => e.currentTarget.style.borderColor = '#D4C8B8'} />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-vurmz-dark mb-2">Phone *</label>
-                    <input type="tel" name="phone" required value={formData.phone} onChange={handleChange} placeholder="Best number to reach you" className="w-full border-2 border-gray-200 px-4 py-3 rounded-xl focus:border-vurmz-teal outline-none transition-all" />
+                    <label className="block text-sm font-medium mb-2" style={{ color: '#5C4A3A' }}>Phone *</label>
+                    <input type="tel" name="phone" required value={formData.phone} onChange={handleChange} placeholder="Best number to reach you" className="w-full px-4 py-3 rounded-xl outline-none transition-all" style={{ border: '2px solid #D4C8B8' }} onFocus={(e) => e.currentTarget.style.borderColor = '#7EB8C9'} onBlur={(e) => e.currentTarget.style.borderColor = '#D4C8B8'} />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-vurmz-dark mb-2">Email</label>
-                    <input type="email" name="email" value={formData.email} onChange={handleChange} className="w-full border-2 border-gray-200 px-4 py-3 rounded-xl focus:border-vurmz-teal outline-none transition-all" />
+                    <label className="block text-sm font-medium mb-2" style={{ color: '#5C4A3A' }}>Email</label>
+                    <input type="email" name="email" value={formData.email} onChange={handleChange} className="w-full px-4 py-3 rounded-xl outline-none transition-all" style={{ border: '2px solid #D4C8B8' }} onFocus={(e) => e.currentTarget.style.borderColor = '#7EB8C9'} onBlur={(e) => e.currentTarget.style.borderColor = '#D4C8B8'} />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-vurmz-dark mb-2">Business Name</label>
-                    <input type="text" name="businessName" value={formData.businessName} onChange={handleChange} className="w-full border-2 border-gray-200 px-4 py-3 rounded-xl focus:border-vurmz-teal outline-none transition-all" />
+                    <label className="block text-sm font-medium mb-2" style={{ color: '#5C4A3A' }}>Business Name</label>
+                    <input type="text" name="businessName" value={formData.businessName} onChange={handleChange} className="w-full px-4 py-3 rounded-xl outline-none transition-all" style={{ border: '2px solid #D4C8B8' }} onFocus={(e) => e.currentTarget.style.borderColor = '#7EB8C9'} onBlur={(e) => e.currentTarget.style.borderColor = '#D4C8B8'} />
                   </div>
                 </div>
 
                 {/* Business Type */}
                 <div>
-                  <label className="block text-sm font-medium text-vurmz-dark mb-2">Type of Business *</label>
-                  <select name="businessType" required value={formData.businessType} onChange={handleChange} className="w-full border-2 border-gray-200 px-4 py-3 rounded-xl focus:border-vurmz-teal outline-none transition-all bg-white">
+                  <label className="block text-sm font-medium mb-2" style={{ color: '#5C4A3A' }}>Type of Business *</label>
+                  <select name="businessType" required value={formData.businessType} onChange={handleChange} className="w-full px-4 py-3 rounded-xl outline-none transition-all bg-white" style={{ border: '2px solid #D4C8B8' }} onFocus={(e) => e.currentTarget.style.borderColor = '#7EB8C9'} onBlur={(e) => e.currentTarget.style.borderColor = '#D4C8B8'}>
                     <option value="">Select...</option>
                     {businessTypes.map(t => <option key={t.value} value={t.value}>{t.label}</option>)}
                   </select>
@@ -868,23 +889,25 @@ export default function PremiumBuilder() {
 
                 {/* Turnaround */}
                 <div>
-                  <label className="block text-sm font-medium text-vurmz-dark mb-3">When do you need it?</label>
+                  <label className="block text-sm font-medium mb-3" style={{ color: '#5C4A3A' }}>When do you need it?</label>
                   <div className="grid grid-cols-3 gap-3">
                     {turnaroundOptions.map(opt => (
                       <motion.label
                         key={opt.value}
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
-                        className={`relative flex flex-col items-center p-4 border-2 rounded-xl cursor-pointer transition-all ${
-                          formData.turnaround === opt.value ? 'border-vurmz-teal bg-vurmz-teal/5' : 'border-gray-200 hover:border-gray-300'
-                        }`}
+                        className="relative flex flex-col items-center p-4 border-2 rounded-xl cursor-pointer transition-all"
+                        style={{
+                          borderColor: formData.turnaround === opt.value ? '#7EB8C9' : '#D4C8B8',
+                          backgroundColor: formData.turnaround === opt.value ? 'rgba(126, 184, 201, 0.05)' : 'transparent'
+                        }}
                       >
                         <input type="radio" name="turnaround" value={opt.value} checked={formData.turnaround === opt.value} onChange={handleChange} className="sr-only" />
-                        <span className="font-semibold text-vurmz-dark">{opt.label}</span>
-                        <span className="text-sm text-vurmz-teal">{opt.sublabel}</span>
-                        <span className="text-xs text-gray-500">{opt.note}</span>
+                        <span className="font-semibold" style={{ color: '#5C4A3A' }}>{opt.label}</span>
+                        <span className="text-sm" style={{ color: '#7EB8C9' }}>{opt.sublabel}</span>
+                        <span className="text-xs" style={{ color: '#8B7355' }}>{opt.note}</span>
                         {formData.turnaround === opt.value && (
-                          <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="absolute top-2 right-2 w-5 h-5 bg-vurmz-teal rounded-full flex items-center justify-center">
+                          <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="absolute top-2 right-2 w-5 h-5 rounded-full flex items-center justify-center" style={{ backgroundColor: '#7EB8C9' }}>
                             <CheckIcon className="w-3 h-3 text-white" />
                           </motion.div>
                         )}
@@ -895,23 +918,25 @@ export default function PremiumBuilder() {
 
                 {/* Delivery */}
                 <div>
-                  <label className="block text-sm font-medium text-vurmz-dark mb-3">Pickup or Delivery?</label>
+                  <label className="block text-sm font-medium mb-3" style={{ color: '#5C4A3A' }}>Pickup or Delivery?</label>
                   <div className="grid grid-cols-2 gap-3">
                     {deliveryOptions.map(opt => (
                       <motion.label
                         key={opt.value}
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
-                        className={`relative flex flex-col items-center p-4 border-2 rounded-xl cursor-pointer transition-all ${
-                          formData.deliveryMethod === opt.value ? 'border-vurmz-teal bg-vurmz-teal/5' : 'border-gray-200 hover:border-gray-300'
-                        }`}
+                        className="relative flex flex-col items-center p-4 border-2 rounded-xl cursor-pointer transition-all"
+                        style={{
+                          borderColor: formData.deliveryMethod === opt.value ? '#7EB8C9' : '#D4C8B8',
+                          backgroundColor: formData.deliveryMethod === opt.value ? 'rgba(126, 184, 201, 0.05)' : 'transparent'
+                        }}
                       >
                         <input type="radio" name="deliveryMethod" value={opt.value} checked={formData.deliveryMethod === opt.value} onChange={handleChange} className="sr-only" />
-                        <span className="font-semibold text-vurmz-dark">{opt.label}</span>
-                        <span className="text-sm text-vurmz-teal">{opt.sublabel}</span>
-                        <span className="text-xs text-gray-500">{opt.note}</span>
+                        <span className="font-semibold" style={{ color: '#5C4A3A' }}>{opt.label}</span>
+                        <span className="text-sm" style={{ color: '#7EB8C9' }}>{opt.sublabel}</span>
+                        <span className="text-xs" style={{ color: '#8B7355' }}>{opt.note}</span>
                         {formData.deliveryMethod === opt.value && (
-                          <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="absolute top-2 right-2 w-5 h-5 bg-vurmz-teal rounded-full flex items-center justify-center">
+                          <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="absolute top-2 right-2 w-5 h-5 rounded-full flex items-center justify-center" style={{ backgroundColor: '#7EB8C9' }}>
                             <CheckIcon className="w-3 h-3 text-white" />
                           </motion.div>
                         )}
@@ -921,7 +946,7 @@ export default function PremiumBuilder() {
 
                   {formData.deliveryMethod === 'delivery' && (
                     <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="mt-4">
-                      <label className="block text-sm font-medium text-vurmz-dark mb-2">Delivery Address</label>
+                      <label className="block text-sm font-medium mb-2" style={{ color: '#5C4A3A' }}>Delivery Address</label>
                       <AddressAutocomplete
                         value={formData.deliveryAddress}
                         onChange={(addr) => setFormData(prev => ({ ...prev, deliveryAddress: addr }))}
@@ -945,30 +970,31 @@ export default function PremiumBuilder() {
               exit="exit"
             >
               <div className="text-center mb-10">
-                <h1 className="text-3xl md:text-4xl font-bold text-vurmz-dark mb-2">
+                <h1 className="text-3xl md:text-4xl font-bold mb-2" style={{ color: '#5C4A3A' }}>
                   Review Your Order
                 </h1>
-                <p className="text-gray-500">Make sure everything looks good</p>
+                <p style={{ color: '#8B7355' }}>Make sure everything looks good</p>
               </div>
 
               <div className="max-w-2xl mx-auto space-y-6">
                 {/* Order Summary Card */}
                 <motion.div
-                  className="bg-gradient-to-br from-vurmz-dark via-gray-800 to-vurmz-dark text-white p-8 rounded-2xl shadow-2xl"
+                  className="text-white p-8 rounded-2xl"
+                  style={{ backgroundColor: '#3D3428', boxShadow: '0 2px 8px rgba(139, 115, 85, 0.06)' }}
                   initial={{ scale: 0.95, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{ delay: 0.2 }}
                 >
                   <h3 className="text-lg font-bold mb-6 flex items-center gap-2">
-                    <span className="w-8 h-8 bg-vurmz-teal/20 rounded-full flex items-center justify-center">
-                      <CheckIcon className="w-4 h-4 text-vurmz-teal" />
+                    <span className="w-8 h-8 rounded-full flex items-center justify-center" style={{ backgroundColor: 'rgba(126, 184, 201, 0.2)' }}>
+                      <CheckIcon className="w-4 h-4" style={{ color: '#7EB8C9' }} />
                     </span>
                     Order Summary
                   </h3>
 
                   <div className="space-y-4">
                     <div className="flex justify-between">
-                      <span className="text-gray-400">Product</span>
+                      <span style={{ color: '#9A8F82' }}>Product</span>
                       <span className="font-medium">{selectedProductData?.label}</span>
                     </div>
 
@@ -977,46 +1003,46 @@ export default function PremiumBuilder() {
                         {'numPacks' in orderTotal && 'packPrice' in orderTotal ? (
                           <>
                             <div className="flex justify-between">
-                              <span className="text-gray-400">Packs</span>
+                              <span style={{ color: '#9A8F82' }}>Packs</span>
                               <span className="font-medium">{(orderTotal as { numPacks: number; itemsPerPack: number }).numPacks} × {(orderTotal as { numPacks: number; itemsPerPack: number }).itemsPerPack} = {orderTotal.quantity} {selectedProduct === 'pens' ? 'pens' : 'cards'}</span>
                             </div>
                             <div className="flex justify-between">
-                              <span className="text-gray-400">Price per {selectedProduct === 'pens' ? 'pen' : 'card'}</span>
+                              <span style={{ color: '#9A8F82' }}>Price per {selectedProduct === 'pens' ? 'pen' : 'card'}</span>
                               <span className="font-medium">${orderTotal.pricePerUnit.toFixed(2)}</span>
                             </div>
                             <div className="flex justify-between">
-                              <span className="text-gray-400">Pack price</span>
+                              <span style={{ color: '#9A8F82' }}>Pack price</span>
                               <span className="font-medium">${(orderTotal as { packPrice: number }).packPrice.toFixed(2)}</span>
                             </div>
                           </>
                         ) : (
                           <>
                             <div className="flex justify-between">
-                              <span className="text-gray-400">Quantity</span>
+                              <span style={{ color: '#9A8F82' }}>Quantity</span>
                               <span className="font-medium">{orderTotal.quantity} units</span>
                             </div>
                             <div className="flex justify-between">
-                              <span className="text-gray-400">Price per unit</span>
+                              <span style={{ color: '#9A8F82' }}>Price per unit</span>
                               <span className="font-medium">${orderTotal.pricePerUnit.toFixed(2)}</span>
                             </div>
                           </>
                         )}
-                        <div className="border-t border-gray-700 pt-4 mt-4">
+                        <div className="pt-4 mt-4" style={{ borderTop: '1px solid #5C4A3A' }}>
                           <div className="flex justify-between items-center">
                             <span className="font-semibold text-lg">Total</span>
-                            <span className="text-3xl font-bold text-vurmz-teal">${orderTotal.total.toFixed(2)}</span>
+                            <span className="text-3xl font-bold" style={{ color: '#7EB8C9' }}>${orderTotal.total.toFixed(2)}</span>
                           </div>
                         </div>
                       </>
                     )}
 
                     <div className="flex justify-between">
-                      <span className="text-gray-400">Turnaround</span>
+                      <span style={{ color: '#9A8F82' }}>Turnaround</span>
                       <span className="font-medium">{turnaroundOptions.find(t => t.value === formData.turnaround)?.label}</span>
                     </div>
 
                     <div className="flex justify-between">
-                      <span className="text-gray-400">Delivery</span>
+                      <span style={{ color: '#9A8F82' }}>Delivery</span>
                       <span className="font-medium">{deliveryOptions.find(d => d.value === formData.deliveryMethod)?.label}</span>
                     </div>
                   </div>
@@ -1024,17 +1050,18 @@ export default function PremiumBuilder() {
 
                 {/* Contact Info Summary */}
                 <motion.div
-                  className="bg-white border border-gray-200 p-6 rounded-xl"
+                  className="p-6 rounded-xl"
+                  style={{ backgroundColor: '#FAF7F2', border: '1px solid #E0D6C8', boxShadow: '0 2px 8px rgba(139, 115, 85, 0.06)' }}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}
                 >
-                  <h3 className="font-semibold text-vurmz-dark mb-4">Contact Information</h3>
+                  <h3 className="font-semibold mb-4" style={{ color: '#5C4A3A' }}>Contact Information</h3>
                   <div className="grid grid-cols-2 gap-4 text-sm">
-                    <div><span className="text-gray-500">Name:</span> <span className="font-medium">{formData.name}</span></div>
-                    <div><span className="text-gray-500">Phone:</span> <span className="font-medium">{formData.phone}</span></div>
-                    {formData.email && <div><span className="text-gray-500">Email:</span> <span className="font-medium">{formData.email}</span></div>}
-                    {formData.businessName && <div><span className="text-gray-500">Business:</span> <span className="font-medium">{formData.businessName}</span></div>}
+                    <div><span style={{ color: '#8B7355' }}>Name:</span> <span className="font-medium" style={{ color: '#5C4A3A' }}>{formData.name}</span></div>
+                    <div><span style={{ color: '#8B7355' }}>Phone:</span> <span className="font-medium" style={{ color: '#5C4A3A' }}>{formData.phone}</span></div>
+                    {formData.email && <div><span style={{ color: '#8B7355' }}>Email:</span> <span className="font-medium" style={{ color: '#5C4A3A' }}>{formData.email}</span></div>}
+                    {formData.businessName && <div><span style={{ color: '#8B7355' }}>Business:</span> <span className="font-medium" style={{ color: '#5C4A3A' }}>{formData.businessName}</span></div>}
                   </div>
                 </motion.div>
 
@@ -1048,7 +1075,7 @@ export default function PremiumBuilder() {
       </div>
 
       {/* Bottom Navigation - Premium */}
-      <div className="sticky bottom-0 z-40 bg-white/90 backdrop-blur-2xl border-t border-gray-100">
+      <div className="sticky bottom-0 z-40 backdrop-blur-2xl" style={{ backgroundColor: 'rgba(250, 247, 242, 0.9)', borderTop: '1px solid #E0D6C8' }}>
         <div className="max-w-5xl mx-auto px-4 py-5">
           <div className="flex items-center justify-between">
             {/* Back Button */}
@@ -1058,18 +1085,18 @@ export default function PremiumBuilder() {
               disabled={currentStep === 0}
               whileHover={currentStep > 0 ? { x: -4 } : undefined}
               whileTap={currentStep > 0 ? { scale: 0.95 } : undefined}
-              className={`group flex items-center gap-3 px-6 py-3 rounded-xl font-medium transition-all ${
-                currentStep === 0
-                  ? 'text-gray-300 cursor-not-allowed'
-                  : 'text-gray-600 hover:text-vurmz-dark hover:bg-gray-100'
-              }`}
+              className="group flex items-center gap-3 px-6 py-3 rounded-xl font-medium transition-all"
+              style={{
+                color: currentStep === 0 ? '#D4C8B8' : '#6B5A48',
+                cursor: currentStep === 0 ? 'not-allowed' : 'pointer'
+              }}
             >
               <ArrowLeftIcon className={`w-5 h-5 transition-transform ${currentStep > 0 ? 'group-hover:-translate-x-1' : ''}`} />
               <span>Back</span>
             </motion.button>
 
             {/* Progress indicator - mobile */}
-            <div className="md:hidden text-sm text-gray-500">
+            <div className="md:hidden text-sm" style={{ color: '#8B7355' }}>
               Step {currentStep + 1} of {STEPS.length}
             </div>
 
@@ -1081,25 +1108,17 @@ export default function PremiumBuilder() {
                 disabled={!canProceed()}
                 whileHover={canProceed() ? { scale: 1.02, y: -2 } : undefined}
                 whileTap={canProceed() ? { scale: 0.98 } : undefined}
-                className={`group relative flex items-center gap-3 px-8 py-4 font-semibold rounded-2xl transition-all overflow-hidden ${
-                  canProceed()
-                    ? 'text-white shadow-xl'
-                    : 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                }`}
+                className="group relative flex items-center gap-3 px-8 py-4 font-semibold rounded-2xl transition-all overflow-hidden"
                 style={canProceed() ? {
-                  background: 'linear-gradient(135deg, #6A8C8C 0%, #5A7A7A 100%)',
-                  boxShadow: '0 8px 32px rgba(106,140,140,0.35), 0 0 0 1px rgba(255,255,255,0.1) inset',
-                } : undefined}
+                  backgroundColor: '#7EB8C9',
+                  color: '#FFFFFF',
+                  boxShadow: '0 2px 8px rgba(139, 115, 85, 0.06)',
+                } : {
+                  backgroundColor: '#E0D6C8',
+                  color: '#9A8F82',
+                  cursor: 'not-allowed'
+                }}
               >
-                {/* Shine effect */}
-                {canProceed() && (
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-                    initial={{ x: '-100%' }}
-                    animate={{ x: '200%' }}
-                    transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
-                  />
-                )}
                 <span className="relative">Continue</span>
                 <ArrowRightIcon className={`relative w-5 h-5 transition-transform ${canProceed() ? 'group-hover:translate-x-1' : ''}`} />
               </motion.button>
@@ -1110,12 +1129,10 @@ export default function PremiumBuilder() {
                 disabled={loading}
                 whileHover={!loading ? { scale: 1.02, y: -2 } : undefined}
                 whileTap={!loading ? { scale: 0.98 } : undefined}
-                className="group relative flex items-center gap-3 px-8 py-4 text-white font-semibold rounded-2xl shadow-xl overflow-hidden"
+                className="group relative flex items-center gap-3 px-8 py-4 text-white font-semibold rounded-2xl overflow-hidden"
                 style={{
-                  background: loading
-                    ? 'linear-gradient(135deg, #8A9C9C 0%, #7A8A8A 100%)'
-                    : 'linear-gradient(135deg, #6A8C8C 0%, #5A7A7A 100%)',
-                  boxShadow: '0 8px 32px rgba(106,140,140,0.35), 0 0 0 1px rgba(255,255,255,0.1) inset',
+                  backgroundColor: loading ? '#A8C8D0' : '#7EB8C9',
+                  boxShadow: '0 2px 8px rgba(139, 115, 85, 0.06)',
                 }}
               >
                 {loading ? (
@@ -1125,13 +1142,6 @@ export default function PremiumBuilder() {
                   </>
                 ) : (
                   <>
-                    {/* Shine effect */}
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-                      initial={{ x: '-100%' }}
-                      animate={{ x: '200%' }}
-                      transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
-                    />
                     <span className="relative">
                       {orderTotal ? `Submit Order — $${orderTotal.total.toFixed(2)}` : 'Submit Quote Request'}
                     </span>

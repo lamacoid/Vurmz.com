@@ -1,20 +1,87 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import dynamic from 'next/dynamic'
 
-// Photorealistic 3D preview
-const PlasticSign3D = dynamic(() => import('./builder/visualizers/PlasticSign3D'), {
-  ssr: false,
-  loading: () => (
-    <div className="w-full h-[260px] flex items-center justify-center">
-      <div className="flex flex-col items-center gap-3">
-        <div className="w-8 h-8 border-2 border-vurmz-teal/30 border-t-vurmz-teal rounded-full animate-spin" />
-        <div className="text-gray-400 text-sm">Loading 3D Preview...</div>
-      </div>
-    </div>
-  ),
-})
+// Simple 2D Tag Preview component
+function IndustrialTagPreviewSVG({
+  width,
+  height,
+  material,
+  line1,
+  line2,
+  line3,
+  line4,
+  isRound,
+  textAlignment,
+}: {
+  width: number
+  height: number
+  material: { color: string; textColor: string }
+  line1: string
+  line2?: string
+  line3?: string
+  line4?: string
+  isRound: boolean
+  textAlignment: 'left' | 'center' | 'right'
+}) {
+  // Scale dimensions for SVG
+  const scale = Math.min(200 / width, 150 / height, 50)
+  const svgWidth = width * scale
+  const svgHeight = height * scale
+  const padding = 10
+
+  const lines = [line1, line2, line3, line4].filter(Boolean)
+  const lineHeight = Math.min(16, svgHeight / (lines.length + 1))
+  const startY = (svgHeight + padding * 2) / 2 - ((lines.length - 1) * lineHeight) / 2
+
+  const textAnchor = textAlignment === 'left' ? 'start' : textAlignment === 'right' ? 'end' : 'middle'
+  const textX = textAlignment === 'left' ? padding + 8 : textAlignment === 'right' ? svgWidth + padding - 8 : (svgWidth + padding * 2) / 2
+
+  return (
+    <svg
+      viewBox={`0 0 ${svgWidth + padding * 2} ${svgHeight + padding * 2}`}
+      className="w-full max-w-xs mx-auto"
+      style={{ maxHeight: '200px' }}
+    >
+      {isRound ? (
+        <circle
+          cx={(svgWidth + padding * 2) / 2}
+          cy={(svgHeight + padding * 2) / 2}
+          r={Math.min(svgWidth, svgHeight) / 2}
+          fill={material.color}
+          stroke="#555"
+          strokeWidth="1"
+        />
+      ) : (
+        <rect
+          x={padding}
+          y={padding}
+          width={svgWidth}
+          height={svgHeight}
+          rx="4"
+          fill={material.color}
+          stroke="#555"
+          strokeWidth="1"
+        />
+      )}
+      {lines.map((line, i) => (
+        <text
+          key={i}
+          x={textX}
+          y={startY + i * lineHeight}
+          textAnchor={textAnchor}
+          dominantBaseline="middle"
+          fill={material.textColor}
+          fontSize={i === 0 ? Math.min(14, lineHeight) : Math.min(11, lineHeight * 0.85)}
+          fontFamily="Arial, sans-serif"
+          fontWeight={i === 0 ? '600' : '400'}
+        >
+          {line}
+        </text>
+      ))}
+    </svg>
+  )
+}
 
 // ============================================================================
 // PREMIUM INDUSTRIAL LABELS, TAGS & NAMETAGS DESIGNER
@@ -904,20 +971,17 @@ export default function IndustrialTagPreview({ onChange, quantity = 1 }: Props) 
 
         {/* Right: Preview */}
         <div className="bg-gray-50 p-4">
-          {/* 3D Preview */}
-          <PlasticSign3D
-            type={data.tagType === 'nametag' ? 'nametag' : 'tag'}
-            shape={sizeInfo.shape === 'round' || data.size.includes('round') ? 'round' : data.nametagShape === 'rounded' ? 'rounded' : 'rectangle'}
+          {/* Preview */}
+          <IndustrialTagPreviewSVG
             width={width}
             height={height}
-            material={data.material}
+            material={material}
             line1={data.line1 || (data.tagType === 'nametag' ? 'Your Name' : 'LINE 1')}
             line2={data.line2}
             line3={data.line3}
             line4={data.line4}
+            isRound={sizeInfo.shape === 'round' || data.size.includes('round')}
             textAlignment={data.textAlignment}
-            hasHole={data.holePosition !== 'none'}
-            holePosition={data.holePosition}
           />
 
           {/* Attachment Indicator */}

@@ -2,7 +2,7 @@ export const runtime = 'edge'
 
 import { NextRequest, NextResponse } from 'next/server'
 import { getD1 } from '@/lib/d1'
-import { Resend } from 'resend'
+import { sendEmail } from '@/lib/resend-edge'
 
 export async function POST(request: NextRequest) {
   try {
@@ -38,8 +38,7 @@ export async function POST(request: NextRequest) {
     const siteUrl = process.env.SITE_URL || 'https://vurmz.com'
     const magicLink = `${siteUrl}/admin/verify?token=${token}&email=${encodeURIComponent(user.email)}`
 
-    const resend = new Resend(process.env.RESEND_API_KEY)
-    await resend.emails.send({
+    await sendEmail({
       from: 'Vurmz <noreply@vurmz.com>',
       to: user.email,
       subject: 'Admin Login - Vurmz',

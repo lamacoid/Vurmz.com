@@ -1,8 +1,8 @@
 export const runtime = 'edge'
 
 import { NextRequest, NextResponse } from 'next/server'
-import { getD1, generateId, now } from '@/lib/d1'
-import { Resend } from 'resend'
+import { getD1, now } from '@/lib/d1'
+import { sendEmail } from '@/lib/resend-edge'
 
 // POST - Quick actions (mark-complete, resend-receipt, mark-paid)
 export async function POST(
@@ -26,7 +26,6 @@ export async function POST(
     }
 
     const timestamp = now()
-    const resend = new Resend(process.env.RESEND_API_KEY)
 
     switch (action) {
       case 'mark-complete': {
@@ -36,7 +35,7 @@ export async function POST(
 
         // Notify customer
         if (order.customer_email) {
-          await resend.emails.send({
+          await sendEmail({
             from: 'VURMZ <noreply@vurmz.com>',
             to: order.customer_email,
             subject: `Your order ${order.order_number} is ready!`,
@@ -74,7 +73,7 @@ export async function POST(
         `).bind(timestamp, id).run()
 
         if (order.customer_email) {
-          await resend.emails.send({
+          await sendEmail({
             from: 'VURMZ <noreply@vurmz.com>',
             to: order.customer_email,
             subject: `Work started on order ${order.order_number}`,
@@ -114,7 +113,7 @@ export async function POST(
           SELECT * FROM receipts WHERE order_id = ? ORDER BY created_at DESC LIMIT 1
         `).bind(id).first() as any
 
-        await resend.emails.send({
+        await sendEmail({
           from: 'VURMZ <noreply@vurmz.com>',
           to: order.customer_email,
           subject: `Receipt for Order ${order.order_number} - VURMZ`,

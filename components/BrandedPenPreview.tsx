@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { PhotoIcon } from '@heroicons/react/24/outline'
 import { fontOptions, ENGRAVING_COLOR } from '@/lib/fonts'
 import FontSelector from './FontSelector'
+import { PRODUCTS } from '@/lib/products'
 
 interface PenData {
   penStyle: 'stylus' | 'fountain'
@@ -47,13 +48,12 @@ export default function BrandedPenPreview({ onChange }: BrandedPenPreviewProps) 
     pricePerPen: 7.50
   })
 
-  // Calculate price whenever options change
-  // Base: $3/pen, Second line: +$0.50, Logo: +$2, Both sides: +$2
+  // Calculate price from centralized source
   const calculatePrice = (data: Omit<PenData, 'pricePerPen'>) => {
-    let price = 3 // Base price
-    if (data.textStyle === 'two-lines' && data.line2.trim().length > 0) price += 0.50
-    if (data.logoEnabled) price += 2
-    if (data.bothSides) price += 2
+    let price = PRODUCTS.pens.basePerItem
+    if (data.textStyle === 'two-lines' && data.line2.trim().length > 0) price += PRODUCTS.pens.addOns.secondLine
+    if (data.logoEnabled) price += PRODUCTS.pens.addOns.logo
+    if (data.bothSides) price += PRODUCTS.pens.addOns.bothSides
     return price
   }
 

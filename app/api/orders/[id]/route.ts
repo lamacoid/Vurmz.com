@@ -2,7 +2,7 @@ export const runtime = 'edge'
 
 import { NextRequest, NextResponse } from 'next/server'
 import { getD1, generateId, now } from '@/lib/d1'
-import { Resend } from 'resend'
+import { sendEmail } from '@/lib/resend-edge'
 
 // GET - Get single order
 export async function GET(
@@ -160,8 +160,6 @@ export async function PATCH(
 
       // Send customer notification if requested
       if (updates.notifyCustomer && order.customer_email) {
-        const resend = new Resend(process.env.RESEND_API_KEY)
-
         const statusMessages: Record<string, { subject: string; message: string }> = {
           'IN_PROGRESS': {
             subject: `Your order ${order.order_number} is being worked on`,
@@ -181,7 +179,7 @@ export async function PATCH(
 
         const statusInfo = statusMessages[updates.status]
         if (statusInfo) {
-          await resend.emails.send({
+          await sendEmail({
             from: 'VURMZ <noreply@vurmz.com>',
             to: order.customer_email,
             subject: statusInfo.subject,

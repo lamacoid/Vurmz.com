@@ -1,17 +1,15 @@
 import { NextResponse } from 'next/server'
-import { Resend } from 'resend'
+import { sendEmail } from '@/lib/resend-edge'
 
 export const runtime = 'edge'
 
 export async function GET() {
   try {
-    const resend = new Resend(process.env.RESEND_API_KEY)
-
     const invoiceNumber = `VURMZ-TEST-${Date.now()}`
     const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
     const dueDate = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
 
-    await resend.emails.send({
+    await sendEmail({
       from: 'VURMZ <orders@vurmz.com>',
       to: 'zach@vurmz.com',
       subject: `Invoice ${invoiceNumber} from VURMZ`,

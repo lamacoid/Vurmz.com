@@ -19,8 +19,8 @@ export const metadata: Metadata = {
 const categories = [
   { name: 'Sports Teams', emoji: '⚾' },
   { name: 'Trophies & Awards', emoji: '🏆' },
+  { name: 'Signs & Plaques', emoji: '🪵' },
   { name: 'Graduations', emoji: '🎓' },
-  { name: 'Weddings', emoji: '💒' },
   { name: 'Personal Gifts', emoji: '🎁' },
 ]
 
@@ -35,7 +35,14 @@ const trophiesAwards = [
   { name: 'Glass Awards', price: 'From $20', desc: 'Crystal-look glass, perfect for corporate recognition.' },
   { name: 'Wood Plaques', price: 'From $25', desc: 'Classic walnut or oak. Engraved plates included.' },
   { name: 'Acrylic Trophies', price: 'From $18', desc: 'Modern look, custom shapes available.' },
-  { name: 'Medal Sets', price: 'From $8/ea', desc: 'Gold, silver, bronze. Custom text on back.' },
+  { name: 'Medals', price: 'From $8/ea', desc: 'Gold, silver, bronze. Custom text on back.' },
+]
+
+const signsPlayques = [
+  { name: 'Wood Yard Signs', price: 'From $35', desc: 'Weather-resistant finish. Great for graduations, birthdays, real estate.' },
+  { name: 'Address Plaques', price: 'From $40', desc: 'House numbers on wood or metal. Indoor or outdoor.' },
+  { name: 'Memorial Plaques', price: 'From $30', desc: 'Benches, trees, gardens. Lasting tributes.' },
+  { name: 'Business Signs', price: 'From $50', desc: 'Small shop signs, desk nameplates, door signs.' },
 ]
 
 const personalGifts = [
@@ -141,6 +148,34 @@ export default function GiftsPage() {
 
           <div className="grid sm:grid-cols-2 gap-6">
             {trophiesAwards.map((item) => (
+              <div
+                key={item.name}
+                className="group p-6 bg-white rounded-2xl border border-[#E8E0D8] hover:border-[#D4B896] hover:shadow-lg hover:shadow-[#D4B896]/10 transition-all"
+              >
+                <div className="flex justify-between items-start mb-3">
+                  <h3 className="text-lg font-medium text-[#3D3428]">{item.name}</h3>
+                  <span className="text-[#A08060] font-medium">{item.price}</span>
+                </div>
+                <p className="text-[#6B5A48]/70 text-sm">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Signs & Plaques Section */}
+      <section id="signs" className="py-20 lg:py-24 scroll-mt-20">
+        <div className="max-w-5xl mx-auto px-6 lg:px-8">
+          <div className="text-center mb-14">
+            <p className="text-[#A08060] font-medium tracking-[0.15em] text-sm mb-3 uppercase">Signs & Plaques</p>
+            <h2 className="text-3xl sm:text-4xl font-light text-[#3D3428]" style={{ fontFamily: 'Georgia, serif' }}>
+              Yard signs, address plaques, memorials
+            </h2>
+            <p className="text-[#6B5A48]/70 mt-3">Indoor or outdoor. Weather-resistant options available.</p>
+          </div>
+
+          <div className="grid sm:grid-cols-2 gap-6">
+            {signsPlayques.map((item) => (
               <div
                 key={item.name}
                 className="group p-6 bg-white rounded-2xl border border-[#E8E0D8] hover:border-[#D4B896] hover:shadow-lg hover:shadow-[#D4B896]/10 transition-all"

@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { fontOptions } from '@/lib/fonts'
 import FontSelector from './FontSelector'
+import { PRODUCTS } from '@/lib/products'
 
 // Knife exclusive font - Spacetime (metal marking only)
 const SPACETIME_FONT = {
@@ -54,9 +55,9 @@ export default function KnifeEngravingPreview({ onChange }: KnifeEngravingPrevie
     : (fontOptions.find(f => f.value === data.font) || fontOptions[0])
 
   const calculatePrice = () => {
-    let price = 15 // Base price for knife engraving
-    if (data.markingStyle === 'deep') price += 5
-    if (data.line2) price += 3
+    let price = PRODUCTS.knives.base
+    if (data.markingStyle === 'deep') price += PRODUCTS.knives.addOns.deepMark
+    if (data.line2) price += PRODUCTS.knives.addOns.secondLine
     return price
   }
 

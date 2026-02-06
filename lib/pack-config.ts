@@ -13,10 +13,10 @@ export const PACK_CONFIG = {
   },
   'business-cards': {
     name: 'Metal Business Cards',
-    itemsPerPack: 15,
-    basePrice: 75, // 15 x $5 base
-    basePricePerItem: 5,
-    description: '15 premium metal cards',
+    itemsPerPack: 10,
+    basePrice: 30, // 10 x $3 base
+    basePricePerItem: 3,
+    description: '10 premium metal cards',
     minPacks: 1,
     maxPacks: 10,
     dynamicPricing: true,

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Colorado flag inspired design with V -->
+
+  <!-- Background: Blue stripes (top and bottom) -->
+  <rect x="0" y="0" width="512" height="171" fill="#002868"/>
+  <rect x="0" y="341" width="512" height="171" fill="#002868"/>
+
+  <!-- Middle white stripe -->
+  <rect x="0" y="171" width="512" height="170" fill="#ffffff"/>
+
+  <!-- Red "V" shape with gold/yellow circle accent -->
+  <g transform="translate(256, 256)">
+    <!-- Yellow/Gold circle (like the Colorado C) -->
+    <circle cx="0" cy="20" r="80" fill="#FFD700"/>
+
+    <!-- Red V -->
+    <path
+      d="M -140 -120
+         L -60 -120
+         L 0 60
+         L 60 -120
+         L 140 -120
+         L 40 140
+         L -40 140 Z"
+      fill="#BF0A30"
+    />
+  </g>
+</svg>

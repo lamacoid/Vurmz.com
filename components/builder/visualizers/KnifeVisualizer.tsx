@@ -1,8 +1,5 @@
 'use client'
 
-import { motion, AnimatePresence } from 'framer-motion'
-import { useMemo } from 'react'
-
 type KnifeType = 'pocket' | 'chef' | 'steak-set' | 'kitchen-set'
 type EngravingLocation = 'blade' | 'handle' | 'both'
 
@@ -15,883 +12,275 @@ interface KnifeVisualizerProps {
   setSize?: number
 }
 
-// Custom easing curve
-const premiumEasing = [0.23, 1, 0.32, 1] as const
-
-// ============================================
-// MIYABI SG2 8" CHEF KNIFE - Japanese Gyuto
-// ============================================
-// Characteristics: Curved belly for rocking motion,
-// pointed tip, thin spine tapering to razor edge,
-// D-shaped pakkawood handle with metal bolster
-
-const MIYABI_BLADE = `
-  M 12,58
-  C 18,56 35,48 65,40
-  Q 95,32 140,26
-  L 185,22
-  Q 200,20 210,20
-  L 218,20
-  Q 225,20 228,24
-  L 230,30
-  Q 228,36 220,38
-  L 180,43
-  Q 140,48 90,54
-  Q 50,60 25,62
-  L 12,58
-  Z
-`
-
-const MIYABI_SPINE = `
-  M 12,58
-  C 18,56 35,48 65,40
-  Q 95,32 140,26
-  L 185,22
-  Q 200,20 210,20
-  L 218,20
-`
-
-const MIYABI_EDGE = `
-  M 230,30
-  Q 228,36 220,38
-  L 180,43
-  Q 140,48 90,54
-  Q 50,60 25,62
-  L 12,58
-`
-
-// D-shaped pakkawood handle with contoured ergonomic profile
-const MIYABI_HANDLE = `
-  M 228,22
-  Q 235,18 248,18
-  L 285,20
-  Q 305,22 315,30
-  Q 322,38 320,45
-  Q 316,54 300,58
-  L 255,58
-  Q 240,56 232,50
-  Q 226,44 228,36
-  L 228,22
-  Z
-`
-
-// Bolster (metal collar between blade and handle)
-const MIYABI_BOLSTER = `
-  M 226,24
-  L 232,22
-  Q 238,22 240,26
-  L 240,52
-  Q 238,56 232,56
-  L 226,54
-  Q 222,50 222,38
-  Q 222,26 226,24
-  Z
-`
-
-// ============================================
-// KERSHAW TACTICAL FOLDER - Pocket Knife
-// ============================================
-// Characteristics: Clip point blade, flipper tab,
-// textured G10 handle scales, pocket clip, pivot
-
-const KERSHAW_BLADE = `
-  M 18,44
-  L 45,38
-  Q 80,32 100,30
-  L 118,30
-  Q 125,30 128,34
-  L 130,40
-  Q 130,46 125,50
-  L 118,52
-  Q 100,54 80,52
-  L 45,48
-  L 18,46
-  Z
-`
-
-const KERSHAW_BLADE_SPINE = `
-  M 18,44
-  L 45,38
-  Q 80,32 100,30
-  L 118,30
-`
-
-const KERSHAW_BLADE_EDGE = `
-  M 130,40
-  Q 130,46 125,50
-  L 118,52
-  Q 100,54 80,52
-  L 45,48
-  L 18,46
-`
-
-// Handle scales with ergonomic contour
-const KERSHAW_HANDLE = `
-  M 128,30
-  L 145,26
-  Q 175,22 210,24
-  L 250,28
-  Q 268,34 270,45
-  Q 270,58 252,64
-  L 210,68
-  Q 175,70 145,68
-  L 128,64
-  Q 118,58 118,45
-  Q 118,34 128,30
-  Z
-`
-
-// Textured grip pattern paths
-const KERSHAW_TEXTURE = `
-  M 150,30 L 150,62
-  M 165,27 L 165,65
-  M 180,25 L 180,67
-  M 195,24 L 195,68
-  M 210,25 L 210,67
-  M 225,28 L 225,64
-  M 240,32 L 240,60
-  M 252,38 L 252,54
-`
-
-// Jimping (grip notches on spine)
-const KERSHAW_JIMPING = `
-  M 132,30 L 134,26
-  M 138,29 L 140,25
-  M 144,28 L 146,24
-`
-
-// ============================================
-// STEAK KNIFE - Classic serrated profile
-// ============================================
-
-const STEAK_BLADE = `
-  M 8,32
-  L 55,26
-  Q 75,24 85,26
-  L 92,30
-  Q 94,35 92,40
-  Q 85,44 75,44
-  L 55,42
-  L 8,38
-  Z
-`
-
-const STEAK_HANDLE = `
-  M 94,28
-  Q 100,26 110,26
-  L 145,28
-  Q 162,32 165,40
-  Q 162,48 145,52
-  L 110,54
-  Q 100,54 94,52
-  L 94,28
-  Z
-`
-
-// ============================================
-// COMPONENT
-// ============================================
-
 export default function KnifeVisualizer({
   type,
   bladeText = '',
   handleText = '',
   engravingLocation,
-  font = 'Inter, sans-serif',
+  font = 'Arial, sans-serif',
   setSize = 4,
 }: KnifeVisualizerProps) {
   const showBlade = engravingLocation === 'blade' || engravingLocation === 'both'
   const showHandle = engravingLocation === 'handle' || engravingLocation === 'both'
-
-  // Unique ID for gradients to prevent conflicts
-  const uniqueId = useMemo(() => Math.random().toString(36).substring(7), [])
 
   // Steak/Kitchen Set View
   if (type === 'steak-set' || type === 'kitchen-set') {
     const count = type === 'steak-set' ? setSize : 4
     return (
       <div className="w-full">
-        <svg viewBox="0 0 320 220" className="w-full max-w-md mx-auto">
+        <svg viewBox="0 0 300 180" className="w-full max-w-sm mx-auto">
           <defs>
-            {/* Premium steel gradient for steak knives */}
-            <linearGradient id={`steakSteel-${uniqueId}`} x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#fafafa"/>
-              <stop offset="15%" stopColor="#e8e8e8"/>
-              <stop offset="40%" stopColor="#d0d0d0"/>
-              <stop offset="60%" stopColor="#e0e0e0"/>
-              <stop offset="85%" stopColor="#c8c8c8"/>
-              <stop offset="100%" stopColor="#a8a8a8"/>
+            <linearGradient id="steakBlade" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="#e8e8e8"/>
+              <stop offset="50%" stopColor="#d0d0d0"/>
+              <stop offset="100%" stopColor="#b8b8b8"/>
             </linearGradient>
-
-            {/* Walnut wood handle gradient */}
-            <linearGradient id={`steakWood-${uniqueId}`} x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#6b4423"/>
-              <stop offset="25%" stopColor="#5c3d1e"/>
-              <stop offset="50%" stopColor="#4a3218"/>
-              <stop offset="75%" stopColor="#3d2812"/>
-              <stop offset="100%" stopColor="#2f1f0e"/>
-            </linearGradient>
-
-            {/* Wood grain pattern */}
-            <pattern id={`steakGrain-${uniqueId}`} patternUnits="userSpaceOnUse" width="40" height="8">
-              <path d="M0,4 Q10,2 20,4 Q30,6 40,4" stroke="rgba(0,0,0,0.15)" strokeWidth="0.5" fill="none"/>
-              <path d="M0,6 Q10,8 20,6 Q30,4 40,6" stroke="rgba(255,255,255,0.08)" strokeWidth="0.3" fill="none"/>
-            </pattern>
-
-            {/* Glass shadow effect */}
-            <filter id={`steakShadow-${uniqueId}`} x="-20%" y="-20%" width="140%" height="140%">
-              <feDropShadow dx="2" dy="4" stdDeviation="4" floodColor="#000" floodOpacity="0.2"/>
-            </filter>
-
-            {/* Bolster metal gradient */}
-            <linearGradient id={`steakBolster-${uniqueId}`} x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#c0c0c0"/>
-              <stop offset="50%" stopColor="#909090"/>
-              <stop offset="100%" stopColor="#a8a8a8"/>
+            <linearGradient id="steakHandle" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#5d4037"/>
+              <stop offset="50%" stopColor="#4e342e"/>
+              <stop offset="100%" stopColor="#3e2723"/>
             </linearGradient>
           </defs>
 
-          <g filter={`url(#steakShadow-${uniqueId})`}>
-            {Array.from({ length: count }).map((_, i) => (
-              <motion.g
-                key={i}
-                initial={{ opacity: 0, x: -30, y: -20 }}
-                animate={{ opacity: 1, x: 0, y: 0 }}
-                transition={{
-                  delay: i * 0.1,
-                  duration: 0.6,
-                  ease: premiumEasing
-                }}
-              >
-                <g transform={`translate(${i * 38}, ${i * 28})`}>
-                  {/* Blade */}
-                  <path
-                    d={STEAK_BLADE}
-                    fill={`url(#steakSteel-${uniqueId})`}
-                    stroke="#888"
-                    strokeWidth="0.5"
-                  />
+          {Array.from({ length: count }).map((_, i) => (
+            <g key={i} transform={`translate(${i * 25}, ${i * 28})`}>
+              {/* Steak knife blade - serrated edge */}
+              <path
+                d="M 15,22 L 95,18 Q 105,18 108,22 L 108,26 L 95,28 L 15,30 Z"
+                fill="url(#steakBlade)"
+                stroke="#999"
+                strokeWidth="0.5"
+              />
+              {/* Serrations */}
+              <path
+                d="M 20,30 L 22,28 L 24,30 L 26,28 L 28,30 L 30,28 L 32,30 L 34,28 L 36,30 L 38,28 L 40,30 L 42,28 L 44,30 L 46,28 L 48,30 L 50,28 L 52,30 L 54,28 L 56,30 L 58,28 L 60,30 L 62,28 L 64,30 L 66,28 L 68,30 L 70,28 L 72,30 L 74,28 L 76,30 L 78,28 L 80,30 L 82,28 L 84,30 L 86,28 L 88,30 L 90,28 L 92,30"
+                fill="none"
+                stroke="#999"
+                strokeWidth="0.5"
+              />
+              {/* Handle */}
+              <path
+                d="M 108,18 L 160,20 Q 165,24 160,28 L 108,30 Z"
+                fill="url(#steakHandle)"
+              />
+              {/* Rivets */}
+              <circle cx="120" cy="24" r="2" fill="#brass" stroke="#666" strokeWidth="0.5"/>
+              <circle cx="145" cy="24" r="2" fill="#brass" stroke="#666" strokeWidth="0.5"/>
+            </g>
+          ))}
 
-                  {/* Edge highlight */}
-                  <path
-                    d="M 8,38 L 55,42 Q 75,44 92,40"
-                    fill="none"
-                    stroke="#fff"
-                    strokeWidth="0.6"
-                    strokeOpacity="0.5"
-                  />
-
-                  {/* Handle base */}
-                  <path
-                    d={STEAK_HANDLE}
-                    fill={`url(#steakWood-${uniqueId})`}
-                  />
-
-                  {/* Wood grain overlay */}
-                  <path
-                    d={STEAK_HANDLE}
-                    fill={`url(#steakGrain-${uniqueId})`}
-                  />
-
-                  {/* Bolster */}
-                  <rect
-                    x="91"
-                    y="28"
-                    width="5"
-                    height="24"
-                    fill={`url(#steakBolster-${uniqueId})`}
-                    rx="0.5"
-                  />
-
-                  {/* Rivets */}
-                  <circle cx="115" cy="40" r="2" fill="#a0a0a0" stroke="#808080" strokeWidth="0.3"/>
-                  <circle cx="140" cy="40" r="2" fill="#a0a0a0" stroke="#808080" strokeWidth="0.3"/>
-                </g>
-              </motion.g>
-            ))}
-          </g>
-
-          {/* Set label text */}
-          {bladeText && showBlade && (
-            <motion.text
-              x="160"
-              y="200"
-              textAnchor="middle"
-              fill="#555"
-              fontSize="12"
-              fontFamily={font}
-              fontWeight="500"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.6 }}
-            >
+          {/* Text label */}
+          {bladeText && (
+            <text x="150" y="170" textAnchor="middle" fill="#666" fontSize="11" fontFamily={font}>
               {bladeText}
-            </motion.text>
+            </text>
           )}
         </svg>
         <p className="text-center text-sm text-gray-500 mt-2">
-          {count}-piece {type === 'steak-set' ? 'steak knife' : 'kitchen'} set
+          {count}-piece {type === 'steak-set' ? 'Steak Knife' : 'Kitchen'} Set
         </p>
       </div>
     )
   }
 
-  // Single knife (chef or pocket)
-  const isChef = type === 'chef'
-
-  return (
-    <div className="w-full">
-      <AnimatePresence mode="wait">
-        <motion.svg
-          key={type}
-          viewBox={isChef ? "0 0 360 100" : "0 0 300 100"}
-          className="w-full max-w-lg mx-auto"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.3 }}
-        >
+  // Chef Knife
+  if (type === 'chef') {
+    return (
+      <div className="w-full">
+        <svg viewBox="0 0 340 100" className="w-full max-w-md mx-auto">
           <defs>
-            {/* ========== PREMIUM STEEL GRADIENTS ========== */}
-
-            {/* Japanese VG10/SG2 steel - bright, mirror polish */}
-            <linearGradient id={`miyabiSteel-${uniqueId}`} x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#ffffff"/>
-              <stop offset="8%" stopColor="#f8f8f8"/>
-              <stop offset="25%" stopColor="#e8e8e8"/>
-              <stop offset="45%" stopColor="#d4d4d4"/>
-              <stop offset="55%" stopColor="#e0e0e0"/>
-              <stop offset="75%" stopColor="#d8d8d8"/>
-              <stop offset="90%" stopColor="#c8c8c8"/>
-              <stop offset="100%" stopColor="#b0b0b0"/>
-            </linearGradient>
-
-            {/* American tactical steel - satin/stonewash finish */}
-            <linearGradient id={`kershawSteel-${uniqueId}`} x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#e8e8e8"/>
-              <stop offset="20%" stopColor="#d8d8d8"/>
-              <stop offset="40%" stopColor="#c8c8c8"/>
-              <stop offset="60%" stopColor="#d0d0d0"/>
-              <stop offset="80%" stopColor="#c0c0c0"/>
-              <stop offset="100%" stopColor="#a8a8a8"/>
-            </linearGradient>
-
-            {/* ========== WOOD HANDLE GRADIENTS ========== */}
-
-            {/* Pakkawood handle - rich brown laminate */}
-            <linearGradient id={`pakkawood-${uniqueId}`} x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#5a3d2b"/>
-              <stop offset="20%" stopColor="#4d3324"/>
-              <stop offset="40%" stopColor="#3f2a1d"/>
-              <stop offset="60%" stopColor="#4a3020"/>
-              <stop offset="80%" stopColor="#3a2618"/>
-              <stop offset="100%" stopColor="#2d1e12"/>
-            </linearGradient>
-
-            {/* Wood grain pattern for pakkawood */}
-            <pattern id={`woodGrain-${uniqueId}`} patternUnits="userSpaceOnUse" width="60" height="12" patternTransform="rotate(-5)">
-              <path d="M0,3 Q15,1 30,3 Q45,5 60,3" stroke="rgba(0,0,0,0.12)" strokeWidth="0.4" fill="none"/>
-              <path d="M0,6 Q15,8 30,6 Q45,4 60,6" stroke="rgba(255,220,180,0.06)" strokeWidth="0.3" fill="none"/>
-              <path d="M0,9 Q15,7 30,9 Q45,11 60,9" stroke="rgba(0,0,0,0.08)" strokeWidth="0.3" fill="none"/>
-            </pattern>
-
-            {/* G10 tactical handle - dark textured composite */}
-            <linearGradient id={`g10Handle-${uniqueId}`} x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#3a3a3a"/>
-              <stop offset="25%" stopColor="#2d2d2d"/>
-              <stop offset="50%" stopColor="#222222"/>
-              <stop offset="75%" stopColor="#2a2a2a"/>
-              <stop offset="100%" stopColor="#1a1a1a"/>
-            </linearGradient>
-
-            {/* ========== METAL ACCENTS ========== */}
-
-            {/* Stainless bolster/guard */}
-            <linearGradient id={`bolster-${uniqueId}`} x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#a8a8a8"/>
-              <stop offset="30%" stopColor="#d0d0d0"/>
-              <stop offset="50%" stopColor="#e8e8e8"/>
-              <stop offset="70%" stopColor="#c8c8c8"/>
+            <linearGradient id="chefBlade" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="#f5f5f5"/>
+              <stop offset="30%" stopColor="#e0e0e0"/>
+              <stop offset="70%" stopColor="#c0c0c0"/>
               <stop offset="100%" stopColor="#a0a0a0"/>
             </linearGradient>
-
-            {/* Pivot screw metal */}
-            <radialGradient id={`pivot-${uniqueId}`} cx="30%" cy="30%">
-              <stop offset="0%" stopColor="#888888"/>
-              <stop offset="50%" stopColor="#606060"/>
-              <stop offset="100%" stopColor="#404040"/>
-            </radialGradient>
-
-            {/* ========== EFFECTS ========== */}
-
-            {/* Glass-like shadow */}
-            <filter id={`glassShadow-${uniqueId}`} x="-30%" y="-30%" width="160%" height="160%">
-              <feDropShadow dx="0" dy="6" stdDeviation="8" floodColor="#000" floodOpacity="0.15"/>
-              <feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="#000" floodOpacity="0.1"/>
-            </filter>
-
-            {/* Engraving inset effect */}
-            <filter id={`engrave-${uniqueId}`} x="-5%" y="-5%" width="110%" height="110%">
-              <feOffset in="SourceAlpha" dx="0.5" dy="0.5" result="shadow"/>
-              <feGaussianBlur in="shadow" stdDeviation="0.3" result="blur"/>
-              <feMerge>
-                <feMergeNode in="blur"/>
-                <feMergeNode in="SourceGraphic"/>
-              </feMerge>
-            </filter>
-
-            {/* Edge highlight */}
-            <linearGradient id={`edgeShine-${uniqueId}`} x1="0%" y1="100%" x2="0%" y2="0%">
-              <stop offset="0%" stopColor="#ffffff" stopOpacity="0.9"/>
-              <stop offset="100%" stopColor="#ffffff" stopOpacity="0"/>
+            <linearGradient id="chefHandle" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#4a3728"/>
+              <stop offset="50%" stopColor="#5d4037"/>
+              <stop offset="100%" stopColor="#3e2723"/>
             </linearGradient>
           </defs>
 
-          {/* Main knife group with glass shadow */}
-          <g filter={`url(#glassShadow-${uniqueId})`}>
-            <AnimatePresence mode="wait">
-              {isChef ? (
-                // ========== MIYABI CHEF KNIFE ==========
-                <motion.g
-                  key="miyabi"
-                  initial={{ opacity: 0, scale: 0.95, x: -20 }}
-                  animate={{ opacity: 1, scale: 1, x: 0 }}
-                  exit={{ opacity: 0, scale: 0.95, x: 20 }}
-                  transition={{ duration: 0.5, ease: premiumEasing }}
-                >
-                  {/* Blade body */}
-                  <motion.path
-                    d={MIYABI_BLADE}
-                    fill={`url(#miyabiSteel-${uniqueId})`}
-                    stroke="#999"
-                    strokeWidth="0.4"
-                    initial={{ pathLength: 0 }}
-                    animate={{ pathLength: 1 }}
-                    transition={{ duration: 0.8, ease: premiumEasing }}
-                  />
+          {/* Chef knife blade - classic curved shape */}
+          <path
+            d="M 10,50
+               Q 30,65 80,70
+               L 180,72
+               Q 200,72 210,68
+               L 210,48
+               Q 200,35 180,30
+               L 80,28
+               Q 40,30 20,40
+               Z"
+            fill="url(#chefBlade)"
+            stroke="#888"
+            strokeWidth="0.75"
+          />
 
-                  {/* Spine line (darker) */}
-                  <motion.path
-                    d={MIYABI_SPINE}
-                    fill="none"
-                    stroke="#a0a0a0"
-                    strokeWidth="1"
-                    strokeLinecap="round"
-                    initial={{ pathLength: 0 }}
-                    animate={{ pathLength: 1 }}
-                    transition={{ duration: 0.6, delay: 0.2, ease: premiumEasing }}
-                  />
+          {/* Blade spine highlight */}
+          <path
+            d="M 20,42 Q 40,32 80,30 L 180,32 Q 195,35 205,42"
+            fill="none"
+            stroke="#fff"
+            strokeWidth="1"
+            opacity="0.4"
+          />
 
-                  {/* Edge highlight (razor edge shine) */}
-                  <motion.path
-                    d={MIYABI_EDGE}
-                    fill="none"
-                    stroke="#ffffff"
-                    strokeWidth="0.8"
-                    strokeOpacity="0.7"
-                    strokeLinecap="round"
-                    initial={{ pathLength: 0 }}
-                    animate={{ pathLength: 1 }}
-                    transition={{ duration: 0.8, delay: 0.3, ease: premiumEasing }}
-                  />
+          {/* Bolster (metal part between blade and handle) */}
+          <rect x="205" y="38" width="12" height="24" rx="2" fill="#888" stroke="#666" strokeWidth="0.5"/>
 
-                  {/* Bolster */}
-                  <motion.path
-                    d={MIYABI_BOLSTER}
-                    fill={`url(#bolster-${uniqueId})`}
-                    stroke="#888"
-                    strokeWidth="0.3"
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.3, duration: 0.4, ease: premiumEasing }}
-                  />
+          {/* Handle */}
+          <path
+            d="M 217,38
+               Q 220,36 230,36
+               L 300,40
+               Q 320,48 320,50
+               Q 320,52 300,60
+               L 230,64
+               Q 220,64 217,62
+               Z"
+            fill="url(#chefHandle)"
+          />
 
-                  {/* Bolster highlight */}
-                  <motion.ellipse
-                    cx="232"
-                    cy="32"
-                    rx="4"
-                    ry="6"
-                    fill="rgba(255,255,255,0.3)"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.5 }}
-                  />
+          {/* Handle rivets */}
+          <circle cx="240" cy="50" r="3" fill="#c9b037" stroke="#8b7355" strokeWidth="0.5"/>
+          <circle cx="265" cy="50" r="3" fill="#c9b037" stroke="#8b7355" strokeWidth="0.5"/>
+          <circle cx="290" cy="50" r="3" fill="#c9b037" stroke="#8b7355" strokeWidth="0.5"/>
 
-                  {/* Handle base */}
-                  <motion.path
-                    d={MIYABI_HANDLE}
-                    fill={`url(#pakkawood-${uniqueId})`}
-                    initial={{ opacity: 0, x: 15 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.2, duration: 0.5, ease: premiumEasing }}
-                  />
+          {/* Blade engraving text */}
+          {showBlade && (
+            <text
+              x="120"
+              y="54"
+              textAnchor="middle"
+              fill="#666"
+              fontSize="12"
+              fontFamily={font}
+              fontStyle="italic"
+            >
+              {bladeText || 'Blade text'}
+            </text>
+          )}
 
-                  {/* Wood grain overlay */}
-                  <motion.path
-                    d={MIYABI_HANDLE}
-                    fill={`url(#woodGrain-${uniqueId})`}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.4 }}
-                  />
+          {/* Handle engraving text */}
+          {showHandle && (
+            <text
+              x="265"
+              y="54"
+              textAnchor="middle"
+              fill="#c9a67a"
+              fontSize="9"
+              fontFamily={font}
+            >
+              {handleText || 'Handle'}
+            </text>
+          )}
+        </svg>
+        <p className="text-center text-sm text-gray-500 mt-2">Chef Knife</p>
+      </div>
+    )
+  }
 
-                  {/* Handle highlight (D-shape contour) */}
-                  <motion.path
-                    d="M 248,20 Q 290,22 310,32"
-                    fill="none"
-                    stroke="rgba(255,220,180,0.15)"
-                    strokeWidth="4"
-                    strokeLinecap="round"
-                    initial={{ pathLength: 0 }}
-                    animate={{ pathLength: 1 }}
-                    transition={{ delay: 0.5, duration: 0.4 }}
-                  />
+  // Pocket Knife (default)
+  return (
+    <div className="w-full">
+      <svg viewBox="0 0 300 90" className="w-full max-w-md mx-auto">
+        <defs>
+          <linearGradient id="pocketBlade" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#f0f0f0"/>
+            <stop offset="50%" stopColor="#d8d8d8"/>
+            <stop offset="100%" stopColor="#b0b0b0"/>
+          </linearGradient>
+          <linearGradient id="pocketHandle" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#2a2a2a"/>
+            <stop offset="50%" stopColor="#1a1a1a"/>
+            <stop offset="100%" stopColor="#0a0a0a"/>
+          </linearGradient>
+        </defs>
 
-                  {/* End cap accent */}
-                  <motion.ellipse
-                    cx="318"
-                    cy="42"
-                    rx="3"
-                    ry="10"
-                    fill="#2f1f0e"
-                    stroke="#1a1208"
-                    strokeWidth="0.5"
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ delay: 0.5, type: 'spring', stiffness: 200 }}
-                  />
+        {/* Pocket knife blade - drop point style */}
+        <path
+          d="M 20,45
+             L 110,38
+             Q 125,38 130,42
+             L 130,48
+             Q 125,52 110,52
+             L 20,50
+             Z"
+          fill="url(#pocketBlade)"
+          stroke="#888"
+          strokeWidth="0.75"
+        />
 
-                  {/* Engraving area indicator - Blade */}
-                  {showBlade && (
-                    <motion.g
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 0.6 }}
-                    >
-                      {/* Engraving zone highlight */}
-                      <rect
-                        x="80"
-                        y="32"
-                        width="80"
-                        height="16"
-                        fill="rgba(0,200,200,0.08)"
-                        rx="2"
-                        stroke="rgba(0,200,200,0.3)"
-                        strokeWidth="0.5"
-                        strokeDasharray="3,2"
-                      />
+        {/* Blade edge line */}
+        <path
+          d="M 22,50 L 110,52 Q 122,52 128,48"
+          fill="none"
+          stroke="#999"
+          strokeWidth="0.5"
+        />
 
-                      {/* Blade engraving text */}
-                      <text
-                        x="120"
-                        y="44"
-                        textAnchor="middle"
-                        fill="#555"
-                        fontSize="10"
-                        fontFamily={font}
-                        fontWeight="500"
-                        filter={`url(#engrave-${uniqueId})`}
-                      >
-                        {bladeText || 'BLADE TEXT'}
-                      </text>
-                    </motion.g>
-                  )}
+        {/* Handle body */}
+        <rect
+          x="125"
+          y="30"
+          width="145"
+          height="30"
+          rx="4"
+          fill="url(#pocketHandle)"
+          stroke="#333"
+          strokeWidth="0.5"
+        />
 
-                  {/* Engraving area indicator - Handle */}
-                  {showHandle && (
-                    <motion.g
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 0.7 }}
-                    >
-                      {/* Engraving zone highlight */}
-                      <rect
-                        x="252"
-                        y="30"
-                        width="48"
-                        height="18"
-                        fill="rgba(0,200,200,0.08)"
-                        rx="2"
-                        stroke="rgba(0,200,200,0.3)"
-                        strokeWidth="0.5"
-                        strokeDasharray="3,2"
-                      />
+        {/* Handle texture lines */}
+        <line x1="150" y1="33" x2="150" y2="57" stroke="#333" strokeWidth="0.5" opacity="0.5"/>
+        <line x1="175" y1="33" x2="175" y2="57" stroke="#333" strokeWidth="0.5" opacity="0.5"/>
+        <line x1="200" y1="33" x2="200" y2="57" stroke="#333" strokeWidth="0.5" opacity="0.5"/>
+        <line x1="225" y1="33" x2="225" y2="57" stroke="#333" strokeWidth="0.5" opacity="0.5"/>
+        <line x1="250" y1="33" x2="250" y2="57" stroke="#333" strokeWidth="0.5" opacity="0.5"/>
 
-                      {/* Handle engraving text */}
-                      <text
-                        x="276"
-                        y="43"
-                        textAnchor="middle"
-                        fill="#c9a67a"
-                        fontSize="8"
-                        fontFamily={font}
-                        fontWeight="500"
-                      >
-                        {handleText || 'HANDLE'}
-                      </text>
-                    </motion.g>
-                  )}
-                </motion.g>
-              ) : (
-                // ========== KERSHAW POCKET KNIFE ==========
-                <motion.g
-                  key="kershaw"
-                  initial={{ opacity: 0, scale: 0.95, x: 20 }}
-                  animate={{ opacity: 1, scale: 1, x: 0 }}
-                  exit={{ opacity: 0, scale: 0.95, x: -20 }}
-                  transition={{ duration: 0.5, ease: premiumEasing }}
-                >
-                  {/* Blade body */}
-                  <motion.path
-                    d={KERSHAW_BLADE}
-                    fill={`url(#kershawSteel-${uniqueId})`}
-                    stroke="#888"
-                    strokeWidth="0.4"
-                    initial={{ pathLength: 0 }}
-                    animate={{ pathLength: 1 }}
-                    transition={{ duration: 0.6, ease: premiumEasing }}
-                  />
+        {/* Pivot screw */}
+        <circle cx="132" cy="45" r="6" fill="#444" stroke="#333" strokeWidth="1"/>
+        <circle cx="132" cy="45" r="2.5" fill="#555"/>
 
-                  {/* Blade spine */}
-                  <motion.path
-                    d={KERSHAW_BLADE_SPINE}
-                    fill="none"
-                    stroke="#a0a0a0"
-                    strokeWidth="0.8"
-                    strokeLinecap="round"
-                    initial={{ pathLength: 0 }}
-                    animate={{ pathLength: 1 }}
-                    transition={{ duration: 0.5, delay: 0.1 }}
-                  />
+        {/* Pocket clip */}
+        <path
+          d="M 258,32 L 272,32 L 272,38 L 265,38 L 265,35 L 258,35 Z"
+          fill="#333"
+          stroke="#222"
+          strokeWidth="0.5"
+        />
 
-                  {/* Edge shine */}
-                  <motion.path
-                    d={KERSHAW_BLADE_EDGE}
-                    fill="none"
-                    stroke="#ffffff"
-                    strokeWidth="0.6"
-                    strokeOpacity="0.6"
-                    strokeLinecap="round"
-                    initial={{ pathLength: 0 }}
-                    animate={{ pathLength: 1 }}
-                    transition={{ duration: 0.6, delay: 0.2 }}
-                  />
+        {/* Blade engraving text */}
+        {showBlade && (
+          <text
+            x="75"
+            y="48"
+            textAnchor="middle"
+            fill="#555"
+            fontSize="9"
+            fontFamily={font}
+          >
+            {bladeText || 'Blade text'}
+          </text>
+        )}
 
-                  {/* Jimping on spine */}
-                  <motion.path
-                    d={KERSHAW_JIMPING}
-                    fill="none"
-                    stroke="#777"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.4 }}
-                  />
-
-                  {/* Handle scales */}
-                  <motion.path
-                    d={KERSHAW_HANDLE}
-                    fill={`url(#g10Handle-${uniqueId})`}
-                    stroke="#444"
-                    strokeWidth="0.5"
-                    initial={{ opacity: 0, x: 15 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.15, duration: 0.5, ease: premiumEasing }}
-                  />
-
-                  {/* Handle texture lines */}
-                  <motion.path
-                    d={KERSHAW_TEXTURE}
-                    fill="none"
-                    stroke="#444"
-                    strokeWidth="0.8"
-                    strokeOpacity="0.6"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.35, duration: 0.4 }}
-                  />
-
-                  {/* Handle highlight */}
-                  <motion.path
-                    d="M 145,28 Q 200,26 250,32"
-                    fill="none"
-                    stroke="rgba(255,255,255,0.08)"
-                    strokeWidth="6"
-                    strokeLinecap="round"
-                    initial={{ pathLength: 0 }}
-                    animate={{ pathLength: 1 }}
-                    transition={{ delay: 0.4, duration: 0.4 }}
-                  />
-
-                  {/* Flipper tab */}
-                  <motion.path
-                    d="M 125,30 L 135,26 L 138,30 Q 136,34 130,34 L 125,30 Z"
-                    fill="#606060"
-                    stroke="#505050"
-                    strokeWidth="0.5"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.3, type: 'spring', stiffness: 200 }}
-                  />
-
-                  {/* Pivot circle (outer) */}
-                  <motion.circle
-                    cx="135"
-                    cy="47"
-                    r="8"
-                    fill={`url(#pivot-${uniqueId})`}
-                    stroke="#555"
-                    strokeWidth="0.5"
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ delay: 0.4, type: 'spring', stiffness: 150 }}
-                  />
-
-                  {/* Pivot circle (inner detail) */}
-                  <motion.circle
-                    cx="135"
-                    cy="47"
-                    r="4"
-                    fill="#707070"
-                    stroke="#606060"
-                    strokeWidth="0.3"
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ delay: 0.5, type: 'spring', stiffness: 200 }}
-                  />
-
-                  {/* Pivot center dot */}
-                  <motion.circle
-                    cx="135"
-                    cy="47"
-                    r="1.5"
-                    fill="#888"
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ delay: 0.55, type: 'spring' }}
-                  />
-
-                  {/* Pocket clip */}
-                  <motion.g
-                    initial={{ opacity: 0, x: 10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.45, duration: 0.3 }}
-                  >
-                    <path
-                      d="M 255,32 Q 255,22 262,18 L 282,18 L 282,24 L 265,24 Q 260,26 260,32"
-                      fill="#505050"
-                      stroke="#404040"
-                      strokeWidth="0.5"
-                    />
-                    {/* Clip highlight */}
-                    <path
-                      d="M 262,20 L 278,20"
-                      stroke="rgba(255,255,255,0.2)"
-                      strokeWidth="1"
-                    />
-                  </motion.g>
-
-                  {/* Lanyard hole */}
-                  <motion.circle
-                    cx="262"
-                    cy="58"
-                    r="4"
-                    fill="#1a1a1a"
-                    stroke="#333"
-                    strokeWidth="0.5"
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ delay: 0.5, type: 'spring' }}
-                  />
-
-                  {/* Engraving area indicator - Blade */}
-                  {showBlade && (
-                    <motion.g
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 0.6 }}
-                    >
-                      {/* Engraving zone highlight */}
-                      <rect
-                        x="38"
-                        y="34"
-                        width="55"
-                        height="14"
-                        fill="rgba(0,200,200,0.08)"
-                        rx="2"
-                        stroke="rgba(0,200,200,0.3)"
-                        strokeWidth="0.5"
-                        strokeDasharray="3,2"
-                      />
-
-                      {/* Blade engraving text */}
-                      <text
-                        x="65"
-                        y="45"
-                        textAnchor="middle"
-                        fill="#666"
-                        fontSize="8"
-                        fontFamily={font}
-                        fontWeight="500"
-                        filter={`url(#engrave-${uniqueId})`}
-                      >
-                        {bladeText || 'BLADE'}
-                      </text>
-                    </motion.g>
-                  )}
-
-                  {/* Engraving area indicator - Handle */}
-                  {showHandle && (
-                    <motion.g
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 0.7 }}
-                    >
-                      {/* Engraving zone highlight */}
-                      <rect
-                        x="168"
-                        y="38"
-                        width="60"
-                        height="18"
-                        fill="rgba(0,200,200,0.08)"
-                        rx="2"
-                        stroke="rgba(0,200,200,0.3)"
-                        strokeWidth="0.5"
-                        strokeDasharray="3,2"
-                      />
-
-                      {/* Handle engraving text */}
-                      <text
-                        x="198"
-                        y="51"
-                        textAnchor="middle"
-                        fill="#909090"
-                        fontSize="7"
-                        fontFamily={font}
-                        fontWeight="500"
-                      >
-                        {handleText || 'HANDLE TEXT'}
-                      </text>
-                    </motion.g>
-                  )}
-                </motion.g>
-              )}
-            </AnimatePresence>
-          </g>
-        </motion.svg>
-      </AnimatePresence>
-
-      {/* Label */}
-      <motion.p
-        className="text-center text-sm text-gray-500 mt-3"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.5 }}
-      >
-        {isChef ? 'Miyabi SG2 8" Chef Knife' : 'Kershaw Tactical Folder'}
-      </motion.p>
+        {/* Handle engraving text */}
+        {showHandle && (
+          <text
+            x="200"
+            y="49"
+            textAnchor="middle"
+            fill="#888"
+            fontSize="8"
+            fontFamily={font}
+          >
+            {handleText || 'Handle text'}
+          </text>
+        )}
+      </svg>
+      <p className="text-center text-sm text-gray-500 mt-2">Pocket Knife</p>
     </div>
   )
 }

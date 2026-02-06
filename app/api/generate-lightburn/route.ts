@@ -1,18 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { Resend } from 'resend'
+import { sendEmail } from '@/lib/resend-edge'
 import { IndustrialLabelConfig, generateIndustrialLabel } from '@/lib/lightburn/generator'
 import { validateBarcodeValue, BarcodeType } from '@/lib/lightburn/barcode-generator'
 
 export const runtime = 'edge'
-
-// Lazy initialization to avoid build-time errors
-let resend: Resend | null = null
-function getResend() {
-  if (!resend) {
-    resend = new Resend(process.env.RESEND_API_KEY)
-  }
-  return resend
-}
 
 interface GenerateLightBurnRequest {
   templateType: string
@@ -94,7 +85,7 @@ export async function POST(request: NextRequest) {
     }
 
     try {
-      await getResend().emails.send({
+      await sendEmail({
         from: 'VURMZ Orders <orders@vurmz.com>',
         to: adminEmail,
         subject: `New LightBurn File: ${templateType} - ${customerName}`,
@@ -137,7 +128,7 @@ export async function POST(request: NextRequest) {
 
     // Send confirmation to customer
     try {
-      await getResend().emails.send({
+      await sendEmail({
         from: 'VURMZ <orders@vurmz.com>',
         to: customerEmail,
         subject: 'Your Order Has Been Received - VURMZ',

@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   authors: [{ name: 'VURMZ' }],
   creator: 'VURMZ',
   icons: {
-    icon: '/duck-laser.svg',
+    icon: '/favicon.svg',
     apple: '/images/apple-touch-icon.png',
   },
   openGraph: {

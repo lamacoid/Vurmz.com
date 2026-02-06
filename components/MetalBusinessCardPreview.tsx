@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { QrCodeIcon, PhotoIcon, ArrowPathIcon } from '@heroicons/react/24/outline'
 import { fontOptions, ENGRAVING_COLOR } from '@/lib/fonts'
 import FontSelector from './FontSelector'
+import { PRODUCTS } from '@/lib/products'
 
 type CardColor = 'matte-black' | 'gloss-black' | 'gloss-green' | 'gloss-red' | 'gloss-blue' | 'gloss-pink' | 'gloss-white' | 'stainless-steel'
 type BackSideOption = 'large-qr' | 'large-logo' | 'custom-text'
@@ -69,10 +70,15 @@ export default function MetalBusinessCardPreview({ onChange }: MetalBusinessCard
     ? SPACETIME_FONT
     : (fontOptions.find(f => f.value === cardData.font) || fontOptions[0])
 
-  // Calculate price whenever options change
+  // Calculate price from centralized source
   const calculatePrice = (data: Omit<CardData, 'pricePerCard'>) => {
-    const basePrice = data.cardColor === 'stainless-steel' ? 15 : 3
-    const addons = (data.qrEnabled ? 1 : 0) + (data.logoEnabled ? 1 : 0) + (data.backSideEnabled ? 1 : 0)
+    const basePrice = data.cardColor === 'stainless-steel'
+      ? PRODUCTS.businessCards.stainlessBase
+      : PRODUCTS.businessCards.matteBlackBase
+    const addons =
+      (data.qrEnabled ? PRODUCTS.businessCards.addOns.qrCode : 0) +
+      (data.logoEnabled ? PRODUCTS.businessCards.addOns.logo : 0) +
+      (data.backSideEnabled ? PRODUCTS.businessCards.addOns.backSide : 0)
     return basePrice + addons
   }
 
@@ -189,91 +195,91 @@ export default function MetalBusinessCardPreview({ onChange }: MetalBusinessCard
   ]
 
   return (
-    <div className="bg-gray-50 border border-gray-200 p-6 mt-4">
-      <h3 className="font-bold text-lg mb-4">Design Your Metal Business Card</h3>
+    <div className="bg-[#FAF7F2] border border-[#D4C8B8] p-6 mt-4">
+      <h3 className="font-bold text-lg mb-4 text-[#3D3428]">Design Your Metal Business Card</h3>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Input Fields */}
         <div className="space-y-4">
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Name *</label>
+              <label className="block text-sm font-medium text-[#5C4A3A] mb-1">Name *</label>
               <input
                 type="text"
                 value={cardData.name}
                 onChange={(e) => updateField('name', e.target.value)}
                 placeholder="John Smith"
-                className="w-full border border-gray-300 px-3 py-2 text-sm focus:border-vurmz-teal focus:ring-1 focus:ring-vurmz-teal outline-none"
+                className="w-full border border-[#D4C8B8] px-3 py-2 text-sm focus:border-[#7EB8C9] focus:ring-1 focus:ring-[#7EB8C9] outline-none"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
+              <label className="block text-sm font-medium text-[#5C4A3A] mb-1">Title</label>
               <input
                 type="text"
                 value={cardData.title}
                 onChange={(e) => updateField('title', e.target.value)}
                 placeholder="CEO / Founder"
-                className="w-full border border-gray-300 px-3 py-2 text-sm focus:border-vurmz-teal focus:ring-1 focus:ring-vurmz-teal outline-none"
+                className="w-full border border-[#D4C8B8] px-3 py-2 text-sm focus:border-[#7EB8C9] focus:ring-1 focus:ring-[#7EB8C9] outline-none"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Business Name</label>
+            <label className="block text-sm font-medium text-[#5C4A3A] mb-1">Business Name</label>
             <input
               type="text"
               value={cardData.business}
               onChange={(e) => updateField('business', e.target.value)}
               placeholder="Acme Corporation"
-              className="w-full border border-gray-300 px-3 py-2 text-sm focus:border-vurmz-teal focus:ring-1 focus:ring-vurmz-teal outline-none"
+              className="w-full border border-[#D4C8B8] px-3 py-2 text-sm focus:border-[#7EB8C9] focus:ring-1 focus:ring-[#7EB8C9] outline-none"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+              <label className="block text-sm font-medium text-[#5C4A3A] mb-1">Phone</label>
               <input
                 type="tel"
                 value={cardData.phone}
                 onChange={(e) => updateField('phone', e.target.value)}
                 placeholder="(555) 123-4567"
-                className="w-full border border-gray-300 px-3 py-2 text-sm focus:border-vurmz-teal focus:ring-1 focus:ring-vurmz-teal outline-none"
+                className="w-full border border-[#D4C8B8] px-3 py-2 text-sm focus:border-[#7EB8C9] focus:ring-1 focus:ring-[#7EB8C9] outline-none"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+              <label className="block text-sm font-medium text-[#5C4A3A] mb-1">Email</label>
               <input
                 type="email"
                 value={cardData.email}
                 onChange={(e) => updateField('email', e.target.value)}
                 placeholder="john@acme.com"
-                className="w-full border border-gray-300 px-3 py-2 text-sm focus:border-vurmz-teal focus:ring-1 focus:ring-vurmz-teal outline-none"
+                className="w-full border border-[#D4C8B8] px-3 py-2 text-sm focus:border-[#7EB8C9] focus:ring-1 focus:ring-[#7EB8C9] outline-none"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Website</label>
+            <label className="block text-sm font-medium text-[#5C4A3A] mb-1">Website</label>
             <input
               type="text"
               value={cardData.website}
               onChange={(e) => updateField('website', e.target.value)}
               placeholder="www.acme.com"
-              className="w-full border border-gray-300 px-3 py-2 text-sm focus:border-vurmz-teal focus:ring-1 focus:ring-vurmz-teal outline-none"
+              className="w-full border border-[#D4C8B8] px-3 py-2 text-sm focus:border-[#7EB8C9] focus:ring-1 focus:ring-[#7EB8C9] outline-none"
             />
           </div>
 
           {/* Font Selection - with Spacetime exclusive */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Font Style</label>
+            <label className="block text-sm font-medium text-[#5C4A3A] mb-2">Font Style</label>
             {/* Spacetime - Business Card Exclusive */}
             <button
               type="button"
               onClick={() => updateField('font', 'spacetime')}
               className={`w-full mb-2 p-3 border-2 rounded-lg text-left transition-all ${
                 cardData.font === 'spacetime'
-                  ? 'border-vurmz-teal bg-vurmz-teal/10'
-                  : 'border-gray-200 hover:border-gray-300'
+                  ? 'border-[#7EB8C9] bg-[#7EB8C9]/10'
+                  : 'border-[#E0D6C8] hover:border-[#D4C8B8]'
               }`}
             >
               <div className="flex items-center justify-between">
@@ -293,39 +299,39 @@ export default function MetalBusinessCardPreview({ onChange }: MetalBusinessCard
           </div>
 
           {/* Marking Style - Deep vs Surface */}
-          <div className="pt-2 border-t border-gray-200">
-            <label className="block text-sm font-medium text-gray-700 mb-2">Marking Style</label>
+          <div className="pt-2 border-t border-[#E0D6C8]">
+            <label className="block text-sm font-medium text-[#5C4A3A] mb-2">Marking Style</label>
             <div className="grid grid-cols-2 gap-2">
               <button
                 type="button"
                 onClick={() => updateField('markingStyle', 'deep')}
                 className={`p-3 border-2 rounded-lg text-center transition-all ${
                   cardData.markingStyle === 'deep'
-                    ? 'border-vurmz-teal bg-vurmz-teal/10'
-                    : 'border-gray-200 hover:border-gray-300'
+                    ? 'border-[#7EB8C9] bg-[#7EB8C9]/10'
+                    : 'border-[#E0D6C8] hover:border-[#D4C8B8]'
                 }`}
               >
-                <div className="font-medium text-sm">Deep Engraving</div>
-                <div className="text-xs text-gray-500">Dark, permanent, premium</div>
+                <div className="font-medium text-sm text-[#5C4A3A]">Deep Engraving</div>
+                <div className="text-xs text-[#8B7355]">Dark, permanent, premium</div>
               </button>
               <button
                 type="button"
                 onClick={() => updateField('markingStyle', 'surface')}
                 className={`p-3 border-2 rounded-lg text-center transition-all ${
                   cardData.markingStyle === 'surface'
-                    ? 'border-vurmz-teal bg-vurmz-teal/10'
-                    : 'border-gray-200 hover:border-gray-300'
+                    ? 'border-[#7EB8C9] bg-[#7EB8C9]/10'
+                    : 'border-[#E0D6C8] hover:border-[#D4C8B8]'
                 }`}
               >
-                <div className="font-medium text-sm">Surface Marking</div>
-                <div className="text-xs text-gray-500">Frosted, subtle, elegant</div>
+                <div className="font-medium text-sm text-[#5C4A3A]">Surface Marking</div>
+                <div className="text-xs text-[#8B7355]">Frosted, subtle, elegant</div>
               </button>
             </div>
           </div>
 
           {/* Card Color */}
-          <div className="pt-2 border-t border-gray-200">
-            <label className="block text-sm font-medium text-gray-700 mb-2">Card Color</label>
+          <div className="pt-2 border-t border-[#E0D6C8]">
+            <label className="block text-sm font-medium text-[#5C4A3A] mb-2">Card Color</label>
             <div className="grid grid-cols-4 gap-2">
               {colorOptions.map((option) => (
                 <button
@@ -334,8 +340,8 @@ export default function MetalBusinessCardPreview({ onChange }: MetalBusinessCard
                   onClick={() => updateField('cardColor', option.value)}
                   className={`px-2 py-2 text-xs font-medium border-2 transition-all relative ${
                     cardData.cardColor === option.value
-                      ? 'border-vurmz-teal ring-1 ring-vurmz-teal'
-                      : 'border-transparent hover:border-gray-400'
+                      ? 'border-[#7EB8C9] ring-1 ring-[#7EB8C9]'
+                      : 'border-transparent hover:border-[#D4C8B8]'
                   } ${option.className}`}
                 >
                   {option.label}
@@ -350,19 +356,19 @@ export default function MetalBusinessCardPreview({ onChange }: MetalBusinessCard
           </div>
 
           {/* Layout */}
-          <div className="pt-2 border-t border-gray-200">
-            <label className="block text-sm font-medium text-gray-700 mb-2">Layout</label>
+          <div className="pt-2 border-t border-[#E0D6C8]">
+            <label className="block text-sm font-medium text-[#5C4A3A] mb-2">Layout</label>
             <div className="flex gap-2">
               <button
                 type="button"
                 onClick={() => updateField('layout', 'horizontal')}
                 className={`flex-1 px-3 py-2 text-sm font-medium border-2 transition-all ${
                   cardData.layout === 'horizontal'
-                    ? 'border-vurmz-teal bg-vurmz-teal/10'
-                    : 'border-gray-300 hover:border-gray-400'
+                    ? 'border-[#7EB8C9] bg-[#7EB8C9]/10'
+                    : 'border-[#D4C8B8] hover:border-[#C4B8A8]'
                 }`}
               >
-                <div className="flex items-center justify-center gap-2">
+                <div className="flex items-center justify-center gap-2 text-[#5C4A3A]">
                   <div className="w-8 h-5 border-2 border-current rounded-sm" />
                   <span>Horizontal</span>
                 </div>
@@ -372,11 +378,11 @@ export default function MetalBusinessCardPreview({ onChange }: MetalBusinessCard
                 onClick={() => updateField('layout', 'portrait')}
                 className={`flex-1 px-3 py-2 text-sm font-medium border-2 transition-all ${
                   cardData.layout === 'portrait'
-                    ? 'border-vurmz-teal bg-vurmz-teal/10'
-                    : 'border-gray-300 hover:border-gray-400'
+                    ? 'border-[#7EB8C9] bg-[#7EB8C9]/10'
+                    : 'border-[#D4C8B8] hover:border-[#C4B8A8]'
                 }`}
               >
-                <div className="flex items-center justify-center gap-2">
+                <div className="flex items-center justify-center gap-2 text-[#5C4A3A]">
                   <div className="w-5 h-8 border-2 border-current rounded-sm" />
                   <span>Portrait</span>
                 </div>
@@ -385,8 +391,8 @@ export default function MetalBusinessCardPreview({ onChange }: MetalBusinessCard
           </div>
 
           {/* Template Selection */}
-          <div className="pt-2 border-t border-gray-200">
-            <label className="block text-sm font-medium text-gray-700 mb-2">Template Style</label>
+          <div className="pt-2 border-t border-[#E0D6C8]">
+            <label className="block text-sm font-medium text-[#5C4A3A] mb-2">Template Style</label>
             <div className="grid grid-cols-3 gap-2">
               {templateOptions.map((option) => (
                 <button
@@ -395,31 +401,31 @@ export default function MetalBusinessCardPreview({ onChange }: MetalBusinessCard
                   onClick={() => updateField('template', option.value)}
                   className={`px-2 py-2 text-xs font-medium border-2 transition-all text-center ${
                     cardData.template === option.value
-                      ? 'border-vurmz-teal bg-vurmz-teal/10'
-                      : 'border-gray-200 hover:border-gray-300'
+                      ? 'border-[#7EB8C9] bg-[#7EB8C9]/10'
+                      : 'border-[#E0D6C8] hover:border-[#D4C8B8]'
                   }`}
                 >
-                  <div className="font-medium">{option.label}</div>
-                  <div className="text-[10px] text-gray-500 mt-0.5">{option.description}</div>
+                  <div className="font-medium text-[#5C4A3A]">{option.label}</div>
+                  <div className="text-[10px] text-[#8B7355] mt-0.5">{option.description}</div>
                 </button>
               ))}
             </div>
           </div>
 
           {/* Extras */}
-          <div className="pt-2 border-t border-gray-200 space-y-3">
-            <label className="block text-sm font-medium text-gray-700">Add-ons <span className="font-normal text-gray-500">(+$1 each per card)</span></label>
+          <div className="pt-2 border-t border-[#E0D6C8] space-y-3">
+            <label className="block text-sm font-medium text-[#5C4A3A]">Add-ons <span className="font-normal text-[#8B7355]">(+$1 each per card)</span></label>
 
             <label className="flex items-center gap-3 cursor-pointer">
               <input
                 type="checkbox"
                 checked={cardData.qrEnabled}
                 onChange={(e) => updateField('qrEnabled', e.target.checked)}
-                className="w-4 h-4 text-vurmz-teal border-gray-300 rounded focus:ring-vurmz-teal"
+                className="w-4 h-4 text-[#7EB8C9] border-[#D4C8B8] rounded focus:ring-[#7EB8C9]"
               />
-              <QrCodeIcon className="h-5 w-5 text-gray-500" />
-              <span className="text-sm">QR Code</span>
-              <span className="text-xs text-vurmz-teal font-medium">+$1</span>
+              <QrCodeIcon className="h-5 w-5 text-[#8B7355]" />
+              <span className="text-sm text-[#5C4A3A]">QR Code</span>
+              <span className="text-xs text-[#7EB8C9] font-medium">+$1</span>
             </label>
 
             {cardData.qrEnabled && (
@@ -429,9 +435,9 @@ export default function MetalBusinessCardPreview({ onChange }: MetalBusinessCard
                   value={cardData.qrValue}
                   onChange={(e) => updateField('qrValue', e.target.value)}
                   placeholder="URL or leave blank for phone"
-                  className="w-full border border-gray-300 px-3 py-2 text-sm focus:border-vurmz-teal focus:ring-1 focus:ring-vurmz-teal outline-none"
+                  className="w-full border border-[#D4C8B8] px-3 py-2 text-sm focus:border-[#7EB8C9] focus:ring-1 focus:ring-[#7EB8C9] outline-none"
                 />
-                <p className="text-xs text-gray-500 mt-1">QR codes link to your website or phone by default</p>
+                <p className="text-xs text-[#8B7355] mt-1">QR codes link to your website or phone by default</p>
               </div>
             )}
 
@@ -440,11 +446,11 @@ export default function MetalBusinessCardPreview({ onChange }: MetalBusinessCard
                 type="checkbox"
                 checked={cardData.logoEnabled}
                 onChange={(e) => updateField('logoEnabled', e.target.checked)}
-                className="w-4 h-4 text-vurmz-teal border-gray-300 rounded focus:ring-vurmz-teal"
+                className="w-4 h-4 text-[#7EB8C9] border-[#D4C8B8] rounded focus:ring-[#7EB8C9]"
               />
-              <PhotoIcon className="h-5 w-5 text-gray-500" />
-              <span className="text-sm">Custom Logo</span>
-              <span className="text-xs text-vurmz-teal font-medium">+$1</span>
+              <PhotoIcon className="h-5 w-5 text-[#8B7355]" />
+              <span className="text-sm text-[#5C4A3A]">Custom Logo</span>
+              <span className="text-xs text-[#7EB8C9] font-medium">+$1</span>
             </label>
 
             <label className="flex items-center gap-3 cursor-pointer">
@@ -452,26 +458,26 @@ export default function MetalBusinessCardPreview({ onChange }: MetalBusinessCard
                 type="checkbox"
                 checked={cardData.backSideEnabled}
                 onChange={(e) => updateField('backSideEnabled', e.target.checked)}
-                className="w-4 h-4 text-vurmz-teal border-gray-300 rounded focus:ring-vurmz-teal"
+                className="w-4 h-4 text-[#7EB8C9] border-[#D4C8B8] rounded focus:ring-[#7EB8C9]"
               />
-              <ArrowPathIcon className="h-5 w-5 text-gray-500" />
-              <span className="text-sm">Back Side Design</span>
-              <span className="text-xs text-vurmz-teal font-medium">+$1</span>
+              <ArrowPathIcon className="h-5 w-5 text-[#8B7355]" />
+              <span className="text-sm text-[#5C4A3A]">Back Side Design</span>
+              <span className="text-xs text-[#7EB8C9] font-medium">+$1</span>
             </label>
 
             {cardData.backSideEnabled && (
-              <div className="ml-7 space-y-2 p-3 bg-gray-50 rounded">
-                <p className="text-xs font-medium text-gray-600 mb-2">Back side content:</p>
+              <div className="ml-7 space-y-2 p-3 bg-[#F5F0E8] rounded">
+                <p className="text-xs font-medium text-[#6B5A48] mb-2">Back side content:</p>
                 <label className="flex items-center gap-2 cursor-pointer">
                   <input
                     type="radio"
                     name="backSideOption"
                     checked={cardData.backSideOption === 'large-qr'}
                     onChange={() => updateField('backSideOption', 'large-qr')}
-                    className="text-vurmz-teal focus:ring-vurmz-teal"
+                    className="text-[#7EB8C9] focus:ring-[#7EB8C9]"
                   />
-                  <QrCodeIcon className="h-4 w-4 text-gray-500" />
-                  <span className="text-sm">Large QR Code</span>
+                  <QrCodeIcon className="h-4 w-4 text-[#8B7355]" />
+                  <span className="text-sm text-[#5C4A3A]">Large QR Code</span>
                 </label>
                 <label className="flex items-center gap-2 cursor-pointer">
                   <input
@@ -479,10 +485,10 @@ export default function MetalBusinessCardPreview({ onChange }: MetalBusinessCard
                     name="backSideOption"
                     checked={cardData.backSideOption === 'large-logo'}
                     onChange={() => updateField('backSideOption', 'large-logo')}
-                    className="text-vurmz-teal focus:ring-vurmz-teal"
+                    className="text-[#7EB8C9] focus:ring-[#7EB8C9]"
                   />
-                  <PhotoIcon className="h-4 w-4 text-gray-500" />
-                  <span className="text-sm">Large Logo</span>
+                  <PhotoIcon className="h-4 w-4 text-[#8B7355]" />
+                  <span className="text-sm text-[#5C4A3A]">Large Logo</span>
                 </label>
                 <label className="flex items-center gap-2 cursor-pointer">
                   <input
@@ -490,9 +496,9 @@ export default function MetalBusinessCardPreview({ onChange }: MetalBusinessCard
                     name="backSideOption"
                     checked={cardData.backSideOption === 'custom-text'}
                     onChange={() => updateField('backSideOption', 'custom-text')}
-                    className="text-vurmz-teal focus:ring-vurmz-teal"
+                    className="text-[#7EB8C9] focus:ring-[#7EB8C9]"
                   />
-                  <span className="text-sm">Custom Text</span>
+                  <span className="text-sm text-[#5C4A3A]">Custom Text</span>
                 </label>
                 {cardData.backSideOption === 'custom-text' && (
                   <textarea
@@ -500,7 +506,7 @@ export default function MetalBusinessCardPreview({ onChange }: MetalBusinessCard
                     onChange={(e) => updateField('backSideText', e.target.value)}
                     placeholder="Enter text for back of card..."
                     rows={2}
-                    className="w-full border border-gray-300 px-3 py-2 text-sm focus:border-vurmz-teal focus:ring-1 focus:ring-vurmz-teal outline-none resize-none mt-1"
+                    className="w-full border border-[#D4C8B8] px-3 py-2 text-sm focus:border-[#7EB8C9] focus:ring-1 focus:ring-[#7EB8C9] outline-none resize-none mt-1"
                   />
                 )}
               </div>
@@ -508,10 +514,10 @@ export default function MetalBusinessCardPreview({ onChange }: MetalBusinessCard
           </div>
 
           {/* Price Calculator */}
-          <div className="pt-3 border-t border-gray-200">
-            <div className="bg-vurmz-dark text-white p-4 rounded">
+          <div className="pt-3 border-t border-[#E0D6C8]">
+            <div className="bg-[#7EB8C9] text-white p-4 rounded">
               <div className="flex justify-between items-center mb-2">
-                <span className="text-sm text-gray-300">Price per card:</span>
+                <span className="text-sm text-white/80">Price per card:</span>
                 <span className="text-xl font-bold">
                   ${cardData.cardColor === 'stainless-steel'
                     ? (15 + (cardData.qrEnabled ? 1 : 0) + (cardData.logoEnabled ? 1 : 0) + (cardData.backSideEnabled ? 1 : 0)).toFixed(2)
@@ -519,7 +525,7 @@ export default function MetalBusinessCardPreview({ onChange }: MetalBusinessCard
                   }
                 </span>
               </div>
-              <div className="text-xs text-gray-400 space-y-0.5">
+              <div className="text-xs text-white/70 space-y-0.5">
                 <div className="flex justify-between">
                   <span>{cardData.cardColor === 'stainless-steel' ? 'Stainless Steel' : 'Metal Card'}</span>
                   <span>${cardData.cardColor === 'stainless-steel' ? '15.00' : '3.00'}</span>
@@ -544,7 +550,7 @@ export default function MetalBusinessCardPreview({ onChange }: MetalBusinessCard
                 )}
               </div>
             </div>
-            <p className="text-xs text-gray-500 mt-2 text-center">
+            <p className="text-xs text-[#8B7355] mt-2 text-center">
               Price shown at checkout
             </p>
           </div>
@@ -552,7 +558,7 @@ export default function MetalBusinessCardPreview({ onChange }: MetalBusinessCard
 
         {/* Card Preview */}
         <div className="space-y-4">
-          <span className="text-sm font-medium text-gray-700">Front</span>
+          <span className="text-sm font-medium text-[#5C4A3A]">Front</span>
 
           {/* Front Card */}
           <div className="flex justify-center">
@@ -562,9 +568,6 @@ export default function MetalBusinessCardPreview({ onChange }: MetalBusinessCard
               }`}
               style={{ background: colors.gradient }}
             >
-              {/* Metallic shine effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-black/10 pointer-events-none" />
-
               {/* Template: Classic */}
               {cardData.template === 'classic' && (
                 <div className={`relative h-full p-5 flex flex-col ${cardData.layout === 'portrait' ? 'justify-start pt-8' : 'justify-between'}`}>
@@ -757,7 +760,7 @@ export default function MetalBusinessCardPreview({ onChange }: MetalBusinessCard
           {/* Back Card - only shown when back side is enabled */}
           {cardData.backSideEnabled && (
             <>
-              <span className="text-sm font-medium text-gray-700 block mt-4">Back</span>
+              <span className="text-sm font-medium text-[#5C4A3A] block mt-4">Back</span>
               <div className="flex justify-center">
                 <div
                   className={`relative rounded-lg shadow-xl ${colors.bg} ${colors.border} border overflow-hidden transition-all duration-300 ${
@@ -765,9 +768,6 @@ export default function MetalBusinessCardPreview({ onChange }: MetalBusinessCard
                   }`}
                   style={{ background: colors.gradient }}
                 >
-                  {/* Metallic shine effect */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-black/10 pointer-events-none" />
-
                   {/* Back Side Content */}
                   <div className="relative h-full p-5 flex items-center justify-center">
                     {cardData.backSideOption === 'large-qr' && (
@@ -815,7 +815,7 @@ export default function MetalBusinessCardPreview({ onChange }: MetalBusinessCard
           )}
 
           {/* Card specs */}
-          <div className="text-center text-xs text-gray-500 mt-4">
+          <div className="text-center text-xs text-[#8B7355] mt-4">
             <p>Standard size: 3.5&quot; x 2&quot; (89mm x 51mm)</p>
             <p>Laser engraved on metal</p>
           </div>

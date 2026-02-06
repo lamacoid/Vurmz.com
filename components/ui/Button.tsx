@@ -103,7 +103,7 @@ function CosmicReveal({ isActive, size }: { isActive: boolean; size: ButtonSize 
           <motion.div
             className="absolute inset-0"
             style={{
-              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%)',
+              backgroundImage: 'linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%)',
               backgroundSize: '400% 400%',
             }}
             animate={{

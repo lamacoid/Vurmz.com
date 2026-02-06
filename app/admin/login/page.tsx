@@ -11,14 +11,12 @@ const liquidEase = [0.23, 1, 0.32, 1] as const
 export default function LoginPage() {
   const router = useRouter()
   const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const [focused, setFocused] = useState<string | null>(null)
-  const [mode, setMode] = useState<'magic' | 'password'>('magic')
   const [sent, setSent] = useState(false)
 
-  const handleMagicLink = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
     setError('')
@@ -42,34 +40,6 @@ export default function LoginPage() {
       setLoading(false)
     }
   }
-
-  const handlePassword = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
-    setError('')
-
-    try {
-      const res = await fetch('/api/auth/signin', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
-      })
-
-      const data = await res.json() as { error?: string; user?: { id: string; email: string; name: string } }
-
-      if (data.error) {
-        setError('Invalid email or password')
-      } else {
-        router.push('/admin/dashboard')
-      }
-    } catch {
-      setError('An error occurred. Please try again.')
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  const handleSubmit = mode === 'magic' ? handleMagicLink : handlePassword
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 flex items-center justify-center px-4 relative overflow-hidden">
@@ -219,39 +189,6 @@ export default function LoginPage() {
                 </motion.div>
               </div>
 
-              {/* Password field - only show in password mode */}
-              {mode === 'password' && (
-              <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-                  Password
-                </label>
-                <motion.div
-                  animate={{
-                    boxShadow: focused === 'password'
-                      ? '0 0 0 3px rgba(106,140,140,0.15), 0 2px 8px rgba(106,140,140,0.1)'
-                      : '0 2px 8px rgba(106,140,140,0.06)',
-                  }}
-                  transition={{ duration: 0.3, ease: liquidEase }}
-                  className="rounded-xl overflow-hidden"
-                >
-                  <input
-                    type="password"
-                    id="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    onFocus={() => setFocused('password')}
-                    onBlur={() => setFocused(null)}
-                    required
-                    className="w-full px-4 py-3.5 rounded-xl outline-none transition-colors"
-                    style={{
-                      background: 'rgba(106,140,140,0.04)',
-                      border: '1px solid rgba(106,140,140,0.12)',
-                    }}
-                  />
-                </motion.div>
-              </div>
-              )}
-
               {/* Submit button */}
               <motion.button
                 type="submit"
@@ -282,22 +219,12 @@ export default function LoginPage() {
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                       </svg>
-                      {mode === 'magic' ? 'Sending...' : 'Signing in...'}
+                      Sending...
                     </span>
-                  ) : mode === 'magic' ? 'Send Login Link' : 'Sign In'}
+                  ) : 'Send Login Link'}
                 </span>
               </motion.button>
 
-              {/* Mode toggle */}
-              <div className="text-center">
-                <button
-                  type="button"
-                  onClick={() => setMode(mode === 'magic' ? 'password' : 'magic')}
-                  className="text-sm text-gray-500 hover:text-[#6a8c8c] transition-colors"
-                >
-                  {mode === 'magic' ? 'Use password instead' : 'Send magic link instead'}
-                </button>
-              </div>
             </motion.form>
             )}
 
