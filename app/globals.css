@@ -549,23 +549,56 @@ html.trippy {
   100% { filter: hue-rotate(0deg) saturate(1.3); }
 }
 
-/* All sections breathe — slow scale pulse */
-html.trippy section {
-  animation: trippy-breathe 6s ease-in-out infinite;
+/* Each section breathes on its own rhythm — deliberately desynchronized */
+html.trippy section:nth-child(1) {
+  animation: trippy-breathe 5.5s ease-in-out infinite;
+  transform-origin: 40% 50%;
+}
+html.trippy section:nth-child(2) {
+  animation: trippy-breathe-alt 7.2s ease-in-out infinite;
+  animation-delay: -1.7s;
+  transform-origin: 60% 45%;
+}
+html.trippy section:nth-child(3) {
+  animation: trippy-breathe 6.8s ease-in-out infinite;
+  animation-delay: -3.4s;
+  transform-origin: 45% 55%;
+}
+html.trippy section:nth-child(4) {
+  animation: trippy-breathe-alt 8.1s ease-in-out infinite;
+  animation-delay: -5.2s;
+  transform-origin: 55% 40%;
+}
+html.trippy section:nth-child(5) {
+  animation: trippy-breathe 5.9s ease-in-out infinite;
+  animation-delay: -2.1s;
+  transform-origin: 50% 60%;
+}
+html.trippy section:nth-child(6) {
+  animation: trippy-breathe-alt 7.5s ease-in-out infinite;
+  animation-delay: -4.3s;
+  transform-origin: 35% 50%;
+}
+html.trippy section:nth-child(n+7) {
+  animation: trippy-breathe 6.3s ease-in-out infinite;
+  animation-delay: -6s;
   transform-origin: center center;
-}
-html.trippy section:nth-child(2n) {
-  animation-delay: -2s;
-  animation-duration: 7s;
-}
-html.trippy section:nth-child(3n) {
-  animation-delay: -4s;
-  animation-duration: 8s;
 }
 
 @keyframes trippy-breathe {
-  0%, 100% { transform: scale(1); }
-  50%      { transform: scale(1.008); }
+  0%, 100% { transform: scale(1) translateY(0); }
+  30%      { transform: scale(1.012) translateY(-1px); }
+  50%      { transform: scale(1.018) translateY(-2px); }
+  70%      { transform: scale(1.01) translateY(-1px); }
+}
+
+/* Alternate breathe — different rhythm so sections feel alive independently */
+@keyframes trippy-breathe-alt {
+  0%, 100% { transform: scale(1) translateX(0); }
+  20%      { transform: scale(1.01) translateX(1px); }
+  45%      { transform: scale(1.02) translateX(-1px) translateY(-1px); }
+  65%      { transform: scale(1.008) translateX(0.5px) translateY(1px); }
+  85%      { transform: scale(1.015) translateX(-0.5px); }
 }
 
 /* Text breathes independently */
@@ -580,39 +613,125 @@ html.trippy h3 { animation-delay: -3s; animation-duration: 5.5s; }
 
 @keyframes trippy-text-breathe {
   0%, 100% {
-    transform: scale(1);
+    transform: scale(1) skewX(0deg);
     letter-spacing: 0em;
     filter: blur(0px);
+    text-shadow: none;
+  }
+  30% {
+    transform: scale(1.02) skewX(0.2deg);
+    letter-spacing: 0.015em;
+    filter: blur(0.2px);
+    text-shadow: 0 0 8px rgba(168, 85, 247, 0.2);
   }
   50% {
-    transform: scale(1.015);
+    transform: scale(1.03) skewX(-0.1deg);
+    letter-spacing: 0.02em;
+    filter: blur(0.4px);
+    text-shadow: 0 0 15px rgba(59, 130, 246, 0.25), -2px 0 10px rgba(236, 72, 153, 0.15);
+  }
+  70% {
+    transform: scale(1.015) skewX(0.15deg);
     letter-spacing: 0.01em;
-    filter: blur(0.3px);
+    filter: blur(0.2px);
+    text-shadow: 0 0 5px rgba(52, 211, 153, 0.2);
   }
 }
 
-/* Cards and bordered elements warp slightly */
-html.trippy [class*="rounded"],
-html.trippy [class*="border"] {
-  animation: trippy-warp 8s ease-in-out infinite;
-}
-html.trippy [class*="rounded"]:nth-child(2n) { animation-delay: -3s; }
-html.trippy [class*="rounded"]:nth-child(3n) { animation-delay: -5s; animation-duration: 9s; }
+/* Each card/element warps on its own independent cycle */
+html.trippy [class*="rounded-lg"]:nth-child(1) { animation: trippy-warp 7s ease-in-out infinite; animation-delay: -0.5s; }
+html.trippy [class*="rounded-lg"]:nth-child(2) { animation: trippy-warp-alt 8.5s ease-in-out infinite; animation-delay: -2.8s; }
+html.trippy [class*="rounded-lg"]:nth-child(3) { animation: trippy-warp 9.2s ease-in-out infinite; animation-delay: -4.1s; }
+html.trippy [class*="rounded-lg"]:nth-child(4) { animation: trippy-warp-alt 7.8s ease-in-out infinite; animation-delay: -6.3s; }
+html.trippy [class*="rounded-lg"]:nth-child(n+5) { animation: trippy-warp 8s ease-in-out infinite; animation-delay: -3s; }
+html.trippy [class*="rounded-xl"] { animation: trippy-warp-alt 9s ease-in-out infinite; }
+html.trippy [class*="rounded-2xl"] { animation: trippy-warp 10s ease-in-out infinite; animation-delay: -4s; }
 
 @keyframes trippy-warp {
   0%, 100% {
-    transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
-    border-radius: inherit;
+    transform: perspective(800px) rotateX(0deg) rotateY(0deg) scale(1);
   }
-  25% {
-    transform: perspective(1000px) rotateX(0.4deg) rotateY(-0.3deg);
+  20% {
+    transform: perspective(800px) rotateX(0.8deg) rotateY(-0.6deg) scale(1.005);
   }
-  50% {
-    transform: perspective(1000px) rotateX(-0.3deg) rotateY(0.4deg);
+  40% {
+    transform: perspective(800px) rotateX(-0.5deg) rotateY(0.8deg) scale(0.998);
+  }
+  60% {
+    transform: perspective(800px) rotateX(0.6deg) rotateY(-0.4deg) scale(1.003);
+  }
+  80% {
+    transform: perspective(800px) rotateX(-0.3deg) rotateY(0.5deg) scale(0.999);
+  }
+}
+
+@keyframes trippy-warp-alt {
+  0%, 100% {
+    transform: perspective(800px) rotateX(0deg) rotateY(0deg) translateZ(0);
+  }
+  15% {
+    transform: perspective(800px) rotateX(-0.6deg) rotateY(0.9deg) translateZ(2px);
+  }
+  35% {
+    transform: perspective(800px) rotateX(0.7deg) rotateY(-0.5deg) translateZ(-1px);
+  }
+  55% {
+    transform: perspective(800px) rotateX(-0.4deg) rotateY(0.6deg) translateZ(3px);
   }
   75% {
-    transform: perspective(1000px) rotateX(0.2deg) rotateY(-0.2deg);
+    transform: perspective(800px) rotateX(0.5deg) rotateY(-0.8deg) translateZ(0);
   }
+}
+
+/* Paragraphs independently drift and blur */
+html.trippy p:nth-child(odd) {
+  animation: trippy-text-drift-a 9s ease-in-out infinite;
+}
+html.trippy p:nth-child(even) {
+  animation: trippy-text-drift-b 11s ease-in-out infinite;
+  animation-delay: -4s;
+}
+
+@keyframes trippy-text-drift-a {
+  0%, 100% { transform: translateX(0); filter: blur(0px); }
+  30% { transform: translateX(1.5px); filter: blur(0.15px); }
+  60% { transform: translateX(-1px); filter: blur(0.25px); }
+}
+
+@keyframes trippy-text-drift-b {
+  0%, 100% { transform: translateX(0) skewX(0deg); }
+  40% { transform: translateX(-1px) skewX(0.15deg); }
+  70% { transform: translateX(0.8px) skewX(-0.1deg); }
+}
+
+/* Buttons breathe and glow independently */
+html.trippy a[class*="bg-vurmz-teal"]:nth-of-type(1) {
+  animation: trippy-btn-glow-a 4s ease-in-out infinite;
+}
+html.trippy a[class*="bg-vurmz-teal"]:nth-of-type(2) {
+  animation: trippy-btn-glow-b 5s ease-in-out infinite;
+  animation-delay: -2s;
+}
+html.trippy a[class*="border"]:nth-of-type(odd) {
+  animation: trippy-btn-border 6s ease-in-out infinite;
+}
+
+@keyframes trippy-btn-glow-a {
+  0%, 100% { box-shadow: 0 4px 20px rgba(60, 185, 178, 0.3); transform: scale(1); }
+  50% { box-shadow: 0 4px 30px rgba(168, 85, 247, 0.5), 0 0 15px rgba(59, 130, 246, 0.3); transform: scale(1.02); }
+}
+
+@keyframes trippy-btn-glow-b {
+  0%, 100% { box-shadow: 0 4px 20px rgba(60, 185, 178, 0.3); transform: scale(1); }
+  30% { box-shadow: 0 4px 25px rgba(236, 72, 153, 0.4); transform: scale(1.015); }
+  70% { box-shadow: 0 4px 28px rgba(52, 211, 153, 0.45), 0 0 10px rgba(251, 146, 60, 0.2); transform: scale(1.025); }
+}
+
+@keyframes trippy-btn-border {
+  0%, 100% { border-color: rgba(75, 85, 99, 0.6); transform: scale(1); }
+  25% { border-color: rgba(168, 85, 247, 0.5); transform: scale(1.01); }
+  50% { border-color: rgba(236, 72, 153, 0.4); transform: scale(0.99); }
+  75% { border-color: rgba(52, 211, 153, 0.5); transform: scale(1.005); }
 }
 
 /* Images and icons pulse with color */
@@ -631,9 +750,15 @@ html.trippy svg {
 }
 
 @keyframes trippy-icon-glow {
-  0%, 100% { filter: drop-shadow(0 0 0px transparent); }
-  50%      { filter: drop-shadow(0 0 6px currentColor); }
+  0%, 100% { filter: drop-shadow(0 0 0px transparent); transform: scale(1) rotate(0deg); }
+  25%      { filter: drop-shadow(0 0 4px rgba(168, 85, 247, 0.6)); transform: scale(1.05) rotate(2deg); }
+  50%      { filter: drop-shadow(0 0 8px currentColor) drop-shadow(0 0 15px rgba(59,130,246,0.3)); transform: scale(1.1) rotate(-1deg); }
+  75%      { filter: drop-shadow(0 0 5px rgba(236, 72, 153, 0.5)); transform: scale(1.03) rotate(1deg); }
 }
+
+/* Individual SVG icons each get their own timing */
+html.trippy svg:nth-child(odd) { animation-duration: 3.5s; animation-delay: -1s; }
+html.trippy svg:nth-child(even) { animation-duration: 4.2s; animation-delay: -2.5s; }
 
 /* Backgrounds shift color temperature */
 html.trippy .bg-vurmz-dark {
@@ -750,7 +875,7 @@ html.trippy body::before {
   height: 200%;
   pointer-events: none;
   z-index: 0;
-  opacity: 0.025;
+  opacity: 0.04;
   background-image:
     repeating-conic-gradient(
       from 0deg at 50% 50%,
@@ -760,8 +885,15 @@ html.trippy body::before {
       transparent 30deg 40deg,
       rgba(236, 72, 153, 0.4) 40deg 50deg,
       transparent 50deg 60deg
+    ),
+    repeating-conic-gradient(
+      from 30deg at 50% 50%,
+      rgba(52, 211, 153, 0.3) 0deg 8deg,
+      transparent 8deg 16deg,
+      rgba(251, 146, 60, 0.3) 16deg 24deg,
+      transparent 24deg 32deg
     );
-  animation: trippy-mandala 60s linear infinite;
+  animation: trippy-mandala 45s linear infinite;
 }
 
 @keyframes trippy-mandala {
