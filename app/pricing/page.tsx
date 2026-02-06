@@ -238,8 +238,10 @@ export default function PricingPage() {
                             <p className="font-medium text-white text-sm sm:text-base">{item.name}</p>
                             <p className="text-xs sm:text-sm text-gray-400">{item.note}</p>
                           </td>
-                          <td className="py-2 sm:py-3 text-right">
-                            <p className="font-semibold text-vurmz-teal text-sm sm:text-base">{item.price}</p>
+                          <td className="py-2 sm:py-3 text-right whitespace-nowrap">
+                            <p className="font-semibold text-vurmz-teal text-sm sm:text-base">
+                              {item.price}{!item.price.startsWith('+') && <span className="text-gray-500 font-normal text-xs sm:text-sm">/ea</span>}
+                            </p>
                           </td>
                         </tr>
                       ))}
