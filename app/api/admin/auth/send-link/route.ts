@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
     const siteUrl = process.env.SITE_URL || 'https://vurmz.com'
     const magicLink = `${siteUrl}/admin/verify?token=${token}&email=${encodeURIComponent(user.email)}`
 
-    await sendEmail({
+    const emailResult = await sendEmail({
       from: 'Vurmz <noreply@vurmz.com>',
       to: user.email,
       subject: 'Admin Login - Vurmz',
@@ -57,6 +57,11 @@ export async function POST(request: NextRequest) {
         </div>
       `
     })
+
+    if (!emailResult.success) {
+      console.error('Failed to send magic link email:', emailResult.error)
+      return NextResponse.json({ error: 'Could not send login email. Please check email configuration.' }, { status: 500 })
+    }
 
     return NextResponse.json({ success: true })
   } catch (error) {

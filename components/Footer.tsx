@@ -328,6 +328,12 @@ export default function Footer() {
               >
                 Terms
               </Link>
+              <Link
+                href="/admin/login"
+                className="text-gray-500/30 hover:text-vurmz-teal transition-colors"
+              >
+                Admin
+              </Link>
             </div>
           </div>
         </div>

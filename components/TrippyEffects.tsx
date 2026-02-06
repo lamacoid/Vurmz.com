@@ -18,10 +18,6 @@ interface GeoShape {
   duration: number;
 }
 
-interface RandomEvent {
-  id: number; type: string; target?: string; intensity: number;
-}
-
 // ─── Sacred Geometry SVGs ────────────────────────────────
 function FlowerOfLife({ hue }: { hue: number }) {
   const r = 20
@@ -191,8 +187,8 @@ export default function TrippyEffects() {
 
   useEffect(() => {
     if (!isActive || reducedMotion) return
-    for (let i = 0; i < 15; i++) setTimeout(spawnWhisp, i * 200)
-    const iv = setInterval(spawnWhisp, 600)
+    for (let i = 0; i < 10; i++) setTimeout(spawnWhisp, i * 400)
+    const iv = setInterval(spawnWhisp, 1200)
     return () => clearInterval(iv)
   }, [isActive, reducedMotion, spawnWhisp])
 
@@ -255,32 +251,15 @@ export default function TrippyEffects() {
       const className = `trippy-event-${type}`
       el.classList.add(className)
 
-      const dur = 1500 + Math.random() * 3500
+      const dur = 3000 + Math.random() * 5000
       setTimeout(() => el.classList.remove(className), dur)
-
-      // 40% chance to cascade — trigger a related event on a nearby element
-      if (Math.random() < 0.4) {
-        const cascadeDelay = 200 + Math.random() * 800
-        setTimeout(() => {
-          const cascadeType = events[Math.floor(Math.random() * events.length)]
-          const cascadeEls = document.querySelectorAll(selectors[cascadeType] || 'section')
-          if (cascadeEls.length === 0) return
-          const cascadeEl = cascadeEls[Math.floor(Math.random() * cascadeEls.length)] as HTMLElement
-          const cascadeClass = `trippy-event-${cascadeType}`
-          cascadeEl.classList.add(cascadeClass)
-          setTimeout(() => cascadeEl.classList.remove(cascadeClass), dur)
-        }, cascadeDelay)
-      }
     }
 
-    // Fire 1-3 events at each interval — things happen simultaneously
+    // Fire ONE event at a time, with long gentle intervals
     const scheduleNext = () => {
-      const delay = 400 + Math.random() * 2000
+      const delay = 4000 + Math.random() * 8000
       return setTimeout(() => {
-        const count = 1 + Math.floor(Math.random() * 3)
-        for (let i = 0; i < count; i++) {
-          setTimeout(doRandomEvent, i * 150)
-        }
+        doRandomEvent()
         timerId = scheduleNext()
       }, delay)
     }
@@ -305,7 +284,7 @@ export default function TrippyEffects() {
           radial-gradient(circle at 70% 70%, rgba(236, 72, 153, 0.08) 0%, transparent 50%)
         `,
         borderRadius: '50%',
-        transition: 'left 0.08s ease-out, top 0.08s ease-out',
+        transition: 'left 0.15s cubic-bezier(0.25, 0.1, 0.25, 1), top 0.15s cubic-bezier(0.25, 0.1, 0.25, 1)',
         mixBlendMode: 'screen',
         animation: 'cursor-breathe 3s ease-in-out infinite',
       }} />
@@ -456,124 +435,112 @@ export default function TrippyEffects() {
 
         /* ─── Random event classes applied to DOM elements ─── */
 
+        /* All random events use smooth cubic-bezier and NO !important */
         .trippy-event-melt-button {
-          animation: te-melt 2.5s ease-in-out !important;
+          animation: te-melt 4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
         @keyframes te-melt {
           0%, 100% { transform: scaleY(1) scaleX(1); filter: blur(0px); }
-          30% { transform: scaleY(1.15) scaleX(0.92); filter: blur(0.5px); }
-          60% { transform: scaleY(0.9) scaleX(1.08); filter: blur(1px); }
-          80% { transform: scaleY(1.05) scaleX(0.97); filter: blur(0.3px); }
+          40% { transform: scaleY(1.06) scaleX(0.96); filter: blur(0.3px); }
+          70% { transform: scaleY(0.97) scaleX(1.03); filter: blur(0.5px); }
         }
 
         .trippy-event-flash-section {
-          animation: te-flash 2s ease-in-out !important;
+          animation: te-flash 5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
         @keyframes te-flash {
           0%, 100% { filter: brightness(1) saturate(1); }
-          15% { filter: brightness(1.4) saturate(1.8); }
-          30% { filter: brightness(0.9) saturate(1.2); }
-          50% { filter: brightness(1.2) saturate(1.5); }
+          30% { filter: brightness(1.15) saturate(1.3); }
+          60% { filter: brightness(0.95) saturate(1.15); }
         }
 
         .trippy-event-wobble-card {
-          animation: te-wobble 3s ease-in-out !important;
+          animation: te-wobble 5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
         @keyframes te-wobble {
-          0%, 100% { transform: perspective(600px) rotateX(0) rotateY(0) rotateZ(0); }
-          20% { transform: perspective(600px) rotateX(2deg) rotateY(-1.5deg) rotateZ(0.5deg); }
-          40% { transform: perspective(600px) rotateX(-1.5deg) rotateY(2deg) rotateZ(-0.3deg); }
-          60% { transform: perspective(600px) rotateX(1deg) rotateY(-1deg) rotateZ(0.8deg); }
-          80% { transform: perspective(600px) rotateX(-0.5deg) rotateY(0.5deg) rotateZ(-0.5deg); }
+          0%, 100% { transform: perspective(800px) rotateX(0) rotateY(0); }
+          25% { transform: perspective(800px) rotateX(1deg) rotateY(-0.8deg); }
+          50% { transform: perspective(800px) rotateX(-0.6deg) rotateY(1deg); }
+          75% { transform: perspective(800px) rotateX(0.4deg) rotateY(-0.4deg); }
         }
 
         .trippy-event-echo-heading {
-          animation: te-echo 2s ease-in-out !important;
-          position: relative;
+          animation: te-echo 4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
         @keyframes te-echo {
-          0%, 100% { text-shadow: none; transform: scale(1); letter-spacing: 0em; }
-          25% { text-shadow: 2px 2px 4px rgba(168,85,247,0.5), -2px -2px 4px rgba(59,130,246,0.5); transform: scale(1.02); letter-spacing: 0.02em; }
-          50% { text-shadow: 4px 4px 8px rgba(236,72,153,0.4), -4px -4px 8px rgba(52,211,153,0.4), 0 0 20px rgba(168,85,247,0.3); transform: scale(1.04); letter-spacing: 0.04em; }
-          75% { text-shadow: 2px 2px 4px rgba(251,146,60,0.4), -2px -2px 4px rgba(59,130,246,0.4); transform: scale(1.01); letter-spacing: 0.01em; }
+          0%, 100% { text-shadow: none; letter-spacing: 0em; }
+          30% { text-shadow: 1px 1px 6px rgba(168,85,247,0.3), -1px -1px 6px rgba(59,130,246,0.3); letter-spacing: 0.01em; }
+          60% { text-shadow: 2px 2px 12px rgba(236,72,153,0.25), -2px -2px 12px rgba(52,211,153,0.2); letter-spacing: 0.02em; }
         }
 
         .trippy-event-breathe-intense {
-          animation: te-breathe-hard 3s ease-in-out !important;
+          animation: te-breathe-hard 5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
         @keyframes te-breathe-hard {
           0%, 100% { transform: scale(1); }
-          50% { transform: scale(1.025); }
+          50% { transform: scale(1.015); }
         }
 
         .trippy-event-color-spike {
-          animation: te-color-spike 2s ease-in-out !important;
+          animation: te-color-spike 6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
         @keyframes te-color-spike {
           0%, 100% { filter: hue-rotate(0deg) saturate(1); }
-          25% { filter: hue-rotate(60deg) saturate(2); }
-          50% { filter: hue-rotate(180deg) saturate(1.5); }
-          75% { filter: hue-rotate(270deg) saturate(1.8); }
+          35% { filter: hue-rotate(40deg) saturate(1.4); }
+          65% { filter: hue-rotate(-30deg) saturate(1.3); }
         }
 
         .trippy-event-drift-text {
-          animation: te-drift 3s ease-in-out !important;
+          animation: te-drift 5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
         @keyframes te-drift {
-          0%, 100% { transform: translateX(0) skewX(0deg); filter: blur(0px); }
-          25% { transform: translateX(3px) skewX(0.5deg); filter: blur(0.3px); }
-          50% { transform: translateX(-2px) skewX(-0.3deg); filter: blur(0.5px); }
-          75% { transform: translateX(1px) skewX(0.2deg); filter: blur(0.2px); }
+          0%, 100% { transform: translateX(0); }
+          30% { transform: translateX(2px); }
+          60% { transform: translateX(-1.5px); }
         }
 
         .trippy-event-ripple {
-          animation: te-ripple 2.5s ease-out !important;
+          animation: te-ripple 5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
         @keyframes te-ripple {
-          0% { box-shadow: inset 0 0 0 0 rgba(168,85,247,0); }
-          20% { box-shadow: inset 0 0 30px 5px rgba(168,85,247,0.15); }
-          50% { box-shadow: inset 0 0 60px 10px rgba(59,130,246,0.1); }
-          100% { box-shadow: inset 0 0 0 0 rgba(52,211,153,0); }
+          0%, 100% { box-shadow: inset 0 0 0 0 rgba(168,85,247,0); }
+          30% { box-shadow: inset 0 0 25px 3px rgba(168,85,247,0.1); }
+          60% { box-shadow: inset 0 0 40px 5px rgba(59,130,246,0.07); }
         }
 
         .trippy-event-invert-flash {
-          animation: te-invert 1.5s ease-in-out !important;
+          animation: te-invert 4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
         @keyframes te-invert {
           0%, 100% { filter: invert(0) hue-rotate(0deg); }
-          40% { filter: invert(0.08) hue-rotate(20deg); }
-          60% { filter: invert(0.05) hue-rotate(-15deg); }
+          50% { filter: invert(0.04) hue-rotate(12deg); }
         }
 
         .trippy-event-stretch-horizontal {
-          animation: te-stretch 2.5s ease-in-out !important;
+          animation: te-stretch 5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
         @keyframes te-stretch {
           0%, 100% { transform: scaleX(1) scaleY(1); }
-          25% { transform: scaleX(1.04) scaleY(0.97); }
-          50% { transform: scaleX(0.97) scaleY(1.03); }
-          75% { transform: scaleX(1.02) scaleY(0.99); }
+          35% { transform: scaleX(1.02) scaleY(0.99); }
+          65% { transform: scaleX(0.99) scaleY(1.01); }
         }
 
         .trippy-event-glow-edges {
-          animation: te-glow-edges 3s ease-in-out !important;
+          animation: te-glow-edges 6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
         @keyframes te-glow-edges {
           0%, 100% { box-shadow: none; }
-          20% { box-shadow: inset 0 0 20px rgba(168,85,247,0.1), 0 0 20px rgba(168,85,247,0.1); }
-          50% { box-shadow: inset 0 0 40px rgba(59,130,246,0.15), 0 0 35px rgba(236,72,153,0.1), 0 0 60px rgba(52,211,153,0.05); }
-          80% { box-shadow: inset 0 0 15px rgba(251,146,60,0.08), 0 0 15px rgba(59,130,246,0.08); }
+          30% { box-shadow: inset 0 0 15px rgba(168,85,247,0.08), 0 0 15px rgba(168,85,247,0.06); }
+          60% { box-shadow: inset 0 0 25px rgba(59,130,246,0.1), 0 0 20px rgba(236,72,153,0.06); }
         }
 
         .trippy-event-phase-shift {
-          animation: te-phase 2s ease-in-out !important;
+          animation: te-phase 5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
         @keyframes te-phase {
-          0%, 100% { opacity: 1; transform: translateX(0); filter: none; }
-          20% { opacity: 0.7; transform: translateX(3px); filter: blur(0.5px); }
-          40% { opacity: 1.0; transform: translateX(-2px); filter: hue-rotate(30deg); }
-          60% { opacity: 0.85; transform: translateX(1px); filter: blur(0.3px) hue-rotate(-20deg); }
-          80% { opacity: 0.95; transform: translateX(-1px); filter: none; }
+          0%, 100% { opacity: 1; transform: translateX(0); }
+          30% { opacity: 0.85; transform: translateX(2px); filter: hue-rotate(15deg); }
+          60% { opacity: 0.92; transform: translateX(-1px); filter: hue-rotate(-10deg); }
         }
       `}} />
     </div>

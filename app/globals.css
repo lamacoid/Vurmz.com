@@ -305,122 +305,118 @@ html {
 }
 
 /* ========================================
-   LIGHT MODE — LIQUID GLASS ON STEROIDS
-   Activated when html.light is set
+   LIGHT MODE — FRUTIGER AERO / AQUA GLASS
+   Baroque wallpaper meets 2000s glossy translucency
+   Think: Mac OS X Aqua, Vista Aero, early iPhone
 ======================================== */
 
-/* Invert the dark backgrounds to glassy whites */
-html.light .bg-vurmz-dark {
-  background-color: rgba(240, 252, 252, 0.7) !important;
-  backdrop-filter: blur(24px) saturate(1.4);
-  -webkit-backdrop-filter: blur(24px) saturate(1.4);
-}
-
-html.light .bg-\[\\#1f2523\] {
-  background-color: rgba(255, 255, 255, 0.5) !important;
-  backdrop-filter: blur(20px) saturate(1.3);
-  -webkit-backdrop-filter: blur(20px) saturate(1.3);
-}
-
-/* Body background — subtle animated gradient like light refracting */
+/* ── Body: Soft aqua-sky gradient with baroque organic warmth ── */
 html.light body {
   background:
-    linear-gradient(135deg,
-      #f0fdfc 0%,
-      #e8faf8 15%,
-      #f0f4ff 30%,
-      #fdf0fd 45%,
-      #f0fdfc 60%,
-      #eef8ff 75%,
-      #f5f0ff 90%,
-      #f0fdfc 100%
+    linear-gradient(160deg,
+      #e4f6f5 0%,
+      #dff0f8 20%,
+      #e8f0f6 40%,
+      #eee9f3 55%,
+      #e4f2f1 70%,
+      #dfeef6 85%,
+      #e4f6f5 100%
     ) !important;
-  background-size: 400% 400% !important;
-  animation: light-bg-shift 20s ease-in-out infinite;
+  background-size: 300% 300% !important;
+  animation: aero-bg-drift 30s ease-in-out infinite;
+  color: #1a2f2e !important;
 }
 
-@keyframes light-bg-shift {
+@keyframes aero-bg-drift {
   0%, 100% { background-position: 0% 50%; }
-  25%      { background-position: 100% 0%; }
-  50%      { background-position: 100% 100%; }
-  75%      { background-position: 0% 100%; }
+  50%      { background-position: 100% 50%; }
 }
 
-/* Glass body overlay — prismatic refraction */
+/* ── Body overlay: Soft baroque floral/organic pattern hint ── */
 html.light body::before {
   content: '';
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  top: 0; left: 0; right: 0; bottom: 0;
   pointer-events: none;
   z-index: 0;
-  background:
-    radial-gradient(ellipse 60% 40% at 20% 20%, rgba(60, 185, 178, 0.12) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 50% at 80% 30%, rgba(123, 200, 212, 0.1) 0%, transparent 50%),
-    radial-gradient(ellipse 70% 30% at 50% 80%, rgba(168, 85, 247, 0.06) 0%, transparent 50%),
-    radial-gradient(ellipse 40% 60% at 10% 70%, rgba(236, 72, 153, 0.04) 0%, transparent 45%);
-  animation: light-refract 12s ease-in-out infinite;
+  opacity: 0.04;
+  background-image:
+    radial-gradient(ellipse 35% 35% at 15% 25%, rgba(60, 185, 178, 0.6) 0%, transparent 70%),
+    radial-gradient(ellipse 30% 40% at 85% 20%, rgba(123, 200, 212, 0.5) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 30% at 50% 80%, rgba(125, 170, 140, 0.4) 0%, transparent 60%),
+    radial-gradient(ellipse 25% 25% at 75% 65%, rgba(181, 216, 224, 0.4) 0%, transparent 55%);
 }
 
-@keyframes light-refract {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50%      { opacity: 0.8; transform: scale(1.05); }
-}
-
-/* Glare sweep across the entire viewport */
+/* ── No aggressive glare sweep — just a very subtle shimmer ── */
 html.light body::after {
   content: '';
   position: fixed;
-  top: -100%;
-  left: -100%;
-  width: 300%;
-  height: 300%;
+  top: 0; left: 0; right: 0; bottom: 0;
   pointer-events: none;
   z-index: 1;
   background: linear-gradient(
     135deg,
-    transparent 42%,
-    rgba(255, 255, 255, 0.5) 45%,
-    rgba(255, 255, 255, 0.8) 48%,
-    rgba(60, 185, 178, 0.15) 50%,
-    rgba(255, 255, 255, 0.5) 52%,
+    transparent 45%,
+    rgba(255, 255, 255, 0.12) 49%,
+    rgba(255, 255, 255, 0.18) 50%,
+    rgba(255, 255, 255, 0.12) 51%,
     transparent 55%
   );
-  animation: light-glare-sweep 8s ease-in-out infinite;
+  background-size: 400% 400%;
+  animation: aero-shimmer 12s ease-in-out infinite;
 }
 
-@keyframes light-glare-sweep {
-  0%   { transform: translateX(-30%) translateY(-30%) rotate(0deg); }
-  100% { transform: translateX(30%) translateY(30%) rotate(0deg); }
+@keyframes aero-shimmer {
+  0%, 100% { background-position: 0% 0%; }
+  50%      { background-position: 100% 100%; }
 }
 
-/* White text becomes dark in light mode */
+/* ── Dark backgrounds become frosted Aero glass ── */
+html.light .bg-vurmz-dark {
+  background: linear-gradient(180deg,
+    rgba(240, 252, 252, 0.85) 0%,
+    rgba(228, 244, 248, 0.8) 100%
+  ) !important;
+  backdrop-filter: blur(20px) saturate(1.3);
+  -webkit-backdrop-filter: blur(20px) saturate(1.3);
+}
+
+html.light .bg-\[\\#1f2523\] {
+  background: rgba(238, 248, 250, 0.75) !important;
+  backdrop-filter: blur(16px) saturate(1.2);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+}
+
+/* ── Text: High contrast dark on light ── */
 html.light .text-white {
   color: #1A2F2E !important;
 }
 
 html.light .text-gray-300,
 html.light .text-gray-400 {
-  color: #4B5563 !important;
+  color: #4B5E5D !important;
 }
 
 html.light .text-gray-500 {
-  color: #6B7280 !important;
+  color: #5C706F !important;
 }
 
-/* Teal stays vibrant but glows */
+/* ── Teal stays vibrant, gets an Aqua-style glow ── */
 html.light .text-vurmz-teal {
   color: #2A9D97 !important;
-  text-shadow: 0 0 12px rgba(60, 185, 178, 0.3);
+  text-shadow: 0 1px 0 rgba(255,255,255,0.5), 0 0 8px rgba(60, 185, 178, 0.2);
 }
 
 html.light .bg-vurmz-teal {
-  background-color: rgba(60, 185, 178, 0.85) !important;
+  background: linear-gradient(180deg,
+    rgba(92, 212, 205, 0.95) 0%,
+    rgba(60, 185, 178, 0.95) 40%,
+    rgba(42, 157, 151, 0.95) 100%
+  ) !important;
   box-shadow:
-    0 8px 32px rgba(60, 185, 178, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    0 1px 0 rgba(255,255,255,0.4) inset,
+    0 -1px 0 rgba(0,0,0,0.08) inset,
+    0 4px 16px rgba(60, 185, 178, 0.25);
 }
 
 /* CTA section text stays white on teal bg */
@@ -428,77 +424,103 @@ html.light .bg-vurmz-teal .text-white,
 html.light .bg-vurmz-teal h2,
 html.light .bg-vurmz-teal p {
   color: #ffffff !important;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.15);
 }
 
-/* Cards become frosted glass */
+/* ── Cards: Glossy Aqua glass panels with visible depth ── */
 html.light [class*="border-gray"] {
-  border-color: rgba(60, 185, 178, 0.15) !important;
+  border-color: rgba(60, 185, 178, 0.12) !important;
 }
 
 html.light .border-gray-700 {
-  border-color: rgba(60, 185, 178, 0.12) !important;
+  border-color: rgba(60, 185, 178, 0.1) !important;
 }
 
 html.light [class*="rounded-lg"],
 html.light [class*="rounded-xl"],
 html.light [class*="rounded-2xl"] {
+  background: linear-gradient(180deg,
+    rgba(255, 255, 255, 0.85) 0%,
+    rgba(245, 250, 252, 0.75) 100%
+  ) !important;
+  backdrop-filter: blur(12px) saturate(1.2);
+  -webkit-backdrop-filter: blur(12px) saturate(1.2);
+  border: 1px solid rgba(255, 255, 255, 0.6) !important;
   box-shadow:
-    0 8px 32px rgba(60, 185, 178, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    0 1px 0 rgba(255,255,255,0.8) inset,
+    0 -1px 3px rgba(0,0,0,0.04) inset,
+    0 4px 20px rgba(60, 185, 178, 0.06),
+    0 1px 3px rgba(0,0,0,0.06);
 }
 
-/* Header becomes frosted glass bar */
+/* ── Header: Aero-style frosted top bar ── */
 html.light header {
-  background: rgba(255, 255, 255, 0.7) !important;
-  backdrop-filter: blur(24px) saturate(1.5) !important;
-  -webkit-backdrop-filter: blur(24px) saturate(1.5) !important;
-  border-bottom: 1px solid rgba(60, 185, 178, 0.15) !important;
-  box-shadow: 0 4px 30px rgba(60, 185, 178, 0.08);
+  background: linear-gradient(180deg,
+    rgba(255, 255, 255, 0.82) 0%,
+    rgba(245, 252, 252, 0.75) 100%
+  ) !important;
+  backdrop-filter: blur(24px) saturate(1.4) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(1.4) !important;
+  border-bottom: 1px solid rgba(60, 185, 178, 0.1) !important;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.6) inset,
+    0 2px 12px rgba(0,0,0,0.04);
 }
 
 html.light header a {
-  color: #374151 !important;
+  color: #2d4a49 !important;
 }
 
 html.light header a:hover {
   color: #2A9D97 !important;
-  background: rgba(60, 185, 178, 0.08) !important;
+  background: rgba(60, 185, 178, 0.06) !important;
 }
 
 html.light header img {
   filter: none !important;
 }
 
-/* Top bar inverts */
+/* ── Top bar ── */
 html.light .bg-vurmz-dark.text-white.py-2 {
-  background-color: rgba(240, 252, 252, 0.9) !important;
+  background: linear-gradient(180deg,
+    rgba(240, 252, 252, 0.9) 0%,
+    rgba(228, 244, 248, 0.85) 100%
+  ) !important;
 }
 
-/* Footer glass */
+/* ── Footer ── */
 html.light footer {
-  background: rgba(240, 252, 252, 0.8) !important;
-  backdrop-filter: blur(20px) !important;
+  background: linear-gradient(180deg,
+    rgba(240, 250, 252, 0.85) 0%,
+    rgba(228, 244, 248, 0.9) 100%
+  ) !important;
+  backdrop-filter: blur(16px) !important;
+  border-top: 1px solid rgba(60, 185, 178, 0.08);
 }
 
 html.light footer .text-gray-400,
 html.light footer .text-gray-500 {
-  color: #6B7280 !important;
+  color: #5C706F !important;
 }
 
 html.light footer .text-white {
   color: #1A2F2E !important;
 }
 
-/* Logo un-invert in light mode */
+/* ── Logo ── */
 html.light img[alt*="VURMZ"] {
   filter: none !important;
 }
 
-/* Price pills become glass */
+/* ── Price pills: Aqua bubble style ── */
 html.light .bg-vurmz-teal\/20 {
-  background: rgba(60, 185, 178, 0.12) !important;
-  backdrop-filter: blur(8px);
-  border-color: rgba(60, 185, 178, 0.2) !important;
+  background: linear-gradient(180deg,
+    rgba(92, 212, 205, 0.15) 0%,
+    rgba(60, 185, 178, 0.1) 100%
+  ) !important;
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(60, 185, 178, 0.15) !important;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.5) inset;
 }
 
 html.light .bg-vurmz-teal\/20 .text-white,
@@ -506,27 +528,38 @@ html.light .bg-vurmz-teal\/20 strong {
   color: #1A2F2E !important;
 }
 
-/* Product cards in light mode */
+/* ── Product cards ── */
 html.light .bg-vurmz-dark.rounded-lg,
 html.light .bg-vurmz-dark.p-4 {
-  background: rgba(255, 255, 255, 0.6) !important;
-  backdrop-filter: blur(16px);
-  border-color: rgba(60, 185, 178, 0.12) !important;
+  background: linear-gradient(180deg,
+    rgba(255, 255, 255, 0.8) 0%,
+    rgba(245, 250, 252, 0.7) 100%
+  ) !important;
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.7) inset,
+    0 3px 12px rgba(0,0,0,0.05);
 }
 
-/* Keep CTA buttons readable */
+/* ── CTA buttons ── */
 html.light a[class*="bg-vurmz-dark"] {
-  background-color: #1A2F2E !important;
+  background: linear-gradient(180deg, #2d4a49 0%, #1A2F2E 100%) !important;
   color: #ffffff !important;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.15) inset,
+    0 2px 8px rgba(0,0,0,0.15);
 }
 
 html.light a[class*="border-gray-600"],
 html.light a[class*="border-white"] {
-  border-color: rgba(60, 185, 178, 0.4) !important;
+  border-color: rgba(60, 185, 178, 0.3) !important;
   color: #1A2F2E !important;
+  background: rgba(255, 255, 255, 0.5) !important;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.6) inset;
 }
 
-/* Sections breathe subtly in light mode too */
+/* ── Sections ── */
 html.light section {
   position: relative;
 }
@@ -536,267 +569,232 @@ html.light section {
    Activated when html.trippy is set
 ======================================== */
 
-/* Breathing hue shift on the entire page */
+/* Breathing hue shift on the entire page — slow and organic */
 html.trippy {
-  animation: trippy-hue 12s ease-in-out infinite;
+  animation: trippy-hue 18s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
 @keyframes trippy-hue {
-  0%   { filter: hue-rotate(0deg) saturate(1.3); }
-  25%  { filter: hue-rotate(15deg) saturate(1.5); }
-  50%  { filter: hue-rotate(-10deg) saturate(1.4); }
-  75%  { filter: hue-rotate(8deg) saturate(1.6); }
-  100% { filter: hue-rotate(0deg) saturate(1.3); }
+  0%   { filter: hue-rotate(0deg) saturate(1.2); }
+  25%  { filter: hue-rotate(10deg) saturate(1.35); }
+  50%  { filter: hue-rotate(-8deg) saturate(1.3); }
+  75%  { filter: hue-rotate(6deg) saturate(1.4); }
+  100% { filter: hue-rotate(0deg) saturate(1.2); }
 }
 
-/* Each section breathes on its own rhythm — deliberately desynchronized */
+/* Each section breathes on its own rhythm — deliberately desynchronized, slow and organic */
 html.trippy section:nth-child(1) {
-  animation: trippy-breathe 5.5s ease-in-out infinite;
+  animation: trippy-breathe 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
   transform-origin: 40% 50%;
+  will-change: transform;
 }
 html.trippy section:nth-child(2) {
-  animation: trippy-breathe-alt 7.2s ease-in-out infinite;
-  animation-delay: -1.7s;
+  animation: trippy-breathe-alt 10s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation-delay: -2.5s;
   transform-origin: 60% 45%;
+  will-change: transform;
 }
 html.trippy section:nth-child(3) {
-  animation: trippy-breathe 6.8s ease-in-out infinite;
-  animation-delay: -3.4s;
+  animation: trippy-breathe 9s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation-delay: -5s;
   transform-origin: 45% 55%;
+  will-change: transform;
 }
 html.trippy section:nth-child(4) {
-  animation: trippy-breathe-alt 8.1s ease-in-out infinite;
-  animation-delay: -5.2s;
+  animation: trippy-breathe-alt 11s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation-delay: -7s;
   transform-origin: 55% 40%;
+  will-change: transform;
 }
 html.trippy section:nth-child(5) {
-  animation: trippy-breathe 5.9s ease-in-out infinite;
-  animation-delay: -2.1s;
+  animation: trippy-breathe 8.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation-delay: -3s;
   transform-origin: 50% 60%;
+  will-change: transform;
 }
 html.trippy section:nth-child(6) {
-  animation: trippy-breathe-alt 7.5s ease-in-out infinite;
-  animation-delay: -4.3s;
+  animation: trippy-breathe-alt 10.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation-delay: -6s;
   transform-origin: 35% 50%;
+  will-change: transform;
 }
 html.trippy section:nth-child(n+7) {
-  animation: trippy-breathe 6.3s ease-in-out infinite;
-  animation-delay: -6s;
+  animation: trippy-breathe 9.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation-delay: -8s;
   transform-origin: center center;
+  will-change: transform;
 }
 
 @keyframes trippy-breathe {
   0%, 100% { transform: scale(1) translateY(0); }
-  30%      { transform: scale(1.012) translateY(-1px); }
-  50%      { transform: scale(1.018) translateY(-2px); }
-  70%      { transform: scale(1.01) translateY(-1px); }
+  50%      { transform: scale(1.012) translateY(-1.5px); }
 }
 
 /* Alternate breathe — different rhythm so sections feel alive independently */
 @keyframes trippy-breathe-alt {
   0%, 100% { transform: scale(1) translateX(0); }
-  20%      { transform: scale(1.01) translateX(1px); }
-  45%      { transform: scale(1.02) translateX(-1px) translateY(-1px); }
-  65%      { transform: scale(1.008) translateX(0.5px) translateY(1px); }
-  85%      { transform: scale(1.015) translateX(-0.5px); }
+  30%      { transform: scale(1.008) translateX(0.5px); }
+  60%      { transform: scale(1.014) translateX(-0.5px) translateY(-1px); }
 }
 
-/* Text breathes independently */
+/* Text breathes independently — gentle and fluid */
 html.trippy h1,
 html.trippy h2,
 html.trippy h3 {
-  animation: trippy-text-breathe 4s ease-in-out infinite;
+  animation: trippy-text-breathe 7s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  will-change: transform, text-shadow;
 }
-html.trippy h1 { animation-duration: 5s; }
-html.trippy h2 { animation-delay: -1.5s; animation-duration: 4.5s; }
-html.trippy h3 { animation-delay: -3s; animation-duration: 5.5s; }
+html.trippy h1 { animation-duration: 8s; }
+html.trippy h2 { animation-delay: -2s; animation-duration: 7.5s; }
+html.trippy h3 { animation-delay: -4s; animation-duration: 9s; }
 
 @keyframes trippy-text-breathe {
   0%, 100% {
-    transform: scale(1) skewX(0deg);
+    transform: scale(1);
     letter-spacing: 0em;
-    filter: blur(0px);
     text-shadow: none;
   }
-  30% {
-    transform: scale(1.02) skewX(0.2deg);
-    letter-spacing: 0.015em;
-    filter: blur(0.2px);
-    text-shadow: 0 0 8px rgba(168, 85, 247, 0.2);
-  }
   50% {
-    transform: scale(1.03) skewX(-0.1deg);
-    letter-spacing: 0.02em;
-    filter: blur(0.4px);
-    text-shadow: 0 0 15px rgba(59, 130, 246, 0.25), -2px 0 10px rgba(236, 72, 153, 0.15);
-  }
-  70% {
-    transform: scale(1.015) skewX(0.15deg);
+    transform: scale(1.015);
     letter-spacing: 0.01em;
-    filter: blur(0.2px);
-    text-shadow: 0 0 5px rgba(52, 211, 153, 0.2);
+    text-shadow: 0 0 12px rgba(168, 85, 247, 0.2), 0 0 24px rgba(59, 130, 246, 0.1);
   }
 }
 
-/* Each card/element warps on its own independent cycle */
-html.trippy [class*="rounded-lg"]:nth-child(1) { animation: trippy-warp 7s ease-in-out infinite; animation-delay: -0.5s; }
-html.trippy [class*="rounded-lg"]:nth-child(2) { animation: trippy-warp-alt 8.5s ease-in-out infinite; animation-delay: -2.8s; }
-html.trippy [class*="rounded-lg"]:nth-child(3) { animation: trippy-warp 9.2s ease-in-out infinite; animation-delay: -4.1s; }
-html.trippy [class*="rounded-lg"]:nth-child(4) { animation: trippy-warp-alt 7.8s ease-in-out infinite; animation-delay: -6.3s; }
-html.trippy [class*="rounded-lg"]:nth-child(n+5) { animation: trippy-warp 8s ease-in-out infinite; animation-delay: -3s; }
-html.trippy [class*="rounded-xl"] { animation: trippy-warp-alt 9s ease-in-out infinite; }
-html.trippy [class*="rounded-2xl"] { animation: trippy-warp 10s ease-in-out infinite; animation-delay: -4s; }
+/* Each card/element warps on its own independent cycle — smooth and dreamy */
+html.trippy [class*="rounded-lg"]:nth-child(1) { animation: trippy-warp 10s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: -0.5s; will-change: transform; }
+html.trippy [class*="rounded-lg"]:nth-child(2) { animation: trippy-warp-alt 12s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: -3s; will-change: transform; }
+html.trippy [class*="rounded-lg"]:nth-child(3) { animation: trippy-warp 11s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: -6s; will-change: transform; }
+html.trippy [class*="rounded-lg"]:nth-child(4) { animation: trippy-warp-alt 10.5s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: -8s; will-change: transform; }
+html.trippy [class*="rounded-lg"]:nth-child(n+5) { animation: trippy-warp 11.5s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: -4s; will-change: transform; }
+html.trippy [class*="rounded-xl"] { animation: trippy-warp-alt 13s cubic-bezier(0.4, 0, 0.2, 1) infinite; will-change: transform; }
+html.trippy [class*="rounded-2xl"] { animation: trippy-warp 14s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: -5s; will-change: transform; }
 
 @keyframes trippy-warp {
   0%, 100% {
     transform: perspective(800px) rotateX(0deg) rotateY(0deg) scale(1);
   }
-  20% {
-    transform: perspective(800px) rotateX(0.8deg) rotateY(-0.6deg) scale(1.005);
-  }
-  40% {
-    transform: perspective(800px) rotateX(-0.5deg) rotateY(0.8deg) scale(0.998);
-  }
-  60% {
-    transform: perspective(800px) rotateX(0.6deg) rotateY(-0.4deg) scale(1.003);
-  }
-  80% {
-    transform: perspective(800px) rotateX(-0.3deg) rotateY(0.5deg) scale(0.999);
+  50% {
+    transform: perspective(800px) rotateX(0.5deg) rotateY(-0.4deg) scale(1.003);
   }
 }
 
 @keyframes trippy-warp-alt {
   0%, 100% {
-    transform: perspective(800px) rotateX(0deg) rotateY(0deg) translateZ(0);
-  }
-  15% {
-    transform: perspective(800px) rotateX(-0.6deg) rotateY(0.9deg) translateZ(2px);
+    transform: perspective(800px) rotateX(0deg) rotateY(0deg);
   }
   35% {
-    transform: perspective(800px) rotateX(0.7deg) rotateY(-0.5deg) translateZ(-1px);
+    transform: perspective(800px) rotateX(-0.4deg) rotateY(0.5deg);
   }
-  55% {
-    transform: perspective(800px) rotateX(-0.4deg) rotateY(0.6deg) translateZ(3px);
-  }
-  75% {
-    transform: perspective(800px) rotateX(0.5deg) rotateY(-0.8deg) translateZ(0);
+  65% {
+    transform: perspective(800px) rotateX(0.3deg) rotateY(-0.3deg);
   }
 }
 
-/* Paragraphs independently drift and blur */
+/* Paragraphs gently drift */
 html.trippy p:nth-child(odd) {
-  animation: trippy-text-drift-a 9s ease-in-out infinite;
+  animation: trippy-text-drift-a 12s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 html.trippy p:nth-child(even) {
-  animation: trippy-text-drift-b 11s ease-in-out infinite;
-  animation-delay: -4s;
+  animation: trippy-text-drift-b 14s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation-delay: -5s;
 }
 
 @keyframes trippy-text-drift-a {
-  0%, 100% { transform: translateX(0); filter: blur(0px); }
-  30% { transform: translateX(1.5px); filter: blur(0.15px); }
-  60% { transform: translateX(-1px); filter: blur(0.25px); }
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(1px); }
 }
 
 @keyframes trippy-text-drift-b {
-  0%, 100% { transform: translateX(0) skewX(0deg); }
-  40% { transform: translateX(-1px) skewX(0.15deg); }
-  70% { transform: translateX(0.8px) skewX(-0.1deg); }
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(-0.8px); }
 }
 
-/* Buttons breathe and glow independently */
+/* Buttons breathe and glow — slow, dreamy */
 html.trippy a[class*="bg-vurmz-teal"]:nth-of-type(1) {
-  animation: trippy-btn-glow-a 4s ease-in-out infinite;
+  animation: trippy-btn-glow-a 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 html.trippy a[class*="bg-vurmz-teal"]:nth-of-type(2) {
-  animation: trippy-btn-glow-b 5s ease-in-out infinite;
-  animation-delay: -2s;
+  animation: trippy-btn-glow-b 10s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation-delay: -4s;
 }
 html.trippy a[class*="border"]:nth-of-type(odd) {
-  animation: trippy-btn-border 6s ease-in-out infinite;
+  animation: trippy-btn-border 9s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
 @keyframes trippy-btn-glow-a {
-  0%, 100% { box-shadow: 0 4px 20px rgba(60, 185, 178, 0.3); transform: scale(1); }
-  50% { box-shadow: 0 4px 30px rgba(168, 85, 247, 0.5), 0 0 15px rgba(59, 130, 246, 0.3); transform: scale(1.02); }
+  0%, 100% { box-shadow: 0 4px 20px rgba(60, 185, 178, 0.3); }
+  50% { box-shadow: 0 4px 28px rgba(168, 85, 247, 0.35), 0 0 12px rgba(59, 130, 246, 0.2); }
 }
 
 @keyframes trippy-btn-glow-b {
-  0%, 100% { box-shadow: 0 4px 20px rgba(60, 185, 178, 0.3); transform: scale(1); }
-  30% { box-shadow: 0 4px 25px rgba(236, 72, 153, 0.4); transform: scale(1.015); }
-  70% { box-shadow: 0 4px 28px rgba(52, 211, 153, 0.45), 0 0 10px rgba(251, 146, 60, 0.2); transform: scale(1.025); }
+  0%, 100% { box-shadow: 0 4px 20px rgba(60, 185, 178, 0.3); }
+  50% { box-shadow: 0 4px 24px rgba(236, 72, 153, 0.3), 0 0 10px rgba(52, 211, 153, 0.15); }
 }
 
 @keyframes trippy-btn-border {
-  0%, 100% { border-color: rgba(75, 85, 99, 0.6); transform: scale(1); }
-  25% { border-color: rgba(168, 85, 247, 0.5); transform: scale(1.01); }
-  50% { border-color: rgba(236, 72, 153, 0.4); transform: scale(0.99); }
-  75% { border-color: rgba(52, 211, 153, 0.5); transform: scale(1.005); }
+  0%, 100% { border-color: rgba(75, 85, 99, 0.6); }
+  33% { border-color: rgba(168, 85, 247, 0.35); }
+  66% { border-color: rgba(52, 211, 153, 0.35); }
 }
 
-/* Images and icons pulse with color */
+/* Images pulse gently */
 html.trippy img {
-  animation: trippy-image 7s ease-in-out infinite;
+  animation: trippy-image 12s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
 @keyframes trippy-image {
   0%, 100% { filter: brightness(1) contrast(1); }
-  33%      { filter: brightness(1.1) contrast(1.05); }
-  66%      { filter: brightness(0.95) contrast(1.1); }
+  50%      { filter: brightness(1.06) contrast(1.04); }
 }
 
 html.trippy svg {
-  animation: trippy-icon-glow 3s ease-in-out infinite;
+  animation: trippy-icon-glow 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
 @keyframes trippy-icon-glow {
-  0%, 100% { filter: drop-shadow(0 0 0px transparent); transform: scale(1) rotate(0deg); }
-  25%      { filter: drop-shadow(0 0 4px rgba(168, 85, 247, 0.6)); transform: scale(1.05) rotate(2deg); }
-  50%      { filter: drop-shadow(0 0 8px currentColor) drop-shadow(0 0 15px rgba(59,130,246,0.3)); transform: scale(1.1) rotate(-1deg); }
-  75%      { filter: drop-shadow(0 0 5px rgba(236, 72, 153, 0.5)); transform: scale(1.03) rotate(1deg); }
+  0%, 100% { filter: drop-shadow(0 0 0px transparent); transform: scale(1); }
+  50%      { filter: drop-shadow(0 0 6px currentColor); transform: scale(1.04); }
 }
 
 /* Individual SVG icons each get their own timing */
-html.trippy svg:nth-child(odd) { animation-duration: 3.5s; animation-delay: -1s; }
-html.trippy svg:nth-child(even) { animation-duration: 4.2s; animation-delay: -2.5s; }
+html.trippy svg:nth-child(odd) { animation-duration: 9s; animation-delay: -2s; }
+html.trippy svg:nth-child(even) { animation-duration: 11s; animation-delay: -5s; }
 
-/* Backgrounds shift color temperature */
+/* Backgrounds shift color temperature — slow morph */
 html.trippy .bg-vurmz-dark {
-  animation: trippy-bg-shift 10s ease-in-out infinite;
+  animation: trippy-bg-shift 16s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
 @keyframes trippy-bg-shift {
   0%, 100% { background-color: #1A2F2E; }
-  25%      { background-color: #1E2A35; }
-  50%      { background-color: #251A2F; }
-  75%      { background-color: #1A2F24; }
+  33%      { background-color: #1E2A35; }
+  66%      { background-color: #221A2F; }
 }
 
 html.trippy .bg-vurmz-teal {
-  animation: trippy-teal-shift 8s ease-in-out infinite;
+  animation: trippy-teal-shift 14s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
 @keyframes trippy-teal-shift {
   0%, 100% { background-color: #3CB9B2; }
-  25%      { background-color: #B23CB9; }
-  50%      { background-color: #B9823C; }
-  75%      { background-color: #3C6FB9; }
+  33%      { background-color: #9B59B6; }
+  66%      { background-color: #3C7FB9; }
 }
 
 /* Border colors breathe */
 html.trippy [class*="border-gray"] {
-  animation: trippy-border 6s ease-in-out infinite;
+  animation: trippy-border 10s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
 @keyframes trippy-border {
   0%, 100% { border-color: rgba(75, 85, 99, 0.6); }
-  33%      { border-color: rgba(139, 92, 246, 0.4); }
-  66%      { border-color: rgba(59, 130, 246, 0.4); }
+  50%      { border-color: rgba(139, 92, 246, 0.35); }
 }
 
-/* The teal accent text color-cycles */
+/* The teal accent text color-cycles — slower, smoother */
 html.trippy .text-vurmz-teal {
-  animation: trippy-accent-text 5s ease-in-out infinite;
+  animation: trippy-accent-text 10s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
 @keyframes trippy-accent-text {
@@ -806,7 +804,7 @@ html.trippy .text-vurmz-teal {
   75%      { color: #34D399; }
 }
 
-/* Scrollbar goes psychedelic */
+/* Scrollbar goes psychedelic — slow drift */
 html.trippy::-webkit-scrollbar {
   width: 10px;
 }
@@ -816,7 +814,7 @@ html.trippy::-webkit-scrollbar-track {
 html.trippy::-webkit-scrollbar-thumb {
   background: linear-gradient(180deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3, #54a0ff);
   background-size: 100% 300%;
-  animation: trippy-scrollbar 4s ease-in-out infinite;
+  animation: trippy-scrollbar 8s ease-in-out infinite;
   border-radius: 5px;
 }
 
@@ -825,7 +823,7 @@ html.trippy::-webkit-scrollbar-thumb {
   50%      { background-position: 0% 100%; }
 }
 
-/* Fractal-like background overlay on body */
+/* Fractal-like background overlay on body — gentle color wash */
 html.trippy body::after {
   content: '';
   position: fixed;
@@ -835,37 +833,27 @@ html.trippy body::after {
   bottom: 0;
   pointer-events: none;
   z-index: 1;
-  opacity: 0.04;
+  opacity: 0.03;
   background-image:
     radial-gradient(circle at 20% 30%, rgba(168, 85, 247, 0.8) 0%, transparent 50%),
     radial-gradient(circle at 80% 70%, rgba(59, 130, 246, 0.8) 0%, transparent 50%),
-    radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.6) 0%, transparent 40%),
-    radial-gradient(circle at 30% 80%, rgba(52, 211, 153, 0.6) 0%, transparent 45%),
-    radial-gradient(circle at 70% 20%, rgba(251, 146, 60, 0.6) 0%, transparent 45%);
-  animation: trippy-fractal 15s ease-in-out infinite;
+    radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.6) 0%, transparent 40%);
+  animation: trippy-fractal 25s cubic-bezier(0.4, 0, 0.2, 1) infinite;
   mix-blend-mode: screen;
 }
 
 @keyframes trippy-fractal {
   0%, 100% {
-    transform: scale(1) rotate(0deg);
-    opacity: 0.04;
-  }
-  25% {
-    transform: scale(1.1) rotate(1deg);
-    opacity: 0.07;
+    transform: scale(1);
+    opacity: 0.03;
   }
   50% {
-    transform: scale(1.05) rotate(-0.5deg);
-    opacity: 0.05;
-  }
-  75% {
-    transform: scale(1.15) rotate(0.8deg);
-    opacity: 0.08;
+    transform: scale(1.08);
+    opacity: 0.06;
   }
 }
 
-/* Subtle background pattern that drifts */
+/* Subtle mandala that drifts — slow rotation */
 html.trippy body::before {
   content: '';
   position: fixed;
@@ -875,30 +863,23 @@ html.trippy body::before {
   height: 200%;
   pointer-events: none;
   z-index: 0;
-  opacity: 0.04;
+  opacity: 0.03;
   background-image:
     repeating-conic-gradient(
       from 0deg at 50% 50%,
-      rgba(168, 85, 247, 0.5) 0deg 10deg,
+      rgba(168, 85, 247, 0.4) 0deg 10deg,
       transparent 10deg 20deg,
-      rgba(59, 130, 246, 0.5) 20deg 30deg,
+      rgba(59, 130, 246, 0.4) 20deg 30deg,
       transparent 30deg 40deg,
-      rgba(236, 72, 153, 0.4) 40deg 50deg,
+      rgba(236, 72, 153, 0.3) 40deg 50deg,
       transparent 50deg 60deg
-    ),
-    repeating-conic-gradient(
-      from 30deg at 50% 50%,
-      rgba(52, 211, 153, 0.3) 0deg 8deg,
-      transparent 8deg 16deg,
-      rgba(251, 146, 60, 0.3) 16deg 24deg,
-      transparent 24deg 32deg
     );
-  animation: trippy-mandala 45s linear infinite;
+  animation: trippy-mandala 90s linear infinite;
 }
 
 @keyframes trippy-mandala {
   0%   { transform: rotate(0deg) scale(1); }
-  50%  { transform: rotate(180deg) scale(1.2); }
+  50%  { transform: rotate(180deg) scale(1.1); }
   100% { transform: rotate(360deg) scale(1); }
 }
 
@@ -934,23 +915,21 @@ html.trippy [class*="bg-vurmz-teal"][href]:hover {
 
 /* White text gets a subtle rainbow shimmer in trippy */
 html.trippy .text-white {
-  animation: trippy-white-shimmer 8s ease-in-out infinite;
+  animation: trippy-white-shimmer 14s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
 @keyframes trippy-white-shimmer {
   0%, 100% { color: #ffffff; }
-  25%      { color: #f0e6ff; }
-  50%      { color: #e6f0ff; }
-  75%      { color: #f0ffe6; }
+  33%      { color: #f2e8ff; }
+  66%      { color: #e8f2ff; }
 }
 
 /* Gray text gets warmer/cooler */
 html.trippy .text-gray-400 {
-  animation: trippy-gray-shift 6s ease-in-out infinite;
+  animation: trippy-gray-shift 12s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
 @keyframes trippy-gray-shift {
   0%, 100% { color: #9ca3af; }
-  33%      { color: #a89cb8; }
-  66%      { color: #9caab8; }
+  50%      { color: #a89cb8; }
 }
