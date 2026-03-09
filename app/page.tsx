@@ -1,402 +1,259 @@
 'use client'
 
 import Link from 'next/link'
-import {
-  ArrowRightIcon,
-  ChatBubbleLeftRightIcon,
-  ClockIcon,
-  CubeIcon,
-  UserIcon,
-  TruckIcon,
-  MapPinIcon,
-} from '@heroicons/react/24/outline'
-import { siteInfo, getSmsLink } from '@/lib/site-info'
-import { PRODUCTS } from '@/lib/products'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
-
-const products = [
-  {
-    name: PRODUCTS.pens.name,
-    price: `$${PRODUCTS.pens.basePerItem}`,
-    unit: '/ea',
-    description: `Metal stylus pens with your logo`,
-    highlight: false,
-  },
-  {
-    name: PRODUCTS.businessCards.name,
-    price: `$${PRODUCTS.businessCards.matteBlackBase}`,
-    unit: '/ea',
-    description: `Matte black aluminum cards`,
-    highlight: true,
-  },
-  {
-    name: PRODUCTS.knives.name,
-    price: `$${PRODUCTS.knives.base}`,
-    unit: '+',
-    description: PRODUCTS.knives.description,
-    highlight: false,
-  },
-  {
-    name: PRODUCTS.coasters.name,
-    price: `$${PRODUCTS.coasters.materials.wood}`,
-    unit: '/ea',
-    description: 'Wood, slate, or steel with your logo',
-    highlight: false,
-  },
-  {
-    name: PRODUCTS.tools.name,
-    price: `$${PRODUCTS.tools.base}`,
-    unit: '+',
-    description: PRODUCTS.tools.description,
-    highlight: false,
-  },
-  {
-    name: PRODUCTS.keychains.name,
-    price: `$${PRODUCTS.keychains.materials.acrylic}`,
-    unit: '/ea',
-    description: 'Metal or wood with your logo',
-    highlight: false,
-  },
-]
-
-const valueProps = [
-  {
-    title: 'Same-Day Turnaround',
-    description: 'Morning order, afternoon pickup. No waiting weeks.',
-    icon: ClockIcon,
-    stat: '24hr',
-  },
-  {
-    title: 'No Minimums',
-    description: 'Need 1 or 500? Same quality, same speed.',
-    icon: CubeIcon,
-    stat: '1+',
-  },
-  {
-    title: 'Direct to Owner',
-    description: 'Text Zach directly. No tickets, no runaround.',
-    icon: UserIcon,
-    stat: 'SMS',
-  },
-  {
-    title: 'Free Delivery',
-    description: `Hand-delivered across the ${siteInfo.city} area.`,
-    icon: TruckIcon,
-    stat: 'Free',
-  },
-]
+import { ArrowRightIcon, ChatBubbleLeftIcon } from '@heroicons/react/24/outline'
+import { siteInfo, getSmsLink } from '@/lib/site-info'
+import NewsletterSignup from '@/components/NewsletterSignup'
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: i * 0.08, duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] as const },
-  }),
+  initial: { opacity: 0, y: 24 },
+  animate: { opacity: 1, y: 0 },
 }
 
-export default function HomePage() {
-  return (
-    <div>
-      {/* ============ HERO ============ */}
-      <section className="relative min-h-[90vh] sm:min-h-screen flex items-center bg-vurmz-dark overflow-hidden">
-        {/* Gradient mesh background */}
-        <div className="absolute inset-0">
-          <div
-            className="absolute inset-0 opacity-40"
-            style={{
-              background: `
-                radial-gradient(ellipse 80% 50% at 20% 40%, rgba(60,185,178,0.15) 0%, transparent 50%),
-                radial-gradient(ellipse 60% 80% at 80% 20%, rgba(123,200,212,0.1) 0%, transparent 50%),
-                radial-gradient(ellipse 50% 60% at 60% 80%, rgba(125,170,140,0.08) 0%, transparent 50%)
-              `,
-            }}
-          />
-          {/* Subtle dot grid */}
-          <div
-            className="absolute inset-0 opacity-[0.03]"
-            style={{
-              backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.8) 1px, transparent 1px)',
-              backgroundSize: '32px 32px',
-            }}
-          />
-        </div>
+const stagger = {
+  animate: { transition: { staggerChildren: 0.1, delayChildren: 0.15 } },
+}
 
-        {/* Animated gradient line accent */}
+export default function Home() {
+  return (
+    <div className="bg-vurmz-dark">
+      {/* ═══════════ HERO ═══════════ */}
+      <section className="relative py-16 sm:py-20 lg:py-28 flex items-center overflow-hidden">
+        {/* Raw texture — concrete grain overlay */}
         <div
-          className="absolute top-0 left-0 right-0 h-[1px]"
+          className="absolute inset-0 opacity-[0.04]"
           style={{
-            background: 'linear-gradient(90deg, transparent, rgba(60,185,178,0.5), transparent)',
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E")`,
+            backgroundSize: '200px 200px',
           }}
         />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-24 lg:py-32 w-full">
-          <div className="max-w-3xl">
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-            >
-              <div className="inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 mb-8 text-[13px] text-gray-400 border border-white/[0.08] bg-white/[0.03]">
-                <MapPinIcon className="h-3.5 w-3.5 text-vurmz-teal" />
-                <span>{siteInfo.city}, {siteInfo.state}</span>
-                <span className="text-white/20">|</span>
-                <span className="text-vurmz-teal">Same-day turnaround</span>
-              </div>
+        {/* Refined — clean diagonal accent line */}
+        <div
+          className="absolute top-0 right-0 w-1/2 h-full pointer-events-none"
+          style={{
+            background: 'linear-gradient(135deg, transparent 0%, transparent 49.5%, rgba(60,185,178,0.07) 49.5%, rgba(60,185,178,0.07) 50.5%, transparent 50.5%)',
+          }}
+        />
+
+        {/* Subtle teal glow from bottom-left */}
+        <div
+          className="absolute bottom-0 left-0 w-[500px] h-[500px] pointer-events-none"
+          style={{
+            background: 'radial-gradient(circle, rgba(60,185,178,0.08) 0%, transparent 70%)',
+          }}
+        />
+
+        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+          <motion.div
+            variants={stagger}
+            initial="initial"
+            animate="animate"
+            className="max-w-3xl"
+          >
+            {/* Eyebrow */}
+            <motion.div variants={fadeUp} transition={{ duration: 0.5 }}>
+              <span className="inline-block text-vurmz-teal text-xs font-mono tracking-[0.25em] uppercase mb-6 border border-vurmz-teal/20 px-3 py-1.5 rounded-sm">
+                Laser Engraving &middot; {siteInfo.city}, {siteInfo.stateAbbr}
+              </span>
             </motion.div>
 
+            {/* Heading — massive, high contrast */}
             <motion.h1
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white leading-[1.08] mb-6"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              variants={fadeUp}
+              transition={{ duration: 0.6 }}
+              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-[0.95] mb-6"
             >
-              Laser engraving,{' '}
-              <span className="text-glass-gradient">delivered to your door.</span>
+              Let&apos;s put <span className="text-vurmz-teal">your name</span> on something<Link href="/laser-sim.html" className="inline-block w-[0.3em] h-[0.3em] rounded-full bg-white/80 hover:bg-vurmz-teal hover:shadow-[0_0_8px_rgba(60,185,178,0.6)] transition-all duration-300 align-baseline translate-y-[-0.15em] ml-[0.05em] cursor-default" aria-label="Secret simulator" />
             </motion.h1>
 
+            {/* Sub — restrained, high legibility */}
             <motion.p
-              className="text-lg sm:text-xl text-gray-400 max-w-xl leading-relaxed mb-10"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.35 }}
+              variants={fadeUp}
+              transition={{ duration: 0.5 }}
+              className="text-base sm:text-lg text-gray-400 max-w-xl mb-8 leading-relaxed"
             >
-              Branded pens, metal business cards, knife engraving, tool marking &mdash; hand-delivered across South Denver metro. No minimums.
+              Laser engraving for restaurants, contractors, corporate teams, and small businesses across the South Denver metro. Small batches, same-week turnaround, hand-delivered to your door.
             </motion.p>
 
+            {/* CTAs */}
             <motion.div
-              className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-12"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
+              variants={fadeUp}
+              transition={{ duration: 0.5 }}
+              className="flex flex-col sm:flex-row gap-4"
             >
+              <Link
+                href="/contact"
+                className="group inline-flex items-center justify-center gap-2 px-8 py-4 bg-vurmz-cta text-white font-semibold text-base rounded-sm hover:bg-vurmz-cta-hover transition-all shadow-lg shadow-vurmz-cta/20"
+              >
+                Get a Quote
+                <ArrowRightIcon className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
               <a
                 href={getSmsLink()}
-                className="group inline-flex items-center justify-center gap-2.5 bg-vurmz-teal text-white px-7 py-4 rounded-full font-semibold text-base hover:bg-vurmz-teal-dark transition-all shadow-lg shadow-vurmz-teal/20 hover:shadow-vurmz-teal/30"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-white/15 text-gray-300 font-medium text-base rounded-sm hover:bg-white/5 hover:border-white/25 hover:text-white transition-all"
               >
-                <ChatBubbleLeftRightIcon className="h-5 w-5" />
-                Text Me for a Quote
+                <ChatBubbleLeftIcon className="w-4 h-4" />
+                Text {siteInfo.phone}
               </a>
-              <Link
-                href="/order"
-                className="group inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full font-semibold text-base border border-white/[0.12] text-gray-300 hover:text-white hover:border-white/[0.25] hover:bg-white/[0.04] transition-all"
-              >
-                Build Your Order
-                <ArrowRightIcon className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
-              </Link>
             </motion.div>
-
-            {/* Price pills */}
-            <motion.div
-              className="flex flex-wrap gap-2"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.7 }}
-            >
-              {[
-                { label: 'Pens', price: `$${PRODUCTS.pens.basePerItem}` },
-                { label: 'Cards', price: `$${PRODUCTS.businessCards.matteBlackBase}` },
-                { label: 'Knives', price: `$${PRODUCTS.knives.base}` },
-                { label: 'Coasters', price: `$${PRODUCTS.coasters.materials.wood}` },
-              ].map((item) => (
-                <span
-                  key={item.label}
-                  className="text-[13px] text-gray-500 px-3 py-1 rounded-full border border-white/[0.06] bg-white/[0.02]"
-                >
-                  {item.label} from <span className="text-gray-300 font-medium">{item.price}</span>
-                </span>
-              ))}
-            </motion.div>
-          </div>
-        </div>
-
-        {/* Scroll indicator */}
-        <motion.div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden sm:block"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5 }}
-        >
-          <div className="w-5 h-8 rounded-full border border-white/[0.15] flex items-start justify-center p-1.5">
-            <motion.div
-              className="w-1 h-1.5 rounded-full bg-white/40"
-              animate={{ y: [0, 10, 0] }}
-              transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-            />
-          </div>
-        </motion.div>
-      </section>
-
-      {/* ============ VALUE PROPS ============ */}
-      <section className="bg-[#0d1b1a] py-16 sm:py-20 border-t border-white/[0.04]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-            {valueProps.map((prop, i) => (
-              <motion.div
-                key={prop.title}
-                className="group relative p-5 sm:p-6 rounded-2xl border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/[0.1] transition-all duration-300"
-                custom={i}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={fadeUp}
-              >
-                <div className="text-2xl sm:text-3xl font-bold text-vurmz-teal mb-1 tracking-tight">{prop.stat}</div>
-                <h3 className="text-sm sm:text-base font-semibold text-white mb-1.5">{prop.title}</h3>
-                <p className="text-gray-500 text-xs sm:text-sm leading-relaxed">{prop.description}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ============ PRODUCTS GRID ============ */}
-      <section className="bg-vurmz-dark py-16 sm:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            className="text-center mb-12 sm:mb-16"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight mb-3">
-              What we engrave
-            </h2>
-            <p className="text-gray-500 text-base sm:text-lg max-w-lg mx-auto">
-              From branded pens to industrial labels. All made in {siteInfo.city}.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-            {products.map((product, i) => (
-              <motion.div
-                key={product.name}
-                className={`group relative p-6 sm:p-7 rounded-2xl border transition-all duration-300 hover:border-vurmz-teal/30 ${
-                  product.highlight
-                    ? 'border-vurmz-teal/20 bg-gradient-to-b from-vurmz-teal/[0.06] to-transparent'
-                    : 'border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04]'
-                }`}
-                custom={i}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={fadeUp}
-              >
-                <div className="flex justify-between items-start mb-3">
-                  <h3 className="text-base sm:text-lg font-semibold text-white">{product.name}</h3>
-                  <div className="text-right flex-shrink-0 ml-4">
-                    <span className="text-vurmz-teal font-bold text-lg">{product.price}</span>
-                    <span className="text-gray-500 text-sm">{product.unit}</span>
-                  </div>
-                </div>
-                <p className="text-gray-500 text-sm leading-relaxed">{product.description}</p>
-              </motion.div>
-            ))}
-          </div>
-
-          <motion.div
-            className="text-center mt-10"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3 }}
-          >
-            <Link
-              href="/pricing"
-              className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-vurmz-teal transition-colors font-medium"
-            >
-              View full pricing
-              <ArrowRightIcon className="h-3.5 w-3.5" />
-            </Link>
           </motion.div>
         </div>
       </section>
 
-      {/* ============ PROCESS ============ */}
-      <section className="bg-[#0d1b1a] py-16 sm:py-24 border-t border-white/[0.04]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            className="text-center mb-12 sm:mb-16"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight mb-3">
-              How it works
-            </h2>
-            <p className="text-gray-500 text-base sm:text-lg">
-              Four steps. Usually done same-day.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
-            {[
-              { step: '01', title: 'Text or email', desc: 'Tell Zach what you need. Photos welcome.' },
-              { step: '02', title: 'Get a quote', desc: 'Exact pricing within hours, not days.' },
-              { step: '03', title: 'Approve & produce', desc: 'Approve the proof. We start right away.' },
-              { step: '04', title: 'Pickup or delivery', desc: `Free hand-delivery in ${siteInfo.city}.` },
-            ].map((item, i) => (
-              <motion.div
-                key={item.step}
-                className="relative"
-                custom={i}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={fadeUp}
-              >
-                <div className="text-vurmz-teal/30 text-4xl sm:text-5xl font-bold tracking-tighter mb-3">{item.step}</div>
-                <h3 className="text-white font-semibold text-sm sm:text-base mb-1.5">{item.title}</h3>
-                <p className="text-gray-500 text-xs sm:text-sm leading-relaxed">{item.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ============ CTA ============ */}
-      <section className="bg-vurmz-dark py-16 sm:py-24 relative overflow-hidden">
-        {/* Gradient accent */}
+      {/* ═══════════ SERVICES + CTA (two-column) ═══════════ */}
+      <section className="relative py-12 sm:py-16 border-t border-white/[0.06]">
         <div
-          className="absolute inset-0 opacity-30"
+          className="absolute inset-0"
           style={{
-            background: 'radial-gradient(ellipse 60% 50% at 50% 50%, rgba(60,185,178,0.15) 0%, transparent 60%)',
+            background: 'linear-gradient(180deg, rgba(255,255,255,0.015) 0%, transparent 40%, transparent 60%, rgba(255,255,255,0.015) 100%)',
           }}
         />
 
-        <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight mb-4">
-              Ready to get started?
-            </h2>
-            <p className="text-gray-400 text-lg sm:text-xl mb-8 max-w-xl mx-auto">
-              Text Zach. Get a quote in minutes. No obligation, no sales pitch.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-              <a
-                href={getSmsLink()}
-                className="group inline-flex items-center justify-center gap-2.5 bg-vurmz-teal text-white px-8 py-4 rounded-full font-semibold text-base hover:bg-vurmz-teal-dark transition-all shadow-lg shadow-vurmz-teal/20"
-              >
-                <ChatBubbleLeftRightIcon className="h-5 w-5" />
-                Text {siteInfo.phone}
-              </a>
-              <Link
-                href="/order"
-                className="group inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-semibold text-base border border-white/[0.12] text-gray-300 hover:text-white hover:border-white/[0.25] transition-all"
-              >
-                Build Your Order
-                <ArrowRightIcon className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
-              </Link>
+            {/* Left — What I Do */}
+            <div>
+              <p className="text-xs font-mono text-gray-500 tracking-[0.2em] uppercase mb-6">
+                What I Do
+              </p>
+              <div className="flex flex-wrap gap-x-5 gap-y-2 mb-4">
+                {['Pens', 'Business Cards', 'Labels', 'Knives', 'Coasters', 'Keychains'].map((item) => (
+                  <span
+                    key={item}
+                    className="text-lg sm:text-xl lg:text-2xl font-light text-white/80 hover:text-vurmz-teal transition-colors duration-300 cursor-default"
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
+              <p className="text-gray-400 text-sm leading-relaxed mb-5">
+                I keep a small selection of items ready to engrave, but your business is unique. If you have something specific in mind, message me and we&apos;ll figure it out together.
+              </p>
+              <div className="flex items-center gap-4">
+                <Link
+                  href="/pricing"
+                  className="inline-flex items-center gap-2 text-sm text-vurmz-teal font-mono tracking-wide hover:text-white transition-colors group"
+                >
+                  View pricing
+                  <ArrowRightIcon className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                </Link>
+                <a
+                  href={getSmsLink()}
+                  className="inline-flex items-center gap-2 text-sm text-gray-400 font-mono tracking-wide hover:text-white transition-colors group"
+                >
+                  <ChatBubbleLeftIcon className="w-3.5 h-3.5" />
+                  Text me
+                </a>
+              </div>
+            </div>
+
+            {/* Right — CTA */}
+            <div className="flex flex-col justify-center">
+              <div className="mb-4">
+                <p className="text-xs font-mono text-gray-500 tracking-[0.2em] uppercase mb-3">
+                  Trusted by
+                </p>
+                <div className="flex items-center gap-6">
+                  <span className="text-sm font-medium text-white/50">Nordstrom Beauty</span>
+                  <Image
+                    src="/images/clients/county-line-guitar-amps.svg"
+                    alt="County Line Guitar Amps"
+                    width={120}
+                    height={36}
+                    className="opacity-50 brightness-0 invert"
+                  />
+                </div>
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight mb-6">
+                Let&apos;s work together, {siteInfo.city}.
+              </h2>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <Link
+                  href="/contact"
+                  className="group inline-flex items-center justify-center gap-2 px-6 py-3 bg-vurmz-cta text-white font-semibold text-sm rounded-sm hover:bg-vurmz-cta-hover transition-all shadow-lg shadow-vurmz-cta/20"
+                >
+                  Get a Quote
+                  <ArrowRightIcon className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
+                <a
+                  href={getSmsLink()}
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-white/15 text-gray-300 font-medium text-sm rounded-sm hover:bg-white/5 hover:border-white/25 hover:text-white transition-all"
+                >
+                  <ChatBubbleLeftIcon className="w-4 h-4" />
+                  Text {siteInfo.phone}
+                </a>
+              </div>
             </div>
           </motion.div>
         </div>
       </section>
+
+      {/* ═══════════ ABOUT (two-column) ═══════════ */}
+      <section className="relative py-12 sm:py-16">
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E")`,
+            backgroundSize: '256px 256px',
+          }}
+        />
+
+        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center"
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="relative aspect-[4/3] overflow-hidden rounded-sm">
+              <Image
+                src="/images/zach.jpeg"
+                alt={`${siteInfo.founder.name}, owner of VURMZ`}
+                fill
+                className="object-cover"
+              />
+              <div
+                className="absolute bottom-0 left-0 right-0 h-1/3 pointer-events-none"
+                style={{
+                  background: 'linear-gradient(to top, rgba(26,47,46,0.6) 0%, transparent 100%)',
+                }}
+              />
+              <div className="absolute bottom-4 left-4">
+                <span className="text-xs font-mono text-white/60 tracking-wider uppercase">
+                  {siteInfo.founder.name} &middot; Owner
+                </span>
+              </div>
+            </div>
+
+            <div>
+              <p className="text-xs font-mono text-vurmz-teal tracking-[0.2em] uppercase mb-4">
+                Who I Am
+              </p>
+              <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight leading-tight mb-4">
+                No department.
+                <br />
+                <span className="text-gray-500">Just me.</span>
+              </h2>
+              <p className="text-gray-400 text-base leading-relaxed">
+                I&apos;m {siteInfo.founder.name}, and I run VURMZ out of {siteInfo.city}. I live here, I work here, and I deliver here — Centennial, Lone Tree, Highlands Ranch, and everywhere in between. You text me, I quote you in minutes, and I handle your job personally. No middlemen, no runaround.
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ═══════════ NEWSLETTER ═══════════ */}
+      <NewsletterSignup variant="full" />
     </div>
   )
 }
