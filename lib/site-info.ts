@@ -22,6 +22,7 @@ export const siteInfo = {
   state: 'Colorado',
   stateAbbr: 'CO',
   address: 'Centennial, CO', // For display purposes
+  fullAddress: 'Centennial, CO 80112', // For NAP consistency and schema markup
 
   // Coordinates (for weather API, maps)
   coordinates: {
@@ -63,11 +64,9 @@ export const siteInfo = {
 
 // Navigation items - used in Header and Footer
 export const navigation = [
-  { name: 'Services', href: '/services' },
-  { name: 'Gifts & Awards', href: '/gifts' },
-  { name: 'Portfolio', href: '/portfolio' },
   { name: 'Pricing', href: '/pricing' },
-  { name: 'About', href: '/about' },
+  { name: 'Portfolio', href: '/portfolio' },
+  { name: 'Centennial', href: '/centennial' },
   { name: 'Contact', href: '/contact' },
 ] as const
 

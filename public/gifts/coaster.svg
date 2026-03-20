@@ -1,0 +1,99 @@
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1A2F2E;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0d1b1a;stop-opacity:1" />
+    </linearGradient>
+
+    <radialGradient id="slateGradient" cx="40%" cy="40%">
+      <stop offset="0%" style="stop-color:#4a5568;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#2d3748;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a202c;stop-opacity:1" />
+    </radialGradient>
+
+    <radialGradient id="slateGradient2" cx="35%" cy="35%">
+      <stop offset="0%" style="stop-color:#5a6b7a;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#3d4957;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1f2937;stop-opacity:1" />
+    </radialGradient>
+
+    <filter id="glowEffect2">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="shadowFilter">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feOffset in="coloredBlur" dx="2" dy="2" result="offsetblur"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.3"/>
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode in="offsetblur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <clipPath id="coasterClip">
+      <circle cx="0" cy="0" r="80"/>
+    </clipPath>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="600" fill="url(#bgGradient2)"/>
+
+  <!-- Title -->
+  <text x="400" y="50" font-size="32" font-weight="bold" text-anchor="middle" fill="#3CB9B2" font-family="Arial, sans-serif">Premium Coaster Set</text>
+  <text x="400" y="80" font-size="14" text-anchor="middle" fill="#7a9b9a" font-family="Arial, sans-serif">Slate with Custom Engraving</text>
+
+  <!-- Back Left Coaster (peek) -->
+  <g transform="translate(250, 240)" opacity="0.6">
+    <circle cx="0" cy="0" r="80" fill="url(#slateGradient2)" stroke="#0f1419" stroke-width="2" filter="url(#shadowFilter)"/>
+    <circle cx="0" cy="0" r="75" fill="none" stroke="#4a5568" stroke-width="0.5" opacity="0.5"/>
+  </g>
+
+  <!-- Back Right Coaster (peek) -->
+  <g transform="translate(550, 260)" opacity="0.65">
+    <circle cx="0" cy="0" r="80" fill="url(#slateGradient2)" stroke="#0f1419" stroke-width="2" filter="url(#shadowFilter)"/>
+    <circle cx="0" cy="0" r="75" fill="none" stroke="#4a5568" stroke-width="0.5" opacity="0.5"/>
+  </g>
+
+  <!-- Middle Back Coaster (slight peek) -->
+  <g transform="translate(400, 300)" opacity="0.7">
+    <circle cx="0" cy="0" r="80" fill="url(#slateGradient2)" stroke="#0f1419" stroke-width="2" filter="url(#shadowFilter)"/>
+    <circle cx="0" cy="0" r="75" fill="none" stroke="#4a5568" stroke-width="0.5" opacity="0.5"/>
+  </g>
+
+  <!-- Front Top Coaster (prominent with monogram) -->
+  <g transform="translate(400, 320)" filter="url(#shadowFilter)">
+    <!-- Main coaster -->
+    <circle cx="0" cy="0" r="80" fill="url(#slateGradient)" stroke="#0f1419" stroke-width="2"/>
+
+    <!-- Textured edge -->
+    <circle cx="0" cy="0" r="78" fill="none" stroke="#4a5568" stroke-width="1" opacity="0.3"/>
+    <circle cx="0" cy="0" r="76" fill="none" stroke="#3a4558" stroke-width="0.5" opacity="0.4"/>
+
+    <!-- Decorative border circle -->
+    <circle cx="0" cy="0" r="65" fill="none" stroke="#3CB9B2" stroke-width="2" opacity="0.8" filter="url(#glowEffect2)"/>
+
+    <!-- Monogram engraving with glow -->
+    <g filter="url(#glowEffect2)">
+      <text x="-15" y="8" font-size="28" font-weight="bold" fill="#3CB9B2" font-family="Georgia, serif">J</text>
+      <text x="5" y="8" font-size="20" font-weight="300" fill="#3CB9B2" font-family="Georgia, serif">&amp;</text>
+      <text x="20" y="8" font-size="28" font-weight="bold" fill="#3CB9B2" font-family="Georgia, serif">M</text>
+
+      <!-- Date below monogram -->
+      <text x="0" y="35" font-size="9" text-anchor="middle" fill="#3CB9B2" font-family="Arial, sans-serif" letter-spacing="2">2024</text>
+    </g>
+
+    <!-- Subtle shine -->
+    <ellipse cx="-20" cy="-25" rx="15" ry="20" fill="white" opacity="0.08"/>
+  </g>
+
+  <!-- Bottom accent bar -->
+  <rect x="0" y="580" width="800" height="20" fill="url(#bgGradient2)"/>
+  <text x="400" y="595" font-size="11" text-anchor="middle" fill="#3CB9B2" font-family="Arial, sans-serif">Laser Engraved Slate • Protect Your Furniture • Perfect Gift Set</text>
+</svg>

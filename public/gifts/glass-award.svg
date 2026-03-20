@@ -1,0 +1,98 @@
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1A2F2E;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0d1b1a;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Glass Gradient - Light Blue Tint -->
+    <linearGradient id="glassGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e8f4f8;stop-opacity:0.8" />
+      <stop offset="30%" style="stop-color:#b8e6f0;stop-opacity:0.7" />
+      <stop offset="70%" style="stop-color:#7ec9db;stop-opacity:0.6" />
+      <stop offset="100%" style="stop-color:#4a9fb5;stop-opacity:0.5" />
+    </linearGradient>
+
+    <!-- Glass Shine Gradient -->
+    <linearGradient id="glassShine" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.9" />
+      <stop offset="15%" style="stop-color:#ffffff;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0" />
+    </linearGradient>
+
+    <!-- Dark Base Gradient -->
+    <radialGradient id="baseGradient" cx="50%" cy="30%">
+      <stop offset="0%" style="stop-color:#2a2a2a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0d0d0d;stop-opacity:1" />
+    </radialGradient>
+
+    <!-- Teal Glow -->
+    <filter id="teaGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="3" />
+    </filter>
+
+    <!-- Text Glow Filter -->
+    <filter id="textGlow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="coloredBlur" />
+      <feMerge>
+        <feMergeNode in="coloredBlur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <!-- Drop Shadow -->
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-opacity="0.4" />
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="600" fill="url(#bgGradient)" />
+
+  <!-- Subtle center light -->
+  <ellipse cx="400" cy="250" rx="300" ry="250" fill="#1a3a3a" opacity="0.3" />
+
+  <!-- Award Base -->
+  <g filter="url(#shadow)">
+    <ellipse cx="400" cy="480" rx="120" ry="35" fill="url(#baseGradient)" />
+    <path d="M 320 480 L 330 470 L 470 470 L 480 480 Z" fill="#1a1a1a" />
+  </g>
+
+  <!-- Main Glass Award Body -->
+  <g filter="url(#shadow)">
+    <!-- Left edge highlight -->
+    <path d="M 280 150 L 275 480 Q 280 485 290 485 L 290 150 Z" fill="#ffffff" opacity="0.35" />
+
+    <!-- Main glass shape -->
+    <path d="M 290 150 L 280 480 Q 280 490 295 492 L 505 492 Q 520 490 520 480 L 510 150 Z" fill="url(#glassGradient)" stroke="#7ec9db" stroke-width="1" opacity="0.85" />
+
+    <!-- Right edge highlight -->
+    <path d="M 510 150 L 525 480 Q 520 485 510 485 L 510 150 Z" fill="#ffffff" opacity="0.25" />
+
+    <!-- Glass shine/reflection -->
+    <path d="M 310 150 L 315 280 Q 318 290 325 295 L 320 150 Z" fill="url(#glassShine)" />
+    <path d="M 330 160 L 335 250 L 330 160 Z" fill="#ffffff" opacity="0.15" />
+
+    <!-- Beveled top edge -->
+    <ellipse cx="400" cy="150" rx="115" ry="18" fill="#ffffff" opacity="0.2" />
+    <ellipse cx="400" cy="148" rx="115" ry="16" fill="#ffffff" opacity="0.3" />
+  </g>
+
+  <!-- Engraved Text - EXCELLENCE IN SERVICE -->
+  <text x="400" y="280" font-family="Segoe UI, sans-serif" font-size="24" font-weight="600" text-anchor="middle" fill="#3CB9B2" opacity="0.9" filter="url(#textGlow)">
+    EXCELLENCE IN
+  </text>
+  <text x="400" y="310" font-family="Segoe UI, sans-serif" font-size="24" font-weight="600" text-anchor="middle" fill="#3CB9B2" opacity="0.9" filter="url(#textGlow)">
+    SERVICE
+  </text>
+
+  <!-- Year - 2025 -->
+  <text x="400" y="380" font-family="Segoe UI, sans-serif" font-size="32" font-weight="300" text-anchor="middle" fill="#3CB9B2" opacity="0.8" filter="url(#textGlow)">
+    2025
+  </text>
+
+  <!-- Subtle decorative line -->
+  <line x1="320" y1="240" x2="480" y2="240" stroke="#3CB9B2" stroke-width="1" opacity="0.4" />
+  <line x1="320" y1="400" x2="480" y2="400" stroke="#3CB9B2" stroke-width="1" opacity="0.4" />
+</svg>

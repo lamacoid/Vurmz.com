@@ -1,315 +1,146 @@
 // Shared font options for all product designers
-// Curated from local font collection for laser engraving
+// 59 curated fonts from Font Book — self-hosted via /public/fonts/
+// CSS @font-face declarations in app/fonts.css
 
 export const ENGRAVING_COLOR = '#c0c0c0'
 export const ENGRAVING_COLOR_DARK = '#a0a0a0'
 
+export type FontCategory =
+  | 'professional-sans'
+  | 'professional-serif'
+  | 'script'
+  | 'industrial'
+  | 'display'
+  | 'monospace'
+  | 'fun'
+  | 'western'
+  | 'gothic'
+
 export interface FontOption {
   value: string
   label: string
-  category: 'sans' | 'serif' | 'display' | 'script' | 'fun'
+  category: FontCategory
   style: React.CSSProperties
 }
 
 export const fontOptions: FontOption[] = [
   // ============================================
-  // SANS-SERIF - Clean & Modern
+  // PROFESSIONAL SANS-SERIF (10)
   // ============================================
-  {
-    value: 'arial',
-    label: 'Clean Sans',
-    category: 'sans',
-    style: { fontFamily: 'Arial, Helvetica, sans-serif' }
-  },
-  {
-    value: 'helvetica',
-    label: 'Helvetica',
-    category: 'sans',
-    style: { fontFamily: 'Helvetica Neue, Helvetica, sans-serif' }
-  },
-  {
-    value: 'futura',
-    label: 'Futura',
-    category: 'sans',
-    style: { fontFamily: 'Futura, Century Gothic, sans-serif' }
-  },
-  {
-    value: 'century-gothic',
-    label: 'Century Gothic',
-    category: 'sans',
-    style: { fontFamily: 'Century Gothic, CenturyGothic, sans-serif' }
-  },
-  {
-    value: 'bolton-sans',
-    label: 'Bolton Sans',
-    category: 'sans',
-    style: { fontFamily: 'Bolton Sans, Arial, sans-serif' }
-  },
-  {
-    value: 'benjamin-gothic',
-    label: 'Benjamin Gothic',
-    category: 'sans',
-    style: { fontFamily: 'Benjamin-Gothic-Medium, Arial, sans-serif' }
-  },
+  { value: 'b691-sans', label: 'B691 Sans', category: 'professional-sans', style: { fontFamily: "'B691-Sans', sans-serif" } },
+  { value: 'e820-sans', label: 'E820 Sans', category: 'professional-sans', style: { fontFamily: "'E820-Sans', sans-serif" } },
+  { value: 'eurasia', label: 'Eurasia', category: 'professional-sans', style: { fontFamily: "'Eurasia', sans-serif" } },
+  { value: 'coolvetica', label: 'Coolvetica', category: 'professional-sans', style: { fontFamily: "'Coolvetica', sans-serif" } },
+  { value: 'cleargothic', label: 'ClearGothic', category: 'professional-sans', style: { fontFamily: "'ClearGothicSerial', sans-serif" } },
+  { value: 'bolton-sans', label: 'Bolton Sans', category: 'professional-sans', style: { fontFamily: "'Bolton Sans', sans-serif" } },
+  { value: 'birmingham-sans', label: 'Birmingham Sans', category: 'professional-sans', style: { fontFamily: "'Birmingham Sans Serif', sans-serif" } },
+  { value: 'blue-highway', label: 'Blue Highway', category: 'professional-sans', style: { fontFamily: "'Blue Highway D Type', sans-serif" } },
+  { value: 'bonobo', label: 'Bonobo', category: 'professional-sans', style: { fontFamily: "'Bonobo', sans-serif" } },
+  { value: 'anuphan', label: 'Anuphan', category: 'professional-sans', style: { fontFamily: "'Anuphan', sans-serif" } },
 
   // ============================================
-  // SERIF - Classic & Professional
+  // PROFESSIONAL SERIF (10)
   // ============================================
-  {
-    value: 'times',
-    label: 'Times Classic',
-    category: 'serif',
-    style: { fontFamily: 'Times New Roman, Times, serif' }
-  },
-  {
-    value: 'georgia',
-    label: 'Georgia',
-    category: 'serif',
-    style: { fontFamily: 'Georgia, Palatino, serif' }
-  },
-  {
-    value: 'baskerville',
-    label: 'Baskerville',
-    category: 'serif',
-    style: { fontFamily: 'Baskerville, Baskerville Old Face, serif' }
-  },
-  {
-    value: 'garamond',
-    label: 'Garamond',
-    category: 'serif',
-    style: { fontFamily: 'Garamond, Baskerville, serif' }
-  },
-  {
-    value: 'palatino',
-    label: 'Palatino',
-    category: 'serif',
-    style: { fontFamily: 'Palatino Linotype, Palatino, serif' }
-  },
-  {
-    value: 'hamilton-serif',
-    label: 'Hamilton Serif',
-    category: 'serif',
-    style: { fontFamily: 'Hamilton Serif, Georgia, serif' }
-  },
+  { value: 'bodoni', label: 'Bodoni', category: 'professional-serif', style: { fontFamily: "'Bodoni', serif" } },
+  { value: 'baskerville', label: 'Baskerville', category: 'professional-serif', style: { fontFamily: "'Baskerville-Old-Face', serif" } },
+  { value: 'century-schoolbook', label: 'Century Schoolbook', category: 'professional-serif', style: { fontFamily: "'Century-Schoolbook', serif" } },
+  { value: 'bernhard-modern', label: 'Bernhard Modern', category: 'professional-serif', style: { fontFamily: "'BernhardModern', serif" } },
+  { value: 'egyptienne', label: 'Egyptienne', category: 'professional-serif', style: { fontFamily: "'EgyptienneStd', serif" } },
+  { value: 'cambridge', label: 'Cambridge', category: 'professional-serif', style: { fontFamily: "'Cambridge', serif" } },
+  { value: 'b693-roman', label: 'B693 Roman', category: 'professional-serif', style: { fontFamily: "'B693-Roman', serif" } },
+  { value: 'b820-roman', label: 'B820 Roman', category: 'professional-serif', style: { fontFamily: "'B820-Roman', serif" } },
+  { value: 'copperplate-gothic', label: 'Copperplate Gothic', category: 'professional-serif', style: { fontFamily: "'Copperplate-Gothic', serif", letterSpacing: '2px' } },
+  { value: 'bestseller', label: 'Bestseller', category: 'professional-serif', style: { fontFamily: "'Bestseller', serif" } },
 
   // ============================================
-  // DISPLAY - Bold & Impactful
+  // SCRIPT / CALLIGRAPHY (9)
   // ============================================
-  {
-    value: 'impact',
-    label: 'Impact Bold',
-    category: 'display',
-    style: { fontFamily: 'Impact, Haettenschweiler, sans-serif' }
-  },
-  {
-    value: 'cooper-black',
-    label: 'Cooper Black',
-    category: 'display',
-    style: { fontFamily: 'Cooper-Black-Regular, Cooper Black, serif' }
-  },
-  {
-    value: 'carbon-block',
-    label: 'Carbon Block',
-    category: 'display',
-    style: { fontFamily: 'Carbon Block, Impact, sans-serif' }
-  },
-  {
-    value: 'copperplate',
-    label: 'Copperplate',
-    category: 'display',
-    style: { fontFamily: 'Copperplate, Copperplate Gothic Light, serif', letterSpacing: '2px' }
-  },
-  {
-    value: 'stencil',
-    label: 'Stencil',
-    category: 'display',
-    style: { fontFamily: 'AG-Stencil, Stencil, Impact, sans-serif', letterSpacing: '1px' }
-  },
-  {
-    value: 'ruler-stencil',
-    label: 'Ruler Stencil',
-    category: 'display',
-    style: { fontFamily: 'Ruler Stencil Bold, Stencil, sans-serif' }
-  },
+  { value: 'bernhard-script', label: 'Bernhard Script', category: 'script', style: { fontFamily: "'BernhardScript', cursive" } },
+  { value: 'brush-script', label: 'Brush Script', category: 'script', style: { fontFamily: "'Brush-Script', cursive" } },
+  { value: 'commercial-script', label: 'Commercial Script', category: 'script', style: { fontFamily: "'Commercial-Script', cursive" } },
+  { value: 'elegant-script', label: 'Elegant Script', category: 'script', style: { fontFamily: "'Elegant-Script', cursive" } },
+  { value: 'daisy-script', label: 'Daisy Script', category: 'script', style: { fontFamily: "'Daisy Script', cursive" } },
+  { value: 'bay-script', label: 'BayScript', category: 'script', style: { fontFamily: "'BayScript', cursive" } },
+  { value: 'amanda-rose', label: 'Amanda Rose', category: 'script', style: { fontFamily: "'Amanda Rose', cursive" } },
+  { value: 'bernhard-elegant', label: 'Bernhard Elegant', category: 'script', style: { fontFamily: "'BernhardElegant', cursive" } },
+  { value: 'black-chancery', label: 'Black Chancery', category: 'script', style: { fontFamily: "'BlackChancery', cursive" } },
 
   // ============================================
-  // SCRIPT - Elegant & Handwritten
+  // INDUSTRIAL / STENCIL / MILITARY (9)
   // ============================================
-  {
-    value: 'commercial-script',
-    label: 'Commercial Script',
-    category: 'script',
-    style: { fontFamily: 'Commercial-Script, cursive' }
-  },
-  {
-    value: 'bernhard-script',
-    label: 'Bernhard Script',
-    category: 'script',
-    style: { fontFamily: 'BernhardScript-Regular, cursive' }
-  },
-  {
-    value: 'calligraph-script',
-    label: 'Calligraph',
-    category: 'script',
-    style: { fontFamily: 'CalligraphScript, cursive' }
-  },
-  {
-    value: 'snell',
-    label: 'Snell Roundhand',
-    category: 'script',
-    style: { fontFamily: 'Snell Roundhand, cursive' }
-  },
-  {
-    value: 'cheyenne-hand',
-    label: 'Cheyenne Hand',
-    category: 'script',
-    style: { fontFamily: 'CheyenneHand, cursive' }
-  },
-  {
-    value: 'daisy-script',
-    label: 'Daisy Script',
-    category: 'script',
-    style: { fontFamily: 'Daisy Script, cursive' }
-  },
+  { value: 'ag-stencil', label: 'AG Stencil', category: 'industrial', style: { fontFamily: "'AG Stencil', sans-serif", letterSpacing: '1px' } },
+  { value: 'stencilia', label: 'Stencilia', category: 'industrial', style: { fontFamily: "'Stencilia-A', sans-serif", letterSpacing: '1px' } },
+  { value: 'bride-stencil', label: 'Bride Stencil', category: 'industrial', style: { fontFamily: "'Bride Stencil', sans-serif" } },
+  { value: 'ruler-stencil', label: 'Ruler Stencil', category: 'industrial', style: { fontFamily: "'Ruler Stencil', sans-serif" } },
+  { value: 'battlefield', label: 'Battlefield', category: 'industrial', style: { fontFamily: "'Battlefield', sans-serif" } },
+  { value: 'alpha-taurus', label: 'Alpha Taurus', category: 'industrial', style: { fontFamily: "'Alpha Taurus', sans-serif" } },
+  { value: 'ben-zion', label: 'Ben-Zion', category: 'industrial', style: { fontFamily: "'Ben-Zion', sans-serif" } },
+  { value: 'archery-black', label: 'Archery Black', category: 'industrial', style: { fontFamily: "'Archery Black', sans-serif" } },
+  { value: 'blacktop', label: 'Blacktop', category: 'industrial', style: { fontFamily: "'Blacktop', sans-serif" } },
 
   // ============================================
-  // FUN & CREATIVE - 20 Fun Fonts
+  // DISPLAY / BOLD (6)
   // ============================================
-  {
-    value: 'comic-commando',
-    label: 'Comic Commando',
-    category: 'fun',
-    style: { fontFamily: 'Comic Book Commando, Comic Sans MS, sans-serif' }
-  },
-  {
-    value: 'bionic-comic',
-    label: 'Bionic Comic',
-    category: 'fun',
-    style: { fontFamily: 'Bionic Comic, Comic Sans MS, sans-serif' }
-  },
-  {
-    value: '300-trojans',
-    label: '300 Trojans',
-    category: 'fun',
-    style: { fontFamily: '300 Trojans, Impact, sans-serif' }
-  },
-  {
-    value: 'college-halo',
-    label: 'College Varsity',
-    category: 'fun',
-    style: { fontFamily: 'College Halo, Impact, sans-serif' }
-  },
-  {
-    value: 'anchor-steam',
-    label: 'Anchor Steam',
-    category: 'fun',
-    style: { fontFamily: 'Anchor Steam NF, serif' }
-  },
-  {
-    value: 'camp-granada',
-    label: 'Camp Granada',
-    category: 'fun',
-    style: { fontFamily: 'Camp Granada NF, serif' }
-  },
-  {
-    value: 'carnival',
-    label: 'Carnival',
-    category: 'fun',
-    style: { fontFamily: 'Carnival MF Rimmed, serif' }
-  },
-  {
-    value: 'biker-bones',
-    label: 'Biker Bones',
-    category: 'fun',
-    style: { fontFamily: 'BikerBones, Impact, sans-serif' }
-  },
-  {
-    value: 'soviet',
-    label: '10 Cent Soviet',
-    category: 'fun',
-    style: { fontFamily: '10 Cent Soviet Bold, Impact, sans-serif' }
-  },
-  {
-    value: 'saturday-night',
-    label: 'Saturday Night',
-    category: 'fun',
-    style: { fontFamily: '10.15 Saturday Night BRK, cursive' }
-  },
-  {
-    value: 'earwig-factory',
-    label: 'Earwig Factory',
-    category: 'fun',
-    style: { fontFamily: 'Earwig Factory, sans-serif' }
-  },
-  {
-    value: 'digital-strip',
-    label: 'Digital Strip',
-    category: 'fun',
-    style: { fontFamily: 'DigitalStrip 2.0 BB, monospace' }
-  },
-  {
-    value: 'coyote-deco',
-    label: 'Coyote Deco',
-    category: 'fun',
-    style: { fontFamily: 'Coyote Deco Bold Italic, serif' }
-  },
-  {
-    value: 'brownwood',
-    label: 'Brownwood',
-    category: 'fun',
-    style: { fontFamily: 'Brownwood NF, serif' }
-  },
-  {
-    value: 'casper-comics',
-    label: 'Casper Comics',
-    category: 'fun',
-    style: { fontFamily: 'Casper Comics, Comic Sans MS, sans-serif' }
-  },
-  {
-    value: 'chock-block',
-    label: 'Chock A Block',
-    category: 'fun',
-    style: { fontFamily: 'Chock A Block NF, Impact, sans-serif' }
-  },
-  {
-    value: 'barbecue',
-    label: 'Barbecue',
-    category: 'fun',
-    style: { fontFamily: 'Barbecue, serif' }
-  },
-  {
-    value: 'beer-glass',
-    label: 'Beer Glass',
-    category: 'fun',
-    style: { fontFamily: 'BeerGlass, serif' }
-  },
-  {
-    value: '7th-service',
-    label: '7th Service',
-    category: 'fun',
-    style: { fontFamily: '7th Service, sans-serif' }
-  },
-  {
-    value: 'blockstepped',
-    label: 'Blockstepped',
-    category: 'fun',
-    style: { fontFamily: 'Blockstepped, Impact, sans-serif' }
-  },
+  { value: 'cooper-black', label: 'Cooper Black', category: 'display', style: { fontFamily: "'Cooper-Black', serif" } },
+  { value: 'canyon', label: 'Canyon', category: 'display', style: { fontFamily: "'Canyon', sans-serif" } },
+  { value: 'impact-label', label: 'Impact Label', category: 'display', style: { fontFamily: "'Impact Label', sans-serif" } },
+  { value: 'bamf', label: 'Bamf', category: 'display', style: { fontFamily: "'Bamf', sans-serif" } },
+  { value: 'blavicke-capitals', label: 'Blavicke Capitals', category: 'display', style: { fontFamily: "'Blavicke Capitals', sans-serif", letterSpacing: '2px' } },
+  { value: 'charlemagne', label: 'Charlemagne', category: 'display', style: { fontFamily: "'Charlemagne', serif" } },
+
+  // ============================================
+  // MONOSPACE / TECHNICAL (4)
+  // ============================================
+  { value: 'courier-ps', label: 'Courier', category: 'monospace', style: { fontFamily: "'Courier-PS', monospace" } },
+  { value: 'bitstream-vera', label: 'Bitstream Vera Mono', category: 'monospace', style: { fontFamily: "'Bitstream Vera Sans Mono', monospace" } },
+  { value: 'bank-design', label: 'BankDesign', category: 'monospace', style: { fontFamily: "'BankDesign', monospace" } },
+  { value: 'spacetime', label: 'Spacetime', category: 'monospace', style: { fontFamily: "'Space Time', monospace" } },
+
+  // ============================================
+  // FUN / NOVELTY (6)
+  // ============================================
+  { value: 'balloon', label: 'Balloon', category: 'fun', style: { fontFamily: "'Balloon', cursive" } },
+  { value: 'jua', label: 'Jua', category: 'fun', style: { fontFamily: "'Jua', sans-serif" } },
+  { value: 'boopee', label: 'Boopee', category: 'fun', style: { fontFamily: "'Boopee', cursive" } },
+  { value: 'bonita', label: 'Bonita', category: 'fun', style: { fontFamily: "'Bonita', cursive" } },
+  { value: 'pop-art', label: 'Pop Art', category: 'fun', style: { fontFamily: "'Pop Art', sans-serif" } },
+  { value: 'bionic-comic', label: 'Bionic Comic', category: 'fun', style: { fontFamily: "'Bionic Comic', cursive" } },
+
+  // ============================================
+  // WESTERN / VINTAGE (3)
+  // ============================================
+  { value: 'cockney', label: 'Cockney', category: 'western', style: { fontFamily: "'Cockney', serif" } },
+  { value: 'byington', label: 'Byington', category: 'western', style: { fontFamily: "'Byington', serif" } },
+  { value: 'bellhop', label: 'Bellhop', category: 'western', style: { fontFamily: "'Bellhop NF', serif" } },
+
+  // ============================================
+  // GOTHIC / BLACKLETTER (2)
+  // ============================================
+  { value: 'olde-english', label: 'Olde English', category: 'gothic', style: { fontFamily: "'Olde English', serif" } },
+  { value: 'stencil-gothic', label: 'Stencil Gothic', category: 'gothic', style: { fontFamily: "'Stencil Gothic BE', sans-serif" } },
 ]
 
 // Group fonts by category for UI display
-export const fontsByCategory = {
-  sans: fontOptions.filter(f => f.category === 'sans'),
-  serif: fontOptions.filter(f => f.category === 'serif'),
-  display: fontOptions.filter(f => f.category === 'display'),
+export const fontsByCategory: Record<FontCategory, FontOption[]> = {
+  'professional-sans': fontOptions.filter(f => f.category === 'professional-sans'),
+  'professional-serif': fontOptions.filter(f => f.category === 'professional-serif'),
   script: fontOptions.filter(f => f.category === 'script'),
+  industrial: fontOptions.filter(f => f.category === 'industrial'),
+  display: fontOptions.filter(f => f.category === 'display'),
+  monospace: fontOptions.filter(f => f.category === 'monospace'),
   fun: fontOptions.filter(f => f.category === 'fun'),
+  western: fontOptions.filter(f => f.category === 'western'),
+  gothic: fontOptions.filter(f => f.category === 'gothic'),
 }
 
-export const categoryLabels = {
-  sans: 'Clean & Modern',
-  serif: 'Classic & Professional',
-  display: 'Bold & Impactful',
+export const categoryLabels: Record<FontCategory, string> = {
+  'professional-sans': 'Clean & Modern',
+  'professional-serif': 'Classic & Professional',
   script: 'Script & Elegant',
+  industrial: 'Industrial & Stencil',
+  display: 'Bold & Impactful',
+  monospace: 'Technical & Monospace',
   fun: 'Fun & Creative',
+  western: 'Western & Vintage',
+  gothic: 'Gothic & Blackletter',
 }

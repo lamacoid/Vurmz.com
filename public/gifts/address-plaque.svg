@@ -1,0 +1,92 @@
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Background gradient -->
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1A2F2E;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0d1b1a;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Slate/stone gradient -->
+    <linearGradient id="slateGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4A4A4A;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#3A3A3A;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2A2A2A;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Noise/texture pattern -->
+    <filter id="stoneTexture">
+      <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" result="noise" />
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="2" />
+    </filter>
+
+    <!-- Teal glow effect -->
+    <filter id="tealglow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="strongglow">
+      <feGaussianBlur stdDeviation="5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="600" fill="url(#bgGradient)"/>
+
+  <!-- Main plaque body -->
+  <rect x="150" y="180" width="500" height="240" fill="url(#slateGradient)" filter="url(#stoneTexture)" rx="6"/>
+
+  <!-- Stone texture overlay -->
+  <rect x="150" y="180" width="500" height="240" fill="#1a1a1a" opacity="0.15" rx="6"/>
+
+  <!-- Subtle stone noise pattern -->
+  <circle cx="200" cy="210" r="2" fill="#2a2a2a" opacity="0.3"/>
+  <circle cx="280" cy="240" r="1.5" fill="#2a2a2a" opacity="0.2"/>
+  <circle cx="350" cy="200" r="2" fill="#2a2a2a" opacity="0.3"/>
+  <circle cx="420" cy="280" r="1.5" fill="#2a2a2a" opacity="0.2"/>
+  <circle cx="480" cy="220" r="2" fill="#2a2a2a" opacity="0.3"/>
+  <circle cx="550" cy="260" r="1.5" fill="#2a2a2a" opacity="0.2"/>
+  <circle cx="600" cy="300" r="2" fill="#2a2a2a" opacity="0.3"/>
+
+  <!-- Mounting screws - left -->
+  <circle cx="180" cy="195" r="6" fill="#444" opacity="0.8"/>
+  <circle cx="180" cy="195" r="5" fill="#555"/>
+  <line x1="178" y1="193" x2="182" y2="197" stroke="#333" stroke-width="1" opacity="0.6"/>
+
+  <!-- Mounting screws - right -->
+  <circle cx="620" cy="195" r="6" fill="#444" opacity="0.8"/>
+  <circle cx="620" cy="195" r="5" fill="#555"/>
+  <line x1="618" y1="193" x2="622" y2="197" stroke="#333" stroke-width="1" opacity="0.6"/>
+
+  <!-- Bottom screws -->
+  <circle cx="180" cy="405" r="6" fill="#444" opacity="0.8"/>
+  <circle cx="180" cy="405" r="5" fill="#555"/>
+  <line x1="178" y1="403" x2="182" y2="407" stroke="#333" stroke-width="1" opacity="0.6"/>
+
+  <circle cx="620" cy="405" r="6" fill="#444" opacity="0.8"/>
+  <circle cx="620" cy="405" r="5" fill="#555"/>
+  <line x1="618" y1="403" x2="622" y2="407" stroke="#333" stroke-width="1" opacity="0.6"/>
+
+  <!-- Engraved border -->
+  <rect x="170" y="210" width="460" height="170" fill="none" stroke="#1a1a1a" stroke-width="1.5" opacity="0.5"/>
+  <rect x="172" y="212" width="456" height="166" fill="none" stroke="#5a5a5a" stroke-width="0.5" opacity="0.3"/>
+
+  <!-- Numbers: 1234 with teal glow -->
+  <text x="400" y="305" font-family="Arial, sans-serif" font-size="96" font-weight="bold" text-anchor="middle" fill="#3CB9B2" filter="url(#strongglow)" letter-spacing="8">
+    1234
+  </text>
+
+  <!-- Additional stroke glow for depth -->
+  <text x="400" y="305" font-family="Arial, sans-serif" font-size="96" font-weight="bold" text-anchor="middle" fill="none" stroke="#3CB9B2" stroke-width="1.5" opacity="0.5" filter="url(#tealglow)" letter-spacing="8"/>
+
+  <!-- Shadow beneath plaque -->
+  <ellipse cx="400" cy="430" rx="260" ry="25" fill="#000000" opacity="0.3"/>
+</svg>

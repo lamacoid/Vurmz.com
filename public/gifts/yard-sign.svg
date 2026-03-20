@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <defs>
+    <!-- Main background gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1A2F2E;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0d1b1a;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Wood gradient for sign -->
+    <linearGradient id="woodGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#D4C5B9;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#C9B8AA;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#B8A89A;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Teal glow filter -->
+    <filter id="tealglow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Wood texture pattern -->
+    <pattern id="woodTexture" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
+      <rect width="100" height="100" fill="url(#woodGrad)"/>
+      <line x1="0" y1="20" x2="100" y2="20" stroke="#8B7355" stroke-width="0.5" opacity="0.3"/>
+      <line x1="0" y1="45" x2="100" y2="45" stroke="#8B7355" stroke-width="0.5" opacity="0.2"/>
+      <line x1="0" y1="70" x2="100" y2="70" stroke="#8B7355" stroke-width="0.5" opacity="0.3"/>
+      <circle cx="30" cy="50" r="3" fill="#A0905F" opacity="0.2"/>
+      <circle cx="75" cy="30" r="2" fill="#A0905F" opacity="0.15"/>
+    </pattern>
+
+    <!-- Stake gradient -->
+    <linearGradient id="stakeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#8B4513;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#A0522D;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#6B3410;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Grass gradient -->
+    <linearGradient id="grassGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#2A4A2A;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a3a1a;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="600" fill="url(#bgGrad)"/>
+
+  <!-- Grass area -->
+  <ellipse cx="400" cy="520" rx="300" ry="80" fill="url(#grassGrad)" opacity="0.6"/>
+  <path d="M 200 480 Q 250 490 300 480 T 400 480 T 500 480 T 600 480" stroke="#3CB9B2" stroke-width="1" fill="none" opacity="0.2"/>
+
+  <!-- Left stake -->
+  <rect x="280" y="280" width="16" height="240" fill="url(#stakeGrad)" rx="4"/>
+  <rect x="280" y="280" width="16" height="240" fill="#000000" opacity="0.2" rx="4"/>
+  <line x1="285" y1="285" x2="285" y2="520" stroke="#FFE4B5" stroke-width="1" opacity="0.3"/>
+
+  <!-- Right stake -->
+  <rect x="504" y="280" width="16" height="240" fill="url(#stakeGrad)" rx="4"/>
+  <rect x="504" y="280" width="16" height="240" fill="#000000" opacity="0.2" rx="4"/>
+  <line x1="509" y1="285" x2="509" y2="520" stroke="#FFE4B5" stroke-width="1" opacity="0.3"/>
+
+  <!-- Main sign board -->
+  <g transform="rotate(-8 400 320)">
+    <!-- Sign shadow -->
+    <rect x="240" y="160" width="320" height="280" fill="#000000" opacity="0.3" rx="8" transform="translate(8, 8)"/>
+
+    <!-- Sign body -->
+    <rect x="240" y="160" width="320" height="280" fill="url(#woodTexture)" stroke="#8B7355" stroke-width="2" rx="8"/>
+
+    <!-- Sign shine/highlight -->
+    <rect x="240" y="160" width="320" height="20" fill="#FFFFFF" opacity="0.15" rx="8 8 0 0"/>
+
+    <!-- Engraved border effect -->
+    <rect x="260" y="180" width="280" height="240" fill="none" stroke="#2A1810" stroke-width="2" opacity="0.4" rx="4"/>
+
+    <!-- Engraved text with glow -->
+    <g filter="url(#tealglow)">
+      <text x="400" y="240" font-family="Georgia, serif" font-size="36" font-weight="bold" text-anchor="middle" fill="#2A1810">HAPPY BIRTHDAY</text>
+      <text x="400" y="290" font-family="Georgia, serif" font-size="48" font-weight="bold" text-anchor="middle" fill="#2A1810">EMMA!</text>
+    </g>
+
+    <!-- Glow effect on text -->
+    <g opacity="0.4">
+      <text x="400" y="240" font-family="Georgia, serif" font-size="36" font-weight="bold" text-anchor="middle" fill="#3CB9B2">HAPPY BIRTHDAY</text>
+      <text x="400" y="290" font-family="Georgia, serif" font-size="48" font-weight="bold" text-anchor="middle" fill="#3CB9B2">EMMA!</text>
+    </g>
+  </g>
+</svg>

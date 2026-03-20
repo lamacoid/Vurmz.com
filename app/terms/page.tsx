@@ -51,7 +51,7 @@ export default function TermsPage() {
     {
       title: 'Turnaround & Delivery',
       items: [
-        { term: 'Standard', desc: 'Most orders are completed within 3-5 business days. Same-day and next-day turnaround is often available.' },
+        { term: 'Standard', desc: 'Most orders are completed within 3-5 business days. Rush turnaround is often available.' },
         { term: 'Pickup', desc: `Free local pickup is available by appointment in ${siteInfo.city}.` },
         { term: 'Delivery', desc: 'Free delivery on orders $100+ within south suburban Denver. Other areas may incur a fee.' },
       ],
@@ -77,7 +77,7 @@ export default function TermsPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero */}
-      <section className="bg-vurmz-dark text-white py-16 sm:py-20">
+      <section className="bg-vurmz-dark text-cream py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <p className="text-vurmz-teal font-medium mb-2 uppercase tracking-wider text-sm">Legal</p>
           <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4">

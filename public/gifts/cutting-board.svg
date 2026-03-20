@@ -1,0 +1,90 @@
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1A2F2E;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0d1b1a;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Wood Gradient -->
+    <linearGradient id="woodGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6B3A2A;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#5A3220;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4A2818;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Teal Glow Filter -->
+    <filter id="tealglow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Glow Light Filter -->
+    <filter id="glowlight">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="600" fill="url(#bgGradient)"/>
+
+  <!-- Cutting Board Shadow -->
+  <ellipse cx="400" cy="520" rx="180" ry="40" fill="rgba(0,0,0,0.3)"/>
+
+  <!-- Main Cutting Board -->
+  <g id="cutting-board">
+    <!-- Board Body -->
+    <rect x="150" y="120" width="500" height="320" rx="30" fill="url(#woodGradient)" stroke="rgba(0,0,0,0.5)" stroke-width="2"/>
+
+    <!-- Wood Grain Lines -->
+    <line x1="160" y1="130" x2="640" y2="135" stroke="rgba(0,0,0,0.15)" stroke-width="1"/>
+    <line x1="160" y1="160" x2="640" y2="165" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
+    <line x1="160" y1="200" x2="640" y2="205" stroke="rgba(0,0,0,0.1)" stroke-width="1.5"/>
+    <line x1="160" y1="250" x2="640" y2="255" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+    <line x1="160" y1="290" x2="640" y2="295" stroke="rgba(0,0,0,0.12)" stroke-width="1"/>
+    <line x1="160" y1="330" x2="640" y2="335" stroke="rgba(255,255,255,0.07)" stroke-width="0.5"/>
+
+    <!-- Wood Grain Vertical Texture -->
+    <line x1="200" y1="130" x2="205" y2="430" stroke="rgba(0,0,0,0.08)" stroke-width="1"/>
+    <line x1="300" y1="130" x2="302" y2="430" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+    <line x1="400" y1="130" x2="402" y2="430" stroke="rgba(0,0,0,0.07)" stroke-width="1"/>
+    <line x1="500" y1="130" x2="505" y2="430" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+    <line x1="600" y1="130" x2="598" y2="430" stroke="rgba(0,0,0,0.06)" stroke-width="1"/>
+
+    <!-- Handle Cutout -->
+    <ellipse cx="150" cy="280" rx="35" ry="50" fill="#0d1b1a" stroke="rgba(0,0,0,0.5)" stroke-width="2"/>
+    <ellipse cx="150" cy="280" rx="30" ry="45" fill="rgba(0,0,0,0.3)"/>
+  </g>
+
+  <!-- Engraved Text with Teal Glow -->
+  <g id="engraved-text">
+    <!-- Main Text -->
+    <text x="400" y="260" font-family="Georgia, serif" font-size="42" font-weight="bold" text-anchor="middle" fill="#3CB9B2" filter="url(#tealglow)" opacity="0.9">
+      THE SMITH FAMILY
+    </text>
+
+    <!-- Secondary Text -->
+    <text x="400" y="310" font-family="Georgia, serif" font-size="32" text-anchor="middle" fill="#3CB9B2" filter="url(#tealglow)" opacity="0.85">
+      EST. 2020
+    </text>
+
+    <!-- Glow effect layers -->
+    <text x="400" y="260" font-family="Georgia, serif" font-size="42" font-weight="bold" text-anchor="middle" fill="none" stroke="#3CB9B2" stroke-width="1" opacity="0.4" filter="url(#glowlight)">
+      THE SMITH FAMILY
+    </text>
+    <text x="400" y="310" font-family="Georgia, serif" font-size="32" text-anchor="middle" fill="none" stroke="#3CB9B2" stroke-width="0.5" opacity="0.3" filter="url(#glowlight)">
+      EST. 2020
+    </text>
+  </g>
+
+  <!-- Highlight/Shine Effect -->
+  <ellipse cx="250" cy="200" rx="80" ry="60" fill="rgba(255,255,255,0.08)"/>
+  <ellipse cx="300" cy="350" rx="60" ry="40" fill="rgba(255,255,255,0.05)"/>
+</svg>

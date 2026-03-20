@@ -1,0 +1,98 @@
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Background gradient -->
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1A2F2E;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0d1b1a;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Wood grain for plaque -->
+    <linearGradient id="woodGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#8B6F47;stop-opacity:1" />
+      <stop offset="20%" style="stop-color:#A0826D;stop-opacity:1" />
+      <stop offset="40%" style="stop-color:#9B7856;stop-opacity:1" />
+      <stop offset="60%" style="stop-color:#8B7355;stop-opacity:1" />
+      <stop offset="80%" style="stop-color:#7A6347;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#6B5541;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Gold engraving color -->
+    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#E8C547;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#D4A945;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#B8942D;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Gold glow filter -->
+    <filter id="goldglow">
+      <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Shadow filter -->
+    <filter id="shadow">
+      <feDropShadow dx="3" dy="15" stdDeviation="12" flood-opacity="0.6"/>
+    </filter>
+
+    <clipPath id="svgClip">
+      <rect width="800" height="600" rx="16" ry="16"/>
+    </clipPath>
+  </defs>
+
+  <!-- Clipped container -->
+  <g clip-path="url(#svgClip)">
+    <!-- Background -->
+    <rect width="800" height="600" fill="url(#bgGradient)"/>
+
+    <!-- Wall mount bracket shadow -->
+    <ellipse cx="400" cy="520" rx="200" ry="40" fill="rgba(0, 0, 0, 0.3)"/>
+
+    <!-- Plaque group -->
+    <g transform="translate(400, 280)" filter="url(#shadow)">
+      <!-- Plaque wooden frame -->
+      <rect x="-120" y="-80" width="240" height="160" rx="8" ry="8" fill="url(#woodGradient)" stroke="rgba(0, 0, 0, 0.3)" stroke-width="2"/>
+
+      <!-- Wood texture overlay -->
+      <line x1="-115" y1="-70" x2="-115" y2="70" stroke="rgba(0, 0, 0, 0.08)" stroke-width="1" opacity="0.6"/>
+      <line x1="0" y1="-75" x2="0" y2="75" stroke="rgba(0, 0, 0, 0.06)" stroke-width="1" opacity="0.6"/>
+      <line x1="115" y1="-70" x2="115" y2="70" stroke="rgba(0, 0, 0, 0.08)" stroke-width="1" opacity="0.6"/>
+
+      <!-- Wood grain highlight -->
+      <ellipse cx="-80" cy="-30" rx="25" ry="50" fill="rgba(255, 255, 255, 0.08)"/>
+      <ellipse cx="70" cy="20" rx="30" ry="40" fill="rgba(255, 255, 255, 0.06)"/>
+
+      <!-- Mounting hardware (top left corner) -->
+      <circle cx="-105" cy="-70" r="5" fill="#5A5A5A"/>
+      <circle cx="-105" cy="-70" r="3" fill="rgba(255, 255, 255, 0.3)"/>
+
+      <!-- Mounting hardware (top right corner) -->
+      <circle cx="105" cy="-70" r="5" fill="#5A5A5A"/>
+      <circle cx="105" cy="-70" r="3" fill="rgba(255, 255, 255, 0.3)"/>
+
+      <!-- Engraved content area -->
+      <g transform="translate(0, 0)">
+        <!-- Main title text -->
+        <text x="0" y="-35" font-family="Georgia, serif" font-size="32" font-weight="bold"
+              text-anchor="middle" fill="url(#goldGradient)" filter="url(#goldglow)" letter-spacing="2">
+          2025 CHAMPIONS
+        </text>
+
+        <!-- Horizontal divider line -->
+        <line x1="-85" y1="-12" x2="85" y2="-12" stroke="url(#goldGradient)" stroke-width="2" opacity="0.8"/>
+
+        <!-- Secondary text -->
+        <text x="0" y="28" font-family="Georgia, serif" font-size="20"
+              text-anchor="middle" fill="url(#goldGradient)" filter="url(#goldglow)" letter-spacing="1">
+          CENTRAL HIGH
+        </text>
+        <text x="0" y="52" font-family="Georgia, serif" font-size="20" font-weight="bold"
+              text-anchor="middle" fill="url(#goldGradient)" filter="url(#goldglow)" letter-spacing="1">
+          WILDCATS
+        </text>
+      </g>
+    </g>
+  </g>
+</svg>

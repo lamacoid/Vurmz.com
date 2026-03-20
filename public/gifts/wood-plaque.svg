@@ -1,0 +1,109 @@
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1A2F2E;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0d1b1a;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Wood Grain Gradient -->
+    <linearGradient id="woodGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8B6F47;stop-opacity:1" />
+      <stop offset="30%" style="stop-color:#6B4423;stop-opacity:1" />
+      <stop offset="60%" style="stop-color:#7A5C3D;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#5C3D23;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Wood Shine -->
+    <linearGradient id="woodShine" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.1" />
+      <stop offset="50%" style="stop-color:#ffffff;stop-opacity:0.03" />
+      <stop offset="100%" style="stop-color:#000000;stop-opacity:0.2" />
+    </linearGradient>
+
+    <!-- Brass/Gold Gradient -->
+    <linearGradient id="brassGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#D4A574;stop-opacity:1" />
+      <stop offset="40%" style="stop-color:#C9A363;stop-opacity:1" />
+      <stop offset="70%" style="stop-color:#B8935A;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#A67C52;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Brass Shine -->
+    <linearGradient id="brassShine" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.4" />
+      <stop offset="50%" style="stop-color:#ffffff;stop-opacity:0.1" />
+      <stop offset="100%" style="stop-color:#000000;stop-opacity:0.1" />
+    </linearGradient>
+
+    <!-- Teal Glow Filter -->
+    <filter id="textGlow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="coloredBlur" />
+      <feMerge>
+        <feMergeNode in="coloredBlur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <!-- Drop Shadow -->
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="12" stdDeviation="15" flood-opacity="0.5" />
+    </filter>
+
+    <!-- Wood Texture Pattern -->
+    <pattern id="woodTexture" x="0" y="0" width="100" height="400" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="0" y2="400" stroke="#000000" stroke-width="1" opacity="0.08" />
+      <line x1="25" y1="0" x2="25" y2="400" stroke="#000000" stroke-width="0.5" opacity="0.05" />
+      <line x1="50" y1="0" x2="50" y2="400" stroke="#000000" stroke-width="1" opacity="0.07" />
+      <line x1="75" y1="0" x2="75" y2="400" stroke="#000000" stroke-width="0.5" opacity="0.04" />
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="600" fill="url(#bgGradient)" />
+
+  <!-- Subtle center light -->
+  <ellipse cx="400" cy="280" rx="280" ry="220" fill="#1a3a3a" opacity="0.25" />
+
+  <!-- Shield-shaped Wooden Plaque with drop shadow -->
+  <g filter="url(#shadow)">
+    <!-- Main plaque shape: shield -->
+    <path d="M 250 120 L 550 120 L 550 360 Q 400 450 400 450 Q 250 360 250 360 Z" fill="url(#woodGradient)" stroke="#4a2c1a" stroke-width="2" />
+
+    <!-- Wood texture overlay -->
+    <path d="M 250 120 L 550 120 L 550 360 Q 400 450 400 450 Q 250 360 250 360 Z" fill="url(#woodTexture)" opacity="0.15" />
+
+    <!-- Wood shine/varnish effect -->
+    <path d="M 260 130 L 540 130 L 540 320 Q 400 390 400 390 Q 260 320 260 320 Z" fill="url(#woodShine)" opacity="0.4" />
+
+    <!-- Left edge highlight -->
+    <path d="M 255 125 L 255 360 Q 250 400 260 430 L 265 135 Z" fill="#ffffff" opacity="0.15" />
+
+    <!-- Right edge shadow -->
+    <path d="M 545 125 L 545 360 Q 550 400 540 430 L 535 135 Z" fill="#000000" opacity="0.15" />
+  </g>
+
+  <!-- Brass/Gold Nameplate -->
+  <g filter="url(#shadow)">
+    <rect x="280" y="280" width="240" height="90" rx="4" fill="url(#brassGradient)" stroke="#8B7355" stroke-width="1" />
+    <rect x="285" y="285" width="230" height="80" fill="#000000" opacity="0.05" />
+    <rect x="280" y="280" width="240" height="90" rx="4" fill="url(#brassShine)" opacity="0.5" />
+  </g>
+
+  <!-- Main Engraved Text on Brass -->
+  <text x="400" y="310" font-family="Georgia, serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#3CB9B2" opacity="0.95" filter="url(#textGlow)" letter-spacing="1">
+    EMPLOYEE OF THE YEAR
+  </text>
+  <text x="400" y="345" font-family="Georgia, serif" font-size="20" font-weight="600" text-anchor="middle" fill="#3CB9B2" opacity="0.9" filter="url(#textGlow)">
+    JAMES WILSON
+  </text>
+
+  <!-- Decorative line above text -->
+  <line x1="310" y1="270" x2="490" y2="270" stroke="#3CB9B2" stroke-width="1" opacity="0.5" filter="url(#textGlow)" />
+  <line x1="310" y1="360" x2="490" y2="360" stroke="#3CB9B2" stroke-width="1" opacity="0.5" filter="url(#textGlow)" />
+
+  <!-- Corner details -->
+  <circle cx="270" cy="145" r="8" fill="#A67C52" opacity="0.6" />
+  <circle cx="530" cy="145" r="8" fill="#A67C52" opacity="0.6" />
+  <circle cx="400" cy="440" r="6" fill="#A67C52" opacity="0.6" />
+</svg>

@@ -1,0 +1,78 @@
+/* Self-hosted fonts from Font Book - curated for laser engraving */
+
+/* Professional Sans-Serif */
+@font-face { font-family: 'B691-Sans'; src: url('/fonts/B691-Sans-Regular.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'E820-Sans'; src: url('/fonts/E820-Sans-Regular.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Eurasia'; src: url('/fonts/Eurasia-Regular.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Coolvetica'; src: url('/fonts/Coolvetica-Regular.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'ClearGothicSerial'; src: url('/fonts/ClearGothicSerial-Regular.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Bolton Sans'; src: url('/fonts/Bolton-Sans.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Birmingham Sans Serif'; src: url('/fonts/Birmingham-Sans-Serif.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Blue Highway D Type'; src: url('/fonts/Blue-Highway-D-Type.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Bonobo'; src: url('/fonts/Bonobo.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Anuphan'; src: url('/fonts/Anuphan-VariableFont_wght.ttf') format('truetype'); font-display: swap; }
+
+/* Professional Serif */
+@font-face { font-family: 'Bodoni'; src: url('/fonts/Bodoni-Regular.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Baskerville-Old-Face'; src: url('/fonts/Baskerville-Old-Face-Regular.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Century-Schoolbook'; src: url('/fonts/Century-Schoolbook-Regular.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'BernhardModern'; src: url('/fonts/BernhardModern-Regular.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'EgyptienneStd'; src: url('/fonts/EgyptienneStd-Regular.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Cambridge'; src: url('/fonts/Cambridge-Regular.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'B693-Roman'; src: url('/fonts/B693-Roman-Regular.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'B820-Roman'; src: url('/fonts/B820-Roman-Regular.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Copperplate-Gothic'; src: url('/fonts/Copperplate-Gothic-Medium.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Bestseller'; src: url('/fonts/Bestseller-Regular.ttf') format('truetype'); font-display: swap; }
+
+/* Script / Calligraphy */
+@font-face { font-family: 'BernhardScript'; src: url('/fonts/BernhardScript-Regular.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Brush-Script'; src: url('/fonts/Brush-Script.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Commercial-Script'; src: url('/fonts/Commercial-Script.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Elegant-Script'; src: url('/fonts/Elegant-Script.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Daisy Script'; src: url('/fonts/Daisy-Script.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'BayScript'; src: url('/fonts/BayScript.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Amanda Rose'; src: url('/fonts/Amanda-Rose.otf') format('opentype'); font-display: swap; }
+@font-face { font-family: 'BernhardElegant'; src: url('/fonts/BernhardElegant-Regular.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'BlackChancery'; src: url('/fonts/BlackChancery.TTF') format('truetype'); font-display: swap; }
+
+/* Industrial / Stencil / Military */
+@font-face { font-family: 'AG Stencil'; src: url('/fonts/AG-Stencil.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Stencilia-A'; src: url('/fonts/Stencilia-A.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Bride Stencil'; src: url('/fonts/Bride-Stencil.TTF') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Ruler Stencil'; src: url('/fonts/Ruler-Stencil-Regular.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Battlefield'; src: url('/fonts/Battlefield.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Alpha Taurus'; src: url('/fonts/Alpha-Taurus.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Ben-Zion'; src: url('/fonts/Ben-Zion.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Archery Black'; src: url('/fonts/Archery-Black.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Blacktop'; src: url('/fonts/Blacktop.ttf') format('truetype'); font-display: swap; }
+
+/* Display / Bold */
+@font-face { font-family: 'Cooper-Black'; src: url('/fonts/Cooper-Black-Regular.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Canyon'; src: url('/fonts/Canyon-Regular.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Impact Label'; src: url('/fonts/Impact-Label.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Bamf'; src: url('/fonts/Bamf.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Blavicke Capitals'; src: url('/fonts/Blavicke-Capitals-Semi-expanded-Regular.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Charlemagne'; src: url('/fonts/Charlemagne.ttf') format('truetype'); font-display: swap; }
+
+/* Monospace / Technical */
+@font-face { font-family: 'Courier-PS'; src: url('/fonts/Courier-PS-Regular.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Bitstream Vera Sans Mono'; src: url('/fonts/Bitstream-Vera-Sans-Mono.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'BankDesign'; src: url('/fonts/BankDesign-Regular.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Space Time'; src: url('/fonts/spacetime-regular.ttf') format('truetype'); font-display: swap; }
+
+/* Fun / Novelty */
+@font-face { font-family: 'Balloon'; src: url('/fonts/Balloon.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Jua'; src: url('/fonts/Jua-Regular.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Boopee'; src: url('/fonts/Boopee.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Bonita'; src: url('/fonts/Bonita.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Pop Art'; src: url('/fonts/PopArt-Regular.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Bionic Comic'; src: url('/fonts/Bionic-Comic.ttf') format('truetype'); font-display: swap; }
+
+/* Western / Vintage */
+@font-face { font-family: 'Cockney'; src: url('/fonts/Cockney-Regular.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Byington'; src: url('/fonts/Byington-Regular.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Bellhop NF'; src: url('/fonts/Bellhop-NF.ttf') format('truetype'); font-display: swap; }
+
+/* Gothic / Blackletter */
+@font-face { font-family: 'Olde English'; src: url('/fonts/OldeEnglishRegular-Zd2J.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Stencil Gothic BE'; src: url('/fonts/StencilGothicBe-jEE9.ttf') format('truetype'); font-display: swap; }

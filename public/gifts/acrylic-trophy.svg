@@ -1,0 +1,113 @@
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1A2F2E;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0d1b1a;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Acrylic Frosted Gradient -->
+    <linearGradient id="acrylicGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f5f5f5;stop-opacity:0.75" />
+      <stop offset="25%" style="stop-color:#e8e8e8;stop-opacity:0.7" />
+      <stop offset="50%" style="stop-color:#d0d0d0;stop-opacity:0.65" />
+      <stop offset="100%" style="stop-color:#a8a8a8;stop-opacity:0.6" />
+    </linearGradient>
+
+    <!-- Acrylic Edge Highlight -->
+    <linearGradient id="acrylicEdge" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.8" />
+      <stop offset="50%" style="stop-color:#ffffff;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0" />
+    </linearGradient>
+
+    <!-- Base Gradient -->
+    <radialGradient id="baseGradient" cx="50%" cy="30%">
+      <stop offset="0%" style="stop-color:#2a2a2a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0d0d0d;stop-opacity:1" />
+    </radialGradient>
+
+    <!-- Teal Glow Filter -->
+    <filter id="teaGlow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="coloredBlur" />
+      <feMerge>
+        <feMergeNode in="coloredBlur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <!-- Drop Shadow -->
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-opacity="0.5" />
+    </filter>
+
+    <!-- Inner Shadow for Facets -->
+    <filter id="innerShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="1" result="coloredBlur" />
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="600" fill="url(#bgGradient)" />
+
+  <!-- Subtle center light -->
+  <ellipse cx="400" cy="250" rx="300" ry="220" fill="#1a3a3a" opacity="0.3" />
+
+  <!-- Trophy Base -->
+  <g filter="url(#shadow)">
+    <rect x="320" y="480" width="160" height="50" rx="8" fill="url(#baseGradient)" stroke="#1a1a1a" stroke-width="1" />
+    <ellipse cx="400" cy="480" rx="85" ry="15" fill="#1a1a1a" opacity="0.4" />
+  </g>
+
+  <!-- Main Faceted Acrylic Trophy - Angular Diamond/Geometric Shape -->
+  <g filter="url(#shadow)">
+    <!-- Bottom-left facet -->
+    <polygon points="280,380 330,460 350,460 320,380" fill="url(#acrylicGradient)" stroke="#c0c0c0" stroke-width="1" opacity="0.7" />
+    <polygon points="280,380 330,460 350,460 320,380" fill="#ffffff" opacity="0.15" />
+
+    <!-- Bottom-right facet -->
+    <polygon points="520,380 470,460 450,460 480,380" fill="url(#acrylicGradient)" stroke="#c0c0c0" stroke-width="1" opacity="0.7" />
+    <polygon points="520,380 470,460 450,460 480,380" fill="#ffffff" opacity="0.15" />
+
+    <!-- Left facet -->
+    <polygon points="280,380 320,240 320,380" fill="url(#acrylicGradient)" stroke="#b8b8b8" stroke-width="1" opacity="0.68" />
+    <polygon points="280,380 320,240 320,380" fill="#ffffff" opacity="0.12" />
+
+    <!-- Right facet -->
+    <polygon points="520,380 480,240 480,380" fill="url(#acrylicGradient)" stroke="#b8b8b8" stroke-width="1" opacity="0.68" />
+    <polygon points="520,380 480,240 480,380" fill="#ffffff" opacity="0.12" />
+
+    <!-- Front main facet -->
+    <polygon points="320,240 480,240 480,380 320,380" fill="url(#acrylicGradient)" stroke="#c8c8c8" stroke-width="1.5" opacity="0.75" />
+    <polygon points="320,240 480,240 480,380 320,380" fill="url(#acrylicEdge)" opacity="0.4" />
+
+    <!-- Top left facet -->
+    <polygon points="330,160 320,240 370,190" fill="url(#acrylicGradient)" stroke="#a8a8a8" stroke-width="0.5" opacity="0.72" />
+
+    <!-- Top right facet -->
+    <polygon points="470,190 480,240 430,160" fill="url(#acrylicGradient)" stroke="#a8a8a8" stroke-width="0.5" opacity="0.72" />
+
+    <!-- Peak point -->
+    <polygon points="400,100 330,160 470,160" fill="#f0f0f0" stroke="#e0e0e0" stroke-width="0.5" opacity="0.8" />
+    <polygon points="400,100 330,160 470,160" fill="#ffffff" opacity="0.3" />
+
+    <!-- Horizontal edge highlights -->
+    <line x1="325" y1="245" x2="475" y2="245" stroke="#ffffff" stroke-width="2" opacity="0.4" />
+  </g>
+
+  <!-- Engraved Text - INNOVATION AWARD -->
+  <text x="400" y="320" font-family="Segoe UI, sans-serif" font-size="20" font-weight="600" text-anchor="middle" fill="#3CB9B2" opacity="0.95" filter="url(#teaGlow)" letter-spacing="0.5">
+    INNOVATION
+  </text>
+  <text x="400" y="350" font-family="Segoe UI, sans-serif" font-size="20" font-weight="600" text-anchor="middle" fill="#3CB9B2" opacity="0.95" filter="url(#teaGlow)" letter-spacing="0.5">
+    AWARD
+  </text>
+
+  <!-- Decorative accent lines -->
+  <line x1="340" y1="305" x2="460" y2="305" stroke="#3CB9B2" stroke-width="1" opacity="0.5" filter="url(#teaGlow)" />
+  <line x1="340" y1="365" x2="460" y2="365" stroke="#3CB9B2" stroke-width="1" opacity="0.5" filter="url(#teaGlow)" />
+
+  <!-- Top shine effect -->
+  <path d="M 330 160 L 335 175 L 365 165 Z" fill="#ffffff" opacity="0.5" />
+  <path d="M 470 160 L 465 175 L 435 165 Z" fill="#ffffff" opacity="0.5" />
+</svg>

@@ -2,10 +2,10 @@
 
 :root {
   /* VURMZ Brand Colors - Tempered Glass Aesthetic */
-  --vurmz-teal: #3CB9B2;           /* Vibrant tempered glass green */
-  --vurmz-teal-dark: #2A9D97;      /* Deeper glass edge */
-  --vurmz-teal-light: #5CD4CD;     /* Light reflection */
-  --vurmz-teal-glow: #4ECDC4;      /* Glare highlight */
+  --vurmz-teal: #6BB8B2;           /* Dusty muted teal */
+  --vurmz-teal-dark: #4A9D97;      /* Deeper muted teal */
+  --vurmz-teal-light: #8DCDC8;     /* Soft light teal */
+  --vurmz-teal-glow: #7AC5BE;      /* Muted glow */
   --vurmz-powder: #B5D8E0;         /* Frosted glass blue */
   --vurmz-powder-light: #D0E8ED;   /* Light frost */
   --vurmz-sky: #7BC8D4;            /* Clear sky through glass */
@@ -13,17 +13,24 @@
   --vurmz-sky-dark: #5BB8C4;
   --vurmz-sage: #7DAA8C;           /* Soft green tint */
   --vurmz-sage-light: #9DBDA8;
-  --vurmz-dark: #1A2F2E;           /* Deep glass edge shadow */
+  --vurmz-dark: #243B39;           /* Lightened dark base */
   --vurmz-light: #F5FAFA;          /* Clean glass surface */
 
   /* Semantic Colors */
-  --background: #ffffff;
-  --foreground: #1A2F2E;
-  --primary: #3CB9B2;
-  --primary-dark: #2A9D97;
-  --primary-light: #5CD4CD;
-  --secondary: #7BC8D4;
-  --accent: #4ECDC4;
+  --background: #243B39;
+  --foreground: #F0E6D3;
+  --primary: #6BB8B2;
+  --primary-dark: #4A9D97;
+  --primary-light: #8DCDC8;
+  --secondary: #8CC5CC;
+  --accent: #7AC5BE;
+
+  /* Conversion CTA - Dusty terracotta coral */
+  --vurmz-cta: #C46B4D;
+  --vurmz-cta-hover: #AD5D42;
+  --vurmz-cta-active: #964F38;
+  --vurmz-cta-cream: #F0E6D3;
+  --vurmz-cta-cream-hover: #E5D9C4;
 
   /* Status Colors */
   --success: #3DAA7D;
@@ -34,6 +41,47 @@
   --glass-shine: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 50%);
   --glass-reflection: linear-gradient(180deg, rgba(60,185,178,0.1) 0%, transparent 30%);
   --glass-border: rgba(60,185,178,0.2);
+
+  /* Configurator Design Tokens (maps to VURMZ brand) */
+  --color-primary: #3CB9B2;
+  --color-primary-dark: #2A9D97;
+  --color-primary-light: #5CD4CD;
+  --color-primary-wash: rgba(60, 185, 178, 0.08);
+  --color-dark: #1A2F2E;
+  --color-muted: #6A8C8C;
+  --color-light: #F5FAFA;
+  --color-sky: #7BC8D4;
+  --color-sky-dark: #5BB8C4;
+  --color-cta: #FF8C42;
+  --color-cta-hover: #E67E22;
+
+  /* ── Frutiger Aero Design Tokens ── */
+  --aero-teal: #2AA5A0;
+  --aero-teal-light: #3DBDB7;
+  --aero-teal-glow: rgba(42, 165, 160, 0.35);
+  --aero-cta: #FF8C42;
+  --aero-cta-hover: #E67E22;
+
+  /* Text */
+  --aero-text-primary: #1E293B;
+  --aero-text-secondary: #64748B;
+  --aero-text-muted: #94A3B8;
+  --aero-text-on-glass: #374151;
+  --aero-text-label: #475569;
+
+  /* Glass */
+  --aero-glass-bg: rgba(255, 255, 255, 0.65);
+  --aero-glass-bg-solid: rgba(255, 255, 255, 0.82);
+  --aero-glass-border: rgba(255, 255, 255, 0.80);
+  --aero-glass-shadow: 0 8px 32px rgba(31, 38, 135, 0.12);
+  --aero-glass-blur: 24px;
+  --aero-glass-highlight: linear-gradient(180deg, rgba(255,255,255,0.50) 0%, transparent 50%);
+
+  /* Inputs */
+  --aero-input-bg: rgba(255, 255, 255, 0.70);
+  --aero-input-border: rgba(209, 213, 219, 0.60);
+  --aero-input-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.04);
+  --aero-focus-ring: 0 0 0 3px rgba(59, 130, 246, 0.35);
 }
 
 body {
@@ -42,7 +90,31 @@ body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-/* Subtle ambient glow — non-blocking z-index */
+/* Consistent spacing across all pages */
+main section + section {
+  margin-top: 1.5rem;
+}
+
+/* Wider horizontal margins site-wide */
+main [class*="mx-auto"][class*="px-4"] {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+@media (min-width: 640px) {
+  main [class*="mx-auto"][class*="px-4"] {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+}
+@media (min-width: 1024px) {
+  main [class*="mx-auto"][class*="px-4"] {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+/* Scroll-reactive glare is handled by the ScrollGlare component */
+/* Keep body pseudo-elements free for light/trippy modes */
 body::before {
   content: '';
   position: fixed;
@@ -53,13 +125,28 @@ body::before {
   pointer-events: none;
   z-index: 0;
   background:
-    radial-gradient(ellipse 80% 50% at 20% 10%, rgba(60, 185, 178, 0.04) 0%, transparent 50%),
-    radial-gradient(ellipse 60% 40% at 80% 90%, rgba(123, 200, 212, 0.03) 0%, transparent 45%);
+    radial-gradient(ellipse 70% 50% at 20% 15%, rgba(60, 185, 178, 0.06) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 45% at 85% 80%, rgba(196, 107, 77, 0.04) 0%, transparent 50%),
+    radial-gradient(ellipse 50% 40% at 75% 70%, rgba(123, 200, 212, 0.04) 0%, transparent 50%);
 }
 
-/* Force light mode */
+/* Global coral hover for interactive elements */
+html.dark a:not([class*="bg-vurmz-cta"]):not([class*="bg-vurmz-cream"]):hover {
+  color: var(--vurmz-cta);
+}
+
+/* Linked images shift warm on hover (logos, etc.) */
+html.dark a:hover img {
+  filter: brightness(0) invert(42%) sepia(60%) saturate(600%) hue-rotate(340deg) !important;
+  transition: filter 0.2s ease;
+}
+html.dark a img {
+  transition: filter 0.2s ease;
+}
+
+/* Default dark mode */
 html {
-  color-scheme: light;
+  color-scheme: dark;
 }
 
 /* ========================================
@@ -224,6 +311,30 @@ html {
   .text-vurmz-dark {
     color: var(--vurmz-dark);
   }
+  .text-cream {
+    color: #F0E6D3;
+  }
+  .hover\:text-cream:hover {
+    color: #F0E6D3;
+  }
+  .text-cream\/40 {
+    color: rgba(240, 230, 211, 0.4);
+  }
+  .text-cream\/50 {
+    color: rgba(240, 230, 211, 0.5);
+  }
+  .text-cream\/60 {
+    color: rgba(240, 230, 211, 0.6);
+  }
+  .hover\:text-cream\/60:hover {
+    color: rgba(240, 230, 211, 0.6);
+  }
+  .hover\:text-cream\/70:hover {
+    color: rgba(240, 230, 211, 0.7);
+  }
+  .text-cream\/80 {
+    color: rgba(240, 230, 211, 0.8);
+  }
   .border-vurmz-teal {
     border-color: var(--vurmz-teal);
   }
@@ -238,6 +349,35 @@ html {
   }
   .hover\:text-vurmz-teal:hover {
     color: var(--vurmz-teal);
+  }
+
+  /* Conversion-optimized CTA button */
+  .bg-vurmz-cta {
+    background-color: var(--vurmz-cta);
+  }
+  .hover\:bg-vurmz-cta-hover:hover {
+    background-color: var(--vurmz-cta-hover);
+  }
+  .text-vurmz-cta {
+    color: var(--vurmz-cta);
+  }
+  .hover\:text-vurmz-cta:hover {
+    color: var(--vurmz-cta);
+  }
+  .border-vurmz-cta {
+    border-color: var(--vurmz-cta);
+  }
+  .shadow-vurmz-cta {
+    box-shadow: 0 4px 20px rgba(224, 96, 80, 0.3);
+  }
+  .bg-vurmz-cream {
+    background-color: var(--vurmz-cta-cream);
+  }
+  .hover\:bg-vurmz-cream-hover:hover {
+    background-color: var(--vurmz-cta-cream-hover);
+  }
+  .text-vurmz-dark {
+    color: var(--background);
   }
   .border-t-vurmz-teal {
     border-top-color: var(--vurmz-teal);
@@ -283,6 +423,184 @@ html {
   .glow-teal-intense {
     box-shadow: 0 0 30px rgba(60, 185, 178, 0.5), 0 0 60px rgba(60, 185, 178, 0.25);
   }
+
+  /* ================================================
+     FRUTIGER AERO UTILITY CLASSES
+  ================================================ */
+
+  /* Studio full-page background */
+  .studio-bg {
+    background:
+      linear-gradient(160deg,
+        #E8F4FD 0%,
+        #F5FAF8 28%,
+        #FAFBF8 50%,
+        #E0F2F1 75%,
+        #E8F4FD 100%
+      );
+    background-size: 200% 200%;
+    animation: aero-bg-drift 30s ease-in-out infinite;
+  }
+
+  /* Frosted glass panel */
+  .aero-glass {
+    background: var(--aero-glass-bg);
+    backdrop-filter: blur(var(--aero-glass-blur)) saturate(1.2);
+    -webkit-backdrop-filter: blur(var(--aero-glass-blur)) saturate(1.2);
+    border: 1px solid var(--aero-glass-border);
+    box-shadow: var(--aero-glass-shadow);
+    position: relative;
+  }
+
+  /* Top-edge highlight for glass panels */
+  .aero-glass::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: var(--aero-glass-highlight);
+    pointer-events: none;
+  }
+
+  /* Solid glass — higher opacity for sidebars / controls */
+  .aero-glass-solid {
+    background: var(--aero-glass-bg-solid);
+    backdrop-filter: blur(32px) saturate(1.3);
+    -webkit-backdrop-filter: blur(32px) saturate(1.3);
+    border: 1px solid var(--aero-glass-border);
+    box-shadow:
+      var(--aero-glass-shadow),
+      inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  }
+
+  /* Aero input field */
+  .aero-input {
+    background: var(--aero-input-bg);
+    border: 1px solid var(--aero-input-border);
+    box-shadow: var(--aero-input-shadow);
+    border-radius: 0.75rem;
+    padding: 0.75rem 1rem;
+    color: var(--aero-text-primary);
+    font-size: 0.875rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+    width: 100%;
+  }
+
+  .aero-input::placeholder {
+    color: var(--aero-text-muted);
+  }
+
+  .aero-input:focus {
+    border-color: var(--aero-teal);
+    box-shadow: var(--aero-input-shadow), var(--aero-focus-ring);
+  }
+
+  /* Primary teal button — glossy gradient */
+  .aero-btn-primary {
+    background: linear-gradient(180deg, var(--aero-teal-light) 0%, var(--aero-teal) 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 0.75rem;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.30) inset,
+      0 4px 16px rgba(42, 165, 160, 0.25);
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+
+  .aero-btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.35) inset,
+      0 6px 20px rgba(42, 165, 160, 0.35);
+  }
+
+  .aero-btn-primary:active {
+    transform: scale(0.98);
+  }
+
+  /* CTA orange button — glossy gradient */
+  .aero-btn-cta {
+    background: linear-gradient(180deg, #FFA056 0%, #FF8C42 50%, #E67E22 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 0.75rem;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.30) inset,
+      0 4px 16px rgba(255, 140, 66, 0.30);
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+
+  .aero-btn-cta:hover {
+    transform: translateY(-1px);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.35) inset,
+      0 6px 20px rgba(255, 140, 66, 0.40);
+  }
+
+  .aero-btn-cta:active {
+    transform: scale(0.98);
+  }
+
+  /* Secondary / outline button */
+  .aero-btn-secondary {
+    background: rgba(255, 255, 255, 0.50);
+    color: var(--aero-text-primary);
+    border: 1px solid rgba(209, 213, 219, 0.50);
+    border-radius: 0.75rem;
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+    font-size: 0.875rem;
+    cursor: pointer;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.40) inset;
+    transition: transform 0.15s, background 0.15s, border-color 0.15s;
+  }
+
+  .aero-btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.70);
+    border-color: rgba(209, 213, 219, 0.70);
+    transform: translateY(-1px);
+  }
+
+  .aero-btn-secondary:active {
+    transform: scale(0.98);
+  }
+
+  /* Aero scrollbar */
+  /* Hide scrollbar but keep scroll functionality */
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .aero-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+  .aero-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .aero-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(148, 163, 184, 0.30);
+    border-radius: 3px;
+  }
+  .aero-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(148, 163, 184, 0.50);
+  }
 }
 
 /* ========================================
@@ -290,6 +608,11 @@ html {
    Baroque wallpaper meets 2000s glossy translucency
    Think: Mac OS X Aqua, Vista Aero, early iPhone
 ======================================== */
+
+/* Light mode color scheme override */
+html.light {
+  color-scheme: light;
+}
 
 /* ── Body: Soft aqua-sky gradient with baroque organic warmth ── */
 html.light body {
@@ -313,6 +636,36 @@ html.light body {
   50%      { background-position: 100% 50%; }
 }
 
+/* Item scroller — multi-line, multi-speed */
+@keyframes scroll-left {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes scroll-right {
+  0%   { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+/* Logo scroll — kicks in when logos overflow the container */
+.logo-scroll {
+  /* For now, centered. When you have 5+ logos, duplicate the children
+     and switch to: animation: logo-marquee 20s linear infinite; */
+}
+@keyframes logo-marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Local info ticker */
+.ticker-scroll {
+  display: flex;
+  animation: ticker 30s linear infinite;
+}
+@keyframes ticker {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
 /* ── Body overlay: Soft baroque floral/organic pattern hint ── */
 html.light body::before {
   content: '';
@@ -328,28 +681,10 @@ html.light body::before {
     radial-gradient(ellipse 25% 25% at 75% 65%, rgba(181, 216, 224, 0.4) 0%, transparent 55%);
 }
 
-/* ── No aggressive glare sweep — just a very subtle shimmer ── */
+/* ── Light mode: hide dark-mode light effects ── */
+html.light body::before,
 html.light body::after {
-  content: '';
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  pointer-events: none;
-  z-index: 1;
-  background: linear-gradient(
-    135deg,
-    transparent 45%,
-    rgba(255, 255, 255, 0.12) 49%,
-    rgba(255, 255, 255, 0.18) 50%,
-    rgba(255, 255, 255, 0.12) 51%,
-    transparent 55%
-  );
-  background-size: 400% 400%;
-  animation: aero-shimmer 12s ease-in-out infinite;
-}
-
-@keyframes aero-shimmer {
-  0%, 100% { background-position: 0% 0%; }
-  50%      { background-position: 100% 100%; }
+  display: none;
 }
 
 /* ── Dark backgrounds become frosted Aero glass ── */
@@ -362,7 +697,7 @@ html.light .bg-vurmz-dark {
   -webkit-backdrop-filter: blur(20px) saturate(1.3);
 }
 
-html.light .bg-\[\\#1f2523\] {
+html.light [class*="bg-[#1f2523]"] {
   background: rgba(238, 248, 250, 0.75) !important;
   backdrop-filter: blur(16px) saturate(1.2);
   -webkit-backdrop-filter: blur(16px) saturate(1.2);
@@ -408,30 +743,17 @@ html.light .bg-vurmz-teal p {
   text-shadow: 0 1px 2px rgba(0,0,0,0.15);
 }
 
-/* ── Cards: Glossy Aqua glass panels with visible depth ── */
+/* ── Borders: Visible in light mode ── */
 html.light [class*="border-gray"] {
-  border-color: rgba(60, 185, 178, 0.12) !important;
+  border-color: rgba(60, 185, 178, 0.18) !important;
 }
 
 html.light .border-gray-700 {
-  border-color: rgba(60, 185, 178, 0.1) !important;
+  border-color: rgba(60, 185, 178, 0.15) !important;
 }
 
-html.light [class*="rounded-lg"],
-html.light [class*="rounded-xl"],
-html.light [class*="rounded-2xl"] {
-  background: linear-gradient(180deg,
-    rgba(255, 255, 255, 0.85) 0%,
-    rgba(245, 250, 252, 0.75) 100%
-  ) !important;
-  backdrop-filter: blur(12px) saturate(1.2);
-  -webkit-backdrop-filter: blur(12px) saturate(1.2);
-  border: 1px solid rgba(255, 255, 255, 0.6) !important;
-  box-shadow:
-    0 1px 0 rgba(255,255,255,0.8) inset,
-    0 -1px 3px rgba(0,0,0,0.04) inset,
-    0 4px 20px rgba(60, 185, 178, 0.06),
-    0 1px 3px rgba(0,0,0,0.06);
+html.light .divide-gray-700 > * + * {
+  border-color: rgba(60, 185, 178, 0.12) !important;
 }
 
 /* ── Header: Aero-style frosted bar ── */
@@ -497,40 +819,108 @@ html.light .bg-vurmz-teal\/20 strong {
   color: #1A2F2E !important;
 }
 
-/* ── Product cards ── */
+/* ── Cards: Only target actual card containers, not every rounded element ── */
 html.light .bg-vurmz-dark.rounded-lg,
-html.light .bg-vurmz-dark.p-4 {
-  background: linear-gradient(180deg,
-    rgba(255, 255, 255, 0.8) 0%,
-    rgba(245, 250, 252, 0.7) 100%
-  ) !important;
-  backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.5) !important;
-  box-shadow:
-    0 1px 0 rgba(255,255,255,0.7) inset,
-    0 3px 12px rgba(0,0,0,0.05);
+html.light .bg-vurmz-dark.rounded-xl,
+html.light .bg-vurmz-dark.rounded-2xl {
+  background: rgba(255, 255, 255, 0.8) !important;
+  border: 1px solid rgba(60, 185, 178, 0.12) !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
 
-/* ── CTA buttons ── */
+/* Comparison table rows stay clean */
+html.light table,
+html.light thead,
+html.light tbody,
+html.light tr,
+html.light td,
+html.light th {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+html.light thead tr {
+  background: linear-gradient(180deg, rgba(60, 185, 178, 0.95) 0%, rgba(42, 157, 151, 0.95) 100%) !important;
+}
+
+html.light thead th {
+  color: #ffffff !important;
+  font-weight: 600;
+}
+
+html.light tbody {
+  background: rgba(255, 255, 255, 0.7) !important;
+}
+
+html.light tbody td {
+  border-bottom: 1px solid rgba(60, 185, 178, 0.1) !important;
+}
+
+html.light tbody td.font-medium {
+  color: #1A2F2E !important;
+}
+
+/* ── CTA buttons: keep orange CTA visible ── */
+html.light .bg-vurmz-cta {
+  background-color: var(--vurmz-cta) !important;
+  color: #ffffff !important;
+}
+
+html.light .bg-vurmz-cta:hover {
+  background-color: var(--vurmz-cta-hover) !important;
+}
+
 html.light a[class*="bg-vurmz-dark"] {
   background: linear-gradient(180deg, #2d4a49 0%, #1A2F2E 100%) !important;
   color: #ffffff !important;
-  box-shadow:
-    0 1px 0 rgba(255,255,255,0.15) inset,
-    0 2px 8px rgba(0,0,0,0.15);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
 
-html.light a[class*="border-gray-600"],
 html.light a[class*="border-white"] {
-  border-color: rgba(60, 185, 178, 0.3) !important;
+  border-color: rgba(26, 47, 46, 0.25) !important;
   color: #1A2F2E !important;
   background: rgba(255, 255, 255, 0.5) !important;
-  box-shadow: 0 1px 0 rgba(255,255,255,0.6) inset;
+}
+
+/* ── Image containers stay clean ── */
+html.light .aspect-\[4\/3\],
+html.light .aspect-\[3\/2\],
+html.light .aspect-\[2\/3\],
+html.light .aspect-square {
+  background: #f0f4f4 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: none !important;
 }
 
 /* ── Sections ── */
 html.light section {
   position: relative;
+}
+
+/* ── Input/form elements stay clean ── */
+html.light input,
+html.light select,
+html.light textarea {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* ========================================
+   STUDIO TAKEOVER
+   Hides site header/footer when studio is active
+======================================== */
+
+body:has(.studio-takeover) > header,
+body:has(.studio-takeover) > footer {
+  display: none !important;
+}
+
+body:has(.studio-takeover) > main {
+  padding-top: 0 !important;
 }
 
 /* ========================================

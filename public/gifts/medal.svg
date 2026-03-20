@@ -1,0 +1,147 @@
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1A2F2E;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0d1b1a;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Gold Gradient -->
+    <radialGradient id="goldGradient" cx="45%" cy="35%">
+      <stop offset="0%" style="stop-color:#FFE55C;stop-opacity:1" />
+      <stop offset="40%" style="stop-color:#FFD700;stop-opacity:1" />
+      <stop offset="80%" style="stop-color:#DAA520;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#B8860B;stop-opacity:1" />
+    </radialGradient>
+
+    <!-- Text Glow Filter -->
+    <filter id="textglow">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Deep Glow Filter -->
+    <filter id="deepglow">
+      <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Gold Shine Filter -->
+    <filter id="goldshine">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="600" fill="url(#bgGradient)"/>
+
+  <!-- Medal Shadow -->
+  <ellipse cx="400" cy="520" rx="95" ry="20" fill="#000000" opacity="0.4"/>
+
+  <!-- Red Ribbon Top (flowing) -->
+  <path d="M 360 50 Q 340 80 335 140 Q 330 180 340 220"
+        stroke="#CC0000" stroke-width="35" fill="none" stroke-linecap="round" opacity="0.95"/>
+
+  <path d="M 440 50 Q 460 80 465 140 Q 470 180 460 220"
+        stroke="#CC0000" stroke-width="35" fill="none" stroke-linecap="round" opacity="0.95"/>
+
+  <!-- Ribbon Highlights -->
+  <path d="M 358 50 Q 342 75 338 130 Q 334 170 342 215"
+        stroke="#FF4444" stroke-width="12" fill="none" stroke-linecap="round" opacity="0.6"/>
+
+  <path d="M 442 50 Q 458 75 462 130 Q 466 170 458 215"
+        stroke="#FF4444" stroke-width="12" fill="none" stroke-linecap="round" opacity="0.6"/>
+
+  <!-- Medal Outer Ring -->
+  <circle cx="400" cy="380" r="110" fill="url(#goldGradient)" stroke="#8B6914" stroke-width="2"/>
+
+  <!-- Medal Inner Circle (darker gold) -->
+  <circle cx="400" cy="380" r="100" fill="url(#goldGradient)" opacity="0.95"/>
+
+  <!-- Star Embossed Pattern (5 stars arranged) -->
+  <!-- Center Star (largest) -->
+  <g transform="translate(400 380)">
+    <!-- Main Center Star -->
+    <g transform="translate(0 0)">
+      <polygon points="0,-35 8,-12 32,-12 14,4 22,27 0,15 -22,27 -14,4 -32,-12 -8,-12"
+               fill="#B8860B" opacity="0.6"/>
+      <polygon points="0,-35 8,-12 32,-12 14,4 22,27 0,15 -22,27 -14,4 -32,-12 -8,-12"
+               fill="none" stroke="#FFE55C" stroke-width="0.5" opacity="0.4"/>
+    </g>
+
+    <!-- Top Left Star -->
+    <g transform="translate(-35 -35)">
+      <polygon points="0,-12 3,-4 11,-4 5,1 8,9 0,5 -8,9 -5,1 -11,-4 -3,-4"
+               fill="#B8860B" opacity="0.5"/>
+      <polygon points="0,-12 3,-4 11,-4 5,1 8,9 0,5 -8,9 -5,1 -11,-4 -3,-4"
+               fill="none" stroke="#FFE55C" stroke-width="0.4" opacity="0.3"/>
+    </g>
+
+    <!-- Top Right Star -->
+    <g transform="translate(35 -35)">
+      <polygon points="0,-12 3,-4 11,-4 5,1 8,9 0,5 -8,9 -5,1 -11,-4 -3,-4"
+               fill="#B8860B" opacity="0.5"/>
+      <polygon points="0,-12 3,-4 11,-4 5,1 8,9 0,5 -8,9 -5,1 -11,-4 -3,-4"
+               fill="none" stroke="#FFE55C" stroke-width="0.4" opacity="0.3"/>
+    </g>
+
+    <!-- Bottom Left Star -->
+    <g transform="translate(-45 20)">
+      <polygon points="0,-12 3,-4 11,-4 5,1 8,9 0,5 -8,9 -5,1 -11,-4 -3,-4"
+               fill="#B8860B" opacity="0.5"/>
+      <polygon points="0,-12 3,-4 11,-4 5,1 8,9 0,5 -8,9 -5,1 -11,-4 -3,-4"
+               fill="none" stroke="#FFE55C" stroke-width="0.4" opacity="0.3"/>
+    </g>
+
+    <!-- Bottom Right Star -->
+    <g transform="translate(45 20)">
+      <polygon points="0,-12 3,-4 11,-4 5,1 8,9 0,5 -8,9 -5,1 -11,-4 -3,-4"
+               fill="#B8860B" opacity="0.5"/>
+      <polygon points="0,-12 3,-4 11,-4 5,1 8,9 0,5 -8,9 -5,1 -11,-4 -3,-4"
+               fill="none" stroke="#FFE55C" stroke-width="0.4" opacity="0.3"/>
+    </g>
+  </g>
+
+  <!-- 1ST Text with Teal Glow Center -->
+  <g filter="url(#textglow)">
+    <text x="400" y="395" font-family="serif" font-size="52" font-weight="bold"
+          text-anchor="middle" fill="#3CB9B2" opacity="0.9" letter-spacing="2">
+      1ST
+    </text>
+  </g>
+
+  <!-- Additional Teal Glow Circle -->
+  <circle cx="400" cy="380" r="85" fill="#3CB9B2" opacity="0.05" filter="url(#deepglow)"/>
+
+  <!-- Medal Shine/Highlight Areas -->
+  <ellipse cx="360" cy="340" rx="30" ry="25" fill="#FFFFFF" opacity="0.2"/>
+
+  <path d="M 340 360 Q 350 330 380 325"
+        stroke="#FFFFFF" stroke-width="3" fill="none" opacity="0.15" stroke-linecap="round"/>
+
+  <!-- Edge Highlight on Medal Ring -->
+  <path d="M 320 380 Q 350 330 400 320"
+        stroke="#FFE55C" stroke-width="2" fill="none" opacity="0.3" stroke-linecap="round"/>
+
+  <!-- Bottom Right Shine -->
+  <ellipse cx="440" cy="420" rx="25" ry="20" fill="#FFFFFF" opacity="0.15"/>
+
+  <!-- Medal Depth Shadow -->
+  <circle cx="400" cy="380" r="100" fill="none" stroke="#5C4507" stroke-width="1" opacity="0.4"/>
+
+  <!-- Ribbon Connection Point -->
+  <rect x="380" y="220" width="40" height="20" rx="3" fill="#8B6914" opacity="0.7"/>
+
+  <!-- Gold Rim Details -->
+  <circle cx="400" cy="380" r="110" fill="none" stroke="#FFD700" stroke-width="0.8" opacity="0.5"/>
+</svg>

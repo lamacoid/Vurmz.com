@@ -1,246 +1,161 @@
 import Link from 'next/link'
 import { Metadata } from 'next'
-import {
-  ArrowRightIcon,
-  CheckCircleIcon,
-  ClockIcon,
-  UserIcon,
-  CubeIcon,
-  TruckIcon,
-} from '@heroicons/react/24/outline'
-import { PRODUCTS, PRICING_DETAILS, PROMO_PACK_SIZE } from '@/lib/products'
+import { ArrowRightIcon, ChatBubbleLeftIcon } from '@heroicons/react/24/outline'
+import { PRODUCTS, PRICING_DETAILS } from '@/lib/products'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 
 export const metadata: Metadata = {
-  title: 'Laser Engraving Pricing | Fair & Transparent | VURMZ Centennial CO',
-  description: `Transparent laser engraving pricing for ${siteInfo.city} and Denver metro businesses. Premium service at fair prices. No hidden fees, no surprises.`,
+  title: 'Pricing | VURMZ Laser Engraving',
+  description: `Laser engraving pricing for ${siteInfo.city} and the Denver metro. $50 single-piece engraving. Pre-stocked item packs. No setup fees. Free delivery.`,
 }
 
-// Pricing categories from centralized products
 const pricingCategories = [
   {
     category: PRICING_DETAILS.pens.category,
     packNote: PRICING_DETAILS.pens.packNote,
+    packTotal: `$${PRODUCTS.pens.basePackPrice} – $${PRODUCTS.pens.fullyLoadedPackPrice}`,
     items: PRICING_DETAILS.pens.items,
   },
   {
     category: PRICING_DETAILS.businessCards.category,
     packNote: PRICING_DETAILS.businessCards.packNote,
+    packTotal: `$${PRODUCTS.businessCards.matteBlackBase * PRODUCTS.businessCards.packSize} – $${PRODUCTS.businessCards.stainlessLoaded * PRODUCTS.businessCards.packSize}`,
     items: PRICING_DETAILS.businessCards.items,
   },
   {
     category: PRICING_DETAILS.coasters.category,
     packNote: PRICING_DETAILS.coasters.packNote,
+    packTotal: `$${PRODUCTS.coasters.materials.wood * PRODUCTS.coasters.packSize} – $${PRODUCTS.coasters.materials.steel * PRODUCTS.coasters.packSize}`,
     items: PRICING_DETAILS.coasters.items,
   },
   {
     category: PRICING_DETAILS.keychains.category,
     packNote: PRICING_DETAILS.keychains.packNote,
+    packTotal: `$${PRODUCTS.keychains.materials.acrylic * PRODUCTS.keychains.packSize} – $${PRODUCTS.keychains.materials.metal * PRODUCTS.keychains.packSize}`,
     items: PRICING_DETAILS.keychains.items,
   },
   {
     category: PRICING_DETAILS.knives.category,
     packNote: PRICING_DETAILS.knives.packNote,
+    packTotal: `$${PRODUCTS.knives.base} – $${PRODUCTS.knives.fullyLoaded}`,
     items: PRICING_DETAILS.knives.items,
   },
   {
     category: PRICING_DETAILS.industrial.category,
     packNote: PRICING_DETAILS.industrial.packNote,
+    packTotal: 'Quote',
     items: PRICING_DETAILS.industrial.items,
-  },
-]
-
-const comparison = [
-  {
-    factor: 'Turnaround',
-    vurmz: 'Same-day or next-day',
-    online: '1-3 weeks',
-  },
-  {
-    factor: 'Order Size',
-    vurmz: `Packs of ${PROMO_PACK_SIZE} for promo items`,
-    online: '50-250 pieces typical',
-  },
-  {
-    factor: 'Shipping',
-    vurmz: 'Free local pickup, delivery available',
-    online: '$15-$50+ depending on size',
-  },
-  {
-    factor: 'Communication',
-    vurmz: 'Direct with owner',
-    online: 'Support tickets, chatbots',
-  },
-  {
-    factor: 'Errors/Issues',
-    vurmz: 'Fixed same day, personally',
-    online: 'Return shipping, wait for replacement',
-  },
-  {
-    factor: 'Rush Orders',
-    vurmz: 'Usually yes',
-    online: 'Extra fees if available',
   },
 ]
 
 export default function PricingPage() {
   return (
-    <div>
+    <div className="bg-vurmz-dark">
       {/* Hero */}
-      <section className="bg-vurmz-dark text-white py-10 sm:py-12 md:py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6">
-              Fair Pricing, No Surprises
-            </h1>
-            <p className="text-base sm:text-lg md:text-xl text-gray-300">
-              I charge more per item than online wholesalers. Here is why that ends up costing you less.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Why Premium Pricing */}
-      <section className="bg-[#1f2523] py-10 sm:py-12 md:py-16">
+      <section className="py-12 sm:py-16 lg:py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8 sm:mb-12">
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white">
-              What You Get for the Premium
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
-            <div className="bg-vurmz-dark p-4 sm:p-6 border border-gray-700 border-t-4 border-t-vurmz-teal text-center rounded-lg">
-              <ClockIcon className="h-8 w-8 sm:h-10 sm:w-10 text-vurmz-teal mx-auto mb-2 sm:mb-4" />
-              <h3 className="font-semibold text-white mb-1 sm:mb-2 text-sm sm:text-base">Hours, Not Weeks</h3>
-              <p className="text-gray-400 text-xs sm:text-sm">Same-day turnaround available</p>
-            </div>
-            <div className="bg-vurmz-dark p-4 sm:p-6 border border-gray-700 border-t-4 border-t-vurmz-teal text-center rounded-lg">
-              <CubeIcon className="h-8 w-8 sm:h-10 sm:w-10 text-vurmz-teal mx-auto mb-2 sm:mb-4" />
-              <h3 className="font-semibold text-white mb-1 sm:mb-2 text-sm sm:text-base">Buy What You Use</h3>
-              <p className="text-gray-400 text-xs sm:text-sm">Packs of {PROMO_PACK_SIZE}. No 100+ forced bulk.</p>
-            </div>
-            <div className="bg-vurmz-dark p-4 sm:p-6 border border-gray-700 border-t-4 border-t-vurmz-teal text-center rounded-lg">
-              <UserIcon className="h-8 w-8 sm:h-10 sm:w-10 text-vurmz-teal mx-auto mb-2 sm:mb-4" />
-              <h3 className="font-semibold text-white mb-1 sm:mb-2 text-sm sm:text-base">Text Me Directly</h3>
-              <p className="text-gray-400 text-xs sm:text-sm">One person. One number.</p>
-            </div>
-            <div className="bg-vurmz-dark p-4 sm:p-6 border border-gray-700 border-t-4 border-t-vurmz-teal text-center rounded-lg">
-              <TruckIcon className="h-8 w-8 sm:h-10 sm:w-10 text-vurmz-teal mx-auto mb-2 sm:mb-4" />
-              <h3 className="font-semibold text-white mb-1 sm:mb-2 text-sm sm:text-base">Pickup or Delivery</h3>
-              <p className="text-gray-400 text-xs sm:text-sm">Free delivery over $100</p>
-            </div>
-          </div>
+          <p className="text-xs font-mono text-vurmz-teal tracking-[0.2em] uppercase mb-4">
+            Pricing
+          </p>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-cream tracking-tight leading-tight mb-6">
+            Simple pricing.<br />
+            <span className="text-gray-500">No surprises.</span>
+          </h1>
+          <p className="text-gray-400 text-base sm:text-lg leading-relaxed max-w-2xl">
+            Every job is different, so I&apos;ll quote you personally. Here&apos;s the baseline so you know what to expect.
+          </p>
         </div>
       </section>
 
-      {/* Real Cost Comparison */}
-      <section className="py-10 sm:py-12 md:py-16 bg-vurmz-dark">
+      {/* Custom Engraving */}
+      <section className="py-12 sm:py-16 border-t border-white/[0.06] bg-white/[0.02]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-6 sm:mb-8 text-center">
-            Do the Math
-          </h2>
-
-          <div className="bg-[#1f2523] p-4 sm:p-6 md:p-8 mb-6 sm:mb-8 rounded-lg border border-gray-700">
-            <h3 className="text-base sm:text-lg md:text-xl font-semibold text-white mb-4 sm:mb-6">You need some pens with your logo. Here are your options:</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
-              <div className="border border-gray-600 p-4 sm:p-6 bg-vurmz-dark rounded-lg">
-                <h4 className="font-semibold text-gray-400 mb-3 sm:mb-4 text-sm sm:text-base">Online Wholesaler</h4>
-                <ul className="space-y-2 text-gray-400 text-sm sm:text-base">
-                  <li className="flex justify-between">
-                    <span>100 pens @ $2.00 (minimum)</span>
-                    <span>$200</span>
-                  </li>
-                  <li className="flex justify-between">
-                    <span>Setup fee</span>
-                    <span>$25</span>
-                  </li>
-                  <li className="flex justify-between">
-                    <span>Shipping</span>
-                    <span>$18</span>
-                  </li>
-                  <li className="flex justify-between">
-                    <span>Wait time</span>
-                    <span>2 weeks</span>
-                  </li>
-                  <li className="flex justify-between">
-                    <span>Pens you do not need</span>
-                    <span>85+</span>
-                  </li>
-                </ul>
-                <div className="border-t border-gray-600 mt-4 pt-4">
-                  <p className="flex justify-between font-semibold text-gray-300">
-                    <span>Total</span>
-                    <span>$243 + hassle</span>
-                  </p>
-                </div>
-              </div>
-
-              <div className="border-2 border-vurmz-teal p-4 sm:p-6 bg-vurmz-dark rounded-lg">
-                <h4 className="font-semibold text-vurmz-teal mb-3 sm:mb-4 text-sm sm:text-base">{siteInfo.name}</h4>
-                <ul className="space-y-2 text-gray-300 text-sm sm:text-base">
-                  <li className="flex justify-between">
-                    <span>{PROMO_PACK_SIZE} fully loaded pens (logo, 2 lines, both sides)</span>
-                    <span>${PRODUCTS.pens.fullyLoadedPackPrice}</span>
-                  </li>
-                  <li className="flex justify-between">
-                    <span>Setup fee</span>
-                    <span>$0</span>
-                  </li>
-                  <li className="flex justify-between">
-                    <span>Pickup in {siteInfo.city}</span>
-                    <span>$0</span>
-                  </li>
-                  <li className="flex justify-between">
-                    <span>Wait time</span>
-                    <span>Same day</span>
-                  </li>
-                  <li className="flex justify-between">
-                    <span>Extra pens</span>
-                    <span>0</span>
-                  </li>
-                </ul>
-                <div className="border-t border-vurmz-teal mt-4 pt-4">
-                  <p className="flex justify-between font-semibold text-vurmz-teal">
-                    <span>Total</span>
-                    <span>${PRODUCTS.pens.fullyLoadedPackPrice}</span>
-                  </p>
-                </div>
-              </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-start">
+            <div>
+              <p className="text-xs font-mono text-gray-500 tracking-[0.2em] uppercase mb-4">
+                Custom Engraving
+              </p>
+              <h2 className="text-2xl sm:text-3xl font-bold text-cream tracking-tight leading-tight mb-4">
+                Bring me your thing.
+              </h2>
+              <p className="text-gray-400 text-base leading-relaxed mb-4">
+                A gift, a tool, a one-off piece for your business. Just text me a photo and I&apos;ll quote you. Most single-piece jobs start at $50. Hand-delivered.</p>
+              <ul className="space-y-2 text-gray-400 text-sm">
+                <li className="flex items-center gap-2">
+                  <span className="text-vurmz-teal">✓</span> No setup fees
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="text-vurmz-teal">✓</span> No minimums
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="text-vurmz-teal">✓</span> Free delivery in the South Denver metro
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="text-vurmz-teal">✓</span> I&apos;ll work with you until you&apos;re happy
+                </li>
+              </ul>
             </div>
-            <p className="text-center text-gray-400 mt-4 sm:mt-6 text-sm sm:text-base">
-              <span className="font-semibold text-white">Result:</span> {PROMO_PACK_SIZE} fully loaded pens, same day, ${PRODUCTS.pens.fullyLoadedPackPrice}. When you run out, order {PROMO_PACK_SIZE} more.
-            </p>
+
+            <div className="bg-white/[0.03] border border-white/[0.08] rounded-sm p-6 sm:p-8 text-center">
+              <p className="text-xs font-mono text-gray-500 tracking-[0.2em] uppercase mb-3">
+                Starting at
+              </p>
+              <p className="text-5xl sm:text-6xl font-bold text-cream mb-2">
+                $50
+              </p>
+              <p className="text-gray-500 text-sm mb-6">
+                per piece · custom engraving
+              </p>
+              <a
+                href={getSmsLink("I have something I'd like engraved")}
+                className="group inline-flex items-center justify-center gap-2 w-full px-6 py-3 bg-vurmz-cta text-white font-semibold text-sm rounded-sm hover:bg-vurmz-cta-hover transition-all shadow-lg shadow-vurmz-cta/20"
+              >
+                <ChatBubbleLeftIcon className="w-4 h-4" />
+                Text me a photo
+              </a>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Pricing Tables */}
-      <section className="bg-[#1f2523] py-10 sm:py-12 md:py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-8 sm:mb-12 text-center">
-            Product Pricing
+      {/* Pre-Stocked Packs */}
+      <section className="py-12 sm:py-16 border-t border-white/[0.06]">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="text-xs font-mono text-gray-500 tracking-[0.2em] uppercase mb-4">
+            Pre-Stocked Packs
+          </p>
+          <h2 className="text-2xl sm:text-3xl font-bold text-cream tracking-tight leading-tight mb-2">
+            Items I keep on hand.
           </h2>
+          <p className="text-gray-400 text-base leading-relaxed mb-8 max-w-2xl">
+            These are items I stock and can turn around fast. Pens, cards, coasters, ready to engrave with your logo or text.
+          </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
             {pricingCategories.map((category) => (
-              <div key={category.category} className="bg-vurmz-dark border border-gray-700 rounded-lg overflow-hidden">
-                <div className="bg-vurmz-teal text-white px-4 sm:px-6 py-3 sm:py-4">
-                  <h3 className="text-base sm:text-lg font-semibold">{category.category}</h3>
-                  {category.packNote && <p className="text-xs sm:text-sm text-white/80">{category.packNote}</p>}
+              <div key={category.category} className="bg-white/[0.03] border border-white/[0.08] rounded-sm overflow-hidden">
+                <div className="px-5 py-3 border-b border-white/[0.06] flex items-center justify-between">
+                  <div>
+                    <h3 className="text-sm font-semibold text-cream">{category.category}</h3>
+                    {category.packNote && <p className="text-xs text-gray-500">{category.packNote}</p>}
+                  </div>
+                  <div className="text-right">
+                    <p className="text-xs text-gray-500">Pack total</p>
+                    <p className="text-sm font-semibold text-vurmz-teal">{category.packTotal}</p>
+                  </div>
                 </div>
-                <div className="p-4 sm:p-6">
+                <div className="px-5 py-3">
                   <table className="w-full">
-                    <tbody className="divide-y divide-gray-700">
+                    <tbody className="divide-y divide-white/[0.04]">
                       {category.items.map((item) => (
                         <tr key={item.name}>
-                          <td className="py-2 sm:py-3">
-                            <p className="font-medium text-white text-sm sm:text-base">{item.name}</p>
-                            <p className="text-xs sm:text-sm text-gray-400">{item.note}</p>
+                          <td className="py-2">
+                            <p className="text-sm text-cream/80">{item.name}</p>
+                            {item.note && <p className="text-xs text-gray-500">{item.note}</p>}
                           </td>
-                          <td className="py-2 sm:py-3 text-right whitespace-nowrap">
-                            <p className="font-semibold text-vurmz-teal text-sm sm:text-base">
-                              {item.price}{!item.price.startsWith('+') && <span className="text-gray-500 font-normal text-xs sm:text-sm">/ea</span>}
+                          <td className="py-2 text-right whitespace-nowrap">
+                            <p className="text-sm font-semibold text-vurmz-teal">
+                              {item.price}{!item.price.startsWith('+') && <span className="text-gray-500 font-normal text-xs">/ea</span>}
                             </p>
                           </td>
                         </tr>
@@ -252,106 +167,54 @@ export default function PricingPage() {
             ))}
           </div>
 
-          <p className="text-center text-gray-400 mt-6 sm:mt-8 text-sm sm:text-base">
+          <p className="text-gray-500 text-xs mt-6 text-center">
             Prices are estimates. Final pricing depends on quantity, complexity, and materials.
-            <Link href="/order" className="text-vurmz-teal font-medium ml-1 hover:underline">
-              Start your order for exact pricing
-            </Link>
+            {' '}<Link href="/portfolio" className="text-vurmz-teal hover:text-cream transition-colors">See examples of finished work</Link>.
           </p>
-
-          <div className="mt-8 sm:mt-10 bg-vurmz-dark border border-vurmz-teal/30 rounded-xl p-6 sm:p-8 text-center">
-            <p className="text-lg sm:text-xl text-white font-medium mb-2">
-              Special project?
-            </p>
-            <p className="text-gray-400 mb-4">
-              If you can describe it, I can probably engrave it. Let&apos;s figure it out together.
-            </p>
-            <a
-              href={getSmsLink()}
-              className="inline-flex items-center gap-2 text-vurmz-teal font-semibold hover:underline"
-            >
-              Text {siteInfo.phone}
-              <ArrowRightIcon className="h-4 w-4" />
-            </a>
-          </div>
         </div>
       </section>
 
-      {/* Service Comparison Table */}
-      <section className="py-10 sm:py-12 md:py-16 bg-vurmz-dark">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-6 sm:mb-8 text-center">
-            See Why Local Costs Less
+      {/* Recurring Orders */}
+      <section className="py-12 sm:py-16 border-t border-white/[0.06] bg-white/[0.02]">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-2xl sm:text-3xl font-bold text-cream tracking-tight mb-4">
+            Do you hand out a lot of pens?
           </h2>
-
-          <div className="overflow-x-auto -mx-4 sm:mx-0">
-            <table className="w-full border-collapse min-w-[500px]">
-              <thead>
-                <tr className="bg-vurmz-teal text-white">
-                  <th className="px-3 sm:px-6 py-3 sm:py-4 text-left font-semibold text-xs sm:text-sm md:text-base">Factor</th>
-                  <th className="px-3 sm:px-6 py-3 sm:py-4 text-left font-semibold text-xs sm:text-sm md:text-base">VURMZ</th>
-                  <th className="px-3 sm:px-6 py-3 sm:py-4 text-left font-semibold text-xs sm:text-sm md:text-base">Online Wholesaler</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-700 bg-[#1f2523]">
-                {comparison.map((row) => (
-                  <tr key={row.factor}>
-                    <td className="px-3 sm:px-6 py-3 sm:py-4 font-medium text-white text-xs sm:text-sm md:text-base">{row.factor}</td>
-                    <td className="px-3 sm:px-6 py-3 sm:py-4">
-                      <span className="flex items-center gap-1 sm:gap-2 text-vurmz-teal text-xs sm:text-sm md:text-base">
-                        <CheckCircleIcon className="h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" />
-                        {row.vurmz}
-                      </span>
-                    </td>
-                    <td className="px-3 sm:px-6 py-3 sm:py-4 text-gray-400 text-xs sm:text-sm md:text-base">{row.online}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      {/* Volume Discounts */}
-      <section className="bg-vurmz-dark text-white py-10 sm:py-12 md:py-16">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6">
-            Volume Discounts Available
-          </h2>
-          <p className="text-base sm:text-lg md:text-xl text-gray-300 mb-6 sm:mb-8">
-            Ordering 100+ pens? Setting up recurring orders? Let me know and I will work with you on pricing.
+          <p className="text-gray-400 text-base leading-relaxed mb-6">
+            I&apos;ll keep your stock fresh and deliver on a schedule that works for you. You don&apos;t have to think about reordering.
           </p>
-          <Link
-            href="/order"
-            className="inline-flex items-center gap-2 bg-vurmz-teal text-white px-6 py-3 sm:px-8 sm:py-4 font-semibold hover:bg-vurmz-teal-dark transition-colors rounded-lg sm:rounded-none"
+          <a
+            href={getSmsLink("I'm interested in recurring orders")}
+            className="group inline-flex items-center justify-center gap-2 px-6 py-3 bg-vurmz-cta text-white font-semibold text-sm rounded-sm hover:bg-vurmz-cta-hover transition-all shadow-lg shadow-vurmz-cta/20"
           >
-            Request Volume Pricing
-            <ArrowRightIcon className="h-4 w-4 sm:h-5 sm:w-5" />
-          </Link>
+            <ChatBubbleLeftIcon className="w-4 h-4" />
+            Text me about recurring orders
+          </a>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="bg-vurmz-teal py-10 sm:py-12 md:py-16">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3 sm:mb-4">
-            Ready to Order?
+      {/* Bottom CTA */}
+      <section className="py-12 sm:py-16 border-t border-white/[0.06]">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-2xl sm:text-3xl font-bold text-cream tracking-tight mb-4">
+            Not sure what it&apos;ll cost?
           </h2>
-          <p className="text-base sm:text-lg md:text-xl text-white/80 mb-6 sm:mb-8">
-            Build your order online or text me directly. Same-day response.
+          <p className="text-gray-400 text-base leading-relaxed mb-6">
+            Just text me. I quote fast and I don&apos;t charge for estimates. If it&apos;s not right, we&apos;ll adjust until it is.
           </p>
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
-              href="/order"
-              className="bg-vurmz-dark text-white px-6 py-3 sm:px-8 sm:py-4 font-semibold text-base sm:text-lg hover:bg-vurmz-dark/80 transition-colors inline-flex items-center justify-center gap-2 rounded-xl"
+              href="/contact"
+              className="group inline-flex items-center justify-center gap-2 px-6 py-3 bg-vurmz-cta text-white font-semibold text-sm rounded-sm hover:bg-vurmz-cta-hover transition-all shadow-lg shadow-vurmz-cta/20"
             >
-              Start Your Order
-              <ArrowRightIcon className="h-4 w-4 sm:h-5 sm:w-5" />
+              Get a Quote
+              <ArrowRightIcon className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
             <a
               href={getSmsLink()}
-              className="border-2 border-white/30 text-white px-6 py-3 sm:px-8 sm:py-4 font-semibold text-base sm:text-lg hover:bg-white/10 transition-colors inline-flex items-center justify-center rounded-xl"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-vurmz-cream text-vurmz-dark font-semibold text-sm rounded-sm hover:bg-vurmz-cream-hover transition-all"
             >
+              <ChatBubbleLeftIcon className="w-4 h-4" />
               Text {siteInfo.phone}
             </a>
           </div>

@@ -6,12 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/admin/', '/api/', '/view-quote/'],
-      },
-      {
-        userAgent: 'Googlebot',
-        allow: '/',
-        disallow: ['/admin/', '/api/', '/view-quote/'],
+        disallow: ['/api/'],
       },
     ],
     sitemap: 'https://www.vurmz.com/sitemap.xml',

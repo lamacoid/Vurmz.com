@@ -1,65 +1,67 @@
 import { MetadataRoute } from 'next'
 
+const serviceAreaSlugs = [
+  'centennial',
+  'littleton',
+  'lone-tree',
+  'parker',
+  'highlands-ranch',
+  'englewood',
+  'castle-rock',
+  'aurora',
+  'greenwood-village',
+  'cherry-hills',
+  'denver',
+]
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://www.vurmz.com'
 
-  // Core pages with priority based on business value
-  const pages = [
+  const staticPages: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
       lastModified: new Date(),
-      changeFrequency: 'weekly' as const,
+      changeFrequency: 'weekly',
       priority: 1.0,
-    },
-    {
-      url: `${baseUrl}/order/industrial`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly' as const,
-      priority: 0.85,
-    },
-    {
-      url: `${baseUrl}/order`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly' as const,
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/services`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
-      priority: 0.8,
     },
     {
       url: `${baseUrl}/pricing`,
       lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
+      changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
       url: `${baseUrl}/portfolio`,
       lastModified: new Date(),
-      changeFrequency: 'weekly' as const,
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/about`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
-      priority: 0.6,
+      changeFrequency: 'weekly',
+      priority: 0.8,
     },
     {
       url: `${baseUrl}/contact`,
       lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
-      priority: 0.6,
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/privacy`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 0.3,
     },
     {
       url: `${baseUrl}/terms`,
       lastModified: new Date(),
-      changeFrequency: 'yearly' as const,
+      changeFrequency: 'yearly',
       priority: 0.3,
     },
   ]
 
-  return pages
+  const serviceAreaPages: MetadataRoute.Sitemap = serviceAreaSlugs.map((slug) => ({
+    url: `${baseUrl}/laser-engraving/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly',
+    priority: 0.7,
+  }))
+
+  return [...staticPages, ...serviceAreaPages]
 }

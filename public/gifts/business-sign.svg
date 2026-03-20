@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <defs>
+    <!-- Main background gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1A2F2E;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0d1b1a;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Black acrylic/metal gradient -->
+    <linearGradient id="acrylicGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1A1A1A;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#0D0D0D;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#050505;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Brushed metal effect -->
+    <linearGradient id="brushedMetal" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#2A2A2A;stop-opacity:0.3" />
+      <stop offset="50%" style="stop-color:#0D0D0D;stop-opacity:0" />
+      <stop offset="100%" style="stop-color:#2A2A2A;stop-opacity:0.3" />
+    </linearGradient>
+
+    <!-- Glossy shine -->
+    <radialGradient id="glossShine" cx="40%" cy="20%">
+      <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:0.4" />
+      <stop offset="50%" style="stop-color:#FFFFFF;stop-opacity:0.1" />
+      <stop offset="100%" style="stop-color:#FFFFFF;stop-opacity:0" />
+    </radialGradient>
+
+    <!-- Teal laser engrave glow -->
+    <filter id="laserGlow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feComponentTransfer in="coloredBlur" type="saturate" tableValues="1.5"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Deep shadow for 3D effect -->
+    <filter id="deepshadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="15" dy="15" stdDeviation="10" flood-opacity="0.8"/>
+    </filter>
+
+    <!-- Inner shadow for depth -->
+    <filter id="innershadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+      <feOffset dx="2" dy="2" result="offsetblur"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.3"/>
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode in="offsetblur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Metal texture -->
+    <pattern id="metalTexture" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="20" y2="20" stroke="#1A1A1A" stroke-width="0.5" opacity="0.4"/>
+      <line x1="20" y1="0" x2="0" y2="20" stroke="#2A2A2A" stroke-width="0.3" opacity="0.2"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="600" fill="url(#bgGrad)"/>
+
+  <!-- Desk surface reference -->
+  <ellipse cx="400" cy="520" rx="250" ry="60" fill="#1A2A29" opacity="0.4"/>
+
+  <!-- Sign shadow on desk -->
+  <ellipse cx="420" cy="530" rx="180" ry="30" fill="#000000" opacity="0.4"/>
+
+  <!-- Main nameplate body -->
+  <rect x="220" y="200" width="360" height="220" fill="url(#acrylicGrad)" stroke="#000000" stroke-width="2" rx="16" filter="url(#deepshadow)"/>
+
+  <!-- Metal texture overlay -->
+  <rect x="220" y="200" width="360" height="220" fill="url(#metalTexture)" rx="16" opacity="0.15"/>
+
+  <!-- Brushed metal directional effect -->
+  <rect x="220" y="200" width="360" height="220" fill="url(#brushedMetal)" rx="16"/>
+
+  <!-- Glossy highlight on top -->
+  <rect x="220" y="200" width="360" height="60" fill="url(#glossShine)" rx="16 16 0 0"/>
+
+  <!-- Inner depth border -->
+  <rect x="230" y="210" width="340" height="200" fill="none" stroke="#2A2A2A" stroke-width="1" rx="12" opacity="0.6"/>
+
+  <!-- Laser engraved name with glow -->
+  <g filter="url(#laserGlow)">
+    <text x="400" y="295" font-family="Helvetica Neue, Arial, sans-serif" font-size="52" font-weight="700" text-anchor="middle" fill="#E8F8F7" letter-spacing="1">DR. SARAH PATEL</text>
+  </g>
+
+  <!-- Primary teal glow effect on name -->
+  <g opacity="0.5">
+    <text x="400" y="295" font-family="Helvetica Neue, Arial, sans-serif" font-size="52" font-weight="700" text-anchor="middle" fill="#3CB9B2" letter-spacing="1">DR. SARAH PATEL</text>
+  </g>
+
+  <!-- Subtle secondary glow -->
+  <g opacity="0.25">
+    <text x="400" y="295" font-family="Helvetica Neue, Arial, sans-serif" font-size="52" font-weight="700" text-anchor="middle" fill="#5FD4CC" letter-spacing="1" filter="url(#laserGlow)">DR. SARAH PATEL</text>
+  </g>
+
+  <!-- Title text with glow -->
+  <g filter="url(#laserGlow)">
+    <text x="400" y="360" font-family="Helvetica Neue, Arial, sans-serif" font-size="28" font-weight="500" text-anchor="middle" fill="#D0E8E6" letter-spacing="0.5">FAMILY DENTISTRY</text>
+  </g>
+
+  <!-- Teal glow on title -->
+  <g opacity="0.4">
+    <text x="400" y="360" font-family="Helvetica Neue, Arial, sans-serif" font-size="28" font-weight="500" text-anchor="middle" fill="#3CB9B2" letter-spacing="0.5">FAMILY DENTISTRY</text>
+  </g>
+
+  <!-- Decorative laser-cut line -->
+  <line x1="270" y1="375" x2="530" y2="375" stroke="#3CB9B2" stroke-width="1.5" opacity="0.6" filter="url(#laserGlow)"/>
+
+  <!-- Bottom edge accent -->
+  <rect x="220" y="400" width="360" height="2" fill="#3CB9B2" opacity="0.3"/>
+
+  <!-- Corner accent details for premium feel -->
+  <circle cx="240" cy="220" r="2.5" fill="#3CB9B2" opacity="0.5"/>
+  <circle cx="560" cy="220" r="2.5" fill="#3CB9B2" opacity="0.5"/>
+  <circle cx="240" cy="400" r="2.5" fill="#3CB9B2" opacity="0.4"/>
+  <circle cx="560" cy="400" r="2.5" fill="#3CB9B2" opacity="0.4"/>
+
+  <!-- Side edge reflection -->
+  <rect x="575" y="210" width="3" height="190" fill="#FFFFFF" opacity="0.1" rx="2"/>
+
+  <!-- Additional ambient glow reflection -->
+  <ellipse cx="400" cy="300" rx="150" ry="80" fill="#3CB9B2" opacity="0.04"/>
+</svg>

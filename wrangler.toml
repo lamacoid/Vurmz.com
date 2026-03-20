@@ -6,16 +6,10 @@ compatibility_flags = ["nodejs_compat"]
 # Pages configuration - next-on-pages output
 pages_build_output_dir = ".vercel/output/static"
 
-# D1 Database for quotes
-[[d1_databases]]
-binding = "DB"
-database_name = "vurmz-quotes"
-database_id = "b57e42c9-229c-436c-8109-fa3362e52b60"
-
-# R2 Storage for customer files
-[[r2_buckets]]
-binding = "FILES"
-bucket_name = "customer-files"
+# KV namespace for rate limiting
+[[kv_namespaces]]
+binding = "RATE_LIMIT"
+id = "02f167c6131342b4ad6a83ff6d45c768"
 
 # Environment variables
 [vars]

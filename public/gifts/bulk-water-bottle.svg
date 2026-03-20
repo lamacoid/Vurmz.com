@@ -1,0 +1,90 @@
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Background gradient -->
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1A2F2E;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0d1b1a;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Bottle metallic gradient -->
+    <linearGradient id="bottleGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#D0D0D0;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#909090;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#D0D0D0;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Teal glow filter -->
+    <filter id="tealglow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Stronger glow -->
+    <filter id="strongGlow">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="600" fill="url(#bgGradient)"/>
+
+  <!-- Left bottle -->
+  <g>
+    <!-- Bottle body -->
+    <path d="M 140 180 Q 135 180 135 200 L 135 420 Q 135 435 150 435 L 210 435 Q 225 435 225 420 L 225 200 Q 225 180 220 180 Z" fill="url(#bottleGradient)" stroke="#606060" stroke-width="1"/>
+
+    <!-- Bottle cap -->
+    <rect x="150" y="160" width="60" height="25" rx="2" fill="#404040" stroke="#303030" stroke-width="1"/>
+
+    <!-- Bottle shine -->
+    <ellipse cx="160" cy="250" rx="8" ry="35" fill="white" opacity="0.3"/>
+
+    <!-- Bottle label area -->
+    <rect x="145" y="300" width="70" height="80" fill="rgba(0,0,0,0.1)" rx="2"/>
+  </g>
+
+  <!-- Center bottle (front, with logo) -->
+  <g>
+    <!-- Bottle body -->
+    <path d="M 340 160 Q 335 160 335 185 L 335 430 Q 335 450 355 450 L 445 450 Q 465 450 465 430 L 465 185 Q 465 160 460 160 Z" fill="url(#bottleGradient)" stroke="#606060" stroke-width="1"/>
+
+    <!-- Bottle cap -->
+    <rect x="360" y="130" width="80" height="35" rx="3" fill="#303030" stroke="#202020" stroke-width="1"/>
+    <rect x="365" y="125" width="70" height="8" rx="2" fill="#505050"/>
+
+    <!-- Bottle shine -->
+    <ellipse cx="370" cy="280" rx="12" ry="50" fill="white" opacity="0.35"/>
+
+    <!-- Bottle label area -->
+    <rect x="350" y="310" width="100" height="90" fill="rgba(0,0,0,0.08)" rx="3"/>
+
+    <!-- LOGO text with glow -->
+    <text x="400" y="365" font-family="Arial, sans-serif" font-size="36" font-weight="bold" text-anchor="middle" fill="#3CB9B2" filter="url(#strongGlow)" opacity="0.9">LOGO</text>
+  </g>
+
+  <!-- Right bottle -->
+  <g>
+    <!-- Bottle body -->
+    <path d="M 540 190 Q 535 190 535 210 L 535 420 Q 535 435 550 435 L 610 435 Q 625 435 625 420 L 625 210 Q 625 190 620 190 Z" fill="url(#bottleGradient)" stroke="#606060" stroke-width="1"/>
+
+    <!-- Bottle cap -->
+    <rect x="550" y="165" width="60" height="28" rx="2" fill="#404040" stroke="#303030" stroke-width="1"/>
+
+    <!-- Bottle shine -->
+    <ellipse cx="560" cy="260" rx="8" ry="40" fill="white" opacity="0.3"/>
+
+    <!-- Bottle label area -->
+    <rect x="545" y="305" width="70" height="80" fill="rgba(0,0,0,0.1)" rx="2"/>
+  </g>
+
+  <!-- Subtle shadow for depth -->
+  <ellipse cx="400" cy="470" rx="280" ry="40" fill="rgba(0,0,0,0.3)" filter="url(#tealglow)"/>
+</svg>

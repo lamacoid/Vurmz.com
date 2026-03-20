@@ -22,7 +22,7 @@ export const PRODUCTS = {
   },
 
   businessCards: {
-    name: 'Metal Business Cards',
+    name: 'Metal Cards',
     packSize: 10,
     matteBlackBase: 3,    // Text only
     matteBlackLoaded: 6,  // Text + logo + QR + back
@@ -35,7 +35,7 @@ export const PRODUCTS = {
     },
     get basePackPrice() { return this.matteBlackBase * this.packSize }, // $30
     displayPrice: '$30/10',
-    description: 'Anodized aluminum or stainless steel',
+    description: 'Multiple colors. Business cards, membership tokens, VIP passes, custom coins, loyalty cards \u2014 any commercial application.',
   },
 
   coasters: {
@@ -146,7 +146,7 @@ export const HOMEPAGE_PRODUCTS = [
   {
     name: PRODUCTS.businessCards.name,
     price: PRODUCTS.businessCards.displayPrice,
-    note: 'Pack of 10'
+    note: 'Multiple colors & uses'
   },
   {
     name: PRODUCTS.coasters.name,
@@ -222,7 +222,7 @@ export const PRICING_DETAILS = {
     category: PRODUCTS.businessCards.name,
     packNote: `Sold in packs of 10`,
     items: [
-      { name: 'Matte Black (text only)', price: `$${PRODUCTS.businessCards.matteBlackBase}`, note: `= $30/pack` },
+      { name: 'Anodized aluminum (text only)', price: `$${PRODUCTS.businessCards.matteBlackBase}`, note: `= $30/pack` },
       { name: '+ Logo', price: `+$${PRODUCTS.businessCards.addOns.logo}`, note: '' },
       { name: '+ QR Code', price: `+$${PRODUCTS.businessCards.addOns.qrCode}`, note: '' },
       { name: '+ Back side', price: `+$${PRODUCTS.businessCards.addOns.backSide}`, note: '' },

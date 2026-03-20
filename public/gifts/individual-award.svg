@@ -1,0 +1,94 @@
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1A2F2E;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0d1b1a;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Gold Gradient for Star -->
+    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFD700;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#FFC700;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#B8860B;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Radial gold for star highlight -->
+    <radialGradient id="goldRadial" cx="40%" cy="40%">
+      <stop offset="0%" style="stop-color:#FFED4E;stop-opacity:1" />
+      <stop offset="60%" style="stop-color:#FFD700;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#B8860B;stop-opacity:1" />
+    </radialGradient>
+
+    <!-- Dark Base Gradient -->
+    <linearGradient id="baseGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#444444;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#222222;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Glow Effect for Engraved Text -->
+    <filter id="tealglow-strong" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="4" />
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.8" />
+      </feComponentTransfer>
+    </filter>
+
+    <!-- Shadow for depth -->
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="3" />
+      <feOffset dx="2" dy="4" result="offsetblur" />
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.4" />
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="600" fill="url(#bgGradient)" />
+
+  <!-- Award Display -->
+  <g transform="translate(400, 300)">
+    <!-- Base - rectangular block -->
+    <rect x="-90" y="80" width="180" height="80" rx="6" fill="url(#baseGradient)" filter="url(#shadow)" />
+
+    <!-- Base top rim - lighter -->
+    <ellipse cx="0" cy="80" rx="90" ry="12" fill="#555555" />
+
+    <!-- Base front face shine -->
+    <rect x="-85" y="85" width="170" height="15" rx="4" fill="white" opacity="0.12" />
+
+    <!-- Base bottom shadow -->
+    <rect x="-90" y="155" width="180" height="8" fill="black" opacity="0.3" rx="4" />
+
+    <!-- Connector post from base to star -->
+    <rect x="-12" y="45" width="24" height="40" fill="url(#baseGradient)" />
+
+    <!-- Post shine -->
+    <rect x="-10" y="45" width="8" height="35" fill="white" opacity="0.15" />
+
+    <!-- Star - 5 pointed -->
+    <!-- Using a 5-pointed star path -->
+    <g filter="url(#shadow)">
+      <path d="M 0,-90 L 17,-28 L 80,-28 L 32,12 L 50,75 L 0,35 L -50,75 L -32,12 L -80,-28 L -17,-28 Z" fill="url(#goldRadial)" stroke="#8B6914" stroke-width="2" />
+    </g>
+
+    <!-- Star shine/highlight on upper left points -->
+    <path d="M 0,-80 L 10,-40 L 40,-35 L 20,0 Z" fill="white" opacity="0.25" />
+
+    <!-- Star inner glow (darker gold shadow on right) -->
+    <path d="M 15,-25 L 75,-25 L 35,10 L 45,70 Z" fill="black" opacity="0.1" />
+
+    <!-- MVP Text in center of star with teal glow -->
+    <g filter="url(#tealglow-strong)">
+      <text x="0" y="8" font-family="Arial, sans-serif" font-size="42" font-weight="bold" fill="#3CB9B2" text-anchor="middle" letter-spacing="2">MVP</text>
+    </g>
+
+    <!-- Subtle text shadow effect -->
+    <text x="1" y="9" font-family="Arial, sans-serif" font-size="42" font-weight="bold" fill="#1a1a1a" text-anchor="middle" letter-spacing="2" opacity="0.3">MVP</text>
+  </g>
+</svg>

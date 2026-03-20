@@ -1,0 +1,97 @@
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Background gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1A2F2E;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0d1b1a;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Blade metallic gradient -->
+    <linearGradient id="bladeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#e8e8e8;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#f5f5f5;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d0d0d0;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Handle wood gradient -->
+    <linearGradient id="handleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#6B5344;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#8B6F47;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#5C4A37;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Teal glow for engraving -->
+    <filter id="teaGlow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Shadow filter -->
+    <filter id="shadowFilter">
+      <feDropShadow dx="2" dy="12" stdDeviation="8" flood-opacity="0.4"/>
+    </filter>
+
+    <!-- Blade shine -->
+    <linearGradient id="bladeShine" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.4" />
+      <stop offset="50%" style="stop-color:#ffffff;stop-opacity:0" />
+      <stop offset="100%" style="stop-color:#000000;stop-opacity:0.1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="600" fill="url(#bgGrad)"/>
+
+  <!-- Shadow beneath knife -->
+  <ellipse cx="380" cy="530" rx="160" ry="35" fill="rgba(0,0,0,0.3)"/>
+
+  <!-- Knife group (rotated) -->
+  <g transform="translate(350, 280) rotate(35)" filter="url(#shadowFilter)">
+
+    <!-- Blade -->
+    <path d="M 0,-8 L 280,-8 L 320,0 L 280,8 L 0,8 Z" fill="url(#bladeGrad)" stroke="#a0a0a0" stroke-width="0.5"/>
+
+    <!-- Blade shine effect -->
+    <path d="M 20,-6 L 260,-6 L 290,0 L 260,6 L 20,6 Z" fill="url(#bladeShine)" opacity="0.7"/>
+
+    <!-- Blade edge highlight -->
+    <line x1="0" y1="-8" x2="280" y2="-8" stroke="rgba(255,255,255,0.6)" stroke-width="1.5" opacity="0.5"/>
+
+    <!-- Handle -->
+    <rect x="-100" y="-12" width="100" height="24" rx="6" fill="url(#handleGrad)" stroke="#4a3a2a" stroke-width="1"/>
+
+    <!-- Handle grain texture -->
+    <g opacity="0.2">
+      <line x1="-95" y1="-12" x2="-95" y2="12" stroke="rgba(0,0,0,0.3)" stroke-width="1.5"/>
+      <line x1="-80" y1="-12" x2="-80" y2="12" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+      <line x1="-65" y1="-12" x2="-65" y2="12" stroke="rgba(0,0,0,0.2)" stroke-width="1"/>
+      <line x1="-50" y1="-12" x2="-50" y2="12" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+      <line x1="-35" y1="-12" x2="-35" y2="12" stroke="rgba(0,0,0,0.25)" stroke-width="1"/>
+      <line x1="-20" y1="-12" x2="-20" y2="12" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+    </g>
+
+    <!-- Engraved text with teal glow -->
+    <g filter="url(#teaGlow)" transform="translate(-50, 0)">
+      <text x="0" y="5" font-family="Arial, sans-serif" font-size="14" font-weight="bold"
+            fill="none" stroke="#3CB9B2" stroke-width="0.7" text-anchor="middle" letter-spacing="3">
+        BEST MAN • JAKE
+      </text>
+    </g>
+
+    <!-- Subtle engraved fill -->
+    <g opacity="0.12" transform="translate(-50, 0)">
+      <text x="0" y="5" font-family="Arial, sans-serif" font-size="14" font-weight="bold"
+            fill="#ffffff" text-anchor="middle" letter-spacing="3">BEST MAN • JAKE</text>
+    </g>
+
+    <!-- Handle highlight -->
+    <rect x="-100" y="-10" width="100" height="6" rx="3" fill="rgba(255,255,255,0.15)" opacity="0.8"/>
+
+    <!-- Handle shadow -->
+    <rect x="-100" y="6" width="100" height="6" rx="3" fill="rgba(0,0,0,0.15)" opacity="0.6"/>
+
+  </g>
+</svg>
