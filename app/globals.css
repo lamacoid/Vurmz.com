@@ -90,9 +90,19 @@ body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
+
 /* Consistent spacing across all pages */
 main section + section {
-  margin-top: 1.5rem;
+  margin-top: 2.5rem;
+}
+
+/* Cap content width site-wide — tighter, more focused */
+main .max-w-6xl,
+main .max-w-7xl {
+  max-width: 56rem; /* 896px = max-w-4xl */
+}
+main .max-w-5xl {
+  max-width: 56rem;
 }
 
 /* Wider horizontal margins site-wide */

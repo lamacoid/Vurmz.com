@@ -66,7 +66,7 @@ export const siteInfo = {
 export const navigation = [
   { name: 'Pricing', href: '/pricing' },
   { name: 'Portfolio', href: '/portfolio' },
-  { name: 'Centennial', href: '/centennial' },
+  { name: 'Community', href: '/centennial' },
   { name: 'Contact', href: '/contact' },
 ] as const
 

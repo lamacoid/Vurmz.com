@@ -7,7 +7,7 @@ import { portfolioItems } from '@/lib/portfolio'
 
 export const metadata: Metadata = {
   title: 'Portfolio | Laser Engraving Examples | VURMZ Centennial CO',
-  description: 'Laser engraving work for local businesses in South Denver metro. Branded pens, metal cards, tool marking, knife engraving.',
+  description: 'Client work, personal projects, and experiments in laser engraving. Metal, wood, glass, and more from Centennial, CO.',
 }
 
 export default function PortfolioPage() {
@@ -21,7 +21,7 @@ export default function PortfolioPage() {
               Portfolio
             </h1>
             <p className="text-base sm:text-lg md:text-xl text-gray-300">
-              Real examples of laser engraving work I&apos;ve done for local businesses and individuals.
+              Some of those possibilities.
             </p>
           </div>
         </div>
@@ -43,10 +43,13 @@ export default function PortfolioPage() {
                   height={600}
                   className="w-full h-auto object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <p className="absolute bottom-0 left-0 right-0 px-4 py-3 text-sm text-cream font-medium translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                  {item.label}
-                </p>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-0 left-0 right-0 px-4 py-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                  <p className="text-sm text-cream font-medium">{item.label}</p>
+                  {'context' in item && item.context && (
+                    <p className="text-xs text-cream/60 mt-0.5">{item.context}</p>
+                  )}
+                </div>
               </div>
             ))}
           </div>

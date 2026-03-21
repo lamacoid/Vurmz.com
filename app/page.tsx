@@ -131,7 +131,7 @@ export default function Home() {
               transition={{ duration: 0.5 }}
               className="text-base sm:text-lg text-gray-400 max-w-xl mb-8 leading-relaxed"
             >
-              Laser engraving for restaurants, contractors, corporate teams, and small businesses across the South Denver metro. Small batches, same-week turnaround, hand-delivered to your door.
+              Next-day turnaround. Hand-to-hand delivery across the South Denver metro. One person, start to finish.
             </motion.p>
 
             {/* CTAs */}
@@ -160,7 +160,7 @@ export default function Home() {
       </section>
 
       {/* ═══════════ WHAT I DO — scrolling items ═══════════ */}
-      <section className="relative py-12 sm:py-16 border-t border-white/[0.06] overflow-hidden">
+      <section className="relative py-12 sm:py-16 overflow-hidden bg-white/[0.015]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
           <h2 className="text-2xl sm:text-3xl font-bold text-cream tracking-tight">
             The possibilities are endless.
@@ -179,7 +179,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
             <div>
               <p className="text-gray-400 text-sm leading-relaxed mb-5">
-                I keep a small selection of items ready to engrave, but your business is unique. If you have something specific in mind, message me and we&apos;ll figure it out together.
+                Stock items like pens, cards, and coasters start at a few dollars each. Custom work on your own items starts at $50. Either way — next-day turnaround, hand-delivered.
               </p>
               <div className="flex items-center gap-4">
                 <Link
@@ -215,34 +215,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══════════ TRUSTED BY ═══════════ */}
-      <section className="py-8 sm:py-10 border-t border-white/[0.06] overflow-hidden">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-xs font-mono text-gray-500 tracking-[0.2em] uppercase mb-5 text-center">
-            Trusted by
-          </p>
-        </div>
-        <div className="relative">
-          <div className="flex items-center justify-center gap-12 sm:gap-16 logo-scroll">
-            <a href="http://nordstrom.com/store/cherry-creek" target="_blank" rel="noopener noreferrer" className="flex-shrink-0 text-sm font-medium text-cream/40 hover:text-cream/60 transition-colors">
-              Nordstrom Beauty
-            </a>
-            <a href="http://countylineguitaramps.com" target="_blank" rel="noopener noreferrer" className="flex-shrink-0 transition-opacity">
-              <Image
-                src="/images/clients/county-line-guitar-amps.svg"
-                alt="County Line Guitar Amps"
-                width={120}
-                height={36}
-                className="opacity-40 brightness-0 invert"
-              />
-            </a>
-            {/* Add more logos here — once there are enough, the row will scroll automatically */}
-          </div>
-        </div>
-      </section>
+      {/* Trusted By — hidden until 4+ logos */}
 
       {/* ═══════════ ABOUT (two-column) ═══════════ */}
-      <section className="relative py-12 sm:py-16">
+      <section className="relative py-12 sm:py-16 bg-white/[0.015]">
         <div
           className="absolute inset-0 opacity-[0.03]"
           style={{
@@ -288,7 +264,7 @@ export default function Home() {
                 <br />
                 <span className="text-gray-500">Just me.</span>
               </h2>
-              <p className="text-gray-400 text-base leading-relaxed">
+              <p className="text-gray-400 text-base leading-relaxed mb-4">
                 I&apos;m {siteInfo.founder.name}, and I run VURMZ out of {siteInfo.city}. I live here, I work here, and I deliver to Centennial, Lone Tree, Highlands Ranch, and everywhere in between. You text me, I quote you in minutes, and I handle your job personally.
               </p>
             </div>
@@ -297,7 +273,7 @@ export default function Home() {
       </section>
 
       {/* ═══════════ SAMPLES ═══════════ */}
-      <section className="relative py-12 sm:py-16 border-t border-white/[0.06]">
+      <section className="relative py-12 sm:py-16">
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center"
