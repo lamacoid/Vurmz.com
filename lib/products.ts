@@ -1,10 +1,9 @@
 // ═══════════════════════════════════════════
 // VURMZ PRICING — SINGLE SOURCE OF TRUTH
-// Two tiers: Basic (stock items + marking) and Signature (custom $50+)
+// Three lanes: Signature (custom $50+), Basic (stock packs), Leave Your Mark (tradespeople)
 // ═══════════════════════════════════════════
 
-// ─── Signature Tier ───
-// Custom work: bring your own item, one-of-a-kind, creative projects
+// ─── Signature ───
 export const SIGNATURE = {
   startingPrice: 50,
   description: 'Custom engraving on your item. One person, start to finish.',
@@ -16,13 +15,10 @@ export const SIGNATURE = {
   ],
 } as const
 
-// ─── Basic Tier ───
-// Stock items I keep on hand + straightforward marking services
-
+// ─── Basic ───
 export const BASIC = {
   pens: {
     name: 'Branded Pens',
-    tier: 'basic' as const,
     packSize: 15,
     basePerItem: 3,
     withLogo: 5,
@@ -34,22 +30,8 @@ export const BASIC = {
     description: 'Metal stylus pens with your text or logo',
   },
 
-  businessCards: {
-    name: 'Metal Cards',
-    tier: 'basic' as const,
-    packSize: 10,
-    matteBlackBase: 3,
-    matteBlackLoaded: 6,
-    stainlessBase: 15,
-    stainlessLoaded: 18,
-    addOns: { logo: 1, qrCode: 1, backSide: 1 },
-    get basePackPrice() { return this.matteBlackBase * this.packSize },
-    description: 'Business cards, membership tokens, VIP passes, loyalty cards — multiple colors available.',
-  },
-
   coasters: {
     name: 'Coasters',
-    tier: 'basic' as const,
     packSize: 15,
     materials: { wood: 4, hardwood: 5, slate: 5, steel: 6 },
     get basePackPrice() { return this.materials.wood * this.packSize },
@@ -58,7 +40,6 @@ export const BASIC = {
 
   keychains: {
     name: 'Keychains',
-    tier: 'basic' as const,
     packSize: 15,
     materials: { acrylic: 3, wood: 4, metal: 4 },
     addOns: { sameOnBack: 2, differentOnBack: 3 },
@@ -68,68 +49,79 @@ export const BASIC = {
 
   knives: {
     name: 'Knife Marking',
-    tier: 'basic' as const,
     perKnife: 25,
     addOns: { deepMark: 5, secondLine: 3 },
     description: 'Bring your own blade. Names near the handle, logos, custom text. I can pick up from a whole kitchen crew and return next day.',
-    note: 'Per knife · bring your own blade',
   },
 
   tools: {
     name: 'Tool Marking',
-    tier: 'basic' as const,
     perPiece: 15,
     minimum: 4,
     description: 'Names, IDs, or company info on power tools and equipment.',
-    note: '4 piece minimum for free delivery',
   },
 } as const
 
-// ─── Pricing Page Data ───
+// ─── Leave Your Mark ───
+export const LEAVE_YOUR_MARK = {
+  serviceTags: {
+    name: 'Metal Service Tags',
+    packSize: 10,
+    matteBlackBase: 3,
+    matteBlackLoaded: 6,
+    stainlessBase: 15,
+    stainlessLoaded: 18,
+    addOns: { logo: 1, qrCode: 1, backSide: 1 },
+    description: 'Credit card-sized metal tags. Company info, service date, callback schedule. Stainless steel or anodized aluminum with 3M adhesive backing.',
+  },
+
+  signatureTiles: {
+    name: 'Signature Tiles',
+    price: 15,
+    description: 'Small engraved tile with your logo or mark. Set into your finished work — floors, backsplashes, stonework. Like signing a painting.',
+  },
+} as const
+
+// ─── Pricing Page Cards ───
 
 export const BASIC_PRICING_CARDS = [
   {
     category: BASIC.pens.name,
-    packNote: `Packs of ${BASIC.pens.packSize}`,
+    packNote: `Pack of ${BASIC.pens.packSize}`,
+    packTotal: `$${BASIC.pens.basePackPrice} – $${BASIC.pens.fullyLoadedPackPrice}`,
     items: [
-      { name: 'Text only', price: `$${BASIC.pens.basePerItem}`, note: `$${BASIC.pens.basePackPrice}/pack` },
+      { name: 'Text only', price: `$${BASIC.pens.basePerItem}/ea`, note: '' },
       { name: '+ Logo', price: `+$${BASIC.pens.addOns.logo}`, note: '' },
       { name: '+ Second line', price: `+$${BASIC.pens.addOns.secondLine}`, note: '' },
       { name: '+ Both sides', price: `+$${BASIC.pens.addOns.bothSides}`, note: '' },
-      { name: 'Fully loaded', price: `$${BASIC.pens.fullyLoaded}`, note: `$${BASIC.pens.fullyLoadedPackPrice}/pack` },
-    ],
-  },
-  {
-    category: BASIC.businessCards.name,
-    packNote: 'Packs of 10',
-    items: [
-      { name: 'Anodized aluminum (text)', price: `$${BASIC.businessCards.matteBlackBase}`, note: '$30/pack' },
-      { name: '+ Logo / QR / back', price: '+$1 each', note: '' },
-      { name: 'Stainless steel', price: `$${BASIC.businessCards.stainlessBase}`, note: '$150/pack' },
+      { name: 'Fully loaded', price: `$${BASIC.pens.fullyLoaded}/ea`, note: '' },
     ],
   },
   {
     category: BASIC.coasters.name,
-    packNote: `Packs of ${BASIC.coasters.packSize}`,
+    packNote: `Pack of ${BASIC.coasters.packSize}`,
+    packTotal: `$${BASIC.coasters.materials.wood * BASIC.coasters.packSize} – $${BASIC.coasters.materials.steel * BASIC.coasters.packSize}`,
     items: [
-      { name: 'Pine / Bamboo', price: `$${BASIC.coasters.materials.wood}`, note: '' },
-      { name: 'Oak / Acacia', price: `$${BASIC.coasters.materials.hardwood}`, note: '' },
-      { name: 'Natural Slate', price: `$${BASIC.coasters.materials.slate}`, note: '' },
-      { name: 'Stainless Steel', price: `$${BASIC.coasters.materials.steel}`, note: '' },
+      { name: 'Pine / Bamboo', price: `$${BASIC.coasters.materials.wood}/ea`, note: '' },
+      { name: 'Oak / Acacia', price: `$${BASIC.coasters.materials.hardwood}/ea`, note: '' },
+      { name: 'Natural Slate', price: `$${BASIC.coasters.materials.slate}/ea`, note: '' },
+      { name: 'Stainless Steel', price: `$${BASIC.coasters.materials.steel}/ea`, note: '' },
     ],
   },
   {
     category: BASIC.keychains.name,
-    packNote: `Packs of ${BASIC.keychains.packSize}`,
+    packNote: `Pack of ${BASIC.keychains.packSize}`,
+    packTotal: `$${BASIC.keychains.materials.acrylic * BASIC.keychains.packSize} – $${BASIC.keychains.materials.metal * BASIC.keychains.packSize}`,
     items: [
-      { name: 'Acrylic', price: `$${BASIC.keychains.materials.acrylic}`, note: '' },
-      { name: 'Wood', price: `$${BASIC.keychains.materials.wood}`, note: '' },
-      { name: 'Metal', price: `$${BASIC.keychains.materials.metal}`, note: '' },
+      { name: 'Acrylic', price: `$${BASIC.keychains.materials.acrylic}/ea`, note: '' },
+      { name: 'Wood', price: `$${BASIC.keychains.materials.wood}/ea`, note: '' },
+      { name: 'Metal', price: `$${BASIC.keychains.materials.metal}/ea`, note: '' },
     ],
   },
   {
     category: BASIC.knives.name,
     packNote: 'Bring your own · per knife',
+    packTotal: '',
     items: [
       { name: 'Name near handle', price: '$25', note: 'Most common' },
       { name: '+ Deep marking', price: `+$${BASIC.knives.addOns.deepMark}`, note: '' },
@@ -139,10 +131,33 @@ export const BASIC_PRICING_CARDS = [
   },
   {
     category: BASIC.tools.name,
-    packNote: `$${BASIC.tools.perPiece}/piece · ${BASIC.tools.minimum} minimum`,
+    packNote: `${BASIC.tools.minimum} piece minimum for free delivery`,
+    packTotal: '',
     items: [
-      { name: 'Name / ID marking', price: `$${BASIC.tools.perPiece}`, note: 'Per piece' },
-      { name: 'Free delivery', price: '4+ pieces', note: 'South Denver metro' },
+      { name: 'Name / ID marking', price: `$${BASIC.tools.perPiece}/ea`, note: '' },
+    ],
+  },
+]
+
+export const LEAVE_YOUR_MARK_CARDS = [
+  {
+    category: LEAVE_YOUR_MARK.serviceTags.name,
+    packNote: 'Pack of 10 · credit card sized',
+    packTotal: `$${LEAVE_YOUR_MARK.serviceTags.matteBlackBase * LEAVE_YOUR_MARK.serviceTags.packSize} – $${LEAVE_YOUR_MARK.serviceTags.stainlessLoaded * LEAVE_YOUR_MARK.serviceTags.packSize}`,
+    items: [
+      { name: 'Anodized aluminum (text)', price: `$${LEAVE_YOUR_MARK.serviceTags.matteBlackBase}/ea`, note: '' },
+      { name: '+ Logo / QR / back', price: '+$1 each', note: '' },
+      { name: 'Stainless steel', price: `$${LEAVE_YOUR_MARK.serviceTags.stainlessBase}/ea`, note: '' },
+      { name: '3M adhesive backing', price: 'Included', note: '' },
+    ],
+  },
+  {
+    category: LEAVE_YOUR_MARK.signatureTiles.name,
+    packNote: 'Per tile',
+    packTotal: '',
+    items: [
+      { name: 'Logo on tile', price: `$${LEAVE_YOUR_MARK.signatureTiles.price}`, note: 'Your logo, set into your work' },
+      { name: 'Custom design', price: 'Quote', note: '' },
     ],
   },
 ]

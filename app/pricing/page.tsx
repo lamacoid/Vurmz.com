@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { Metadata } from 'next'
 import { ArrowRightIcon, ChatBubbleLeftIcon } from '@heroicons/react/24/outline'
-import { SIGNATURE, BASIC_PRICING_CARDS } from '@/lib/products'
+import { SIGNATURE, BASIC_PRICING_CARDS, LEAVE_YOUR_MARK_CARDS } from '@/lib/products'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 
 export const metadata: Metadata = {
@@ -89,9 +89,17 @@ export default function PricingPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {BASIC_PRICING_CARDS.map((card) => (
               <div key={card.category} className="bg-white/[0.03] border border-white/[0.08] rounded-sm overflow-hidden">
-                <div className="px-5 py-3 border-b border-white/[0.06]">
-                  <h3 className="text-sm font-semibold text-cream">{card.category}</h3>
-                  <p className="text-xs text-gray-500">{card.packNote}</p>
+                <div className="px-5 py-3 border-b border-white/[0.06] flex items-center justify-between">
+                  <div>
+                    <h3 className="text-sm font-semibold text-cream">{card.category}</h3>
+                    <p className="text-xs text-gray-500">{card.packNote}</p>
+                  </div>
+                  {card.packTotal && (
+                    <div className="text-right">
+                      <p className="text-sm font-semibold text-vurmz-teal">{card.packTotal}</p>
+                      <p className="text-[10px] text-gray-500">pack total</p>
+                    </div>
+                  )}
                 </div>
                 <div className="px-5 py-3">
                   <table className="w-full">
@@ -118,6 +126,67 @@ export default function PricingPage() {
             Prices are estimates. Final pricing depends on quantity, complexity, and materials.
             {' '}<Link href="/portfolio" className="text-vurmz-teal hover:text-cream transition-colors">See examples</Link>.
           </p>
+        </div>
+      </section>
+
+      {/* ═══ LEAVE YOUR MARK ═══ */}
+      <section className="py-12 sm:py-16 bg-white/[0.02]">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.06] border border-white/[0.1] mb-4">
+            <span className="text-xs font-semibold text-cream tracking-wide uppercase">Leave Your Mark</span>
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-bold text-cream tracking-tight leading-tight mb-2">
+            For the trades.
+          </h2>
+          <p className="text-gray-400 text-base leading-relaxed mb-8 max-w-2xl">
+            Metal service tags, installer signature tiles. The kind of thing that outlasts a sticker by about 20 years. HVAC, plumbing, electrical, masonry, flooring — if you do the work, people should know who did it.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {LEAVE_YOUR_MARK_CARDS.map((card) => (
+              <div key={card.category} className="bg-white/[0.03] border border-white/[0.08] rounded-sm overflow-hidden">
+                <div className="px-5 py-3 border-b border-white/[0.06] flex items-center justify-between">
+                  <div>
+                    <h3 className="text-sm font-semibold text-cream">{card.category}</h3>
+                    <p className="text-xs text-gray-500">{card.packNote}</p>
+                  </div>
+                  {card.packTotal && (
+                    <div className="text-right">
+                      <p className="text-sm font-semibold text-vurmz-teal">{card.packTotal}</p>
+                      <p className="text-[10px] text-gray-500">pack total</p>
+                    </div>
+                  )}
+                </div>
+                <div className="px-5 py-3">
+                  <table className="w-full">
+                    <tbody className="divide-y divide-white/[0.04]">
+                      {card.items.map((item) => (
+                        <tr key={item.name}>
+                          <td className="py-2">
+                            <p className="text-sm text-cream/80">{item.name}</p>
+                            {item.note && <p className="text-xs text-gray-500">{item.note}</p>}
+                          </td>
+                          <td className="py-2 text-right whitespace-nowrap">
+                            <p className="text-sm font-semibold text-vurmz-teal">{item.price}</p>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-6 text-center">
+            <a
+              href={getSmsLink("I'm interested in service tags or signature tiles")}
+              className="group inline-flex items-center justify-center gap-2 px-6 py-3 bg-vurmz-cta text-white font-semibold text-sm rounded-sm hover:bg-vurmz-cta-hover transition-all shadow-lg shadow-vurmz-cta/20"
+            >
+              <ChatBubbleLeftIcon className="w-4 h-4" />
+              Text me about Leave Your Mark
+            </a>
+          </div>
         </div>
       </section>
 

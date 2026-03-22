@@ -687,7 +687,7 @@ html.light body::before {
   background-image:
     radial-gradient(ellipse 35% 35% at 15% 25%, rgba(60, 185, 178, 0.6) 0%, transparent 70%),
     radial-gradient(ellipse 30% 40% at 85% 20%, rgba(123, 200, 212, 0.5) 0%, transparent 65%),
-    radial-gradient(ellipse 40% 30% at 50% 80%, rgba(125, 170, 140, 0.4) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 30% at 50% 80%, rgba(60, 185, 178, 0.4) 0%, transparent 60%),
     radial-gradient(ellipse 25% 25% at 75% 65%, rgba(181, 216, 224, 0.4) 0%, transparent 55%);
 }
 

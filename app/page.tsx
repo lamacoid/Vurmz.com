@@ -215,6 +215,39 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ═══════════ LEAVE YOUR MARK ═══════════ */}
+      <section className="relative py-12 sm:py-16 bg-white/[0.015]">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-2xl">
+            <p className="text-xs font-mono text-gray-500 tracking-[0.2em] uppercase mb-4">
+              For the Trades
+            </p>
+            <h2 className="text-2xl sm:text-3xl font-bold text-cream tracking-tight leading-tight mb-4">
+              Leave your mark.
+            </h2>
+            <p className="text-gray-400 text-base leading-relaxed mb-6">
+              Metal service tags, installer signature tiles. If you do the work, people should know who did it. HVAC, plumbing, electrical, masonry, flooring.
+            </p>
+            <div className="flex items-center gap-4">
+              <Link
+                href="/pricing"
+                className="inline-flex items-center gap-2 text-sm text-vurmz-teal font-mono tracking-wide hover:text-cream transition-colors group"
+              >
+                See pricing
+                <ArrowRightIcon className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+              </Link>
+              <a
+                href={getSmsLink("I'm interested in service tags")}
+                className="inline-flex items-center gap-2 text-sm text-gray-400 font-mono tracking-wide hover:text-cream transition-colors group"
+              >
+                <ChatBubbleLeftIcon className="w-3.5 h-3.5" />
+                Text me
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Trusted By — hidden until 4+ logos */}
 
       {/* ═══════════ ABOUT (two-column) ═══════════ */}
