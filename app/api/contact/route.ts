@@ -222,6 +222,49 @@ export async function POST(request: NextRequest) {
       throw new Error('Failed to send email')
     }
 
+    // Send confirmation email to the customer
+    try {
+      await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${resendApiKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          from: 'Zach at VURMZ <noreply@vurmz.com>',
+          to: email,
+          reply_to: 'zach@vurmz.com',
+          subject: 'Got your message — VURMZ',
+          html: `
+            <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 500px; margin: 0 auto; padding: 32px 0;">
+              <div style="margin-bottom: 24px;">
+                <strong style="font-size: 18px; color: #243B39;">VURMZ</strong>
+                <span style="color: #999; font-size: 14px; margin-left: 8px;">Laser Engraving</span>
+              </div>
+              <p style="font-size: 15px; color: #333; line-height: 1.6; margin-bottom: 16px;">
+                Hey ${escapeHtml(name.split(' ')[0])},
+              </p>
+              <p style="font-size: 15px; color: #333; line-height: 1.6; margin-bottom: 16px;">
+                I received your message and I&rsquo;ll be reaching out soon. If you need a faster response, feel free to text me directly at <strong>(719) 257-3834</strong>.
+              </p>
+              <p style="font-size: 15px; color: #333; line-height: 1.6; margin-bottom: 24px;">
+                Talk soon,<br/>
+                <strong>Zach DeMillo</strong><br/>
+                <span style="color: #666;">VURMZ &middot; Centennial, CO</span>
+              </p>
+              <hr style="border: none; border-top: 1px solid #eee; margin: 24px 0;" />
+              <p style="font-size: 12px; color: #999;">
+                <a href="https://vurmz.com" style="color: #6BB8B2;">vurmz.com</a> &middot; (719) 257-3834 &middot; zach@vurmz.com
+              </p>
+            </div>
+          `,
+        }),
+      })
+    } catch {
+      // Don't fail the whole request if confirmation email fails
+      console.warn('Confirmation email failed to send')
+    }
+
     const response = NextResponse.json({ success: true })
     response.headers.set('X-RateLimit-Remaining', String(remaining))
     return response

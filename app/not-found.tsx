@@ -1,190 +1,224 @@
-'use client'
-
 import Link from 'next/link'
-import { useEffect, useRef } from 'react'
 
 export default function NotFound() {
-  const canvasRef = useRef<HTMLCanvasElement>(null)
+  // Total cycle: 6s. Char1: 0-1.6s, Char2: 1.7-3.3s, Char3: 3.4-5s, hold 5-5.5s, reset 5.5-6s
+  const cycle = 6
+  const fillDur = 1.5 // seconds per character fill
+  const chars = [
+    { char: '4', start: 0.1, end: 0.1 + fillDur },
+    { char: '0', start: 1.7, end: 1.7 + fillDur },
+    { char: '4', start: 3.3, end: 3.3 + fillDur },
+  ]
 
-  useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
-    const ctx = canvas.getContext('2d')!
-    if (!ctx) return
-
-    let w = window.innerWidth
-    let h = window.innerHeight
-    canvas.width = w
-    canvas.height = h
-
-    const resize = () => {
-      w = window.innerWidth
-      h = window.innerHeight
-      canvas.width = w
-      canvas.height = h
-    }
-    window.addEventListener('resize', resize)
-
-    // Engraved "404" marks that accumulate
-    const marks: Array<{ x: number; y: number; size: number; rot: number; opacity: number }> = []
-
-    // Laser head position
-    let laserX = w / 2
-    let laserY = h / 2
-    let targetX = Math.random() * w
-    let targetY = Math.random() * h
-    let engraving = false
-    let engraveTick = 0
-    const speed = 4
-
-    // Sparks
-    const sparks: Array<{ x: number; y: number; vx: number; vy: number; life: number }> = []
-
-    function newTarget() {
-      targetX = 60 + Math.random() * (w - 120)
-      targetY = 60 + Math.random() * (h - 120)
-      engraving = false
-    }
-
-    function addMark() {
-      const sizes = [28, 36, 48, 64, 80, 100]
-      marks.push({
-        x: laserX,
-        y: laserY,
-        size: sizes[Math.floor(Math.random() * sizes.length)],
-        rot: (Math.random() - 0.5) * 0.4,
-        opacity: 0.6 + Math.random() * 0.3,
-      })
-      // Keep it from getting too heavy
-      if (marks.length > 120) marks.shift()
-    }
-
-    function addSparks() {
-      for (let i = 0; i < 3; i++) {
-        const angle = Math.random() * Math.PI * 2
-        const spd = 1 + Math.random() * 3
-        sparks.push({
-          x: laserX,
-          y: laserY,
-          vx: Math.cos(angle) * spd,
-          vy: Math.sin(angle) * spd - 1,
-          life: 15 + Math.random() * 20,
-        })
-      }
-    }
-
-    function draw() {
-      ctx.clearRect(0, 0, w, h)
-
-      // Dark background
-      ctx.fillStyle = '#1a2a1f'
-      ctx.fillRect(0, 0, w, h)
-
-      // Draw accumulated burn marks
-      for (const m of marks) {
-        ctx.save()
-        ctx.translate(m.x, m.y)
-        ctx.rotate(m.rot)
-        ctx.font = `900 ${m.size}px Inter, system-ui, sans-serif`
-        ctx.textAlign = 'center'
-        ctx.textBaseline = 'middle'
-        // Burn mark — dark etched look
-        ctx.fillStyle = `rgba(18, 28, 20, ${m.opacity})`
-        ctx.fillText('404', 0, 0)
-        // Subtle edge highlight
-        ctx.fillStyle = `rgba(125, 170, 140, ${m.opacity * 0.15})`
-        ctx.fillText('404', 0.5, -0.5)
-        ctx.restore()
-      }
-
-      // Move laser toward target
-      const dx = targetX - laserX
-      const dy = targetY - laserY
-      const dist = Math.sqrt(dx * dx + dy * dy)
-
-      if (dist < 5) {
-        if (!engraving) {
-          engraving = true
-          engraveTick = 0
-        }
-        engraveTick++
-        if (engraveTick > 8) {
-          addMark()
-          newTarget()
-        }
-        addSparks()
-      } else {
-        laserX += (dx / dist) * speed
-        laserY += (dy / dist) * speed
-      }
-
-      // Draw sparks
-      for (let i = sparks.length - 1; i >= 0; i--) {
-        const s = sparks[i]
-        s.x += s.vx
-        s.y += s.vy
-        s.vy += 0.1
-        s.life--
-        if (s.life <= 0) { sparks.splice(i, 1); continue }
-        const alpha = s.life / 30
-        ctx.beginPath()
-        ctx.arc(s.x, s.y, 1, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(255, ${150 + Math.random() * 100}, ${50 + Math.random() * 50}, ${alpha})`
-        ctx.fill()
-      }
-
-      // Laser dot glow
-      if (dist < 30 || engraving) {
-        const glow = ctx.createRadialGradient(laserX, laserY, 0, laserX, laserY, 20)
-        glow.addColorStop(0, 'rgba(255, 200, 100, 0.9)')
-        glow.addColorStop(0.3, 'rgba(255, 140, 60, 0.4)')
-        glow.addColorStop(1, 'rgba(255, 100, 30, 0)')
-        ctx.fillStyle = glow
-        ctx.fillRect(laserX - 20, laserY - 20, 40, 40)
-      }
-
-      // Laser dot
-      ctx.beginPath()
-      ctx.arc(laserX, laserY, 2, 0, Math.PI * 2)
-      ctx.fillStyle = '#ff9944'
-      ctx.fill()
-
-      // Faint crosshair
-      ctx.strokeStyle = 'rgba(255, 150, 80, 0.15)'
-      ctx.lineWidth = 0.5
-      ctx.beginPath()
-      ctx.moveTo(laserX - 15, laserY)
-      ctx.lineTo(laserX + 15, laserY)
-      ctx.moveTo(laserX, laserY - 15)
-      ctx.lineTo(laserX, laserY + 15)
-      ctx.stroke()
-
-      requestAnimationFrame(draw)
-    }
-
-    draw()
-
-    return () => window.removeEventListener('resize', resize)
-  }, [])
+  function pct(s: number) { return ((s / cycle) * 100).toFixed(1) }
 
   return (
-    <div className="relative min-h-screen bg-[#1a2a1f] overflow-hidden">
-      <canvas ref={canvasRef} className="absolute inset-0" />
+    <div className="relative min-h-screen bg-vurmz-dark overflow-hidden flex items-center justify-center">
+      <style>{`
+        .engrave-wrap {
+          display: flex;
+          gap: clamp(2px, 0.5vw, 8px);
+          user-select: none;
+          position: relative;
+        }
 
-      {/* Content overlay */}
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4">
-        <p className="text-xs font-mono text-gray-500 tracking-[0.3em] uppercase mb-4">
-          Page not found
-        </p>
-        <h1 className="text-6xl sm:text-8xl font-bold text-cream/10 tracking-tight mb-8">
-          404
-        </h1>
-        <Link
-          href="/"
-          className="px-6 py-3 bg-vurmz-cta text-white font-semibold text-sm rounded-sm hover:bg-vurmz-cta-hover transition-all shadow-lg shadow-vurmz-cta/20"
-        >
-          Back to VURMZ
-        </Link>
+        .char-box {
+          position: relative;
+          overflow: hidden;
+        }
+
+        /* Ghost — faint outline of what will be engraved */
+        .char-ghost {
+          font-size: clamp(100px, 26vw, 280px);
+          font-weight: 900;
+          line-height: 0.85;
+          color: transparent;
+          -webkit-text-stroke: 1px rgba(240, 230, 213, 0.03);
+          font-family: Inter, system-ui, sans-serif;
+        }
+
+        /* ═══ Filled text ═══
+           Uses background-clip:text so the fill gradient only shows INSIDE the letter shape.
+           This is the key — the gradient acts as a "progress bar" moving down through the letter. */
+        .char-fill {
+          position: absolute;
+          top: 0; left: 0;
+          font-size: clamp(100px, 26vw, 280px);
+          font-weight: 900;
+          line-height: 0.85;
+          font-family: Inter, system-ui, sans-serif;
+          -webkit-background-clip: text;
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+
+        /* The fill gradient: solid color on top (engraved area), bright line (laser), transparent below (unengraved) */
+        ${chars.map((c, i) => `
+          .char-box:nth-child(${i + 1}) .char-fill {
+            background: linear-gradient(
+              180deg,
+              rgba(240, 230, 213, 0.8) 0%,
+              rgba(240, 230, 213, 0.8) var(--fill-pos, 0%),
+              rgba(255, 200, 120, 1) var(--fill-pos, 0%),
+              rgba(255, 140, 60, 0.6) calc(var(--fill-pos, 0%) + 1.5%),
+              transparent calc(var(--fill-pos, 0%) + 2.5%)
+            );
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fillChar${i} ${cycle}s linear infinite;
+          }
+
+          @keyframes fillChar${i} {
+            0% { --fill-pos: 0%; }
+            ${pct(c.start)}% { --fill-pos: 0%; }
+            ${pct(c.end)}% { --fill-pos: 100%; }
+            ${pct(cycle * 0.92)}% { --fill-pos: 100%; }
+            ${pct(cycle * 0.97)}% { --fill-pos: 0%; }
+            100% { --fill-pos: 0%; }
+          }
+        `).join('')}
+
+        /* Hatch line overlay — gives it the engraved line texture */
+        .char-hatch {
+          position: absolute;
+          top: 0; left: 0; right: 0; bottom: 0;
+          background: repeating-linear-gradient(
+            0deg,
+            transparent 0px,
+            transparent 3px,
+            rgba(36, 59, 57, 0.2) 3px,
+            rgba(36, 59, 57, 0.2) 4px
+          );
+          pointer-events: none;
+          mix-blend-mode: multiply;
+        }
+
+        /* ═══ Laser dot ═══
+           Jitters rapidly left-right (galvo X mirror) while tracking Y with the fill */
+        .char-dot {
+          position: absolute;
+          width: 5px;
+          height: 5px;
+          background: #fff;
+          border-radius: 50%;
+          box-shadow:
+            0 0 4px 2px rgba(255, 255, 255, 0.9),
+            0 0 12px 4px rgba(255, 200, 100, 0.7),
+            0 0 30px 8px rgba(255, 140, 60, 0.4),
+            0 0 50px 12px rgba(255, 100, 30, 0.15);
+          left: 50%;
+          opacity: 0;
+          z-index: 5;
+        }
+
+        /* X-axis jitter — simulates the galvo mirror snapping back and forth */
+        @keyframes galvoX {
+          0% { transform: translateX(-45px); }
+          10% { transform: translateX(38px); }
+          20% { transform: translateX(-28px); }
+          30% { transform: translateX(52px); }
+          40% { transform: translateX(-42px); }
+          50% { transform: translateX(30px); }
+          60% { transform: translateX(-50px); }
+          70% { transform: translateX(44px); }
+          80% { transform: translateX(-32px); }
+          90% { transform: translateX(48px); }
+          100% { transform: translateX(-45px); }
+        }
+
+        ${chars.map((c, i) => `
+          .char-box:nth-child(${i + 1}) .char-dot {
+            animation:
+              dotY${i} ${cycle}s linear infinite,
+              galvoX 0.06s linear infinite;
+          }
+
+          @keyframes dotY${i} {
+            0% { top: 0%; opacity: 0; }
+            ${pct(c.start - 0.05)}% { top: 0%; opacity: 0; }
+            ${pct(c.start)}% { top: 0%; opacity: 1; }
+            ${pct(c.end)}% { top: 95%; opacity: 1; }
+            ${pct(c.end + 0.05)}% { opacity: 0; }
+            100% { opacity: 0; }
+          }
+        `).join('')}
+
+        /* ═══ Glow line ═══
+           Wider ambient glow that follows the laser position */
+        .char-glow {
+          position: absolute;
+          left: -30%;
+          right: -30%;
+          height: 8px;
+          background: radial-gradient(ellipse 50% 100% at 50% 50%,
+            rgba(255, 180, 80, 0.5) 0%,
+            rgba(255, 120, 40, 0.15) 50%,
+            transparent 100%
+          );
+          opacity: 0;
+          z-index: 4;
+          filter: blur(2px);
+        }
+
+        ${chars.map((c, i) => `
+          .char-box:nth-child(${i + 1}) .char-glow {
+            animation: glowY${i} ${cycle}s linear infinite;
+          }
+          @keyframes glowY${i} {
+            0% { top: 0%; opacity: 0; }
+            ${pct(c.start)}% { top: 0%; opacity: 1; }
+            ${pct(c.end)}% { top: 95%; opacity: 1; }
+            ${pct(c.end + 0.05)}% { opacity: 0; }
+            100% { opacity: 0; }
+          }
+        `).join('')}
+
+        /* Ambient glow behind everything */
+        .ambient {
+          position: absolute;
+          top: 50%; left: 50%;
+          transform: translate(-50%, -55%);
+          width: 70%;
+          height: 60%;
+          background: radial-gradient(ellipse, rgba(255,140,60,0.03) 0%, transparent 70%);
+          pointer-events: none;
+        }
+
+        /* Register the custom property for gradient animation */
+        @property --fill-pos {
+          syntax: '<percentage>';
+          inherits: false;
+          initial-value: 0%;
+        }
+      `}</style>
+
+      <div className="ambient" />
+
+      <div className="text-center relative z-10">
+        <div className="engrave-wrap">
+          {chars.map((c, i) => (
+            <div key={i} className="char-box">
+              <span className="char-ghost">{c.char}</span>
+              <span className="char-fill">{c.char}</span>
+              <div className="char-hatch" />
+              <div className="char-glow" />
+              <div className="char-dot" />
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-10">
+          <p className="text-xs font-mono text-gray-500 tracking-[0.3em] uppercase mb-6">
+            Page not found
+          </p>
+          <Link
+            href="/"
+            className="px-6 py-3 bg-vurmz-cta text-white font-semibold text-sm rounded-sm hover:bg-vurmz-cta-hover transition-all shadow-lg shadow-vurmz-cta/20"
+          >
+            Back to VURMZ
+          </Link>
+        </div>
       </div>
     </div>
   )
