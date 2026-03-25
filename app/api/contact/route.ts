@@ -265,6 +265,31 @@ export async function POST(request: NextRequest) {
       console.warn('Confirmation email failed to send')
     }
 
+    // Store submission in KV for admin inbox
+    try {
+      const { env } = getRequestContext()
+      const kv = (env as unknown as Record<string, KVNamespace>).RATE_LIMIT
+      if (kv) {
+        const submission = {
+          id: crypto.randomUUID().slice(0, 8),
+          name, email, phone, message, productInterest,
+          read: false,
+          archived: false,
+          receivedAt: new Date().toISOString(),
+          notes: '',
+        }
+        // Store with a prefix and TTL of 90 days
+        await kv.put(`inbox:${submission.id}`, JSON.stringify(submission), { expirationTtl: 7776000 })
+        // Keep a list of IDs for easy retrieval
+        const existingIds = await kv.get('inbox:_index')
+        const ids = existingIds ? JSON.parse(existingIds) : []
+        ids.unshift(submission.id)
+        await kv.put('inbox:_index', JSON.stringify(ids.slice(0, 500)))
+      }
+    } catch {
+      console.warn('Failed to store submission in KV')
+    }
+
     const response = NextResponse.json({ success: true })
     response.headers.set('X-RateLimit-Remaining', String(remaining))
     return response
