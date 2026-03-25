@@ -70,6 +70,21 @@ export default function PricingPage() {
               </a>
             </div>
           </div>
+
+          {/* Concierge */}
+          <div className="mt-8 bg-white/[0.03] border border-white/[0.08] rounded-sm p-5 sm:p-6">
+            <h3 className="text-sm font-semibold text-cream mb-2">Don&apos;t have the item yet?</h3>
+            <p className="text-gray-400 text-sm leading-relaxed">
+              I offer concierge sourcing. Tell me what you want — I&apos;ll find it, buy it, engrave it, and deliver it. You don&apos;t have to lift a finger. $25 flat finders fee + cost of item.
+            </p>
+            <a
+              href={getSmsLink("I need help sourcing an item")}
+              className="inline-flex items-center gap-1.5 text-xs text-vurmz-teal font-mono tracking-wide hover:text-cream transition-colors group mt-3"
+            >
+              <ChatBubbleLeftIcon className="w-3.5 h-3.5" />
+              Tell me what you need
+            </a>
+          </div>
         </div>
       </section>
 
