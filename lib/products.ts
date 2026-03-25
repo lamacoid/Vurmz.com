@@ -9,7 +9,7 @@ export const SIGNATURE = {
   description: 'Custom engraving on your item. One person, start to finish.',
   includes: [
     'No setup fees',
-    'No minimums',
+    'Single items welcome',
     'Next-day turnaround',
     'Free hand-to-hand delivery in the South Denver metro',
   ],
@@ -90,11 +90,11 @@ export const BASIC_PRICING_CARDS = [
     packNote: `Pack of ${BASIC.pens.packSize}`,
     packTotal: `$${BASIC.pens.basePackPrice} – $${BASIC.pens.fullyLoadedPackPrice}`,
     items: [
-      { name: 'Text only', price: `$${BASIC.pens.basePerItem}/ea`, note: '' },
+      { name: 'Text only', price: `$${BASIC.pens.basePerItem}`, note: '' },
       { name: '+ Logo', price: `+$${BASIC.pens.addOns.logo}`, note: '' },
       { name: '+ Second line', price: `+$${BASIC.pens.addOns.secondLine}`, note: '' },
       { name: '+ Both sides', price: `+$${BASIC.pens.addOns.bothSides}`, note: '' },
-      { name: 'Fully loaded', price: `$${BASIC.pens.fullyLoaded}/ea`, note: '' },
+      { name: 'Fully loaded', price: `$${BASIC.pens.fullyLoaded}`, note: '' },
     ],
   },
   {
@@ -102,10 +102,10 @@ export const BASIC_PRICING_CARDS = [
     packNote: `Pack of ${BASIC.coasters.packSize}`,
     packTotal: `$${BASIC.coasters.materials.wood * BASIC.coasters.packSize} – $${BASIC.coasters.materials.steel * BASIC.coasters.packSize}`,
     items: [
-      { name: 'Pine / Bamboo', price: `$${BASIC.coasters.materials.wood}/ea`, note: '' },
-      { name: 'Oak / Acacia', price: `$${BASIC.coasters.materials.hardwood}/ea`, note: '' },
-      { name: 'Natural Slate', price: `$${BASIC.coasters.materials.slate}/ea`, note: '' },
-      { name: 'Stainless Steel', price: `$${BASIC.coasters.materials.steel}/ea`, note: '' },
+      { name: 'Pine / Bamboo', price: `$${BASIC.coasters.materials.wood}`, note: '' },
+      { name: 'Oak / Acacia', price: `$${BASIC.coasters.materials.hardwood}`, note: '' },
+      { name: 'Natural Slate', price: `$${BASIC.coasters.materials.slate}`, note: '' },
+      { name: 'Stainless Steel', price: `$${BASIC.coasters.materials.steel}`, note: '' },
     ],
   },
   {
@@ -113,9 +113,9 @@ export const BASIC_PRICING_CARDS = [
     packNote: `Pack of ${BASIC.keychains.packSize}`,
     packTotal: `$${BASIC.keychains.materials.acrylic * BASIC.keychains.packSize} – $${BASIC.keychains.materials.metal * BASIC.keychains.packSize}`,
     items: [
-      { name: 'Acrylic', price: `$${BASIC.keychains.materials.acrylic}/ea`, note: '' },
-      { name: 'Wood', price: `$${BASIC.keychains.materials.wood}/ea`, note: '' },
-      { name: 'Metal', price: `$${BASIC.keychains.materials.metal}/ea`, note: '' },
+      { name: 'Acrylic', price: `$${BASIC.keychains.materials.acrylic}`, note: '' },
+      { name: 'Wood', price: `$${BASIC.keychains.materials.wood}`, note: '' },
+      { name: 'Metal', price: `$${BASIC.keychains.materials.metal}`, note: '' },
     ],
   },
   {
@@ -134,7 +134,7 @@ export const BASIC_PRICING_CARDS = [
     packNote: `${BASIC.tools.minimum} piece minimum for free delivery`,
     packTotal: '',
     items: [
-      { name: 'Name / ID marking', price: `$${BASIC.tools.perPiece}/ea`, note: '' },
+      { name: 'Name / ID marking', price: `$${BASIC.tools.perPiece}`, note: '' },
     ],
   },
 ]
@@ -145,9 +145,9 @@ export const LEAVE_YOUR_MARK_CARDS = [
     packNote: 'Pack of 10 · credit card sized',
     packTotal: `$${LEAVE_YOUR_MARK.serviceTags.matteBlackBase * LEAVE_YOUR_MARK.serviceTags.packSize} – $${LEAVE_YOUR_MARK.serviceTags.stainlessLoaded * LEAVE_YOUR_MARK.serviceTags.packSize}`,
     items: [
-      { name: 'Anodized aluminum (text)', price: `$${LEAVE_YOUR_MARK.serviceTags.matteBlackBase}/ea`, note: '' },
-      { name: '+ Logo / QR / back', price: '+$1 each', note: '' },
-      { name: 'Stainless steel', price: `$${LEAVE_YOUR_MARK.serviceTags.stainlessBase}/ea`, note: '' },
+      { name: 'Anodized aluminum (text)', price: `$${LEAVE_YOUR_MARK.serviceTags.matteBlackBase}`, note: '' },
+      { name: '+ Logo / QR / back', price: '+$1', note: '' },
+      { name: 'Stainless steel', price: `$${LEAVE_YOUR_MARK.serviceTags.stainlessBase}`, note: '' },
       { name: '3M adhesive backing', price: 'Included', note: '' },
     ],
   },

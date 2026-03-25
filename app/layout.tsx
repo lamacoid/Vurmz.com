@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     default: 'VURMZ | Laser Engraving in Centennial, Colorado',
     template: '%s | VURMZ'
   },
-  description: 'Professional laser engraving in Centennial, CO. Branded pens, metal business cards, equipment labels, custom gifts. No minimums. Fast turnaround. Hand-delivered in South Denver metro.',
+  description: 'Professional laser engraving in Centennial, CO. Branded pen packs, metal service tags, custom engraving starting at $50. Next-day turnaround. Hand-delivered in South Denver metro.',
   keywords: [
     'laser engraving Centennial CO',
     'laser engraving near me',
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     url: 'https://www.vurmz.com',
     siteName: 'VURMZ',
     title: 'VURMZ | Laser Engraving in Centennial, Colorado',
-    description: 'Professional laser engraving for local businesses. Branded pens, metal cards, equipment labels, custom gifts. No minimums. Hand-delivered in South Denver metro.',
+    description: 'Professional laser engraving for local businesses. Branded pen packs, metal service tags, custom engraving. Next-day turnaround. Hand-delivered in South Denver metro.',
     images: [
       {
         url: 'https://www.vurmz.com/images/og-image.jpg',
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'VURMZ | Laser Engraving in Centennial, Colorado',
-    description: 'Professional laser engraving for local businesses. No minimums, fast turnaround, hand-delivered in South Denver metro.',
+    description: 'Professional laser engraving for local businesses. Next-day turnaround, hand-delivered in South Denver metro.',
     images: ['https://www.vurmz.com/images/og-image.jpg'],
   },
   robots: {
@@ -94,7 +94,7 @@ export default function RootLayout({
               "@type": "LocalBusiness",
               "name": "VURMZ LLC",
               "alternateName": "VURMZ Laser Engraving",
-              "description": "Professional laser engraving services for businesses and individuals in the South Denver metro area. Branded pens, metal business cards, equipment labels, trophies, custom gifts. No minimums, hand-delivered.",
+              "description": "Professional laser engraving services for businesses and individuals in the South Denver metro area. Branded pen packs, metal service tags, coasters, keychains, custom engraving, concierge sourcing. Next-day turnaround, hand-delivered.",
               "url": "https://www.vurmz.com",
               "telephone": "(719) 257-3834",
               "email": "zach@vurmz.com",

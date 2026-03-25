@@ -4,15 +4,15 @@ import { useState } from 'react'
 import { ArrowRightIcon, CheckCircleIcon } from '@heroicons/react/24/outline'
 
 const productOptions = [
-  'Branded Pens',
-  'Metal Business Cards',
-  'Coasters',
-  'Keychains',
-  'Knife Engraving',
+  'Branded Pens (pack)',
+  'Metal Service Tags (pack)',
+  'Coasters (pack)',
+  'Keychains (pack)',
+  'Knife Marking',
   'Tool Marking',
-  'Industrial Labels',
-  'Name Plates',
-  'Custom Gift / Award',
+  'Signature Tiles',
+  'Custom Engraving ($50+)',
+  'Concierge Sourcing',
   'Other',
 ]
 

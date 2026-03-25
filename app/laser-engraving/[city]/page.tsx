@@ -180,7 +180,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!city) return {}
 
   const title = `Laser Engraving in ${city.name}, CO`
-  const description = `Professional laser engraving in ${city.name}, Colorado. Branded pens, metal business cards, custom gifts, industrial labels, and more. No minimums, same-week turnaround, hand-delivered by VURMZ.`
+  const description = `Professional laser engraving in ${city.name}, Colorado. Branded pen packs, metal service tags, custom engraving starting at $50. Next-day turnaround, hand-delivered by VURMZ.`
 
   return {
     title,

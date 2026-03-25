@@ -179,7 +179,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
             <div>
               <p className="text-gray-400 text-sm leading-relaxed mb-5">
-                Stock items like pens, cards, and coasters start at a few dollars each. Custom work on your own items starts at $50. Don&apos;t have the item? I&apos;ll source it for you. Either way — next-day turnaround, hand-delivered.
+                Stock items like pens, cards, and coasters come in packs. Custom work on your own items starts at $50. Don&apos;t have the item? I&apos;ll source it for you. Next-day turnaround, hand-delivered.
               </p>
               <div className="flex items-center gap-4">
                 <Link
