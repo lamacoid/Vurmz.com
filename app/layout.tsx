@@ -173,6 +173,14 @@ export default function RootLayout({
             })
           }}
         />
+        {/* Lightweight pageview tracker — skips if owner cookie is set */}
+        <script dangerouslySetInnerHTML={{ __html: `
+          (function(){
+            if (document.cookie.indexOf('vurmz_owner=1') !== -1) return;
+            var b = new Blob([JSON.stringify({path: location.pathname, referrer: document.referrer || ''})], {type: 'application/json'});
+            navigator.sendBeacon('/api/track', b);
+          })();
+        `}} />
       </head>
       <body className={`${inter.className} bg-vurmz-dark text-gray-100 relative`}>
 

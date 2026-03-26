@@ -11,6 +11,17 @@ pages_build_output_dir = ".vercel/output/static"
 binding = "RATE_LIMIT"
 id = "02f167c6131342b4ad6a83ff6d45c768"
 
+# D1 database for custom analytics (owner-filtered pageviews)
+[[d1_databases]]
+binding = "TRACK_DB"
+database_name = "vurmz-track"
+database_id = "2eadd359-67ca-447c-9f33-5ed533ea72f1"
+
+# KV namespace for admin sessions
+[[kv_namespaces]]
+binding = "SESSIONS"
+id = "5b23e933e1364ce781dcf72342dc382b"
+
 # Environment variables
 [vars]
 SITE_URL = "https://vurmz.com"
