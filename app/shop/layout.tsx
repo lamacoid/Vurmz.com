@@ -1,3 +1,5 @@
+import ShopHeader from '@/components/ShopHeader'
+import ShopFooter from '@/components/ShopFooter'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -11,7 +13,11 @@ export const metadata: Metadata = {
 export default function ShopLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="bg-[#F0E6D3] text-[#243B39] min-h-screen" data-theme="shop">
-      {children}
+      <ShopHeader />
+      <main className="min-h-screen">
+        {children}
+      </main>
+      <ShopFooter />
     </div>
   )
 }
