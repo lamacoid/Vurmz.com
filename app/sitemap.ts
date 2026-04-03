@@ -25,19 +25,31 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1.0,
     },
     {
-      url: `${baseUrl}/pricing`,
+      url: `${baseUrl}/shop`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/services`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/services/pricing`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/portfolio`,
+      url: `${baseUrl}/services/portfolio`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/contact`,
+      url: `${baseUrl}/services/contact`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.9,
@@ -57,7 +69,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ]
 
   const serviceAreaPages: MetadataRoute.Sitemap = serviceAreaSlugs.map((slug) => ({
-    url: `${baseUrl}/laser-engraving/${slug}`,
+    url: `${baseUrl}/services/laser-engraving/${slug}`,
     lastModified: new Date(),
     changeFrequency: 'monthly',
     priority: 0.7,

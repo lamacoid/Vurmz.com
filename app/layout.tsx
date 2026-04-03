@@ -7,10 +7,10 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: {
-    default: 'VURMZ | Laser Engraving in Centennial, Colorado',
+    default: 'VURMZ | Laser Engraving — Shop & Services',
     template: '%s | VURMZ'
   },
-  description: 'Professional laser engraving in Centennial, CO. Branded pen packs, metal service tags, custom engraving starting at $50. Next-day turnaround. Hand-delivered in South Denver metro.',
+  description: 'VURMZ laser engraving in Centennial, CO. Shop engraved products or get custom engraving services for your business. Next-day turnaround, hand-delivered in South Denver metro.',
   keywords: [
     'laser engraving Centennial CO',
     'laser engraving near me',
@@ -39,8 +39,8 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: 'https://www.vurmz.com',
     siteName: 'VURMZ',
-    title: 'VURMZ | Laser Engraving in Centennial, Colorado',
-    description: 'Professional laser engraving for local businesses. Branded pen packs, metal service tags, custom engraving. Next-day turnaround, hand-delivered in South Denver metro.',
+    title: 'VURMZ | Laser Engraving — Shop & Services',
+    description: 'VURMZ laser engraving in Centennial, CO. Shop engraved products or get custom services for your business.',
     images: [
       {
         url: 'https://www.vurmz.com/images/og-image.jpg',
@@ -52,8 +52,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'VURMZ | Laser Engraving in Centennial, Colorado',
-    description: 'Professional laser engraving for local businesses. Next-day turnaround, hand-delivered in South Denver metro.',
+    title: 'VURMZ | Laser Engraving — Shop & Services',
+    description: 'VURMZ laser engraving in Centennial, CO. Shop or get custom services.',
     images: ['https://www.vurmz.com/images/og-image.jpg'],
   },
   robots: {
