@@ -179,7 +179,7 @@ export default function RootLayout({
           })();
         `}} />
       </head>
-      <body className={`${inter.className} bg-vurmz-dark text-gray-100 relative`}>
+      <body className={`${inter.className} relative`}>
         {children}
       </body>
     </html>
