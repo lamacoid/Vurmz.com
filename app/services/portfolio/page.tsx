@@ -63,11 +63,11 @@ export default function PortfolioPage() {
             Like what you see?
           </h2>
           <p className="text-gray-400 text-base leading-relaxed mb-6">
-            Check out <Link href="/pricing" className="text-vurmz-teal hover:text-cream transition-colors">transparent pricing</Link> or just text me a photo of what you want engraved.
+            Check out <Link href="/services/pricing" className="text-vurmz-teal hover:text-cream transition-colors">transparent pricing</Link> or just text me a photo of what you want engraved.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
-              href="/pricing"
+              href="/services/pricing"
               className="group inline-flex items-center justify-center gap-2 px-6 py-3 bg-vurmz-cream text-vurmz-dark font-semibold text-sm rounded-sm hover:bg-vurmz-cream-hover transition-all"
             >
               View Pricing

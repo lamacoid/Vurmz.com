@@ -141,7 +141,7 @@ export default function Home() {
               className="flex flex-col sm:flex-row gap-4"
             >
               <Link
-                href="/contact"
+                href="/services/contact"
                 className="group inline-flex items-center justify-center gap-2 px-8 py-4 bg-vurmz-cta text-white font-semibold text-base rounded-sm hover:bg-vurmz-cta-hover transition-all shadow-lg shadow-vurmz-cta/20"
               >
                 Get a Quote
@@ -183,7 +183,7 @@ export default function Home() {
               </p>
               <div className="flex items-center gap-4">
                 <Link
-                  href="/pricing"
+                  href="/services/pricing"
                   className="inline-flex items-center gap-2 text-sm text-vurmz-teal font-mono tracking-wide hover:text-cream transition-colors group"
                 >
                   View pricing
@@ -230,7 +230,7 @@ export default function Home() {
             </p>
             <div className="flex items-center gap-4">
               <Link
-                href="/pricing"
+                href="/services/pricing"
                 className="inline-flex items-center gap-2 text-sm text-vurmz-teal font-mono tracking-wide hover:text-cream transition-colors group"
               >
                 See pricing

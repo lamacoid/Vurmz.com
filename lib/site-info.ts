@@ -62,12 +62,21 @@ export const siteInfo = {
   ],
 } as const
 
-// Navigation items - used in Header and Footer
-export const navigation = [
-  { name: 'Pricing', href: '/pricing' },
-  { name: 'Portfolio', href: '/portfolio' },
-  { name: 'Community', href: '/centennial' },
-  { name: 'Contact', href: '/contact' },
+// Navigation items — services section
+export const servicesNavigation = [
+  { name: 'Pricing', href: '/services/pricing' },
+  { name: 'Portfolio', href: '/services/portfolio' },
+  { name: 'Community', href: '/services/centennial' },
+  { name: 'Contact', href: '/services/contact' },
+] as const
+
+// Alias for backward compat with Header/Footer
+export const navigation = servicesNavigation
+
+// Navigation items — shop section
+export const shopNavigation = [
+  { name: 'Products', href: '/shop' },
+  { name: 'Contact', href: '/shop/contact' },
 ] as const
 
 // Quick helper functions

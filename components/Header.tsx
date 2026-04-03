@@ -65,7 +65,7 @@ export default function Header() {
                 {siteInfo.phone}
               </a>
               <Link
-                href="/contact"
+                href="/services/contact"
                 className="px-4 py-2 bg-vurmz-cta text-white font-semibold text-[13px] rounded-full hover:bg-vurmz-cta-hover transition-all duration-200 flex items-center gap-1.5 shadow-lg shadow-vurmz-cta/25"
               >
                 Get in Touch
@@ -111,7 +111,7 @@ export default function Header() {
             </div>
             <div className="mt-4 pt-4 border-t border-white/10 flex flex-col gap-3">
               <Link
-                href="/contact"
+                href="/services/contact"
                 className="px-6 py-3 bg-vurmz-cta text-white font-semibold rounded-xl text-center text-sm shadow-lg shadow-vurmz-cta/25"
                 onClick={() => setMobileMenuOpen(false)}
               >

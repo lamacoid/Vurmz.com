@@ -139,7 +139,7 @@ export default function TermsPage() {
                   Text {siteInfo.phone}
                 </a>
                 <Link
-                  href="/contact"
+                  href="/services/contact"
                   className="inline-flex items-center px-5 py-2.5 rounded-lg font-medium text-vurmz-dark border border-gray-300 hover:bg-gray-50 transition-all"
                 >
                   Contact Page

@@ -139,7 +139,7 @@ export default function PricingPage() {
 
           <p className="text-gray-500 text-xs mt-6 text-center">
             Prices are estimates. Final pricing depends on quantity, complexity, and materials.
-            {' '}<Link href="/portfolio" className="text-vurmz-teal hover:text-cream transition-colors">See examples</Link>.
+            {' '}<Link href="/services/portfolio" className="text-vurmz-teal hover:text-cream transition-colors">See examples</Link>.
           </p>
         </div>
       </section>
@@ -235,7 +235,7 @@ export default function PricingPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
-              href="/contact"
+              href="/services/contact"
               className="group inline-flex items-center justify-center gap-2 px-6 py-3 bg-vurmz-cta text-white font-semibold text-sm rounded-sm hover:bg-vurmz-cta-hover transition-all shadow-lg shadow-vurmz-cta/20"
             >
               Get a Quote
