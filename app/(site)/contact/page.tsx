@@ -186,7 +186,7 @@ export default function ContactPage() {
         </div>
         <div className="relative">
           <div className="flex items-center justify-center gap-12 sm:gap-16">
-            <a href="http://nordstrom.com/store/cherry-creek" target="_blank" rel="noopener noreferrer" className="flex-shrink-0 text-sm font-medium text-cream/40 hover:text-cream/60 transition-colors">
+            <a href="https://www.nordstrom.com/store-details/nordstrom-cherry-creek-shopping-center" target="_blank" rel="noopener noreferrer" className="flex-shrink-0 text-sm font-medium text-cream/40 hover:text-cream/60 transition-colors">
               Nordstrom Beauty
             </a>
             <a href="http://countylineguitaramps.com" target="_blank" rel="noopener noreferrer" className="flex-shrink-0 hover:opacity-70 transition-opacity">

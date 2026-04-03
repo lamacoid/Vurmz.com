@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+/* Hide site chrome on admin pages */
+body.is-admin > *:not(main):not(script):not(next-route-announcer) {
+  display: none !important;
+}
+body.is-admin > main {
+  min-height: 100vh;
+}
+
 :root {
   /* VURMZ Brand Colors - Tempered Glass Aesthetic */
   --vurmz-teal: #6BB8B2;           /* Dusty muted teal */

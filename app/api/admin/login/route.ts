@@ -5,7 +5,7 @@ import { getRequestContext } from '@cloudflare/next-on-pages'
 import { hashPassword, createSession } from '@/lib/admin-auth'
 
 // Hardcoded hash of 'vurmz2024' — can also be overridden by ADMIN_PASSWORD_HASH secret
-const DEFAULT_HASH = '5e2bf57d3f40c4b6df69daf1936cb766f832374b4fc0259a7cbff06e2f70f269'
+const DEFAULT_HASH = 'e938305b24259c9310a484969ba10e9a01352ff9ef00534e8cbbb2ece4ede29c'
 
 export async function POST(req: NextRequest) {
   try {

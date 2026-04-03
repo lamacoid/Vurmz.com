@@ -2,10 +2,6 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import './fonts.css'
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
-import LocalTicker from '@/components/LocalTicker'
-import ScrollGlare from '@/components/ScrollGlare'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -44,7 +40,7 @@ export const metadata: Metadata = {
     url: 'https://www.vurmz.com',
     siteName: 'VURMZ',
     title: 'VURMZ | Laser Engraving in Centennial, Colorado',
-    description: 'Professional laser engraving for local businesses. Branded pen packs, metal service tags, custom engraving. Next-day turnaround. Hand-delivered in South Denver metro.',
+    description: 'Professional laser engraving for local businesses. Branded pen packs, metal service tags, custom engraving. Next-day turnaround, hand-delivered in South Denver metro.',
     images: [
       {
         url: 'https://www.vurmz.com/images/og-image.jpg',
@@ -177,20 +173,14 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: `
           (function(){
             if (document.cookie.indexOf('vurmz_owner=1') !== -1) return;
+            if (location.pathname.startsWith('/admin')) return;
             var b = new Blob([JSON.stringify({path: location.pathname, referrer: document.referrer || ''})], {type: 'application/json'});
             navigator.sendBeacon('/api/track', b);
           })();
         `}} />
       </head>
       <body className={`${inter.className} bg-vurmz-dark text-gray-100 relative`}>
-
-        <LocalTicker />
-        <Header />
-        <main className="min-h-screen">
-          {children}
-        </main>
-        <Footer />
-        <ScrollGlare />
+        {children}
       </body>
     </html>
   )
