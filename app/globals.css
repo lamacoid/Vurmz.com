@@ -45,6 +45,19 @@ body.is-admin > main {
   --warning: #D4A654;
   --error: #C75B55;
 
+  /* ── Shop Palette (B2C) ── */
+  --shop-bg: #F0E6D3;
+  --shop-bg-subtle: #EBE0CC;
+  --shop-text: #243B39;
+  --shop-text-sub: #6B6259;
+  --shop-text-light: #7A7068;
+  --shop-text-strong: #5C534A;
+  --shop-accent: #B16558;
+  --shop-accent-hover: #954E44;
+  --shop-accent-active: #7D4139;
+  --shop-border: rgba(36, 59, 57, 0.12);
+  --shop-border-strong: rgba(36, 59, 57, 0.2);
+
   /* Glass effects */
   --glass-shine: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 50%);
   --glass-reflection: linear-gradient(180deg, rgba(60,185,178,0.1) 0%, transparent 30%);
@@ -131,9 +144,8 @@ main [class*="mx-auto"][class*="px-4"] {
   }
 }
 
-/* Scroll-reactive glare is handled by the ScrollGlare component */
-/* Keep body pseudo-elements free for light/trippy modes */
-body::before {
+/* Ambient glow — only on services (dark) pages */
+[data-theme="services"]::before {
   content: '';
   position: fixed;
   top: 0;
@@ -148,23 +160,18 @@ body::before {
     radial-gradient(ellipse 50% 40% at 75% 70%, rgba(123, 200, 212, 0.04) 0%, transparent 50%);
 }
 
-/* Global coral hover for interactive elements */
-html.dark a:not([class*="bg-vurmz-cta"]):not([class*="bg-vurmz-cream"]):hover {
+/* Global coral hover for interactive elements — services only */
+[data-theme="services"] a:not([class*="bg-vurmz-cta"]):not([class*="bg-vurmz-cream"]):hover {
   color: var(--vurmz-cta);
 }
 
-/* Linked images shift warm on hover (logos, etc.) */
-html.dark a:hover img {
+/* Linked images shift warm on hover (logos, etc.) — services only */
+[data-theme="services"] a:hover img {
   filter: brightness(0) invert(42%) sepia(60%) saturate(600%) hue-rotate(340deg) !important;
   transition: filter 0.2s ease;
 }
-html.dark a img {
+[data-theme="services"] a img {
   transition: filter 0.2s ease;
-}
-
-/* Default dark mode */
-html {
-  color-scheme: dark;
 }
 
 /* ========================================
@@ -424,6 +431,21 @@ html {
   .hover\:bg-vurmz-sky-dark:hover {
     background-color: var(--vurmz-sky-dark);
   }
+
+  /* ── Shop utilities ── */
+  .bg-shop { background-color: var(--shop-bg); }
+  .bg-shop-subtle { background-color: var(--shop-bg-subtle); }
+  .text-shop { color: var(--shop-text); }
+  .text-shop-sub { color: var(--shop-text-sub); }
+  .text-shop-light { color: var(--shop-text-light); }
+  .text-shop-strong { color: var(--shop-text-strong); }
+  .bg-shop-accent { background-color: var(--shop-accent); }
+  .hover\:bg-shop-accent-hover:hover { background-color: var(--shop-accent-hover); }
+  .text-shop-accent { color: var(--shop-accent); }
+  .hover\:text-shop-accent:hover { color: var(--shop-accent); }
+  .border-shop { border-color: var(--shop-border); }
+  .border-shop-strong { border-color: var(--shop-border-strong); }
+  .shadow-shop-accent { box-shadow: 0 4px 20px rgba(177, 101, 88, 0.25); }
 
   /* Glass gradient text */
   .text-glass-gradient {
