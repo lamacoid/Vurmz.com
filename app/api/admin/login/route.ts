@@ -15,8 +15,10 @@ export async function POST(req: NextRequest) {
 
     const { env } = getRequestContext()
 
-    // Prefer env secret; fall back to existing hash until rotated
-    const expectedHash = (env as any).ADMIN_PASSWORD_HASH || 'e938305b24259c9310a484969ba10e9a01352ff9ef00534e8cbbb2ece4ede29c'
+    const expectedHash = (env as unknown as { ADMIN_PASSWORD_HASH?: string }).ADMIN_PASSWORD_HASH
+    if (!expectedHash) {
+      return NextResponse.json({ error: 'Server misconfigured' }, { status: 500 })
+    }
 
     const inputHash = await hashPassword(password)
 
