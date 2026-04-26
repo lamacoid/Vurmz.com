@@ -25,6 +25,16 @@ export async function GET(req: NextRequest) {
   })
 }
 
+function sanitize(val: unknown, maxLen: number): string {
+  if (typeof val !== 'string') return ''
+  return val.slice(0, maxLen).trim()
+}
+
+function sanitizeNumber(val: unknown): number {
+  const n = Number(val)
+  return Number.isFinite(n) && n >= 0 ? n : 0
+}
+
 export async function POST(req: NextRequest) {
   return withAuth(req, async () => {
     const db = getDb()
@@ -33,18 +43,20 @@ export async function POST(req: NextRequest) {
     const id = crypto.randomUUID().slice(0, 8)
     const now = new Date().toISOString()
 
+    const title = sanitize(body.title, 200) || 'Untitled'
+    const type = sanitize(body.type, 50) || 'custom'
+    const description = sanitize(body.description, 5000)
+    const price = sanitizeNumber(body.price)
+    const items = sanitize(body.items, 5000)
+    const notes = sanitize(body.notes, 5000)
+
     await db.prepare(
       `INSERT INTO jobs (id, customer_id, title, type, description, price, items, notes, status, created_at, updated_at)
        VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'quoted', ?, ?)`
     ).bind(
       id,
       body.customerId || null,
-      body.title || 'Untitled',
-      body.type || 'custom',
-      body.description || '',
-      body.price || 0,
-      body.items || '',
-      body.notes || '',
+      title, type, description, price, items, notes,
       now, now
     ).run()
 

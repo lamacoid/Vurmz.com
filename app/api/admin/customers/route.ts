@@ -1,89 +1,41 @@
+import { NextRequest, NextResponse } from 'next/server'
+import { z } from 'zod'
+import { withAdminAuth } from '@/lib/auth/admin'
+import { listCustomers, upsertCustomerByEmail } from '@/lib/db/repos/customers'
+import { audit } from '@/lib/audit'
+import { getClientIp, getUserAgent } from '@/lib/auth/session'
+
 export const runtime = 'edge'
 
-import { NextRequest, NextResponse } from 'next/server'
-import { getRequestContext } from '@cloudflare/next-on-pages'
-import { withAuth } from '@/lib/admin-auth'
-
-function getDb() {
-  const { env } = getRequestContext()
-  return (env as any).TRACK_DB as D1Database
-}
-
 export async function GET(req: NextRequest) {
-  return withAuth(req, async () => {
-    const db = getDb()
-    const q = req.nextUrl.searchParams.get('q')
-
-    let customers
-    if (q) {
-      const like = `%${q}%`
-      customers = await db.prepare(
-        'SELECT * FROM customers WHERE name LIKE ? OR email LIKE ? OR company LIKE ? ORDER BY name ASC'
-      ).bind(like, like, like).all()
-    } else {
-      customers = await db.prepare('SELECT * FROM customers ORDER BY created_at DESC').all()
-    }
-
-    return NextResponse.json({ customers: customers.results })
+  return withAdminAuth(req, async () => {
+    const url = new URL(req.url)
+    const search = url.searchParams.get('q') ?? undefined
+    const customers = await listCustomers({ search, limit: 500 })
+    return NextResponse.json({ ok: true, data: { customers } })
   })
 }
+
+const createSchema = z.object({
+  email: z.string().email().max(254),
+  name: z.string().max(200).optional(),
+  phone: z.string().max(30).nullable().optional(),
+  company: z.string().max(200).nullable().optional(),
+})
 
 export async function POST(req: NextRequest) {
-  return withAuth(req, async () => {
-    const db = getDb()
-    const body = await req.json() as any
-
-    const id = crypto.randomUUID().slice(0, 8)
-    const now = new Date().toISOString()
-
-    await db.prepare(
-      'INSERT INTO customers (id, name, email, phone, company, notes, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)'
-    ).bind(
-      id,
-      body.name || '',
-      body.email || '',
-      body.phone || '',
-      body.company || '',
-      body.notes || '',
-      now
-    ).run()
-
-    return NextResponse.json({ ok: true, id })
-  })
-}
-
-export async function PUT(req: NextRequest) {
-  return withAuth(req, async () => {
-    const db = getDb()
-    const body = await req.json() as any
-
-    if (!body.id) return NextResponse.json({ error: 'ID required' }, { status: 400 })
-
-    await db.prepare(
-      'UPDATE customers SET name = ?, email = ?, phone = ?, company = ?, notes = ? WHERE id = ?'
-    ).bind(
-      body.name || '',
-      body.email || '',
-      body.phone || '',
-      body.company || '',
-      body.notes || '',
-      body.id
-    ).run()
-
-    return NextResponse.json({ ok: true })
-  })
-}
-
-export async function DELETE(req: NextRequest) {
-  return withAuth(req, async () => {
-    const db = getDb()
-    const { id } = await req.json() as { id: string }
-    if (!id) return NextResponse.json({ error: 'ID required' }, { status: 400 })
-
-    // Unlink jobs
-    await db.prepare('UPDATE jobs SET customer_id = NULL WHERE customer_id = ?').bind(id).run()
-    await db.prepare('DELETE FROM customers WHERE id = ?').bind(id).run()
-
-    return NextResponse.json({ ok: true })
+  return withAdminAuth(req, async (session) => {
+    const body = createSchema.safeParse(await req.json().catch(() => null))
+    if (!body.success) {
+      return NextResponse.json({ ok: false, error: { code: 'VALIDATION', details: body.error.issues } }, { status: 422 })
+    }
+    const customer = await upsertCustomerByEmail(body.data)
+    await audit({
+      actorType: 'admin', actorId: session.email ?? null,
+      action: 'customer.create', targetType: 'customer', targetId: customer.id,
+      diff: { email: customer.email, name: customer.name },
+      ip: getClientIp(req), userAgent: getUserAgent(req),
+    })
+    return NextResponse.json({ ok: true, data: { customer } })
   })
 }

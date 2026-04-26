@@ -3,16 +3,20 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRightIcon, ChatBubbleLeftIcon } from '@heroicons/react/24/outline'
 import { getSmsLink } from '@/lib/site-info'
+import Breadcrumbs from '@/components/Breadcrumbs'
 import { portfolioItems } from '@/lib/portfolio'
 
 export const metadata: Metadata = {
-  title: 'Portfolio | Laser Engraving Examples | VURMZ Centennial CO',
+  title: 'Portfolio',
   description: 'Client work, personal projects, and experiments in laser engraving. Metal, wood, glass, and more from Centennial, CO.',
 }
 
 export default function PortfolioPage() {
   return (
     <div>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+        <Breadcrumbs items={[{ label: 'VURMZ', href: '/' }, { label: 'Services', href: '/services' }, { label: 'Portfolio' }]} theme="services" />
+      </div>
       {/* Hero */}
       <section className="bg-vurmz-dark text-cream py-10 sm:py-12 md:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { siteInfo } from '@/lib/site-info'
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy | VURMZ Laser Engraving',
+  title: 'Privacy Policy',
   description: `Privacy policy for ${siteInfo.legalName}. How we handle your information when you use our laser engraving services in ${siteInfo.city}, CO.`,
 }
 
@@ -53,7 +53,7 @@ export default function PrivacyPage() {
               <h2 className="text-xl font-semibold text-cream mb-3">How We Use Your Information</h2>
               <ul className="text-gray-400 space-y-2 list-disc list-inside">
                 <li>Process and fulfill your engraving orders</li>
-                <li>Communicate about your order status and proofs</li>
+                <li>Communicate about your order status</li>
                 <li>Send invoices and process payments via Square</li>
                 <li>Respond to your questions and requests</li>
                 <li>Improve our services and website</li>
@@ -77,7 +77,7 @@ export default function PrivacyPage() {
             <div>
               <h2 className="text-xl font-semibold text-cream mb-3">Email Communications</h2>
               <p className="text-gray-400 leading-relaxed">
-                We send transactional emails related to your orders (confirmations, proofs, invoices, shipping updates).
+                We send transactional emails related to your orders (confirmations, invoices, shipping updates).
                 We use Resend as our email service provider. You can unsubscribe from any non-transactional communications at any time.
               </p>
             </div>

@@ -1,17 +1,21 @@
 import Link from 'next/link'
 import { Metadata } from 'next'
 import { ArrowRightIcon, ChatBubbleLeftIcon } from '@heroicons/react/24/outline'
-import { SIGNATURE, BASIC_PRICING_CARDS, LEAVE_YOUR_MARK_CARDS } from '@/lib/products'
+import { SIGNATURE, BASIC_PRICING_CARDS, LEAVE_YOUR_MARK_CARDS } from '@/lib/pricing'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
+import Breadcrumbs from '@/components/Breadcrumbs'
 
 export const metadata: Metadata = {
-  title: 'Pricing | VURMZ Laser Engraving',
+  title: 'Pricing',
   description: `Laser engraving pricing for ${siteInfo.city} and the Denver metro. Two tiers: Basic stock items and Signature custom work starting at $${SIGNATURE.startingPrice}. No setup fees. Free delivery.`,
 }
 
 export default function PricingPage() {
   return (
     <div className="bg-vurmz-dark">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+        <Breadcrumbs items={[{ label: 'VURMZ', href: '/' }, { label: 'Services', href: '/services' }, { label: 'Pricing' }]} theme="services" />
+      </div>
       {/* Hero */}
       <section className="py-12 sm:py-16 lg:py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">

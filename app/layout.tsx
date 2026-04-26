@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import './fonts.css'
+import LocalTicker from '@/components/LocalTicker'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -169,17 +170,20 @@ export default function RootLayout({
             })
           }}
         />
-        {/* Lightweight pageview tracker — skips if owner cookie is set */}
+        {/* Lightweight pageview tracker — skips if owner cookie is set, skips local dev */}
         <script dangerouslySetInnerHTML={{ __html: `
           (function(){
             if (document.cookie.indexOf('vurmz_owner=1') !== -1) return;
             if (location.pathname.startsWith('/admin')) return;
+            var h = location.hostname;
+            if (h === 'localhost' || h === '127.0.0.1' || h.endsWith('.local')) return;
             var b = new Blob([JSON.stringify({path: location.pathname, referrer: document.referrer || ''})], {type: 'application/json'});
             navigator.sendBeacon('/api/track', b);
           })();
         `}} />
       </head>
       <body className={`${inter.className} relative`}>
+        <LocalTicker />
         {children}
       </body>
     </html>

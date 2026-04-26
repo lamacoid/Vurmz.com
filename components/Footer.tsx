@@ -6,6 +6,7 @@ import {
   EnvelopeIcon,
 } from '@heroicons/react/24/outline'
 import { siteInfo, navigation } from '@/lib/site-info'
+import { SHOP_CATEGORIES } from '@/lib/categories'
 import NewsletterSignup from '@/components/NewsletterSignup'
 
 export default function Footer() {
@@ -50,15 +51,32 @@ export default function Footer() {
 
           {/* Links */}
           <div>
-            <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4">Navigation</h3>
+            <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4">Services</h3>
             <ul className="space-y-2.5">
-              {navigation.map((link) => (
+              {navigation.filter(l => l.name !== 'Shop').map((link) => (
                 <li key={link.name}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-gray-400 hover:text-white transition-colors"
-                  >
+                  <Link href={link.href} className="text-sm text-gray-400 hover:text-white transition-colors">
                     {link.name}
+                  </Link>
+                </li>
+              ))}
+              <li>
+                <Link href="/about" className="text-sm text-gray-400 hover:text-white transition-colors">
+                  About
+                </Link>
+              </li>
+            </ul>
+            <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4 mt-6">Shop</h3>
+            <ul className="space-y-2.5">
+              <li>
+                <Link href="/shop" className="text-sm text-gray-400 hover:text-white transition-colors">
+                  All Products
+                </Link>
+              </li>
+              {SHOP_CATEGORIES.slice(0, 4).map((cat) => (
+                <li key={cat.slug}>
+                  <Link href={`/shop/${cat.slug}`} className="text-sm text-gray-400 hover:text-white transition-colors">
+                    {cat.shortName}
                   </Link>
                 </li>
               ))}

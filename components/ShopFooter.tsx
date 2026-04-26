@@ -6,12 +6,13 @@ import {
   EnvelopeIcon,
 } from '@heroicons/react/24/outline'
 import { siteInfo } from '@/lib/site-info'
+import { SHOP_CATEGORIES } from '@/lib/categories'
 
 export default function ShopFooter() {
   return (
     <footer className="bg-[#243B39] border-t border-[#243B39]/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 sm:gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-12">
           {/* Brand */}
           <div>
             <Image
@@ -46,13 +47,37 @@ export default function ShopFooter() {
             </div>
           </div>
 
+          {/* Categories */}
+          <div>
+            <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4">Products</h3>
+            <ul className="space-y-2.5">
+              {SHOP_CATEGORIES.map((cat) => (
+                <li key={cat.slug}>
+                  <Link href={`/shop/${cat.slug}`} className="text-sm text-gray-400 hover:text-white transition-colors">
+                    {cat.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
           {/* Links */}
           <div>
             <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4">Navigation</h3>
             <ul className="space-y-2.5">
               <li>
                 <Link href="/shop" className="text-sm text-gray-400 hover:text-white transition-colors">
-                  Shop
+                  All Products
+                </Link>
+              </li>
+              <li>
+                <Link href="/shop/contact" className="text-sm text-gray-400 hover:text-white transition-colors">
+                  Contact
+                </Link>
+              </li>
+              <li>
+                <Link href="/about" className="text-sm text-gray-400 hover:text-white transition-colors">
+                  About
                 </Link>
               </li>
               <li>

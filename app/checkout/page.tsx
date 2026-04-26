@@ -1,0 +1,311 @@
+'use client'
+/* eslint-disable @next/next/no-img-element */
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { useCart } from '@/lib/cart/store'
+import SquarePayment from '@/components/shop/SquarePayment'
+
+interface FulfillmentOption {
+  method: 'ship' | 'hand_deliver' | 'pickup' | 'uber_direct' | 'invoice_later'
+  label: string
+  priceCents: number
+  eta: string
+  description: string
+  disabled?: boolean
+}
+
+interface SquareConfig { applicationId: string; locationId: string; environment: 'sandbox' | 'production' }
+
+function money(c: number) { return `$${(c / 100).toFixed(2)}` }
+
+export default function CheckoutPage() {
+  const { items, clear, subtotalCents } = useCart()
+  const router = useRouter()
+
+  const [email, setEmail] = useState('')
+  const [address, setAddress] = useState({ name: '', line1: '', line2: '', city: '', state: 'CO', postalCode: '', phone: '' })
+  const [notes, setNotes] = useState('')
+  const [options, setOptions] = useState<FulfillmentOption[]>([])
+  const [chosenMethod, setChosenMethod] = useState<FulfillmentOption['method'] | null>(null)
+  const [squareConfig, setSquareConfig] = useState<SquareConfig | null>(null)
+  const [squareChecked, setSquareChecked] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  // Load square config once
+  useEffect(() => {
+    fetch('/api/checkout/config').then(r => r.json()).then(j => {
+      const parsed = j as { data?: { square: SquareConfig | null } }
+      setSquareConfig(parsed.data?.square ?? null)
+      setSquareChecked(true)
+    }).catch(() => setSquareChecked(true))
+  }, [])
+
+  const refreshQuote = useCallback(async () => {
+    if (items.length === 0) return
+    try {
+      const res = await fetch('/api/checkout/quote', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          items: items.map(i => ({ productId: i.productId, qty: i.qty })),
+          address: address.postalCode ? { postalCode: address.postalCode, state: address.state } : undefined,
+        }),
+      })
+      const json = (await res.json()) as { ok?: boolean; data?: { fulfillmentOptions: FulfillmentOption[] } }
+      if (json.ok && json.data) {
+        setOptions(json.data.fulfillmentOptions)
+        if (chosenMethod == null && json.data.fulfillmentOptions.length) {
+          setChosenMethod(json.data.fulfillmentOptions[0].method)
+        }
+      }
+    } catch {}
+  }, [items, address.postalCode, address.state, chosenMethod])
+
+  useEffect(() => { refreshQuote() }, [refreshQuote])
+
+  const chosen = options.find(o => o.method === chosenMethod) ?? null
+  const totalCents = subtotalCents + (chosen?.priceCents ?? 0)
+  const needsAddress = chosenMethod === 'ship' || chosenMethod === 'hand_deliver' || chosenMethod === 'uber_direct'
+  const paymentMethodAvailable = Boolean(squareConfig)
+
+  function idempotencyKey() {
+    // RFC-4122-ish
+    const r = crypto.getRandomValues(new Uint8Array(16))
+    r[6] = (r[6] & 0x0f) | 0x40
+    r[8] = (r[8] & 0x3f) | 0x80
+    const h = Array.from(r).map(b => b.toString(16).padStart(2, '0')).join('')
+    return `${h.slice(0,8)}-${h.slice(8,12)}-${h.slice(12,16)}-${h.slice(16,20)}-${h.slice(20)}`
+  }
+
+  async function submitOrder(paymentMethod: 'square' | 'invoice_later', sourceId?: string) {
+    if (!chosenMethod) { setError('Choose a fulfillment option'); return }
+    if (!email) { setError('Email required'); return }
+    if (needsAddress && (!address.line1 || !address.city || !address.postalCode)) {
+      setError('Address required for this fulfillment method')
+      return
+    }
+    setSubmitting(true)
+    setError(null)
+    try {
+      const res = await fetch('/api/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email,
+          items: items.map(i => ({ productId: i.productId, qty: i.qty })),
+          fulfillmentMethod: chosenMethod,
+          address: needsAddress ? {
+            name: address.name || email.split('@')[0],
+            line1: address.line1,
+            line2: address.line2 || null,
+            city: address.city,
+            state: address.state,
+            postalCode: address.postalCode,
+            phone: address.phone || null,
+            country: 'US',
+          } : null,
+          notes,
+          payment: {
+            method: paymentMethod,
+            sourceId,
+            idempotencyKey: paymentMethod === 'square' ? idempotencyKey() : undefined,
+          },
+        }),
+      })
+      const json = (await res.json()) as { ok?: boolean; data?: { order: { number: string } }; error?: { code?: string; message?: string } }
+      if (!res.ok || !json.ok) {
+        setError(json.error?.message ?? json.error?.code ?? 'Order failed')
+        setSubmitting(false)
+        return
+      }
+      clear()
+      router.push(`/checkout/success?n=${encodeURIComponent(json.data!.order.number)}`)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Network error')
+      setSubmitting(false)
+    }
+  }
+
+  const canCheckout = useMemo(() => !!email && !!chosenMethod && !submitting, [email, chosenMethod, submitting])
+
+  if (items.length === 0) {
+    return (
+      <div className="max-w-2xl mx-auto px-6 py-24 text-center">
+        <h1 className="text-2xl font-bold mb-3">Your cart is empty</h1>
+        <Link href="/shop" className="inline-flex text-[#B16558] hover:underline">← Back to shop</Link>
+      </div>
+    )
+  }
+
+  return (
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <div className="mb-8">
+        <Link href="/shop" className="text-sm text-[#6B6259] hover:text-[#243B39]">← Continue shopping</Link>
+        <h1 className="text-3xl font-bold mt-2">Checkout</h1>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-10">
+        {/* Form */}
+        <div className="space-y-8">
+          <Section title="1 · Contact">
+            <Input label="Email" value={email} onChange={setEmail} type="email" placeholder="you@example.com" required />
+          </Section>
+
+          <Section title="2 · Fulfillment">
+            {address.postalCode.length === 5 && (
+              <p className="text-xs text-[#6B6259] mb-2">ZIP recognized — options updated.</p>
+            )}
+            <div className="grid grid-cols-1 gap-2">
+              {options.map(opt => (
+                <label
+                  key={opt.method}
+                  className={`flex items-start gap-3 rounded-sm border p-3 cursor-pointer ${
+                    chosenMethod === opt.method
+                      ? 'border-[#B16558] bg-[#B16558]/5'
+                      : 'border-[#243B39]/12 bg-white/60 hover:border-[#243B39]/25'
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name="fulfillment"
+                    checked={chosenMethod === opt.method}
+                    onChange={() => setChosenMethod(opt.method)}
+                    className="mt-1"
+                  />
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between gap-3">
+                      <span className="font-semibold text-sm">{opt.label}</span>
+                      <span className="text-sm font-semibold">{opt.priceCents === 0 ? 'Free' : money(opt.priceCents)}</span>
+                    </div>
+                    <p className="text-xs text-[#6B6259] mt-0.5">{opt.description} · {opt.eta}</p>
+                  </div>
+                </label>
+              ))}
+            </div>
+          </Section>
+
+          {needsAddress && (
+            <Section title="3 · Address">
+              <div className="grid grid-cols-2 gap-3">
+                <Input label="Full name" value={address.name} onChange={v => setAddress(a => ({ ...a, name: v }))} colSpan={2} />
+                <Input label="Street" value={address.line1} onChange={v => setAddress(a => ({ ...a, line1: v }))} colSpan={2} />
+                <Input label="Apt / Suite" value={address.line2} onChange={v => setAddress(a => ({ ...a, line2: v }))} colSpan={2} />
+                <Input label="City" value={address.city} onChange={v => setAddress(a => ({ ...a, city: v }))} />
+                <div className="grid grid-cols-2 gap-3">
+                  <Input label="State" value={address.state} onChange={v => setAddress(a => ({ ...a, state: v.toUpperCase().slice(0, 2) }))} />
+                  <Input label="ZIP" value={address.postalCode} onChange={v => setAddress(a => ({ ...a, postalCode: v.replace(/[^0-9-]/g, '').slice(0, 10) }))} />
+                </div>
+                <Input label="Phone" value={address.phone} onChange={v => setAddress(a => ({ ...a, phone: v }))} colSpan={2} />
+              </div>
+            </Section>
+          )}
+
+          <Section title={needsAddress ? '4 · Order notes' : '3 · Order notes'}>
+            <textarea
+              value={notes}
+              onChange={e => setNotes(e.target.value)}
+              rows={3}
+              placeholder="Engraving text, color preferences, or anything I should know…"
+              className="w-full bg-white/70 border border-[#243B39]/12 rounded-sm px-3 py-2 text-sm outline-none focus:border-[#B16558]"
+            />
+          </Section>
+
+          <Section title="Payment">
+            {!squareChecked ? (
+              <p className="text-sm text-[#6B6259]">Loading…</p>
+            ) : paymentMethodAvailable && chosenMethod !== 'invoice_later' ? (
+              <SquarePayment
+                config={squareConfig!}
+                amountCents={totalCents}
+                onToken={(token) => submitOrder('square', token)}
+                onError={(msg) => setError(msg)}
+              />
+            ) : (
+              <div>
+                <p className="text-sm text-[#6B6259] mb-3">
+                  {paymentMethodAvailable
+                    ? `"${chosen?.label}" is invoice-based. I'll follow up with a Square invoice once I review the order.`
+                    : 'Online payment is not yet configured — I\'ll send you a Square invoice after confirming your order.'}
+                </p>
+                <button
+                  onClick={() => submitOrder('invoice_later')}
+                  disabled={!canCheckout}
+                  className="w-full h-11 bg-[#B16558] hover:bg-[#954E44] disabled:opacity-60 text-white text-sm font-semibold rounded-sm"
+                >
+                  {submitting ? 'Placing order…' : 'Place order · pay by invoice'}
+                </button>
+              </div>
+            )}
+            {error && <p className="text-xs text-red-700 mt-2">{error}</p>}
+          </Section>
+        </div>
+
+        {/* Summary */}
+        <aside className="lg:sticky lg:top-6 lg:self-start bg-white/70 border border-[#243B39]/12 rounded-sm p-5">
+          <p className="text-[11px] uppercase tracking-wider text-[#7A7068] mb-3 font-semibold">Summary</p>
+          <div className="space-y-3">
+            {items.map(item => (
+              <div key={item.productId} className="flex gap-3 items-start">
+                <div className="w-14 h-14 bg-white border border-[#243B39]/10 rounded-sm overflow-hidden flex-shrink-0">
+                  {item.heroUrl ? <img src={item.heroUrl} alt="" className="w-full h-full object-cover" /> : null}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium truncate">{item.name}</p>
+                  <p className="text-xs text-[#6B6259]">{item.qty} × pack of {item.packSize}</p>
+                </div>
+                <p className="text-sm font-semibold">{money(item.priceCents * item.qty)}</p>
+              </div>
+            ))}
+          </div>
+          <div className="border-t border-[#243B39]/10 mt-4 pt-3 space-y-1 text-sm">
+            <div className="flex justify-between"><span className="text-[#6B6259]">Subtotal</span><span>{money(subtotalCents)}</span></div>
+            <div className="flex justify-between"><span className="text-[#6B6259]">{chosen?.label ?? 'Delivery'}</span><span>{chosen ? money(chosen.priceCents) : '—'}</span></div>
+            <div className="flex justify-between text-base font-bold pt-2"><span>Total</span><span>{money(totalCents)}</span></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  )
+}
+
+function Section({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <section>
+      <h2 className="text-xs font-mono uppercase tracking-[0.2em] text-[#7A7068] mb-3">{title}</h2>
+      <div>{children}</div>
+    </section>
+  )
+}
+
+function Input({
+  label,
+  value,
+  onChange,
+  type = 'text',
+  placeholder,
+  required,
+  colSpan,
+}: {
+  label: string
+  value: string
+  onChange: (v: string) => void
+  type?: string
+  placeholder?: string
+  required?: boolean
+  colSpan?: 1 | 2
+}) {
+  return (
+    <label className={`block ${colSpan === 2 ? 'col-span-2' : ''}`}>
+      <span className="text-[11px] uppercase tracking-wider text-[#7A7068] block mb-1">{label}{required && ' *'}</span>
+      <input
+        type={type}
+        value={value}
+        placeholder={placeholder}
+        onChange={e => onChange(e.target.value)}
+        className="w-full bg-white/70 border border-[#243B39]/12 rounded-sm px-3 py-2 text-sm outline-none focus:border-[#B16558]"
+      />
+    </label>
+  )
+}

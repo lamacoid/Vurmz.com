@@ -1,0 +1,126 @@
+'use client'
+
+import Link from 'next/link'
+import Image from 'next/image'
+import { useState, useEffect } from 'react'
+import { Bars3Icon, XMarkIcon, ChatBubbleLeftIcon, PhoneIcon } from '@heroicons/react/24/outline'
+import { siteInfo, getSmsLink } from '@/lib/site-info'
+
+const NAV_LINKS = [
+  { label: 'Shop', href: '/shop' },
+  { label: 'Services', href: '/services' },
+  { label: 'Pricing', href: '/services/pricing' },
+  { label: 'Portfolio', href: '/services/portfolio' },
+  { label: 'About', href: '/about' },
+  { label: 'Contact', href: '/services/contact' },
+]
+
+export default function SiteHeader({ variant = 'services' }: { variant?: 'shop' | 'services' }) {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+
+  const isShop = variant === 'shop'
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20)
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  const headerBg = isShop
+    ? scrolled ? 'bg-[#F0E6D3]/95 backdrop-blur-2xl border-b border-[#243B39]/10 shadow-sm' : 'bg-[#F0E6D3]'
+    : scrolled ? 'bg-[#1e3331]/90 backdrop-blur-2xl border-b border-white/10 shadow-lg shadow-black/10' : 'bg-transparent'
+
+  const textColor = isShop ? 'text-[#6B6259]' : 'text-gray-400'
+  const hoverColor = isShop ? 'hover:text-[#6BB8B2]' : 'hover:text-vurmz-cta'
+  const logoFilter = isShop ? '' : 'brightness-0 invert'
+  const logoSrc = isShop ? '/images/vurmz-logo-full-teal.svg' : '/images/vurmz-logo-full.svg'
+
+  const mobileBg = isShop ? 'bg-[#F0E6D3] border-[#243B39]/10' : 'bg-[#162524] border-white/10'
+  const mobileText = isShop ? 'text-[#5C534A]' : 'text-gray-300'
+  const mobileHover = isShop ? 'hover:text-[#6BB8B2] hover:bg-[#243B39]/[0.04]' : 'hover:text-vurmz-cta hover:bg-white/[0.06]'
+  const menuIcon = isShop ? 'text-[#5C534A]' : 'text-gray-300'
+
+  return (
+    <>
+      <header className={`fixed top-7 left-0 right-0 z-50 transition-all duration-300 ${headerBg}`}>
+        <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16 sm:h-[72px]">
+            <Link href="/" className="flex-shrink-0">
+              <Image src={logoSrc} alt="VURMZ" width={120} height={32} className={`h-7 sm:h-8 w-auto ${logoFilter}`} priority />
+            </Link>
+
+            {/* Desktop nav */}
+            <div className="hidden md:flex items-center gap-0.5">
+              {NAV_LINKS.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`px-3.5 py-1.5 text-[13px] font-medium ${textColor} ${hoverColor} rounded-full transition-colors duration-200`}
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+
+            {/* Right side */}
+            <div className="hidden md:flex items-center gap-3">
+              <a href={getSmsLink()} className={`text-[13px] ${textColor} hover:text-current transition-colors font-medium flex items-center gap-1.5`}>
+                <ChatBubbleLeftIcon className="w-3.5 h-3.5" />
+                {siteInfo.phone}
+              </a>
+            </div>
+
+            {/* Mobile menu button */}
+            <button
+              type="button"
+              className="md:hidden p-2 -mr-2 rounded-full transition-colors"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle navigation menu"
+              aria-expanded={mobileMenuOpen}
+            >
+              {mobileMenuOpen ? (
+                <XMarkIcon className={`h-5 w-5 ${menuIcon}`} />
+              ) : (
+                <Bars3Icon className={`h-5 w-5 ${menuIcon}`} />
+              )}
+            </button>
+          </div>
+        </nav>
+      </header>
+
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <>
+          <div className="fixed inset-0 z-40 bg-black/30 backdrop-blur-sm" onClick={() => setMobileMenuOpen(false)} />
+          <div className={`fixed top-[92px] left-3 right-3 z-50 ${mobileBg} border rounded-2xl shadow-2xl p-5 max-h-[calc(100vh-108px)] overflow-y-auto`}>
+            <div className="flex flex-col gap-1">
+              {NAV_LINKS.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`px-4 py-3 ${mobileText} font-medium ${mobileHover} rounded-xl transition-colors`}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+            <div className="mt-4 pt-4 border-t border-white/10">
+              <a
+                href={getSmsLink()}
+                className={`flex items-center justify-center gap-2 ${textColor} text-sm py-2`}
+              >
+                <ChatBubbleLeftIcon className="w-4 h-4" />
+                Text {siteInfo.phone}
+              </a>
+            </div>
+          </div>
+        </>
+      )}
+
+      {/* Spacer */}
+      <div className="h-[92px] sm:h-[100px]" />
+    </>
+  )
+}

@@ -13,7 +13,3 @@ export const portfolioItems = [
   { src: '/portfolio/plastic-marking-charger.jpg', label: 'Plastic Marking', context: 'Marking on an Apple charger brick' },
   { src: '/portfolio/laser-engraved-artwork.jpg', label: 'Laser Engraved Artwork', context: 'Fine detail artwork on anodized aluminum' },
 ]
-// Sample/test pieces — used in the samples section on homepage
-export const sampleItems = [
-  { src: '/portfolio/clga-faceplate-standing.jpg', label: 'Sample Faceplate' },
-]

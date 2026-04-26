@@ -7,9 +7,11 @@ import { CheckIcon, EnvelopeIcon } from '@heroicons/react/24/outline'
 interface NewsletterSignupProps {
   /** 'full' = homepage section with heading, 'compact' = footer inline */
   variant?: 'full' | 'compact'
+  /** 'services' = dark bg teal accent, 'shop' = dark card on cream page with coral accent */
+  theme?: 'services' | 'shop'
 }
 
-export default function NewsletterSignup({ variant = 'full' }: NewsletterSignupProps) {
+export default function NewsletterSignup({ variant = 'full', theme = 'services' }: NewsletterSignupProps) {
   const [email, setEmail] = useState('')
   const [firstName, setFirstName] = useState('')
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
@@ -102,14 +104,15 @@ export default function NewsletterSignup({ variant = 'full' }: NewsletterSignupP
   }
 
   // ─── FULL: Homepage section ───
+  const isShopTheme = theme === 'shop'
+
   return (
-    <section className="relative py-12 sm:py-16 border-t border-white/[0.06]">
-      <div
-        className="absolute inset-0"
-        style={{
-          background: 'linear-gradient(180deg, transparent 0%, rgba(60,185,178,0.03) 50%, transparent 100%)',
-        }}
-      />
+    <section className={`relative py-12 sm:py-16 ${isShopTheme ? '' : 'border-t border-white/[0.06]'}`}>
+      {isShopTheme ? (
+        <div className="absolute inset-0 bg-[#243B39] rounded-sm mx-4 sm:mx-6 lg:mx-8" />
+      ) : (
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, transparent 0%, rgba(60,185,178,0.03) 50%, transparent 100%)' }} />
+      )}
 
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
@@ -173,7 +176,11 @@ export default function NewsletterSignup({ variant = 'full' }: NewsletterSignupP
                   <button
                     type="submit"
                     disabled={status === 'loading'}
-                    className="group inline-flex items-center justify-center gap-2 px-6 py-3 bg-vurmz-cta text-white font-semibold text-sm rounded-sm hover:bg-vurmz-cta-hover transition-all shadow-lg shadow-vurmz-cta/20 disabled:opacity-50"
+                    className={`group inline-flex items-center justify-center gap-2 px-6 py-3 font-semibold text-sm rounded-sm transition-all disabled:opacity-50 ${
+                      isShopTheme
+                        ? 'bg-[#B16558] text-white hover:bg-[#954E44] shadow-lg shadow-[#B16558]/20'
+                        : 'bg-vurmz-cta text-white hover:bg-vurmz-cta-hover shadow-lg shadow-vurmz-cta/20'
+                    }`}
                   >
                     <EnvelopeIcon className="w-4 h-4" />
                     {status === 'loading' ? 'Signing up...' : 'Subscribe'}

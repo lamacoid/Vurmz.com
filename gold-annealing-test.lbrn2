@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightBurnProject AppVersion="1.7.03" FormatVersion="1" MaterialHeight="0" MirrorX="False" MirrorY="False">
+    <CutSetting type="Cut">
+        <index Value="0"/>
+        <name Value="S50 P8%"/>
+        <speed Value="50"/>
+        <maxPower Value="8"/>
+        <frequency Value="80000"/>
+        <priority Value="0"/>
+        <tabCount Value="1"/>
+        <fillMode Value="1"/>
+        <fillInterval Value="0.015"/>
+        <bidir Value="1"/>
+        <C Value="#1ec832"/>
+    </CutSetting>
+    <CutSetting type="Cut">
+        <index Value="1"/>
+        <name Value="S50 P10%"/>
+        <speed Value="50"/>
+        <maxPower Value="10"/>
+        <frequency Value="80000"/>
+        <priority Value="1"/>
+        <tabCount Value="1"/>
+        <fillMode Value="1"/>
+        <fillInterval Value="0.015"/>
+        <bidir Value="1"/>
+        <C Value="#24c235"/>
+    </CutSetting>
+    <CutSetting type="Cut">
+        <index Value="2"/>
+        <name Value="S50 P12%"/>
+        <speed Value="50"/>
+        <maxPower Value="12"/>
+        <frequency Value="80000"/>
+        <priority Value="2"/>
+        <tabCount Value="1"/>
+        <fillMode Value="1"/>
+        <fillInterval Value="0.015"/>
+        <bidir Value="1"/>
+        <C Value="#2bbd38"/>
+    </CutSetting>
+    <CutSetting type="Cut">
+        <index Value="3"/>
+        <name Value="S50 P14%"/>
+        <speed Value="50"/>
+        <maxPower Value="14"/>
+        <frequency Value="80000"/>
+        <priority Value="3"/>
+        <tabCount Value="1"/>
+        <fillMode Value="1"/>
+        <fillInterval Value="0.015"/>
+        <bidir Value="1"/>
+        <C Value="#32b83c"/>
+    </CutSetting>
+    <CutSetting type="Cut">
+        <index Value="4"/>
+        <name Value="S50 P16%"/>
+        <speed Value="50"/>
+        <maxPower Value="16"/>
+        <frequency Value="80000"/>
+        <priority Value="4"/>
+        <tabCount Value="1"/>
+        <fillMode Value="1"/>
+        <fillInterval Value="0.015"/>
+        <bidir Value="1"/>
+        <C Value="#39b33f"/>
+    </CutSetting>
+    <CutSetting type="Cut">
+        <index Value="5"/>
+        <name Value="S80 P8%"/>
+        <speed Value="80"/>
+        <maxPower Value="8"/>
+        <frequency Value="80000"/>
+        <priority Value="5"/>
+        <tabCount Value="1"/>
+        <fillMode Value="1"/>
+        <fillInterval Value="0.015"/>
+        <bidir Value="1"/>
+        <C Value="#40ae43"/>
+    </CutSetting>
+    <CutSetting type="Cut">
+        <index Value="6"/>
+        <name Value="S80 P10%"/>
+        <speed Value="80"/>
+        <maxPower Value="10"/>
+        <frequency Value="80000"/>
+        <priority Value="6"/>
+        <tabCount Value="1"/>
+        <fillMode Value="1"/>
+        <fillInterval Value="0.015"/>
+        <bidir Value="1"/>
+        <C Value="#47a846"/>
+    </CutSetting>
+    <CutSetting type="Cut">
+        <index Value="7"/>
+        <name Value="S80 P12%"/>
+        <speed Value="80"/>
+        <maxPower Value="12"/>
+        <frequency Value="80000"/>
+        <priority Value="7"/>
+        <tabCount Value="1"/>
+        <fillMode Value="1"/>
+        <fillInterval Value="0.015"/>
+        <bidir Value="1"/>
+        <C Value="#4ea34a"/>
+    </CutSetting>
+    <CutSetting type="Cut">
+        <index Value="8"/>
+        <name Value="S80 P14%"/>
+        <speed Value="80"/>
+        <maxPower Value="14"/>
+        <frequency Value="80000"/>
+        <priority Value="8"/>
+        <tabCount Value="1"/>
+        <fillMode Value="1"/>
+        <fillInterval Value="0.015"/>
+        <bidir Value="1"/>
+        <C Value="#559e4d"/>
+    </CutSetting>
+    <CutSetting type="Cut">
+        <index Value="9"/>
+        <name Value="S80 P16%"/>
+        <speed Value="80"/>
+        <maxPower Value="16"/>
+        <frequency Value="80000"/>
+        <priority Value="9"/>
+        <tabCount Value="1"/>
+        <fillMode Value="1"/>
+        <fillInterval Value="0.015"/>
+        <bidir Value="1"/>
+        <C Value="#5c9951"/>
+    </CutSetting>
+    <CutSetting type="Cut">
+        <index Value="10"/>
+        <name Value="S110 P8%"/>
+        <speed Value="110"/>
+        <maxPower Value="8"/>
+        <frequency Value="80000"/>
+        <priority Value="10"/>
+        <tabCount Value="1"/>
+        <fillMode Value="1"/>
+        <fillInterval Value="0.015"/>
+        <bidir Value="1"/>
+        <C Value="#629454"/>
+    </CutSetting>
+    <CutSetting type="Cut">
+        <index Value="11"/>
+        <name Value="S110 P10%"/>
+        <speed Value="110"/>
+        <maxPower Value="10"/>
+        <frequency Value="80000"/>
+        <priority Value="11"/>
+        <tabCount Value="1"/>
+        <fillMode Value="1"/>
+        <fillInterval Value="0.015"/>
+        <bidir Value="1"/>
+        <C Value="#698f57"/>
+    </CutSetting>
+    <CutSetting type="Cut">
+        <index Value="12"/>
+        <name Value="S110 P12%"/>
+        <speed Value="110"/>
+        <maxPower Value="12"/>
+        <frequency Value="80000"/>
+        <priority Value="12"/>
+        <tabCount Value="1"/>
+        <fillMode Value="1"/>
+        <fillInterval Value="0.015"/>
+        <bidir Value="1"/>
+        <C Value="#70895b"/>
+    </CutSetting>
+    <CutSetting type="Cut">
+        <index Value="13"/>
+        <name Value="S110 P14%"/>
+        <speed Value="110"/>
+        <maxPower Value="14"/>
+        <frequency Value="80000"/>
+        <priority Value="13"/>
+        <tabCount Value="1"/>
+        <fillMode Value="1"/>
+        <fillInterval Value="0.015"/>
+        <bidir Value="1"/>
+        <C Value="#77845e"/>
+    </CutSetting>
+    <CutSetting type="Cut">
+        <index Value="14"/>
+        <name Value="S110 P16%"/>
+        <speed Value="110"/>
+        <maxPower Value="16"/>
+        <frequency Value="80000"/>
+        <priority Value="14"/>
+        <tabCount Value="1"/>
+        <fillMode Value="1"/>
+        <fillInterval Value="0.015"/>
+        <bidir Value="1"/>
+        <C Value="#7e7f62"/>
+    </CutSetting>
+    <CutSetting type="Cut">
+        <index Value="15"/>
+        <name Value="S140 P8%"/>
+        <speed Value="140"/>
+        <maxPower Value="8"/>
+        <frequency Value="80000"/>
+        <priority Value="15"/>
+        <tabCount Value="1"/>
+        <fillMode Value="1"/>
+        <fillInterval Value="0.015"/>
+        <bidir Value="1"/>
+        <C Value="#857a65"/>
+    </CutSetting>
+    <CutSetting type="Cut">
+        <index Value="16"/>
+        <name Value="S140 P10%"/>
+        <speed Value="140"/>
+        <maxPower Value="10"/>
+        <frequency Value="80000"/>
+        <priority Value="16"/>
+        <tabCount Value="1"/>
+        <fillMode Value="1"/>
+        <fillInterval Value="0.015"/>
+        <bidir Value="1"/>
+        <C Value="#8c7569"/>
+    </CutSetting>
+    <CutSetting type="Cut">
+        <index Value="17"/>
+        <name Value="S140 P12%"/>
+        <speed Value="140"/>
+        <maxPower Value="12"/>
+        <frequency Value="80000"/>
+        <priority Value="17"/>
+        <tabCount Value="1"/>
+        <fillMode Value="1"/>
+        <fillInterval Value="0.015"/>
+        <bidir Value="1"/>
+        <C Value="#93706c"/>
+    </CutSetting>
+    <CutSetting type="Cut">
+        <index Value="18"/>
+        <name Value="S140 P14%"/>
+        <speed Value="140"/>
+        <maxPower Value="14"/>
+        <frequency Value="80000"/>
+        <priority Value="18"/>
+        <tabCount Value="1"/>
+        <fillMode Value="1"/>
+        <fillInterval Value="0.015"/>
+        <bidir Value="1"/>
+        <C Value="#9a6a70"/>
+    </CutSetting>
+    <CutSetting type="Cut">
+        <index Value="19"/>
+        <name Value="S140 P16%"/>
+        <speed Value="140"/>
+        <maxPower Value="16"/>
+        <frequency Value="80000"/>
+        <priority Value="19"/>
+        <tabCount Value="1"/>
+        <fillMode Value="1"/>
+        <fillInterval Value="0.015"/>
+        <bidir Value="1"/>
+        <C Value="#a16573"/>
+    </CutSetting>
+    <CutSetting type="Cut">
+        <index Value="20"/>
+        <name Value="S170 P8%"/>
+        <speed Value="170"/>
+        <maxPower Value="8"/>
+        <frequency Value="80000"/>
+        <priority Value="20"/>
+        <tabCount Value="1"/>
+        <fillMode Value="1"/>
+        <fillInterval Value="0.015"/>
+        <bidir Value="1"/>
+        <C Value="#a76076"/>
+    </CutSetting>
+    <CutSetting type="Cut">
+        <index Value="21"/>
+        <name Value="S170 P10%"/>
+        <speed Value="170"/>
+        <maxPower Value="10"/>
+        <frequency Value="80000"/>
+        <priority Value="21"/>
+        <tabCount Value="1"/>
+        <fillMode Value="1"/>
+        <fillInterval Value="0.015"/>
+        <bidir Value="1"/>
+        <C Value="#ae5b7a"/>
+    </CutSetting>
+    <CutSetting type="Cut">
+        <index Value="22"/>
+        <name Value="S170 P12%"/>
+        <speed Value="170"/>
+        <maxPower Value="12"/>
+        <frequency Value="80000"/>
+        <priority Value="22"/>
+        <tabCount Value="1"/>
+        <fillMode Value="1"/>
+        <fillInterval Value="0.015"/>
+        <bidir Value="1"/>
+        <C Value="#b5567d"/>
+    </CutSetting>
+    <CutSetting type="Cut">
+        <index Value="23"/>
+        <name Value="S170 P14%"/>
+        <speed Value="170"/>
+        <maxPower Value="14"/>
+        <frequency Value="80000"/>
+        <priority Value="23"/>
+        <tabCount Value="1"/>
+        <fillMode Value="1"/>
+        <fillInterval Value="0.015"/>
+        <bidir Value="1"/>
+        <C Value="#bc5181"/>
+    </CutSetting>
+    <CutSetting type="Cut">
+        <index Value="24"/>
+        <name Value="S170 P16%"/>
+        <speed Value="170"/>
+        <maxPower Value="16"/>
+        <frequency Value="80000"/>
+        <priority Value="24"/>
+        <tabCount Value="1"/>
+        <fillMode Value="1"/>
+        <fillInterval Value="0.015"/>
+        <bidir Value="1"/>
+        <C Value="#c34b84"/>
+    </CutSetting>
+    <CutSetting type="Cut">
+        <index Value="25"/>
+        <name Value="S200 P8%"/>
+        <speed Value="200"/>
+        <maxPower Value="8"/>
+        <frequency Value="80000"/>
+        <priority Value="25"/>
+        <tabCount Value="1"/>
+        <fillMode Value="1"/>
+        <fillInterval Value="0.015"/>
+        <bidir Value="1"/>
+        <C Value="#ca4688"/>
+    </CutSetting>
+    <CutSetting type="Cut">
+        <index Value="26"/>
+        <name Value="S200 P10%"/>
+        <speed Value="200"/>
+        <maxPower Value="10"/>
+        <frequency Value="80000"/>
+        <priority Value="26"/>
+        <tabCount Value="1"/>
+        <fillMode Value="1"/>
+        <fillInterval Value="0.015"/>
+        <bidir Value="1"/>
+        <C Value="#d1418b"/>
+    </CutSetting>
+    <CutSetting type="Cut">
+        <index Value="27"/>
+        <name Value="S200 P12%"/>
+        <speed Value="200"/>
+        <maxPower Value="12"/>
+        <frequency Value="80000"/>
+        <priority Value="27"/>
+        <tabCount Value="1"/>
+        <fillMode Value="1"/>
+        <fillInterval Value="0.015"/>
+        <bidir Value="1"/>
+        <C Value="#d83c8f"/>
+    </CutSetting>
+    <CutSetting type="Cut">
+        <index Value="28"/>
+        <name Value="S200 P14%"/>
+        <speed Value="200"/>
+        <maxPower Value="14"/>
+        <frequency Value="80000"/>
+        <priority Value="28"/>
+        <tabCount Value="1"/>
+        <fillMode Value="1"/>
+        <fillInterval Value="0.015"/>
+        <bidir Value="1"/>
+        <C Value="#df3792"/>
+    </CutSetting>
+    <CutSetting type="Cut">
+        <index Value="29"/>
+        <name Value="S200 P16%"/>
+        <speed Value="200"/>
+        <maxPower Value="16"/>
+        <frequency Value="80000"/>
+        <priority Value="29"/>
+        <tabCount Value="1"/>
+        <fillMode Value="1"/>
+        <fillInterval Value="0.015"/>
+        <bidir Value="1"/>
+        <C Value="#e63296"/>
+    </CutSetting>
+    <Shape Type="Rect" CutIndex="0" W="8" H="8" Cr="0">
+        <XForm>1 0 0 1 -24.0 30.0</XForm>
+    </Shape>
+    <Shape Type="Rect" CutIndex="1" W="8" H="8" Cr="0">
+        <XForm>1 0 0 1 -12.0 30.0</XForm>
+    </Shape>
+    <Shape Type="Rect" CutIndex="2" W="8" H="8" Cr="0">
+        <XForm>1 0 0 1 0.0 30.0</XForm>
+    </Shape>
+    <Shape Type="Rect" CutIndex="3" W="8" H="8" Cr="0">
+        <XForm>1 0 0 1 12.0 30.0</XForm>
+    </Shape>
+    <Shape Type="Rect" CutIndex="4" W="8" H="8" Cr="0">
+        <XForm>1 0 0 1 24.0 30.0</XForm>
+    </Shape>
+    <Shape Type="Rect" CutIndex="5" W="8" H="8" Cr="0">
+        <XForm>1 0 0 1 -24.0 18.0</XForm>
+    </Shape>
+    <Shape Type="Rect" CutIndex="6" W="8" H="8" Cr="0">
+        <XForm>1 0 0 1 -12.0 18.0</XForm>
+    </Shape>
+    <Shape Type="Rect" CutIndex="7" W="8" H="8" Cr="0">
+        <XForm>1 0 0 1 0.0 18.0</XForm>
+    </Shape>
+    <Shape Type="Rect" CutIndex="8" W="8" H="8" Cr="0">
+        <XForm>1 0 0 1 12.0 18.0</XForm>
+    </Shape>
+    <Shape Type="Rect" CutIndex="9" W="8" H="8" Cr="0">
+        <XForm>1 0 0 1 24.0 18.0</XForm>
+    </Shape>
+    <Shape Type="Rect" CutIndex="10" W="8" H="8" Cr="0">
+        <XForm>1 0 0 1 -24.0 6.0</XForm>
+    </Shape>
+    <Shape Type="Rect" CutIndex="11" W="8" H="8" Cr="0">
+        <XForm>1 0 0 1 -12.0 6.0</XForm>
+    </Shape>
+    <Shape Type="Rect" CutIndex="12" W="8" H="8" Cr="0">
+        <XForm>1 0 0 1 0.0 6.0</XForm>
+    </Shape>
+    <Shape Type="Rect" CutIndex="13" W="8" H="8" Cr="0">
+        <XForm>1 0 0 1 12.0 6.0</XForm>
+    </Shape>
+    <Shape Type="Rect" CutIndex="14" W="8" H="8" Cr="0">
+        <XForm>1 0 0 1 24.0 6.0</XForm>
+    </Shape>
+    <Shape Type="Rect" CutIndex="15" W="8" H="8" Cr="0">
+        <XForm>1 0 0 1 -24.0 -6.0</XForm>
+    </Shape>
+    <Shape Type="Rect" CutIndex="16" W="8" H="8" Cr="0">
+        <XForm>1 0 0 1 -12.0 -6.0</XForm>
+    </Shape>
+    <Shape Type="Rect" CutIndex="17" W="8" H="8" Cr="0">
+        <XForm>1 0 0 1 0.0 -6.0</XForm>
+    </Shape>
+    <Shape Type="Rect" CutIndex="18" W="8" H="8" Cr="0">
+        <XForm>1 0 0 1 12.0 -6.0</XForm>
+    </Shape>
+    <Shape Type="Rect" CutIndex="19" W="8" H="8" Cr="0">
+        <XForm>1 0 0 1 24.0 -6.0</XForm>
+    </Shape>
+    <Shape Type="Rect" CutIndex="20" W="8" H="8" Cr="0">
+        <XForm>1 0 0 1 -24.0 -18.0</XForm>
+    </Shape>
+    <Shape Type="Rect" CutIndex="21" W="8" H="8" Cr="0">
+        <XForm>1 0 0 1 -12.0 -18.0</XForm>
+    </Shape>
+    <Shape Type="Rect" CutIndex="22" W="8" H="8" Cr="0">
+        <XForm>1 0 0 1 0.0 -18.0</XForm>
+    </Shape>
+    <Shape Type="Rect" CutIndex="23" W="8" H="8" Cr="0">
+        <XForm>1 0 0 1 12.0 -18.0</XForm>
+    </Shape>
+    <Shape Type="Rect" CutIndex="24" W="8" H="8" Cr="0">
+        <XForm>1 0 0 1 24.0 -18.0</XForm>
+    </Shape>
+    <Shape Type="Rect" CutIndex="25" W="8" H="8" Cr="0">
+        <XForm>1 0 0 1 -24.0 -30.0</XForm>
+    </Shape>
+    <Shape Type="Rect" CutIndex="26" W="8" H="8" Cr="0">
+        <XForm>1 0 0 1 -12.0 -30.0</XForm>
+    </Shape>
+    <Shape Type="Rect" CutIndex="27" W="8" H="8" Cr="0">
+        <XForm>1 0 0 1 0.0 -30.0</XForm>
+    </Shape>
+    <Shape Type="Rect" CutIndex="28" W="8" H="8" Cr="0">
+        <XForm>1 0 0 1 12.0 -30.0</XForm>
+    </Shape>
+    <Shape Type="Rect" CutIndex="29" W="8" H="8" Cr="0">
+        <XForm>1 0 0 1 24.0 -30.0</XForm>
+    </Shape>
+    <Notes ShowOnLoad="1" Notes="VURMZ Gold Annealing Test Grid&#10;&#10;Rows (top to bottom): 50, 80, 110, 140, 170, 200 mm/s&#10;Columns (left to right): 8%, 10%, 12%, 14%, 16% power&#10;&#10;Fixed: 80kHz frequency, 0.015mm line spacing, bi-directional fill&#10;&#10;SET DEFOCUS: +3 to +5mm above focal point BEFORE running&#10;Material: 304 stainless steel, clean and degreased&#10;&#10;Look for gold/straw color in the low-power, slow-speed corner (top-left)."/>
+</LightBurnProject>

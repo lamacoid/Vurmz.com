@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+/* Accessible focus states */
+*:focus-visible {
+  outline: 2px solid var(--vurmz-teal, #6BB8B2);
+  outline-offset: 2px;
+}
+[data-theme="shop"] *:focus-visible {
+  outline-color: #B16558;
+}
+
 /* Hide site chrome on admin pages */
 body.is-admin > *:not(main):not(script):not(next-route-announcer) {
   display: none !important;

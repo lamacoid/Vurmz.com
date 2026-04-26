@@ -4,11 +4,15 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { Bars3Icon, XMarkIcon, PhoneIcon, ArrowRightIcon } from '@heroicons/react/24/outline'
-import { siteInfo, navigation, getSmsLink } from '@/lib/site-info'
+import { siteInfo, navigation as staticNav, getSmsLink } from '@/lib/site-info'
+import { usePublicNav } from '@/lib/nav/usePublicNav'
+
+const defaultNav = staticNav.map((n, i) => ({ id: `default-${i}`, label: n.name, href: n.href }))
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const navigation = usePublicNav('header', defaultNav)
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20)
@@ -43,11 +47,11 @@ export default function Header() {
             <div className="hidden md:flex items-center gap-0.5">
               {navigation.map((item) => (
                 <Link
-                  key={item.name}
+                  key={item.id}
                   href={item.href}
                   className="px-3.5 py-1.5 text-[13px] font-medium text-gray-400 hover:text-vurmz-cta rounded-full transition-colors duration-200 hover:bg-white/[0.06]"
                 >
-                  {item.name}
+                  {item.label}
                 </Link>
               ))}
             </div>
@@ -78,6 +82,8 @@ export default function Header() {
               type="button"
               className="md:hidden p-2 -mr-2 rounded-full hover:bg-white/10 transition-colors"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle navigation menu"
+              aria-expanded={mobileMenuOpen}
             >
               {mobileMenuOpen ? (
                 <XMarkIcon className="h-5 w-5 text-white" />
@@ -100,12 +106,12 @@ export default function Header() {
             <div className="flex flex-col gap-1">
               {navigation.map((item) => (
                 <Link
-                  key={item.name}
+                  key={item.id}
                   href={item.href}
                   className="px-4 py-3 text-gray-300 font-medium hover:text-vurmz-cta hover:bg-white/[0.06] rounded-xl transition-colors"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  {item.name}
+                  {item.label}
                 </Link>
               ))}
             </div>

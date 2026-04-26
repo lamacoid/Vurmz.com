@@ -4,27 +4,41 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getRequestContext } from '@cloudflare/next-on-pages'
 import { hashPassword, createSession } from '@/lib/admin-auth'
 
-// Hardcoded hash of 'vurmz2024' — can also be overridden by ADMIN_PASSWORD_HASH secret
-const DEFAULT_HASH = 'e938305b24259c9310a484969ba10e9a01352ff9ef00534e8cbbb2ece4ede29c'
-
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json() as { password?: string }
     const password = body.password
 
-    if (!password || typeof password !== 'string') {
+    if (!password || typeof password !== 'string' || password.length > 200) {
       return NextResponse.json({ error: 'Password required' }, { status: 400 })
     }
 
     const { env } = getRequestContext()
 
-    // Use secret if set, otherwise use default hash
-    const expectedHash = (env as any).ADMIN_PASSWORD_HASH || DEFAULT_HASH
+    // Prefer env secret; fall back to existing hash until rotated
+    const expectedHash = (env as any).ADMIN_PASSWORD_HASH || 'e938305b24259c9310a484969ba10e9a01352ff9ef00534e8cbbb2ece4ede29c'
+
     const inputHash = await hashPassword(password)
 
-    if (inputHash !== expectedHash) {
-      // Brief delay to slow brute force
-      await new Promise(r => setTimeout(r, 500))
+    // Constant-time comparison to prevent timing attacks
+    const encoder = new TextEncoder()
+    const a = encoder.encode(inputHash)
+    const b = encoder.encode(expectedHash)
+    let match = a.length === b.length
+    if (match) {
+      try {
+        // timingSafeEqual is available in Cloudflare Workers runtime
+        match = (crypto.subtle as any).timingSafeEqual(a, b)
+      } catch {
+        // Fallback: XOR-based comparison (still constant-time for equal lengths)
+        let diff = 0
+        for (let i = 0; i < a.length; i++) diff |= a[i] ^ b[i]
+        match = diff === 0
+      }
+    }
+
+    if (!match) {
+      await new Promise(r => setTimeout(r, 1000 + Math.random() * 1000))
       return NextResponse.json({ error: 'Wrong password' }, { status: 401 })
     }
 
@@ -33,7 +47,7 @@ export async function POST(req: NextRequest) {
     const res = NextResponse.json({ ok: true })
     res.headers.set('Set-Cookie', cookie)
     return res
-  } catch (e: any) {
-    return NextResponse.json({ error: e.message }, { status: 500 })
+  } catch {
+    return NextResponse.json({ error: 'Login failed' }, { status: 500 })
   }
 }

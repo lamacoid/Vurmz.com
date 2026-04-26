@@ -2,16 +2,18 @@
 
 import { useState } from 'react'
 import { ArrowRightIcon, CheckCircleIcon } from '@heroicons/react/24/outline'
+import { siteInfo } from '@/lib/site-info'
+import { BASIC, LEAVE_YOUR_MARK, SIGNATURE } from '@/lib/pricing'
 
 const productOptions = [
-  'Branded Pens (pack)',
-  'Metal Service Tags (pack)',
-  'Coasters (pack)',
-  'Keychains (pack)',
-  'Knife Marking',
-  'Tool Marking',
-  'Signature Tiles',
-  'Custom Engraving ($50+)',
+  `${BASIC.pens.name} (pack)`,
+  `${LEAVE_YOUR_MARK.serviceTags.name} (pack)`,
+  `${BASIC.coasters.name} (pack)`,
+  `${BASIC.keychains.name} (pack)`,
+  BASIC.knives.name,
+  BASIC.tools.name,
+  LEAVE_YOUR_MARK.signatureTiles.name,
+  `Custom Engraving ($${SIGNATURE.startingPrice}+)`,
   'Concierge Sourcing',
   'Other',
 ]
@@ -59,7 +61,7 @@ export default function ContactForm() {
         <CheckCircleIcon className="w-12 h-12 text-vurmz-teal mx-auto mb-4" />
         <h3 className="text-xl font-semibold text-white mb-2">Message Sent</h3>
         <p className="text-gray-400 mb-4">
-          Thanks for reaching out. Zach will get back to you shortly.
+          Thanks for reaching out. {siteInfo.founder.name} will get back to you shortly.
         </p>
         <button
           onClick={() => setStatus('idle')}

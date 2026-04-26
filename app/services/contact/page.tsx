@@ -3,36 +3,37 @@ import Image from 'next/image'
 import { MapPinIcon, PhoneIcon, EnvelopeIcon, ClockIcon } from '@heroicons/react/24/outline'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 import ContactForm from '@/components/ContactForm'
+import Breadcrumbs from '@/components/Breadcrumbs'
 
 export const metadata: Metadata = {
-  title: 'Contact VURMZ | Centennial CO Laser Engraving',
+  title: 'Contact',
   description: `Contact ${siteInfo.founder.name} at ${siteInfo.name} for laser engraving in ${siteInfo.city} and Denver metro. Text ${siteInfo.phone} or email.`,
 }
 
 const faqItems = [
   {
     question: 'How fast can you turn around an order?',
-    answer: 'Turnaround depends on the job. Rush orders are often possible for local businesses. Standard orders are 3-5 days. I am flexible.',
+    answer: 'Next-day on most jobs. Same-day is usually possible on stock items. Bigger runs and custom sourcing take longer. Tell me the deadline and I will tell you if it is doable.',
   },
   {
     question: 'How are orders structured?',
-    answer: 'Promotional items like pens and coasters come in packs of 15. Industrial labels and custom work are quoted per job.',
+    answer: 'Stock items like pens, coasters, and keychains come in packs of 15. Custom work on your item starts at $50. Industrial labels and trades work are quoted per job.',
   },
   {
     question: 'Can I bring my own items to engrave?',
-    answer: 'Absolutely. I can engrave your existing kitchen pans, tools, or other items. Just let me know what you have and I will tell you if it will work.',
+    answer: 'Yes. Knives, tumblers, laptops, cutting boards, leather, glass, whatever you have. Text me a photo and I will tell you if it will mark.',
   },
   {
     question: 'What file formats do you need for logos?',
-    answer: 'Vector files (SVG, AI, EPS) work best. High-resolution PNG or JPG can work too. If you only have a basic image, I can often work with it.',
+    answer: 'Vector files (SVG, AI, EPS) are ideal. High-resolution PNG or JPG works too. If all you have is a rough image, send it. I can usually clean it up.',
   },
   {
     question: 'How do I pay?',
-    answer: 'I accept all major payment methods. For business orders, I can invoice through Square. Payment is typically due upon completion.',
+    answer: 'Cash, card, or Square invoice for business orders. Payment is due at delivery.',
   },
   {
     question: 'Do you set up recurring orders?',
-    answer: 'Yes. Many businesses order pens quarterly. I can set up automatic reorders so you never run low.',
+    answer: 'Yes. If you hand out pens or business cards regularly, I can keep your stock fresh on a schedule that matches your burn rate. You do not have to think about reordering.',
   },
 ]
 
@@ -56,6 +57,13 @@ export default function ContactPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
+
+      {/* Breadcrumbs */}
+      <div className="bg-vurmz-dark pt-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Breadcrumbs items={[{ label: 'VURMZ', href: '/' }, { label: 'Services', href: '/services' }, { label: 'Contact' }]} theme="services" />
+        </div>
+      </div>
 
       {/* Hero */}
       <section className="bg-vurmz-dark text-cream py-10">

@@ -65,9 +65,11 @@ export const siteInfo = {
 // Navigation items — services section
 export const servicesNavigation = [
   { name: 'Pricing', href: '/services/pricing' },
+  { name: 'Materials', href: '/services/materials' },
   { name: 'Portfolio', href: '/services/portfolio' },
   { name: 'Community', href: '/services/centennial' },
   { name: 'Contact', href: '/services/contact' },
+  { name: 'Shop', href: '/shop' },
 ] as const
 
 // Alias for backward compat with Header/Footer

@@ -1,26 +1,21 @@
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
-import LocalTicker from '@/components/LocalTicker'
+import SiteHeader from '@/components/SiteHeader'
+import SiteFooter from '@/components/SiteFooter'
 import ScrollGlare from '@/components/ScrollGlare'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: {
-    default: 'Services | VURMZ',
-    template: '%s | VURMZ Services',
-  },
-  description: 'Professional laser engraving services in Centennial, CO. Branded pen packs, metal service tags, custom engraving. Next-day turnaround, hand-delivered in South Denver metro.',
+  title: 'Services',
+  description: 'Laser engraving for small business in Centennial, CO. Branded pen packs, metal service tags, custom engraving. Next-day turnaround, hand-delivered across South Denver.',
 }
 
 export default function ServicesLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="bg-vurmz-dark text-gray-100" data-theme="services">
-      <LocalTicker />
-      <Header />
+      <SiteHeader variant="services" />
       <main className="min-h-screen">
         {children}
       </main>
-      <Footer />
+      <SiteFooter />
       <ScrollGlare />
     </div>
   )

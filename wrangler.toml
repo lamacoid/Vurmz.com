@@ -11,16 +11,33 @@ pages_build_output_dir = ".vercel/output/static"
 binding = "RATE_LIMIT"
 id = "02f167c6131342b4ad6a83ff6d45c768"
 
+# KV namespace for admin sessions
+[[kv_namespaces]]
+binding = "SESSIONS"
+id = "5b23e933e1364ce781dcf72342dc382b"
+
+# KV namespace for customer portal sessions (magic link + passkey)
+[[kv_namespaces]]
+binding = "CUSTOMER_SESSIONS"
+id = "8571e7d9cf8045d6a0a3736782915edd"
+
 # D1 database for custom analytics (owner-filtered pageviews)
 [[d1_databases]]
 binding = "TRACK_DB"
 database_name = "vurmz-track"
 database_id = "2eadd359-67ca-447c-9f33-5ed533ea72f1"
 
-# KV namespace for admin sessions
-[[kv_namespaces]]
-binding = "SESSIONS"
-id = "5b23e933e1364ce781dcf72342dc382b"
+# D1 database for core CMS / commerce / customer data
+[[d1_databases]]
+binding = "DB"
+database_name = "vurmz-core"
+database_id = "84be53e8-100d-41ef-927d-2719c89f0348"
+migrations_dir = "lib/db/migrations"
+
+# R2 bucket for admin media library (images, assets)
+[[r2_buckets]]
+binding = "MEDIA"
+bucket_name = "vurmz-media"
 
 # Environment variables
 [vars]

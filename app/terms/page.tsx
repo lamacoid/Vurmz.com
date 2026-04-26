@@ -3,10 +3,10 @@ import Link from 'next/link'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 
 export const metadata: Metadata = {
-  title: `Terms & Conditions | ${siteInfo.name}`,
+  title: 'Terms & Conditions',
   description: `Terms of service and policies for ${siteInfo.name} laser engraving services in ${siteInfo.city}, ${siteInfo.state}.`,
   openGraph: {
-    title: `Terms & Conditions | ${siteInfo.name}`,
+    title: 'Terms & Conditions',
     description: `Terms of service and policies for ${siteInfo.name} laser engraving services.`,
     url: `${siteInfo.url}/terms`,
     siteName: siteInfo.name,
@@ -45,7 +45,7 @@ export default function TermsPage() {
       items: [
         { term: 'File Formats', desc: 'Vector files (SVG, AI, EPS) are preferred. High-resolution PNG or JPG (300+ DPI) may work depending on the project.' },
         { term: 'Ownership', desc: `You must own or have rights to use any logos, artwork, or designs you provide. ${siteInfo.name} is not responsible for verifying IP rights.` },
-        { term: 'Proofs', desc: 'Digital proofs are provided for approval before production. Changes after approval may incur additional charges.' },
+        { term: 'Design Confirmation', desc: 'Designs are confirmed with you before production. Changes after confirmation may incur additional charges.' },
       ],
     },
     {
@@ -61,7 +61,7 @@ export default function TermsPage() {
       items: [
         { term: 'Quality Guarantee', desc: 'All work is inspected before delivery. Defects in workmanship will be remade at no charge.' },
         { term: 'Customer-Supplied Items', desc: `${siteInfo.name} is not responsible for damage to customer-supplied items. Engraving inherently alters the surface.` },
-        { term: 'No Returns on Custom', desc: 'Due to personalized nature of engraving, all sales are final. Review proofs carefully before approval.' },
+        { term: 'No Returns on Custom', desc: 'Due to the personalized nature of engraving, all sales are final.' },
       ],
     },
     {

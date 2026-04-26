@@ -3,5 +3,5 @@
 /contact /services/contact 301
 /portfolio /services/portfolio 301
 /centennial /services/centennial 301
-/gifts /services/gifts 301
+/gifts /shop 301
 /laser-engraving/* /services/laser-engraving/:splat 301
