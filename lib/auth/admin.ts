@@ -1,12 +1,20 @@
 /**
- * Admin auth — thin wrapper over existing lib/admin-auth.ts.
- * Keeps legacy API intact while exposing the new session-data shape.
- * The legacy file stays in place; import from here in new code.
+ * Admin auth — single source of truth for admin sessions and password
+ * hashing. Replaces the older lib/admin-auth.ts module.
  */
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 import { getSessions, nowIso } from '@/lib/db/client'
 import { generateToken, cookieString, clearCookieString } from './session'
+
+/** SHA-256 hash of a password string. */
+export async function hashPassword(password: string): Promise<string> {
+  const data = new TextEncoder().encode(password)
+  const hash = await crypto.subtle.digest('SHA-256', data)
+  return Array.from(new Uint8Array(hash))
+    .map(b => b.toString(16).padStart(2, '0'))
+    .join('')
+}
 
 export const ADMIN_COOKIE = 'vurmz_admin'
 export const ADMIN_SESSION_TTL = 60 * 60 * 24 * 7 // 7 days

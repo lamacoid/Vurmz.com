@@ -2,12 +2,12 @@ export const runtime = 'edge'
 
 import { NextRequest, NextResponse } from 'next/server'
 import { getRequestContext } from '@cloudflare/next-on-pages'
-import { withAuth } from '@/lib/admin-auth'
+import { withAdminAuth } from '@/lib/auth/admin'
 
 export async function GET(req: NextRequest) {
-  return withAuth(req, async () => {
+  return withAdminAuth(req, async () => {
     const { env } = getRequestContext()
-    const db = (env as any).TRACK_DB as D1Database
+    const db = env.TRACK_DB
 
     const days = parseInt(req.nextUrl.searchParams.get('days') || '30')
     const end = new Date().toISOString().split('T')[0]

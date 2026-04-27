@@ -17,9 +17,13 @@ interface CloudflareEnv {
   // Environment variables
   SITE_URL: string
   RESEND_API_KEY: string
+  RESEND_AUDIENCE_ID?: string
 
   // Admin auth
   ADMIN_PASSWORD_HASH: string
+
+  // Owner identification (for analytics owner-skip)
+  OWNER_KEY?: string
 
   // Error reporting (Sentry)
   SENTRY_DSN?: string

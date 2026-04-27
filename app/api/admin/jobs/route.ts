@@ -2,15 +2,15 @@ export const runtime = 'edge'
 
 import { NextRequest, NextResponse } from 'next/server'
 import { getRequestContext } from '@cloudflare/next-on-pages'
-import { withAuth } from '@/lib/admin-auth'
+import { withAdminAuth } from '@/lib/auth/admin'
 
 function getDb() {
   const { env } = getRequestContext()
-  return (env as any).TRACK_DB as D1Database
+  return env.TRACK_DB
 }
 
 export async function GET(req: NextRequest) {
-  return withAuth(req, async () => {
+  return withAdminAuth(req, async () => {
     const db = getDb()
     const status = req.nextUrl.searchParams.get('status')
 
@@ -36,7 +36,7 @@ function sanitizeNumber(val: unknown): number {
 }
 
 export async function POST(req: NextRequest) {
-  return withAuth(req, async () => {
+  return withAdminAuth(req, async () => {
     const db = getDb()
     const body = await req.json() as any
 
@@ -73,7 +73,7 @@ export async function POST(req: NextRequest) {
 }
 
 export async function PUT(req: NextRequest) {
-  return withAuth(req, async () => {
+  return withAdminAuth(req, async () => {
     const db = getDb()
     const body = await req.json() as any
 
@@ -121,7 +121,7 @@ export async function PUT(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
-  return withAuth(req, async () => {
+  return withAdminAuth(req, async () => {
     const db = getDb()
     const { id } = await req.json() as { id: string }
     if (!id) return NextResponse.json({ error: 'ID required' }, { status: 400 })

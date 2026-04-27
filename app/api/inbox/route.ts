@@ -2,12 +2,12 @@ export const runtime = 'edge'
 
 import { NextRequest, NextResponse } from 'next/server'
 import { getRequestContext } from '@cloudflare/next-on-pages'
-import { withAuth } from '@/lib/admin-auth'
+import { withAdminAuth } from '@/lib/auth/admin'
 
 export async function GET(request: NextRequest) {
-  return withAuth(request, async () => {
+  return withAdminAuth(request, async () => {
     const { env } = getRequestContext()
-    const kv = (env as unknown as Record<string, KVNamespace>).RATE_LIMIT
+    const kv = env.RATE_LIMIT
     if (!kv) return NextResponse.json({ messages: [] })
 
     const indexStr = await kv.get('inbox:_index')
@@ -26,9 +26,9 @@ export async function GET(request: NextRequest) {
 }
 
 export async function PUT(request: NextRequest) {
-  return withAuth(request, async () => {
+  return withAdminAuth(request, async () => {
     const { env } = getRequestContext()
-    const kv = (env as unknown as Record<string, KVNamespace>).RATE_LIMIT
+    const kv = env.RATE_LIMIT
     if (!kv) return NextResponse.json({ error: 'KV not available' }, { status: 500 })
 
     const body = await request.json() as { id: string; read?: boolean; archived?: boolean; notes?: string }

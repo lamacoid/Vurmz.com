@@ -2,7 +2,7 @@ export const runtime = 'edge'
 
 import { NextRequest, NextResponse } from 'next/server'
 import { getRequestContext } from '@cloudflare/next-on-pages'
-import { hashPassword, createSession } from '@/lib/admin-auth'
+import { hashPassword, createAdminSession } from '@/lib/auth/admin'
 
 export async function POST(req: NextRequest) {
   try {
@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
 
     const { env } = getRequestContext()
 
-    const expectedHash = (env as unknown as { ADMIN_PASSWORD_HASH?: string }).ADMIN_PASSWORD_HASH
+    const expectedHash = env.ADMIN_PASSWORD_HASH
     if (!expectedHash) {
       return NextResponse.json({ error: 'Server misconfigured' }, { status: 500 })
     }
@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Wrong password' }, { status: 401 })
     }
 
-    const { cookie } = await createSession(env)
+    const { cookie } = await createAdminSession()
 
     const res = NextResponse.json({ ok: true })
     res.headers.set('Set-Cookie', cookie)

@@ -19,14 +19,9 @@ export async function GET(_req: NextRequest) {
   const startedAt = Date.now()
   const env = (() => {
     try {
-      return getRequestContext().env as unknown as {
-        DB?: D1Database
-        TRACK_DB?: D1Database
-        SESSIONS?: KVNamespace
-        MEDIA?: R2Bucket
-      }
+      return getRequestContext().env as Partial<CloudflareEnv>
     } catch {
-      return {} as Record<string, never>
+      return {} as Partial<CloudflareEnv>
     }
   })()
 

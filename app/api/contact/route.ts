@@ -49,7 +49,7 @@ function getClientIp(request: NextRequest): string {
 async function checkRateLimit(ip: string): Promise<{ allowed: boolean; remaining: number }> {
   try {
     const { env } = getRequestContext()
-    const kv = (env as unknown as Record<string, KVNamespace>).RATE_LIMIT
+    const kv = env.RATE_LIMIT
     if (!kv) {
       // KV not bound — allow request but log warning
       console.warn('RATE_LIMIT KV not bound, skipping rate limit check')
@@ -156,7 +156,7 @@ export async function POST(request: NextRequest) {
     let resendApiKey: string | undefined
     try {
       const { env } = getRequestContext()
-      resendApiKey = (env as unknown as Record<string, string>).RESEND_API_KEY
+      resendApiKey = env.RESEND_API_KEY
     } catch {
       // Not in Cloudflare context (local dev)
     }
@@ -268,7 +268,7 @@ export async function POST(request: NextRequest) {
     // Store submission in KV for admin inbox
     try {
       const { env } = getRequestContext()
-      const kv = (env as unknown as Record<string, KVNamespace>).RATE_LIMIT
+      const kv = env.RATE_LIMIT
       if (kv) {
         const submission = {
           id: crypto.randomUUID().slice(0, 8),

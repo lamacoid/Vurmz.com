@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
 
     const db = getDb()
     const env = getEnv()
-    const token = (env as Record<string, string>).JDS_API_TOKEN
+    const token = env.JDS_API_TOKEN
 
     if (!token) {
       return NextResponse.json({ ok: false, error: 'JDS_API_TOKEN not configured' }, { status: 500 })

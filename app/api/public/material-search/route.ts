@@ -42,7 +42,7 @@ export async function GET(req: NextRequest) {
 
   // Pull images from JDS API
   const env = getEnv()
-  const token = (env as Record<string, string>).JDS_API_TOKEN
+  const token = env.JDS_API_TOKEN
 
   if (token) {
     try {

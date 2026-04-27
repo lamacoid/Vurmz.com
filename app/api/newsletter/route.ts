@@ -24,7 +24,7 @@ function getClientIp(request: NextRequest): string {
 async function checkRateLimit(ip: string): Promise<{ allowed: boolean }> {
   try {
     const { env } = getRequestContext()
-    const kv = (env as unknown as Record<string, KVNamespace>).RATE_LIMIT
+    const kv = env.RATE_LIMIT
     if (!kv) return { allowed: true }
 
     const key = `newsletter:${ip}`
@@ -85,9 +85,8 @@ export async function POST(request: NextRequest) {
     let audienceId: string | undefined
     try {
       const { env } = getRequestContext()
-      const cfEnv = env as unknown as Record<string, string>
-      resendApiKey = cfEnv.RESEND_API_KEY
-      audienceId = cfEnv.RESEND_AUDIENCE_ID
+      resendApiKey = env.RESEND_API_KEY
+      audienceId = env.RESEND_AUDIENCE_ID
     } catch {
       // Local dev fallback
     }

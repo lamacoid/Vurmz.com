@@ -2,12 +2,12 @@ export const runtime = 'edge'
 
 import { NextRequest, NextResponse } from 'next/server'
 import { getRequestContext } from '@cloudflare/next-on-pages'
-import { withAuth } from '@/lib/admin-auth'
+import { withAdminAuth } from '@/lib/auth/admin'
 
 export async function GET(req: NextRequest) {
-  return withAuth(req, async () => {
+  return withAdminAuth(req, async () => {
     const { env } = getRequestContext()
-    const db = (env as any).TRACK_DB as D1Database
+    const db = env.TRACK_DB
 
     const total = await db.prepare('SELECT COUNT(*) as c FROM jobs').first() as any
     const active = await db.prepare("SELECT COUNT(*) as c FROM jobs WHERE status NOT IN ('delivered', 'cancelled')").first() as any

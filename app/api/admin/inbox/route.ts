@@ -2,12 +2,12 @@ export const runtime = 'edge'
 
 import { NextRequest, NextResponse } from 'next/server'
 import { getRequestContext } from '@cloudflare/next-on-pages'
-import { withAuth } from '@/lib/admin-auth'
+import { withAdminAuth } from '@/lib/auth/admin'
 
 export async function GET(req: NextRequest) {
-  return withAuth(req, async () => {
+  return withAdminAuth(req, async () => {
     const { env } = getRequestContext()
-    const kv = (env as any).RATE_LIMIT as KVNamespace
+    const kv = env.RATE_LIMIT
 
     // Get inbox index
     const indexRaw = await kv.get('inbox:_index')
@@ -40,9 +40,9 @@ export async function GET(req: NextRequest) {
 }
 
 export async function PUT(req: NextRequest) {
-  return withAuth(req, async () => {
+  return withAdminAuth(req, async () => {
     const { env } = getRequestContext()
-    const kv = (env as any).RATE_LIMIT as KVNamespace
+    const kv = env.RATE_LIMIT
     const body = await req.json() as { id: string; read?: boolean; archived?: boolean; notes?: string }
 
     if (!body.id) return NextResponse.json({ error: 'ID required' }, { status: 400 })

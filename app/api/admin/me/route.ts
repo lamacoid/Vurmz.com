@@ -1,12 +1,12 @@
 export const runtime = 'edge'
 
 import { NextRequest, NextResponse } from 'next/server'
-import { validateSession } from '@/lib/admin-auth'
+import { getAdminSession } from '@/lib/auth/admin'
 
 export async function GET(req: NextRequest) {
-  const valid = await validateSession(req)
-  if (!valid) {
+  const session = await getAdminSession(req)
+  if (!session) {
     return NextResponse.json({ authenticated: false }, { status: 401 })
   }
-  return NextResponse.json({ authenticated: true })
+  return NextResponse.json({ authenticated: true, email: session.email })
 }

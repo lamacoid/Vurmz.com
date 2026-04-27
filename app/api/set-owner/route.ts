@@ -6,7 +6,7 @@ import { getRequestContext } from '@cloudflare/next-on-pages'
 export async function GET(req: NextRequest) {
   const key = req.nextUrl.searchParams.get('key')
   const { env } = getRequestContext()
-  const expectedKey = (env as any).OWNER_KEY || 'vurmz-zach-2024'
+  const expectedKey = env.OWNER_KEY || 'vurmz-zach-2024'
 
   if (key !== expectedKey) {
     return NextResponse.json({ error: 'nope' }, { status: 403 })

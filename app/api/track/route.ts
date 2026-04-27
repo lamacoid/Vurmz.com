@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
     }
 
     const { env } = getRequestContext()
-    const db = (env as any).TRACK_DB
+    const db = env.TRACK_DB
 
     // Get path from request body
     const body = await req.json().catch(() => ({} as any)) as { path?: string; referrer?: string }
@@ -48,7 +48,7 @@ export async function GET(req: NextRequest) {
     }
 
     const { env } = getRequestContext()
-    const db = (env as any).TRACK_DB
+    const db = env.TRACK_DB
 
     const path = req.nextUrl.searchParams.get('p') || '/'
     const referrer = req.nextUrl.searchParams.get('r') || ''
