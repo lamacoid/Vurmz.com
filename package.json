@@ -16,7 +16,10 @@
     "db:list:remote": "wrangler d1 migrations list vurmz-core --remote",
     "db:seed:local": "tsx scripts/seed.ts --local",
     "db:seed:remote": "tsx scripts/seed.ts --remote",
-    "db:tables": "wrangler d1 execute vurmz-core --local --command=\"SELECT name FROM sqlite_master WHERE type='table' ORDER BY name\""
+    "db:tables": "wrangler d1 execute vurmz-core --local --command=\"SELECT name FROM sqlite_master WHERE type='table' ORDER BY name\"",
+    "db:backup": "mkdir -p backups && wrangler d1 export vurmz-core --remote --output=\"backups/vurmz-core-$(date +%Y-%m-%d-%H%M).sql\"",
+    "db:cleanup": "tsx scripts/db-cleanup.ts",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",

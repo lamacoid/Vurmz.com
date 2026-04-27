@@ -56,8 +56,38 @@ export default function Home() {
     return () => clearInterval(interval)
   }, [])
 
+  const serviceSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    serviceType: 'Laser Engraving',
+    name: 'VURMZ Laser Engraving Services',
+    description: 'Custom laser engraving for businesses, trades, restaurants, and individuals. Branded products, service tags, knife marking, custom gifts. Next-day turnaround, hand-delivered across the South Denver metro.',
+    provider: {
+      '@type': 'LocalBusiness',
+      name: 'VURMZ LLC',
+      url: 'https://www.vurmz.com',
+      telephone: siteInfo.phone,
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: siteInfo.city,
+        addressRegion: siteInfo.stateAbbr,
+        addressCountry: 'US',
+      },
+    },
+    areaServed: siteInfo.serviceAreas.map((area) => ({ '@type': 'City', name: area })),
+    offers: {
+      '@type': 'Offer',
+      priceCurrency: 'USD',
+      priceSpecification: { '@type': 'PriceSpecification', minPrice: 50, priceCurrency: 'USD' },
+    },
+  }
+
   return (
     <div className="bg-vurmz-dark">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      />
       {/* ═══════════ HERO ═══════════ */}
       <section className="relative py-16 sm:py-20 lg:py-28 flex items-center overflow-hidden">
         {/* Cycling portfolio background */}
