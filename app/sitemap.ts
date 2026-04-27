@@ -1,4 +1,5 @@
 import { MetadataRoute } from 'next'
+import { portfolioItems } from '@/lib/portfolio'
 
 const serviceAreaSlugs = [
   'centennial',
@@ -95,5 +96,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }))
 
-  return [...staticPages, ...serviceAreaPages, ...shopCategoryPages]
+  const portfolioPages: MetadataRoute.Sitemap = portfolioItems.map((item) => ({
+    url: `${baseUrl}/services/portfolio/${item.slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly',
+    priority: 0.6,
+  }))
+
+  return [...staticPages, ...serviceAreaPages, ...shopCategoryPages, ...portfolioPages]
 }

@@ -35,10 +35,11 @@ export default function PortfolioPage() {
       <section className="py-10 sm:py-12 bg-vurmz-dark">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
-            {portfolioItems.map((item, idx) => (
-              <div
-                key={idx}
-                className="relative break-inside-avoid rounded-sm overflow-hidden group cursor-default"
+            {portfolioItems.map((item) => (
+              <Link
+                key={item.slug}
+                href={`/services/portfolio/${item.slug}`}
+                className="relative break-inside-avoid rounded-sm overflow-hidden group block"
               >
                 <Image
                   src={item.src}
@@ -50,11 +51,11 @@ export default function PortfolioPage() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-0 left-0 right-0 px-4 py-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
                   <p className="text-sm text-cream font-medium">{item.label}</p>
-                  {'context' in item && item.context && (
+                  {item.context && (
                     <p className="text-xs text-cream/60 mt-0.5">{item.context}</p>
                   )}
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
