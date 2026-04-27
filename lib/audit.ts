@@ -1,4 +1,5 @@
 import { getDb, newId, nowIso } from './db/client'
+import { reportError } from './error'
 
 export interface AuditInput {
   actorType: 'admin' | 'customer' | 'system' | 'webhook'
@@ -40,6 +41,6 @@ export async function audit(input: AuditInput): Promise<void> {
       )
       .run()
   } catch (err) {
-    console.error('[audit] write failed', err)
+    await reportError(err, { route: 'audit', extra: { action: input.action, targetType: input.targetType } })
   }
 }

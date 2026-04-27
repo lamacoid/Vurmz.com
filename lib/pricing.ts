@@ -182,49 +182,56 @@ export const LEAVE_YOUR_MARK = {
   },
 } as const
 
+// Format a dollar amount with always-two decimals.
+const usd = (n: number) => `$${n.toFixed(2)}`
+const usdMod = (n: number) => `+$${n.toFixed(2)}`
+
 // ─── Pricing Page Cards ───
 
 export const BASIC_PRICING_CARDS = [
   {
     category: STOCK.pens.name,
     packNote: `Pack of ${STOCK.pens.pack}`,
-    packTotal: `$${STOCK.pens.packPrice[0]} – $${STOCK.pens.packPrice[1]}`,
+    packTotal: `${usd(STOCK.pens.packPrice[0])} – ${usd(STOCK.pens.packPrice[1])}`,
     items: [
-      { name: 'Text only', price: `$${STOCK.pens.perItem[0]}`, note: '' },
-      { name: '+ Logo', price: '+$2', note: '' },
-      { name: '+ Second line', price: '+$0.5', note: '' },
-      { name: '+ Both sides', price: '+$2', note: '' },
-      { name: 'Fully loaded', price: `$${STOCK.pens.perItem[1]}`, note: '' },
+      { name: 'Text only', price: usd(STOCK.pens.perItem[0]), note: '' },
+      { name: '+ Logo', price: usdMod(2), note: '' },
+      { name: '+ Second line', price: usdMod(0.5), note: '' },
+      { name: '+ Both sides', price: usdMod(2), note: '' },
+      { name: 'Fully loaded', price: usd(STOCK.pens.perItem[1]), note: '' },
     ],
   },
   {
     category: STOCK.coasters.name,
     packNote: `Pack of ${STOCK.coasters.pack}`,
-    packTotal: `$${STOCK.coasters.packPrice[0]} – $${STOCK.coasters.packPrice[1]}`,
-    items: STOCK.coasters.materials.map(m => ({ name: m.label, price: `$${m.price}`, note: '' })),
+    packTotal: `${usd(STOCK.coasters.packPrice[0])} – ${usd(STOCK.coasters.packPrice[1])}`,
+    items: STOCK.coasters.materials.map(m => ({ name: m.label, price: usd(m.price), note: '' })),
   },
   {
     category: STOCK.keychains.name,
     packNote: `Pack of ${STOCK.keychains.pack}`,
-    packTotal: `$${STOCK.keychains.packPrice[0]} – $${STOCK.keychains.packPrice[1]}`,
-    items: STOCK.keychains.materials.map(m => ({ name: m.label, price: `$${m.price}`, note: '' })),
+    packTotal: `${usd(STOCK.keychains.packPrice[0])} – ${usd(STOCK.keychains.packPrice[1])}`,
+    items: STOCK.keychains.materials.map(m => ({ name: m.label, price: usd(m.price), note: '' })),
   },
   {
     category: MARKING.knife.name,
     packNote: MARKING.knife.unit,
     packTotal: '',
-    items: MARKING.knife.options.map(o => ({
-      name: o.label,
-      price: o.note === 'Free' ? 'Free' : o.modifier ? `+$${o.price}` : `$${o.price}`,
-      note: o.note || '',
-    })),
+    items: MARKING.knife.options.map(o => {
+      const opt = o as { label: string; price: number | null; modifier?: boolean; note?: string }
+      return {
+        name: opt.label,
+        price: opt.note === 'Free' ? 'Free' : opt.price == null ? '' : opt.modifier ? usdMod(opt.price) : usd(opt.price),
+        note: opt.note || '',
+      }
+    }),
   },
   {
     category: MARKING.tool.name,
     packNote: `${MARKING.tool.minimum} piece minimum for free delivery`,
     packTotal: '',
     items: [
-      { name: 'Name / ID marking', price: `$${MARKING.tool.base}`, note: '' },
+      { name: 'Name / ID marking', price: usd(MARKING.tool.base), note: '' },
     ],
   },
 ]
@@ -233,11 +240,11 @@ export const LEAVE_YOUR_MARK_CARDS = [
   {
     category: TRADES.serviceTags.name,
     packNote: 'Pack of 10 · credit card sized',
-    packTotal: `$${TRADES.serviceTags.range[0]} – $${TRADES.serviceTags.range[1]}`,
+    packTotal: `${usd(TRADES.serviceTags.range[0])} – ${usd(TRADES.serviceTags.range[1])}`,
     items: [
-      { name: 'Anodized aluminum (text)', price: '$3', note: '' },
-      { name: '+ Logo / QR / back', price: '+$1', note: '' },
-      { name: 'Stainless steel', price: '$15', note: '' },
+      { name: 'Anodized aluminum (text)', price: usd(3), note: '' },
+      { name: '+ Logo / QR / back', price: usdMod(1), note: '' },
+      { name: 'Stainless steel', price: usd(15), note: '' },
       { name: '3M adhesive backing', price: 'Included', note: '' },
     ],
   },
@@ -246,7 +253,7 @@ export const LEAVE_YOUR_MARK_CARDS = [
     packNote: 'Per tile',
     packTotal: '',
     items: [
-      { name: 'Logo on tile', price: '$15', note: 'Your logo, set into your work' },
+      { name: 'Logo on tile', price: usd(15), note: 'Your logo, set into your work' },
       { name: 'Custom design', price: 'Quote', note: '' },
     ],
   },

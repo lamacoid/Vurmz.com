@@ -157,6 +157,7 @@ export default function LandingPage() {
             }
           `}</style>
         </div>
+        <h1 className="sr-only">VURMZ — Laser Engraving in {siteInfo.address}</h1>
         <p className="text-gray-400 text-sm sm:text-base tracking-wide">
           Laser Engraving &middot; {siteInfo.address}
         </p>

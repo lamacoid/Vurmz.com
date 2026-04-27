@@ -1341,3 +1341,21 @@ html.trippy .text-gray-400 {
   0%, 100% { color: #9ca3af; }
   50%      { color: #a89cb8; }
 }
+
+/* ──────────────────────────────────────────────────────────────
+   Accessibility: respect prefers-reduced-motion
+   Disables all CSS animations + smooth scrolling for users who
+   request reduced motion (vestibular disorders, etc.). framer-motion
+   reads this preference natively via useReducedMotion().
+   WCAG 2.3.3 — Animation from Interactions
+   ────────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

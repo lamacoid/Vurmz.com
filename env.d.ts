@@ -18,6 +18,12 @@ interface CloudflareEnv {
   SITE_URL: string
   RESEND_API_KEY: string
 
+  // Admin auth
+  ADMIN_PASSWORD_HASH: string
+
+  // Error reporting (Sentry)
+  SENTRY_DSN?: string
+
   // JDS Industries API
   JDS_API_TOKEN?: string
 
