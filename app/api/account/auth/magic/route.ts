@@ -4,6 +4,7 @@ import { upsertCustomerByEmail } from '@/lib/db/repos/customers'
 import { createMagicLinkToken } from '@/lib/auth/customer'
 import { getClientIp, getUserAgent } from '@/lib/auth/session'
 import { getEnv, getRateLimit } from '@/lib/db/client'
+import { reportError } from '@/lib/error'
 
 export const runtime = 'edge'
 
@@ -62,7 +63,7 @@ export async function POST(req: NextRequest) {
   const env = getEnv()
   const link = `${env.SITE_URL || 'https://vurmz.com'}/account/verify?t=${token}`
 
-  await sendEmail(env, email, link).catch(err => console.error('[magic] email failed', err))
+  await sendEmail(env, email, link).catch((err) => reportError(err, { route: 'account/auth/magic' }))
 
   return NextResponse.json({ ok: true })
 }

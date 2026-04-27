@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main, site-split]
+  push:
+    branches: [site-split]
+
+jobs:
+  verify:
+    name: lint + typecheck + build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+        continue-on-error: true  # eslint warnings shouldn't block deploys yet
+
+      - name: Typecheck
+        run: npm run typecheck
+        continue-on-error: true  # known pre-existing TS errors; remove flag once cleaned
+
+      - name: Build (next-on-pages)
+        run: npm run pages:build
+        env:
+          # Stub envs so the build doesn't fail on missing secrets
+          NEXT_PUBLIC_SITE_URL: https://www.vurmz.com

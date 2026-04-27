@@ -2,6 +2,7 @@ export const runtime = 'edge'
 
 import { NextRequest, NextResponse } from 'next/server'
 import { getRequestContext } from '@cloudflare/next-on-pages'
+import { reportError } from '@/lib/error'
 
 const ALLOWED_ORIGINS = [
   'https://vurmz.com',
@@ -301,7 +302,7 @@ export async function POST(request: NextRequest) {
     response.headers.set('X-RateLimit-Remaining', String(remaining))
     return response
   } catch (error) {
-    console.error('Contact form error:', error)
+    await reportError(error, { route: 'contact', method: 'POST' })
     return NextResponse.json(
       { error: 'Failed to send message. Please try again or call/text directly.' },
       { status: 500 }

@@ -2,6 +2,7 @@ export const runtime = 'edge'
 
 import { NextRequest, NextResponse } from 'next/server'
 import { getRequestContext } from '@cloudflare/next-on-pages'
+import { reportError } from '@/lib/error'
 
 const ALLOWED_ORIGINS = [
   'https://vurmz.com',
@@ -198,7 +199,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ success: true })
   } catch (error) {
-    console.error('Newsletter signup error:', error)
+    await reportError(error, { route: 'newsletter', method: 'POST' })
     return NextResponse.json(
       { error: 'Something went wrong. Please try again.' },
       { status: 500 }
