@@ -25,6 +25,8 @@ export default function ContactForm() {
     phone: '',
     productInterest: '',
     message: '',
+    // Honeypot — real users leave it empty; bots fill every field
+    website: '',
   })
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
   const [errorMessage, setErrorMessage] = useState('')
@@ -48,7 +50,7 @@ export default function ContactForm() {
       }
 
       setStatus('success')
-      setFormData({ name: '', email: '', phone: '', productInterest: '', message: '' })
+      setFormData({ name: '', email: '', phone: '', productInterest: '', message: '', website: '' })
     } catch (err) {
       setStatus('error')
       setErrorMessage(err instanceof Error ? err.message : 'Failed to send. Please try again.')
@@ -153,6 +155,20 @@ export default function ContactForm() {
           onChange={e => setFormData(prev => ({ ...prev, message: e.target.value }))}
           className="w-full px-4 py-3 bg-vurmz-dark border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-vurmz-teal focus:ring-1 focus:ring-vurmz-teal outline-none transition-colors resize-none"
           placeholder="Tell me about your project. What you need, quantity, timeline..."
+        />
+      </div>
+
+      {/* Honeypot — hidden from users, catches bots that fill every field */}
+      <div aria-hidden="true" style={{ position: 'absolute', left: '-9999px', width: '1px', height: '1px', overflow: 'hidden' }}>
+        <label htmlFor="website">Website (leave blank)</label>
+        <input
+          type="text"
+          id="website"
+          name="website"
+          tabIndex={-1}
+          autoComplete="off"
+          value={formData.website}
+          onChange={e => setFormData(prev => ({ ...prev, website: e.target.value }))}
         />
       </div>
 

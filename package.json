@@ -19,6 +19,7 @@
     "db:tables": "wrangler d1 execute vurmz-core --local --command=\"SELECT name FROM sqlite_master WHERE type='table' ORDER BY name\"",
     "db:backup": "mkdir -p backups && wrangler d1 export vurmz-core --remote --output=\"backups/vurmz-core-$(date +%Y-%m-%d-%H%M).sql\"",
     "db:cleanup": "tsx scripts/db-cleanup.ts",
+    "db:types": "tsx scripts/gen-db-types.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

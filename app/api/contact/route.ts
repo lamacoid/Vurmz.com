@@ -106,6 +106,13 @@ export async function POST(request: NextRequest) {
       phone?: string
       message?: string
       productInterest?: string
+      website?: string  // honeypot — must be empty
+    }
+
+    // Honeypot check — bots fill every field; humans don't see this one.
+    // Silent 200 so the bot thinks it succeeded and doesn't retry.
+    if (body.website && body.website.length > 0) {
+      return NextResponse.json({ success: true })
     }
 
     let { name, email, phone, message, productInterest } = body

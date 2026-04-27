@@ -138,6 +138,10 @@ export async function POST(request: NextRequest) {
         from: 'VURMZ <noreply@vurmz.com>',
         to: email.trim().toLowerCase(),
         subject: "You're in — welcome to the VURMZ list",
+        headers: {
+          'List-Unsubscribe': '<mailto:zach@vurmz.com?subject=Unsubscribe>, <https://www.vurmz.com/unsubscribe>',
+          'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
+        },
         html: `
           <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 560px; margin: 0 auto; padding: 32px 20px;">
             <div style="text-align: center; margin-bottom: 24px;">
