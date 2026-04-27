@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import UnsubscribeForm from './UnsubscribeForm'
 
+export const runtime = 'edge'
+
 export const metadata: Metadata = {
   title: 'Unsubscribe',
   description: 'Unsubscribe from VURMZ newsletter updates.',

@@ -28,9 +28,6 @@ interface CloudflareEnv {
   // Error reporting (Sentry)
   SENTRY_DSN?: string
 
-  // JDS Industries API
-  JDS_API_TOKEN?: string
-
   // Square (provisioned in Chunk 5)
   SQUARE_ACCESS_TOKEN?: string
   SQUARE_APPLICATION_ID?: string
