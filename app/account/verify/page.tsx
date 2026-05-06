@@ -6,6 +6,7 @@ function VerifyInner() {
   const params = useSearchParams()
   const router = useRouter()
   const [status, setStatus] = useState<'loading' | 'ok' | 'error'>('loading')
+  const [firstName, setFirstName] = useState<string>('')
 
   useEffect(() => {
     const token = params?.get('t')
@@ -16,8 +17,11 @@ function VerifyInner() {
       body: JSON.stringify({ token }),
     })
       .then(async r => {
-        if (r.ok) { setStatus('ok'); router.push('/account') }
-        else setStatus('error')
+        if (!r.ok) { setStatus('error'); return }
+        const json = (await r.json().catch(() => null)) as { firstName?: string } | null
+        setFirstName(json?.firstName ?? 'there')
+        setStatus('ok')
+        setTimeout(() => router.push('/account'), 1400)
       })
       .catch(() => setStatus('error'))
   }, [params, router])
@@ -25,7 +29,19 @@ function VerifyInner() {
   return (
     <div className="max-w-md mx-auto p-6 sm:p-10 text-center">
       {status === 'loading' && <p className="text-gray-400 text-sm">Verifying your sign-in link…</p>}
-      {status === 'ok' && <p className="text-cream text-sm">Signed in. Redirecting…</p>}
+      {status === 'ok' && (
+        <div className="min-h-[40vh] flex flex-col items-center justify-center">
+          <div className="w-14 h-14 rounded-full bg-[#6BB8B2]/15 border border-[#6BB8B2]/30 flex items-center justify-center mb-5">
+            <span className="text-[#6BB8B2] text-2xl font-semibold">
+              {firstName.charAt(0).toUpperCase() || '·'}
+            </span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-semibold text-cream">
+            Hi, {firstName}
+          </h1>
+          <p className="text-xs text-gray-500 mt-3 tracking-wide">Welcome back</p>
+        </div>
+      )}
       {status === 'error' && (
         <div>
           <h1 className="text-xl font-bold text-cream mb-2">Link invalid or expired</h1>
