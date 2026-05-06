@@ -27,15 +27,15 @@ export default function AccountDashboard() {
 
   return (
     <div className="max-w-3xl mx-auto p-6 sm:p-10">
-      <h1 className="text-3xl font-bold text-cream mb-2">Hi {me.name || me.email.split('@')[0]}.</h1>
-      <p className="text-sm text-gray-400 mb-8">Your VURMZ account — invoices, messages, files, and orders.</p>
+      <h1 className="text-3xl font-bold text-cream mb-2">My Account</h1>
+      <p className="text-sm text-gray-400 mb-8">Invoices, messages, files, orders, and profile — all in one place.</p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <Card href="/account/invoices" title="Invoices" sub="Pay open invoices, view receipts" soon />
-        <Card href="/account/orders" title="Orders" sub="Track your orders and service jobs" soon />
-        <Card href="/account/messages" title="Messages" sub="Your conversation with Zach" soon />
-        <Card href="/account/files" title="Files" sub="Designs, artwork, and references" soon />
-        <Card href="/account/profile" title="Profile" sub="Contact info, saved payment methods" soon />
+        <Card href="/account/invoices" title="Invoices" sub="Pay open invoices, view receipts" />
+        <Card href="/account/orders" title="Orders" sub="Track your orders and service jobs" />
+        <Card href="/account/messages" title="Messages" sub="Your conversation with Zach" />
+        <Card href="/account/files" title="Files" sub="Designs, artwork, and references" />
+        <Card href="/account/profile" title="Profile" sub="Contact info, saved payment methods" />
       </div>
 
       <button
@@ -51,13 +51,10 @@ export default function AccountDashboard() {
   )
 }
 
-function Card({ href, title, sub, soon }: { href: string; title: string; sub: string; soon?: boolean }) {
+function Card({ href, title, sub }: { href: string; title: string; sub: string }) {
   return (
     <Link href={href} className="bg-[#243B39] border border-white/5 hover:border-[#6BB8B2]/30 rounded-xl p-5 transition-colors">
-      <div className="flex items-start justify-between mb-2">
-        <p className="text-base font-semibold text-cream">{title}</p>
-        {soon && <span className="text-[9px] font-mono uppercase text-gray-500">soon</span>}
-      </div>
+      <p className="text-base font-semibold text-cream mb-2">{title}</p>
       <p className="text-xs text-gray-400 leading-relaxed">{sub}</p>
     </Link>
   )
