@@ -19,6 +19,8 @@ export interface ProductDraft {
   leadTimeDays: number
   weightGrams: number
   heroMediaId: string | null
+  oneOff: boolean
+  soldAt?: string | null
   metadata: Record<string, unknown>
 }
 
@@ -158,9 +160,73 @@ export default function ProductForm({ initial }: { initial: ProductDraft }) {
 
           <Section title="Pricing & pack">
             <div className="grid grid-cols-2 gap-3">
-              <FieldText label="Price" value={priceStr} onChange={setPriceStr} prefix="$" hint="Pack price, not per-item." />
-              <FieldNum label="Pack size" value={draft.packSize} onChange={v => field('packSize', v)} min={1} hint="Units per pack." />
+              <FieldText label="Price" value={priceStr} onChange={setPriceStr} prefix="$" hint={draft.oneOff ? 'Price for the single item.' : 'Pack price, not per-item.'} />
+              <FieldNum
+                label="Pack size"
+                value={draft.oneOff ? 1 : draft.packSize}
+                onChange={v => field('packSize', v)}
+                min={1}
+                hint={draft.oneOff ? 'One-off — locked to 1.' : 'Units per pack.'}
+              />
             </div>
+          </Section>
+
+          <Section title="One-off / unique item">
+            <label className="flex items-center gap-2 bg-[#243B39] border border-white/5 rounded-md px-3 py-2.5">
+              <input
+                type="checkbox"
+                checked={draft.oneOff}
+                onChange={e => {
+                  const v = e.target.checked
+                  setDraft(prev => ({ ...prev, oneOff: v, packSize: v ? 1 : prev.packSize }))
+                }}
+              />
+              <span className="text-sm text-cream">This is a one-off — only one exists.</span>
+            </label>
+            {draft.oneOff && (
+              <p className="text-[10px] text-gray-500 leading-snug">
+                Pack size is forced to 1. The shop will hide this item automatically once it sells.
+              </p>
+            )}
+            {draft.oneOff && draft.id && (
+              draft.soldAt ? (
+                <div className="flex items-center justify-between bg-[#C46B4D]/15 border border-[#C46B4D]/30 rounded-md px-3 py-2">
+                  <div>
+                    <p className="text-xs font-semibold text-[#C46B4D]">Sold</p>
+                    <p className="text-[10px] text-gray-400">on {new Date(draft.soldAt).toLocaleString()}</p>
+                  </div>
+                  <button
+                    onClick={async () => {
+                      if (!confirm('Mark this item as available again?')) return
+                      await fetch(`/api/admin/products/${draft.id}`, {
+                        method: 'PATCH',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ sold: false, isPublished: true }),
+                      })
+                      setDraft(prev => ({ ...prev, soldAt: null, isPublished: true }))
+                    }}
+                    className="text-xs px-2 py-1 bg-white/5 hover:bg-white/10 rounded text-cream"
+                  >
+                    Un-sell
+                  </button>
+                </div>
+              ) : (
+                <button
+                  onClick={async () => {
+                    if (!confirm('Mark this one-off as sold? It will be hidden from the shop.')) return
+                    await fetch(`/api/admin/products/${draft.id}`, {
+                      method: 'PATCH',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({ sold: true }),
+                    })
+                    setDraft(prev => ({ ...prev, soldAt: new Date().toISOString(), isPublished: false }))
+                  }}
+                  className="text-xs px-2.5 py-1.5 bg-white/5 hover:bg-white/10 rounded text-cream"
+                >
+                  Mark sold
+                </button>
+              )
+            )}
           </Section>
 
           <Section title="Fulfillment">

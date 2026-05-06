@@ -13,6 +13,30 @@ export interface FulfillmentOption {
   description: string
   availableReason?: string
   disabled?: boolean
+  /** For hand_deliver: slot keys the customer can pick from. */
+  windows?: HandDeliveryWindow[]
+}
+
+export interface HandDeliveryWindow {
+  key: string
+  label: string
+}
+
+/**
+ * Standard delivery windows offered for hand delivery. Zach drives the
+ * route himself, so these are coarse-grained on purpose.
+ */
+export const HAND_DELIVERY_WINDOWS: HandDeliveryWindow[] = [
+  { key: 'morning',   label: 'Morning (8am–11am)' },
+  { key: 'midday',    label: 'Midday (11am–2pm)' },
+  { key: 'afternoon', label: 'Afternoon (2pm–5pm)' },
+  { key: 'evening',   label: 'Evening (5pm–8pm)' },
+  { key: 'flexible',  label: 'Flexible — text me when you head out' },
+]
+
+export function isValidHandDeliveryWindow(key: string | null | undefined): boolean {
+  if (!key) return false
+  return HAND_DELIVERY_WINDOWS.some(w => w.key === key)
 }
 
 // South Denver / Centennial-area ZIP codes eligible for hand delivery.
@@ -57,12 +81,13 @@ export function computeFulfillmentOptions(args: {
     const fee = subtotalCents >= 7500 ? 0 : 500
     opts.push({
       method: 'hand_deliver',
-      label: 'Hand delivery (South Denver)',
+      label: 'Local hand delivery (South Denver)',
       priceCents: fee,
       eta: '1–2 days',
       description: fee === 0
-        ? 'Free when you spend $75+. Hand-delivered by Zach.'
-        : 'Hand-delivered by Zach. Free over $75.',
+        ? 'Free when you spend $75+. Hand-delivered by Zach. Pick a window below.'
+        : 'Hand-delivered by Zach. Free over $75. Pick a window below.',
+      windows: HAND_DELIVERY_WINDOWS,
     })
   }
 

@@ -33,6 +33,7 @@ export async function GET(req: NextRequest) {
     packSize: p.packSize,
     madeToOrder: p.madeToOrder,
     leadTimeDays: p.leadTimeDays,
+    oneOff: p.oneOff,
     heroUrl: p.heroMediaId ? mediaById.get(p.heroMediaId)?.url ?? null : null,
     categoryId: p.categoryId,
   }))

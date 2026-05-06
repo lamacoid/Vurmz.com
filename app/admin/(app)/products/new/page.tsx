@@ -15,6 +15,8 @@ const empty: ProductDraft = {
   leadTimeDays: 0,
   weightGrams: 0,
   heroMediaId: null,
+  oneOff: false,
+  soldAt: null,
   metadata: {},
 }
 

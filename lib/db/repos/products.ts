@@ -19,6 +19,8 @@ export interface Product {
   leadTimeDays: number
   weightGrams: number
   heroMediaId: string | null
+  oneOff: boolean
+  soldAt: string | null
   metadata: Record<string, unknown>
   createdAt: string
   updatedAt: string
@@ -41,6 +43,8 @@ interface ProductRowExtended extends ProductRow {
   weight_grams?: number
   hero_media_id?: string | null
   audience?: Audience
+  one_off?: number
+  sold_at?: string | null
 }
 
 function hydrateProduct(row: ProductRowExtended): Product {
@@ -60,6 +64,8 @@ function hydrateProduct(row: ProductRowExtended): Product {
     leadTimeDays: row.lead_time_days ?? 0,
     weightGrams: row.weight_grams ?? 0,
     heroMediaId: row.hero_media_id ?? null,
+    oneOff: (row.one_off ?? 0) === 1,
+    soldAt: row.sold_at ?? null,
     metadata: JSON.parse(row.metadata) as Record<string, unknown>,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
@@ -154,6 +160,7 @@ export async function listProducts(opts: {
   categoryId?: string
   audience?: Audience | 'shop_visible' | 'services_visible'
   includeUnpublished?: boolean
+  includeSold?: boolean
   limit?: number
   offset?: number
   search?: string
@@ -164,6 +171,7 @@ export async function listProducts(opts: {
   const conds = ['deleted_at IS NULL']
   const binds: unknown[] = []
   if (!opts.includeUnpublished) conds.push('is_published = 1')
+  if (!opts.includeSold) conds.push('sold_at IS NULL')
   if (opts.categoryId) { conds.push('category_id = ?'); binds.push(opts.categoryId) }
   if (opts.audience === 'shop_visible') {
     conds.push("audience IN ('shop', 'both')")
@@ -215,6 +223,7 @@ export interface CreateProductInput {
   leadTimeDays?: number
   weightGrams?: number
   heroMediaId?: string | null
+  oneOff?: boolean
   metadata?: Record<string, unknown>
 }
 
@@ -222,14 +231,17 @@ export async function createProduct(input: CreateProductInput): Promise<Product>
   const db = getDb()
   const id = newId('prd')
   const now = nowIso()
+  const oneOff = input.oneOff ? 1 : 0
+  // One-off items are unique — pack size is always 1.
+  const packSize = oneOff ? 1 : input.packSize
   await db
     .prepare(
       `INSERT INTO products (
         id, slug, name, description, short_description, category_id, audience,
         price_cents, pack_size, position, is_published,
-        made_to_order, lead_time_days, weight_grams, hero_media_id,
+        made_to_order, lead_time_days, weight_grams, hero_media_id, one_off,
         metadata, created_at, updated_at
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
     )
     .bind(
       id,
@@ -240,13 +252,14 @@ export async function createProduct(input: CreateProductInput): Promise<Product>
       input.categoryId ?? null,
       input.audience ?? 'shop',
       input.priceCents,
-      input.packSize,
+      packSize,
       input.position ?? 0,
       input.isPublished === false ? 0 : 1,
       input.madeToOrder ? 1 : 0,
       input.leadTimeDays ?? 0,
       input.weightGrams ?? 0,
       input.heroMediaId ?? null,
+      oneOff,
       JSON.stringify(input.metadata ?? {}),
       now,
       now
@@ -280,6 +293,11 @@ export async function updateProduct(id: string, patch: Partial<CreateProductInpu
   }
   if (patch.isPublished !== undefined) { sets.push('is_published = ?'); binds.push(patch.isPublished ? 1 : 0) }
   if (patch.madeToOrder !== undefined) { sets.push('made_to_order = ?'); binds.push(patch.madeToOrder ? 1 : 0) }
+  if (patch.oneOff !== undefined) {
+    sets.push('one_off = ?'); binds.push(patch.oneOff ? 1 : 0)
+    // Force pack_size to 1 when flipping a product to one-off.
+    if (patch.oneOff) { sets.push('pack_size = ?'); binds.push(1) }
+  }
   if (patch.metadata !== undefined) { sets.push('metadata = ?'); binds.push(JSON.stringify(patch.metadata)) }
   if (sets.length === 0) return
   sets.push('updated_at = ?'); binds.push(nowIso())
@@ -295,6 +313,28 @@ export async function softDeleteProduct(id: string): Promise<void> {
 export async function restoreProduct(id: string): Promise<void> {
   const db = getDb()
   await db.prepare('UPDATE products SET deleted_at = NULL WHERE id = ?').bind(id).run()
+}
+
+/**
+ * Clear sold_at on a one-off product so the admin can re-list it (e.g. if
+ * the order was cancelled).
+ */
+export async function clearProductSold(id: string): Promise<void> {
+  const db = getDb()
+  await db.prepare('UPDATE products SET sold_at = NULL, updated_at = ? WHERE id = ?').bind(nowIso(), id).run()
+}
+
+/**
+ * Stamp a one-off product as sold. Also unpublishes it so the shop hides it
+ * (admin can still view and "unsell" via clearing sold_at).
+ */
+export async function markProductSold(id: string): Promise<void> {
+  const db = getDb()
+  const now = nowIso()
+  await db
+    .prepare('UPDATE products SET sold_at = ?, is_published = 0, updated_at = ? WHERE id = ? AND one_off = 1 AND sold_at IS NULL')
+    .bind(now, now, id)
+    .run()
 }
 
 export async function reorderProducts(items: Array<{ id: string; position: number }>): Promise<void> {

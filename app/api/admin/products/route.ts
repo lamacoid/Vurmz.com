@@ -22,6 +22,7 @@ const createSchema = z.object({
   leadTimeDays: z.number().int().nonnegative().optional(),
   weightGrams: z.number().int().nonnegative().optional(),
   heroMediaId: z.string().nullable().optional(),
+  oneOff: z.boolean().optional(),
   metadata: z.record(z.string(), z.unknown()).optional(),
 })
 
@@ -32,6 +33,7 @@ export async function GET(req: NextRequest) {
     const search = url.searchParams.get('q') ?? undefined
     const products = await listProducts({
       includeUnpublished: true,
+      includeSold: true,
       categoryId,
       search,
       limit: 500,

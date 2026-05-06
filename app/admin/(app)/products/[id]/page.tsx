@@ -19,6 +19,8 @@ interface ProductApi {
   leadTimeDays: number
   weightGrams: number
   heroMediaId: string | null
+  oneOff: boolean
+  soldAt: string | null
   metadata: Record<string, unknown>
 }
 
@@ -53,6 +55,8 @@ export default function EditProductPage() {
           leadTimeDays: p.leadTimeDays,
           weightGrams: p.weightGrams,
           heroMediaId: p.heroMediaId,
+          oneOff: p.oneOff ?? false,
+          soldAt: p.soldAt ?? null,
           metadata: p.metadata ?? {},
         })
       })

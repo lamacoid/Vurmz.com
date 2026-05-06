@@ -13,6 +13,7 @@ interface FulfillmentOption {
   eta: string
   description: string
   disabled?: boolean
+  windows?: Array<{ key: string; label: string }>
 }
 
 interface SquareConfig { applicationId: string; locationId: string; environment: 'sandbox' | 'production' }
@@ -28,6 +29,8 @@ export default function CheckoutPage() {
   const [notes, setNotes] = useState('')
   const [options, setOptions] = useState<FulfillmentOption[]>([])
   const [chosenMethod, setChosenMethod] = useState<FulfillmentOption['method'] | null>(null)
+  const [handDeliveryWindow, setHandDeliveryWindow] = useState<string>('')
+  const [handDeliveryNote, setHandDeliveryNote] = useState<string>('')
   const [squareConfig, setSquareConfig] = useState<SquareConfig | null>(null)
   const [squareChecked, setSquareChecked] = useState(false)
   const [submitting, setSubmitting] = useState(false)
@@ -86,6 +89,10 @@ export default function CheckoutPage() {
       setError('Address required for this fulfillment method')
       return
     }
+    if (chosenMethod === 'hand_deliver' && !handDeliveryWindow) {
+      setError('Pick a delivery window')
+      return
+    }
     setSubmitting(true)
     setError(null)
     try {
@@ -107,6 +114,10 @@ export default function CheckoutPage() {
             country: 'US',
           } : null,
           notes,
+          handDelivery: chosenMethod === 'hand_deliver' ? {
+            window: handDeliveryWindow || undefined,
+            note: handDeliveryNote || undefined,
+          } : undefined,
           payment: {
             method: paymentMethod,
             sourceId,
@@ -159,29 +170,66 @@ export default function CheckoutPage() {
             )}
             <div className="grid grid-cols-1 gap-2">
               {options.map(opt => (
-                <label
-                  key={opt.method}
-                  className={`flex items-start gap-3 rounded-sm border p-3 cursor-pointer ${
-                    chosenMethod === opt.method
-                      ? 'border-[#B16558] bg-[#B16558]/5'
-                      : 'border-[#243B39]/12 bg-white/60 hover:border-[#243B39]/25'
-                  }`}
-                >
-                  <input
-                    type="radio"
-                    name="fulfillment"
-                    checked={chosenMethod === opt.method}
-                    onChange={() => setChosenMethod(opt.method)}
-                    className="mt-1"
-                  />
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between gap-3">
-                      <span className="font-semibold text-sm">{opt.label}</span>
-                      <span className="text-sm font-semibold">{opt.priceCents === 0 ? 'Free' : money(opt.priceCents)}</span>
+                <div key={opt.method}>
+                  <label
+                    className={`flex items-start gap-3 rounded-sm border p-3 cursor-pointer ${
+                      chosenMethod === opt.method
+                        ? 'border-[#B16558] bg-[#B16558]/5'
+                        : 'border-[#243B39]/12 bg-white/60 hover:border-[#243B39]/25'
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="fulfillment"
+                      checked={chosenMethod === opt.method}
+                      onChange={() => setChosenMethod(opt.method)}
+                      className="mt-1"
+                    />
+                    <div className="flex-1">
+                      <div className="flex items-center justify-between gap-3">
+                        <span className="font-semibold text-sm">{opt.label}</span>
+                        <span className="text-sm font-semibold">{opt.priceCents === 0 ? 'Free' : money(opt.priceCents)}</span>
+                      </div>
+                      <p className="text-xs text-[#6B6259] mt-0.5">{opt.description} · {opt.eta}</p>
                     </div>
-                    <p className="text-xs text-[#6B6259] mt-0.5">{opt.description} · {opt.eta}</p>
-                  </div>
-                </label>
+                  </label>
+
+                  {opt.method === 'hand_deliver' && chosenMethod === 'hand_deliver' && opt.windows && opt.windows.length > 0 && (
+                    <div className="mt-2 ml-7 space-y-3">
+                      <div>
+                        <p className="text-[11px] uppercase tracking-wider text-[#7A7068] mb-1.5 font-semibold">Preferred window</p>
+                        <div className="flex flex-wrap gap-1.5">
+                          {opt.windows.map(w => (
+                            <button
+                              key={w.key}
+                              type="button"
+                              onClick={() => setHandDeliveryWindow(w.key)}
+                              className={`text-xs px-3 py-1.5 rounded-sm border transition-colors ${
+                                handDeliveryWindow === w.key
+                                  ? 'border-[#B16558] bg-[#B16558] text-white'
+                                  : 'border-[#243B39]/15 bg-white/70 text-[#243B39] hover:border-[#B16558]/50'
+                              }`}
+                            >
+                              {w.label}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                      <div>
+                        <label className="text-[11px] uppercase tracking-wider text-[#7A7068] block mb-1 font-semibold">
+                          Delivery note <span className="font-normal normal-case text-[#9A8F86]">(gate code, parking, leave-with, etc.)</span>
+                        </label>
+                        <textarea
+                          value={handDeliveryNote}
+                          onChange={e => setHandDeliveryNote(e.target.value.slice(0, 500))}
+                          rows={2}
+                          placeholder="e.g. Gate code 1234, leave with front desk if I'm not home."
+                          className="w-full bg-white/70 border border-[#243B39]/12 rounded-sm px-3 py-2 text-xs outline-none focus:border-[#B16558]"
+                        />
+                      </div>
+                    </div>
+                  )}
+                </div>
               ))}
             </div>
           </Section>

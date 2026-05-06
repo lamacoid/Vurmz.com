@@ -35,6 +35,8 @@ interface Product {
   categoryId: string | null
   heroMediaId: string | null
   audience: 'shop' | 'services' | 'both'
+  oneOff: boolean
+  soldAt: string | null
 }
 interface Category { id: string; slug: string; name: string }
 interface MediaItem { id: string; url: string; altText: string }
@@ -75,9 +77,20 @@ function Row({ product, media, onToggle }: { product: Product; media: Map<string
         )}
       </div>
       <Link href={`/admin/products/${product.id}`} className="flex-1 min-w-0">
-        <p className="text-sm font-medium text-cream truncate">{product.name}</p>
+        <p className="text-sm font-medium text-cream truncate flex items-center gap-2">
+          <span className="truncate">{product.name}</span>
+          {product.oneOff && (
+            <span className={`text-[9px] px-1.5 py-0.5 rounded font-semibold uppercase tracking-wider flex-shrink-0 ${
+              product.soldAt
+                ? 'bg-[#C46B4D]/20 text-[#C46B4D] border border-[#C46B4D]/30'
+                : 'bg-[#F0E6D3]/15 text-[#F0E6D3] border border-[#F0E6D3]/20'
+            }`}>
+              {product.soldAt ? 'Sold' : 'One-off'}
+            </span>
+          )}
+        </p>
         <p className="text-[11px] text-gray-500 truncate">
-          {money(product.priceCents)} · pack of {product.packSize}
+          {money(product.priceCents)}{!product.oneOff && ` · pack of ${product.packSize}`}
           {product.madeToOrder && ` · made to order (${product.leadTimeDays}d)`}
         </p>
       </Link>

@@ -9,10 +9,13 @@ export default function AddToCart(props: {
   priceCents: number
   packSize: number
   heroUrl: string | null
+  oneOff?: boolean
 }) {
-  const { add } = useCart()
+  const { add, items } = useCart()
   const [qty, setQty] = useState(1)
   const [added, setAdded] = useState(false)
+
+  const alreadyInCart = props.oneOff && items.some(i => i.productId === props.productId)
 
   function onAdd() {
     add(
@@ -23,11 +26,24 @@ export default function AddToCart(props: {
         priceCents: props.priceCents,
         packSize: props.packSize,
         heroUrl: props.heroUrl,
+        oneOff: props.oneOff,
       },
-      qty
+      props.oneOff ? 1 : qty
     )
     setAdded(true)
     setTimeout(() => setAdded(false), 1400)
+  }
+
+  if (props.oneOff) {
+    return (
+      <button
+        onClick={onAdd}
+        disabled={alreadyInCart}
+        className="w-full sm:w-auto inline-flex items-center justify-center px-6 h-11 bg-[#B16558] hover:bg-[#954E44] disabled:opacity-60 disabled:cursor-not-allowed text-white text-sm font-semibold rounded-sm transition-colors"
+      >
+        {alreadyInCart ? 'Already in cart' : added ? 'Added ✓' : 'Add to cart'}
+      </button>
+    )
   }
 
   return (
