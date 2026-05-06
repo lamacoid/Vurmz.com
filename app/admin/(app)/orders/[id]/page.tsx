@@ -11,6 +11,7 @@ interface Order {
   fulfillmentMethod: string
   fulfillmentAddress: { name?: string; line1?: string; line2?: string | null; city?: string; state?: string; postalCode?: string; phone?: string | null } | null
   notes: string; createdAt: string
+  metadata?: { handDelivery?: { window?: string; windowLabel?: string; note?: string } }
 }
 
 function money(c: number) { return `$${(c / 100).toFixed(2)}` }
@@ -111,6 +112,18 @@ export default function OrderDetailPage() {
           <div className="flex justify-between font-bold text-base pt-1"><span className="text-cream">Total</span><span className="text-cream">{money(order.totalCents)}</span></div>
         </div>
       </div>
+
+      {order.fulfillmentMethod === 'hand_deliver' && order.metadata?.handDelivery && (
+        <div className="bg-[#6BB8B2]/10 border border-[#6BB8B2]/30 rounded-xl p-4 mb-6">
+          <p className="text-[11px] uppercase tracking-wider text-[#6BB8B2] mb-2 font-semibold">Hand delivery</p>
+          {order.metadata.handDelivery.windowLabel && (
+            <p className="text-sm text-cream"><span className="text-gray-400">Window:</span> {order.metadata.handDelivery.windowLabel}</p>
+          )}
+          {order.metadata.handDelivery.note && (
+            <p className="text-sm text-cream mt-1 whitespace-pre-wrap"><span className="text-gray-400">Note:</span> {order.metadata.handDelivery.note}</p>
+          )}
+        </div>
+      )}
 
       {order.notes && (
         <div className="bg-[#243B39] border border-white/5 rounded-xl p-4">

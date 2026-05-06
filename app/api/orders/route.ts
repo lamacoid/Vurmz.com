@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import { validateCart } from '@/lib/checkout/validate'
-import { computeFulfillmentOptions } from '@/lib/checkout/fulfillment'
+import { computeFulfillmentOptions, isValidHandDeliveryWindow } from '@/lib/checkout/fulfillment'
 import { createOrder, type FulfillmentMethod, type ShippingAddress } from '@/lib/db/repos/orders'
 import { markProductSold } from '@/lib/db/repos/products'
 import { upsertCustomerByEmail } from '@/lib/db/repos/customers'
@@ -30,6 +30,10 @@ const schema = z.object({
   fulfillmentMethod: z.enum(['ship','hand_deliver','pickup','uber_direct','invoice_later']),
   address: addressSchema.optional().nullable(),
   notes: z.string().max(2000).optional(),
+  handDelivery: z.object({
+    window: z.string().max(40).optional(),
+    note: z.string().max(500).optional(),
+  }).optional(),
   payment: z.object({
     method: z.enum(['square','invoice_later']),
     sourceId: z.string().optional(),
@@ -123,6 +127,21 @@ export async function POST(req: NextRequest) {
   const fulfillmentFeeCents = chosen.priceCents
   const totalCents = cart.subtotalCents + fulfillmentFeeCents
 
+  // Hand delivery: validate the chosen window (if any). Reject unknown values
+  // rather than silently dropping them.
+  let handDeliveryMeta: { window?: string; windowLabel?: string; note?: string } | null = null
+  if (body.fulfillmentMethod === 'hand_deliver') {
+    const win = body.handDelivery?.window?.trim() || null
+    if (win && !isValidHandDeliveryWindow(win)) {
+      return NextResponse.json({ ok: false, error: { code: 'BAD_DELIVERY_WINDOW' } }, { status: 400 })
+    }
+    handDeliveryMeta = {
+      window: win ?? undefined,
+      windowLabel: chosen.windows?.find(w => w.key === win)?.label,
+      note: body.handDelivery?.note?.trim() || undefined,
+    }
+  }
+
   // 3. Upsert customer (so admin sees them immediately)
   const session = await getCustomerSession(req)
   const customer = session?.customer ?? await upsertCustomerByEmail({
@@ -149,7 +168,10 @@ export async function POST(req: NextRequest) {
       unitPriceCents: i.unitPriceCents,
     })),
     channel: 'shop',
-    metadata: { source: 'checkout' },
+    metadata: {
+      source: 'checkout',
+      ...(handDeliveryMeta ? { handDelivery: handDeliveryMeta } : {}),
+    },
   })
 
   // 5. Payment — Square if requested and enabled, else defer to invoice
@@ -198,6 +220,9 @@ export async function POST(req: NextRequest) {
   }
 
   // 7. Send emails (non-blocking)
+  const fulfillmentLabel = handDeliveryMeta?.windowLabel
+    ? `${chosen.label} — ${handDeliveryMeta.windowLabel}`
+    : chosen.label
   await sendOrderEmails(getEnv(), {
     email: body.email,
     customerName: body.address?.name ?? customer.name ?? null,
@@ -207,7 +232,7 @@ export async function POST(req: NextRequest) {
     fulfillmentFeeCents,
     totalCents,
     items: cart.items.map(i => ({ name: `${i.name} (${i.packSize}-pack)`, qty: i.qty, unitPriceCents: i.unitPriceCents })),
-    fulfillmentLabel: chosen.label,
+    fulfillmentLabel,
   })
 
   await audit({
