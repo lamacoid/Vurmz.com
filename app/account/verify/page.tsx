@@ -18,8 +18,8 @@ function VerifyInner() {
     })
       .then(async r => {
         if (!r.ok) { setStatus('error'); return }
-        const json = (await r.json().catch(() => null)) as { firstName?: string } | null
-        setFirstName(json?.firstName ?? 'there')
+        const json = (await r.json()) as { firstName: string }
+        setFirstName(json.firstName)
         setStatus('ok')
         setTimeout(() => router.push('/account'), 1400)
       })
@@ -33,7 +33,7 @@ function VerifyInner() {
         <div className="min-h-[40vh] flex flex-col items-center justify-center">
           <div className="w-14 h-14 rounded-full bg-[#6BB8B2]/15 border border-[#6BB8B2]/30 flex items-center justify-center mb-5">
             <span className="text-[#6BB8B2] text-2xl font-semibold">
-              {firstName.charAt(0).toUpperCase() || '·'}
+              {firstName.charAt(0).toUpperCase()}
             </span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-semibold text-cream">
