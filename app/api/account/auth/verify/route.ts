@@ -41,7 +41,8 @@ export async function POST(req: NextRequest) {
     userAgent: getUserAgent(req),
   })
 
-  const res = NextResponse.json({ ok: true })
+  const firstName = customer.name.trim().split(/\s+/)[0]
+  const res = NextResponse.json({ ok: true, firstName })
   res.headers.append('Set-Cookie', cookie)
   return res
 }
