@@ -11,7 +11,7 @@ export const runtime = 'edge'
 export default async function ProductDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const product = await getProductBySlug(slug)
-  if (!product || !product.isPublished) return notFound()
+  if (!product || !product.isPublished || product.soldAt) return notFound()
 
   const [category, hero] = await Promise.all([
     product.categoryId ? getCategoryById(product.categoryId) : null,
@@ -50,8 +50,18 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
 
             <div className="flex items-baseline gap-2 mb-6">
               <span className="text-3xl font-bold text-[#B16558]">${price}</span>
-              <span className="text-sm text-[#6B6259]">pack of {product.packSize}</span>
+              {product.oneOff ? (
+                <span className="text-sm text-[#6B6259]">one of a kind</span>
+              ) : (
+                <span className="text-sm text-[#6B6259]">pack of {product.packSize}</span>
+              )}
             </div>
+
+            {product.oneOff && (
+              <div className="inline-flex items-center gap-2 text-xs bg-[#B16558]/10 text-[#B16558] border border-[#B16558]/30 px-3 py-1.5 rounded-sm mb-6">
+                Only one available — once it&rsquo;s gone, it&rsquo;s gone.
+              </div>
+            )}
 
             {product.madeToOrder && product.leadTimeDays > 0 && (
               <div className="inline-flex items-center gap-2 text-xs bg-[#243B39]/6 text-[#243B39] px-3 py-1.5 rounded-sm mb-6">
@@ -66,6 +76,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
               priceCents={product.priceCents}
               packSize={product.packSize}
               heroUrl={hero?.url ?? null}
+              oneOff={product.oneOff}
             />
 
             {product.description && (

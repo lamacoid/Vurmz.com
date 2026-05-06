@@ -3,7 +3,7 @@ import { z } from 'zod'
 import { withAdminAuth } from '@/lib/auth/admin'
 import { audit } from '@/lib/audit'
 import { getClientIp, getUserAgent } from '@/lib/auth/session'
-import { getProductById, updateProduct, softDeleteProduct, restoreProduct } from '@/lib/db/repos/products'
+import { getProductById, updateProduct, softDeleteProduct, restoreProduct, clearProductSold, markProductSold } from '@/lib/db/repos/products'
 
 export const runtime = 'edge'
 
@@ -22,6 +22,9 @@ const patchSchema = z.object({
   leadTimeDays: z.number().int().nonnegative().optional(),
   weightGrams: z.number().int().nonnegative().optional(),
   heroMediaId: z.string().nullable().optional(),
+  oneOff: z.boolean().optional(),
+  /** Admin override for one-off sold state. true = mark sold, false = un-sell. */
+  sold: z.boolean().optional(),
   metadata: z.record(z.string(), z.unknown()).optional(),
 })
 
@@ -43,7 +46,10 @@ export async function PATCH(req: NextRequest, ctx: { params: Promise<{ id: strin
     }
     const before = await getProductById(id)
     if (!before) return NextResponse.json({ ok: false, error: { code: 'NOT_FOUND' } }, { status: 404 })
-    await updateProduct(id, body.data)
+    const { sold, ...rest } = body.data
+    await updateProduct(id, rest)
+    if (sold === true) await markProductSold(id)
+    if (sold === false) await clearProductSold(id)
     const after = await getProductById(id)
     await audit({
       actorType: 'admin',

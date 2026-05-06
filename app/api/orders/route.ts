@@ -3,6 +3,7 @@ import { z } from 'zod'
 import { validateCart } from '@/lib/checkout/validate'
 import { computeFulfillmentOptions } from '@/lib/checkout/fulfillment'
 import { createOrder, type FulfillmentMethod, type ShippingAddress } from '@/lib/db/repos/orders'
+import { markProductSold } from '@/lib/db/repos/products'
 import { upsertCustomerByEmail } from '@/lib/db/repos/customers'
 import { getCustomerSession } from '@/lib/auth/customer'
 import { audit } from '@/lib/audit'
@@ -101,6 +102,13 @@ export async function POST(req: NextRequest) {
   if (cart.items.length === 0) {
     return NextResponse.json({ ok: false, error: { code: 'EMPTY_CART' } }, { status: 400 })
   }
+  const soldItem = cart.unavailable.find(u => u.reason === 'sold')
+  if (soldItem) {
+    return NextResponse.json({
+      ok: false,
+      error: { code: 'ITEM_SOLD', message: 'One of the items in your cart was just sold. Please remove it and try again.', details: cart.unavailable },
+    }, { status: 409 })
+  }
 
   // 2. Compute fulfillment options and match the chosen method
   const options = computeFulfillmentOptions({
@@ -182,7 +190,14 @@ export async function POST(req: NextRequest) {
     paymentStatus = 'paid'
   }
 
-  // 6. Send emails (non-blocking)
+  // 6. Mark any one-off items in the order as sold (atomic per-row, race-safe).
+  for (const it of cart.items) {
+    if (it.oneOff) {
+      await markProductSold(it.productId)
+    }
+  }
+
+  // 7. Send emails (non-blocking)
   await sendOrderEmails(getEnv(), {
     email: body.email,
     customerName: body.address?.name ?? customer.name ?? null,

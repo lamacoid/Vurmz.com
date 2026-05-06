@@ -13,6 +13,7 @@ export interface CartItem {
   packSize: number
   qty: number
   heroUrl: string | null
+  oneOff?: boolean
   metadata?: Record<string, unknown>
 }
 
@@ -72,30 +73,34 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     setState(prev => {
       const existing = prev.items.find(i => i.productId === item.productId)
       if (existing) {
+        // One-off items are unique — never increment past 1.
+        if (item.oneOff || existing.oneOff) return prev
         return {
           items: prev.items.map(i =>
             i.productId === item.productId ? { ...i, qty: i.qty + qty } : i
           ),
         }
       }
-      return { items: [...prev.items, { ...item, qty }] }
+      return { items: [...prev.items, { ...item, qty: item.oneOff ? 1 : qty }] }
     })
     setOpen(true)
+  }, [])
+
+  const setQty = useCallback<CartContextValue['setQty']>((productId, qty) => {
+    if (qty <= 0) {
+      setState(prev => ({ items: prev.items.filter(i => i.productId !== productId) }))
+      return
+    }
+    setState(prev => ({
+      items: prev.items.map(i =>
+        i.productId === productId ? { ...i, qty: i.oneOff ? 1 : qty } : i
+      ),
+    }))
   }, [])
 
   const remove = useCallback<CartContextValue['remove']>(productId => {
     setState(prev => ({ items: prev.items.filter(i => i.productId !== productId) }))
   }, [])
-
-  const setQty = useCallback<CartContextValue['setQty']>((productId, qty) => {
-    if (qty <= 0) {
-      remove(productId)
-      return
-    }
-    setState(prev => ({
-      items: prev.items.map(i => (i.productId === productId ? { ...i, qty } : i)),
-    }))
-  }, [remove])
 
   const clear = useCallback(() => setState({ items: [] }), [])
 
