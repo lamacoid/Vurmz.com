@@ -7,7 +7,7 @@ import { getClientIp, getUserAgent } from '@/lib/auth/session'
 
 export const runtime = 'edge'
 
-export const MAX_REFERENCE_IMAGES = 5
+const MAX_REFERENCE_IMAGES = 5
 const MAX_SIZE = 10 * 1024 * 1024
 const ALLOWED_MIME = new Set([
   'image/jpeg',
