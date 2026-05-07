@@ -1,5 +1,6 @@
 import SiteHeader from '@/components/SiteHeader'
 import SiteFooter from '@/components/SiteFooter'
+import CartDrawer from '@/components/shop/CartDrawer'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -14,6 +15,7 @@ export default function ShopLayout({ children }: { children: React.ReactNode }) 
       <main className="min-h-screen">
         {children}
       </main>
+      <CartDrawer />
       <SiteFooter />
     </div>
   )

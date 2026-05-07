@@ -22,8 +22,7 @@ export default function AccountDashboard() {
       .finally(() => setLoading(false))
   }, [router])
 
-  if (loading) return <div className="p-10 text-center text-gray-500 text-sm">Loading…</div>
-  if (!me) return null
+  if (loading || !me) return <div className="p-10 text-center text-gray-500 text-sm">Loading…</div>
 
   return (
     <div className="max-w-3xl mx-auto p-6 sm:p-10">

@@ -33,13 +33,15 @@ function VerifyInner() {
         <div className="min-h-[40vh] flex flex-col items-center justify-center">
           <div className="w-14 h-14 rounded-full bg-[#6BB8B2]/15 border border-[#6BB8B2]/30 flex items-center justify-center mb-5">
             <span className="text-[#6BB8B2] text-2xl font-semibold">
-              {firstName.charAt(0).toUpperCase()}
+              {firstName ? firstName.charAt(0).toUpperCase() : '✓'}
             </span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-semibold text-cream">
-            Hi, {firstName}
+            {firstName ? `Hi, ${firstName}` : 'Signed in'}
           </h1>
-          <p className="text-xs text-gray-500 mt-3 tracking-wide">Welcome back</p>
+          <p className="text-xs text-gray-500 mt-3 tracking-wide">
+            {firstName ? 'Welcome back' : 'Welcome to VURMZ'}
+          </p>
         </div>
       )}
       {status === 'error' && (

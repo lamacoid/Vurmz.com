@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import './fonts.css'
 import LocalTicker from '@/components/LocalTicker'
+import { CartProvider } from '@/lib/cart/store'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -190,7 +191,9 @@ export default function RootLayout({
           Skip to main content
         </a>
         <LocalTicker />
-        <main id="main-content">{children}</main>
+        <CartProvider>
+          <main id="main-content">{children}</main>
+        </CartProvider>
       </body>
     </html>
   )

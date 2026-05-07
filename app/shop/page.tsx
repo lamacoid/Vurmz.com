@@ -9,6 +9,8 @@ import { siteInfo, getSmsLink } from '@/lib/site-info'
 import { shopTestimonials } from '@/lib/testimonials'
 import TestimonialCarousel from '@/components/TestimonialCarousel'
 import ItemScroller from '@/components/ItemScroller'
+import CategoryCard from '@/components/CategoryCard'
+import { SHOP_CATEGORIES } from '@/lib/categories'
 
 const fadeUp = {
   initial: { opacity: 0, y: 20 },
@@ -93,6 +95,18 @@ export default function ShopHome() {
                   <span className="text-white text-xs font-medium">{item.label}</span>
                 </div>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Categories */}
+      <section className="pb-16 sm:pb-20">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-bold text-[#243B39] text-center mb-10">Shop by category</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {SHOP_CATEGORIES.map((cat) => (
+              <CategoryCard key={cat.slug} category={cat} />
             ))}
           </div>
         </div>

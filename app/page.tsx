@@ -164,17 +164,19 @@ export default function LandingPage() {
       </motion.div>
 
       {/* Split chooser */}
-      <div className="relative z-10 flex flex-col md:flex-row gap-4 sm:gap-6 px-4 sm:px-6 lg:px-8 pb-6 max-w-6xl mx-auto w-full">
+      <div className="relative z-10 flex flex-col md:flex-row gap-3 sm:gap-4 px-4 sm:px-6 lg:px-8 pb-3 max-w-6xl mx-auto w-full">
         {/* Shop side — coral/bone */}
         <Link
           href="/shop"
-          className="group relative flex-1 flex items-center justify-center p-8 sm:p-12 bg-[#F0E6D3] rounded-sm overflow-hidden transition-all duration-500 hover:flex-[1.1]"
+          className="group relative flex-1 flex items-center justify-center p-6 sm:p-8 min-h-[200px]"
         >
+          {/* Soft color wash — circular blur, no defined edge */}
           <div
-            className="absolute inset-0 opacity-[0.03]"
+            className="absolute top-1/2 left-1/2 w-3/5 aspect-square bg-[#F0E6D3] rounded-full pointer-events-none transition-opacity duration-500 group-hover:opacity-80"
             style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E")`,
-              backgroundSize: '256px 256px',
+              transform: 'translate(-50%, -50%)',
+              filter: 'blur(70px)',
+              opacity: 0.55,
             }}
           />
           <motion.div
@@ -186,8 +188,8 @@ export default function LandingPage() {
             <span className="inline-block text-[#B16558] text-xs font-mono tracking-[0.25em] uppercase mb-5 border border-[#B16558]/20 px-3 py-1.5 rounded-sm">
               Individuals
             </span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#243B39] tracking-tight mb-3">Shop</h2>
-            <p className="text-[#6B6259] text-sm sm:text-base leading-relaxed mb-6">
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#F0E6D3] tracking-tight mb-3">Shop</h2>
+            <p className="text-gray-400 text-sm sm:text-base leading-relaxed mb-6">
               Engraved gifts, personalized knives, custom coasters, home decor. Pricing up front.
             </p>
             <span className="inline-flex items-center gap-2 text-[#B16558] font-semibold text-sm group-hover:gap-3 transition-all">
@@ -195,17 +197,29 @@ export default function LandingPage() {
               <ArrowRightIcon className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </span>
           </motion.div>
-          <div className="absolute inset-0 bg-[#B16558]/0 group-hover:bg-[#B16558]/[0.03] transition-colors duration-500 pointer-events-none" />
         </Link>
 
         {/* Services side — dark teal */}
         <Link
           href="/services"
-          className="group relative flex-1 flex items-center justify-center p-8 sm:p-12 bg-[#243B39] rounded-sm overflow-hidden transition-all duration-500 hover:flex-[1.1] border border-white/[0.06]"
+          className="group relative flex-1 flex items-center justify-center p-6 sm:p-8 min-h-[200px]"
         >
+          {/* Soft color wash — circular blur, no defined edge */}
           <div
-            className="absolute inset-0 pointer-events-none"
-            style={{ background: 'radial-gradient(ellipse 60% 50% at 50% 40%, rgba(60, 185, 178, 0.06) 0%, transparent 60%)' }}
+            className="absolute top-1/2 left-1/2 w-3/5 aspect-square bg-[#243B39] rounded-full pointer-events-none transition-opacity duration-500 group-hover:opacity-100"
+            style={{
+              transform: 'translate(-50%, -50%)',
+              filter: 'blur(70px)',
+              opacity: 0.85,
+            }}
+          />
+          <div
+            className="absolute top-1/2 left-1/2 w-2/5 aspect-square rounded-full pointer-events-none"
+            style={{
+              transform: 'translate(-50%, -50%)',
+              background: 'radial-gradient(circle, rgba(107, 184, 178, 0.18) 0%, transparent 70%)',
+              filter: 'blur(40px)',
+            }}
           />
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -225,22 +239,21 @@ export default function LandingPage() {
               <ArrowRightIcon className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </span>
           </motion.div>
-          <div className="absolute inset-0 bg-[#6BB8B2]/0 group-hover:bg-[#6BB8B2]/[0.03] transition-colors duration-500 pointer-events-none" />
         </Link>
       </div>
 
       {/* Trust bar */}
-      <div className="max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 pb-8">
+      <div className="max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 pb-3">
         <TrustBar theme="landing" variant="inline" />
       </div>
 
       {/* Trusted By */}
-      <div className="max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 pb-10">
+      <div className="max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 pb-4">
         <TrustedBy theme="landing" />
       </div>
 
       {/* Featured Work */}
-      <section className="py-12 sm:py-16 bg-white/[0.015]">
+      <section className="py-8 sm:py-12 bg-white/[0.015]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
@@ -256,7 +269,7 @@ export default function LandingPage() {
       </section>
 
       {/* Brand story teaser */}
-      <section className="py-12 sm:py-16">
+      <section className="py-8 sm:py-12">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center"

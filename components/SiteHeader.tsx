@@ -3,8 +3,9 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
-import { Bars3Icon, XMarkIcon, ChatBubbleLeftIcon, PhoneIcon } from '@heroicons/react/24/outline'
+import { Bars3Icon, XMarkIcon, ChatBubbleLeftIcon, PhoneIcon, UserIcon } from '@heroicons/react/24/outline'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
+import CartButton from '@/components/shop/CartButton'
 
 const NAV_LINKS = [
   { label: 'Shop', href: '/shop' },
@@ -64,7 +65,16 @@ export default function SiteHeader({ variant = 'services' }: { variant?: 'shop' 
             </div>
 
             {/* Right side */}
-            <div className="hidden md:flex items-center gap-3">
+            <div className="hidden md:flex items-center gap-4">
+              {isShop && <CartButton />}
+              <Link
+                href="/account"
+                className={`inline-flex items-center gap-1.5 text-[13px] ${textColor} ${hoverColor} transition-colors font-medium`}
+                aria-label="Account"
+              >
+                <UserIcon className="w-4 h-4" />
+                <span>Account</span>
+              </Link>
               <a href={getSmsLink()} className={`text-[13px] ${textColor} hover:text-current transition-colors font-medium flex items-center gap-1.5`}>
                 <ChatBubbleLeftIcon className="w-3.5 h-3.5" />
                 {siteInfo.phone}
@@ -94,6 +104,21 @@ export default function SiteHeader({ variant = 'services' }: { variant?: 'shop' 
         <>
           <div className="fixed inset-0 z-40 bg-black/30 backdrop-blur-sm" onClick={() => setMobileMenuOpen(false)} />
           <div className={`fixed top-[92px] left-3 right-3 z-50 ${mobileBg} border rounded-2xl shadow-2xl p-5 max-h-[calc(100vh-108px)] overflow-y-auto`}>
+            <div className={`flex flex-col gap-1 mb-3 pb-3 border-b ${isShop ? 'border-[#243B39]/10' : 'border-white/10'}`}>
+              <Link
+                href="/account"
+                className={`px-4 py-3 ${mobileText} font-medium ${mobileHover} rounded-xl transition-colors flex items-center gap-2`}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <UserIcon className="w-4 h-4" />
+                Account
+              </Link>
+              {isShop && (
+                <div className={`px-4 py-3 ${mobileText} font-medium ${mobileHover} rounded-xl transition-colors`}>
+                  <CartButton />
+                </div>
+              )}
+            </div>
             <div className="flex flex-col gap-1">
               {NAV_LINKS.map((link) => (
                 <Link
