@@ -170,13 +170,12 @@ export default function LandingPage() {
           href="/shop"
           className="group relative flex-1 flex items-center justify-center p-6 sm:p-8 min-h-[200px]"
         >
-          {/* Soft color wash — circular blur, no defined edge */}
+          {/* Pure radial wash — no container shape */}
           <div
-            className="absolute top-1/2 left-1/2 w-3/5 aspect-square bg-[#F0E6D3] rounded-full pointer-events-none transition-opacity duration-500 group-hover:opacity-80"
+            className="absolute inset-0 pointer-events-none transition-opacity duration-500 group-hover:opacity-100"
             style={{
-              transform: 'translate(-50%, -50%)',
-              filter: 'blur(70px)',
-              opacity: 0.55,
+              background: 'radial-gradient(ellipse 50% 55% at center, rgba(240, 230, 211, 0.28) 0%, transparent 75%)',
+              opacity: 0.9,
             }}
           />
           <motion.div
@@ -204,21 +203,12 @@ export default function LandingPage() {
           href="/services"
           className="group relative flex-1 flex items-center justify-center p-6 sm:p-8 min-h-[200px]"
         >
-          {/* Soft color wash — circular blur, no defined edge */}
+          {/* Pure radial wash — no container shape */}
           <div
-            className="absolute top-1/2 left-1/2 w-3/5 aspect-square bg-[#243B39] rounded-full pointer-events-none transition-opacity duration-500 group-hover:opacity-100"
+            className="absolute inset-0 pointer-events-none transition-opacity duration-500 group-hover:opacity-100"
             style={{
-              transform: 'translate(-50%, -50%)',
-              filter: 'blur(70px)',
-              opacity: 0.85,
-            }}
-          />
-          <div
-            className="absolute top-1/2 left-1/2 w-2/5 aspect-square rounded-full pointer-events-none"
-            style={{
-              transform: 'translate(-50%, -50%)',
-              background: 'radial-gradient(circle, rgba(107, 184, 178, 0.18) 0%, transparent 70%)',
-              filter: 'blur(40px)',
+              background: 'radial-gradient(ellipse 50% 55% at center, rgba(36, 59, 57, 0.45) 0%, transparent 75%), radial-gradient(ellipse 30% 35% at center, rgba(107, 184, 178, 0.20) 0%, transparent 75%)',
+              opacity: 0.9,
             }}
           />
           <motion.div
