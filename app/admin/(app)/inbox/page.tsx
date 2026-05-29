@@ -69,7 +69,7 @@ export default function InboxPage() {
           Back
         </button>
 
-        <div className="bg-[#243B39] rounded-xl p-4 border border-white/5 space-y-4">
+        <div className="bg-[#235158] rounded-xl p-4 border border-white/5 space-y-4">
           <div>
             <p className="text-lg font-semibold text-cream">{selected.name}</p>
             <p className="text-xs text-gray-400 mt-0.5">{timeAgo(selected.receivedAt)}</p>
@@ -77,12 +77,12 @@ export default function InboxPage() {
 
           <div className="flex flex-wrap gap-2">
             {selected.email && (
-              <a href={`mailto:${selected.email}`} className="text-xs bg-[#1a2926] px-2.5 py-1 rounded-full text-[#6BB8B2]">
+              <a href={`mailto:${selected.email}`} className="text-xs bg-[#1d474e] px-2.5 py-1 rounded-full text-[#6BB8B2]">
                 {selected.email}
               </a>
             )}
             {selected.phone && (
-              <a href={`tel:${selected.phone}`} className="text-xs bg-[#1a2926] px-2.5 py-1 rounded-full text-[#6BB8B2]">
+              <a href={`tel:${selected.phone}`} className="text-xs bg-[#1d474e] px-2.5 py-1 rounded-full text-[#6BB8B2]">
                 {selected.phone}
               </a>
             )}
@@ -94,7 +94,7 @@ export default function InboxPage() {
             </p>
           )}
 
-          <div className="bg-[#1a2926] rounded-lg p-3">
+          <div className="bg-[#1d474e] rounded-lg p-3">
             <p className="text-sm text-gray-200 whitespace-pre-wrap leading-relaxed">{selected.message}</p>
           </div>
 
@@ -102,10 +102,10 @@ export default function InboxPage() {
             <a href={`sms:${selected.phone}`} className="flex-1 py-2.5 bg-vurmz-cta text-white text-xs font-semibold rounded-lg text-center">
               Text
             </a>
-            <a href={`mailto:${selected.email}`} className="flex-1 py-2.5 bg-[#1a2926] text-cream text-xs font-semibold rounded-lg text-center border border-white/10">
+            <a href={`mailto:${selected.email}`} className="flex-1 py-2.5 bg-[#1d474e] text-cream text-xs font-semibold rounded-lg text-center border border-white/10">
               Email
             </a>
-            <button onClick={() => toggleArchive(selected)} className="py-2.5 px-3 bg-[#1a2926] text-gray-400 text-xs rounded-lg border border-white/10">
+            <button onClick={() => toggleArchive(selected)} className="py-2.5 px-3 bg-[#1d474e] text-gray-400 text-xs rounded-lg border border-white/10">
               {selected.archived ? 'Unarchive' : 'Archive'}
             </button>
           </div>
@@ -122,13 +122,13 @@ export default function InboxPage() {
       </div>
 
       {/* Filter tabs */}
-      <div className="flex gap-1 mb-4 bg-[#1a2926] rounded-lg p-1">
+      <div className="flex gap-1 mb-4 bg-[#1d474e] rounded-lg p-1">
         {(['all', 'unread', 'archived'] as const).map(f => (
           <button
             key={f}
             onClick={() => setFilter(f)}
             className={`flex-1 py-1.5 text-xs font-medium rounded-md capitalize transition-colors ${
-              filter === f ? 'bg-[#243B39] text-cream' : 'text-gray-500'
+              filter === f ? 'bg-[#235158] text-cream' : 'text-gray-500'
             }`}
           >
             {f}
@@ -146,7 +146,7 @@ export default function InboxPage() {
             <button
               key={msg.id}
               onClick={() => markRead(msg)}
-              className="w-full text-left bg-[#243B39] rounded-xl p-3.5 border border-white/5 hover:border-[#6BB8B2]/20 transition-colors"
+              className="w-full text-left bg-[#235158] rounded-xl p-3.5 border border-white/5 hover:border-[#6BB8B2]/20 transition-colors"
             >
               <div className="flex items-start justify-between gap-2">
                 <div className="min-w-0 flex-1">

@@ -153,7 +153,7 @@ export default function ProductForm({ initial }: { initial: ProductDraft }) {
                 onChange={e => field('description', e.target.value)}
                 rows={6}
                 placeholder="Markdown supported. Details, specs, what's included…"
-                className="w-full bg-[#243B39] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6BB8B2]"
+                className="w-full bg-[#235158] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6BB8B2]"
               />
             </div>
           </Section>
@@ -172,7 +172,7 @@ export default function ProductForm({ initial }: { initial: ProductDraft }) {
           </Section>
 
           <Section title="One-off / unique item">
-            <label className="flex items-center gap-2 bg-[#243B39] border border-white/5 rounded-md px-3 py-2.5">
+            <label className="flex items-center gap-2 bg-[#235158] border border-white/5 rounded-md px-3 py-2.5">
               <input
                 type="checkbox"
                 checked={draft.oneOff}
@@ -231,7 +231,7 @@ export default function ProductForm({ initial }: { initial: ProductDraft }) {
 
           <Section title="Fulfillment">
             <div className="grid grid-cols-2 gap-3">
-              <label className="flex items-center gap-2 bg-[#243B39] border border-white/5 rounded-md px-3 py-2.5">
+              <label className="flex items-center gap-2 bg-[#235158] border border-white/5 rounded-md px-3 py-2.5">
                 <input type="checkbox" checked={draft.madeToOrder} onChange={e => field('madeToOrder', e.target.checked)} />
                 <span className="text-sm text-cream">Made to order</span>
               </label>
@@ -283,7 +283,7 @@ export default function ProductForm({ initial }: { initial: ProductDraft }) {
             <select
               value={draft.categoryId ?? ''}
               onChange={e => field('categoryId', e.target.value || null)}
-              className="w-full bg-[#243B39] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6BB8B2]"
+              className="w-full bg-[#235158] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6BB8B2]"
             >
               <option value="">No category</option>
               {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
@@ -293,7 +293,7 @@ export default function ProductForm({ initial }: { initial: ProductDraft }) {
           <Section title="Main image">
             {heroMedia ? (
               <div>
-                <div className="aspect-square w-full bg-[#1a2f2e] rounded-lg overflow-hidden border border-white/5">
+                <div className="aspect-square w-full bg-[#1c474e] rounded-lg overflow-hidden border border-white/5">
                   <img src={heroMedia.url} alt={heroMedia.altText} className="w-full h-full object-cover" />
                 </div>
                 <div className="flex gap-2 mt-2">
@@ -316,7 +316,7 @@ export default function ProductForm({ initial }: { initial: ProductDraft }) {
 
       {mediaPickerOpen && (
         <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4" onClick={() => setMediaPickerOpen(false)}>
-          <div onClick={e => e.stopPropagation()} className="bg-[#1a2f2e] border border-white/10 rounded-xl max-w-3xl w-full max-h-[80vh] flex flex-col">
+          <div onClick={e => e.stopPropagation()} className="bg-[#1c474e] border border-white/10 rounded-xl max-w-3xl w-full max-h-[80vh] flex flex-col">
             <div className="flex items-center justify-between p-4 border-b border-white/5">
               <p className="text-sm font-semibold text-cream">Choose image</p>
               <button onClick={() => setMediaPickerOpen(false)} className="p-1 text-gray-400 hover:text-cream"><Icon name="x" className="w-4 h-4" /></button>
@@ -330,7 +330,7 @@ export default function ProductForm({ initial }: { initial: ProductDraft }) {
                     <button
                       key={m.id}
                       onClick={() => { field('heroMediaId', m.id); setHeroMedia(m); setMediaPickerOpen(false) }}
-                      className="aspect-square bg-[#243B39] border border-white/5 hover:border-[#6BB8B2]/40 rounded-lg overflow-hidden"
+                      className="aspect-square bg-[#235158] border border-white/5 hover:border-[#6BB8B2]/40 rounded-lg overflow-hidden"
                     >
                       <img src={m.url} alt={m.altText} className="w-full h-full object-cover" />
                     </button>
@@ -347,7 +347,7 @@ export default function ProductForm({ initial }: { initial: ProductDraft }) {
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="bg-[#243B39] border border-white/5 rounded-xl p-5">
+    <div className="bg-[#235158] border border-white/5 rounded-xl p-5">
       <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-3 font-semibold">{title}</p>
       <div className="space-y-3">{children}</div>
     </div>
@@ -358,7 +358,7 @@ function FieldText({ label, value, onChange, placeholder, prefix, hint }: { labe
   return (
     <div>
       <label className="text-[11px] uppercase tracking-wider text-gray-500 block mb-1">{label}</label>
-      <div className="flex items-center bg-[#1a2f2e] border border-white/5 rounded-md focus-within:border-[#6BB8B2]">
+      <div className="flex items-center bg-[#1c474e] border border-white/5 rounded-md focus-within:border-[#6BB8B2]">
         {prefix && <span className="pl-3 text-gray-500 text-sm">{prefix}</span>}
         <input
           value={value}
@@ -381,7 +381,7 @@ function FieldNum({ label, value, onChange, min, hint }: { label: string; value:
         value={value}
         min={min}
         onChange={e => onChange(parseInt(e.target.value, 10) || 0)}
-        className="w-full bg-[#1a2f2e] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6BB8B2]"
+        className="w-full bg-[#1c474e] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6BB8B2]"
       />
       {hint && <p className="text-[10px] text-gray-600 mt-1">{hint}</p>}
     </div>

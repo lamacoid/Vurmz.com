@@ -140,7 +140,7 @@ export default function AdminCustomerDetail() {
 
 function Section({ title, children, fullWidth }: { title: string; children: React.ReactNode; fullWidth?: boolean }) {
   return (
-    <div className={`bg-[#243B39] border border-white/5 rounded-xl p-5 ${fullWidth ? 'lg:col-span-2' : ''}`}>
+    <div className={`bg-[#235158] border border-white/5 rounded-xl p-5 ${fullWidth ? 'lg:col-span-2' : ''}`}>
       <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-3 font-semibold">{title}</p>
       {children}
     </div>
@@ -182,7 +182,7 @@ function InlineTextarea({ value, onSave, placeholder }: { value: string; onSave:
       onBlur={() => local !== value && onSave(local)}
       placeholder={placeholder}
       rows={6}
-      className="w-full bg-[#1a2f2e] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6BB8B2] resize-none"
+      className="w-full bg-[#1c474e] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6BB8B2] resize-none"
     />
   )
 }

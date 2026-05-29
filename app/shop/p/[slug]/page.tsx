@@ -21,7 +21,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
   const price = (product.priceCents / 100).toFixed(2)
 
   return (
-    <div className="bg-[#F0E6D3] text-[#243B39] min-h-screen">
+    <div className="bg-[#F0E6D3] text-[#235158] min-h-screen">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16">
         <Breadcrumbs
           items={[
@@ -34,7 +34,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
         />
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mt-8">
-          <div className="aspect-square bg-white/60 border border-[#243B39]/10 rounded-sm overflow-hidden">
+          <div className="aspect-square bg-white/60 border border-[#235158]/10 rounded-sm overflow-hidden">
             {hero?.url ? (
               <img src={hero.url} alt={hero.altText || product.name} className="w-full h-full object-cover" />
             ) : (
@@ -64,7 +64,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
             )}
 
             {product.madeToOrder && product.leadTimeDays > 0 && (
-              <div className="inline-flex items-center gap-2 text-xs bg-[#243B39]/6 text-[#243B39] px-3 py-1.5 rounded-sm mb-6">
+              <div className="inline-flex items-center gap-2 text-xs bg-[#235158]/6 text-[#235158] px-3 py-1.5 rounded-sm mb-6">
                 Made to order · ready in {product.leadTimeDays} {product.leadTimeDays === 1 ? 'day' : 'days'}
               </div>
             )}
@@ -80,9 +80,9 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
             />
 
             {product.description && (
-              <div className="mt-10 pt-8 border-t border-[#243B39]/10">
+              <div className="mt-10 pt-8 border-t border-[#235158]/10">
                 <h2 className="text-sm font-semibold uppercase tracking-wider text-[#6B6259] mb-3">Details</h2>
-                <div className="prose prose-sm text-[#243B39]/90 whitespace-pre-wrap">{product.description}</div>
+                <div className="prose prose-sm text-[#235158]/90 whitespace-pre-wrap">{product.description}</div>
               </div>
             )}
 

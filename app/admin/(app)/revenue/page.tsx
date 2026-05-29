@@ -53,7 +53,7 @@ export default function RevenuePage() {
         <Stat title="Orders total" value={String(data.totals.orders_total)} icon="cart" sub={`${data.totals.customers_total} customers`} />
       </div>
 
-      <div className="bg-[#243B39] border border-white/5 rounded-xl p-5 mb-6">
+      <div className="bg-[#235158] border border-white/5 rounded-xl p-5 mb-6">
         <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-4 font-semibold">Monthly revenue</p>
         {data.monthly.length === 0 ? (
           <p className="text-sm text-gray-500">No payments yet.</p>
@@ -76,7 +76,7 @@ export default function RevenuePage() {
         )}
       </div>
 
-      <div className="bg-[#243B39] border border-white/5 rounded-xl p-5">
+      <div className="bg-[#235158] border border-white/5 rounded-xl p-5">
         <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-4 font-semibold">Top products</p>
         {data.topProducts.length === 0 ? (
           <p className="text-sm text-gray-500">No order data yet.</p>
@@ -100,7 +100,7 @@ export default function RevenuePage() {
 
 function Stat({ title, value, sub, icon, accent }: { title: string; value: string; sub?: string; icon: string; accent?: 'coral' }) {
   return (
-    <div className="bg-[#243B39] border border-white/5 rounded-xl p-4">
+    <div className="bg-[#235158] border border-white/5 rounded-xl p-4">
       <div className="flex items-start justify-between mb-2">
         <p className="text-[10px] text-gray-400 uppercase tracking-wider">{title}</p>
         <Icon name={icon} className={`w-4 h-4 ${accent === 'coral' ? 'text-[#C46B4D]' : 'text-[#6BB8B2]'} opacity-70`} />

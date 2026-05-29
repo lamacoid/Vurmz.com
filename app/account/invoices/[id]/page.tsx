@@ -79,7 +79,7 @@ export default function InvoiceDetailPage() {
         </span>
       </div>
 
-      <div className="bg-[#243B39] border border-white/5 rounded-xl p-5 mb-5">
+      <div className="bg-[#235158] border border-white/5 rounded-xl p-5 mb-5">
         <div className="divide-y divide-white/5">
           {items.map(it => (
             <div key={it.id} className="py-2.5 flex justify-between">
@@ -105,14 +105,14 @@ export default function InvoiceDetailPage() {
       </div>
 
       {invoice.notes && (
-        <div className="bg-[#243B39] border border-white/5 rounded-xl p-4 mb-5">
+        <div className="bg-[#235158] border border-white/5 rounded-xl p-4 mb-5">
           <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-1">Notes</p>
           <p className="text-sm text-cream whitespace-pre-wrap">{invoice.notes}</p>
         </div>
       )}
 
       {isPayable && (
-        <div className="bg-[#243B39] border border-white/5 rounded-xl p-5">
+        <div className="bg-[#235158] border border-white/5 rounded-xl p-5">
           <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-3">Pay now</p>
           {squareConfig ? (
             <SquarePayment

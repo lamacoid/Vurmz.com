@@ -39,19 +39,19 @@ export default function CategoryCard({ category: cat, compact }: CategoryCardPro
     return (
       <Link
         href={`/shop/${cat.slug}`}
-        className="group block bg-white/60 border border-[#243B39]/8 rounded-sm overflow-hidden hover:border-[#B16558]/20 hover:shadow-lg hover:shadow-[#B16558]/5 transition-all duration-300"
+        className="group block bg-white/60 border border-[#235158]/8 rounded-sm overflow-hidden hover:border-[#B16558]/20 hover:shadow-lg hover:shadow-[#B16558]/5 transition-all duration-300"
       >
-        <div className="aspect-[16/9] bg-[#243B39]/[0.04] relative overflow-hidden">
+        <div className="aspect-[16/9] bg-[#235158]/[0.04] relative overflow-hidden">
           {cat.heroImage ? (
             <Image src={cat.heroImage} alt={cat.name} fill className="object-cover group-hover:scale-[1.03] transition-transform duration-500" sizes="(max-width: 640px) 100vw, 33vw" />
           ) : (
-            <div className="absolute inset-0 flex items-center justify-center bg-[#243B39]/[0.06]">
+            <div className="absolute inset-0 flex items-center justify-center bg-[#235158]/[0.06]">
               <span className="text-[#7A7068] text-xs font-mono">Photo coming soon</span>
             </div>
           )}
         </div>
         <div className="p-4">
-          <h3 className="text-sm font-bold text-[#243B39]">{cat.name}</h3>
+          <h3 className="text-sm font-bold text-[#235158]">{cat.name}</h3>
           <span className="text-[#B16558] font-bold text-xs">{price}</span>
         </div>
       </Link>
@@ -64,14 +64,14 @@ export default function CategoryCard({ category: cat, compact }: CategoryCardPro
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.4 }}
-      className="group relative bg-white/60 border border-[#243B39]/8 rounded-sm overflow-hidden hover:border-[#B16558]/20 hover:shadow-lg hover:shadow-[#B16558]/5 transition-all duration-300"
+      className="group relative bg-white/60 border border-[#235158]/8 rounded-sm overflow-hidden hover:border-[#B16558]/20 hover:shadow-lg hover:shadow-[#B16558]/5 transition-all duration-300"
     >
       <Link href={`/shop/${cat.slug}`}>
-        <div className="aspect-[4/3] bg-[#243B39]/[0.04] relative overflow-hidden">
+        <div className="aspect-[4/3] bg-[#235158]/[0.04] relative overflow-hidden">
           {cat.heroImage ? (
             <Image src={cat.heroImage} alt={cat.name} fill className="object-cover group-hover:scale-[1.03] transition-transform duration-500" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" />
           ) : (
-            <div className="absolute inset-0 flex items-center justify-center bg-[#243B39]/[0.06]">
+            <div className="absolute inset-0 flex items-center justify-center bg-[#235158]/[0.06]">
               <span className="text-[#7A7068] text-sm font-mono">Photo coming soon</span>
             </div>
           )}
@@ -80,7 +80,7 @@ export default function CategoryCard({ category: cat, compact }: CategoryCardPro
 
       <div className="p-5">
         <Link href={`/shop/${cat.slug}`}>
-          <h3 className="text-lg font-bold text-[#243B39] mb-1.5 group-hover:text-[#B16558] transition-colors">{cat.name}</h3>
+          <h3 className="text-lg font-bold text-[#235158] mb-1.5 group-hover:text-[#B16558] transition-colors">{cat.name}</h3>
         </Link>
         <p className="text-[#6B6259] text-sm leading-relaxed mb-4">{cat.tagline}</p>
 
@@ -92,7 +92,7 @@ export default function CategoryCard({ category: cat, compact }: CategoryCardPro
           <div className="flex items-center gap-2">
             <Link
               href={`/shop/${cat.slug}`}
-              className="inline-flex items-center gap-1 text-xs text-[#243B39] font-semibold px-3 py-1.5 border border-[#243B39]/10 rounded-sm hover:border-[#B16558]/30 transition-colors"
+              className="inline-flex items-center gap-1 text-xs text-[#235158] font-semibold px-3 py-1.5 border border-[#235158]/10 rounded-sm hover:border-[#B16558]/30 transition-colors"
             >
               Details
               <ArrowRightIcon className="w-3 h-3" />

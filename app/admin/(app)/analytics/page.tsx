@@ -32,12 +32,12 @@ export default function AnalyticsPage() {
 
       {/* Stats */}
       <div className="grid grid-cols-2 gap-3 mb-6">
-        <div className="bg-[#243B39] rounded-xl p-4 border border-white/5">
+        <div className="bg-[#235158] rounded-xl p-4 border border-white/5">
           <p className="text-[10px] text-gray-500 uppercase">Today</p>
           <p className="text-2xl font-bold text-[#6BB8B2] mt-1">{data.today.views}</p>
           <p className="text-[10px] text-gray-500">views</p>
         </div>
-        <div className="bg-[#243B39] rounded-xl p-4 border border-white/5">
+        <div className="bg-[#235158] rounded-xl p-4 border border-white/5">
           <p className="text-[10px] text-gray-500 uppercase">Last {data.period.days}d</p>
           <p className="text-2xl font-bold text-cream mt-1">{data.period.views.toLocaleString()}</p>
           <p className="text-[10px] text-gray-500">avg {Math.round(data.period.views / data.period.days)}/day</p>
@@ -45,16 +45,16 @@ export default function AnalyticsPage() {
       </div>
 
       {/* Period tabs */}
-      <div className="flex gap-1 mb-4 bg-[#1a2926] rounded-lg p-1">
+      <div className="flex gap-1 mb-4 bg-[#1d474e] rounded-lg p-1">
         {[7, 14, 30].map(d => (
-          <button key={d} onClick={() => setDays(d)} className={`flex-1 py-1.5 text-xs font-medium rounded-md transition-colors ${days === d ? 'bg-[#243B39] text-cream' : 'text-gray-500'}`}>
+          <button key={d} onClick={() => setDays(d)} className={`flex-1 py-1.5 text-xs font-medium rounded-md transition-colors ${days === d ? 'bg-[#235158] text-cream' : 'text-gray-500'}`}>
             {d}d
           </button>
         ))}
       </div>
 
       {/* Chart */}
-      <div className="bg-[#243B39] rounded-xl p-4 border border-white/5 mb-4">
+      <div className="bg-[#235158] rounded-xl p-4 border border-white/5 mb-4">
         <p className="text-xs text-gray-400 mb-3">Daily Views</p>
         <div className="flex items-end gap-[2px] h-24">
           {data.chart.map((d, i) => (
@@ -74,7 +74,7 @@ export default function AnalyticsPage() {
 
       {/* Top Pages */}
       {data.paths.length > 0 && (
-        <div className="bg-[#243B39] rounded-xl p-4 border border-white/5 mb-4">
+        <div className="bg-[#235158] rounded-xl p-4 border border-white/5 mb-4">
           <p className="text-xs text-gray-400 mb-3">Top Pages</p>
           <div className="space-y-2">
             {data.paths.map((p, i) => (
@@ -89,7 +89,7 @@ export default function AnalyticsPage() {
 
       {/* Referrers */}
       {data.referrers.length > 0 && (
-        <div className="bg-[#243B39] rounded-xl p-4 border border-white/5">
+        <div className="bg-[#235158] rounded-xl p-4 border border-white/5">
           <p className="text-xs text-gray-400 mb-3">Top Referrers</p>
           <div className="space-y-2">
             {data.referrers.map((r, i) => (

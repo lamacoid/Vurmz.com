@@ -87,7 +87,7 @@ export default function NavigationEditorPage() {
 
       <div className="space-y-5">
         {(Object.keys(PLACEMENT_LABELS) as Placement[]).map(p => (
-          <div key={p} className="bg-[#243B39] border border-white/5 rounded-xl p-4">
+          <div key={p} className="bg-[#235158] border border-white/5 rounded-xl p-4">
             <div className="flex items-center justify-between mb-3">
               <p className="text-sm font-semibold text-cream">{PLACEMENT_LABELS[p]}</p>
               <button
@@ -102,7 +102,7 @@ export default function NavigationEditorPage() {
             ) : (
               <div className="space-y-1">
                 {nav[p].map(item => (
-                  <div key={item.id} className="flex items-center gap-2 bg-[#1a2f2e] border border-white/5 rounded px-3 py-2">
+                  <div key={item.id} className="flex items-center gap-2 bg-[#1c474e] border border-white/5 rounded px-3 py-2">
                     <div className="flex flex-col">
                       <button onClick={() => move(p, item.id, -1)} className="text-gray-500 hover:text-cream text-[10px]">▲</button>
                       <button onClick={() => move(p, item.id, 1)} className="text-gray-500 hover:text-cream text-[10px]">▼</button>

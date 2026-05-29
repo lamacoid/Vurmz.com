@@ -44,7 +44,7 @@ export default function AccountOrderDetail() {
         </span>
       </div>
 
-      <div className="bg-[#243B39] border border-white/5 rounded-xl p-5 mb-5">
+      <div className="bg-[#235158] border border-white/5 rounded-xl p-5 mb-5">
         <div className="divide-y divide-white/5">
           {items.map(it => (
             <div key={it.id} className="py-2.5 flex justify-between">
@@ -64,12 +64,12 @@ export default function AccountOrderDetail() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
-        <div className="bg-[#243B39] border border-white/5 rounded-xl p-4">
+        <div className="bg-[#235158] border border-white/5 rounded-xl p-4">
           <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-1">Fulfillment</p>
           <p className="text-sm text-cream">{order.fulfillmentMethod.replace('_', ' ')}</p>
         </div>
         {order.fulfillmentAddress && (
-          <div className="bg-[#243B39] border border-white/5 rounded-xl p-4">
+          <div className="bg-[#235158] border border-white/5 rounded-xl p-4">
             <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-1">Ship to</p>
             <p className="text-xs text-cream leading-relaxed">
               {order.fulfillmentAddress.name}<br />
@@ -81,7 +81,7 @@ export default function AccountOrderDetail() {
       </div>
 
       {order.notes && (
-        <div className="bg-[#243B39] border border-white/5 rounded-xl p-4">
+        <div className="bg-[#235158] border border-white/5 rounded-xl p-4">
           <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-1">Your notes</p>
           <p className="text-sm text-cream whitespace-pre-wrap">{order.notes}</p>
         </div>

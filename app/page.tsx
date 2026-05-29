@@ -33,7 +33,18 @@ export default function LandingPage() {
   }, [])
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#1a2f2e] relative overflow-hidden">
+    <div className="min-h-screen flex flex-col bg-[#1c474e] relative overflow-hidden">
+      {/* Floating account link — landing has no traditional header */}
+      <Link
+        href="/account"
+        className="absolute top-4 right-4 sm:top-6 sm:right-6 z-50 inline-flex items-center gap-1.5 text-[12px] sm:text-[13px] text-gray-400 hover:text-cream transition-colors font-medium px-3 py-1.5 rounded-full border border-white/10 hover:border-white/30 backdrop-blur-sm bg-black/20"
+        aria-label="Account"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-3.5 h-3.5">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+        </svg>
+        Account
+      </Link>
       {/* Rotating product photo background — scoped to hero area */}
       <div className="absolute top-0 left-0 right-0 h-screen pointer-events-none select-none overflow-hidden" aria-hidden>
         {heroBgImages.map((img, i) => (
@@ -50,11 +61,11 @@ export default function LandingPage() {
           </div>
         ))}
         {/* Dark overlay for legibility */}
-        <div className="absolute inset-0 bg-[#1a2f2e]/45" />
+        <div className="absolute inset-0 bg-[#1c474e]/45" />
         {/* Bottom fade so the photo dissolves into the dark page below */}
         <div
           className="absolute bottom-0 left-0 right-0 h-1/2 pointer-events-none"
-          style={{ background: 'linear-gradient(to bottom, transparent 0%, #1a2f2e 90%)' }}
+          style={{ background: 'linear-gradient(to bottom, transparent 0%, #1c474e 90%)' }}
         />
       </div>
 

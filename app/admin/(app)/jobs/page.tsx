@@ -82,7 +82,7 @@ export default function JobsPage() {
           Back
         </button>
 
-        <div className="bg-[#243B39] rounded-xl p-4 border border-white/5 space-y-4">
+        <div className="bg-[#235158] rounded-xl p-4 border border-white/5 space-y-4">
           <div className="flex items-start justify-between">
             <div>
               <p className="text-lg font-semibold text-cream">{selected.title}</p>
@@ -111,7 +111,7 @@ export default function JobsPage() {
           </div>
 
           {selected.notes && (
-            <div className="bg-[#1a2926] rounded-lg p-3">
+            <div className="bg-[#1d474e] rounded-lg p-3">
               <p className="text-[10px] text-gray-500 uppercase mb-1">Notes</p>
               <p className="text-xs text-gray-300 whitespace-pre-wrap">{selected.notes}</p>
             </div>
@@ -140,13 +140,13 @@ export default function JobsPage() {
       </div>
 
       {/* Filter tabs */}
-      <div className="flex gap-1 mb-4 bg-[#1a2926] rounded-lg p-1 overflow-x-auto">
+      <div className="flex gap-1 mb-4 bg-[#1d474e] rounded-lg p-1 overflow-x-auto">
         {['active', 'quoted', 'accepted', 'in-progress', 'done', 'delivered'].map(f => (
           <button
             key={f}
             onClick={() => setFilter(f)}
             className={`py-1.5 px-2.5 text-[10px] font-medium rounded-md capitalize whitespace-nowrap transition-colors ${
-              filter === f ? 'bg-[#243B39] text-cream' : 'text-gray-500'
+              filter === f ? 'bg-[#235158] text-cream' : 'text-gray-500'
             }`}
           >
             {f}
@@ -164,7 +164,7 @@ export default function JobsPage() {
             <button
               key={job.id}
               onClick={() => setSelected(job)}
-              className="w-full text-left bg-[#243B39] rounded-xl p-3.5 border border-white/5 hover:border-[#6BB8B2]/20 transition-colors"
+              className="w-full text-left bg-[#235158] rounded-xl p-3.5 border border-white/5 hover:border-[#6BB8B2]/20 transition-colors"
             >
               <div className="flex items-start justify-between gap-2">
                 <div className="min-w-0 flex-1">
@@ -203,12 +203,12 @@ function NewJobForm({ onSave, onCancel }: { onSave: (data: any) => void; onCance
           placeholder="Title"
           value={form.title}
           onChange={e => setForm(f => ({ ...f, title: e.target.value }))}
-          className="w-full px-3 py-2.5 bg-[#243B39] border border-[#2d4a47] rounded-lg text-sm text-cream placeholder:text-gray-500 focus:outline-none focus:border-[#6BB8B2]/50"
+          className="w-full px-3 py-2.5 bg-[#235158] border border-[#2d4a47] rounded-lg text-sm text-cream placeholder:text-gray-500 focus:outline-none focus:border-[#6BB8B2]/50"
         />
         <select
           value={form.type}
           onChange={e => setForm(f => ({ ...f, type: e.target.value }))}
-          className="w-full px-3 py-2.5 bg-[#243B39] border border-[#2d4a47] rounded-lg text-sm text-cream focus:outline-none focus:border-[#6BB8B2]/50"
+          className="w-full px-3 py-2.5 bg-[#235158] border border-[#2d4a47] rounded-lg text-sm text-cream focus:outline-none focus:border-[#6BB8B2]/50"
         >
           {['custom', 'pens', 'cards', 'coasters', 'keychains', 'knife', 'tool', 'labels', 'other'].map(t => (
             <option key={t} value={t}>{t}</option>
@@ -219,21 +219,21 @@ function NewJobForm({ onSave, onCancel }: { onSave: (data: any) => void; onCance
           type="number"
           value={form.price}
           onChange={e => setForm(f => ({ ...f, price: e.target.value }))}
-          className="w-full px-3 py-2.5 bg-[#243B39] border border-[#2d4a47] rounded-lg text-sm text-cream placeholder:text-gray-500 focus:outline-none focus:border-[#6BB8B2]/50"
+          className="w-full px-3 py-2.5 bg-[#235158] border border-[#2d4a47] rounded-lg text-sm text-cream placeholder:text-gray-500 focus:outline-none focus:border-[#6BB8B2]/50"
         />
         <textarea
           placeholder="Description"
           value={form.description}
           onChange={e => setForm(f => ({ ...f, description: e.target.value }))}
           rows={3}
-          className="w-full px-3 py-2.5 bg-[#243B39] border border-[#2d4a47] rounded-lg text-sm text-cream placeholder:text-gray-500 focus:outline-none focus:border-[#6BB8B2]/50 resize-none"
+          className="w-full px-3 py-2.5 bg-[#235158] border border-[#2d4a47] rounded-lg text-sm text-cream placeholder:text-gray-500 focus:outline-none focus:border-[#6BB8B2]/50 resize-none"
         />
         <textarea
           placeholder="Notes"
           value={form.notes}
           onChange={e => setForm(f => ({ ...f, notes: e.target.value }))}
           rows={2}
-          className="w-full px-3 py-2.5 bg-[#243B39] border border-[#2d4a47] rounded-lg text-sm text-cream placeholder:text-gray-500 focus:outline-none focus:border-[#6BB8B2]/50 resize-none"
+          className="w-full px-3 py-2.5 bg-[#235158] border border-[#2d4a47] rounded-lg text-sm text-cream placeholder:text-gray-500 focus:outline-none focus:border-[#6BB8B2]/50 resize-none"
         />
         <button
           onClick={() => onSave({ ...form, price: parseFloat(form.price) || 0 })}

@@ -45,7 +45,7 @@ export default function D1ProductGridClient({ categorySlug, heading, subheading,
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {(heading || subheading) && (
           <div className="mb-6">
-            {heading && <h2 className="text-2xl sm:text-3xl font-bold text-[#243B39] tracking-tight">{heading}</h2>}
+            {heading && <h2 className="text-2xl sm:text-3xl font-bold text-[#235158] tracking-tight">{heading}</h2>}
             {subheading && <p className="text-sm text-[#6B6259] mt-1">{subheading}</p>}
           </div>
         )}
@@ -54,7 +54,7 @@ export default function D1ProductGridClient({ categorySlug, heading, subheading,
             <Link
               key={p.id}
               href={`/shop/p/${p.slug}`}
-              className="group bg-white/60 border border-[#243B39]/10 rounded-sm overflow-hidden hover:border-[#B16558]/40 transition-colors"
+              className="group bg-white/60 border border-[#235158]/10 rounded-sm overflow-hidden hover:border-[#B16558]/40 transition-colors"
             >
               <div className="aspect-square bg-[#F0E6D3] overflow-hidden">
                 {p.heroUrl ? (
@@ -64,12 +64,12 @@ export default function D1ProductGridClient({ categorySlug, heading, subheading,
                 )}
               </div>
               <div className="p-3">
-                <p className="text-sm font-semibold text-[#243B39] truncate">{p.name}</p>
+                <p className="text-sm font-semibold text-[#235158] truncate">{p.name}</p>
                 <p className="text-[11px] text-[#6B6259] mt-0.5 line-clamp-2">{p.shortDescription || `Pack of ${p.packSize}`}</p>
                 <div className="flex items-center justify-between mt-2">
                   <span className="text-sm font-bold text-[#B16558]">${(p.priceCents / 100).toFixed(2)}</span>
                   {p.madeToOrder ? (
-                    <span className="text-[9px] uppercase tracking-wider text-[#6B6259] bg-[#243B39]/6 px-1.5 py-0.5 rounded-sm">
+                    <span className="text-[9px] uppercase tracking-wider text-[#6B6259] bg-[#235158]/6 px-1.5 py-0.5 rounded-sm">
                       {p.leadTimeDays > 0 ? `${p.leadTimeDays}d` : 'MTO'}
                     </span>
                   ) : null}

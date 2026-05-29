@@ -7,7 +7,7 @@ import { Icon } from './icons'
 export default function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname()
   return (
-    <aside className="h-full flex flex-col bg-[#1a2f2e] border-r border-white/5">
+    <aside className="h-full flex flex-col bg-[#1c474e] border-r border-white/5">
       <div className="px-5 py-4 border-b border-white/5 flex items-center gap-2">
         <span className="text-sm font-bold tracking-wider text-cream">VURMZ</span>
         <span className="text-[10px] text-gray-500 bg-white/5 px-1.5 py-0.5 rounded">ADMIN</span>
@@ -30,7 +30,7 @@ export default function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
                     onClick={onNavigate}
                     className={`flex items-center gap-2.5 px-2.5 py-1.5 rounded-md text-[13px] transition-colors ${
                       active
-                        ? 'bg-[#243B39] text-cream'
+                        ? 'bg-[#235158] text-cream'
                         : 'text-gray-400 hover:text-cream hover:bg-white/[0.03]'
                     }`}
                   >

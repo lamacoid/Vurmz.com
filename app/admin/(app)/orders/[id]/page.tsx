@@ -60,29 +60,29 @@ export default function OrderDetailPage() {
         <select
           value={order.status}
           onChange={e => setStatus(e.target.value)}
-          className="bg-[#243B39] border border-white/10 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6BB8B2]"
+          className="bg-[#235158] border border-white/10 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6BB8B2]"
         >
           {['new','confirmed','in_progress','ready','delivered','cancelled','refunded'].map(s => <option key={s} value={s}>{s}</option>)}
         </select>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        <div className="bg-[#243B39] border border-white/5 rounded-xl p-4">
+        <div className="bg-[#235158] border border-white/5 rounded-xl p-4">
           <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-1">Customer</p>
           <p className="text-sm text-cream">{order.email}</p>
         </div>
-        <div className="bg-[#243B39] border border-white/5 rounded-xl p-4">
+        <div className="bg-[#235158] border border-white/5 rounded-xl p-4">
           <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-1">Fulfillment</p>
           <p className="text-sm text-cream">{order.fulfillmentMethod.replace('_', ' ')}</p>
         </div>
-        <div className="bg-[#243B39] border border-white/5 rounded-xl p-4">
+        <div className="bg-[#235158] border border-white/5 rounded-xl p-4">
           <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-1">Total</p>
           <p className="text-sm text-cream font-semibold">{money(order.totalCents)}</p>
         </div>
       </div>
 
       {order.fulfillmentAddress && (
-        <div className="bg-[#243B39] border border-white/5 rounded-xl p-4 mb-6">
+        <div className="bg-[#235158] border border-white/5 rounded-xl p-4 mb-6">
           <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-1">Ship to</p>
           <p className="text-sm text-cream">
             {order.fulfillmentAddress.name}<br />
@@ -93,7 +93,7 @@ export default function OrderDetailPage() {
         </div>
       )}
 
-      <div className="bg-[#243B39] border border-white/5 rounded-xl p-4 mb-6">
+      <div className="bg-[#235158] border border-white/5 rounded-xl p-4 mb-6">
         <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-3">Line items</p>
         <div className="divide-y divide-white/5">
           {items.map(it => (
@@ -126,7 +126,7 @@ export default function OrderDetailPage() {
       )}
 
       {order.notes && (
-        <div className="bg-[#243B39] border border-white/5 rounded-xl p-4">
+        <div className="bg-[#235158] border border-white/5 rounded-xl p-4">
           <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-1">Customer notes</p>
           <p className="text-sm text-cream whitespace-pre-wrap">{order.notes}</p>
         </div>

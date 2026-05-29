@@ -25,12 +25,12 @@ export default function CartDrawer() {
         }`}
         aria-label="Cart"
       >
-        <header className="flex items-center justify-between px-5 py-4 border-b border-[#243B39]/10">
+        <header className="flex items-center justify-between px-5 py-4 border-b border-[#235158]/10">
           <div>
-            <p className="text-sm font-bold text-[#243B39]">Your cart</p>
+            <p className="text-sm font-bold text-[#235158]">Your cart</p>
             <p className="text-xs text-[#6B6259]">{itemCount} {itemCount === 1 ? 'item' : 'items'}</p>
           </div>
-          <button onClick={() => setOpen(false)} className="p-1 text-[#6B6259] hover:text-[#243B39]" aria-label="Close cart">
+          <button onClick={() => setOpen(false)} className="p-1 text-[#6B6259] hover:text-[#235158]" aria-label="Close cart">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="w-5 h-5">
               <path d="M6 6l12 12M18 6 6 18" />
             </svg>
@@ -52,7 +52,7 @@ export default function CartDrawer() {
           ) : (
             items.map(item => (
               <div key={item.productId} className="flex gap-3">
-                <div className="w-16 h-16 flex-shrink-0 bg-white/70 border border-[#243B39]/10 rounded-sm overflow-hidden">
+                <div className="w-16 h-16 flex-shrink-0 bg-white/70 border border-[#235158]/10 rounded-sm overflow-hidden">
                   {item.heroUrl ? (
                     <img src={item.heroUrl} alt="" className="w-full h-full object-cover" />
                   ) : (
@@ -63,31 +63,31 @@ export default function CartDrawer() {
                   <Link
                     href={`/shop/p/${item.slug}`}
                     onClick={() => setOpen(false)}
-                    className="text-sm font-medium text-[#243B39] hover:text-[#B16558] block truncate"
+                    className="text-sm font-medium text-[#235158] hover:text-[#B16558] block truncate"
                   >
                     {item.name}
                   </Link>
                   <p className="text-xs text-[#6B6259]">pack of {item.packSize} · {money(item.priceCents)} ea</p>
                   <div className="flex items-center gap-3 mt-2">
-                    <div className="inline-flex items-center bg-white/60 border border-[#243B39]/12 rounded-sm text-sm">
-                      <button onClick={() => setQty(item.productId, item.qty - 1)} className="px-2 py-1 text-[#6B6259] hover:text-[#243B39]" aria-label="Decrease">−</button>
+                    <div className="inline-flex items-center bg-white/60 border border-[#235158]/12 rounded-sm text-sm">
+                      <button onClick={() => setQty(item.productId, item.qty - 1)} className="px-2 py-1 text-[#6B6259] hover:text-[#235158]" aria-label="Decrease">−</button>
                       <span className="min-w-[1.5rem] text-center text-xs font-semibold">{item.qty}</span>
-                      <button onClick={() => setQty(item.productId, item.qty + 1)} className="px-2 py-1 text-[#6B6259] hover:text-[#243B39]" aria-label="Increase">+</button>
+                      <button onClick={() => setQty(item.productId, item.qty + 1)} className="px-2 py-1 text-[#6B6259] hover:text-[#235158]" aria-label="Increase">+</button>
                     </div>
                     <button onClick={() => remove(item.productId)} className="text-xs text-[#6B6259] hover:text-[#B16558]">Remove</button>
                   </div>
                 </div>
-                <div className="text-sm font-semibold text-[#243B39]">{money(item.priceCents * item.qty)}</div>
+                <div className="text-sm font-semibold text-[#235158]">{money(item.priceCents * item.qty)}</div>
               </div>
             ))
           )}
         </div>
 
         {items.length > 0 && (
-          <footer className="border-t border-[#243B39]/10 px-5 py-4 space-y-3">
+          <footer className="border-t border-[#235158]/10 px-5 py-4 space-y-3">
             <div className="flex items-center justify-between text-sm">
               <span className="text-[#6B6259]">Subtotal</span>
-              <span className="font-semibold text-[#243B39]">{money(subtotalCents)}</span>
+              <span className="font-semibold text-[#235158]">{money(subtotalCents)}</span>
             </div>
             <p className="text-[11px] text-[#7A7068]">Taxes and delivery calculated at checkout.</p>
             <Link

@@ -40,7 +40,7 @@ export default function AccountInvoicesPage() {
       {loading ? (
         <p className="text-gray-500 text-sm">Loading…</p>
       ) : invoices.length === 0 ? (
-        <div className="bg-[#243B39] border border-white/5 rounded-xl p-10 text-center text-gray-400 text-sm">
+        <div className="bg-[#235158] border border-white/5 rounded-xl p-10 text-center text-gray-400 text-sm">
           No invoices yet.
         </div>
       ) : (
@@ -51,7 +51,7 @@ export default function AccountInvoicesPage() {
               <Link
                 key={inv.id}
                 href={`/account/invoices/${inv.id}`}
-                className="block bg-[#243B39] border border-white/5 hover:border-[#6BB8B2]/30 rounded-xl p-4 transition-colors"
+                className="block bg-[#235158] border border-white/5 hover:border-[#6BB8B2]/30 rounded-xl p-4 transition-colors"
               >
                 <div className="flex items-center justify-between mb-1.5">
                   <p className="text-sm font-mono text-cream">{inv.number}</p>

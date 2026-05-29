@@ -29,7 +29,7 @@ function StatCard({
   return (
     <Link
       href={href}
-      className={`group bg-[#243B39] rounded-xl p-5 border border-white/5 ${border} transition-colors`}
+      className={`group bg-[#235158] rounded-xl p-5 border border-white/5 ${border} transition-colors`}
     >
       <div className="flex items-start justify-between mb-3">
         <p className="text-[11px] text-gray-400 uppercase tracking-wider">{title}</p>
@@ -129,7 +129,7 @@ function QuickAction({ href, icon, label, external }: { href: string; icon: stri
     <Component
       href={href}
       {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}
-      className="flex items-center gap-3 bg-[#243B39] hover:bg-[#2a4441] rounded-xl p-3 border border-white/5 hover:border-[#6BB8B2]/20 transition-all"
+      className="flex items-center gap-3 bg-[#235158] hover:bg-[#2a4441] rounded-xl p-3 border border-white/5 hover:border-[#6BB8B2]/20 transition-all"
     >
       <Icon name={icon} className="w-4 h-4 text-[#6BB8B2]" />
       <span className="text-sm text-cream">{label}</span>

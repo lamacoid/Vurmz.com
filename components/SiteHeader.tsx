@@ -29,17 +29,17 @@ export default function SiteHeader({ variant = 'services' }: { variant?: 'shop' 
   }, [])
 
   const headerBg = isShop
-    ? scrolled ? 'bg-[#F0E6D3]/95 backdrop-blur-2xl border-b border-[#243B39]/10 shadow-sm' : 'bg-[#F0E6D3]'
-    : scrolled ? 'bg-[#1e3331]/90 backdrop-blur-2xl border-b border-white/10 shadow-lg shadow-black/10' : 'bg-transparent'
+    ? scrolled ? 'bg-[#F0E6D3]/95 backdrop-blur-2xl border-b border-[#235158]/10 shadow-sm' : 'bg-[#F0E6D3]'
+    : scrolled ? 'bg-[#1f474e]/90 backdrop-blur-2xl border-b border-white/10 shadow-lg shadow-black/10' : 'bg-transparent'
 
   const textColor = isShop ? 'text-[#6B6259]' : 'text-gray-400'
   const hoverColor = isShop ? 'hover:text-[#6BB8B2]' : 'hover:text-vurmz-cta'
   const logoFilter = isShop ? '' : 'brightness-0 invert'
   const logoSrc = isShop ? '/images/vurmz-logo-full-teal.svg' : '/images/vurmz-logo-full.svg'
 
-  const mobileBg = isShop ? 'bg-[#F0E6D3] border-[#243B39]/10' : 'bg-[#162524] border-white/10'
+  const mobileBg = isShop ? 'bg-[#F0E6D3] border-[#235158]/10' : 'bg-[#162524] border-white/10'
   const mobileText = isShop ? 'text-[#5C534A]' : 'text-gray-300'
-  const mobileHover = isShop ? 'hover:text-[#6BB8B2] hover:bg-[#243B39]/[0.04]' : 'hover:text-vurmz-cta hover:bg-white/[0.06]'
+  const mobileHover = isShop ? 'hover:text-[#6BB8B2] hover:bg-[#235158]/[0.04]' : 'hover:text-vurmz-cta hover:bg-white/[0.06]'
   const menuIcon = isShop ? 'text-[#5C534A]' : 'text-gray-300'
 
   return (
@@ -104,7 +104,7 @@ export default function SiteHeader({ variant = 'services' }: { variant?: 'shop' 
         <>
           <div className="fixed inset-0 z-40 bg-black/30 backdrop-blur-sm" onClick={() => setMobileMenuOpen(false)} />
           <div className={`fixed top-[92px] left-3 right-3 z-50 ${mobileBg} border rounded-2xl shadow-2xl p-5 max-h-[calc(100vh-108px)] overflow-y-auto`}>
-            <div className={`flex flex-col gap-1 mb-3 pb-3 border-b ${isShop ? 'border-[#243B39]/10' : 'border-white/10'}`}>
+            <div className={`flex flex-col gap-1 mb-3 pb-3 border-b ${isShop ? 'border-[#235158]/10' : 'border-white/10'}`}>
               <Link
                 href="/account"
                 className={`px-4 py-3 ${mobileText} font-medium ${mobileHover} rounded-xl transition-colors flex items-center gap-2`}

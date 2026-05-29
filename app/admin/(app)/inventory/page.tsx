@@ -75,12 +75,12 @@ export default function InventoryPage() {
       {loading ? (
         <div className="text-gray-500 text-sm">Loading…</div>
       ) : items.length === 0 && untracked.length === 0 ? (
-        <div className="bg-[#243B39] border border-white/5 rounded-xl p-10 text-center text-gray-400 text-sm">
+        <div className="bg-[#235158] border border-white/5 rounded-xl p-10 text-center text-gray-400 text-sm">
           No products yet. <Link href="/admin/products/new" className="text-[#6BB8B2] hover:underline">Add a product →</Link>
         </div>
       ) : (
         <>
-          <div className="bg-[#243B39] border border-white/5 rounded-xl overflow-hidden divide-y divide-white/5">
+          <div className="bg-[#235158] border border-white/5 rounded-xl overflow-hidden divide-y divide-white/5">
             {items.map(item => (
               <div key={item.id} className="flex items-center gap-3 px-4 py-3">
                 <div className="flex-1 min-w-0">
@@ -118,7 +118,7 @@ export default function InventoryPage() {
                     const v = parseInt(e.target.value, 10)
                     if (Number.isFinite(v) && v !== item.lowThreshold) setThreshold(item.id, v)
                   }}
-                  className="w-16 bg-[#1a2f2e] border border-white/5 rounded px-2 py-1 text-xs text-cream text-center outline-none focus:border-[#6BB8B2]"
+                  className="w-16 bg-[#1c474e] border border-white/5 rounded px-2 py-1 text-xs text-cream text-center outline-none focus:border-[#6BB8B2]"
                   title="Low-stock threshold"
                 />
               </div>
@@ -126,7 +126,7 @@ export default function InventoryPage() {
           </div>
 
           {untracked.length > 0 && (
-            <div className="mt-6 bg-[#243B39] border border-white/5 rounded-xl p-5">
+            <div className="mt-6 bg-[#235158] border border-white/5 rounded-xl p-5">
               <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-2 font-semibold">Not tracked yet</p>
               <p className="text-xs text-gray-500 mb-3">Click a product to start tracking its stock.</p>
               <div className="flex flex-wrap gap-2">
@@ -134,7 +134,7 @@ export default function InventoryPage() {
                   <button
                     key={p.id}
                     onClick={() => adjust(p.id, 0, 'initialize')}
-                    className="text-xs bg-[#1a2f2e] hover:bg-[#1a2f2e]/80 border border-white/5 hover:border-[#6BB8B2]/40 rounded-full px-3 py-1 text-cream"
+                    className="text-xs bg-[#1c474e] hover:bg-[#1c474e]/80 border border-white/5 hover:border-[#6BB8B2]/40 rounded-full px-3 py-1 text-cream"
                   >
                     + {p.name}
                   </button>

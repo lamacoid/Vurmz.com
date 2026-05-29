@@ -246,7 +246,7 @@ export async function POST(request: NextRequest) {
           html: `
             <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 500px; margin: 0 auto; padding: 32px 0;">
               <div style="margin-bottom: 24px;">
-                <strong style="font-size: 18px; color: #243B39;">VURMZ</strong>
+                <strong style="font-size: 18px; color: #235158;">VURMZ</strong>
                 <span style="color: #999; font-size: 14px; margin-left: 8px;">Laser Engraving</span>
               </div>
               <p style="font-size: 15px; color: #333; line-height: 1.6; margin-bottom: 16px;">

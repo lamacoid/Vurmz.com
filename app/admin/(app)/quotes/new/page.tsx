@@ -61,7 +61,7 @@ export default function NewQuotePage() {
       <h1 className="text-2xl font-bold text-cream mt-2 mb-6">New quote</h1>
 
       <div className="space-y-5">
-        <div className="bg-[#243B39] border border-white/5 rounded-xl p-5">
+        <div className="bg-[#235158] border border-white/5 rounded-xl p-5">
           <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-3 font-semibold">Customer</p>
           <select
             value={customerId ?? ''}
@@ -73,7 +73,7 @@ export default function NewQuotePage() {
                 if (c) setEmail(c.email)
               }
             }}
-            className="w-full bg-[#1a2f2e] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none mb-3"
+            className="w-full bg-[#1c474e] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none mb-3"
           >
             <option value="">— or enter a new email —</option>
             {customers.map(c => <option key={c.id} value={c.id}>{c.name || c.email}</option>)}
@@ -83,18 +83,18 @@ export default function NewQuotePage() {
             value={email}
             onChange={e => setEmail(e.target.value)}
             placeholder="email@example.com"
-            className="w-full bg-[#1a2f2e] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6BB8B2]"
+            className="w-full bg-[#1c474e] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6BB8B2]"
           />
         </div>
 
-        <div className="bg-[#243B39] border border-white/5 rounded-xl p-5">
+        <div className="bg-[#235158] border border-white/5 rounded-xl p-5">
           <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-3 font-semibold">Line items</p>
           <div className="space-y-2">
             {lines.map((line, i) => (
               <div key={i} className="grid grid-cols-[1fr_70px_100px_32px] gap-2">
-                <input value={line.description} onChange={e => updateLine(i, { description: e.target.value })} placeholder="Description" className="bg-[#1a2f2e] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6BB8B2]" />
-                <input type="number" value={line.qty} min={1} onChange={e => updateLine(i, { qty: parseInt(e.target.value, 10) || 1 })} className="bg-[#1a2f2e] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6BB8B2]" />
-                <div className="flex items-center bg-[#1a2f2e] border border-white/5 rounded-md focus-within:border-[#6BB8B2]">
+                <input value={line.description} onChange={e => updateLine(i, { description: e.target.value })} placeholder="Description" className="bg-[#1c474e] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6BB8B2]" />
+                <input type="number" value={line.qty} min={1} onChange={e => updateLine(i, { qty: parseInt(e.target.value, 10) || 1 })} className="bg-[#1c474e] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6BB8B2]" />
+                <div className="flex items-center bg-[#1c474e] border border-white/5 rounded-md focus-within:border-[#6BB8B2]">
                   <span className="pl-2 text-gray-500 text-sm">$</span>
                   <input value={line.price} onChange={e => updateLine(i, { price: e.target.value })} className="flex-1 bg-transparent px-2 py-2 text-sm text-cream outline-none" />
                 </div>
@@ -109,14 +109,14 @@ export default function NewQuotePage() {
           </div>
         </div>
 
-        <div className="bg-[#243B39] border border-white/5 rounded-xl p-5">
+        <div className="bg-[#235158] border border-white/5 rounded-xl p-5">
           <div>
             <label className="text-[11px] uppercase tracking-wider text-gray-500 block mb-1 font-semibold">Valid until (optional)</label>
-            <input type="date" value={expiresAt} onChange={e => setExpiresAt(e.target.value)} className="w-full bg-[#1a2f2e] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6BB8B2]" />
+            <input type="date" value={expiresAt} onChange={e => setExpiresAt(e.target.value)} className="w-full bg-[#1c474e] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6BB8B2]" />
           </div>
           <div className="mt-3">
             <label className="text-[11px] uppercase tracking-wider text-gray-500 block mb-1 font-semibold">Notes</label>
-            <textarea value={notes} onChange={e => setNotes(e.target.value)} rows={3} className="w-full bg-[#1a2f2e] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6BB8B2]" />
+            <textarea value={notes} onChange={e => setNotes(e.target.value)} rows={3} className="w-full bg-[#1c474e] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6BB8B2]" />
           </div>
         </div>
 

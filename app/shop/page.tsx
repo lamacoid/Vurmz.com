@@ -11,6 +11,17 @@ import TestimonialCarousel from '@/components/TestimonialCarousel'
 import ItemScroller from '@/components/ItemScroller'
 import CategoryCard from '@/components/CategoryCard'
 import { SHOP_CATEGORIES } from '@/lib/categories'
+import { BASIC } from '@/lib/pricing'
+
+// Pack-based categories (coasters, keychains) are business-only — hide from consumer shop.
+const CONSUMER_CATEGORIES = SHOP_CATEGORIES.filter(cat => {
+  if (cat.pricingType === 'signature') return true
+  if (cat.pricingKey && cat.pricingKey in BASIC) {
+    const data = BASIC[cat.pricingKey]
+    return !('materials' in data)
+  }
+  return true
+})
 
 const fadeUp = {
   initial: { opacity: 0, y: 20 },
@@ -46,7 +57,7 @@ export default function ShopHome() {
             <motion.h1
               variants={fadeUp}
               transition={{ duration: 0.6 }}
-              className="text-4xl sm:text-6xl font-bold text-[#243B39] tracking-tight leading-[0.95] mb-6"
+              className="text-4xl sm:text-6xl font-bold text-[#235158] tracking-tight leading-[0.95] mb-6"
             >
               Laser engraving<br />
               <span className="text-[#6BB8B2]">in {siteInfo.city}.</span>
@@ -103,9 +114,9 @@ export default function ShopHome() {
       {/* Categories */}
       <section className="pb-16 sm:pb-20">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold text-[#243B39] text-center mb-10">Shop by category</h2>
+          <h2 className="text-2xl font-bold text-[#235158] text-center mb-10">Shop by category</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {SHOP_CATEGORIES.map((cat) => (
+            {CONSUMER_CATEGORIES.map((cat) => (
               <CategoryCard key={cat.slug} category={cat} />
             ))}
           </div>
@@ -115,27 +126,27 @@ export default function ShopHome() {
       {/* How it works */}
       <section className="pb-16 sm:pb-20">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold text-[#243B39] text-center mb-10">How it works</h2>
+          <h2 className="text-2xl font-bold text-[#235158] text-center mb-10">How it works</h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
             <div>
               <div className="w-10 h-10 rounded-full bg-[#6BB8B2]/10 flex items-center justify-center mb-3 mx-auto">
                 <span className="text-[#6BB8B2] font-bold">1</span>
               </div>
-              <h3 className="font-semibold text-[#243B39] mb-1">Text me</h3>
+              <h3 className="font-semibold text-[#235158] mb-1">Text me</h3>
               <p className="text-[#6B6259] text-sm leading-relaxed">Send a photo of what you want engraved. I&apos;ll get back to you with a quote.</p>
             </div>
             <div>
               <div className="w-10 h-10 rounded-full bg-[#6BB8B2]/10 flex items-center justify-center mb-3 mx-auto">
                 <span className="text-[#6BB8B2] font-bold">2</span>
               </div>
-              <h3 className="font-semibold text-[#243B39] mb-1">I engrave it</h3>
+              <h3 className="font-semibold text-[#235158] mb-1">I engrave it</h3>
               <p className="text-[#6B6259] text-sm leading-relaxed">One person handles your order start to finish. No outsourcing.</p>
             </div>
             <div>
               <div className="w-10 h-10 rounded-full bg-[#6BB8B2]/10 flex items-center justify-center mb-3 mx-auto">
                 <span className="text-[#6BB8B2] font-bold">3</span>
               </div>
-              <h3 className="font-semibold text-[#243B39] mb-1">Hand-delivered</h3>
+              <h3 className="font-semibold text-[#235158] mb-1">Hand-delivered</h3>
               <p className="text-[#6B6259] text-sm leading-relaxed">I bring it to your door across the South Denver metro.</p>
             </div>
           </div>
@@ -145,18 +156,18 @@ export default function ShopHome() {
       {/* Three options */}
       <section className="pb-16 sm:pb-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold text-[#243B39] text-center mb-10">Three ways to work with me</h2>
+          <h2 className="text-2xl font-bold text-[#235158] text-center mb-10">Three ways to work with me</h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-            <div className="bg-white/50 border border-[#243B39]/8 rounded-sm p-5">
-              <h3 className="font-bold text-[#243B39] mb-2">Bring your own</h3>
+            <div className="bg-white/50 border border-[#235158]/8 rounded-sm p-5">
+              <h3 className="font-bold text-[#235158] mb-2">Bring your own</h3>
               <p className="text-[#6B6259] text-sm leading-relaxed">Have a knife, tumbler, laptop, or anything else? Bring it. I engrave it and hand it back.</p>
             </div>
-            <div className="bg-white/50 border border-[#243B39]/8 rounded-sm p-5">
-              <h3 className="font-bold text-[#243B39] mb-2">I source it</h3>
+            <div className="bg-white/50 border border-[#235158]/8 rounded-sm p-5">
+              <h3 className="font-bold text-[#235158] mb-2">I source it</h3>
               <p className="text-[#6B6259] text-sm leading-relaxed">Tell me what you want. Cutting boards, tumblers, gifts — I find it, engrave it, and deliver it.</p>
             </div>
-            <div className="bg-white/50 border border-[#243B39]/8 rounded-sm p-5">
-              <h3 className="font-bold text-[#243B39] mb-2">Shop my stock</h3>
+            <div className="bg-white/50 border border-[#235158]/8 rounded-sm p-5">
+              <h3 className="font-bold text-[#235158] mb-2">Shop my stock</h3>
               <p className="text-[#6B6259] text-sm leading-relaxed">I keep pens, metal cards, tags, keychains, and other basics on hand — ready to engrave right away.</p>
             </div>
           </div>
@@ -168,7 +179,7 @@ export default function ShopHome() {
                 'Coasters', 'Keychains', 'Flasks', 'Wine Glasses', 'Pet Bowls',
                 'Wallets', 'Pens', 'Awards', 'Signs', 'Your Own Item',
               ].map((item) => (
-                <span key={item} className="px-3 py-1.5 bg-[#243B39]/[0.05] border border-[#243B39]/8 rounded-full text-sm text-[#243B39]">
+                <span key={item} className="px-3 py-1.5 bg-[#235158]/[0.05] border border-[#235158]/8 rounded-full text-sm text-[#235158]">
                   {item}
                 </span>
               ))}
@@ -187,7 +198,7 @@ export default function ShopHome() {
       {/* Final CTA */}
       <section className="pb-16 sm:pb-20">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold text-[#243B39] mb-4">
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#235158] mb-4">
             Ready?
           </h2>
           <p className="text-[#6B6259] text-base leading-relaxed mb-8">

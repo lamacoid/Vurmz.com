@@ -46,7 +46,7 @@ function Card({ order }: { order: Order }) {
       style={style}
       {...attributes}
       {...listeners}
-      className="bg-[#1a2f2e] rounded-md border border-white/5 px-3 py-2.5 hover:border-[#6BB8B2]/30 cursor-grab active:cursor-grabbing"
+      className="bg-[#1c474e] rounded-md border border-white/5 px-3 py-2.5 hover:border-[#6BB8B2]/30 cursor-grab active:cursor-grabbing"
     >
       <div className="flex items-center justify-between mb-1">
         <Link href={`/admin/orders/${order.id}`} className="text-xs font-mono text-cream hover:text-[#6BB8B2]">{order.number}</Link>
@@ -63,7 +63,7 @@ function Column({ status, label, orders }: { status: OrderStatus; label: string;
   return (
     <div
       ref={setNodeRef}
-      className={`bg-[#243B39]/60 border rounded-lg p-3 min-h-[400px] transition-colors ${isOver ? 'border-[#6BB8B2]' : 'border-white/5'}`}
+      className={`bg-[#235158]/60 border rounded-lg p-3 min-h-[400px] transition-colors ${isOver ? 'border-[#6BB8B2]' : 'border-white/5'}`}
     >
       <div className="flex items-center justify-between mb-3 px-1">
         <p className="text-xs font-semibold text-cream uppercase tracking-wider">{label}</p>
@@ -117,7 +117,7 @@ export default function OrdersPage() {
       {loading ? (
         <div className="text-gray-500 text-sm">Loading…</div>
       ) : orders.length === 0 ? (
-        <div className="bg-[#243B39] border border-white/5 rounded-xl p-10 text-center text-gray-400 text-sm">
+        <div className="bg-[#235158] border border-white/5 rounded-xl p-10 text-center text-gray-400 text-sm">
           No orders yet. Your first order will appear here.
         </div>
       ) : (

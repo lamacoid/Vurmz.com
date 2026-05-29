@@ -18,7 +18,7 @@ export default function ComingSoon({
         <h1 className="text-2xl font-bold text-cream">{title}</h1>
       </div>
 
-      <div className="bg-[#243B39] border border-white/5 rounded-xl p-8">
+      <div className="bg-[#235158] border border-white/5 rounded-xl p-8">
         <div className="flex items-start gap-4">
           <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-[#6BB8B2]/10 border border-[#6BB8B2]/20 flex items-center justify-center text-[#6BB8B2] font-mono text-sm">
             C{chunk}

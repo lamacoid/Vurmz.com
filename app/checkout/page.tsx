@@ -153,7 +153,7 @@ export default function CheckoutPage() {
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       <div className="mb-8">
-        <Link href="/shop" className="text-sm text-[#6B6259] hover:text-[#243B39]">← Continue shopping</Link>
+        <Link href="/shop" className="text-sm text-[#6B6259] hover:text-[#235158]">← Continue shopping</Link>
         <h1 className="text-3xl font-bold mt-2">Checkout</h1>
       </div>
 
@@ -175,7 +175,7 @@ export default function CheckoutPage() {
                     className={`flex items-start gap-3 rounded-sm border p-3 cursor-pointer ${
                       chosenMethod === opt.method
                         ? 'border-[#B16558] bg-[#B16558]/5'
-                        : 'border-[#243B39]/12 bg-white/60 hover:border-[#243B39]/25'
+                        : 'border-[#235158]/12 bg-white/60 hover:border-[#235158]/25'
                     }`}
                   >
                     <input
@@ -207,7 +207,7 @@ export default function CheckoutPage() {
                               className={`text-xs px-3 py-1.5 rounded-sm border transition-colors ${
                                 handDeliveryWindow === w.key
                                   ? 'border-[#B16558] bg-[#B16558] text-white'
-                                  : 'border-[#243B39]/15 bg-white/70 text-[#243B39] hover:border-[#B16558]/50'
+                                  : 'border-[#235158]/15 bg-white/70 text-[#235158] hover:border-[#B16558]/50'
                               }`}
                             >
                               {w.label}
@@ -224,7 +224,7 @@ export default function CheckoutPage() {
                           onChange={e => setHandDeliveryNote(e.target.value.slice(0, 500))}
                           rows={2}
                           placeholder="e.g. Gate code 1234, leave with front desk if I'm not home."
-                          className="w-full bg-white/70 border border-[#243B39]/12 rounded-sm px-3 py-2 text-xs outline-none focus:border-[#B16558]"
+                          className="w-full bg-white/70 border border-[#235158]/12 rounded-sm px-3 py-2 text-xs outline-none focus:border-[#B16558]"
                         />
                       </div>
                     </div>
@@ -256,7 +256,7 @@ export default function CheckoutPage() {
               onChange={e => setNotes(e.target.value)}
               rows={3}
               placeholder="Engraving text, color preferences, or anything I should know…"
-              className="w-full bg-white/70 border border-[#243B39]/12 rounded-sm px-3 py-2 text-sm outline-none focus:border-[#B16558]"
+              className="w-full bg-white/70 border border-[#235158]/12 rounded-sm px-3 py-2 text-sm outline-none focus:border-[#B16558]"
             />
           </Section>
 
@@ -291,12 +291,12 @@ export default function CheckoutPage() {
         </div>
 
         {/* Summary */}
-        <aside className="lg:sticky lg:top-6 lg:self-start bg-white/70 border border-[#243B39]/12 rounded-sm p-5">
+        <aside className="lg:sticky lg:top-6 lg:self-start bg-white/70 border border-[#235158]/12 rounded-sm p-5">
           <p className="text-[11px] uppercase tracking-wider text-[#7A7068] mb-3 font-semibold">Summary</p>
           <div className="space-y-3">
             {items.map(item => (
               <div key={item.productId} className="flex gap-3 items-start">
-                <div className="w-14 h-14 bg-white border border-[#243B39]/10 rounded-sm overflow-hidden flex-shrink-0">
+                <div className="w-14 h-14 bg-white border border-[#235158]/10 rounded-sm overflow-hidden flex-shrink-0">
                   {item.heroUrl ? <img src={item.heroUrl} alt="" className="w-full h-full object-cover" /> : null}
                 </div>
                 <div className="flex-1 min-w-0">
@@ -307,7 +307,7 @@ export default function CheckoutPage() {
               </div>
             ))}
           </div>
-          <div className="border-t border-[#243B39]/10 mt-4 pt-3 space-y-1 text-sm">
+          <div className="border-t border-[#235158]/10 mt-4 pt-3 space-y-1 text-sm">
             <div className="flex justify-between"><span className="text-[#6B6259]">Subtotal</span><span>{money(subtotalCents)}</span></div>
             <div className="flex justify-between"><span className="text-[#6B6259]">{chosen?.label ?? 'Delivery'}</span><span>{chosen ? money(chosen.priceCents) : '—'}</span></div>
             <div className="flex justify-between text-base font-bold pt-2"><span>Total</span><span>{money(totalCents)}</span></div>
@@ -352,7 +352,7 @@ function Input({
         value={value}
         placeholder={placeholder}
         onChange={e => onChange(e.target.value)}
-        className="w-full bg-white/70 border border-[#243B39]/12 rounded-sm px-3 py-2 text-sm outline-none focus:border-[#B16558]"
+        className="w-full bg-white/70 border border-[#235158]/12 rounded-sm px-3 py-2 text-sm outline-none focus:border-[#B16558]"
       />
     </label>
   )

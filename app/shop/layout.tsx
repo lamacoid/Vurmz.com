@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function ShopLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="bg-[#F0E6D3] text-[#243B39] min-h-screen" data-theme="shop">
+    <div className="bg-[#F0E6D3] text-[#235158] min-h-screen" data-theme="shop">
       <SiteHeader variant="shop" />
       <main className="min-h-screen">
         {children}

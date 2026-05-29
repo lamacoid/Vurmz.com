@@ -35,7 +35,7 @@ export default function AccountOrdersPage() {
       {loading ? (
         <p className="text-gray-500 text-sm">Loading…</p>
       ) : orders.length === 0 ? (
-        <div className="bg-[#243B39] border border-white/5 rounded-xl p-10 text-center text-gray-400 text-sm">
+        <div className="bg-[#235158] border border-white/5 rounded-xl p-10 text-center text-gray-400 text-sm">
           No orders yet. <Link href="/shop" className="text-[#6BB8B2] hover:underline">Shop now →</Link>
         </div>
       ) : (
@@ -44,7 +44,7 @@ export default function AccountOrdersPage() {
             <Link
               key={o.id}
               href={`/account/orders/${o.id}`}
-              className="block bg-[#243B39] border border-white/5 hover:border-[#6BB8B2]/30 rounded-xl p-4 transition-colors"
+              className="block bg-[#235158] border border-white/5 hover:border-[#6BB8B2]/30 rounded-xl p-4 transition-colors"
             >
               <div className="flex items-center justify-between mb-1.5">
                 <p className="text-sm font-mono text-cream">{o.number}</p>

@@ -7,7 +7,7 @@ import { Icon } from './icons'
 export default function MobileTabBar() {
   const pathname = usePathname()
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#1a2f2e]/95 backdrop-blur border-t border-white/5">
+    <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#1c474e]/95 backdrop-blur border-t border-white/5">
       <div className="flex justify-around items-center h-16 max-w-lg mx-auto">
         {mobileTabs.map(tab => {
           const active = tab.href === '/admin' ? pathname === '/admin' || pathname === '/admin/' : pathname.startsWith(tab.href)

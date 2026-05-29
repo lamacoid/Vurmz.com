@@ -51,7 +51,7 @@ export default function ProfilePage() {
       <Link href="/account" className="text-xs text-gray-500 hover:text-cream mb-4 inline-block">← Back</Link>
       <h1 className="text-2xl font-bold text-cream mb-6">Profile</h1>
 
-      <div className="bg-[#243B39] border border-white/5 rounded-xl p-5 space-y-4 mb-5">
+      <div className="bg-[#235158] border border-white/5 rounded-xl p-5 space-y-4 mb-5">
         <div>
           <label className="text-[11px] uppercase tracking-wider text-gray-500 block mb-1">Email</label>
           <p className="text-sm text-cream">{customer.email}</p>
@@ -72,7 +72,7 @@ export default function ProfilePage() {
 
       <ReferenceImages />
 
-      <div className="bg-[#243B39] border border-white/5 rounded-xl p-5">
+      <div className="bg-[#235158] border border-white/5 rounded-xl p-5">
         <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-3 font-semibold">Saved payment methods</p>
         {methods.length === 0 ? (
           <p className="text-xs text-gray-500">
@@ -81,7 +81,7 @@ export default function ProfilePage() {
         ) : (
           <div className="space-y-2">
             {methods.map(m => (
-              <div key={m.id} className="flex items-center justify-between bg-[#1a2f2e] rounded-md px-3 py-2 border border-white/5">
+              <div key={m.id} className="flex items-center justify-between bg-[#1c474e] rounded-md px-3 py-2 border border-white/5">
                 <p className="text-sm text-cream">
                   {m.brand ?? 'Card'} •••• {m.last4}
                   {m.expMonth && m.expYear && <span className="text-gray-500 ml-2 text-xs">exp {m.expMonth}/{String(m.expYear).slice(-2)}</span>}
@@ -103,7 +103,7 @@ function Field({ label, value, onChange }: { label: string; value: string; onCha
       <input
         value={value}
         onChange={e => onChange(e.target.value)}
-        className="w-full bg-[#1a2f2e] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6BB8B2]"
+        className="w-full bg-[#1c474e] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6BB8B2]"
       />
     </div>
   )
@@ -217,7 +217,7 @@ function Addresses() {
   }
 
   return (
-    <div className="bg-[#243B39] border border-white/5 rounded-xl p-5 mb-5">
+    <div className="bg-[#235158] border border-white/5 rounded-xl p-5 mb-5">
       <div className="flex items-center justify-between mb-3">
         <p className="text-[11px] uppercase tracking-wider text-gray-500 font-semibold">Shipping addresses</p>
         {!adding && !editingId && (
@@ -247,7 +247,7 @@ function Addresses() {
                   saveLabel="Save"
                 />
               ) : (
-                <div key={a.id} className="bg-[#1a2f2e] rounded-md px-3 py-3 border border-white/5">
+                <div key={a.id} className="bg-[#1c474e] rounded-md px-3 py-3 border border-white/5">
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0">
                       <p className="text-sm text-cream font-semibold">
@@ -305,7 +305,7 @@ function AddressForm({
 }) {
   const upd = (patch: Partial<AddressDraft>) => setDraft({ ...draft, ...patch })
   return (
-    <div className="bg-[#1a2f2e] rounded-md p-3 border border-[#6BB8B2]/20 space-y-3">
+    <div className="bg-[#1c474e] rounded-md p-3 border border-[#6BB8B2]/20 space-y-3">
       <FormField label="Label" value={draft.label} onChange={v => upd({ label: v })} />
       <FormField label="Street address" value={draft.line1} onChange={v => upd({ line1: v })} />
       <FormField label="Apt / Suite (optional)" value={draft.line2 ?? ''} onChange={v => upd({ line2: v })} />
@@ -338,7 +338,7 @@ function FormField({ label, value, onChange }: { label: string; value: string; o
       <input
         value={value}
         onChange={e => onChange(e.target.value)}
-        className="w-full bg-[#243B39] border border-white/5 rounded-md px-2.5 py-1.5 text-sm text-cream outline-none focus:border-[#6BB8B2]"
+        className="w-full bg-[#235158] border border-white/5 rounded-md px-2.5 py-1.5 text-sm text-cream outline-none focus:border-[#6BB8B2]"
       />
     </div>
   )
@@ -392,7 +392,7 @@ function ReferenceImages() {
   const atMax = images.length >= MAX_REFS
 
   return (
-    <div className="bg-[#243B39] border border-white/5 rounded-xl p-5 mb-5">
+    <div className="bg-[#235158] border border-white/5 rounded-xl p-5 mb-5">
       <div className="flex items-start justify-between mb-1">
         <p className="text-[11px] uppercase tracking-wider text-gray-500 font-semibold">Reference images</p>
         <span className="text-[10px] text-gray-500 font-mono">{images.length} / {MAX_REFS}</span>
@@ -408,7 +408,7 @@ function ReferenceImages() {
           {images.length > 0 && (
             <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 mb-3">
               {images.map(img => (
-                <div key={img.id} className="relative group aspect-square bg-[#1a2f2e] border border-white/5 rounded-md overflow-hidden">
+                <div key={img.id} className="relative group aspect-square bg-[#1c474e] border border-white/5 rounded-md overflow-hidden">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={img.url} alt={img.filename} className="w-full h-full object-cover" />
                   <button

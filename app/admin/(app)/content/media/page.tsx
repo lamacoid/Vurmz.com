@@ -126,7 +126,7 @@ export default function MediaLibraryPage() {
             <button
               key={item.id}
               onClick={() => setSelected(item)}
-              className="group relative aspect-square bg-[#243B39] border border-white/5 hover:border-[#6BB8B2]/40 rounded-lg overflow-hidden transition-colors"
+              className="group relative aspect-square bg-[#235158] border border-white/5 hover:border-[#6BB8B2]/40 rounded-lg overflow-hidden transition-colors"
             >
               {item.mimeType.startsWith('image/') ? (
                 <img src={item.url} alt={item.altText} className="w-full h-full object-cover" />
@@ -145,7 +145,7 @@ export default function MediaLibraryPage() {
 
       {selected && (
         <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4" onClick={() => setSelected(null)}>
-          <div onClick={e => e.stopPropagation()} className="bg-[#1a2f2e] border border-white/10 rounded-xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
+          <div onClick={e => e.stopPropagation()} className="bg-[#1c474e] border border-white/10 rounded-xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between p-4 border-b border-white/5">
               <p className="text-sm font-semibold text-cream truncate pr-4">{selected.filename}</p>
               <button onClick={() => setSelected(null)} className="p-1 text-gray-400 hover:text-cream">
@@ -153,7 +153,7 @@ export default function MediaLibraryPage() {
               </button>
             </div>
             <div className="p-4 grid md:grid-cols-2 gap-5">
-              <div className="bg-[#243B39] rounded-lg overflow-hidden">
+              <div className="bg-[#235158] rounded-lg overflow-hidden">
                 {selected.mimeType.startsWith('image/') ? (
                   <img src={selected.url} alt={selected.altText} className="w-full h-auto" />
                 ) : (
@@ -169,7 +169,7 @@ export default function MediaLibraryPage() {
                     defaultValue={selected.altText}
                     onBlur={e => updateAlt(selected.id, e.target.value)}
                     placeholder="Describe this image…"
-                    className="w-full bg-[#243B39] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6BB8B2]"
+                    className="w-full bg-[#235158] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6BB8B2]"
                   />
                 </div>
                 <dl className="text-xs space-y-1 text-gray-400">
@@ -180,7 +180,7 @@ export default function MediaLibraryPage() {
                 <div className="flex gap-2 pt-2">
                   <button
                     onClick={() => { navigator.clipboard.writeText(window.location.origin + selected.url); }}
-                    className="flex-1 px-3 h-9 bg-[#243B39] hover:bg-[#2a4441] text-cream text-xs font-medium rounded-md border border-white/5"
+                    className="flex-1 px-3 h-9 bg-[#235158] hover:bg-[#2a4441] text-cream text-xs font-medium rounded-md border border-white/5"
                   >
                     Copy URL
                   </button>

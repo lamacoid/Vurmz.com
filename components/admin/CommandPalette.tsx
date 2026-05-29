@@ -28,7 +28,7 @@ export default function CommandPalette() {
           className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm flex items-start justify-center pt-[15vh] px-4"
           onClick={() => setOpen(false)}
         >
-          <div onClick={e => e.stopPropagation()} className="w-full max-w-xl bg-[#1a2f2e] border border-white/10 rounded-xl shadow-2xl overflow-hidden">
+          <div onClick={e => e.stopPropagation()} className="w-full max-w-xl bg-[#1c474e] border border-white/10 rounded-xl shadow-2xl overflow-hidden">
             <Command label="Global command menu" shouldFilter>
               <div className="flex items-center gap-2 px-4 py-3 border-b border-white/5">
                 <Icon name="search" className="w-4 h-4 text-gray-400" />

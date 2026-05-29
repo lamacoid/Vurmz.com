@@ -53,7 +53,7 @@ export default function AdminInvoicesPage() {
       {loading ? (
         <div className="text-gray-500 text-sm">Loading…</div>
       ) : invoices.length === 0 ? (
-        <div className="bg-[#243B39] border border-white/5 rounded-xl p-10 text-center">
+        <div className="bg-[#235158] border border-white/5 rounded-xl p-10 text-center">
           <Icon name="file-invoice" className="w-8 h-8 text-gray-600 mx-auto mb-3" />
           <p className="text-cream text-sm font-semibold mb-1">No invoices yet</p>
           <p className="text-gray-500 text-xs mb-5">Create your first invoice to bill a customer.</p>
@@ -63,7 +63,7 @@ export default function AdminInvoicesPage() {
           </Link>
         </div>
       ) : (
-        <div className="bg-[#243B39] border border-white/5 rounded-xl overflow-hidden">
+        <div className="bg-[#235158] border border-white/5 rounded-xl overflow-hidden">
           <div className="divide-y divide-white/5">
             {invoices.map(inv => {
               const owed = inv.totalCents - inv.amountPaidCents

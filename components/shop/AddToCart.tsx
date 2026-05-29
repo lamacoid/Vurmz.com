@@ -48,10 +48,10 @@ export default function AddToCart(props: {
 
   return (
     <div className="flex flex-col sm:flex-row gap-3">
-      <div className="inline-flex items-center bg-white/60 border border-[#243B39]/12 rounded-sm">
+      <div className="inline-flex items-center bg-white/60 border border-[#235158]/12 rounded-sm">
         <button
           onClick={() => setQty(q => Math.max(1, q - 1))}
-          className="px-3 py-2.5 text-[#6B6259] hover:text-[#243B39]"
+          className="px-3 py-2.5 text-[#6B6259] hover:text-[#235158]"
           aria-label="Decrease quantity"
         >
           −
@@ -59,7 +59,7 @@ export default function AddToCart(props: {
         <span className="min-w-[2.5rem] text-center text-sm font-semibold">{qty}</span>
         <button
           onClick={() => setQty(q => q + 1)}
-          className="px-3 py-2.5 text-[#6B6259] hover:text-[#243B39]"
+          className="px-3 py-2.5 text-[#6B6259] hover:text-[#235158]"
           aria-label="Increase quantity"
         >
           +

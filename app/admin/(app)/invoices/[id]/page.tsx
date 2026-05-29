@@ -70,7 +70,7 @@ export default function AdminInvoiceDetail() {
           <select
             value={invoice.status}
             onChange={e => setStatus(e.target.value)}
-            className="bg-[#243B39] border border-white/10 rounded-md px-3 py-2 text-xs text-cream outline-none focus:border-[#6BB8B2]"
+            className="bg-[#235158] border border-white/10 rounded-md px-3 py-2 text-xs text-cream outline-none focus:border-[#6BB8B2]"
           >
             {['draft','sent','viewed','paid','partially_paid','overdue','void','refunded'].map(s => <option key={s} value={s}>{s.replace('_', ' ')}</option>)}
           </select>
@@ -84,7 +84,7 @@ export default function AdminInvoiceDetail() {
         <Pill label="Due" value={invoice.dueDate ? new Date(invoice.dueDate).toLocaleDateString() : 'On receipt'} />
       </div>
 
-      <div className="bg-[#243B39] border border-white/5 rounded-xl p-5 mb-5">
+      <div className="bg-[#235158] border border-white/5 rounded-xl p-5 mb-5">
         <div className="divide-y divide-white/5">
           {items.map(it => (
             <div key={it.id} className="py-2 flex justify-between">
@@ -106,7 +106,7 @@ export default function AdminInvoiceDetail() {
       </div>
 
       {invoice.notes && (
-        <div className="bg-[#243B39] border border-white/5 rounded-xl p-4">
+        <div className="bg-[#235158] border border-white/5 rounded-xl p-4">
           <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-1">Notes</p>
           <p className="text-sm text-cream whitespace-pre-wrap">{invoice.notes}</p>
         </div>
@@ -117,7 +117,7 @@ export default function AdminInvoiceDetail() {
 
 function Pill({ label, value }: { label: string; value: string }) {
   return (
-    <div className="bg-[#243B39] border border-white/5 rounded-lg px-3 py-2">
+    <div className="bg-[#235158] border border-white/5 rounded-lg px-3 py-2">
       <p className="text-[10px] uppercase tracking-wider text-gray-500">{label}</p>
       <p className="text-sm text-cream truncate">{value}</p>
     </div>

@@ -13,14 +13,14 @@ interface TestimonialCarouselProps {
 
 const themeStyles = {
   shop: {
-    card: 'bg-white/60 border border-[#243B39]/8',
+    card: 'bg-white/60 border border-[#235158]/8',
     quote: 'text-[#B16558]',
-    name: 'text-[#243B39]',
+    name: 'text-[#235158]',
     role: 'text-[#6B6259]',
     dot: 'bg-[#B16558]',
-    dotInactive: 'bg-[#243B39]/15',
+    dotInactive: 'bg-[#235158]/15',
     arrow: 'text-[#6B6259] hover:text-[#B16558]',
-    heading: 'text-[#243B39]',
+    heading: 'text-[#235158]',
     eyebrow: 'text-[#B16558]',
   },
   services: {
@@ -68,7 +68,7 @@ export default function TestimonialCarousel({ testimonials, theme, title = 'What
             className={`${styles.card} rounded-sm p-8 sm:p-10`}
           >
             <span className={`text-4xl font-serif leading-none ${styles.quote}`}>&ldquo;</span>
-            <blockquote className={`text-base sm:text-lg leading-relaxed mt-2 mb-6 ${theme === 'shop' ? 'text-[#243B39]' : 'text-gray-300'}`}>
+            <blockquote className={`text-base sm:text-lg leading-relaxed mt-2 mb-6 ${theme === 'shop' ? 'text-[#235158]' : 'text-gray-300'}`}>
               {t.quote}
             </blockquote>
             <div>

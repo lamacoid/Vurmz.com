@@ -13,13 +13,13 @@ function Inner() {
           <path d="M20 6 9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </div>
-      <h1 className="text-3xl font-bold text-[#243B39] mb-2">Order placed</h1>
-      {number && <p className="text-sm text-[#6B6259] mb-2">Order <span className="font-mono text-[#243B39]">{number}</span></p>}
+      <h1 className="text-3xl font-bold text-[#235158] mb-2">Order placed</h1>
+      {number && <p className="text-sm text-[#6B6259] mb-2">Order <span className="font-mono text-[#235158]">{number}</span></p>}
       <p className="text-[#6B6259] mb-8 max-w-md mx-auto">
         You&rsquo;ll get a confirmation email in a minute. I&rsquo;ll reach out personally with next steps.
       </p>
       <div className="flex gap-3 justify-center">
-        <Link href="/shop" className="px-5 h-11 inline-flex items-center bg-white/60 border border-[#243B39]/12 text-[#243B39] text-sm font-semibold rounded-sm">
+        <Link href="/shop" className="px-5 h-11 inline-flex items-center bg-white/60 border border-[#235158]/12 text-[#235158] text-sm font-semibold rounded-sm">
           Keep shopping
         </Link>
         <Link href="/account" className="px-5 h-11 inline-flex items-center bg-[#B16558] hover:bg-[#954E44] text-white text-sm font-semibold rounded-sm">

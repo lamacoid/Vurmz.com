@@ -28,7 +28,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
 
   if (authed === null) {
     return (
-      <div className="min-h-screen bg-[#1a2f2e] flex items-center justify-center">
+      <div className="min-h-screen bg-[#1c474e] flex items-center justify-center">
         <div className="text-gray-500 text-sm">Loading…</div>
       </div>
     )
@@ -42,7 +42,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
   }
 
   return (
-    <div className="min-h-screen bg-[#1a2f2e] text-gray-100">
+    <div className="min-h-screen bg-[#1c474e] text-gray-100">
       {/* Desktop sidebar */}
       <div className="hidden md:block fixed inset-y-0 left-0 w-60 z-30">
         <Sidebar />

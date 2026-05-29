@@ -7,8 +7,8 @@ export default function manifest(): MetadataRoute.Manifest {
     description: 'Laser engraving for small business — Centennial, CO',
     start_url: '/',
     display: 'standalone',
-    background_color: '#1a2f2e',
-    theme_color: '#1a2f2e',
+    background_color: '#1c474e',
+    theme_color: '#1c474e',
     orientation: 'portrait-primary',
     icons: [
       {
