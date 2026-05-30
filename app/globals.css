@@ -67,6 +67,27 @@ body.is-admin > main {
   --shop-border: rgba(36, 59, 57, 0.12);
   --shop-border-strong: rgba(36, 59, 57, 0.2);
 
+  /* ── Shop · Aubusson Tapestry Palette ──
+     Floral tapestry / 19thC botanical-plate aesthetic. Anchored on
+     cream backgrounds, faded burgundy + sage + ochre. */
+  --aub-cream:        #F0E6D3;   /* page (matches existing shop-bg) */
+  --aub-cream-warm:   #F4ECDA;   /* lighter mat / inset panel */
+  --aub-cream-deep:   #E6D8BB;   /* hairline rules, hover wash */
+  --aub-beige:        #DBCBA6;   /* calm page background behind the floral frame */
+  --aub-burgundy:     #7A2E2A;   /* primary display ink */
+  --aub-burgundy-dk:  #5C1F1C;   /* hover */
+  --aub-terracotta:   #B16558;   /* CTA (already exists as shop-accent) */
+  --aub-sage:         #7DAA8C;   /* botanical green */
+  --aub-sage-dk:      #547761;
+  --aub-ochre:        #B58E3C;   /* gold leaf accent */
+  --aub-ochre-dk:     #8D6B23;
+  --aub-rose:         #C49494;   /* dusty rose, soft accent */
+  --aub-ink:          #2A1A14;   /* near-black, printer's ink */
+  --aub-ink-soft:     #4A3F36;   /* body text */
+  --aub-mute:         #8A7D70;   /* secondary text */
+  --aub-rule:         rgba(42, 26, 20, 0.18);
+  --aub-rule-strong:  rgba(42, 26, 20, 0.40);
+
   /* Glass effects */
   --glass-shine: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 50%);
   --glass-reflection: linear-gradient(180deg, rgba(60,185,178,0.1) 0%, transparent 30%);
@@ -455,6 +476,104 @@ main [class*="mx-auto"][class*="px-4"] {
   .border-shop { border-color: var(--shop-border); }
   .border-shop-strong { border-color: var(--shop-border-strong); }
   .shadow-shop-accent { box-shadow: 0 4px 20px rgba(177, 101, 88, 0.25); }
+
+  /* ── Aubusson utilities ── */
+  .bg-aub-cream      { background-color: var(--aub-cream); }
+  .bg-aub-cream-warm { background-color: var(--aub-cream-warm); }
+  .bg-aub-cream-deep { background-color: var(--aub-cream-deep); }
+  .bg-aub-beige      { background-color: var(--aub-beige); }
+  .bg-aub-burgundy   { background-color: var(--aub-burgundy); }
+  .bg-aub-terracotta { background-color: var(--aub-terracotta); }
+  .bg-aub-sage       { background-color: var(--aub-sage); }
+  .bg-aub-ochre      { background-color: var(--aub-ochre); }
+  .text-aub-cream      { color: var(--aub-cream); }
+  .text-aub-cream-warm { color: var(--aub-cream-warm); }
+  .text-aub-burgundy { color: var(--aub-burgundy); }
+  .text-aub-burgundy-dk { color: var(--aub-burgundy-dk); }
+  .text-aub-terracotta  { color: var(--aub-terracotta); }
+  .text-aub-sage     { color: var(--aub-sage); }
+  .text-aub-sage-dk  { color: var(--aub-sage-dk); }
+  .text-aub-ochre    { color: var(--aub-ochre); }
+  .text-aub-ink      { color: var(--aub-ink); }
+  .text-aub-ink-soft { color: var(--aub-ink-soft); }
+  .text-aub-mute     { color: var(--aub-mute); }
+  .text-aub-rose     { color: var(--aub-rose); }
+  .border-aub-rule   { border-color: var(--aub-rule); }
+  .border-aub-rule-strong { border-color: var(--aub-rule-strong); }
+  .border-aub-burgundy    { border-color: var(--aub-burgundy); }
+  .hover\:bg-aub-burgundy-dk:hover { background-color: var(--aub-burgundy-dk); }
+  .hover\:text-aub-burgundy-dk:hover { color: var(--aub-burgundy-dk); }
+  .ring-aub-ochre    { --tw-ring-color: var(--aub-ochre); }
+
+  /* Aubusson font stacks (uses self-hosted faces in app/fonts.css) */
+  .font-aub-display { font-family: 'Bestseller', 'BernhardModern', 'Bodoni', Georgia, serif; }
+  .font-aub-body    { font-family: 'Century-Schoolbook', 'Baskerville-Old-Face', Georgia, serif; }
+  .font-aub-script  { font-family: 'BernhardScript', 'Commercial-Script', 'BlackChancery', cursive; }
+  .font-aub-smallcaps { font-family: 'Copperplate-Gothic', 'Bestseller', Georgia, serif;
+                        letter-spacing: 0.18em; text-transform: uppercase; }
+
+  /* Aubusson surface: paper texture + warm cream gradient */
+  .surface-aub-paper {
+    background-color: var(--aub-cream);
+    background-image:
+      radial-gradient(ellipse at top, rgba(244,236,218,0.5) 0%, transparent 60%),
+      radial-gradient(ellipse at bottom right, rgba(230,216,187,0.4) 0%, transparent 50%);
+  }
+
+  /* ── Floral frame ──────────────────────────────────────────────
+     A thick Morris-pattern border ring around page content. The loud
+     floral lives ONLY in this band; everything else stays calm beige.
+     Outer element carries the tiled pattern + acts as the border via
+     padding; the inner element covers the center with solid beige. */
+  .floral-frame {
+    position: relative;
+    background-repeat: repeat;
+    background-size: 300px auto;
+    padding: clamp(14px, 2.4vw, 32px);
+    /* crisp outer keyline so the floral band has a hard structured edge */
+    box-shadow:
+      inset 0 0 0 2px var(--aub-burgundy),
+      0 18px 50px -24px rgba(42, 26, 20, 0.5);
+  }
+  .floral-frame-inner {
+    position: relative;
+    background-color: var(--aub-beige);
+    /* crisp inner keyline — the "mat" edge between floral and content */
+    box-shadow: inset 0 0 0 2px var(--aub-burgundy);
+    min-height: 40vh;
+  }
+
+  /* Hairline rule used between sections */
+  .rule-aub {
+    border: 0;
+    border-top: 1px solid var(--aub-rule);
+    margin: 0;
+  }
+  .rule-aub-double {
+    border: 0;
+    height: 6px;
+    border-top: 1px solid var(--aub-rule-strong);
+    border-bottom: 1px solid var(--aub-rule-strong);
+  }
+
+  /* Drop cap for intro paragraph */
+  .aub-dropcap::first-letter {
+    font-family: 'Bestseller', 'BernhardModern', Georgia, serif;
+    font-size: 4.5rem;
+    line-height: 0.85;
+    float: left;
+    padding: 0.25rem 0.75rem 0 0;
+    color: var(--aub-burgundy);
+  }
+
+  /* Plate label small caps */
+  .aub-label {
+    font-family: 'Copperplate-Gothic', Georgia, serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--aub-ink-soft);
+  }
 
   /* Glass gradient text */
   .text-glass-gradient {

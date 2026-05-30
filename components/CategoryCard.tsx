@@ -39,20 +39,20 @@ export default function CategoryCard({ category: cat, compact }: CategoryCardPro
     return (
       <Link
         href={`/shop/${cat.slug}`}
-        className="group block bg-white/60 border border-[#235158]/8 rounded-sm overflow-hidden hover:border-[#B16558]/20 hover:shadow-lg hover:shadow-[#B16558]/5 transition-all duration-300"
+        className="group block bg-aub-cream-warm border border-aub-rule overflow-hidden hover:border-aub-burgundy/40 transition-all duration-300"
       >
-        <div className="aspect-[16/9] bg-[#235158]/[0.04] relative overflow-hidden">
+        <div className="aspect-[16/9] bg-aub-cream-deep relative overflow-hidden">
           {cat.heroImage ? (
             <Image src={cat.heroImage} alt={cat.name} fill className="object-cover group-hover:scale-[1.03] transition-transform duration-500" sizes="(max-width: 640px) 100vw, 33vw" />
           ) : (
-            <div className="absolute inset-0 flex items-center justify-center bg-[#235158]/[0.06]">
-              <span className="text-[#7A7068] text-xs font-mono">Photo coming soon</span>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <span className="aub-label">Photo coming soon</span>
             </div>
           )}
         </div>
         <div className="p-4">
-          <h3 className="text-sm font-bold text-[#235158]">{cat.name}</h3>
-          <span className="text-[#B16558] font-bold text-xs">{price}</span>
+          <h3 className="font-aub-display text-aub-burgundy text-base">{cat.name}</h3>
+          <span className="font-aub-smallcaps text-[10px] text-aub-ochre">{price}</span>
         </div>
       </Link>
     )
@@ -64,35 +64,52 @@ export default function CategoryCard({ category: cat, compact }: CategoryCardPro
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.4 }}
-      className="group relative bg-white/60 border border-[#235158]/8 rounded-sm overflow-hidden hover:border-[#B16558]/20 hover:shadow-lg hover:shadow-[#B16558]/5 transition-all duration-300"
+      className="
+        group relative bg-aub-cream-warm
+        border border-aub-rule
+        ring-1 ring-aub-rule
+        overflow-hidden
+        shadow-[0_1px_0_rgba(42,26,20,0.05),0_8px_24px_-14px_rgba(42,26,20,0.18)]
+        hover:border-aub-burgundy/40 hover:shadow-[0_1px_0_rgba(42,26,20,0.05),0_12px_30px_-12px_rgba(122,46,42,0.22)]
+        transition-all duration-300
+      "
     >
       <Link href={`/shop/${cat.slug}`}>
-        <div className="aspect-[4/3] bg-[#235158]/[0.04] relative overflow-hidden">
-          {cat.heroImage ? (
-            <Image src={cat.heroImage} alt={cat.name} fill className="object-cover group-hover:scale-[1.03] transition-transform duration-500" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" />
-          ) : (
-            <div className="absolute inset-0 flex items-center justify-center bg-[#235158]/[0.06]">
-              <span className="text-[#7A7068] text-sm font-mono">Photo coming soon</span>
-            </div>
-          )}
+        <div className="relative aspect-[4/3] bg-aub-cream-deep overflow-hidden">
+          {/* image with inset mat effect */}
+          <div className="absolute inset-2 ring-1 ring-aub-rule overflow-hidden">
+            {cat.heroImage ? (
+              <Image src={cat.heroImage} alt={cat.name} fill className="object-cover group-hover:scale-[1.03] transition-transform duration-500" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" />
+            ) : (
+              <div className="absolute inset-0 flex items-center justify-center bg-aub-cream-deep">
+                <span className="aub-label">Photo coming soon</span>
+              </div>
+            )}
+          </div>
         </div>
       </Link>
 
-      <div className="p-5">
+      <div className="px-5 pt-4 pb-5">
         <Link href={`/shop/${cat.slug}`}>
-          <h3 className="text-lg font-bold text-[#235158] mb-1.5 group-hover:text-[#B16558] transition-colors">{cat.name}</h3>
+          <h3 className="font-aub-display text-aub-burgundy text-xl leading-tight mb-1 group-hover:text-aub-burgundy-dk transition-colors">
+            {cat.name}
+          </h3>
         </Link>
-        <p className="text-[#6B6259] text-sm leading-relaxed mb-4">{cat.tagline}</p>
+        <p className="font-aub-body text-aub-ink-soft text-[14px] leading-relaxed mb-4">
+          {cat.tagline}
+        </p>
 
-        <div className="flex items-center justify-between">
+        <div className="flex items-end justify-between gap-3 pt-3 border-t border-aub-rule">
           <div>
-            <span className="text-[#B16558] font-bold text-sm">{price}</span>
-            {note && <span className="text-[#7A7068] text-xs block mt-0.5">{note}</span>}
+            <span className="font-aub-smallcaps text-[10px] text-aub-ochre">{price}</span>
+            {note && (
+              <span className="block font-aub-body italic text-aub-mute text-[12px] mt-0.5">{note}</span>
+            )}
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 shrink-0">
             <Link
               href={`/shop/${cat.slug}`}
-              className="inline-flex items-center gap-1 text-xs text-[#235158] font-semibold px-3 py-1.5 border border-[#235158]/10 rounded-sm hover:border-[#B16558]/30 transition-colors"
+              className="inline-flex items-center gap-1 font-aub-smallcaps text-[10px] text-aub-ink-soft px-3 py-1.5 border border-aub-rule hover:border-aub-burgundy/40 hover:text-aub-burgundy transition-colors"
             >
               Details
               <ArrowRightIcon className="w-3 h-3" />
@@ -100,7 +117,7 @@ export default function CategoryCard({ category: cat, compact }: CategoryCardPro
             <a
               href={getSmsLink(cat.smsMessage)}
               onClick={() => trackEvent('sms_click', cat.slug)}
-              className="inline-flex items-center gap-1 text-xs text-[#B16558] font-semibold px-3 py-1.5 border border-[#B16558]/20 rounded-sm hover:bg-[#B16558]/5 transition-colors"
+              className="inline-flex items-center gap-1 font-aub-smallcaps text-[10px] text-aub-cream-warm px-3 py-1.5 bg-aub-burgundy hover:bg-aub-burgundy-dk transition-colors"
             >
               <ChatBubbleLeftIcon className="w-3.5 h-3.5" />
               Text

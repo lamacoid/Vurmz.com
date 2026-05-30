@@ -47,8 +47,32 @@ export default function SiteHeader({ variant = 'services' }: { variant?: 'shop' 
       <header className={`fixed top-7 left-0 right-0 z-50 transition-all duration-300 ${headerBg}`}>
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16 sm:h-[72px]">
-            <Link href="/" className="flex-shrink-0">
-              <Image src={logoSrc} alt="VURMZ" width={120} height={32} className={`h-7 sm:h-8 w-auto ${logoFilter}`} priority />
+            <Link href="/" className="flex-shrink-0" aria-label="VURMZ">
+              {isShop ? (
+                /* Shop logo: the "VURMZ" wordmark filled with a Morris floral
+                   pattern (Pimpernel), via CSS mask of vurmz-logo-text.png.
+                   PNG aspect ratio is 3.88:1. */
+                <span
+                  className="block h-7 sm:h-8 w-[108px] sm:w-[124px]"
+                  role="img"
+                  aria-label="VURMZ"
+                  style={{
+                    backgroundImage: 'url(/shop/ornaments/pimpernel.jpg)',
+                    backgroundSize: '200px auto',
+                    backgroundPosition: 'center',
+                    WebkitMaskImage: 'url(/images/vurmz-logo-text.png)',
+                    maskImage: 'url(/images/vurmz-logo-text.png)',
+                    WebkitMaskSize: 'contain',
+                    maskSize: 'contain',
+                    WebkitMaskRepeat: 'no-repeat',
+                    maskRepeat: 'no-repeat',
+                    WebkitMaskPosition: 'left center',
+                    maskPosition: 'left center',
+                  }}
+                />
+              ) : (
+                <Image src={logoSrc} alt="VURMZ" width={120} height={32} className={`h-7 sm:h-8 w-auto ${logoFilter}`} priority />
+              )}
             </Link>
 
             {/* Desktop nav */}
