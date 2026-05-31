@@ -56,7 +56,7 @@ export default function ShopHome() {
   return (
     <div>
       {/* Hero — rotating portfolio photos behind frosted teal glass */}
-      <section className="relative overflow-hidden -mt-[92px] sm:-mt-[100px] pt-[150px] sm:pt-[180px] pb-16 sm:pb-24">
+      <section className="relative overflow-hidden -mt-[92px] sm:-mt-[100px] pt-[124px] sm:pt-[148px] pb-10 sm:pb-14">
         <div className="absolute inset-0 pointer-events-none select-none overflow-hidden" aria-hidden>
           {heroBgImages.map((img, i) => (
             <div
@@ -103,7 +103,7 @@ export default function ShopHome() {
             <motion.p
               variants={fadeUp}
               transition={{ duration: 0.5 }}
-              className="text-gray-300 text-lg sm:text-xl leading-relaxed mb-8 max-w-lg mx-auto"
+              className="text-gray-300 text-base sm:text-lg leading-relaxed mb-6 max-w-lg mx-auto"
             >
               Tell me what you want engraved. Bring your own item, or I&apos;ll find it for you. I engrave it and hand-deliver it across South Denver.
             </motion.p>
@@ -126,9 +126,9 @@ export default function ShopHome() {
       </section>
 
       {/* Portfolio grid — every photo behind the glass */}
-      <section className="pb-16 sm:pb-20">
+      <section className="pb-10 sm:pb-14">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-center text-xs font-mono text-[#6BB8B2] tracking-[0.2em] uppercase mb-8">Recent work</p>
+          <p className="text-center text-xs font-mono text-[#6BB8B2] tracking-[0.2em] uppercase mb-6">Recent work</p>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {WORK.map((item) => (
               <div key={item.label} className="group relative aspect-square rounded-sm overflow-hidden">
@@ -149,9 +149,9 @@ export default function ShopHome() {
       </section>
 
       {/* Categories */}
-      <section className="pb-16 sm:pb-20">
+      <section className="pb-10 sm:pb-14">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold text-[#F0E6D3] text-center mb-10">Shop by category</h2>
+          <h2 className="text-2xl font-bold text-[#F0E6D3] text-center mb-8">Shop by category</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {CONSUMER_CATEGORIES.map((cat) => (
               <CategoryCard key={cat.slug} category={cat} />
@@ -161,10 +161,10 @@ export default function ShopHome() {
       </section>
 
       {/* How it works */}
-      <section className="pb-16 sm:pb-20">
+      <section className="pb-10 sm:pb-14">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold text-[#F0E6D3] text-center mb-10">How it works</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
+          <h2 className="text-2xl font-bold text-[#F0E6D3] text-center mb-8">How it works</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
             {[
               { n: 1, h: 'Text me', p: "Send a photo of what you want engraved. I'll get back to you with a quote." },
               { n: 2, h: 'I engrave it', p: 'One person handles your order start to finish. No outsourcing.' },
@@ -183,9 +183,9 @@ export default function ShopHome() {
       </section>
 
       {/* Three options */}
-      <section className="pb-16 sm:pb-20">
+      <section className="pb-10 sm:pb-14">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold text-[#F0E6D3] text-center mb-10">Three ways to work with me</h2>
+          <h2 className="text-2xl font-bold text-[#F0E6D3] text-center mb-8">Three ways to work with me</h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
             {[
               { h: 'Bring your own', p: 'Have a knife, tumbler, laptop, or anything else? Bring it. I engrave it and hand it back.' },
@@ -216,14 +216,14 @@ export default function ShopHome() {
       </section>
 
       {/* Testimonials */}
-      <section className="pb-16 sm:pb-20">
+      <section className="pb-10 sm:pb-14">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <TestimonialCarousel testimonials={shopTestimonials} theme="services" />
         </div>
       </section>
 
       {/* Final CTA */}
-      <section className="pb-16 sm:pb-20">
+      <section className="pb-10 sm:pb-14">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-2xl sm:text-3xl font-bold text-[#F0E6D3] mb-4">Ready?</h2>
           <p className="text-gray-300 text-base leading-relaxed mb-8">
