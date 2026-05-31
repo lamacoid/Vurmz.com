@@ -1,14 +1,10 @@
-'use client'
-
-import { motion } from 'framer-motion'
-import { useState, useEffect } from 'react'
 import { ChatBubbleLeftIcon } from '@heroicons/react/24/outline'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 import { shopTestimonials } from '@/lib/testimonials'
-import { portfolioItems } from '@/lib/portfolio'
 import TestimonialCarousel from '@/components/TestimonialCarousel'
 import CategoryCard from '@/components/CategoryCard'
 import GlassImage from '@/components/shop/GlassImage'
+import SiteHero from '@/components/SiteHero'
 import { SHOP_CATEGORIES } from '@/lib/categories'
 import { BASIC } from '@/lib/pricing'
 
@@ -22,18 +18,6 @@ const CONSUMER_CATEGORIES = SHOP_CATEGORIES.filter(cat => {
   return true
 })
 
-const fadeUp = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-}
-
-const stagger = {
-  animate: { transition: { staggerChildren: 0.08, delayChildren: 0.1 } },
-}
-
-// Rotating hero background — the same portfolio photos as the landing page.
-const heroBgImages = portfolioItems.map((item) => ({ src: item.src, alt: item.label }))
-
 const WORK = [
   { src: '/portfolio/culinary-cleaver-engraved.jpg', label: 'Knife Engraving' },
   { src: '/portfolio/water-bottle-full-wrap.jpg', label: 'Full-Wrap Bottle' },
@@ -46,84 +30,23 @@ const WORK = [
 ]
 
 export default function ShopHome() {
-  const [bgIndex, setBgIndex] = useState(0)
-
-  useEffect(() => {
-    const interval = setInterval(() => setBgIndex((prev) => (prev + 1) % heroBgImages.length), 5000)
-    return () => clearInterval(interval)
-  }, [])
-
   return (
     <div>
-      {/* Hero — rotating portfolio photos behind frosted teal glass */}
-      <section className="relative overflow-hidden -mt-[92px] sm:-mt-[100px] pt-[124px] sm:pt-[148px] pb-10 sm:pb-14">
-        <div className="absolute inset-0 pointer-events-none select-none overflow-hidden" aria-hidden>
-          {heroBgImages.map((img, i) => (
-            <div
-              key={img.src}
-              className="absolute inset-0 transition-all duration-[2000ms] ease-in-out"
-              style={{
-                opacity: i === bgIndex ? 0.4 : 0,
-                filter: i === bgIndex ? 'blur(0px)' : 'blur(8px)',
-                transform: i === bgIndex ? 'scale(1)' : 'scale(1.08)',
-              }}
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={img.src} alt={img.alt} className="h-full w-full object-cover" />
-            </div>
-          ))}
-          {/* Teal glass film for legibility */}
-          <div className="absolute inset-0 bg-[#1f4f57]/45" />
-          {/* Bottom fade — photo dissolves into the dark page */}
-          <div
-            className="absolute bottom-0 left-0 right-0 h-1/2"
-            style={{ background: 'linear-gradient(to bottom, transparent 0%, #1f4f57 90%)' }}
-          />
-        </div>
-
-        <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div variants={stagger} initial="initial" animate="animate">
-            <motion.span
-              variants={fadeUp}
-              transition={{ duration: 0.5 }}
-              className="inline-block text-[#B16558] text-xs font-mono tracking-[0.25em] uppercase mb-6 border border-[#B16558]/30 px-3 py-1.5 rounded-sm"
-            >
-              Individuals
-            </motion.span>
-
-            <motion.h1
-              variants={fadeUp}
-              transition={{ duration: 0.6 }}
-              className="text-4xl sm:text-6xl font-bold text-[#F0E6D3] tracking-tight leading-[0.98] mb-6"
-            >
-              Laser engraving<br />
-              <span className="text-[#6BB8B2]">in {siteInfo.city}.</span>
-            </motion.h1>
-
-            <motion.p
-              variants={fadeUp}
-              transition={{ duration: 0.5 }}
-              className="text-gray-300 text-base sm:text-lg leading-relaxed mb-6 max-w-lg mx-auto"
-            >
-              Tell me what you want engraved. Bring your own item, or I&apos;ll find it for you. I engrave it and hand-deliver it across South Denver.
-            </motion.p>
-
-            <motion.div variants={fadeUp} transition={{ duration: 0.5 }} className="flex flex-col sm:flex-row gap-3 justify-center">
-              <a
-                href={getSmsLink("Hi, I'd like to get something engraved")}
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#B16558] text-white font-semibold text-base rounded-sm hover:bg-[#954E44] transition-colors shadow-lg shadow-black/20"
-              >
-                <ChatBubbleLeftIcon className="w-5 h-5" />
-                Text me — {siteInfo.phone}
-              </a>
-            </motion.div>
-
-            <motion.p variants={fadeUp} transition={{ duration: 0.5 }} className="text-gray-400 text-sm mt-4">
-              No forms, no wait.
-            </motion.p>
-          </motion.div>
-        </div>
-      </section>
+      {/* Shared brand hero */}
+      <SiteHero eyebrow="Individuals" accent="coral">
+        <p className="text-gray-300 text-base sm:text-lg leading-relaxed mb-7 max-w-lg mx-auto">
+          Engraved gifts, personalized knives, custom coasters, home decor. Bring your own item or
+          I&apos;ll find it for you — engraved and hand-delivered across {siteInfo.city}.
+        </p>
+        <a
+          href={getSmsLink("Hi, I'd like to get something engraved")}
+          className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#B16558] text-white font-semibold text-base rounded-sm hover:bg-[#954E44] transition-colors shadow-lg shadow-black/20"
+        >
+          <ChatBubbleLeftIcon className="w-5 h-5" />
+          Text me — {siteInfo.phone}
+        </a>
+        <p className="text-gray-400 text-sm mt-4">No forms, no wait.</p>
+      </SiteHero>
 
       {/* Portfolio grid — every photo behind the glass */}
       <section className="pb-10 sm:pb-14">
