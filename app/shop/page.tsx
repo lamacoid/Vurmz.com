@@ -73,11 +73,11 @@ export default function ShopHome() {
             </div>
           ))}
           {/* Teal glass film for legibility */}
-          <div className="absolute inset-0 bg-[#1c474e]/45" />
+          <div className="absolute inset-0 bg-[#1f4f57]/45" />
           {/* Bottom fade — photo dissolves into the dark page */}
           <div
             className="absolute bottom-0 left-0 right-0 h-1/2"
-            style={{ background: 'linear-gradient(to bottom, transparent 0%, #1c474e 90%)' }}
+            style={{ background: 'linear-gradient(to bottom, transparent 0%, #1f4f57 90%)' }}
           />
         </div>
 

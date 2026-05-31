@@ -91,7 +91,7 @@ export default async function ShopCategoryPage({ params }: { params: Promise<{ c
         {cat.heroImage && (
           <div className="absolute inset-0 overflow-hidden" aria-hidden>
             <Image src={cat.heroImage} alt="" fill className="object-cover blur-2xl opacity-[0.18]" />
-            <div className="absolute inset-0 bg-[#1c474e]/70" />
+            <div className="absolute inset-0 bg-[#1f4f57]/70" />
           </div>
         )}
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">

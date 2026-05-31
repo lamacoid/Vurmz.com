@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function ShopLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="relative min-h-screen bg-[#1c474e] text-gray-300" data-theme="shop">
+    <div className="relative min-h-screen bg-[#1f4f57] text-gray-300" data-theme="shop">
       {/* Ambient teal glow, fixed behind everything */}
       <div
         className="pointer-events-none fixed inset-0 z-0"

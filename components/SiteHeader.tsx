@@ -30,7 +30,7 @@ export default function SiteHeader({ variant = 'services' }: { variant?: 'shop' 
 
   // Shop now shares the landing/services dark teal scheme, but keeps its coral accent.
   const headerBg = isShop
-    ? scrolled ? 'bg-[#1c474e]/90 backdrop-blur-2xl border-b border-white/10 shadow-lg shadow-black/10' : 'bg-transparent'
+    ? scrolled ? 'bg-[#1f4f57]/90 backdrop-blur-2xl border-b border-white/10 shadow-lg shadow-black/10' : 'bg-transparent'
     : scrolled ? 'bg-[#1f474e]/90 backdrop-blur-2xl border-b border-white/10 shadow-lg shadow-black/10' : 'bg-transparent'
 
   const textColor = isShop ? 'text-gray-300' : 'text-gray-400'
