@@ -1,8 +1,8 @@
-/* eslint-disable @next/next/no-img-element */
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import AddToCart from '@/components/shop/AddToCart'
+import GlassImage from '@/components/shop/GlassImage'
 import { getProductBySlug, getCategoryById } from '@/lib/db/repos/products'
 import { getMediaById } from '@/lib/db/repos/media'
 
@@ -21,7 +21,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
   const price = (product.priceCents / 100).toFixed(2)
 
   return (
-    <div className="bg-[#F0E6D3] text-[#235158] min-h-screen">
+    <div className="text-gray-300 min-h-screen">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16">
         <Breadcrumbs
           items={[
@@ -30,41 +30,41 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
             ...(category ? [{ label: category.name, href: `/shop/${category.slug}` }] : []),
             { label: product.name },
           ]}
-          theme="shop"
+          theme="services"
         />
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mt-8">
-          <div className="aspect-square bg-white/60 border border-[#235158]/10 rounded-sm overflow-hidden">
+          <div className="group relative aspect-square bg-white/[0.04] border border-white/10 rounded-sm overflow-hidden">
             {hero?.url ? (
-              <img src={hero.url} alt={hero.altText || product.name} className="w-full h-full object-cover" />
+              <GlassImage src={hero.url} alt={hero.altText || product.name} depth="product" plain className="absolute inset-0" />
             ) : (
-              <div className="w-full h-full flex items-center justify-center text-[#6B6259] text-sm">No image yet</div>
+              <div className="w-full h-full flex items-center justify-center text-gray-500 text-sm">No image yet</div>
             )}
           </div>
 
           <div>
-            <h1 className="text-3xl sm:text-4xl font-bold tracking-tight leading-tight mb-3">{product.name}</h1>
+            <h1 className="text-3xl sm:text-4xl font-bold tracking-tight leading-tight mb-3 text-[#F0E6D3]">{product.name}</h1>
             {product.shortDescription && (
-              <p className="text-[#6B6259] text-base leading-relaxed mb-5">{product.shortDescription}</p>
+              <p className="text-gray-300 text-base leading-relaxed mb-5">{product.shortDescription}</p>
             )}
 
             <div className="flex items-baseline gap-2 mb-6">
               <span className="text-3xl font-bold text-[#B16558]">${price}</span>
               {product.oneOff ? (
-                <span className="text-sm text-[#6B6259]">one of a kind</span>
+                <span className="text-sm text-gray-400">one of a kind</span>
               ) : (
-                <span className="text-sm text-[#6B6259]">pack of {product.packSize}</span>
+                <span className="text-sm text-gray-400">pack of {product.packSize}</span>
               )}
             </div>
 
             {product.oneOff && (
-              <div className="inline-flex items-center gap-2 text-xs bg-[#B16558]/10 text-[#B16558] border border-[#B16558]/30 px-3 py-1.5 rounded-sm mb-6">
+              <div className="inline-flex items-center gap-2 text-xs bg-[#B16558]/15 text-[#B16558] border border-[#B16558]/30 px-3 py-1.5 rounded-sm mb-6">
                 Only one available — once it&rsquo;s gone, it&rsquo;s gone.
               </div>
             )}
 
             {product.madeToOrder && product.leadTimeDays > 0 && (
-              <div className="inline-flex items-center gap-2 text-xs bg-[#235158]/6 text-[#235158] px-3 py-1.5 rounded-sm mb-6">
+              <div className="inline-flex items-center gap-2 text-xs bg-white/[0.06] text-gray-200 px-3 py-1.5 rounded-sm mb-6">
                 Made to order · ready in {product.leadTimeDays} {product.leadTimeDays === 1 ? 'day' : 'days'}
               </div>
             )}
@@ -80,13 +80,13 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
             />
 
             {product.description && (
-              <div className="mt-10 pt-8 border-t border-[#235158]/10">
-                <h2 className="text-sm font-semibold uppercase tracking-wider text-[#6B6259] mb-3">Details</h2>
-                <div className="prose prose-sm text-[#235158]/90 whitespace-pre-wrap">{product.description}</div>
+              <div className="mt-10 pt-8 border-t border-white/10">
+                <h2 className="text-sm font-semibold uppercase tracking-wider text-gray-400 mb-3">Details</h2>
+                <div className="prose prose-sm prose-invert text-gray-300 whitespace-pre-wrap">{product.description}</div>
               </div>
             )}
 
-            <div className="mt-10 text-xs text-[#6B6259]">
+            <div className="mt-10 text-xs text-gray-400">
               Questions? <Link href="/shop/contact" className="text-[#B16558] hover:underline">Get in touch</Link>
             </div>
           </div>

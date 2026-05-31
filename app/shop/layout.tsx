@@ -10,13 +10,22 @@ export const metadata: Metadata = {
 
 export default function ShopLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="bg-[#F0E6D3] text-[#235158] min-h-screen" data-theme="shop">
-      <SiteHeader variant="shop" />
-      <main className="min-h-screen">
-        {children}
-      </main>
-      <CartDrawer />
-      <SiteFooter />
+    <div className="relative min-h-screen bg-[#1c474e] text-gray-300" data-theme="shop">
+      {/* Ambient teal glow, fixed behind everything */}
+      <div
+        className="pointer-events-none fixed inset-0 z-0"
+        aria-hidden
+        style={{
+          background:
+            'radial-gradient(ellipse 70% 50% at 20% 12%, rgba(60,185,178,0.07) 0%, transparent 55%), radial-gradient(ellipse 60% 45% at 85% 85%, rgba(177,101,88,0.05) 0%, transparent 50%)',
+        }}
+      />
+      <div className="relative z-[1]">
+        <SiteHeader variant="shop" />
+        <main className="min-h-screen">{children}</main>
+        <CartDrawer />
+        <SiteFooter />
+      </div>
     </div>
   )
 }

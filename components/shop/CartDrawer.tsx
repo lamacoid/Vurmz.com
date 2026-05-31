@@ -20,17 +20,17 @@ export default function CartDrawer() {
         />
       )}
       <aside
-        className={`fixed top-0 right-0 bottom-0 z-[80] w-full sm:w-[28rem] bg-[#F0E6D3] shadow-2xl shadow-black/15 flex flex-col transition-transform duration-300 ${
+        className={`fixed top-0 right-0 bottom-0 z-[80] w-full sm:w-[28rem] bg-[#102f33] border-l border-white/10 shadow-2xl shadow-black/40 flex flex-col transition-transform duration-300 ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
         aria-label="Cart"
       >
-        <header className="flex items-center justify-between px-5 py-4 border-b border-[#235158]/10">
+        <header className="flex items-center justify-between px-5 py-4 border-b border-white/10">
           <div>
-            <p className="text-sm font-bold text-[#235158]">Your cart</p>
-            <p className="text-xs text-[#6B6259]">{itemCount} {itemCount === 1 ? 'item' : 'items'}</p>
+            <p className="text-sm font-bold text-[#F0E6D3]">Your cart</p>
+            <p className="text-xs text-gray-400">{itemCount} {itemCount === 1 ? 'item' : 'items'}</p>
           </div>
-          <button onClick={() => setOpen(false)} className="p-1 text-[#6B6259] hover:text-[#235158]" aria-label="Close cart">
+          <button onClick={() => setOpen(false)} className="p-1 text-gray-400 hover:text-[#F0E6D3]" aria-label="Close cart">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="w-5 h-5">
               <path d="M6 6l12 12M18 6 6 18" />
             </svg>
@@ -40,7 +40,7 @@ export default function CartDrawer() {
         <div className="flex-1 overflow-y-auto px-5 py-4 space-y-4">
           {items.length === 0 ? (
             <div className="text-center py-16">
-              <p className="text-[#6B6259] text-sm mb-4">Your cart is empty.</p>
+              <p className="text-gray-400 text-sm mb-4">Your cart is empty.</p>
               <Link
                 href="/shop"
                 onClick={() => setOpen(false)}
@@ -52,7 +52,7 @@ export default function CartDrawer() {
           ) : (
             items.map(item => (
               <div key={item.productId} className="flex gap-3">
-                <div className="w-16 h-16 flex-shrink-0 bg-white/70 border border-[#235158]/10 rounded-sm overflow-hidden">
+                <div className="w-16 h-16 flex-shrink-0 bg-white/[0.06] border border-white/10 rounded-sm overflow-hidden">
                   {item.heroUrl ? (
                     <img src={item.heroUrl} alt="" className="w-full h-full object-cover" />
                   ) : (
@@ -63,33 +63,33 @@ export default function CartDrawer() {
                   <Link
                     href={`/shop/p/${item.slug}`}
                     onClick={() => setOpen(false)}
-                    className="text-sm font-medium text-[#235158] hover:text-[#B16558] block truncate"
+                    className="text-sm font-medium text-[#F0E6D3] hover:text-[#B16558] block truncate"
                   >
                     {item.name}
                   </Link>
-                  <p className="text-xs text-[#6B6259]">pack of {item.packSize} · {money(item.priceCents)} ea</p>
+                  <p className="text-xs text-gray-400">pack of {item.packSize} · {money(item.priceCents)} ea</p>
                   <div className="flex items-center gap-3 mt-2">
-                    <div className="inline-flex items-center bg-white/60 border border-[#235158]/12 rounded-sm text-sm">
-                      <button onClick={() => setQty(item.productId, item.qty - 1)} className="px-2 py-1 text-[#6B6259] hover:text-[#235158]" aria-label="Decrease">−</button>
+                    <div className="inline-flex items-center bg-white/[0.06] border border-white/15 rounded-sm text-sm text-gray-200">
+                      <button onClick={() => setQty(item.productId, item.qty - 1)} className="px-2 py-1 text-gray-400 hover:text-[#F0E6D3]" aria-label="Decrease">−</button>
                       <span className="min-w-[1.5rem] text-center text-xs font-semibold">{item.qty}</span>
-                      <button onClick={() => setQty(item.productId, item.qty + 1)} className="px-2 py-1 text-[#6B6259] hover:text-[#235158]" aria-label="Increase">+</button>
+                      <button onClick={() => setQty(item.productId, item.qty + 1)} className="px-2 py-1 text-gray-400 hover:text-[#F0E6D3]" aria-label="Increase">+</button>
                     </div>
-                    <button onClick={() => remove(item.productId)} className="text-xs text-[#6B6259] hover:text-[#B16558]">Remove</button>
+                    <button onClick={() => remove(item.productId)} className="text-xs text-gray-400 hover:text-[#B16558]">Remove</button>
                   </div>
                 </div>
-                <div className="text-sm font-semibold text-[#235158]">{money(item.priceCents * item.qty)}</div>
+                <div className="text-sm font-semibold text-[#F0E6D3]">{money(item.priceCents * item.qty)}</div>
               </div>
             ))
           )}
         </div>
 
         {items.length > 0 && (
-          <footer className="border-t border-[#235158]/10 px-5 py-4 space-y-3">
+          <footer className="border-t border-white/10 px-5 py-4 space-y-3">
             <div className="flex items-center justify-between text-sm">
-              <span className="text-[#6B6259]">Subtotal</span>
-              <span className="font-semibold text-[#235158]">{money(subtotalCents)}</span>
+              <span className="text-gray-400">Subtotal</span>
+              <span className="font-semibold text-[#F0E6D3]">{money(subtotalCents)}</span>
             </div>
-            <p className="text-[11px] text-[#7A7068]">Taxes and delivery calculated at checkout.</p>
+            <p className="text-[11px] text-gray-500">Taxes and delivery calculated at checkout.</p>
             <Link
               href="/checkout"
               onClick={() => setOpen(false)}

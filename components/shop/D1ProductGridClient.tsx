@@ -1,7 +1,7 @@
 'use client'
-/* eslint-disable @next/next/no-img-element */
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import GlassImage from '@/components/shop/GlassImage'
 
 interface Product {
   id: string
@@ -45,8 +45,8 @@ export default function D1ProductGridClient({ categorySlug, heading, subheading,
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {(heading || subheading) && (
           <div className="mb-6">
-            {heading && <h2 className="text-2xl sm:text-3xl font-bold text-[#235158] tracking-tight">{heading}</h2>}
-            {subheading && <p className="text-sm text-[#6B6259] mt-1">{subheading}</p>}
+            {heading && <h2 className="text-2xl sm:text-3xl font-bold text-[#F0E6D3] tracking-tight">{heading}</h2>}
+            {subheading && <p className="text-sm text-gray-400 mt-1">{subheading}</p>}
           </div>
         )}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5">
@@ -54,22 +54,22 @@ export default function D1ProductGridClient({ categorySlug, heading, subheading,
             <Link
               key={p.id}
               href={`/shop/p/${p.slug}`}
-              className="group bg-white/60 border border-[#235158]/10 rounded-sm overflow-hidden hover:border-[#B16558]/40 transition-colors"
+              className="group bg-white/[0.04] backdrop-blur-xl border border-white/10 rounded-sm overflow-hidden hover:border-[#B16558]/40 hover:bg-white/[0.06] transition-colors"
             >
-              <div className="aspect-square bg-[#F0E6D3] overflow-hidden">
+              <div className="aspect-square relative overflow-hidden">
                 {p.heroUrl ? (
-                  <img src={p.heroUrl} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <GlassImage src={p.heroUrl} alt={p.name} depth="product" plain className="absolute inset-0" />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center text-[#6B6259]/40 text-xs">No photo</div>
+                  <div className="w-full h-full flex items-center justify-center text-gray-500 text-xs">No photo</div>
                 )}
               </div>
               <div className="p-3">
-                <p className="text-sm font-semibold text-[#235158] truncate">{p.name}</p>
-                <p className="text-[11px] text-[#6B6259] mt-0.5 line-clamp-2">{p.shortDescription || `Pack of ${p.packSize}`}</p>
+                <p className="text-sm font-semibold text-[#F0E6D3] truncate">{p.name}</p>
+                <p className="text-[11px] text-gray-400 mt-0.5 line-clamp-2">{p.shortDescription || `Pack of ${p.packSize}`}</p>
                 <div className="flex items-center justify-between mt-2">
                   <span className="text-sm font-bold text-[#B16558]">${(p.priceCents / 100).toFixed(2)}</span>
                   {p.madeToOrder ? (
-                    <span className="text-[9px] uppercase tracking-wider text-[#6B6259] bg-[#235158]/6 px-1.5 py-0.5 rounded-sm">
+                    <span className="text-[9px] uppercase tracking-wider text-gray-400 bg-white/[0.06] px-1.5 py-0.5 rounded-sm">
                       {p.leadTimeDays > 0 ? `${p.leadTimeDays}d` : 'MTO'}
                     </span>
                   ) : null}
