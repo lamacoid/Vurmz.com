@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { ArrowRightIcon, ChatBubbleLeftIcon } from '@heroicons/react/24/outline'
 import { getSmsLink } from '@/lib/site-info'
 import Breadcrumbs from '@/components/Breadcrumbs'
+import SiteHero from '@/components/SiteHero'
 import { portfolioItems } from '@/lib/portfolio'
 
 export const metadata: Metadata = {
@@ -13,23 +14,17 @@ export const metadata: Metadata = {
 
 export default function PortfolioPage() {
   return (
-    <div>
+    <div className="bg-vurmz-dark">
+      {/* Hero (shared) */}
+      <SiteHero eyebrow="Portfolio" accent="teal" baseColor="#235158">
+        <p className="text-gray-300 text-base sm:text-lg leading-relaxed max-w-xl mx-auto">
+          Some of those possibilities — client work, personal projects, and experiments in metal, wood, and glass.
+        </p>
+      </SiteHero>
+
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
         <Breadcrumbs items={[{ label: 'VURMZ', href: '/' }, { label: 'Services', href: '/services' }, { label: 'Portfolio' }]} theme="services" />
       </div>
-      {/* Hero */}
-      <section className="bg-vurmz-dark text-cream py-10 sm:py-12 md:py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6">
-              Portfolio
-            </h1>
-            <p className="text-base sm:text-lg md:text-xl text-gray-300">
-              Some of those possibilities.
-            </p>
-          </div>
-        </div>
-      </section>
 
       {/* Portfolio Grid */}
       <section className="py-10 sm:py-12 bg-vurmz-dark">

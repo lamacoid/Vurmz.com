@@ -4,6 +4,7 @@ import { ArrowRightIcon, ChatBubbleLeftIcon } from '@heroicons/react/24/outline'
 import { SIGNATURE, BASIC_PRICING_CARDS, LEAVE_YOUR_MARK_CARDS } from '@/lib/pricing'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 import Breadcrumbs from '@/components/Breadcrumbs'
+import SiteHero from '@/components/SiteHero'
 
 export const metadata: Metadata = {
   title: 'Pricing',
@@ -13,24 +14,16 @@ export const metadata: Metadata = {
 export default function PricingPage() {
   return (
     <div className="bg-vurmz-dark">
+      {/* Hero (shared) */}
+      <SiteHero eyebrow="Pricing" accent="teal" baseColor="#235158">
+        <p className="text-gray-300 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+          Two tiers, one standard. Basic covers stock items and straightforward marking. Signature is custom work on your item — the stuff that ends up in my portfolio.
+        </p>
+      </SiteHero>
+
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
         <Breadcrumbs items={[{ label: 'VURMZ', href: '/' }, { label: 'Services', href: '/services' }, { label: 'Pricing' }]} theme="services" />
       </div>
-      {/* Hero */}
-      <section className="py-12 sm:py-16 lg:py-20">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-xs font-mono text-vurmz-teal tracking-[0.2em] uppercase mb-4">
-            Pricing
-          </p>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-cream tracking-tight leading-tight mb-6">
-            Two tiers.<br />
-            <span className="text-gray-500">One standard.</span>
-          </h1>
-          <p className="text-gray-400 text-base sm:text-lg leading-relaxed max-w-2xl">
-            Everything I do falls into one of two categories. Basic covers stock items and straightforward marking. Signature is custom work on your item — the stuff that ends up in my portfolio.
-          </p>
-        </div>
-      </section>
 
       {/* ═══ SIGNATURE ═══ */}
       <section className="py-12 sm:py-16 bg-white/[0.02]">

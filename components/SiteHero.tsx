@@ -18,6 +18,8 @@ interface SiteHeroProps {
   eyebrow?: string
   /** Accent for the eyebrow + rotating word. Shop = coral, Services = teal. */
   accent?: 'coral' | 'teal'
+  /** The page's own background teal, so the hero dissolves into it with no seam. */
+  baseColor?: string
   /** Page-specific subcopy + CTAs rendered under the shared headline. */
   children?: React.ReactNode
 }
@@ -29,7 +31,7 @@ interface SiteHeroProps {
  *
  * Pulls up under the fixed SiteHeader via the negative top margin.
  */
-export default function SiteHero({ eyebrow, accent = 'coral', children }: SiteHeroProps) {
+export default function SiteHero({ eyebrow, accent = 'coral', baseColor = '#1f4f57', children }: SiteHeroProps) {
   const [bg, setBg] = useState(0)
   const [w, setW] = useState(0)
 
@@ -63,10 +65,10 @@ export default function SiteHero({ eyebrow, accent = 'coral', children }: SiteHe
             <img src={img.src} alt={img.alt} className="h-full w-full object-cover" />
           </div>
         ))}
-        <div className="absolute inset-0 bg-[#1f4f57]/45" />
+        <div className="absolute inset-0" style={{ backgroundColor: `${baseColor}73` }} />
         <div
           className="absolute bottom-0 left-0 right-0 h-1/2"
-          style={{ background: 'linear-gradient(to bottom, transparent 0%, #1f4f57 90%)' }}
+          style={{ background: `linear-gradient(to bottom, transparent 0%, ${baseColor} 90%)` }}
         />
       </div>
 

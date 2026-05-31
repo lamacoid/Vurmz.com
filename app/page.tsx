@@ -11,6 +11,7 @@ import { portfolioItems } from '@/lib/portfolio'
 import TrustBar from '@/components/TrustBar'
 import TrustedBy from '@/components/TrustedBy'
 import PortfolioPreview from '@/components/PortfolioPreview'
+import ItemScroller from '@/components/ItemScroller'
 
 const featuredWork = [
   { src: '/portfolio/denver-map-mirror-closeup.jpg', label: 'Denver Map on Mirror', context: 'Custom art piece' },
@@ -252,6 +253,19 @@ export default function LandingPage() {
       <div className="max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 pb-4">
         <TrustedBy theme="landing" />
       </div>
+
+      {/* What I engrave — scrolling marquee (landing only) */}
+      <section className="relative z-10 py-8 sm:py-10 overflow-hidden">
+        <div className="max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 mb-5">
+          <p className="text-xs font-mono text-vurmz-teal tracking-[0.25em] uppercase mb-2">What I engrave</p>
+          <h2 className="text-2xl sm:text-3xl font-bold text-cream tracking-tight">Name it. I&apos;ll mark it.</h2>
+        </div>
+        <div className="relative pointer-events-none select-none" style={{ margin: '0 -20px' }}>
+          <div className="absolute left-0 top-0 bottom-0 w-24 z-10" style={{ background: 'linear-gradient(to right, #1c474e, transparent)' }} />
+          <div className="absolute right-0 top-0 bottom-0 w-24 z-10" style={{ background: 'linear-gradient(to left, #1c474e, transparent)' }} />
+          <ItemScroller opacityScale={0.4} />
+        </div>
+      </section>
 
       {/* Featured Work */}
       <section className="py-8 sm:py-12 bg-white/[0.015]">

@@ -33,7 +33,7 @@ export default function ShopHome() {
   return (
     <div>
       {/* Shared brand hero */}
-      <SiteHero eyebrow="Individuals" accent="coral">
+      <SiteHero eyebrow="For You" accent="coral" baseColor="#1f4f57">
         <p className="text-gray-300 text-base sm:text-lg leading-relaxed mb-7 max-w-lg mx-auto">
           Engraved gifts, personalized knives, custom coasters, home decor. Bring your own item or
           I&apos;ll find it for you — engraved and hand-delivered across {siteInfo.city}.

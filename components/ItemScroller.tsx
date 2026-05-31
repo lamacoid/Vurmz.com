@@ -188,7 +188,9 @@ function shuffle(arr: string[], seed: number): string[] {
   return copy
 }
 
-export default function ItemScroller() {
+/** opacityScale multiplies every line's opacity — pass < 1 to make the
+ *  marquee more transparent (e.g. 0.45 on the landing page). */
+export default function ItemScroller({ opacityScale = 1 }: { opacityScale?: number }) {
   const lines = useMemo(() =>
     LINES.map((line, i) => ({
       ...line,
@@ -207,7 +209,7 @@ export default function ItemScroller() {
             <div
               className={`inline-flex gap-0 ${line.size} font-light text-cream`}
               style={{
-                opacity: line.opacity,
+                opacity: line.opacity * opacityScale,
                 animation: `${animName} ${line.speed}s linear infinite`,
               }}
             >

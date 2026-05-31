@@ -2,60 +2,15 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { motion, AnimatePresence } from 'framer-motion'
-import { useState as useStateHook, useEffect as useEffectHook } from 'react'
+import { motion } from 'framer-motion'
 import { ArrowRightIcon, ChatBubbleLeftIcon } from '@heroicons/react/24/outline'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 import { servicesTestimonials } from '@/lib/testimonials'
-import NewsletterSignup from '@/components/NewsletterSignup'
-import ItemScroller from '@/components/ItemScroller'
 import TestimonialCarousel from '@/components/TestimonialCarousel'
 import TrustedBy from '@/components/TrustedBy'
-import { portfolioItems } from '@/lib/portfolio'
-
-const fadeUp = {
-  initial: { opacity: 0, y: 24 },
-  animate: { opacity: 1, y: 0 },
-}
-
-const stagger = {
-  animate: { transition: { staggerChildren: 0.1, delayChildren: 0.15 } },
-}
-
-const heroImages = portfolioItems.map((item) => ({
-  src: item.src,
-  alt: item.label,
-}))
-
-const heroWords = [
-  'brand',
-  'logo',
-  'name',
-  'mark',
-  'story',
-  'crew',
-  'knife',
-  'tumbler',
-  'sign',
-  'gift',
-  'mirror',
-  'merch',
-]
+import SiteHero from '@/components/SiteHero'
 
 export default function Home() {
-  const [heroIndex, setHeroIndex] = useStateHook(0)
-  const [wordIndex, setWordIndex] = useStateHook(0)
-
-  useEffectHook(() => {
-    const interval = setInterval(() => setHeroIndex((prev) => (prev + 1) % heroImages.length), 5000)
-    return () => clearInterval(interval)
-  }, [])
-
-  useEffectHook(() => {
-    const interval = setInterval(() => setWordIndex((prev) => (prev + 1) % heroWords.length), 2200)
-    return () => clearInterval(interval)
-  }, [])
-
   const serviceSchema = {
     '@context': 'https://schema.org',
     '@type': 'Service',
@@ -88,166 +43,28 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
       />
-      {/* ═══════════ HERO ═══════════ */}
-      <section className="relative py-16 sm:py-20 lg:py-28 flex items-center overflow-hidden">
-        {/* Cycling portfolio background */}
-        {heroImages.map((img, i) => (
-          <div
-            key={img.src}
-            className="absolute inset-0 transition-all duration-[2000ms] ease-in-out"
-            style={{
-              opacity: i === heroIndex ? 0.15 : 0,
-              filter: i === heroIndex ? 'blur(0px) hue-rotate(0deg)' : 'blur(8px) hue-rotate(30deg)',
-              transform: i === heroIndex ? 'scale(1)' : 'scale(1.1)',
-            }}
+      {/* ═══════════ HERO (shared) ═══════════ */}
+      <SiteHero eyebrow="For Your Work" accent="teal" baseColor="#235158">
+        <p className="text-gray-300 text-base sm:text-lg leading-relaxed mb-7 max-w-xl mx-auto">
+          Next-day turnaround. Hand-to-hand delivery across the South Denver metro. One person, start to finish.
+        </p>
+        <div className="flex flex-col sm:flex-row gap-3 justify-center">
+          <Link
+            href="/services/contact"
+            className="group inline-flex items-center justify-center gap-2 px-8 py-4 bg-vurmz-cta text-white font-semibold text-base rounded-sm hover:bg-vurmz-cta-hover transition-all shadow-lg shadow-vurmz-cta/20"
           >
-            <Image src={img.src} alt={img.alt} fill className="object-cover" priority={i === 0} />
-          </div>
-        ))}
-        <div className="absolute inset-0 bg-vurmz-dark/70" />
-
-        {/* Glassy glare */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background: 'linear-gradient(135deg, rgba(255,255,255,0.06) 0%, transparent 40%, transparent 60%, rgba(255,255,255,0.03) 100%)',
-          }}
-        />
-        <div
-          className="absolute top-0 left-[20%] w-[60%] h-[1px] pointer-events-none"
-          style={{
-            background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent)',
-          }}
-        />
-
-        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <motion.div
-            variants={stagger}
-            initial="initial"
-            animate="animate"
-            className="max-w-3xl"
+            Get a Quote
+            <ArrowRightIcon className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </Link>
+          <a
+            href={getSmsLink()}
+            className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-vurmz-cream text-vurmz-dark font-semibold text-base rounded-sm hover:bg-vurmz-cream-hover transition-all"
           >
-            {/* Eyebrow */}
-            <motion.div variants={fadeUp} transition={{ duration: 0.5 }}>
-              <span className="inline-block text-vurmz-teal text-xs font-mono tracking-[0.25em] uppercase mb-6 border border-vurmz-teal/20 px-3 py-1.5 rounded-sm">
-                Laser Engraving &middot; {siteInfo.city}, {siteInfo.stateAbbr}
-              </span>
-            </motion.div>
-
-            {/* Heading — massive, high contrast */}
-            <motion.h1
-              variants={fadeUp}
-              transition={{ duration: 0.6 }}
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-cream tracking-tight leading-[0.95] mb-6"
-            >
-              Put your{' '}
-              <span className="inline-block relative align-baseline">
-                <AnimatePresence mode="wait" initial={false}>
-                  <motion.span
-                    key={heroWords[wordIndex]}
-                    initial={{ opacity: 0, y: 12 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -12 }}
-                    transition={{ duration: 0.35, ease: 'easeOut' }}
-                    className="inline-block"
-                  >
-                    {heroWords[wordIndex]}
-                  </motion.span>
-                </AnimatePresence>
-              </span>{' '}
-              <span className="text-vurmz-cta">on something</span>.
-            </motion.h1>
-
-            {/* Sub — restrained, high legibility */}
-            <motion.p
-              variants={fadeUp}
-              transition={{ duration: 0.5 }}
-              className="text-base sm:text-lg text-gray-400 max-w-xl mb-8 leading-relaxed"
-            >
-              Next-day turnaround. Hand-to-hand delivery across the South Denver metro. One person, start to finish.
-            </motion.p>
-
-            {/* CTAs */}
-            <motion.div
-              variants={fadeUp}
-              transition={{ duration: 0.5 }}
-              className="flex flex-col sm:flex-row gap-4"
-            >
-              <Link
-                href="/services/contact"
-                className="group inline-flex items-center justify-center gap-2 px-8 py-4 bg-vurmz-cta text-white font-semibold text-base rounded-sm hover:bg-vurmz-cta-hover transition-all shadow-lg shadow-vurmz-cta/20"
-              >
-                Get a Quote
-                <ArrowRightIcon className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
-              <a
-                href={getSmsLink()}
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-vurmz-cream text-vurmz-dark font-semibold text-base rounded-sm hover:bg-vurmz-cream-hover transition-all"
-              >
-                <ChatBubbleLeftIcon className="w-4 h-4" />
-                Text {siteInfo.phone}
-              </a>
-            </motion.div>
-          </motion.div>
+            <ChatBubbleLeftIcon className="w-4 h-4" />
+            Text {siteInfo.phone}
+          </a>
         </div>
-      </section>
-
-      {/* ═══════════ WHAT I DO — scrolling items ═══════════ */}
-      <section className="relative py-12 sm:py-16 overflow-hidden bg-white/[0.015]">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
-          <p className="text-xs font-mono text-vurmz-teal tracking-[0.25em] uppercase mb-2">What I engrave</p>
-          <h2 className="text-2xl sm:text-3xl font-bold text-cream tracking-tight">
-            Name it. I&apos;ll mark it.
-          </h2>
-        </div>
-
-        <div className="relative pointer-events-none select-none" style={{ margin: '0 -20px' }}>
-          {/* Fade edges */}
-          <div className="absolute left-0 top-0 bottom-0 w-24 z-10" style={{ background: 'linear-gradient(to right, var(--background), transparent)' }} />
-          <div className="absolute right-0 top-0 bottom-0 w-24 z-10" style={{ background: 'linear-gradient(to left, var(--background), transparent)' }} />
-
-          <ItemScroller />
-        </div>
-
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-            <div>
-              <p className="text-gray-400 text-sm leading-relaxed mb-5">
-                Stock items like pens, cards, and coasters come in packs. Custom work on your own items starts at $50. Don&apos;t have the item? I&apos;ll source it for you. Next-day turnaround, hand-delivered.
-              </p>
-              <div className="flex items-center gap-4">
-                <Link
-                  href="/services/pricing"
-                  className="inline-flex items-center gap-2 text-sm text-vurmz-teal font-mono tracking-wide hover:text-cream transition-colors group"
-                >
-                  View pricing
-                  <ArrowRightIcon className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                </Link>
-                <a
-                  href={getSmsLink()}
-                  className="inline-flex items-center gap-2 text-sm text-gray-400 font-mono tracking-wide hover:text-cream transition-colors group"
-                >
-                  <ChatBubbleLeftIcon className="w-3.5 h-3.5" />
-                  Text me
-                </a>
-              </div>
-            </div>
-            <div className="bg-white/[0.03] border border-white/[0.08] rounded-sm p-5">
-              <p className="text-sm font-semibold text-cream mb-1">Do you hand out a lot of pens?</p>
-              <p className="text-gray-400 text-xs leading-relaxed mb-3">
-                I can set up recurring orders so you never run out. I&apos;ll keep your stock fresh and deliver on schedule.
-              </p>
-              <a
-                href={getSmsLink("I'm interested in recurring orders")}
-                className="inline-flex items-center gap-1.5 text-xs text-vurmz-teal font-mono tracking-wide hover:text-cream transition-colors group"
-              >
-                Tell me more
-                <ArrowRightIcon className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
+      </SiteHero>
 
       {/* ═══════════ HOW IT WORKS (B2B) ═══════════ */}
       <section className="relative py-12 sm:py-16">
