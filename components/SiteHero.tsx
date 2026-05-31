@@ -87,18 +87,22 @@ export default function SiteHero({ eyebrow, accent = 'coral', children }: SiteHe
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-[#F0E6D3] font-bold tracking-tight leading-[1.02] text-4xl sm:text-6xl lg:text-7xl"
+          className="text-[#F0E6D3] font-semibold tracking-tight leading-[1.05] text-4xl sm:text-6xl lg:text-7xl"
+          style={{ fontFamily: 'var(--font-display), Georgia, serif' }}
         >
           <span className="block">Let&apos;s put your</span>
-          <span className="block relative h-[1.15em] overflow-hidden my-0.5">
-            <AnimatePresence mode="wait">
+          {/* Fixed-height, full-width line: the word crossfades IN PLACE so the
+              lines above and below never shift, and the word stays centered
+              regardless of its length. */}
+          <span className="relative block h-[1.3em] my-1">
+            <AnimatePresence initial={false}>
               <motion.span
                 key={WORDS[w]}
-                initial={{ opacity: 0, y: '0.6em' }}
+                initial={{ opacity: 0, y: '0.5em' }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: '-0.6em' }}
-                transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                className="block italic"
+                exit={{ opacity: 0, y: '-0.5em' }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                className="absolute inset-x-0 italic whitespace-nowrap"
                 style={{ color: accentColor }}
               >
                 {WORDS[w]}
