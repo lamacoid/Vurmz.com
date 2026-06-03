@@ -38,7 +38,7 @@ export default function LandingPage() {
       {/* Floating account link — landing has no traditional header */}
       <Link
         href="/account"
-        className="absolute top-4 right-4 sm:top-6 sm:right-6 z-50 inline-flex items-center gap-1.5 text-[12px] sm:text-[13px] text-gray-400 hover:text-cream transition-colors font-medium px-3 py-1.5 rounded-full border border-white/10 hover:border-white/30 backdrop-blur-sm bg-black/20"
+        className="absolute top-10 right-4 sm:top-11 sm:right-6 z-50 inline-flex items-center gap-1.5 text-[12px] sm:text-[13px] text-gray-400 hover:text-cream transition-colors font-medium px-3 py-1.5 rounded-full border border-white/10 hover:border-white/30 backdrop-blur-sm bg-black/20"
         aria-label="Account"
       >
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-3.5 h-3.5">

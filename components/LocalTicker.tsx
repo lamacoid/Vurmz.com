@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 
 // WMO weather code → emoji
 function wmoIcon(code: number): string {
@@ -37,13 +38,26 @@ function getTraffic(): TrafficLevels {
   return { i25: 'Moderate', c470: 'Light', i225: 'Light' }
 }
 
-function tc(level: string): string {
-  if (level === 'Heavy') return 'text-red-400'
-  if (level === 'Moderate') return 'text-yellow-400'
-  return 'text-green-400'
+function dotBg(level: string): string {
+  if (level === 'Heavy') return 'bg-red-400'
+  if (level === 'Moderate') return 'bg-amber-400'
+  return 'bg-emerald-400'
 }
 
+function TrafficDot({ label, level }: { label: string; level: string }) {
+  return (
+    <span className="inline-flex items-center gap-1.5" title={`${label}: ${level} traffic`}>
+      <span className="text-gray-400">{label}</span>
+      <span className={`inline-block h-1.5 w-1.5 rounded-full ${dotBg(level)}`} />
+    </span>
+  )
+}
+
+// Routes where the marketing info bar doesn't belong.
+const HIDDEN_PREFIXES = ['/account', '/checkout', '/admin']
+
 export default function LocalTicker() {
+  const pathname = usePathname()
   const [weatherText, setWeatherText] = useState('')
   const [dateStr, setDateStr] = useState('')
   const [timeStr, setTimeStr] = useState('')
@@ -90,22 +104,34 @@ export default function LocalTicker() {
     return () => clearInterval(clockInterval)
   }, [])
 
-  if (!mounted) return <div className="h-7" />
+  // Not on the customer portal, checkout, or admin back-office.
+  if (pathname && HIDDEN_PREFIXES.some((p) => pathname.startsWith(p))) return null
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-[60] bg-[#1a2e2c] border-b border-white/[0.06]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-center gap-4 sm:gap-6 py-1.5 text-[11px] font-mono tracking-wide text-gray-500">
-        {dateStr && <span>{dateStr}</span>}
-        {timeStr && <><span className="text-gray-700">·</span><span>{timeStr}</span></>}
-        {weatherText && <><span className="text-gray-700">·</span><span>{weatherText}</span></>}
-        {traffic && <>
-          <span className="hidden sm:inline text-gray-700">·</span>
-          <span className="hidden sm:inline">I-25 <span className={tc(traffic.i25)}>{traffic.i25}</span></span>
-          <span className="hidden md:inline text-gray-700">·</span>
-          <span className="hidden md:inline">C-470 <span className={tc(traffic.c470)}>{traffic.c470}</span></span>
-          <span className="hidden md:inline text-gray-700">·</span>
-          <span className="hidden md:inline">I-225 <span className={tc(traffic.i225)}>{traffic.i225}</span></span>
-        </>}
+    <div className="fixed top-0 left-0 right-0 z-[60] h-7 bg-[#15363b]/95 backdrop-blur-sm border-b border-white/10">
+      <div className="max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex items-center justify-between text-[11px] font-mono tracking-wide text-gray-400">
+        {/* Left — live local anchor */}
+        <div className="hidden sm:flex items-center gap-2">
+          <span className="relative flex h-1.5 w-1.5" aria-hidden>
+            <span className="absolute inline-flex h-full w-full rounded-full bg-[#6BB8B2] opacity-60 animate-ping" />
+            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#6BB8B2]" />
+          </span>
+          <span className="text-gray-300">Centennial, CO</span>
+        </div>
+
+        {/* Right — date / time / weather / traffic */}
+        <div className="flex items-center gap-3 sm:gap-4 mx-auto sm:mx-0">
+          {mounted && dateStr && <span className="hidden sm:inline">{dateStr}</span>}
+          {mounted && timeStr && <span>{timeStr}</span>}
+          {mounted && weatherText && <><span className="text-gray-600" aria-hidden>·</span><span>{weatherText}</span></>}
+          {mounted && traffic && (
+            <span className="hidden md:flex items-center gap-3 pl-1 border-l border-white/10 ml-1">
+              <TrafficDot label="I-25" level={traffic.i25} />
+              <TrafficDot label="C-470" level={traffic.c470} />
+              <TrafficDot label="I-225" level={traffic.i225} />
+            </span>
+          )}
+        </div>
       </div>
     </div>
   )
