@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { MapPinIcon, PhoneIcon, EnvelopeIcon } from '@heroicons/react/24/outline'
+import { MapPinIcon, ChatBubbleLeftIcon, EnvelopeIcon } from '@heroicons/react/24/outline'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 
 const PRODUCTS = [
@@ -49,8 +49,9 @@ export default function SiteFooter() {
                 {siteInfo.city}, {siteInfo.state}
               </div>
               <a href={getSmsLink()} className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors">
-                <PhoneIcon className="w-4 h-4 text-vurmz-teal/60 flex-shrink-0" />
+                <ChatBubbleLeftIcon className="w-4 h-4 text-vurmz-teal/60 flex-shrink-0" />
                 {siteInfo.phone}
+                <span className="text-gray-600">· text</span>
               </a>
               <a href={`mailto:${siteInfo.email}`} className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors">
                 <EnvelopeIcon className="w-4 h-4 text-vurmz-teal/60 flex-shrink-0" />

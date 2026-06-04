@@ -2,10 +2,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { ChatBubbleLeftIcon, ArrowRightIcon, PhoneIcon, ShieldCheckIcon } from '@heroicons/react/24/outline'
+import { ChatBubbleLeftIcon, ArrowRightIcon, ShieldCheckIcon } from '@heroicons/react/24/outline'
 import { SHOP_CATEGORIES, getCategoryBySlug, getCategoriesBySlugs } from '@/lib/categories'
 import { BASIC, BASIC_PRICING_CARDS, SIGNATURE } from '@/lib/pricing'
-import { siteInfo, getSmsLink, getPhoneLink } from '@/lib/site-info'
+import { siteInfo, getSmsLink } from '@/lib/site-info'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import CategoryCard from '@/components/CategoryCard'
 import AccordionFAQ from '@/components/AccordionFAQ'
@@ -115,11 +115,11 @@ export default async function ShopCategoryPage({ params }: { params: Promise<{ c
                   Text to order
                 </a>
                 <a
-                  href={getPhoneLink()}
+                  href={getSmsLink()}
                   className="inline-flex items-center gap-2 px-6 py-3 border border-white/15 text-gray-300 font-semibold text-sm rounded-sm hover:border-[#B16558]/40 hover:text-[#F0E6D3] transition-all"
                 >
-                  <PhoneIcon className="w-4 h-4" />
-                  Call {siteInfo.phone}
+                  <ChatBubbleLeftIcon className="w-4 h-4" />
+                  Text {siteInfo.phone}
                 </a>
               </div>
             </div>

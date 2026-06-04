@@ -122,8 +122,8 @@ export default function PrivacyPage() {
                   </a>
                 </p>
                 <p>
-                  <a href={`tel:${siteInfo.phone.replace(/[^0-9]/g, '')}`} className="text-vurmz-teal hover:text-cream transition-colors">
-                    {siteInfo.phone}
+                  <a href={`sms:${siteInfo.phone.replace(/[^0-9]/g, '')}`} className="text-vurmz-teal hover:text-cream transition-colors">
+                    {siteInfo.phone} (text)
                   </a>
                 </p>
               </div>

@@ -161,7 +161,7 @@ export async function POST(request: NextRequest) {
             <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid #eee;">
               <p style="color: #888; font-size: 13px; margin: 0;">
                 Zach DeMillo &middot; VURMZ<br/>
-                <a href="tel:7192573834" style="color: #3CB9B2;">(719) 257-3834</a> &middot;
+                <a href="sms:7192573834" style="color: #3CB9B2;">(719) 257-3834 (text)</a> &middot;
                 <a href="https://vurmz.com" style="color: #3CB9B2;">vurmz.com</a>
               </p>
             </div>

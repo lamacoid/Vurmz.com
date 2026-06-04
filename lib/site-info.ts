@@ -84,5 +84,5 @@ export const shopNavigation = [
 // Quick helper functions
 export const getSmsLink = (message?: string) =>
   message ? `sms:${siteInfo.phoneClean}?body=${encodeURIComponent(message)}` : `sms:${siteInfo.phoneClean}`
-export const getPhoneLink = () => `tel:${siteInfo.phoneClean}`
+// VURMZ is text-only — no call links anywhere.
 export const getEmailLink = () => `mailto:${siteInfo.email}`

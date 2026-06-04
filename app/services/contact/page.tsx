@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 import Image from 'next/image'
-import { MapPinIcon, PhoneIcon, EnvelopeIcon, ClockIcon } from '@heroicons/react/24/outline'
+import { MapPinIcon, ChatBubbleLeftIcon, EnvelopeIcon, ClockIcon } from '@heroicons/react/24/outline'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 import ContactForm from '@/components/ContactForm'
 import Breadcrumbs from '@/components/Breadcrumbs'
@@ -73,7 +73,7 @@ export default function ContactPage() {
               Let&apos;s Talk
             </h1>
             <p className="text-xl text-gray-300">
-              Send a message, text, or call. You get Zach directly.
+              Send a message or a text. You get Zach directly.
             </p>
           </div>
         </div>
@@ -96,14 +96,14 @@ export default function ContactPage() {
               <div className="space-y-6">
                 <div className="flex items-start gap-4">
                   <div className="bg-vurmz-teal p-3 rounded-lg">
-                    <PhoneIcon className="h-6 w-6 text-white" />
+                    <ChatBubbleLeftIcon className="h-6 w-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-lg text-cream">Text or Call</h3>
+                    <h3 className="font-semibold text-lg text-cream">Text Me</h3>
                     <a href={getSmsLink()} className="text-vurmz-teal text-xl font-semibold hover:underline">
                       {siteInfo.phone}
                     </a>
-                    <p className="text-sm text-gray-400 mt-1">Fastest way to reach Zach</p>
+                    <p className="text-sm text-gray-400 mt-1">Fastest way to reach Zach — text only</p>
                   </div>
                 </div>
 

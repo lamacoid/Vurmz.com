@@ -96,7 +96,7 @@ export async function POST(request: NextRequest) {
     const { allowed, remaining } = await checkRateLimit(clientIp)
     if (!allowed) {
       return NextResponse.json(
-        { error: 'Too many submissions. Please wait a few minutes and try again, or text/call directly.' },
+        { error: 'Too many submissions. Please wait a few minutes and try again, or text me directly.' },
         { status: 429, headers: { 'Retry-After': '600' } }
       )
     }
@@ -174,7 +174,7 @@ export async function POST(request: NextRequest) {
     if (!resendApiKey) {
       console.error('RESEND_API_KEY not configured')
       return NextResponse.json(
-        { error: 'Email service not configured. Please call or text instead.' },
+        { error: 'Email service not configured. Please text instead.' },
         { status: 500 }
       )
     }
@@ -194,7 +194,7 @@ export async function POST(request: NextRequest) {
           ${phone ? `
           <tr>
             <td style="padding: 8px 0; font-weight: bold; color: #666;">Phone</td>
-            <td style="padding: 8px 0;"><a href="tel:${escapeHtml(phone)}">${escapeHtml(phone)}</a></td>
+            <td style="padding: 8px 0;"><a href="sms:${escapeHtml(phone)}">${escapeHtml(phone)}</a></td>
           </tr>
           ` : ''}
           ${productInterest ? `
@@ -304,7 +304,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     await reportError(error, { route: 'contact', method: 'POST' })
     return NextResponse.json(
-      { error: 'Failed to send message. Please try again or call/text directly.' },
+      { error: 'Failed to send message. Please try again or text me directly.' },
       { status: 500 }
     )
   }

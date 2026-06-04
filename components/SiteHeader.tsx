@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
-import { Bars3Icon, XMarkIcon, ChatBubbleLeftIcon, PhoneIcon, UserIcon } from '@heroicons/react/24/outline'
+import { Bars3Icon, XMarkIcon, ChatBubbleLeftIcon, UserIcon } from '@heroicons/react/24/outline'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 import CartButton from '@/components/shop/CartButton'
 

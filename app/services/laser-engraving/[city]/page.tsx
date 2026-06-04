@@ -306,7 +306,7 @@ export default async function CityPage({ params }: Props) {
             Ready to get started in {city.name}?
           </h2>
           <p className="text-gray-400 text-base leading-relaxed mb-6">
-            Text or call {siteInfo.founder.name} for a free quote. Fast turnaround on finished orders.
+            Text {siteInfo.founder.name} for a free quote. Fast turnaround on finished orders.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link

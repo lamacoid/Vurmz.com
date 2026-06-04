@@ -82,7 +82,7 @@ export default function InboxPage() {
               </a>
             )}
             {selected.phone && (
-              <a href={`tel:${selected.phone}`} className="text-xs bg-[#1d474e] px-2.5 py-1 rounded-full text-[#6BB8B2]">
+              <a href={`sms:${selected.phone}`} className="text-xs bg-[#1d474e] px-2.5 py-1 rounded-full text-[#6BB8B2]">
                 {selected.phone}
               </a>
             )}

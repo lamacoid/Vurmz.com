@@ -73,7 +73,7 @@ export default function Home() {
           <h2 className="text-2xl sm:text-3xl font-bold text-cream tracking-tight mb-10">How it works.</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { step: 1, title: 'Text or call', desc: 'Send me what you need. Photos, logos, quantities.' },
+              { step: 1, title: 'Text me', desc: 'Send me what you need. Photos, logos, quantities.' },
               { step: 2, title: 'I quote you', desc: 'Fast, transparent pricing. No setup fees. No surprises.' },
               { step: 3, title: 'I engrave it', desc: 'One person handles your job from setup to finish. No outsourcing, no handoffs.' },
               { step: 4, title: 'Hand-delivered', desc: 'I deliver to your door across the South Denver metro. Free on orders $100+.' },
