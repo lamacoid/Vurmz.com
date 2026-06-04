@@ -109,7 +109,7 @@ export default function SiteFooter() {
       <div className="border-t border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center">
           <p className="text-vurmz-teal text-sm sm:text-base font-semibold tracking-wide italic">
-            Let&apos;s Put Your Name On Something.
+            Need a guy with some lasers? That&apos;s me.
           </p>
         </div>
       </div>
