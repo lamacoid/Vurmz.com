@@ -12,6 +12,16 @@ const nextConfig: NextConfig = {
 
   trailingSlash: true,
 
+  // /shop/contact is a funnel into the single contact page. A framework-level
+  // redirect is compiled into the next-on-pages worker (which owns all routing
+  // via _routes.json "/*"), so it returns a real 308 — unlike a Server Component
+  // redirect() or a public/_redirects rule, both of which the worker shadows.
+  async redirects() {
+    return [
+      { source: '/shop/contact', destination: '/services/contact', permanent: true },
+    ]
+  },
+
   env: {
     NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL || 'https://vurmz.com',
   },
