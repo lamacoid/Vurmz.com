@@ -55,11 +55,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
       priority: 0.9,
     },
+    // /shop/contact intentionally omitted — it 308-redirects to /services/contact.
     {
-      url: `${baseUrl}/shop/contact`,
+      url: `${baseUrl}/services/metal-tags`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
-      priority: 0.7,
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/services/knife-engraving`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.8,
     },
     {
       url: `${baseUrl}/about`,

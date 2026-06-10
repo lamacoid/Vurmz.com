@@ -10,6 +10,10 @@ export interface ShopCategory {
   name: string
   shortName: string
   tagline: string
+  /** Short, location-keyword-free blurb shown under the title on the /shop card. */
+  cardDescription?: string
+  /** Optional related service-page link surfaced on the /shop card. */
+  serviceLink?: { label: string; href: string }
   description: string
   heroImage: string | null
   galleryImages: string[]
@@ -28,6 +32,7 @@ export const SHOP_CATEGORIES: ShopCategory[] = [
     name: 'Gifts & Keepsakes',
     shortName: 'Gifts',
     tagline: 'The kind of gift people actually keep.',
+    cardDescription: 'Anniversaries, retirements, the gift for the person who has everything. Engraving turns an object into a record.',
     description: `Custom laser engraved gifts in ${SIGNATURE.startingPrice > 0 ? `Centennial, CO. Starting at $${SIGNATURE.startingPrice}` : 'Centennial, CO'}. Cutting boards, plaques, trophies, and personalized keepsakes. Hand-delivered in South Denver.`,
     heroImage: '/portfolio/culinary-cleaver-engraved.jpg',
     galleryImages: [
@@ -56,6 +61,8 @@ export const SHOP_CATEGORIES: ShopCategory[] = [
     name: 'Knife Engraving',
     shortName: 'Knives',
     tagline: 'Bring your blade. I\'ll make it yours.',
+    cardDescription: 'Chef knives, pocket knives, cleavers. A name on the blade or a date on the bolster, marked permanently into the steel.',
+    serviceLink: { label: 'Engraving for businesses', href: '/services/knife-engraving' },
     description: `Knife engraving in Centennial, CO. $${BASIC.knives.perKnife}/knife. Names, initials, logos near the handle. Kitchen crew pickup available. Hand-delivered by VURMZ.`,
     heroImage: '/portfolio/pocket-knife-engraved.jpg',
     galleryImages: [
@@ -85,6 +92,7 @@ export const SHOP_CATEGORIES: ShopCategory[] = [
     name: 'Tumblers & Bottles',
     shortName: 'Tumblers',
     tagline: 'Your name on the cup nobody borrows.',
+    cardDescription: 'Powder-coated tumblers, water bottles, flasks. The coating burns away clean and the mark never washes off, peels, or fades.',
     description: `Custom engraved tumblers and water bottles in Centennial, CO. Starting at $${SIGNATURE.startingPrice}. Stainless steel, powder-coated, full-wrap available. Hand-delivered by VURMZ.`,
     heroImage: '/portfolio/water-bottle-full-wrap.jpg',
     galleryImages: [
@@ -164,6 +172,7 @@ export const SHOP_CATEGORIES: ShopCategory[] = [
     name: 'Art & Home Decor',
     shortName: 'Decor',
     tagline: 'One-of-a-kind pieces for your walls.',
+    cardDescription: 'Maps on mirrors, photos on slate, custom pieces on wood and metal. If you can send me an image, I can probably make it permanent.',
     description: `Custom laser engraved art and home decor in Centennial, CO. Starting at $${SIGNATURE.startingPrice}. Mirrors, metal artwork, custom pieces. Hand-delivered by VURMZ.`,
     heroImage: '/portfolio/eye-storm-hexagonal-mirror.jpg',
     galleryImages: [
@@ -192,6 +201,7 @@ export const SHOP_CATEGORIES: ShopCategory[] = [
     name: 'Device Engraving',
     shortName: 'Devices',
     tagline: 'Permanent personalization on your tech.',
+    cardDescription: 'Laptops, tablets, chargers, tools. Your name on your stuff means it comes back when it walks off.',
     description: `MacBook, iPad, and laptop engraving in Centennial, CO. Starting at $${SIGNATURE.startingPrice}. Permanent laser engraving on your device. Hand-delivered by VURMZ.`,
     heroImage: '/portfolio/macbook-engraving.jpg',
     galleryImages: [

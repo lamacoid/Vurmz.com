@@ -26,6 +26,21 @@ export default function PricingPage() {
         <Breadcrumbs items={[{ label: 'VURMZ', href: '/' }, { label: 'Services', href: '/services' }, { label: 'Pricing' }]} theme="services" />
       </div>
 
+      {/* ═══ WHAT MOVES THE NUMBER ═══ */}
+      <section className="py-12 sm:py-16">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl sm:text-3xl font-bold text-cream tracking-tight leading-tight mb-6">
+            What moves the number.
+          </h2>
+          <p className="text-gray-400 text-base leading-relaxed mb-4">
+            Four things set the price of a job. Material, because steel marks differently than wood and some blanks cost more than others. Quantity, because setup is the expensive part and piece fifty costs less than piece one. Artwork, because a clean vector file is ready to run and a blurry photo of a logo needs rebuild time. And turnaround, because next-day is standard but same-day rush is possible when the schedule allows.
+          </p>
+          <p className="text-gray-400 text-base leading-relaxed">
+            Send me what you&apos;re thinking and I&apos;ll give you a real number, usually within a few hours. No quote forms that go nowhere. No &ldquo;starting at&rdquo; pricing that doubles later.
+          </p>
+        </div>
+      </section>
+
       {/* ═══ SIGNATURE ═══ */}
       <section className="py-12 sm:py-16 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">

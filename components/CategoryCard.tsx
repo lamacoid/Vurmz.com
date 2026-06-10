@@ -82,7 +82,19 @@ export default function CategoryCard({ category: cat, compact }: CategoryCardPro
         <Link href={`/shop/${cat.slug}`}>
           <h3 className="text-lg font-bold text-[#F0E6D3] mb-1.5 group-hover:text-[#B16558] transition-colors">{cat.name}</h3>
         </Link>
-        <p className="text-gray-400 text-sm leading-relaxed mb-4">{cat.tagline}</p>
+        <p className="text-gray-400 text-sm leading-relaxed mb-2">{cat.tagline}</p>
+        {cat.cardDescription && (
+          <p className="text-gray-500 text-sm leading-relaxed mb-4">{cat.cardDescription}</p>
+        )}
+        {cat.serviceLink && (
+          <Link
+            href={cat.serviceLink.href}
+            className="inline-flex items-center gap-1 text-xs text-[#6BB8B2] font-mono tracking-wide hover:text-[#F0E6D3] transition-colors mb-4"
+          >
+            {cat.serviceLink.label}
+            <ArrowRightIcon className="w-3 h-3" />
+          </Link>
+        )}
 
         <div className="flex items-center justify-between">
           <div>

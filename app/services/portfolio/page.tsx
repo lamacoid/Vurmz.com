@@ -11,6 +11,12 @@ export const metadata: Metadata = {
   title: { absolute: 'Laser Engraving Portfolio | VURMZ — Centennial, CO' },
   description: 'Client work, personal projects, and experiments in laser engraving. Metal, wood, glass, and more from Centennial, CO.',
   alternates: { canonical: '/services/portfolio' },
+  openGraph: {
+    title: 'Laser Engraving Portfolio | VURMZ',
+    description: 'Client work, personal projects, and experiments in laser engraving. Metal, wood, glass, and more from Centennial, CO.',
+    url: 'https://www.vurmz.com/services/portfolio',
+    images: ['/portfolio/denver-map-mirror-closeup.jpg'],
+  },
 }
 
 export default function PortfolioPage() {
@@ -40,22 +46,27 @@ export default function PortfolioPage() {
               <Link
                 key={item.slug}
                 href={`/services/portfolio/${item.slug}`}
-                className="relative break-inside-avoid rounded-sm overflow-hidden group block"
+                className="break-inside-avoid group block"
               >
-                <Image
-                  src={item.src}
-                  alt={item.label}
-                  width={800}
-                  height={600}
-                  className="w-full h-auto object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="absolute bottom-0 left-0 right-0 px-4 py-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                  <p className="text-sm text-cream font-medium">{item.label}</p>
-                  {item.context && (
-                    <p className="text-xs text-cream/60 mt-0.5">{item.context}</p>
-                  )}
+                <div className="relative rounded-sm overflow-hidden">
+                  <Image
+                    src={item.src}
+                    alt={item.label}
+                    width={800}
+                    height={600}
+                    className="w-full h-auto object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute bottom-0 left-0 right-0 px-4 py-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                    <p className="text-sm text-cream font-medium">{item.label}</p>
+                    {item.context && (
+                      <p className="text-xs text-cream/60 mt-0.5">{item.context}</p>
+                    )}
+                  </div>
                 </div>
+                <p className="mt-2 text-[11px] font-mono text-gray-500 tracking-[0.12em] uppercase">
+                  {item.material} &middot; {item.process}
+                </p>
               </Link>
             ))}
           </div>

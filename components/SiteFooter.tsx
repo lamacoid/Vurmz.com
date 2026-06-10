@@ -17,6 +17,8 @@ const BUSINESS = [
   { label: 'Pricing', href: '/services/pricing' },
   { label: 'Portfolio', href: '/services/portfolio' },
   { label: 'Materials', href: '/services/materials' },
+  { label: 'Service Tags', href: '/services/metal-tags' },
+  { label: 'Knife Engraving', href: '/services/knife-engraving' },
   { label: 'Contact', href: '/services/contact' },
 ]
 

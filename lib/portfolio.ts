@@ -6,6 +6,7 @@
 //   label        — short title
 //   context      — one-line summary (used on grid cards + meta description)
 //   material     — what was engraved on
+//   process      — machine + technique, shown in the caption (e.g. "fiber laser")
 //   customerType — Business / Personal / Trade / Restaurant / Maker / Custom
 //   leadTimeDays — turnaround in days
 //   tags         — material + customer-type tags for filtering
@@ -17,6 +18,7 @@ export interface PortfolioItem {
   label: string
   context: string
   material: string
+  process: string
   customerType: 'Business' | 'Personal' | 'Trade' | 'Restaurant' | 'Maker' | 'Custom'
   leadTimeDays: number
   tags: string[]
@@ -30,6 +32,7 @@ export const portfolioItems: PortfolioItem[] = [
     label: 'Denver Metro Map on Mirror',
     context: 'Engraved from a vintage map file onto beveled mirror glass',
     material: 'Beveled mirror glass',
+    process: 'fiber ablation',
     customerType: 'Personal',
     leadTimeDays: 3,
     tags: ['glass', 'art', 'personal'],
@@ -41,6 +44,7 @@ export const portfolioItems: PortfolioItem[] = [
     label: 'Amp Faceplate for County Line Guitar Amps',
     context: 'Custom branded faceplate for a Denver-area amp builder',
     material: 'Brushed metal',
+    process: 'fiber laser',
     customerType: 'Business',
     leadTimeDays: 4,
     tags: ['metal', 'business', 'branded-product'],
@@ -52,6 +56,7 @@ export const portfolioItems: PortfolioItem[] = [
     label: 'Full-Wrap Medieval Water Bottle',
     context: 'Detailed medieval scene wrapped 360° on stainless steel',
     material: 'Stainless steel (powder-coated)',
+    process: 'fiber laser',
     customerType: 'Personal',
     leadTimeDays: 2,
     tags: ['metal', 'personal', 'detailed'],
@@ -63,6 +68,7 @@ export const portfolioItems: PortfolioItem[] = [
     label: 'MacBook Lid Engraving',
     context: 'Direct engraving on premium aluminum',
     material: 'Anodized aluminum (MacBook lid)',
+    process: 'fiber laser',
     customerType: 'Personal',
     leadTimeDays: 1,
     tags: ['metal', 'tech', 'personal'],
@@ -74,6 +80,7 @@ export const portfolioItems: PortfolioItem[] = [
     label: 'Engraved Culinary Cleaver',
     context: 'Kitchen knife personalized as a gift',
     material: 'Forged steel blade',
+    process: 'fiber laser',
     customerType: 'Restaurant',
     leadTimeDays: 2,
     tags: ['metal', 'kitchen', 'gift'],
@@ -85,6 +92,7 @@ export const portfolioItems: PortfolioItem[] = [
     label: 'Custom Art on Hexagonal Mirror',
     context: 'Original design engraved onto hexagonal beveled mirror',
     material: 'Beveled hexagonal mirror',
+    process: 'fiber ablation',
     customerType: 'Personal',
     leadTimeDays: 4,
     tags: ['glass', 'art', 'personal', 'detailed'],
@@ -96,6 +104,7 @@ export const portfolioItems: PortfolioItem[] = [
     label: 'Engraved Pocket Knife',
     context: 'Geometric pattern on a folding blade',
     material: 'Stainless steel folding blade',
+    process: 'fiber laser',
     customerType: 'Personal',
     leadTimeDays: 1,
     tags: ['metal', 'personal', 'gift'],
@@ -107,6 +116,7 @@ export const portfolioItems: PortfolioItem[] = [
     label: 'MacBook Engraving',
     context: 'Personalization on the back panel',
     material: 'Anodized aluminum (iPad back)',
+    process: 'fiber laser',
     customerType: 'Personal',
     leadTimeDays: 1,
     tags: ['metal', 'tech', 'personal'],
@@ -118,6 +128,7 @@ export const portfolioItems: PortfolioItem[] = [
     label: 'Branded Tumbler for Local Business',
     context: 'Logo engraving on a powder-coated stainless tumbler',
     material: 'Powder-coated stainless steel',
+    process: 'fiber laser',
     customerType: 'Business',
     leadTimeDays: 2,
     tags: ['metal', 'business', 'branded-product'],
@@ -129,6 +140,7 @@ export const portfolioItems: PortfolioItem[] = [
     label: 'Custom Water Bottle',
     context: 'Logo engraving on powder-coated steel',
     material: 'Powder-coated steel',
+    process: 'fiber laser',
     customerType: 'Business',
     leadTimeDays: 2,
     tags: ['metal', 'business', 'branded-product'],
@@ -140,6 +152,7 @@ export const portfolioItems: PortfolioItem[] = [
     label: 'Owner-Marked Charger Brick',
     context: 'Asset marking on an Apple charger',
     material: 'Polycarbonate (Apple charger)',
+    process: 'fiber marking',
     customerType: 'Personal',
     leadTimeDays: 1,
     tags: ['plastic', 'asset-marking', 'personal'],
@@ -151,6 +164,7 @@ export const portfolioItems: PortfolioItem[] = [
     label: 'Fine-Detail Aluminum Artwork',
     context: 'Anodized aluminum panel with fine line work',
     material: 'Anodized aluminum',
+    process: 'fiber laser',
     customerType: 'Maker',
     leadTimeDays: 3,
     tags: ['metal', 'art', 'detailed'],

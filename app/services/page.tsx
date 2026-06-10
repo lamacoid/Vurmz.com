@@ -113,9 +113,16 @@ export default function Home() {
               Leave your mark.
             </h2>
             <p className="text-gray-400 text-base leading-relaxed mb-6">
-              Metal service tags, installer signature tiles. If you do the work, people should know who did it. HVAC, plumbing, electrical, masonry, flooring.
+              <Link href="/services/metal-tags" className="text-cream underline decoration-vurmz-teal/40 underline-offset-4 hover:decoration-vurmz-teal transition-colors">Metal service tags</Link>, installer signature tiles. If you do the work, people should know who did it. HVAC, plumbing, electrical, masonry, flooring. Run a kitchen? I do <Link href="/services/knife-engraving" className="text-cream underline decoration-vurmz-teal/40 underline-offset-4 hover:decoration-vurmz-teal transition-colors">knife engraving</Link> for crews too.
             </p>
-            <div className="flex items-center gap-4">
+            <div className="flex flex-wrap items-center gap-4">
+              <Link
+                href="/services/metal-tags"
+                className="inline-flex items-center gap-2 text-sm text-vurmz-teal font-mono tracking-wide hover:text-cream transition-colors group"
+              >
+                Service tags
+                <ArrowRightIcon className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+              </Link>
               <Link
                 href="/services/pricing"
                 className="inline-flex items-center gap-2 text-sm text-vurmz-teal font-mono tracking-wide hover:text-cream transition-colors group"
