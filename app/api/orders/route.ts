@@ -13,6 +13,9 @@ import { getDb, getEnv, newId, nowIso } from '@/lib/db/client'
 
 export const runtime = 'edge'
 
+const esc = (s: string) =>
+  s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c] as string))
+
 const addressSchema = z.object({
   name: z.string().min(1).max(120),
   line1: z.string().min(1).max(200),
@@ -26,7 +29,15 @@ const addressSchema = z.object({
 
 const schema = z.object({
   email: z.string().email().max(200),
-  items: z.array(z.object({ productId: z.string(), qty: z.number().int().min(1) })).min(1),
+  items: z.array(z.object({
+    productId: z.string(),
+    qty: z.number().int().min(1),
+    personalization: z.object({
+      text: z.string().max(200),
+      fontValue: z.string().max(60).optional(),
+      fontLabel: z.string().max(120).optional(),
+    }).nullish(),
+  })).min(1),
   fulfillmentMethod: z.enum(['ship','hand_deliver','pickup','uber_direct','invoice_later']),
   address: addressSchema.optional().nullable(),
   notes: z.string().max(2000).optional(),
@@ -49,12 +60,12 @@ async function sendOrderEmails(env: CloudflareEnv, args: {
   subtotalCents: number
   fulfillmentFeeCents: number
   totalCents: number
-  items: Array<{ name: string; qty: number; unitPriceCents: number }>
+  items: Array<{ name: string; qty: number; unitPriceCents: number; engraving?: string }>
   fulfillmentLabel: string
 }) {
   if (!env.RESEND_API_KEY) return
   const dollars = (c: number) => `$${(c / 100).toFixed(2)}`
-  const lines = args.items.map(i => `<li>${i.qty} × ${i.name} — ${dollars(i.unitPriceCents * i.qty)}</li>`).join('')
+  const lines = args.items.map(i => `<li>${i.qty} × ${i.name} — ${dollars(i.unitPriceCents * i.qty)}${i.engraving ? `<br><span style="color:#888">✎ Engraving: ${i.engraving}</span>` : ''}</li>`).join('')
   const html = `
     <div style="font-family:system-ui,sans-serif;max-width:560px;margin:0 auto;padding:32px 20px;color:#111">
       <h2 style="margin:0 0 12px;font-size:20px">Thanks for your order — ${args.orderNumber}</h2>
@@ -150,6 +161,19 @@ export async function POST(req: NextRequest) {
     phone: body.address?.phone ?? null,
   })
 
+  // Per-line personalization (engraving), keyed by product.
+  const personalByProduct = new Map<string, { text: string; fontValue?: string; fontLabel?: string }>()
+  for (const it of body.items) {
+    const t = it.personalization?.text?.trim()
+    if (t) {
+      personalByProduct.set(it.productId, {
+        text: t.slice(0, 200),
+        fontValue: it.personalization?.fontValue || undefined,
+        fontLabel: it.personalization?.fontLabel || undefined,
+      })
+    }
+  }
+
   // 4. Create order
   const order = await createOrder({
     customerId: customer.id,
@@ -161,12 +185,16 @@ export async function POST(req: NextRequest) {
     fulfillmentAddress: (body.address ?? null) as ShippingAddress | null,
     fulfillmentEta: null,
     notes: body.notes ?? '',
-    items: cart.items.map(i => ({
-      productId: i.productId,
-      nameSnapshot: i.name,
-      qty: i.qty,
-      unitPriceCents: i.unitPriceCents,
-    })),
+    items: cart.items.map(i => {
+      const eng = personalByProduct.get(i.productId)
+      return {
+        productId: i.productId,
+        nameSnapshot: i.name,
+        qty: i.qty,
+        unitPriceCents: i.unitPriceCents,
+        metadata: eng ? { engraving: eng } : undefined,
+      }
+    }),
     channel: 'shop',
     metadata: {
       source: 'checkout',
@@ -231,7 +259,15 @@ export async function POST(req: NextRequest) {
     subtotalCents: cart.subtotalCents,
     fulfillmentFeeCents,
     totalCents,
-    items: cart.items.map(i => ({ name: `${i.name} (${i.packSize}-pack)`, qty: i.qty, unitPriceCents: i.unitPriceCents })),
+    items: cart.items.map(i => {
+      const eng = personalByProduct.get(i.productId)
+      return {
+        name: `${i.name} (${i.packSize}-pack)`,
+        qty: i.qty,
+        unitPriceCents: i.unitPriceCents,
+        engraving: eng ? `“${esc(eng.text)}”${eng.fontLabel ? ` · ${esc(eng.fontLabel)}` : ''}` : undefined,
+      }
+    }),
     fulfillmentLabel,
   })
 

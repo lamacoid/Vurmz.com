@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import Breadcrumbs from '@/components/Breadcrumbs'
@@ -7,6 +8,17 @@ import { getProductBySlug, getCategoryById } from '@/lib/db/repos/products'
 import { getMediaById } from '@/lib/db/repos/media'
 
 export const runtime = 'edge'
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params
+  const product = await getProductBySlug(slug)
+  if (!product || !product.isPublished || product.soldAt) return { title: 'Not found' }
+  return {
+    title: product.name,
+    description: product.description || `${product.name} — custom laser engraved by VURMZ in Centennial, CO.`,
+    alternates: { canonical: `/shop/p/${slug}` },
+  }
+}
 
 export default async function ProductDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
@@ -52,8 +64,10 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
               <span className="text-3xl font-bold text-[#B16558]">${price}</span>
               {product.oneOff ? (
                 <span className="text-sm text-gray-400">one of a kind</span>
-              ) : (
+              ) : product.packSize > 1 ? (
                 <span className="text-sm text-gray-400">pack of {product.packSize}</span>
+              ) : (
+                <span className="text-sm text-gray-400">each</span>
               )}
             </div>
 
@@ -77,6 +91,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
               packSize={product.packSize}
               heroUrl={hero?.url ?? null}
               oneOff={product.oneOff}
+              engravable={product.metadata?.engravable !== false}
             />
 
             {product.description && (

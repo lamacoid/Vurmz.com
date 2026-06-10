@@ -1,5 +1,8 @@
 /* Self-hosted fonts from Font Book - curated for laser engraving */
 
+/* VURMZ Originals — house typefaces (generated in /tools/kerf) */
+@font-face { font-family: 'Kerf'; src: url('/fonts/Kerf-Regular.woff2') format('woff2'), url('/fonts/Kerf-Regular.ttf') format('truetype'); font-display: swap; }
+
 /* Professional Sans-Serif */
 @font-face { font-family: 'B691-Sans'; src: url('/fonts/B691-Sans-Regular.ttf') format('truetype'); font-display: swap; }
 @font-face { font-family: 'E820-Sans'; src: url('/fonts/E820-Sans-Regular.ttf') format('truetype'); font-display: swap; }

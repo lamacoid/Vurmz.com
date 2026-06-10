@@ -67,7 +67,15 @@ export default function CartDrawer() {
                   >
                     {item.name}
                   </Link>
-                  <p className="text-xs text-gray-400">pack of {item.packSize} · {money(item.priceCents)} ea</p>
+                  <p className="text-xs text-gray-400">{item.packSize > 1 ? `pack of ${item.packSize} · ${money(item.priceCents)} ea` : `${money(item.priceCents)} each`}</p>
+                  {(() => {
+                    const eng = item.metadata?.engraving as { text?: string; fontLabel?: string } | undefined
+                    return eng?.text ? (
+                      <p className="text-[11px] text-[#B16558] truncate" title={`Engraving: ${eng.text}`}>
+                        ✎ “{eng.text}”{eng.fontLabel ? ` · ${eng.fontLabel}` : ''}
+                      </p>
+                    ) : null
+                  })()}
                   <div className="flex items-center gap-3 mt-2">
                     <div className="inline-flex items-center bg-white/[0.06] border border-white/15 rounded-sm text-sm text-gray-200">
                       <button onClick={() => setQty(item.productId, item.qty - 1)} className="px-2 py-1 text-gray-400 hover:text-[#F0E6D3]" aria-label="Decrease">−</button>

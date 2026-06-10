@@ -6,6 +6,7 @@ export const ENGRAVING_COLOR = '#c0c0c0'
 export const ENGRAVING_COLOR_DARK = '#a0a0a0'
 
 export type FontCategory =
+  | 'vurmz'
   | 'professional-sans'
   | 'professional-serif'
   | 'script'
@@ -24,6 +25,11 @@ export interface FontOption {
 }
 
 export const fontOptions: FontOption[] = [
+  // ============================================
+  // VURMZ ORIGINALS — exclusive house type, only on VURMZ
+  // ============================================
+  { value: 'kerf', label: 'Kerf', category: 'vurmz', style: { fontFamily: "'Kerf', sans-serif", letterSpacing: '1px' } },
+
   // ============================================
   // PROFESSIONAL SANS-SERIF (10)
   // ============================================
@@ -94,11 +100,11 @@ export const fontOptions: FontOption[] = [
   { value: 'courier-ps', label: 'Courier', category: 'monospace', style: { fontFamily: "'Courier-PS', monospace" } },
   { value: 'bitstream-vera', label: 'Bitstream Vera Mono', category: 'monospace', style: { fontFamily: "'Bitstream Vera Sans Mono', monospace" } },
   { value: 'bank-design', label: 'BankDesign', category: 'monospace', style: { fontFamily: "'BankDesign', monospace" } },
-  { value: 'spacetime', label: 'Spacetime', category: 'monospace', style: { fontFamily: "'Space Time', monospace" } },
 
   // ============================================
-  // FUN / NOVELTY (6)
+  // FUN / NOVELTY
   // ============================================
+  { value: 'spacetime', label: 'Space Time', category: 'fun', style: { fontFamily: "'Space Time', sans-serif" } },
   { value: 'balloon', label: 'Balloon', category: 'fun', style: { fontFamily: "'Balloon', cursive" } },
   { value: 'jua', label: 'Jua', category: 'fun', style: { fontFamily: "'Jua', sans-serif" } },
   { value: 'boopee', label: 'Boopee', category: 'fun', style: { fontFamily: "'Boopee', cursive" } },
@@ -122,6 +128,7 @@ export const fontOptions: FontOption[] = [
 
 // Group fonts by category for UI display
 export const fontsByCategory: Record<FontCategory, FontOption[]> = {
+  vurmz: fontOptions.filter(f => f.category === 'vurmz'),
   'professional-sans': fontOptions.filter(f => f.category === 'professional-sans'),
   'professional-serif': fontOptions.filter(f => f.category === 'professional-serif'),
   script: fontOptions.filter(f => f.category === 'script'),
@@ -134,6 +141,7 @@ export const fontsByCategory: Record<FontCategory, FontOption[]> = {
 }
 
 export const categoryLabels: Record<FontCategory, string> = {
+  vurmz: 'VURMZ Originals',
   'professional-sans': 'Clean & Modern',
   'professional-serif': 'Classic & Professional',
   script: 'Script & Elegant',

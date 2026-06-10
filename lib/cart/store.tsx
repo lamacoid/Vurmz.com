@@ -161,11 +161,21 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     setState(prev => {
       const existing = prev.items.find(i => i.productId === item.productId)
       if (existing) {
-        // One-off items are unique — never increment past 1.
-        if (item.oneOff || existing.oneOff) return prev
+        // One-off items are unique — never increment past 1, but still let a
+        // fresh engraving choice replace the old one.
+        if (item.oneOff || existing.oneOff) {
+          if (!item.metadata) return prev
+          return {
+            items: prev.items.map(i =>
+              i.productId === item.productId ? { ...i, metadata: item.metadata } : i
+            ),
+          }
+        }
         return {
           items: prev.items.map(i =>
-            i.productId === item.productId ? { ...i, qty: i.qty + qty } : i
+            i.productId === item.productId
+              ? { ...i, qty: i.qty + qty, metadata: item.metadata ?? i.metadata }
+              : i
           ),
         }
       }

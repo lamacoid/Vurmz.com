@@ -101,7 +101,16 @@ export default function CheckoutPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           email,
-          items: items.map(i => ({ productId: i.productId, qty: i.qty })),
+          items: items.map(i => {
+            const eng = i.metadata?.engraving as { text?: string; fontValue?: string; fontLabel?: string } | undefined
+            return {
+              productId: i.productId,
+              qty: i.qty,
+              personalization: eng?.text
+                ? { text: eng.text, fontValue: eng.fontValue ?? '', fontLabel: eng.fontLabel ?? '' }
+                : undefined,
+            }
+          }),
           fulfillmentMethod: chosenMethod,
           address: needsAddress ? {
             name: address.name || email.split('@')[0],
@@ -301,7 +310,13 @@ export default function CheckoutPage() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium truncate">{item.name}</p>
-                  <p className="text-xs text-[#6B6259]">{item.qty} × pack of {item.packSize}</p>
+                  <p className="text-xs text-[#6B6259]">{item.packSize > 1 ? `${item.qty} × pack of ${item.packSize}` : `Qty ${item.qty}`}</p>
+                  {(() => {
+                    const eng = item.metadata?.engraving as { text?: string; fontLabel?: string } | undefined
+                    return eng?.text ? (
+                      <p className="text-[11px] text-[#B16558] truncate">✎ “{eng.text}”{eng.fontLabel ? ` · ${eng.fontLabel}` : ''}</p>
+                    ) : null
+                  })()}
                 </div>
                 <p className="text-sm font-semibold">{money(item.priceCents * item.qty)}</p>
               </div>
