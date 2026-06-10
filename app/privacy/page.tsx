@@ -5,6 +5,7 @@ import { siteInfo } from '@/lib/site-info'
 export const metadata: Metadata = {
   title: 'Privacy Policy',
   description: `Privacy policy for ${siteInfo.legalName}. How we handle your information when you use our laser engraving services in ${siteInfo.city}, CO.`,
+  alternates: { canonical: '/privacy' },
 }
 
 export default function PrivacyPage() {

@@ -7,15 +7,16 @@ import Breadcrumbs from '@/components/Breadcrumbs'
 import SiteHero from '@/components/SiteHero'
 
 export const metadata: Metadata = {
-  title: 'Pricing',
+  title: { absolute: 'Laser Engraving Pricing | VURMZ — Centennial, CO' },
   description: `Laser engraving pricing for ${siteInfo.city} and the Denver metro. Two tiers: Basic stock items and Signature custom work starting at $${SIGNATURE.startingPrice}. No setup fees. Free delivery.`,
+  alternates: { canonical: '/services/pricing' },
 }
 
 export default function PricingPage() {
   return (
     <div className="bg-vurmz-dark">
       {/* Hero (shared) */}
-      <SiteHero eyebrow="Pricing" accent="teal" baseColor="#235158">
+      <SiteHero eyebrow="Pricing" heading="Laser Engraving Pricing" accent="teal" baseColor="#235158">
         <p className="text-gray-300 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
           Two tiers, one standard. Basic covers stock items and straightforward marking. Signature is custom work on your item — the stuff that ends up in my portfolio.
         </p>

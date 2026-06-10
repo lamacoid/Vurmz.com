@@ -16,28 +16,12 @@ const fraunces = Fraunces({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://www.vurmz.com'),
   title: {
     default: 'VURMZ | Laser Engraving — Shop & Services',
-    template: '%s | VURMZ'
+    template: '%s | VURMZ Laser Engraving',
   },
   description: 'VURMZ laser engraving in Centennial, CO. Shop engraved products or get custom engraving services for your business. Next-day turnaround, hand-delivered in South Denver metro.',
-  keywords: [
-    'laser engraving Centennial CO',
-    'laser engraving near me',
-    'custom engraving Denver metro',
-    'branded pens Colorado',
-    'metal business cards',
-    'equipment nameplates',
-    'ABS panel labels',
-    'laser engraving Highlands Ranch',
-    'laser engraving Greenwood Village',
-    'laser engraving Cherry Hills',
-    'laser engraving Lone Tree',
-    'laser engraving Littleton',
-    'custom gifts Centennial',
-    'engraved trophies Denver',
-    'small business engraving',
-  ],
   authors: [{ name: 'VURMZ' }],
   creator: 'VURMZ',
   icons: {
@@ -78,9 +62,6 @@ export const metadata: Metadata = {
   },
   verification: {
     google: 'kdFagQeB5Nkh4pa0AjopDD1V9hNOkGza-XMb4y9w9T8',
-  },
-  alternates: {
-    canonical: 'https://www.vurmz.com',
   },
 }
 

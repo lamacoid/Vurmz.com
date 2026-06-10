@@ -214,7 +214,7 @@ export default function ItemScroller({ opacityScale = 1 }: { opacityScale?: numb
               }}
             >
               <span className="inline-block px-8">{content}       ·       </span>
-              <span className="inline-block px-8">{content}       ·       </span>
+              <span className="inline-block px-8" aria-hidden="true">{content}       ·       </span>
             </div>
           </div>
         )

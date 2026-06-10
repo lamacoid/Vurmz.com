@@ -15,7 +15,7 @@ This folder contains everything you need to manage and update your website.
 ## Running the Site Locally
 
 ```bash
-cd "/Users/zacharydemillo/Desktop/WEBSITE PROJECT"
+cd "/Users/zacharydemillo/Projects/VURMZ/Main Site"
 npm run dev
 ```
 
@@ -30,7 +30,7 @@ npm run build
 ## File Structure
 
 ```
-WEBSITE PROJECT/
+Main Site/
 ├── app/                    # All pages
 │   ├── page.tsx           # Homepage
 │   ├── pricing/           # Pricing page

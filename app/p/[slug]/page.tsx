@@ -14,6 +14,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     title: page.title,
     description: page.metaDescription ?? undefined,
     robots: page.noindex ? { index: false, follow: false } : undefined,
+    alternates: page.noindex ? undefined : { canonical: `/p/${slug}` },
   }
 }
 

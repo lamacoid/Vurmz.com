@@ -44,7 +44,12 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
       />
       {/* ═══════════ HERO (shared) ═══════════ */}
-      <SiteHero eyebrow="For Your Work" accent="teal" baseColor="#235158">
+      <SiteHero
+        eyebrow="For Your Work"
+        heading="Laser Engraving Services for Businesses in the Denver Metro"
+        accent="teal"
+        baseColor="#235158"
+      >
         <p className="text-gray-300 text-base sm:text-lg leading-relaxed mb-7 max-w-xl mx-auto">
           Next-day turnaround. Hand-to-hand delivery across the South Denver metro. One person, start to finish.
         </p>

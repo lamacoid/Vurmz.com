@@ -6,8 +6,9 @@ import ContactForm from '@/components/ContactForm'
 import Breadcrumbs from '@/components/Breadcrumbs'
 
 export const metadata: Metadata = {
-  title: 'Contact',
+  title: { absolute: 'Contact | VURMZ Laser Engraving — Centennial, CO' },
   description: `Contact ${siteInfo.founder.name} at ${siteInfo.name} for laser engraving in ${siteInfo.city} and Denver metro. Text ${siteInfo.phone} or email.`,
+  alternates: { canonical: '/services/contact' },
 }
 
 const faqItems = [

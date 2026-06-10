@@ -189,10 +189,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: `${title} | VURMZ`,
       description,
-      url: `${siteInfo.url}/laser-engraving/${city.slug}`,
+      url: `${siteInfo.url}/services/laser-engraving/${city.slug}`,
     },
     alternates: {
-      canonical: `${siteInfo.url}/laser-engraving/${city.slug}`,
+      canonical: `/services/laser-engraving/${city.slug}`,
     },
   }
 }

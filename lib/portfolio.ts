@@ -104,7 +104,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     slug: 'ipad-personalization',
     src: '/portfolio/columbine-macbook-engraving.jpg',
-    label: 'iPad Engraving',
+    label: 'MacBook Engraving',
     context: 'Personalization on the back panel',
     material: 'Anodized aluminum (iPad back)',
     customerType: 'Personal',

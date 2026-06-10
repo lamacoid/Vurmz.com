@@ -11,6 +11,7 @@ import SiteFooter from '@/components/SiteFooter'
 export const metadata: Metadata = {
   title: 'About',
   description: `Meet ${siteInfo.founder.name}, the person behind VURMZ. One-person laser engraving studio in ${siteInfo.city}, Colorado. Personal service, next-day turnaround, hand-delivered.`,
+  alternates: { canonical: '/about' },
 }
 
 export default function AboutPage() {

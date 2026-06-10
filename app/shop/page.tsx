@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { ChatBubbleLeftIcon } from '@heroicons/react/24/outline'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 import { shopTestimonials } from '@/lib/testimonials'
@@ -29,11 +30,20 @@ const WORK = [
   { src: '/portfolio/water-bottle-custom-engraved.jpg', label: 'Water Bottle' },
 ]
 
+export const metadata: Metadata = {
+  alternates: { canonical: '/shop' },
+}
+
 export default function ShopHome() {
   return (
     <div>
       {/* Shared brand hero */}
-      <SiteHero eyebrow="For You" accent="coral" baseColor="#1f4f57">
+      <SiteHero
+        eyebrow="For You"
+        heading="Custom Laser Engraving — Gifts, Knives, Tumblers & More"
+        accent="coral"
+        baseColor="#1f4f57"
+      >
         <p className="text-gray-300 text-base sm:text-lg leading-relaxed mb-7 max-w-lg mx-auto">
           Engraved gifts, personalized knives, custom coasters, home decor. Bring your own item or
           I&apos;ll find it for you — engraved and hand-delivered across {siteInfo.city}.

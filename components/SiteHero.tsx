@@ -16,6 +16,10 @@ const heroBg = portfolioItems.map((i) => ({ src: i.src, alt: i.label }))
 interface SiteHeroProps {
   /** Small label above the headline, e.g. "Individuals" / "Businesses". */
   eyebrow?: string
+  /** Unique, descriptive H1 for this page. When set, this becomes the page's
+   *  real <h1> and the rotating brand tagline is demoted to a styled <p> so
+   *  every page carries its own page-specific heading for SEO. */
+  heading?: string
   /** Accent for the eyebrow + rotating word. Shop = coral, Services = teal. */
   accent?: 'coral' | 'teal'
   /** The page's own background teal, so the hero dissolves into it with no seam. */
@@ -31,7 +35,7 @@ interface SiteHeroProps {
  *
  * Pulls up under the fixed SiteHeader via the negative top margin.
  */
-export default function SiteHero({ eyebrow, accent = 'coral', baseColor = '#1f4f57', children }: SiteHeroProps) {
+export default function SiteHero({ eyebrow, heading, accent = 'coral', baseColor = '#1f4f57', children }: SiteHeroProps) {
   const [bg, setBg] = useState(0)
   const [w, setW] = useState(0)
 
@@ -46,6 +50,10 @@ export default function SiteHero({ eyebrow, accent = 'coral', baseColor = '#1f4f
   }, [])
 
   const accentColor = accent === 'teal' ? '#6BB8B2' : '#B16558'
+
+  // When a page-specific heading is supplied it owns the <h1>, so the rotating
+  // brand tagline drops to a <p> (same big typography, just demoted in markup).
+  const Tagline = heading ? motion.p : motion.h1
 
   return (
     <section className="relative overflow-hidden -mt-[92px] sm:-mt-[100px] pt-[128px] sm:pt-[152px] pb-12 sm:pb-16">
@@ -85,7 +93,18 @@ export default function SiteHero({ eyebrow, accent = 'coral', baseColor = '#1f4f
           </motion.span>
         )}
 
-        <motion.h1
+        {heading && (
+          <motion.h1
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.05 }}
+            className="text-[#F0E6D3] font-semibold tracking-tight text-xl sm:text-2xl mb-4"
+          >
+            {heading}
+          </motion.h1>
+        )}
+
+        <Tagline
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -112,7 +131,7 @@ export default function SiteHero({ eyebrow, accent = 'coral', baseColor = '#1f4f
             </AnimatePresence>
           </span>
           <span className="block">on something.</span>
-        </motion.h1>
+        </Tagline>
 
         {children && (
           <motion.div

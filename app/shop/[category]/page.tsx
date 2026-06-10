@@ -33,6 +33,7 @@ export async function generateMetadata({ params }: { params: Promise<{ category:
       description: cat.description,
       ...(cat.heroImage ? { images: [`https://www.vurmz.com${cat.heroImage}`] } : {}),
     },
+    alternates: { canonical: `/shop/${slug}` },
   }
 }
 

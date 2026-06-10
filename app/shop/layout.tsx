@@ -4,7 +4,7 @@ import CartDrawer from '@/components/shop/CartDrawer'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Laser Engraving',
+  title: 'Shop',
   description: 'Custom laser engraving in Centennial, CO. Bring your own item or tell me what you need. Knives, tumblers, cutting boards, laptops, and more. Hand-delivered across South Denver.',
 }
 
