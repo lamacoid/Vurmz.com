@@ -29,8 +29,28 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## Deploy (Cloudflare Pages)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The site deploys to Cloudflare Pages (`vurmz-website`) via GitHub Actions —
+see [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml). It runs on
+every push:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- push to `main` → production deploy
+- push to `site-split` → preview deploy
+
+The workflow builds with `@cloudflare/next-on-pages` and ships with
+`wrangler pages deploy`. (This replaces the Cloudflare Pages GitHub App
+auto-deploy, which stopped triggering builds on push.)
+
+### Required GitHub Actions secrets
+
+Add these under **Settings → Secrets and variables → Actions** before the
+workflow can deploy:
+
+| Secret | What it is |
+| --- | --- |
+| `CLOUDFLARE_API_TOKEN` | API token with the **Cloudflare Pages: Edit** permission |
+| `CLOUDFLARE_ACCOUNT_ID` | The Cloudflare account ID that owns `vurmz-website` |
+
+Until both are set, the deploy step will fail. You can still deploy manually with
+`npm run pages:deploy`.

@@ -1,0 +1,47 @@
+name: Deploy to Cloudflare Pages
+
+# Replaces the (broken) Cloudflare Pages GitHub App auto-deploy.
+# Builds with next-on-pages and ships with wrangler on every push.
+#
+#   push to main       -> production deploy  (--branch=main)
+#   push to site-split -> preview deploy     (--branch=site-split)
+#
+# REQUIRED GitHub Actions secrets
+# (Repo Settings -> Secrets and variables -> Actions -> New repository secret):
+#   CLOUDFLARE_API_TOKEN   - token with the "Cloudflare Pages: Edit" permission
+#   CLOUDFLARE_ACCOUNT_ID  - the Cloudflare account ID that owns vurmz-website
+# Until both are set, this workflow will fail at the deploy step.
+
+on:
+  push:
+    branches: [main, site-split]
+
+jobs:
+  deploy:
+    name: build + deploy (${{ github.ref_name }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Build (next-on-pages)
+        run: npx @cloudflare/next-on-pages
+        env:
+          NEXT_PUBLIC_SITE_URL: https://www.vurmz.com
+
+      - name: Deploy (wrangler pages deploy)
+        run: >
+          npx wrangler pages deploy .vercel/output/static
+          --project-name=vurmz-website
+          --branch=${{ github.ref_name }}
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
