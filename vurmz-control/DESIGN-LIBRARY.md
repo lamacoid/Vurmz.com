@@ -33,6 +33,20 @@ node scripts/find-design.mjs de_42946ff39b341d0b
 Open that SVG in LightBurn and engrave. (You can also recognize most designs by
 the thumbnail and find them in the organizer app.)
 
+## Trademark/quality screen (2026-06-12)
+Per Zach: generic design elements only, no characters/branded art. Two passes:
+1. **Filename + organizer-tag scan** of all selected files against ~90
+   trademark terms (Disney/Marvel/Nintendo/sports/brand names): 2 hits, both
+   false positives (a Halloween "spider", a "frozen"-food file).
+2. **Visual review** of every thumbnail via contact sheets: pulled 13 items —
+   one cartoon duck face (Daffy/Donald territory, hiding in a generically-named
+   "Tattoo-Style" bundle), two sneaker silhouettes (logo-adjacent), and ten
+   off-category/UI-icon junk pieces (gift-with-checkmark icons, hourglass,
+   balloon dog, etc.).
+Catalog is now **200 elements**. Lesson recorded: any future additions need the
+visual pass, not just the name scan — characters hide in generically-named
+bundles. Removed ids are listed in the git history of this commit.
+
 ## What's in the library now
 213 elements: Animals 27, Florals & Botanical 27, Home & Decor 28, Holiday 27,
 Food & Drink 27, Frames & Borders 23, Gothic 27, Emblems & Crests 27. Labels are
