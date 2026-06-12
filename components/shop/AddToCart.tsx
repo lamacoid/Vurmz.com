@@ -18,14 +18,16 @@ export default function AddToCart(props: {
   const { add, items } = useCart()
   const [qty, setQty] = useState(1)
   const [added, setAdded] = useState(false)
-  const [engraving, setEngraving] = useState<EngravingValue>({ text: '', fontValue: 'kerf', placement: '' })
+  const [engraving, setEngraving] = useState<EngravingValue>({ text: '', fontValue: 'kerf', placement: '', element: null })
 
   const engravable = props.engravable !== false
   const alreadyInCart = props.oneOff && items.some(i => i.productId === props.productId)
   const engText = engraving.text.trim()
+  // An order is personalized if it has text OR a chosen design element.
+  const hasPersonalization = Boolean(engText) || Boolean(engraving.element)
 
   function buildMetadata(): Record<string, unknown> | undefined {
-    if (!engravable || !engText) return undefined
+    if (!engravable || !hasPersonalization) return undefined
     const font = fontOptions.find(f => f.value === engraving.fontValue)
     const placement = engraving.placement.trim()
     return {
@@ -34,6 +36,7 @@ export default function AddToCart(props: {
         fontValue: engraving.fontValue,
         fontLabel: font?.label ?? engraving.fontValue,
         ...(placement ? { placement: placement.slice(0, 200) } : {}),
+        ...(engraving.element ? { element: { id: engraving.element.id, label: engraving.element.label, thumb: engraving.element.thumb } } : {}),
       },
     }
   }
@@ -96,9 +99,11 @@ export default function AddToCart(props: {
         </div>
       )}
 
-      {engravable && engText && (
+      {engravable && hasPersonalization && (
         <p className="mt-2 text-[11px] text-gray-500">
-          Engraving “{engText}” will be applied{props.oneOff ? '' : ' to each item in the pack'}.
+          {engText ? <>Engraving “{engText}”</> : 'Your design'}
+          {engraving.element ? <> + {engraving.element.label} design</> : null}
+          {' '}will be applied{props.oneOff ? '' : ' to each item in the pack'}.
         </p>
       )}
     </div>

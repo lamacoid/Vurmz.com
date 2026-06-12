@@ -53,3 +53,4 @@ backups/
 .claude/settings.local.json
 .claude/launch.json
 .backups/
+vurmz-control/design-sources.json

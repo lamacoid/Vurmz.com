@@ -38,6 +38,11 @@ const schema = z.object({
       fontValue: z.string().max(60).optional(),
       fontLabel: z.string().max(120).optional(),
       placement: z.string().max(200).optional(),
+      element: z.object({
+        id: z.string().max(40),
+        label: z.string().max(80),
+        thumb: z.string().max(200),
+      }).optional(),
     }).nullish(),
   })).min(1),
   fulfillmentMethod: z.enum(['ship','hand_deliver','pickup','uber_direct','invoice_later']),
@@ -176,15 +181,19 @@ export async function POST(req: NextRequest) {
   const orderEmail = session?.customer.email ?? body.email
 
   // Per-line personalization (engraving), keyed by product.
-  const personalByProduct = new Map<string, { text: string; fontValue?: string; fontLabel?: string; placement?: string }>()
+  type Personal = { text: string; fontValue?: string; fontLabel?: string; placement?: string; element?: { id: string; label: string; thumb: string } }
+  const personalByProduct = new Map<string, Personal>()
   for (const it of body.items) {
     const t = it.personalization?.text?.trim()
-    if (t) {
+    const el = it.personalization?.element
+    // Persist personalization when there's engraving text OR a chosen design.
+    if (t || el) {
       personalByProduct.set(it.productId, {
-        text: t.slice(0, 200),
+        text: (t || '').slice(0, 200),
         fontValue: it.personalization?.fontValue || undefined,
         fontLabel: it.personalization?.fontLabel || undefined,
         placement: it.personalization?.placement?.trim() || undefined,
+        element: el ? { id: el.id, label: el.label, thumb: el.thumb } : undefined,
       })
     }
   }
@@ -319,7 +328,11 @@ export async function POST(req: NextRequest) {
         name: `${i.name} (${i.packSize}-pack)`,
         qty: i.qty,
         unitPriceCents: i.unitPriceCents,
-        engraving: eng ? `“${esc(eng.text)}”${eng.fontLabel ? ` · ${esc(eng.fontLabel)}` : ''}${eng.placement ? ` · ${esc(eng.placement)}` : ''}` : undefined,
+        engraving: eng ? [
+          eng.text ? `“${esc(eng.text)}”${eng.fontLabel ? ` · ${esc(eng.fontLabel)}` : ''}` : '',
+          eng.element ? `🎨 ${esc(eng.element.label)} design` : '',
+          eng.placement ? esc(eng.placement) : '',
+        ].filter(Boolean).join(' · ') || undefined : undefined,
       }
     }),
     fulfillmentLabel,

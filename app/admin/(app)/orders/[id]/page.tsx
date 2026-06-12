@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
 
-interface OrderItem { id: string; nameSnapshot: string; qty: number; unitPriceCents: number; metadata?: { engraving?: { text?: string; fontValue?: string; fontLabel?: string; placement?: string } } }
+interface OrderItem { id: string; nameSnapshot: string; qty: number; unitPriceCents: number; metadata?: { engraving?: { text?: string; fontValue?: string; fontLabel?: string; placement?: string; element?: { id: string; label: string; thumb: string } } } }
 interface Order {
   id: string; number: string; email: string; status: string
   subtotalCents: number; fulfillmentFeeCents: number; totalCents: number
@@ -112,6 +112,13 @@ export default function OrderDetailPage() {
                 )}
                 {it.metadata?.engraving?.placement && (
                   <p className="text-xs mt-1 text-gray-400">↳ Placement: <span className="text-cream/80">{it.metadata.engraving.placement}</span></p>
+                )}
+                {it.metadata?.engraving?.element && (
+                  <div className="mt-1.5 flex items-center gap-2">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={it.metadata.engraving.element.thumb} alt="" className="h-9 w-9 object-contain bg-[#f0ebe0] rounded p-0.5" />
+                    <span className="text-xs text-gray-400">Design: <span className="text-cream/80">{it.metadata.engraving.element.label}</span> <span className="font-mono text-gray-500">({it.metadata.engraving.element.id})</span></span>
+                  </div>
                 )}
               </div>
               <p className="text-sm font-semibold text-cream">{money(it.qty * it.unitPriceCents)}</p>
