@@ -1,6 +1,6 @@
 // ═══════════════════════════════════════════
 // VURMZ PRICING — SINGLE SOURCE OF TRUTH
-// Two tiers: Signature (custom $50+) and Basic (stock packs & straightforward marking)
+// Two tiers: Signature (custom $35+) and Basic (stock packs & straightforward marking)
 // Every price rendered on the site MUST import from this file.
 // ═══════════════════════════════════════════
 
@@ -8,7 +8,7 @@ export const TIERS = {
   signature: {
     name: "Signature",
     tagline: "Custom work on your item",
-    startingAt: 50,
+    startingAt: 35, // locked 2026-06-11: $35 bring-your-own floor (was 50)
     unit: "per item",
     bullets: [
       "No setup fees",

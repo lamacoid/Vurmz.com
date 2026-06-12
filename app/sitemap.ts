@@ -57,6 +57,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     // /shop/contact intentionally omitted — it 308-redirects to /services/contact.
     {
+      url: `${baseUrl}/services/materials`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    {
       url: `${baseUrl}/services/metal-tags`,
       lastModified: new Date(),
       changeFrequency: 'monthly',

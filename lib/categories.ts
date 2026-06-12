@@ -44,7 +44,7 @@ export const SHOP_CATEGORIES: ShopCategory[] = [
     smsMessage: "Hi, I'm interested in a custom engraved gift",
     faqs: [
       { question: 'What items can you engrave?', answer: 'Wood, metal, glass, acrylic, leather, and more. If you can hold it, I can probably engrave it. Text me a photo and I\'ll tell you right away.' },
-      { question: 'Can I bring my own item?', answer: 'Absolutely. Bring your own cutting board, plaque, or keepsake and I\'ll engrave it. Custom work starts at $50.' },
+      { question: 'Can I bring my own item?', answer: 'Absolutely. Bring your own cutting board, plaque, or keepsake and I\'ll engrave it. Custom work starts at $35.' },
       { question: 'How long does it take?', answer: 'Most custom gift orders are done within a few days. Rush orders are often possible — just let me know your timeline.' },
       { question: "What if I don't have the item yet?", answer: "I can source it for you. There's a $25 flat finder's fee plus the cost of the item. I'll find exactly what you need." },
       { question: 'How do I know what it will look like?', answer: "Tell me what you want and I'll make sure we're on the same page before I engrave. I get it right." },
@@ -103,7 +103,7 @@ export const SHOP_CATEGORIES: ShopCategory[] = [
     pricingType: 'signature',
     smsMessage: "Hi, I'd like a tumbler or bottle engraved",
     faqs: [
-      { question: 'Can I bring my own tumbler?', answer: 'Yes. Bring your Yeti, Stanley, Hydroflask, or any stainless steel tumbler and I\'ll engrave it. Custom work starts at $50.' },
+      { question: 'Can I bring my own tumbler?', answer: 'Yes. Bring your Yeti, Stanley, Hydroflask, or any stainless steel tumbler and I\'ll engrave it. Custom work starts at $35.' },
       { question: 'What about powder-coated tumblers?', answer: 'Laser engraving on powder-coated tumblers reveals the bare steel underneath for a clean, two-tone look. It\'s the most popular style.' },
       { question: 'Do you do full-wrap engraving?', answer: 'Yes. Full-wrap designs that cover the entire surface are available. Text me your design and I\'ll quote it.' },
       { question: "What if I don't have a tumbler?", answer: "I can source one for you. $25 finder's fee plus the cost of the tumbler. I'll find exactly what you need." },
@@ -186,7 +186,7 @@ export const SHOP_CATEGORIES: ShopCategory[] = [
       { question: 'What surfaces can you engrave?', answer: 'Metal, wood, glass, mirror, acrylic, leather, slate. If it\'s flat and solid, I can probably engrave it.' },
       { question: 'Can you engrave on mirrors?', answer: 'Yes. Mirror engraving creates a frosted look where the laser hits. It\'s striking and popular for custom pieces.' },
       { question: 'How large can the piece be?', answer: 'My laser bed handles pieces up to 24" x 16". For larger pieces, text me and we\'ll figure out the best approach.' },
-      { question: 'Can I bring my own material?', answer: 'Yes. Bring your own piece and I\'ll engrave it. Custom work starts at $50.' },
+      { question: 'Can I bring my own material?', answer: 'Yes. Bring your own piece and I\'ll engrave it. Custom work starts at $35.' },
       { question: 'Do you do custom artwork?', answer: 'Yes. Send me your design, photo, or even a rough sketch and I\'ll create the engraving file.' },
     ],
     relatedCategories: ['gifts', 'tumblers'],

@@ -3,6 +3,7 @@ export const runtime = 'edge'
 import { NextRequest, NextResponse } from 'next/server'
 import { getRequestContext } from '@cloudflare/next-on-pages'
 import { reportError } from '@/lib/error'
+import { SIGNATURE } from '@/lib/pricing'
 
 const ALLOWED_ORIGINS = [
   'https://vurmz.com',
@@ -18,7 +19,8 @@ const ALLOWED_PRODUCTS = [
   'Knife Marking',
   'Tool Marking',
   'Signature Tiles',
-  'Custom Engraving ($50+)',
+  // Must match ContactForm.tsx, which renders this from SIGNATURE.startingPrice.
+  `Custom Engraving ($${SIGNATURE.startingPrice}+)`,
   'Concierge Sourcing',
   'Other',
 ]

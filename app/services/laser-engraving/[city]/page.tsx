@@ -36,7 +36,7 @@ const cityData: Record<string, CityData> = {
       'Littleton has one of the best downtowns in the Denver metro. I work with shops, restaurants, and offices throughout Littleton, from Main Street boutiques to offices along Santa Fe Drive.',
       'If you are near the Littleton Riverwalk or in the Columbine Valley area, I can meet you locally to pick up items or hand-deliver finished orders. Direct handoff from the person who engraved your order.',
       'Laser engraving works on metal, wood, acrylic, leather, glass, and more. Branded pens for your register, engraved coasters for your tasting room, custom metal business cards. Whatever you need for your Littleton business, I can make it happen.',
-      'Custom engraving starts at $50 for Signature work on your own items. I also stock pens, keychains, coasters, and metal cards at lower per-piece Basic pricing. No setup fees, no minimums, and free delivery throughout the south Denver metro.',
+      'Custom engraving starts at $35 for Signature work on your own items. I also stock pens, keychains, coasters, and metal cards at lower per-piece Basic pricing. No setup fees, no minimums, and free delivery throughout the south Denver metro.',
     ],
   },
   'lone-tree': {
@@ -80,7 +80,7 @@ const cityData: Record<string, CityData> = {
       'Englewood is right in the heart of the south Denver metro. From the shops along South Broadway to the offices near CityCenter Englewood, I do custom engraving with free local delivery.',
       'If you run a restaurant, brewery, or retail shop in the South Broadway corridor, engraved coasters, pint glasses, and metal business cards are a solid way to stand out. Laser engraving is permanent. It does not peel off or fade like printed stuff.',
       'Englewood also has a lot of medical and professional offices. Engraved pens, nameplates, and awards are a practical way to get your brand in front of patients, clients, and staff. I handle everything from design to delivery.',
-      'Pricing is straightforward. Custom engraving starts at $50, and I stock pens, keychains, coasters, and metal business cards in ready-to-engrave packs. Text me what you need and I will get back to you with a quote.',
+      'Pricing is straightforward. Custom engraving starts at $35, and I stock pens, keychains, coasters, and metal business cards in ready-to-engrave packs. Text me what you need and I will get back to you with a quote.',
     ],
   },
   'castle-rock': {
@@ -181,7 +181,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!city) return {}
 
   const title = `Laser Engraving in ${city.name}, CO`
-  const description = `Professional laser engraving in ${city.name}, Colorado. Branded pen packs, metal service tags, custom engraving starting at $50. Next-day turnaround, hand-delivered by VURMZ.`
+  const description = `Professional laser engraving in ${city.name}, Colorado. Branded pen packs, metal service tags, custom engraving starting at $35. Next-day turnaround, hand-delivered by VURMZ.`
 
   return {
     title,
@@ -212,7 +212,7 @@ export default async function CityPage({ params }: Props) {
     name: siteInfo.legalName,
     alternateName: 'VURMZ Laser Engraving',
     description: `Professional laser engraving services in ${city.name}, Colorado. Branded pens, metal business cards, equipment labels, custom gifts. Hand-delivered by VURMZ.`,
-    url: `${siteInfo.url}/laser-engraving/${city.slug}`,
+    url: `${siteInfo.url}/services/laser-engraving/${city.slug}`,
     telephone: siteInfo.phone,
     email: siteInfo.email,
     address: {

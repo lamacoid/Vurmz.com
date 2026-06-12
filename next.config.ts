@@ -35,7 +35,7 @@ const nextConfig: NextConfig = {
   },
 
   env: {
-    NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL || 'https://vurmz.com',
+    NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL || 'https://www.vurmz.com',
   },
 };
 

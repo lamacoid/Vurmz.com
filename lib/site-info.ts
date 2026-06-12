@@ -30,8 +30,9 @@ export const siteInfo = {
     lng: -104.87,
   },
 
-  // URLs
-  url: 'https://vurmz.com',
+  // URLs — www is the canonical host (metadataBase, live canonicals, and the
+  // Pages custom domain all use www; keep JSON-LD and OG URLs consistent).
+  url: 'https://www.vurmz.com',
 
   // Social (add when available)
   social: {
