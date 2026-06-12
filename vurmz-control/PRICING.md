@@ -1,5 +1,11 @@
 # Pricing Guide
 
+> **STALE — kept for history (2026-06-12).** Site copy prices now live in
+> `lib/pricing.ts` (`lib/products.ts` is dead code, imported nowhere), and
+> shop product prices live in the D1 `products` table — edit them in
+> **admin → Products**. Current locked floors: $35 bring-your-own, $25/knife.
+> See `SESSION-LOG-2026-06-12-overnight.md` for the live catalog table.
+
 All pricing is controlled from ONE file: `lib/products.ts`
 
 When you change prices here, they automatically update on:
