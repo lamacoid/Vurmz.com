@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import { validateCart } from '@/lib/checkout/validate'
 import { computeFulfillmentOptions, isValidHandDeliveryWindow } from '@/lib/checkout/fulfillment'
-import { createOrder, type FulfillmentMethod, type ShippingAddress } from '@/lib/db/repos/orders'
+import { createOrder, updateOrderStatus, type FulfillmentMethod, type ShippingAddress } from '@/lib/db/repos/orders'
 import { markProductSold } from '@/lib/db/repos/products'
 import { upsertCustomerByEmail } from '@/lib/db/repos/customers'
 import { getCustomerSession } from '@/lib/auth/customer'
@@ -10,6 +10,7 @@ import { audit } from '@/lib/audit'
 import { getClientIp, getUserAgent } from '@/lib/auth/session'
 import { createPayment, isSquareEnabled } from '@/lib/payments/square'
 import { getDb, getEnv, newId, nowIso } from '@/lib/db/client'
+import { reportError } from '@/lib/error'
 
 export const runtime = 'edge'
 
@@ -161,6 +162,11 @@ export async function POST(req: NextRequest) {
     phone: body.address?.phone ?? null,
   })
 
+  // For logged-in customers, trust the session's email — never the client-supplied
+  // body. This prevents a signed-in customer from placing an order under a foreign
+  // email. Guests (no session) fall back to the validated body email.
+  const orderEmail = session?.customer.email ?? body.email
+
   // Per-line personalization (engraving), keyed by product.
   const personalByProduct = new Map<string, { text: string; fontValue?: string; fontLabel?: string }>()
   for (const it of body.items) {
@@ -177,7 +183,7 @@ export async function POST(req: NextRequest) {
   // 4. Create order
   const order = await createOrder({
     customerId: customer.id,
-    email: body.email,
+    email: orderEmail,
     subtotalCents: cart.subtotalCents,
     fulfillmentFeeCents,
     totalCents,
@@ -217,27 +223,62 @@ export async function POST(req: NextRequest) {
       idempotencyKey: body.payment.idempotencyKey,
       referenceId: order.id,
       note: `Order ${order.number}`,
-      buyerEmail: body.email,
+      buyerEmail: orderEmail,
     })
     if (!result.ok) {
       return NextResponse.json({ ok: false, error: { code: 'PAYMENT_DECLINED', message: result.error } }, { status: 402 })
     }
     const db = getDb()
-    await db.prepare(
-      `INSERT INTO payments (id, invoice_id, customer_id, amount_cents, status, square_payment_id, square_receipt_url, method_brand, method_last4, metadata, created_at, updated_at)
-       VALUES (?, NULL, ?, ?, 'succeeded', ?, ?, ?, ?, '{}', ?, ?)`
-    ).bind(
-      newId('pay'),
-      customer.id,
-      totalCents,
-      result.paymentId,
-      result.receiptUrl,
-      result.brand,
-      result.last4,
-      nowIso(),
-      nowIso()
-    ).run()
+    try {
+      await db.prepare(
+        `INSERT INTO payments (id, invoice_id, customer_id, amount_cents, status, square_payment_id, square_receipt_url, method_brand, method_last4, metadata, created_at, updated_at)
+         VALUES (?, NULL, ?, ?, 'succeeded', ?, ?, ?, ?, '{}', ?, ?)`
+      ).bind(
+        newId('pay'),
+        customer.id,
+        totalCents,
+        result.paymentId,
+        result.receiptUrl,
+        result.brand,
+        result.last4,
+        nowIso(),
+        nowIso()
+      ).run()
+    } catch (payErr) {
+      // The card was charged at Square but the payments row failed to persist.
+      // Never silently lose the Square payment id — log it prominently and report
+      // it so it can be reconciled by hand. We deliberately do NOT fail the order:
+      // the customer has already paid.
+      console.error(
+        `[orders] SQUARE CHARGE SUCCEEDED BUT PAYMENT INSERT FAILED — reconcile manually. ` +
+        `order=${order.number} squarePaymentId=${result.paymentId} amountCents=${totalCents}`
+      )
+      reportError(payErr, {
+        route: 'orders',
+        extra: {
+          alert: 'CHARGE_SUCCEEDED_PAYMENT_INSERT_FAILED',
+          orderId: order.id,
+          orderNumber: order.number,
+          squarePaymentId: result.paymentId,
+          amountCents: totalCents,
+        },
+      })
+    }
     paymentStatus = 'paid'
+
+    // Persist the paid state on the order. The Square webhook only finalizes
+    // invoices, not shop orders, so advance the order off 'new' inline here.
+    // ('confirmed' is the valid lifecycle status for a paid/acknowledged order —
+    // the orders.status CHECK has no 'paid' value and the admin board keys its
+    // columns off these statuses.) Guarded so it can never break the response.
+    try {
+      await updateOrderStatus(order.id, 'confirmed', { type: 'system', note: 'Payment received' })
+    } catch (statusErr) {
+      reportError(statusErr, {
+        route: 'orders',
+        extra: { alert: 'ORDER_PAID_STATUS_UPDATE_FAILED', orderId: order.id, orderNumber: order.number },
+      })
+    }
   }
 
   // 6. Mark any one-off items in the order as sold (atomic per-row, race-safe).
@@ -252,7 +293,7 @@ export async function POST(req: NextRequest) {
     ? `${chosen.label} — ${handDeliveryMeta.windowLabel}`
     : chosen.label
   await sendOrderEmails(getEnv(), {
-    email: body.email,
+    email: orderEmail,
     customerName: body.address?.name ?? customer.name ?? null,
     orderNumber: order.number,
     orderId: order.id,

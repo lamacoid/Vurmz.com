@@ -14,6 +14,7 @@ export default function ProfilePage() {
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
+  const [saveError, setSaveError] = useState<string | null>(null)
 
   const load = useCallback(async () => {
     const res = await fetch('/api/account/profile')
@@ -30,18 +31,29 @@ export default function ProfilePage() {
   async function save() {
     if (!customer) return
     setSaving(true)
-    await fetch('/api/account/profile', {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name: customer.name,
-        phone: customer.phone,
-        company: customer.company,
-      }),
-    })
-    setSaving(false)
-    setSaved(true)
-    setTimeout(() => setSaved(false), 1800)
+    setSaveError(null)
+    setSaved(false)
+    try {
+      const res = await fetch('/api/account/profile', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: customer.name,
+          phone: customer.phone,
+          company: customer.company,
+        }),
+      })
+      if (!res.ok) {
+        setSaveError('Could not save your profile. Check the fields and try again.')
+        return
+      }
+      setSaved(true)
+      setTimeout(() => setSaved(false), 1800)
+    } catch {
+      setSaveError('Network error — your profile was not saved.')
+    } finally {
+      setSaving(false)
+    }
   }
 
   if (loading || !customer) return <div className="p-10 text-center text-gray-500 text-sm">Loading…</div>
@@ -65,6 +77,7 @@ export default function ProfilePage() {
             {saving ? 'Saving…' : 'Save'}
           </button>
           {saved && <span className="text-xs text-[#6BB8B2]">Saved ✓</span>}
+          {saveError && <span className="text-xs text-red-400">{saveError}</span>}
         </div>
       </div>
 

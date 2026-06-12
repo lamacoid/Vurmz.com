@@ -6,6 +6,9 @@ import { getEnv } from '@/lib/db/client'
 
 export const runtime = 'edge'
 
+const escapeHtml = (s: string) =>
+  s.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c] as string))
+
 export async function GET(req: NextRequest) {
   try {
     const session = await requireCustomer(req)
@@ -42,7 +45,7 @@ export async function POST(req: NextRequest) {
           to: 'zach@vurmz.com',
           reply_to: session.customer.email,
           subject: `Message from ${session.customer.name || session.customer.email}`,
-          html: `<p>${body.data.body.replace(/\n/g, '<br/>')}</p><p style="color:#999;font-size:12px"><a href="https://vurmz.com/admin/customers/${session.customer.id}">View customer →</a></p>`,
+          html: `<p>${escapeHtml(body.data.body).replace(/\n/g, '<br/>')}</p><p style="color:#999;font-size:12px"><a href="https://vurmz.com/admin/customers/${session.customer.id}">View customer →</a></p>`,
         }),
       }).catch(() => {})
     }

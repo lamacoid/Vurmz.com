@@ -19,7 +19,9 @@ export async function GET(req: NextRequest, ctx: { params: Promise<{ id: string 
     if (!obj) return new NextResponse('Gone', { status: 410 })
     const headers = new Headers()
     headers.set('Content-Type', row.mime_type || 'application/octet-stream')
-    headers.set('Content-Disposition', `inline; filename="${row.filename}"`)
+    // Force download rather than inline rendering — prevents a stored HTML/SVG
+    // file from executing as same-origin script (stored XSS) when opened.
+    headers.set('Content-Disposition', `attachment; filename="${row.filename.replace(/[\r\n"]/g, '')}"`)
     headers.set('Cache-Control', 'private, max-age=3600')
     return new NextResponse(obj.body as unknown as ReadableStream, { headers })
   } catch {

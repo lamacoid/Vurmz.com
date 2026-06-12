@@ -12,7 +12,8 @@ const schema = z.object({ email: z.string().email().max(200) })
 
 async function sendEmail(env: CloudflareEnv, to: string, link: string) {
   if (!env.RESEND_API_KEY) {
-    console.warn('[magic] RESEND_API_KEY missing — link:', link)
+    // Never log the live sign-in link/token — it grants account access.
+    console.warn('[magic] RESEND_API_KEY missing — magic link generated for', to)
     return
   }
   await fetch('https://api.resend.com/emails', {

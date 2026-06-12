@@ -262,6 +262,46 @@ export async function listOrderItems(orderId: string): Promise<OrderItem[]> {
   return results.map(hydrateItem)
 }
 
+export interface OrderEvent {
+  id: string
+  orderId: string
+  type: string
+  fromStatus: OrderStatus | null
+  toStatus: OrderStatus | null
+  actorType: string
+  note: string | null
+  createdAt: string
+}
+
+interface OrderEventRow {
+  id: string
+  order_id: string
+  type: string
+  from_status: string | null
+  to_status: string | null
+  actor_type: string
+  actor_id: string | null
+  note: string | null
+  created_at: string
+}
+
+export async function listOrderEvents(orderId: string): Promise<OrderEvent[]> {
+  const db = getDb()
+  const { results } = await db.prepare(
+    'SELECT * FROM order_events WHERE order_id = ? ORDER BY created_at ASC'
+  ).bind(orderId).all<OrderEventRow>()
+  return results.map(r => ({
+    id: r.id,
+    orderId: r.order_id,
+    type: r.type,
+    fromStatus: (r.from_status as OrderStatus | null) ?? null,
+    toStatus: (r.to_status as OrderStatus | null) ?? null,
+    actorType: r.actor_type,
+    note: r.note,
+    createdAt: r.created_at,
+  }))
+}
+
 export async function updateOrderStatus(orderId: string, to: OrderStatus, actor: { type: 'admin' | 'customer' | 'system' | 'webhook'; id?: string | null; note?: string }): Promise<void> {
   const db = getDb()
   const before = await getOrderById(orderId)

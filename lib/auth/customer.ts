@@ -15,7 +15,7 @@
  */
 import type { NextRequest } from 'next/server'
 import { getCustomerSessions, getDb, newId, nowIso } from '@/lib/db/client'
-import { getCustomerById } from '@/lib/db/repos/customers'
+import { getCustomerById, updateLastSeen } from '@/lib/db/repos/customers'
 import type { Customer } from '@/lib/db/repos/customers'
 import { generateToken, sha256, cookieString, clearCookieString } from './session'
 
@@ -106,6 +106,15 @@ export async function getCustomerSession(req: NextRequest): Promise<(CustomerSes
     const data = JSON.parse(raw) as CustomerSessionData
     const customer = await getCustomerById(data.customerId)
     if (!customer) return null
+
+    // Refresh last-seen, throttled to at most once per 5 minutes so we don't write
+    // to D1 on every authenticated request. Best-effort — a failed write must not
+    // break the session lookup.
+    const last = customer.lastSeenAt ? new Date(customer.lastSeenAt).getTime() : 0
+    if (Date.now() - last > 5 * 60 * 1000) {
+      await updateLastSeen(customer.id).catch(() => {})
+    }
+
     return { ...data, customer }
   } catch {
     return null

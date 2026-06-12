@@ -18,6 +18,19 @@ interface FulfillmentOption {
 
 interface SquareConfig { applicationId: string; locationId: string; environment: 'sandbox' | 'production' }
 
+interface SavedAddress {
+  id: string
+  label: string
+  line1: string
+  line2: string | null
+  city: string
+  state: string
+  postalCode: string
+  country: string
+  phone: string | null
+  isDefault: boolean
+}
+
 function money(c: number) { return `$${(c / 100).toFixed(2)}` }
 
 export default function CheckoutPage() {
@@ -36,6 +49,12 @@ export default function CheckoutPage() {
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
+  // Account prefill (logged-in customers only). Guests keep a blank form.
+  const [loggedIn, setLoggedIn] = useState(false)
+  const [savedAddresses, setSavedAddresses] = useState<SavedAddress[]>([])
+  const [selectedAddressId, setSelectedAddressId] = useState<string | null>(null)
+  const [saveAddress, setSaveAddress] = useState(false)
+
   // Load square config once
   useEffect(() => {
     fetch('/api/checkout/config').then(r => r.json()).then(j => {
@@ -44,6 +63,64 @@ export default function CheckoutPage() {
       setSquareChecked(true)
     }).catch(() => setSquareChecked(true))
   }, [])
+
+  // Prefill from the customer's account, if signed in. /api/account/me 401s for
+  // guests, in which case we leave the form blank and the guest flow is untouched.
+  useEffect(() => {
+    let cancelled = false
+    ;(async () => {
+      try {
+        const meRes = await fetch('/api/account/me')
+        if (!meRes.ok) return
+        const me = (await meRes.json()) as { data?: { customer: { name: string; email: string; phone: string | null } } }
+        if (cancelled || !me.data) return
+        setLoggedIn(true)
+        const c = me.data.customer
+        setEmail(prev => prev || c.email || '')
+        setAddress(a => ({ ...a, name: a.name || c.name || '', phone: a.phone || c.phone || '' }))
+
+        const addrRes = await fetch('/api/account/addresses')
+        if (!addrRes.ok || cancelled) return
+        const addrJson = (await addrRes.json()) as { data?: { addresses: SavedAddress[] } }
+        if (cancelled) return
+        const list = addrJson.data?.addresses ?? []
+        setSavedAddresses(list)
+        // Pre-select the default address (or the most recent) and populate fields.
+        const def = list.find(a => a.isDefault) ?? list[0]
+        if (def) {
+          setSelectedAddressId(def.id)
+          setAddress(prev => ({
+            name: prev.name || c.name || '',
+            line1: def.line1,
+            line2: def.line2 ?? '',
+            city: def.city,
+            state: def.state,
+            postalCode: def.postalCode,
+            phone: def.phone ?? prev.phone ?? '',
+          }))
+        }
+      } catch {}
+    })()
+    return () => { cancelled = true }
+  }, [])
+
+  function selectSavedAddress(a: SavedAddress) {
+    setSelectedAddressId(a.id)
+    setAddress(prev => ({
+      name: prev.name,
+      line1: a.line1,
+      line2: a.line2 ?? '',
+      city: a.city,
+      state: a.state,
+      postalCode: a.postalCode,
+      phone: a.phone ?? prev.phone ?? '',
+    }))
+  }
+
+  function enterNewAddress() {
+    setSelectedAddressId(null)
+    setAddress(prev => ({ name: prev.name, line1: '', line2: '', city: '', state: 'CO', postalCode: '', phone: prev.phone }))
+  }
 
   const refreshQuote = useCallback(async () => {
     if (items.length === 0) return
@@ -139,6 +216,24 @@ export default function CheckoutPage() {
         setError(json.error?.message ?? json.error?.code ?? 'Order failed')
         setSubmitting(false)
         return
+      }
+      // Save the entered address to the account if the customer opted in.
+      // Fire-and-forget — we're navigating away and it must not block success.
+      if (loggedIn && saveAddress && selectedAddressId === null && needsAddress && address.line1) {
+        fetch('/api/account/addresses', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            label: 'Shipping',
+            line1: address.line1,
+            line2: address.line2 || null,
+            city: address.city,
+            state: address.state,
+            postalCode: address.postalCode,
+            country: 'US',
+            phone: address.phone || null,
+          }),
+        }).catch(() => {})
       }
       clear()
       router.push(`/checkout/success?n=${encodeURIComponent(json.data!.order.number)}`)
@@ -245,6 +340,53 @@ export default function CheckoutPage() {
 
           {needsAddress && (
             <Section title="3 · Address">
+              {loggedIn && savedAddresses.length > 0 && (
+                <div className="mb-4 space-y-2">
+                  <p className="text-[11px] uppercase tracking-wider text-[#7A7068] font-semibold">Use a saved address</p>
+                  {savedAddresses.map(a => (
+                    <label
+                      key={a.id}
+                      className={`flex items-start gap-3 rounded-sm border p-3 cursor-pointer ${
+                        selectedAddressId === a.id
+                          ? 'border-[#B16558] bg-[#B16558]/5'
+                          : 'border-[#235158]/12 bg-white/60 hover:border-[#235158]/25'
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        name="savedAddress"
+                        checked={selectedAddressId === a.id}
+                        onChange={() => selectSavedAddress(a)}
+                        className="mt-1"
+                      />
+                      <div className="flex-1 min-w-0">
+                        <span className="text-sm font-semibold">
+                          {a.label}
+                          {a.isDefault && <span className="ml-2 text-[10px] uppercase tracking-wider text-[#B16558]">default</span>}
+                        </span>
+                        <p className="text-xs text-[#6B6259] mt-0.5 truncate">
+                          {a.line1}{a.line2 ? `, ${a.line2}` : ''}, {a.city}, {a.state} {a.postalCode}
+                        </p>
+                      </div>
+                    </label>
+                  ))}
+                  <label
+                    className={`flex items-center gap-3 rounded-sm border p-3 cursor-pointer ${
+                      selectedAddressId === null
+                        ? 'border-[#B16558] bg-[#B16558]/5'
+                        : 'border-[#235158]/12 bg-white/60 hover:border-[#235158]/25'
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="savedAddress"
+                      checked={selectedAddressId === null}
+                      onChange={() => enterNewAddress()}
+                    />
+                    <span className="text-sm font-semibold">Enter a new address</span>
+                  </label>
+                </div>
+              )}
               <div className="grid grid-cols-2 gap-3">
                 <Input label="Full name" value={address.name} onChange={v => setAddress(a => ({ ...a, name: v }))} colSpan={2} />
                 <Input label="Street" value={address.line1} onChange={v => setAddress(a => ({ ...a, line1: v }))} colSpan={2} />
@@ -256,6 +398,12 @@ export default function CheckoutPage() {
                 </div>
                 <Input label="Phone" value={address.phone} onChange={v => setAddress(a => ({ ...a, phone: v }))} colSpan={2} />
               </div>
+              {loggedIn && selectedAddressId === null && (
+                <label className="flex items-center gap-2 mt-3 text-sm text-[#6B6259] cursor-pointer">
+                  <input type="checkbox" checked={saveAddress} onChange={e => setSaveAddress(e.target.checked)} />
+                  Save this address to my account
+                </label>
+              )}
             </Section>
           )}
 

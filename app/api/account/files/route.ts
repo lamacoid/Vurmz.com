@@ -9,6 +9,16 @@ export const runtime = 'edge'
 
 const MAX_SIZE = 50 * 1024 * 1024
 
+// Only allow image and PDF uploads. Anything else (HTML, SVG, scripts, archives,
+// office docs with macros, etc.) is rejected to limit stored-file attack surface.
+const ALLOWED_MIME = new Set([
+  'image/jpeg',
+  'image/png',
+  'image/gif',
+  'image/webp',
+  'application/pdf',
+])
+
 interface FileRow {
   id: string; customer_id: string; r2_key: string; filename: string; mime_type: string; size_bytes: number; uploaded_at: string
 }
@@ -42,6 +52,12 @@ export async function POST(req: NextRequest) {
     const file = form.get('file')
     if (!(file instanceof File)) return NextResponse.json({ ok: false, error: { code: 'BAD_REQUEST' } }, { status: 400 })
     if (file.size > MAX_SIZE) return NextResponse.json({ ok: false, error: { code: 'TOO_LARGE' } }, { status: 413 })
+    if (!ALLOWED_MIME.has(file.type)) {
+      return NextResponse.json(
+        { ok: false, error: { code: 'UNSUPPORTED_TYPE', message: 'Only JPG, PNG, GIF, WEBP, or PDF files are allowed.' } },
+        { status: 400 },
+      )
+    }
 
     const id = newId('cfi')
     const r2Key = `customer/${session.customer.id}/${id}/${file.name.replace(/[^a-zA-Z0-9.-]/g, '_').slice(0, 180)}`

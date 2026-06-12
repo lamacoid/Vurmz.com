@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { requireCustomer } from '@/lib/auth/customer'
-import { getOrderById, listOrderItems } from '@/lib/db/repos/orders'
+import { getOrderById, listOrderItems, listOrderEvents } from '@/lib/db/repos/orders'
 
 export const runtime = 'edge'
 
@@ -13,7 +13,8 @@ export async function GET(req: NextRequest, ctx: { params: Promise<{ id: string 
       return NextResponse.json({ ok: false, error: { code: 'NOT_FOUND' } }, { status: 404 })
     }
     const items = await listOrderItems(id)
-    return NextResponse.json({ ok: true, data: { order, items } })
+    const events = await listOrderEvents(id)
+    return NextResponse.json({ ok: true, data: { order, items, events } })
   } catch {
     return NextResponse.json({ ok: false, error: { code: 'UNAUTHORIZED' } }, { status: 401 })
   }
