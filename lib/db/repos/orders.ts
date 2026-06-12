@@ -262,6 +262,41 @@ export async function listOrderItems(orderId: string): Promise<OrderItem[]> {
   return results.map(hydrateItem)
 }
 
+/**
+ * Per-order personalization flags for board/dashboard cards — one GROUP BY
+ * instead of N item queries. hasText/hasElement come from item metadata.
+ */
+export async function listOrderItemFlags(): Promise<Record<string, { hasText: boolean; hasElement: boolean }>> {
+  const db = getDb()
+  const { results } = await db.prepare(
+    `SELECT order_id,
+            MAX(CASE WHEN COALESCE(json_extract(metadata, '$.engraving.text'), '') != '' THEN 1 ELSE 0 END) AS has_text,
+            MAX(CASE WHEN json_extract(metadata, '$.engraving.element.id') IS NOT NULL THEN 1 ELSE 0 END) AS has_element
+     FROM order_items GROUP BY order_id`
+  ).all<{ order_id: string; has_text: number; has_element: number }>()
+  return Object.fromEntries(results.map(r => [r.order_id, { hasText: r.has_text === 1, hasElement: r.has_element === 1 }]))
+}
+
+export type ProofStatus = 'needed' | 'sent' | 'approved'
+
+/**
+ * Track the proof-photo workflow on the order's metadata (no schema change;
+ * the status CHECK stays untouched). Writes an order_event for the timeline.
+ */
+export async function setOrderProof(orderId: string, status: ProofStatus, actor: { id?: string | null }): Promise<void> {
+  const db = getDb()
+  const now = nowIso()
+  await db.batch([
+    db.prepare(
+      `UPDATE orders SET metadata = json_set(COALESCE(metadata, '{}'), '$.proof', json(?)), updated_at = ? WHERE id = ?`
+    ).bind(JSON.stringify({ status, at: now }), now, orderId),
+    db.prepare(
+      `INSERT INTO order_events (id, order_id, type, from_status, to_status, actor_type, actor_id, note, created_at)
+       VALUES (?, ?, 'proof', NULL, NULL, 'admin', ?, ?, ?)`
+    ).bind(newId('evt'), orderId, actor.id ?? null, `Proof ${status}`, now),
+  ])
+}
+
 export interface OrderEvent {
   id: string
   orderId: string

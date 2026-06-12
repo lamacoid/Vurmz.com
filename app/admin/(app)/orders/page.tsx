@@ -22,6 +22,16 @@ interface Order {
   totalCents: number
   fulfillmentMethod: string
   createdAt: string
+  hasText?: boolean
+  hasElement?: boolean
+  attachmentCount?: number
+  proofStatus?: 'needed' | 'sent' | 'approved' | null
+}
+
+const PROOF_DOT: Record<string, string> = {
+  needed: 'bg-amber-400',
+  sent: 'bg-sky-400',
+  approved: 'bg-[#6BB8B2]',
 }
 
 const COLUMNS: { key: OrderStatus; label: string }[] = [
@@ -53,7 +63,17 @@ function Card({ order }: { order: Order }) {
         <span className="text-xs font-semibold text-cream">{money(order.totalCents)}</span>
       </div>
       <p className="text-[11px] text-gray-400 truncate">{order.email}</p>
-      <p className="text-[10px] text-gray-500 mt-1">{order.fulfillmentMethod.replace('_', ' ')}</p>
+      <div className="flex items-center justify-between mt-1">
+        <p className="text-[10px] text-gray-500">{order.fulfillmentMethod.replace('_', ' ')}</p>
+        <span className="flex items-center gap-1">
+          {order.hasText && <span title="Engraving text" className="text-[10px]">✎</span>}
+          {order.hasElement && <span title="Design element" className="text-[10px]">🎨</span>}
+          {(order.attachmentCount ?? 0) > 0 && <span title={`${order.attachmentCount} customer file(s)`} className="text-[10px]">📎</span>}
+          {order.proofStatus && (
+            <span title={`Proof ${order.proofStatus}`} className={`inline-block w-2 h-2 rounded-full ${PROOF_DOT[order.proofStatus]}`} />
+          )}
+        </span>
+      </div>
     </div>
   )
 }

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import { withAdminAuth } from '@/lib/auth/admin'
-import { getOrderById, listOrderItems, updateOrderStatus, type OrderStatus } from '@/lib/db/repos/orders'
+import { getOrderById, listOrderItems, updateOrderStatus, setOrderProof, type OrderStatus, type ProofStatus } from '@/lib/db/repos/orders'
 import { audit } from '@/lib/audit'
 import { getClientIp, getUserAgent } from '@/lib/auth/session'
 
@@ -20,6 +20,7 @@ export async function GET(req: NextRequest, ctx: { params: Promise<{ id: string 
 const patchSchema = z.object({
   status: z.enum(['new','confirmed','in_progress','ready','delivered','cancelled','refunded']).optional(),
   note: z.string().max(500).optional(),
+  proof: z.enum(['needed', 'sent', 'approved']).optional(),
 })
 
 export async function PATCH(req: NextRequest, ctx: { params: Promise<{ id: string }> }) {
@@ -37,6 +38,15 @@ export async function PATCH(req: NextRequest, ctx: { params: Promise<{ id: strin
         actorType: 'admin', actorId: session.email ?? null,
         action: 'order.status_change', targetType: 'order', targetId: id,
         diff: { status: body.data.status, note: body.data.note },
+        ip: getClientIp(req), userAgent: getUserAgent(req),
+      })
+    }
+    if (body.data.proof) {
+      await setOrderProof(id, body.data.proof as ProofStatus, { id: session.email ?? null })
+      await audit({
+        actorType: 'admin', actorId: session.email ?? null,
+        action: 'order.proof_change', targetType: 'order', targetId: id,
+        diff: { proof: body.data.proof },
         ip: getClientIp(req), userAgent: getUserAgent(req),
       })
     }

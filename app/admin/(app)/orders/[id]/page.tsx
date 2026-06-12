@@ -14,6 +14,7 @@ interface Order {
   metadata?: {
     handDelivery?: { window?: string; windowLabel?: string; note?: string }
     attachments?: Array<{ key: string; filename: string }>
+    proof?: { status?: 'needed' | 'sent' | 'approved'; at?: string }
   }
 }
 
@@ -49,6 +50,16 @@ export default function OrderDetailPage() {
     setOrder({ ...order, status })
   }
 
+  async function setProof(proof: 'needed' | 'sent' | 'approved') {
+    if (!order) return
+    await fetch(`/api/admin/orders/${order.id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ proof }),
+    })
+    setOrder({ ...order, metadata: { ...order.metadata, proof: { status: proof, at: new Date().toISOString() } } })
+  }
+
   if (loading) return <div className="p-8 text-gray-500 text-sm">Loading…</div>
   if (!order) return <div className="p-8 text-gray-400 text-sm">Order not found.</div>
 
@@ -67,6 +78,27 @@ export default function OrderDetailPage() {
         >
           {['new','confirmed','in_progress','ready','delivered','cancelled','refunded'].map(s => <option key={s} value={s}>{s}</option>)}
         </select>
+      </div>
+
+      {/* Proof workflow — the promise is "nothing engraves until approved" */}
+      <div className="flex items-center gap-2 mb-6 bg-[#235158] border border-white/5 rounded-xl px-4 py-3">
+        <span className="text-[11px] uppercase tracking-wider text-gray-500 mr-1">Proof</span>
+        {([['needed', 'Needed'], ['sent', 'Sent to customer'], ['approved', 'Approved ✓']] as const).map(([key, label]) => {
+          const current = order.metadata?.proof?.status === key
+          const accent = key === 'approved' ? 'border-[#6BB8B2] bg-[#6BB8B2]/15 text-[#6BB8B2]' : key === 'sent' ? 'border-sky-400 bg-sky-400/15 text-sky-300' : 'border-amber-400 bg-amber-400/15 text-amber-300'
+          return (
+            <button
+              key={key}
+              onClick={() => setProof(key)}
+              className={`text-xs px-3 py-1.5 rounded-full border transition-colors ${current ? accent : 'border-white/10 text-gray-400 hover:text-cream hover:border-white/30'}`}
+            >
+              {label}
+            </button>
+          )
+        })}
+        {order.metadata?.proof?.at && (
+          <span className="text-[10px] text-gray-500 ml-auto">{new Date(order.metadata.proof.at).toLocaleString()}</span>
+        )}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
