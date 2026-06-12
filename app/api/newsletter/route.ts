@@ -94,38 +94,46 @@ export async function POST(request: NextRequest) {
     if (!resendApiKey) resendApiKey = process.env.RESEND_API_KEY
     if (!audienceId) audienceId = process.env.RESEND_AUDIENCE_ID
 
-    if (!resendApiKey || !audienceId) {
-      console.error('RESEND_API_KEY or RESEND_AUDIENCE_ID not configured')
+    if (!resendApiKey) {
+      console.error('RESEND_API_KEY not configured')
       return NextResponse.json(
-        { error: 'Newsletter service not configured. Please try again later.' },
-        { status: 500 }
+        { error: 'Newsletter signups are paused right now — text me instead and I’ll add you.' },
+        { status: 503 }
       )
     }
 
-    // Add contact to Resend Audience
-    const res = await fetch(`https://api.resend.com/audiences/${audienceId}/contacts`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${resendApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email: email.trim().toLowerCase(),
-        first_name: firstName?.trim() || undefined,
-        unsubscribed: false,
-      }),
-    })
+    // Add contact to the Resend Audience when one is configured. With no
+    // RESEND_AUDIENCE_ID the signup still succeeds for the visitor — Zach gets
+    // the notification email below (flagged for manual add) instead of a 500.
+    let addedToAudience = false
+    if (audienceId) {
+      const res = await fetch(`https://api.resend.com/audiences/${audienceId}/contacts`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${resendApiKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email.trim().toLowerCase(),
+          first_name: firstName?.trim() || undefined,
+          unsubscribed: false,
+        }),
+      })
 
-    if (!res.ok) {
-      const errorData = await res.json().catch(() => ({}))
-      console.error('Resend Audience API error:', errorData)
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}))
+        console.error('Resend Audience API error:', errorData)
 
-      // If already subscribed, still return success
-      if (res.status === 409) {
-        return NextResponse.json({ success: true, alreadySubscribed: true })
+        // If already subscribed, still return success
+        if (res.status === 409) {
+          return NextResponse.json({ success: true, alreadySubscribed: true })
+        }
+
+        throw new Error('Failed to add to newsletter')
       }
-
-      throw new Error('Failed to add to newsletter')
+      addedToAudience = true
+    } else {
+      console.warn('RESEND_AUDIENCE_ID not set — signup accepted, notifying owner for manual add')
     }
 
     // Send welcome email
@@ -189,7 +197,7 @@ export async function POST(request: NextRequest) {
             <h3 style="color: #3CB9B2;">New Newsletter Subscriber</h3>
             <p><strong>Email:</strong> ${email}</p>
             ${firstName ? `<p><strong>Name:</strong> ${firstName}</p>` : ''}
-            <p style="color: #888; font-size: 13px;">They've been added to your Resend Audience automatically.</p>
+            <p style="color: #888; font-size: 13px;">${addedToAudience ? "They've been added to your Resend Audience automatically." : '⚠️ RESEND_AUDIENCE_ID is not set — add this contact to your Resend Audience manually (and set the secret to automate this).'}</p>
           </div>
         `,
       }),
