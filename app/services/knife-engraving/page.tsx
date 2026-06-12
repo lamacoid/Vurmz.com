@@ -4,6 +4,7 @@ import { Metadata } from 'next'
 import { ArrowRightIcon, ChatBubbleLeftIcon } from '@heroicons/react/24/outline'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 import { portfolioBySlug } from '@/lib/portfolio'
+import { MARKING } from '@/lib/pricing'
 import Breadcrumbs from '@/components/Breadcrumbs'
 
 export const metadata: Metadata = {
@@ -70,6 +71,33 @@ export default function KnifeEngravingPage() {
           <p className="text-gray-400 text-base sm:text-lg leading-relaxed max-w-2xl">
             I spent fifteen years in professional kitchens before I picked up a laser, so I know what a knife means to the person who carries it. Chef knives, pocket knives, cleavers, hunting knives. A name on the blade, a date on the bolster, a logo on the handle plate. Fiber laser marking goes into the steel, not onto it, so it survives the sharpener and the dishwasher you shouldn&apos;t be using anyway. Bring me your knife or I&apos;ll source one. Next-day on most jobs.
           </p>
+        </div>
+      </section>
+
+      {/* ═══════════ CREW PRICING ═══════════ */}
+      <section className="py-12 sm:py-16 border-t border-white/[0.06]">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="text-xs font-mono text-gray-500 tracking-[0.2em] uppercase mb-8">
+            What it costs
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="bg-white/[0.03] border border-white/[0.08] rounded-sm p-6">
+              <p className="text-4xl font-bold text-cream mb-1">${MARKING.knife.base}</p>
+              <p className="text-sm font-semibold text-cream mb-2">One knife</p>
+              <p className="text-gray-500 text-sm leading-relaxed">Bring your blade. Name, date, or logo marked near the handle.</p>
+            </div>
+            <div className="bg-white/[0.03] border border-white/[0.08] rounded-sm p-6">
+              <p className="text-4xl font-bold text-cream mb-1">${MARKING.knife.crew.perKnife}<span className="text-lg text-gray-500 font-normal">/knife</span></p>
+              <p className="text-sm font-semibold text-cream mb-2">Crew rate · {MARKING.knife.crew.minQty}+ knives</p>
+              <p className="text-gray-500 text-sm leading-relaxed">The line gets matching blades. I pick up and return next day.</p>
+            </div>
+            <div className="bg-vurmz-teal/10 border border-vurmz-teal/30 rounded-sm p-6">
+              <p className="text-4xl font-bold text-cream mb-1">${MARKING.knife.fullKitchen.perKnife}<span className="text-lg text-gray-500 font-normal">/knife</span></p>
+              <p className="text-sm font-semibold text-vurmz-teal mb-2">Full kitchen · {MARKING.knife.fullKitchen.minQty}+ knives</p>
+              <p className="text-gray-500 text-sm leading-relaxed">The whole brigade, every station. Free pickup across the south Denver metro.</p>
+            </div>
+          </div>
+          <p className="text-gray-500 text-xs mt-4">Deep marking +$5. Second line or logo +$3. Pickup is free in the south Denver metro.</p>
         </div>
       </section>
 

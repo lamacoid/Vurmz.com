@@ -76,7 +76,7 @@ export const SHOP_CATEGORIES: ShopCategory[] = [
       { question: 'What knives can you engrave?', answer: 'Kitchen knives, pocket knives, hunting knives, multitools — any blade. Bring your own and I\'ll mark it near the handle.' },
       { question: 'Where does the engraving go?', answer: 'Typically near the handle or on the flat of the blade. Names, initials, dates, logos. I\'ll recommend the best spot based on your knife.' },
       { question: 'Does it affect the blade?', answer: 'No. Laser engraving is surface-level and doesn\'t weaken the steel or affect the edge. It\'s permanent but non-structural.' },
-      { question: 'Can you pick up from a whole kitchen crew?', answer: 'Yes. I can pick up knives from your whole kitchen crew and return them engraved next day. Free pickup in the South Denver metro.' },
+      { question: 'Can you pick up from a whole kitchen crew?', answer: 'Yes, and crews get a better rate. Four or more knives drop to $15 each. A full kitchen of ten or more runs $8 a blade. I pick up, engrave, and return them next day. Free pickup in the South Denver metro.' },
       { question: 'What about deep marking?', answer: `Deep marking is an extra $${BASIC.knives.addOns.deepMark}. It creates a more tactile, visible mark. Great for heavy-use knives.` },
     ],
     relatedCategories: ['gifts', 'tumblers'],

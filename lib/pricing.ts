@@ -67,8 +67,14 @@ export const MARKING = {
     name: "Knife Marking",
     base: 25,
     unit: "per knife (bring your own)",
+    // Crew ladder locked 2026-06-12: $8 full-kitchen rate is Zach's number;
+    // $15 mid tier protects 4-9 knife jobs and tracks the mail-in market.
+    crew: { minQty: 4, perKnife: 15 },
+    fullKitchen: { minQty: 10, perKnife: 8 },
     options: [
       { label: "Name near handle (most common)", price: 25 },
+      { label: "Crew rate (4+ knives)", price: 15, note: "per knife" },
+      { label: "Full kitchen (10+ knives)", price: 8, note: "per knife" },
       { label: "+ Deep marking", price: 5, modifier: true },
       { label: "+ Second line / logo", price: 3, modifier: true },
       { label: "Kitchen crew pickup (South Denver)", price: 0, note: "Free" },
