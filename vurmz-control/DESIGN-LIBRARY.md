@@ -48,10 +48,12 @@ visual pass, not just the name scan — characters hide in generically-named
 bundles. Removed ids are listed in the git history of this commit.
 
 ## What's in the library now
-213 elements: Animals 27, Florals & Botanical 27, Home & Decor 28, Holiday 27,
-Food & Drink 27, Frames & Borders 23, Gothic 27, Emblems & Crests 27. Labels are
-`<Category> N` because the organizer auto-tagged whole bundles identically — in a
-visual picker the thumbnail is the real selector, so generic labels are fine.
+503 elements: Florals & Botanical 93, Patterns & Shapes 77, Symbols & Clipart 55, Gothic 53, Mountains & Outdoors 45, Bones & Anatomy 29, Home & Decor 28, Animals 27, Emblems & Crests 26, Holiday & Seasonal 24, Food & Drink 23, Frames & Borders 23. Labels are
+`<Category> N` — in a visual picker the thumbnail is the real selector.
+Three screening rounds done (17 trademark/quality pulls + 23 generic-round
+pulls, all baked into the pipeline DENYLIST). Dog-breed art is parked for a
+future Pets category.
+
 
 ## Scaling it (when you want more)
 Everything is one script. To add more per category, or new categories:

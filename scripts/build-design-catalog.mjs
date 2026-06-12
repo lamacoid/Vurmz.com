@@ -24,21 +24,30 @@ const CATEGORIES = [
   ['01-Animals-Wildlife', 'Animals'],
   ['02-Flowers-Plants', 'Florals & Botanical'],
   ['03-Coasters-Decor', 'Home & Decor'],
+  ['04-Patterns-Designs', 'Patterns & Shapes', 35],
   ['05-Holiday-Seasonal', 'Holiday & Seasonal'],
   ['06-Food-Party', 'Food & Drink'],
   ['07-Frames-Borders', 'Frames & Borders'],
   ['08-Gothic-Dark', 'Gothic'],
   ['09-Heraldry-Emblems', 'Emblems & Crests'],
+  ['11-Anatomy-Medical', 'Bones & Anatomy', 30],
 ]
 
 // Zach-approved directory sources (2026-06-12) — the organized veins inside
 // the otherwise-skipped downloads bucket, ingested by direct filesystem walk.
 const DL = '/Users/zacharydemillo/Projects/VURMZ/Business/Design Library'
+const HUB = `${DL}/99-Downloads-To-Sort/All Vurmz Asset Download Hub/_Organized`
 const DIR_SOURCES = [
+  // "Generic crap sells" expansion (Zach, 2026-06-12): clipart, patterns, bones.
+  [`${HUB}/07-Icons-Clipart`, 'Symbols & Clipart', 60],
+  [`${HUB}/06-Patterns-Textures`, 'Patterns & Shapes', 45],
+  [`${HUB}/05-Anatomy-Medical`, 'Bones & Anatomy', 30],
+  [`${HUB}/10-Occult-Mystical/Death-Plague-Coloring-Collection`, 'Bones & Anatomy', 15, /\.(svg|png)$/i],
+  [`${HUB}/08-Tattoo-Art`, 'Gothic', 20],
   // Expand florals: his sorted floral tree + the organized nature hub (incl. Columbine, the Colorado state flower)
-  [`${DL}/02-Flowers-Plants/Individual-Flowers`, 'Florals & Botanical', 14],
-  [`${DL}/02-Flowers-Plants/Floral-Arrangements`, 'Florals & Botanical', 8],
-  [`${DL}/02-Flowers-Plants/Wreaths`, 'Florals & Botanical', 8],
+  [`${DL}/02-Flowers-Plants/Individual-Flowers`, 'Florals & Botanical', 36],
+  [`${DL}/02-Flowers-Plants/Floral-Arrangements`, 'Florals & Botanical', 14],
+  [`${DL}/02-Flowers-Plants/Wreaths`, 'Florals & Botanical', 14],
   [`${DL}/02-Flowers-Plants/Herbs`, 'Florals & Botanical', 8],
   [`${DL}/99-Downloads-To-Sort/All Vurmz Asset Download Hub/_Organized/03-Nature-Flowers-Plants/ColumbineFlower1`, 'Florals & Botanical', 6],
   [`${DL}/99-Downloads-To-Sort/All Vurmz Asset Download Hub/_Organized/03-Nature-Flowers-Plants/ColumbineFlower2`, 'Florals & Botanical', 6],
@@ -61,6 +70,33 @@ const DENYLIST = new Set([
   'de_a25bff11bed27b24', 'de_5c64d41c04127335', 'de_8f0139d636d7c627',
   'de_7b67c16e4bbcc00b', 'de_d8fc2ee66969f2fe', 'de_f270783fc69b57ea',
   'de_25a4ea77c74b6baf',
+  // 2nd screen round: cathedral misfiled in florals, 3 dog heads (await Pets)
+  'de_83a0554ba1741935', 'de_d79fc06b8d257921', 'de_6deccdf247c03e4c',
+  'de_5a9ab54c5c4ca5d2',
+  // 3rd screen round: lab/dental clipart, emoji icons, misfiled items
+  'de_0ade73dea1e5d3d4',
+  'de_1fba8286dbbc7f87',
+  'de_234b04f8083fe33b',
+  'de_25a206f6de7c18b4',
+  'de_288cb97e424cb30e',
+  'de_3d3ac02879f36cbe',
+  'de_42d003ee9ba46c23',
+  'de_45405db2e7eee8ac',
+  'de_4e1b8717057ba170',
+  'de_5df86acc84987dc0',
+  'de_626c222f4d5b4927',
+  'de_6956303d7c67956f',
+  'de_8749871122f7475f',
+  'de_8975efc8a85c32ca',
+  'de_8f831042669e705d',
+  'de_8f89edc844e46f31',
+  'de_9f32a5724587b704',
+  'de_ab647abdadc23e52',
+  'de_c5fdf1a5f09e7977',
+  'de_d65131162af58cfa',
+  'de_f2323b85d4156198',
+  'de_f930d45167ba6fbe',
+  'de_fa5316fec631767e',
 ])
 
 function walkSvgs(dir, extRe = /\.svg$/i) {
@@ -85,6 +121,7 @@ const LABEL_NOUN = {
   'Holiday & Seasonal': 'Holiday', 'Food & Drink': 'Food & Drink',
   'Frames & Borders': 'Border', 'Gothic': 'Gothic', 'Emblems & Crests': 'Emblem',
   'Mountains & Outdoors': 'Mountain',
+  'Bones & Anatomy': 'Bones', 'Patterns & Shapes': 'Pattern', 'Symbols & Clipart': 'Clipart',
 }
 
 // Tiled diagonal "VURMZ" watermark, baked into every preview so thumbnails
@@ -145,12 +182,12 @@ async function ingest(absPath, display) {
   return true
 }
 
-for (const [catPath, display] of CATEGORIES) {
+for (const [catPath, display, count] of CATEGORIES) {
   const items = lib.assets.filter(a =>
     (a.categoryPath || '').startsWith(catPath) &&
     (a.fileExtension || '').toLowerCase() === 'svg'
   )
-  for (const a of spread(items, PER_CAT)) {
+  for (const a of spread(items, count ?? PER_CAT)) {
     try { await ingest(a.absolutePath, display) } catch { fail++ }
   }
   console.log(`${display}: ${catalog.filter(c => c.category === display).length}`)
