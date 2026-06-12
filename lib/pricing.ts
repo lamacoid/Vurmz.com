@@ -156,6 +156,16 @@ export const BASIC = {
     addOns: { deepMark: 5, secondLine: 3 },
     description: 'Bring your own blade. Names near the handle, logos, custom text.',
   },
+  cards: {
+    name: 'Metal Business Cards',
+    packSize: 10,
+    matteBlackBase: 3,
+    matteBlackLoaded: 6,
+    stainlessBase: 15,
+    stainlessLoaded: 18,
+    addOns: { logo: 1, qrCode: 1, backSide: 1 },
+    description: 'Anodized aluminum or stainless steel cards with your info engraved.',
+  },
   tools: {
     name: MARKING.tool.name,
     perPiece: MARKING.tool.base,
@@ -232,6 +242,17 @@ export const BASIC_PRICING_CARDS = [
     packTotal: '',
     items: [
       { name: 'Name / ID marking', price: usd(MARKING.tool.base), note: '' },
+    ],
+  },
+  {
+    category: BASIC.cards.name,
+    packNote: `Pack of ${BASIC.cards.packSize} · credit card sized`,
+    packTotal: `${usd(BASIC.cards.matteBlackBase * BASIC.cards.packSize)} – ${usd(BASIC.cards.stainlessLoaded * BASIC.cards.packSize)}`,
+    items: [
+      { name: 'Anodized aluminum (text)', price: usd(BASIC.cards.matteBlackBase), note: '' },
+      { name: '+ Logo / QR / back side', price: usdMod(BASIC.cards.addOns.logo), note: 'each' },
+      { name: 'Stainless steel', price: usd(BASIC.cards.stainlessBase), note: '' },
+      { name: 'Stainless fully loaded', price: usd(BASIC.cards.stainlessLoaded), note: '' },
     ],
   },
 ]

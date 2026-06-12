@@ -101,7 +101,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }))
 
-  const shopCategorySlugs = ['gifts', 'knives', 'tumblers', 'coasters', 'keychains', 'decor', 'devices']
+  const shopCategorySlugs = ['gifts', 'knives', 'tumblers', 'coasters', 'keychains', 'decor', 'devices', 'pens', 'metal-cards']
   const shopCategoryPages: MetadataRoute.Sitemap = shopCategorySlugs.map((slug) => ({
     url: `${baseUrl}/shop/${slug}`,
     lastModified: new Date(),

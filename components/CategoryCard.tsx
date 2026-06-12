@@ -21,6 +21,8 @@ function getPrice(cat: ShopCategory): { price: string; note: string } {
   if (cat.pricingKey && cat.pricingKey in BASIC) {
     const data = BASIC[cat.pricingKey]
     if ('perKnife' in data) return { price: `$${data.perKnife}/knife`, note: 'Bring your own blade' }
+    if ('basePerItem' in data) return { price: `From $${data.basePerItem}/pen`, note: `Packs of ${data.packSize} · singles in shop` }
+    if ('matteBlackBase' in data) return { price: `From $${data.matteBlackBase}/card`, note: `Packs of ${data.packSize} · singles in shop` }
     if ('materials' in data) {
       const vals = Object.values(data.materials) as number[]
       const low = Math.min(...vals)
