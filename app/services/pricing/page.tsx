@@ -18,7 +18,7 @@ export default function PricingPage() {
       {/* Hero (shared) */}
       <SiteHero eyebrow="Pricing" heading="Laser Engraving Pricing" accent="teal" baseColor="#235158">
         <p className="text-gray-300 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-          Two tiers, one standard. Basic covers stock items and straightforward marking. Signature is custom work on your item — the stuff that ends up in my portfolio.
+          Two tiers, one standard. Basic covers stock items and straightforward marking. Signature is the custom work — the stuff that ends up in my portfolio.
         </p>
       </SiteHero>
 
@@ -53,7 +53,7 @@ export default function PricingPage() {
                 Bring me your thing.
               </h2>
               <p className="text-gray-400 text-base leading-relaxed mb-4">
-                A gift, a tool, a one-of-a-kind piece for your business. This is custom work — I engrave your item, your way. Text me a photo and I&apos;ll quote you.
+                A gift, a tool, a one-of-a-kind piece for your business. This is custom work — your idea, built and engraved. Text me a photo and I&apos;ll quote you.
               </p>
               <ul className="space-y-2 text-gray-400 text-sm">
                 {SIGNATURE.includes.map((item) => (

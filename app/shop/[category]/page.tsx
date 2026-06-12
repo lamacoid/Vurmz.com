@@ -152,7 +152,7 @@ export default async function ShopCategoryPage({ params }: { params: Promise<{ c
             <div className="bg-white/[0.04] backdrop-blur-xl border border-white/10 rounded-sm p-6 sm:p-8">
               <div className="flex items-baseline gap-2 mb-4">
                 <span className="text-3xl font-bold text-[#B16558]">${SIGNATURE.startingPrice}+</span>
-                <span className="text-gray-400 text-sm">Custom engraving on your item</span>
+                <span className="text-gray-400 text-sm">Custom engraving</span>
               </div>
               <ul className="space-y-2">
                 {SIGNATURE.includes.map(item => (

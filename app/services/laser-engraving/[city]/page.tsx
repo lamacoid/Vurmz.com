@@ -36,7 +36,7 @@ const cityData: Record<string, CityData> = {
       'Littleton has one of the best downtowns in the Denver metro. I work with shops, restaurants, and offices throughout Littleton, from Main Street boutiques to offices along Santa Fe Drive.',
       'If you are near the Littleton Riverwalk or in the Columbine Valley area, I can meet you locally to pick up items or hand-deliver finished orders. Direct handoff from the person who engraved your order.',
       'Laser engraving works on metal, wood, acrylic, leather, glass, and more. Branded pens for your register, engraved coasters for your tasting room, custom metal business cards. Whatever you need for your Littleton business, I can make it happen.',
-      'Custom engraving starts at $35 for Signature work on your own items. I also stock pens, keychains, coasters, and metal cards at lower per-piece Basic pricing. No setup fees, no minimums, and free delivery throughout the south Denver metro.',
+      'Custom engraving starts at $35. I also stock pens, keychains, coasters, and metal cards at lower per-piece Basic pricing. No setup fees, no minimums, and free delivery throughout the south Denver metro.',
     ],
   },
   'lone-tree': {

@@ -18,7 +18,7 @@ const faqItems = [
   },
   {
     question: 'How are orders structured?',
-    answer: 'Stock items like pens, coasters, and keychains come in packs of 15. Custom work on your item starts at $35. Industrial labels and trades work are quoted per job.',
+    answer: 'Stock items like pens, coasters, and keychains come in packs of 15. Bring Your Own — engraving something you already have — is $35 within size. Industrial labels and trades work are quoted per job.',
   },
   {
     question: 'Can I bring my own items to engrave?',

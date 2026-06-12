@@ -135,7 +135,7 @@ export default function MaterialsClient() {
               transition={{ duration: 0.5 }}
               className="text-gray-400 text-base sm:text-lg leading-relaxed max-w-xl"
             >
-              Shop from what I have on hand, bring your own item, or tell me what you need and I&apos;ll make it happen.
+              Shop from what I have on hand, use Bring Your Own for something you already have, or tell me what you need and I&apos;ll make it happen.
             </motion.p>
           </motion.div>
         </div>

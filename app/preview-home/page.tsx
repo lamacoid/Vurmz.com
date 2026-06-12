@@ -120,7 +120,7 @@ export default function PreviewHome() {
             <h2 className="text-2xl font-bold text-[#F0E6D3] text-center mb-8">How it works</h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
               {[
-                { n: 1, h: 'Pick or text', p: 'Order from the shop, or text me a photo of your own item for a fast quote.' },
+                { n: 1, h: 'Pick or text', p: 'Order from the shop, or use Bring Your Own — $35 to engrave something you already have.' },
                 { n: 2, h: 'Approve the proof', p: 'I send a proof photo before anything runs. Nothing engraves until you sign off.' },
                 { n: 3, h: 'Hand-delivered', p: 'I bring it to your door across the south Denver metro. Free over $100.' },
               ].map((step) => (

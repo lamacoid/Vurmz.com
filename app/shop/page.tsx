@@ -45,8 +45,8 @@ export default function ShopHome() {
         baseColor="#1f4f57"
       >
         <p className="text-gray-300 text-base sm:text-lg leading-relaxed mb-7 max-w-lg mx-auto">
-          Engraved gifts, personalized knives, custom coasters, home decor. Bring your own item or
-          I&apos;ll find it for you — engraved and hand-delivered across {siteInfo.city}.
+          Engraved gifts, custom coasters, home decor — or hit Bring Your Own and I&apos;ll
+          mark the thing you already love. Hand-delivered across {siteInfo.city}.
         </p>
         <a
           href={getSmsLink("Hi, I'd like to get something engraved")}
@@ -137,7 +137,7 @@ export default function ShopHome() {
               {[
                 'Knives', 'Tumblers', 'Water Bottles', 'Cutting Boards', 'Laptops',
                 'Coasters', 'Keychains', 'Flasks', 'Wine Glasses', 'Pet Bowls',
-                'Wallets', 'Pens', 'Awards', 'Signs', 'Your Own Item',
+                'Wallets', 'Pens', 'Awards', 'Signs', 'Bring Your Own',
               ].map((item) => (
                 <span key={item} className="px-3 py-1.5 bg-white/[0.04] border border-white/10 rounded-full text-sm text-gray-300">
                   {item}

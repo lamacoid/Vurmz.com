@@ -7,7 +7,7 @@
 export const TIERS = {
   signature: {
     name: "Signature",
-    tagline: "Custom work on your item",
+    tagline: "Custom work, made to order",
     startingAt: 35, // locked 2026-06-11: $35 bring-your-own floor (was 50)
     unit: "per item",
     bullets: [
