@@ -10,7 +10,8 @@
 //   vurmz-control/design-sources.json      (gitignored: id → absolute source path)
 import sharp from 'sharp'
 import { createHash } from 'node:crypto'
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs'
+import { readFileSync, writeFileSync, mkdirSync, readdirSync, statSync } from 'node:fs'
+import { join } from 'node:path'
 
 const LIB = '/Users/zacharydemillo/Library/Application Support/com.vurmz.library/library.json'
 const OUT = '/tmp/vurmz-design-thumbs'
@@ -30,12 +31,60 @@ const CATEGORIES = [
   ['09-Heraldry-Emblems', 'Emblems & Crests'],
 ]
 
+// Zach-approved directory sources (2026-06-12) — the organized veins inside
+// the otherwise-skipped downloads bucket, ingested by direct filesystem walk.
+const DL = '/Users/zacharydemillo/Projects/VURMZ/Business/Design Library'
+const DIR_SOURCES = [
+  // Expand florals: his sorted floral tree + the organized nature hub (incl. Columbine, the Colorado state flower)
+  [`${DL}/02-Flowers-Plants/Individual-Flowers`, 'Florals & Botanical', 14],
+  [`${DL}/02-Flowers-Plants/Floral-Arrangements`, 'Florals & Botanical', 8],
+  [`${DL}/02-Flowers-Plants/Wreaths`, 'Florals & Botanical', 8],
+  [`${DL}/02-Flowers-Plants/Herbs`, 'Florals & Botanical', 8],
+  [`${DL}/99-Downloads-To-Sort/All Vurmz Asset Download Hub/_Organized/03-Nature-Flowers-Plants/ColumbineFlower1`, 'Florals & Botanical', 6],
+  [`${DL}/99-Downloads-To-Sort/All Vurmz Asset Download Hub/_Organized/03-Nature-Flowers-Plants/ColumbineFlower2`, 'Florals & Botanical', 6],
+  // New category for a Colorado shop
+  // These three bundles are PNG-only — still engravable art, ingest as raster.
+  [`${DL}/99-Downloads-To-Sort/All Vurmz Asset Download Hub/_Organized/03-Nature-Flowers-Plants/Mountain-Silhouettes`, 'Mountains & Outdoors', 16, /\.png$/i],
+  [`${DL}/99-Downloads-To-Sort/All Vurmz Asset Download Hub/_Organized/03-Nature-Flowers-Plants/Outdoor-Nature-Bundle-1-74`, 'Mountains & Outdoors', 10, /\.png$/i],
+  [`${DL}/99-Downloads-To-Sort/All Vurmz Asset Download Hub/_Organized/03-Nature-Flowers-Plants/Outdoor-Nature-Bundle-75-150`, 'Mountains & Outdoors', 10, /\.png$/i],
+  [`${DL}/02-Flowers-Plants/Trees-Nature`, 'Mountains & Outdoors', 8],
+  [`${DL}/99-Downloads-To-Sort/DESIGN ASSETS/SVG Files/Nature-Outdoor`, 'Mountains & Outdoors', 8],
+  // Gothic top-up from the mystical sets
+  [`${DL}/99-Downloads-To-Sort/All Vurmz Asset Download Hub/_Organized/10-Occult-Mystical/WitchyBundleFiles`, 'Gothic', 12],
+  [`${DL}/99-Downloads-To-Sort/All Vurmz Asset Download Hub/_Organized/10-Occult-Mystical/eye_of_providence`, 'Gothic', 6],
+]
+
+// Removed after the 2026-06-12 trademark/quality visual screen — never re-add.
+const DENYLIST = new Set([
+  'de_108ba0e51302996a', 'de_4750181ff2fda97a', 'de_d312a24091e3a664',
+  'de_0b1cd8eebb53552d', 'de_7d4c86e7255206e6', 'de_3863562831f3f6d8',
+  'de_a25bff11bed27b24', 'de_5c64d41c04127335', 'de_8f0139d636d7c627',
+  'de_7b67c16e4bbcc00b', 'de_d8fc2ee66969f2fe', 'de_f270783fc69b57ea',
+  'de_25a4ea77c74b6baf',
+])
+
+function walkSvgs(dir, extRe = /\.svg$/i) {
+  const out = []
+  let entries = []
+  try { entries = readdirSync(dir) } catch { return out }
+  for (const e of entries) {
+    if (e.startsWith('.') || e.startsWith('__MACOSX')) continue
+    const p = join(dir, e)
+    let st
+    try { st = statSync(p) } catch { continue }
+    if (st.isDirectory()) out.push(...walkSvgs(p, extRe))
+    else if (extRe.test(e)) out.push(p)
+  }
+  return out
+}
+
 // Customer-facing labels are "<Noun> N" — bundle filenames are repetitive
 // auto-tags, and in a visual picker the thumbnail is the real selector.
 const LABEL_NOUN = {
   'Animals': 'Animal', 'Florals & Botanical': 'Floral', 'Home & Decor': 'Decor',
   'Holiday & Seasonal': 'Holiday', 'Food & Drink': 'Food & Drink',
   'Frames & Borders': 'Border', 'Gothic': 'Gothic', 'Emblems & Crests': 'Emblem',
+  'Mountains & Outdoors': 'Mountain',
 }
 
 // Tiled diagonal "VURMZ" watermark, baked into every preview so thumbnails
@@ -66,43 +115,54 @@ const sources = {}   // id → absolute path (gitignored)
 const manifest = []  // id → r2 key + temp png
 let n = 0, fail = 0
 
+const labelCounters = {}
+
+async function ingest(absPath, display) {
+  // Stable id from the SOURCE file content — restyling thumbnails
+  // (watermark tweaks etc.) must not rotate ids stored on past orders.
+  const srcHash = createHash('sha256').update(readFileSync(absPath)).digest('hex')
+  const id = 'de_' + srcHash.slice(0, 16)
+  if (sources[id] || DENYLIST.has(id)) return false
+  const base = await sharp(absPath, { density: 200, limitInputPixels: false })
+    .resize(THUMB, THUMB, { fit: 'inside', background: { r: 0, g: 0, b: 0, alpha: 0 } })
+    .png()
+    .toBuffer()
+  const meta = await sharp(base).metadata()
+  const png = await sharp(base)
+    .composite([{ input: watermarkSvg(meta.width, meta.height) }])
+    .png({ compressionLevel: 9 })
+    .toBuffer()
+  const pngHash = createHash('sha256').update(png).digest('hex')
+  const key = `media/${pngHash.slice(0, 2)}/${pngHash.slice(2, 4)}/${pngHash}.png`
+  const tmp = `${OUT}/${id}.png`
+  writeFileSync(tmp, png)
+  const base1 = LABEL_NOUN[display] ?? display
+  labelCounters[base1] = (labelCounters[base1] ?? 0) + 1
+  catalog.push({ id, label: `${base1} ${labelCounters[base1]}`, category: display, thumb: `/api/media/${key}` })
+  sources[id] = absPath
+  manifest.push({ id, key, tmp })
+  n++
+  return true
+}
+
 for (const [catPath, display] of CATEGORIES) {
   const items = lib.assets.filter(a =>
     (a.categoryPath || '').startsWith(catPath) &&
     (a.fileExtension || '').toLowerCase() === 'svg'
   )
-  const picks = spread(items, PER_CAT)
-  let idx = 0
-  for (const a of picks) {
-    try {
-      // Stable id from the SOURCE file content — restyling thumbnails
-      // (watermark tweaks etc.) must not rotate ids stored on past orders.
-      const srcHash = createHash('sha256').update(readFileSync(a.absolutePath)).digest('hex')
-      const id = 'de_' + srcHash.slice(0, 16)
-      if (sources[id]) continue // skip duplicate source content
-      const base = await sharp(a.absolutePath, { density: 200, limitInputPixels: false })
-        .resize(THUMB, THUMB, { fit: 'inside', background: { r: 0, g: 0, b: 0, alpha: 0 } })
-        .png()
-        .toBuffer()
-      const meta = await sharp(base).metadata()
-      const png = await sharp(base)
-        .composite([{ input: watermarkSvg(meta.width, meta.height) }])
-        .png({ compressionLevel: 9 })
-        .toBuffer()
-      const pngHash = createHash('sha256').update(png).digest('hex')
-      const key = `media/${pngHash.slice(0, 2)}/${pngHash.slice(2, 4)}/${pngHash}.png`
-      const tmp = `${OUT}/${id}.png`
-      writeFileSync(tmp, png)
-      idx++
-      catalog.push({ id, label: `${LABEL_NOUN[display] ?? display} ${idx}`, category: display, thumb: `/api/media/${key}` })
-      sources[id] = a.absolutePath
-      manifest.push({ id, key, tmp })
-      n++
-    } catch (e) {
-      fail++
-    }
+  for (const a of spread(items, PER_CAT)) {
+    try { await ingest(a.absolutePath, display) } catch { fail++ }
   }
   console.log(`${display}: ${catalog.filter(c => c.category === display).length}`)
+}
+
+for (const [dir, display, take, extRe] of DIR_SOURCES) {
+  const files = walkSvgs(dir, extRe)
+  let added = 0
+  for (const f of spread(files, take)) {
+    try { if (await ingest(f, display)) added++ } catch { fail++ }
+  }
+  console.log(`+${added} ${display}  <- ${dir.split('/').slice(-2).join('/')} (${files.length} found)`)
 }
 
 writeFileSync(`${OUT}/manifest.json`, JSON.stringify(manifest))
