@@ -84,7 +84,7 @@ export default function KnifeEngravingPage() {
               {SHOWCASE.map((item) => (
                 <Link
                   key={item.slug}
-                  href={`/services/portfolio/${item.slug}`}
+                  href="/shop/knives"
                   className="group block"
                 >
                   <div className="relative aspect-[4/3] rounded-sm overflow-hidden">

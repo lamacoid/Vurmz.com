@@ -12,13 +12,25 @@ const nextConfig: NextConfig = {
 
   trailingSlash: true,
 
-  // /shop/contact is a funnel into the single contact page. A framework-level
-  // redirect is compiled into the next-on-pages worker (which owns all routing
-  // via _routes.json "/*"), so it returns a real 308 — unlike a Server Component
-  // redirect() or a public/_redirects rule, both of which the worker shadows.
+  // These redirects are compiled into the next-on-pages worker (which owns all
+  // routing via _routes.json "/*"), so they return a real 308. A Server Component
+  // redirect() or a public/_redirects rule would both be shadowed by the worker
+  // and 404 in production — which is exactly why the legacy /_redirects rules for
+  // /contact, /pricing, /portfolio, /centennial, /gifts, and /laser-engraving/*
+  // were dead and had to move here.
   async redirects() {
     return [
       { source: '/shop/contact', destination: '/services/contact', permanent: true },
+      { source: '/contact', destination: '/services/contact', permanent: true },
+      { source: '/pricing', destination: '/services/pricing', permanent: true },
+      { source: '/portfolio', destination: '/services/portfolio', permanent: true },
+      // /centennial and the old /services/centennial hop both land on the city page.
+      // Skip the Server Component redirect() (shadowed by the worker in prod) and 308
+      // straight to the destination.
+      { source: '/centennial', destination: '/services/laser-engraving/centennial', permanent: true },
+      { source: '/services/centennial', destination: '/services/laser-engraving/centennial', permanent: true },
+      { source: '/gifts', destination: '/shop', permanent: true },
+      { source: '/laser-engraving/:city*', destination: '/services/laser-engraving/:city*', permanent: true },
     ]
   },
 
