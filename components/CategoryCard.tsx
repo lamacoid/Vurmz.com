@@ -16,7 +16,7 @@ interface CategoryCardProps {
 
 function getPrice(cat: ShopCategory): { price: string; note: string } {
   if (cat.pricingType === 'signature') {
-    return { price: `Starting at $${SIGNATURE.startingPrice}`, note: 'Custom engraving on your item' }
+    return { price: `Starting at $${SIGNATURE.startingPrice}`, note: 'Custom engraving' }
   }
   if (cat.pricingKey && cat.pricingKey in BASIC) {
     const data = BASIC[cat.pricingKey]

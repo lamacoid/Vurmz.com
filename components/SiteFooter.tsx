@@ -5,14 +5,13 @@ import { siteInfo, getSmsLink } from '@/lib/site-info'
 
 const PRODUCTS = [
   { label: 'Gifts', href: '/shop/gifts' },
-  { label: 'Knives', href: '/shop/knives' },
+  { label: 'Bring Your Own', href: '/shop/bring-your-own' },
   { label: 'Tumblers', href: '/shop/tumblers' },
   { label: 'Coasters', href: '/shop/coasters' },
   { label: 'Keychains', href: '/shop/keychains' },
   { label: 'Pens', href: '/shop/pens' },
   { label: 'Metal Cards', href: '/shop/metal-cards' },
   { label: 'Art & Decor', href: '/shop/decor' },
-  { label: 'Devices', href: '/shop/devices' },
 ]
 
 const BUSINESS = [

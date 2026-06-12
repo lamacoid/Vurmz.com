@@ -30,6 +30,9 @@ const nextConfig: NextConfig = {
       { source: '/centennial', destination: '/services/laser-engraving/centennial', permanent: true },
       { source: '/services/centennial', destination: '/services/laser-engraving/centennial', permanent: true },
       { source: '/gifts', destination: '/shop', permanent: true },
+      // Retired consumer categories folded into Bring Your Own (2026-06-12).
+      { source: '/shop/knives', destination: '/shop/bring-your-own', permanent: true },
+      { source: '/shop/devices', destination: '/shop/bring-your-own', permanent: true },
       { source: '/laser-engraving/:city*', destination: '/services/laser-engraving/:city*', permanent: true },
     ]
   },
