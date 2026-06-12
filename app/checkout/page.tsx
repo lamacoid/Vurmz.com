@@ -40,6 +40,10 @@ export default function CheckoutPage() {
   const [email, setEmail] = useState('')
   const [address, setAddress] = useState({ name: '', line1: '', line2: '', city: '', state: 'CO', postalCode: '', phone: '' })
   const [notes, setNotes] = useState('')
+  // Guest-friendly file attachments (photo/logo) — uploaded immediately to
+  // /api/checkout/upload, keys submitted with the order.
+  const [attachments, setAttachments] = useState<Array<{ key: string; filename: string }>>([])
+  const [uploading, setUploading] = useState(false)
   const [options, setOptions] = useState<FulfillmentOption[]>([])
   const [chosenMethod, setChosenMethod] = useState<FulfillmentOption['method'] | null>(null)
   const [handDeliveryWindow, setHandDeliveryWindow] = useState<string>('')
@@ -159,6 +163,28 @@ export default function CheckoutPage() {
     return `${h.slice(0,8)}-${h.slice(8,12)}-${h.slice(12,16)}-${h.slice(16,20)}-${h.slice(20)}`
   }
 
+  async function uploadAttachment(file: File) {
+    if (attachments.length >= 3) { setError('Up to 3 files per order'); return }
+    setUploading(true)
+    setError(null)
+    try {
+      const fd = new FormData()
+      fd.append('file', file)
+      const res = await fetch('/api/checkout/upload', { method: 'POST', body: fd })
+      const json = (await res.json()) as { ok?: boolean; data?: { key: string; filename: string }; error?: { message?: string; code?: string } }
+      if (!res.ok || !json.ok || !json.data) {
+        setError(json.error?.message ?? 'Upload failed — try again or text me the file.')
+        return
+      }
+      const uploaded = json.data
+      setAttachments(prev => [...prev, { key: uploaded.key, filename: uploaded.filename }])
+    } catch {
+      setError('Upload failed — try again or text me the file.')
+    } finally {
+      setUploading(false)
+    }
+  }
+
   async function submitOrder(paymentMethod: 'square' | 'invoice_later', sourceId?: string) {
     if (!chosenMethod) { setError('Choose a fulfillment option'); return }
     if (!email) { setError('Email required'); return }
@@ -200,6 +226,7 @@ export default function CheckoutPage() {
             country: 'US',
           } : null,
           notes,
+          attachments: attachments.length ? attachments : undefined,
           handDelivery: chosenMethod === 'hand_deliver' ? {
             window: handDeliveryWindow || undefined,
             note: handDeliveryNote || undefined,
@@ -415,6 +442,44 @@ export default function CheckoutPage() {
               placeholder="Engraving text, color preferences, or anything I should know…"
               className="w-full bg-white/70 border border-[#235158]/12 rounded-sm px-3 py-2 text-sm outline-none focus:border-[#B16558]"
             />
+
+            {/* Photo / logo attachments — works for guests, no account needed */}
+            <div className="mt-3">
+              <p className="text-xs text-[#6B6259] mb-2">
+                Have a photo or logo for the engraving? Attach it here — up to 3 files (JPG, PNG, or PDF, 10 MB each).
+              </p>
+              {attachments.length > 0 && (
+                <ul className="space-y-1 mb-2">
+                  {attachments.map(a => (
+                    <li key={a.key} className="flex items-center justify-between text-sm bg-white/70 border border-[#235158]/12 rounded-sm px-3 py-1.5">
+                      <span className="truncate">📎 {a.filename}</span>
+                      <button
+                        type="button"
+                        onClick={() => setAttachments(prev => prev.filter(x => x.key !== a.key))}
+                        className="text-[#B16558] text-xs font-semibold ml-3 hover:underline flex-shrink-0"
+                      >
+                        Remove
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+              {attachments.length < 3 && (
+                <label className={`inline-flex items-center gap-2 px-4 py-2 border border-[#235158]/20 rounded-sm text-sm cursor-pointer hover:border-[#B16558] transition-colors ${uploading ? 'opacity-50 pointer-events-none' : ''}`}>
+                  <input
+                    type="file"
+                    accept="image/jpeg,image/png,image/gif,image/webp,application/pdf"
+                    className="hidden"
+                    onChange={e => {
+                      const f = e.target.files?.[0]
+                      if (f) uploadAttachment(f)
+                      e.target.value = ''
+                    }}
+                  />
+                  {uploading ? 'Uploading…' : '+ Attach a photo or logo'}
+                </label>
+              )}
+            </div>
           </Section>
 
           <Section title="Payment">

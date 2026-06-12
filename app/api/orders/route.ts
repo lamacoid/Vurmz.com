@@ -42,6 +42,12 @@ const schema = z.object({
   fulfillmentMethod: z.enum(['ship','hand_deliver','pickup','uber_direct','invoice_later']),
   address: addressSchema.optional().nullable(),
   notes: z.string().max(2000).optional(),
+  // Guest checkout uploads (photos/logos) — keys minted by /api/checkout/upload.
+  // Shape-validated so only that route's private checkout/ prefix is accepted.
+  attachments: z.array(z.object({
+    key: z.string().regex(/^checkout\/gup_[a-z0-9]+\/[A-Za-z0-9._-]{1,180}$/),
+    filename: z.string().min(1).max(200),
+  })).max(3).optional(),
   handDelivery: z.object({
     window: z.string().max(40).optional(),
     note: z.string().max(500).optional(),
@@ -63,6 +69,7 @@ async function sendOrderEmails(env: CloudflareEnv, args: {
   totalCents: number
   items: Array<{ name: string; qty: number; unitPriceCents: number; engraving?: string }>
   fulfillmentLabel: string
+  attachmentCount?: number
 }) {
   if (!env.RESEND_API_KEY) return
   const dollars = (c: number) => `$${(c / 100).toFixed(2)}`
@@ -101,7 +108,7 @@ async function sendOrderEmails(env: CloudflareEnv, args: {
       from: 'VURMZ Orders <orders@vurmz.com>',
       to: 'zach@vurmz.com',
       subject: `New order ${args.orderNumber} — ${dollars(args.totalCents)}`,
-      html: `<p>New order from <strong>${args.email}</strong>. ${args.fulfillmentLabel}.</p><ul style="padding-left:18px">${lines}</ul><p><a href="https://vurmz.com/admin/orders/${args.orderId}">Open in admin →</a></p>`,
+      html: `<p>New order from <strong>${args.email}</strong>. ${args.fulfillmentLabel}.</p><ul style="padding-left:18px">${lines}</ul>${args.attachmentCount ? `<p>📎 ${args.attachmentCount} customer file${args.attachmentCount > 1 ? 's' : ''} attached — view in admin.</p>` : ''}<p><a href="https://www.vurmz.com/admin/orders/${args.orderId}">Open in admin →</a></p>`,
     }),
   }).catch(() => {})
 }
@@ -205,6 +212,7 @@ export async function POST(req: NextRequest) {
     metadata: {
       source: 'checkout',
       ...(handDeliveryMeta ? { handDelivery: handDeliveryMeta } : {}),
+      ...(body.attachments?.length ? { attachments: body.attachments } : {}),
     },
   })
 
@@ -232,7 +240,7 @@ export async function POST(req: NextRequest) {
     try {
       await db.prepare(
         `INSERT INTO payments (id, invoice_id, customer_id, amount_cents, status, square_payment_id, square_receipt_url, method_brand, method_last4, metadata, created_at, updated_at)
-         VALUES (?, NULL, ?, ?, 'succeeded', ?, ?, ?, ?, '{}', ?, ?)`
+         VALUES (?, NULL, ?, ?, 'succeeded', ?, ?, ?, ?, ?, ?, ?)`
       ).bind(
         newId('pay'),
         customer.id,
@@ -241,6 +249,9 @@ export async function POST(req: NextRequest) {
         result.receiptUrl,
         result.brand,
         result.last4,
+        // payments has no order_id column; carry the link in metadata so shop
+        // payments can be reconciled to orders without a schema migration.
+        JSON.stringify({ orderId: order.id, orderNumber: order.number }),
         nowIso(),
         nowIso()
       ).run()
@@ -310,6 +321,7 @@ export async function POST(req: NextRequest) {
       }
     }),
     fulfillmentLabel,
+    attachmentCount: body.attachments?.length ?? 0,
   })
 
   await audit({

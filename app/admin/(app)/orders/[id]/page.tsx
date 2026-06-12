@@ -11,7 +11,10 @@ interface Order {
   fulfillmentMethod: string
   fulfillmentAddress: { name?: string; line1?: string; line2?: string | null; city?: string; state?: string; postalCode?: string; phone?: string | null } | null
   notes: string; createdAt: string
-  metadata?: { handDelivery?: { window?: string; windowLabel?: string; note?: string } }
+  metadata?: {
+    handDelivery?: { window?: string; windowLabel?: string; note?: string }
+    attachments?: Array<{ key: string; filename: string }>
+  }
 }
 
 function money(c: number) { return `$${(c / 100).toFixed(2)}` }
@@ -132,9 +135,29 @@ export default function OrderDetailPage() {
       )}
 
       {order.notes && (
-        <div className="bg-[#235158] border border-white/5 rounded-xl p-4">
+        <div className="bg-[#235158] border border-white/5 rounded-xl p-4 mb-6">
           <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-1">Customer notes</p>
           <p className="text-sm text-cream whitespace-pre-wrap">{order.notes}</p>
+        </div>
+      )}
+
+      {(order.metadata?.attachments?.length ?? 0) > 0 && (
+        <div className="bg-[#235158] border border-white/5 rounded-xl p-4">
+          <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-2">Customer files</p>
+          <ul className="space-y-2">
+            {order.metadata!.attachments!.map(a => (
+              <li key={a.key}>
+                <a
+                  href={`/api/admin/r2/${a.key}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-sm text-[#6BB8B2] hover:text-cream transition-colors"
+                >
+                  📎 {a.filename}
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
       )}
     </div>
