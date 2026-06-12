@@ -195,6 +195,7 @@ export const SHOP_CATEGORIES: ShopCategory[] = [
       "I'll quote you and we'll confirm the design",
       'I engrave it and hand-deliver across South Denver',
     ],
+    materialNote: 'I keep wood panels in a variety of sizes in stock. Bring an idea, leave with art — no waiting on materials.',
   },
   {
     slug: 'devices',
