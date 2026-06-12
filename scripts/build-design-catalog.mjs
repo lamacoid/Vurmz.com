@@ -30,15 +30,25 @@ const CATEGORIES = [
   ['09-Heraldry-Emblems', 'Emblems & Crests'],
 ]
 
-// Tag tokens that are noise for a human label.
-const NOISE = new Set(['svg','vector','art','artistic','illustration','illustrations','clipart','design','graphic','icon','icons','image','file','cut','laser','digital','printable','instant','download','1','2','3'])
+// Customer-facing labels are "<Noun> N" — bundle filenames are repetitive
+// auto-tags, and in a visual picker the thumbnail is the real selector.
+const LABEL_NOUN = {
+  'Animals': 'Animal', 'Florals & Botanical': 'Floral', 'Home & Decor': 'Decor',
+  'Holiday & Seasonal': 'Holiday', 'Food & Drink': 'Food & Drink',
+  'Frames & Borders': 'Border', 'Gothic': 'Gothic', 'Emblems & Crests': 'Emblem',
+}
 
-function labelFromFilename(fn) {
-  const stem = fn.replace(/\.[a-z0-9]+$/i, '').replace(/[_]+/g, '-')
-  const toks = stem.split('-').filter(t => t && isNaN(Number(t)) && !NOISE.has(t.toLowerCase()))
-  const uniq = [...new Set(toks)].slice(0, 3)
-  if (uniq.length === 0) return 'Design'
-  return uniq.map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
+// Tiled diagonal "VURMZ" watermark, baked into every preview so thumbnails
+// can't be casually lifted for digital reuse. Mid-gray at low opacity reads on
+// the cream picker chips and survives the dark-preview inversion.
+function watermarkSvg(w, h) {
+  const marks = []
+  for (let y = 14; y < h + 30; y += 56) {
+    for (let x = -20; x < w + 30; x += 92) {
+      marks.push(`<text x="${x}" y="${y}" font-family="Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#808080" fill-opacity="0.32" transform="rotate(-28 ${x} ${y})">VURMZ</text>`)
+    }
+  }
+  return Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}">${marks.join('')}</svg>`)
 }
 
 // Evenly sample n items across a list so we get variety, not the first n.
@@ -62,18 +72,29 @@ for (const [catPath, display] of CATEGORIES) {
     (a.fileExtension || '').toLowerCase() === 'svg'
   )
   const picks = spread(items, PER_CAT)
+  let idx = 0
   for (const a of picks) {
     try {
-      const png = await sharp(a.absolutePath, { density: 200, limitInputPixels: false })
+      // Stable id from the SOURCE file content — restyling thumbnails
+      // (watermark tweaks etc.) must not rotate ids stored on past orders.
+      const srcHash = createHash('sha256').update(readFileSync(a.absolutePath)).digest('hex')
+      const id = 'de_' + srcHash.slice(0, 16)
+      if (sources[id]) continue // skip duplicate source content
+      const base = await sharp(a.absolutePath, { density: 200, limitInputPixels: false })
         .resize(THUMB, THUMB, { fit: 'inside', background: { r: 0, g: 0, b: 0, alpha: 0 } })
-        .png({ compressionLevel: 9, palette: true })
+        .png()
         .toBuffer()
-      const hash = createHash('sha256').update(png).digest('hex')
-      const id = 'de_' + hash.slice(0, 16)
-      const key = `media/${hash.slice(0, 2)}/${hash.slice(2, 4)}/${hash}.png`
+      const meta = await sharp(base).metadata()
+      const png = await sharp(base)
+        .composite([{ input: watermarkSvg(meta.width, meta.height) }])
+        .png({ compressionLevel: 9 })
+        .toBuffer()
+      const pngHash = createHash('sha256').update(png).digest('hex')
+      const key = `media/${pngHash.slice(0, 2)}/${pngHash.slice(2, 4)}/${pngHash}.png`
       const tmp = `${OUT}/${id}.png`
       writeFileSync(tmp, png)
-      catalog.push({ id, label: labelFromFilename(a.filename), category: display, thumb: `/api/media/${key}` })
+      idx++
+      catalog.push({ id, label: `${LABEL_NOUN[display] ?? display} ${idx}`, category: display, thumb: `/api/media/${key}` })
       sources[id] = a.absolutePath
       manifest.push({ id, key, tmp })
       n++
