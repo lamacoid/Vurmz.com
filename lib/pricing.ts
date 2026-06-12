@@ -85,6 +85,10 @@ export const MARKING = {
     base: 15,
     unit: "per tool",
     minimum: 4,
+    // Jobsite ladder mirrors the knife crew ladder (the $8 deep rate is
+    // Zach's number, locked 2026-06-12).
+    crew: { minQty: 4, perPiece: 12 },
+    jobsite: { minQty: 10, perPiece: 8 },
     note: "4-piece minimum for free delivery",
   },
 } as const
@@ -248,6 +252,8 @@ export const BASIC_PRICING_CARDS = [
     packTotal: '',
     items: [
       { name: 'Name / ID marking', price: usd(MARKING.tool.base), note: '' },
+      { name: `Crew rate (${MARKING.tool.crew.minQty}+ tools)`, price: usd(MARKING.tool.crew.perPiece), note: 'per tool' },
+      { name: `Jobsite rate (${MARKING.tool.jobsite.minQty}+ tools)`, price: usd(MARKING.tool.jobsite.perPiece), note: 'per tool' },
     ],
   },
   {

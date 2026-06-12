@@ -37,6 +37,7 @@ const schema = z.object({
       text: z.string().max(200),
       fontValue: z.string().max(60).optional(),
       fontLabel: z.string().max(120).optional(),
+      placement: z.string().max(200).optional(),
     }).nullish(),
   })).min(1),
   fulfillmentMethod: z.enum(['ship','hand_deliver','pickup','uber_direct','invoice_later']),
@@ -84,7 +85,7 @@ async function sendOrderEmails(env: CloudflareEnv, args: {
         <tr><td style="padding:4px 0;color:#666">${args.fulfillmentLabel}</td><td style="text-align:right">${dollars(args.fulfillmentFeeCents)}</td></tr>
         <tr><td style="padding:4px 0;font-weight:700">Total</td><td style="text-align:right;font-weight:700">${dollars(args.totalCents)}</td></tr>
       </table>
-      <p style="color:#555">I&rsquo;ll reach out with next steps shortly. Reply to this email anytime.</p>
+      <p style="color:#555">If your order has engraving, I&rsquo;ll send you a proof photo to approve before anything runs. I&rsquo;ll reach out with next steps shortly &mdash; reply to this email anytime.</p>
       <p style="margin-top:24px;color:#999;font-size:12px">VURMZ · Centennial, CO · zach@vurmz.com</p>
     </div>
   `
@@ -175,7 +176,7 @@ export async function POST(req: NextRequest) {
   const orderEmail = session?.customer.email ?? body.email
 
   // Per-line personalization (engraving), keyed by product.
-  const personalByProduct = new Map<string, { text: string; fontValue?: string; fontLabel?: string }>()
+  const personalByProduct = new Map<string, { text: string; fontValue?: string; fontLabel?: string; placement?: string }>()
   for (const it of body.items) {
     const t = it.personalization?.text?.trim()
     if (t) {
@@ -183,6 +184,7 @@ export async function POST(req: NextRequest) {
         text: t.slice(0, 200),
         fontValue: it.personalization?.fontValue || undefined,
         fontLabel: it.personalization?.fontLabel || undefined,
+        placement: it.personalization?.placement?.trim() || undefined,
       })
     }
   }
@@ -317,7 +319,7 @@ export async function POST(req: NextRequest) {
         name: `${i.name} (${i.packSize}-pack)`,
         qty: i.qty,
         unitPriceCents: i.unitPriceCents,
-        engraving: eng ? `“${esc(eng.text)}”${eng.fontLabel ? ` · ${esc(eng.fontLabel)}` : ''}` : undefined,
+        engraving: eng ? `“${esc(eng.text)}”${eng.fontLabel ? ` · ${esc(eng.fontLabel)}` : ''}${eng.placement ? ` · ${esc(eng.placement)}` : ''}` : undefined,
       }
     }),
     fulfillmentLabel,

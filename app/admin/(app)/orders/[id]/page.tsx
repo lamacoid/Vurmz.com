@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
 
-interface OrderItem { id: string; nameSnapshot: string; qty: number; unitPriceCents: number; metadata?: { engraving?: { text?: string; fontValue?: string; fontLabel?: string } } }
+interface OrderItem { id: string; nameSnapshot: string; qty: number; unitPriceCents: number; metadata?: { engraving?: { text?: string; fontValue?: string; fontLabel?: string; placement?: string } } }
 interface Order {
   id: string; number: string; email: string; status: string
   subtotalCents: number; fulfillmentFeeCents: number; totalCents: number
@@ -109,6 +109,9 @@ export default function OrderDetailPage() {
                     ✎ Engrave:&nbsp;<span className="text-cream font-medium">“{it.metadata.engraving.text}”</span>
                     {it.metadata.engraving.fontLabel ? <span className="text-gray-400">· {it.metadata.engraving.fontLabel}</span> : null}
                   </p>
+                )}
+                {it.metadata?.engraving?.placement && (
+                  <p className="text-xs mt-1 text-gray-400">↳ Placement: <span className="text-cream/80">{it.metadata.engraving.placement}</span></p>
                 )}
               </div>
               <p className="text-sm font-semibold text-cream">{money(it.qty * it.unitPriceCents)}</p>

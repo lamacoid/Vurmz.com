@@ -18,7 +18,7 @@ export default function AddToCart(props: {
   const { add, items } = useCart()
   const [qty, setQty] = useState(1)
   const [added, setAdded] = useState(false)
-  const [engraving, setEngraving] = useState<EngravingValue>({ text: '', fontValue: 'kerf' })
+  const [engraving, setEngraving] = useState<EngravingValue>({ text: '', fontValue: 'kerf', placement: '' })
 
   const engravable = props.engravable !== false
   const alreadyInCart = props.oneOff && items.some(i => i.productId === props.productId)
@@ -27,11 +27,13 @@ export default function AddToCart(props: {
   function buildMetadata(): Record<string, unknown> | undefined {
     if (!engravable || !engText) return undefined
     const font = fontOptions.find(f => f.value === engraving.fontValue)
+    const placement = engraving.placement.trim()
     return {
       engraving: {
         text: engText.slice(0, 120),
         fontValue: engraving.fontValue,
         fontLabel: font?.label ?? engraving.fontValue,
+        ...(placement ? { placement: placement.slice(0, 200) } : {}),
       },
     }
   }

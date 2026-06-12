@@ -205,12 +205,12 @@ export default function CheckoutPage() {
         body: JSON.stringify({
           email,
           items: items.map(i => {
-            const eng = i.metadata?.engraving as { text?: string; fontValue?: string; fontLabel?: string } | undefined
+            const eng = i.metadata?.engraving as { text?: string; fontValue?: string; fontLabel?: string; placement?: string } | undefined
             return {
               productId: i.productId,
               qty: i.qty,
               personalization: eng?.text
-                ? { text: eng.text, fontValue: eng.fontValue ?? '', fontLabel: eng.fontLabel ?? '' }
+                ? { text: eng.text, fontValue: eng.fontValue ?? '', fontLabel: eng.fontLabel ?? '', placement: eng.placement || undefined }
                 : undefined,
             }
           }),
@@ -434,14 +434,17 @@ export default function CheckoutPage() {
             </Section>
           )}
 
-          <Section title={needsAddress ? '4 · Order notes' : '3 · Order notes'}>
+          <Section title={needsAddress ? '4 · Engraving instructions' : '3 · Engraving instructions'}>
             <textarea
               value={notes}
               onChange={e => setNotes(e.target.value)}
               rows={3}
-              placeholder="Engraving text, color preferences, or anything I should know…"
+              placeholder="Placement, sizes, finishes, links to inspiration — anything I should know before I make your proof…"
               className="w-full bg-white/70 border border-[#235158]/12 rounded-sm px-3 py-2 text-sm outline-none focus:border-[#B16558]"
             />
+            <p className="mt-2 text-xs text-[#235158] font-medium">
+              ✓ I always send a proof photo before I engrave. Nothing runs until you approve it.
+            </p>
 
             {/* Photo / logo attachments — works for guests, no account needed */}
             <div className="mt-3">
