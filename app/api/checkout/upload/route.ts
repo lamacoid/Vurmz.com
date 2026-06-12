@@ -13,11 +13,17 @@ export const runtime = 'edge'
  * order's metadata. Files for orders that never complete just age out unused.
  */
 const MAX_SIZE = 10 * 1024 * 1024 // 10 MB — design refs don't need more
+// SVG is allowed because vector art is the PREFERRED logo format for laser
+// work. It is safe here only because nothing ever serves these files inline:
+// the public media route rejects the checkout/ prefix entirely, and the admin
+// r2 route forces Content-Disposition: attachment for anything not in its
+// raster INLINE_TYPES set — so an SVG with embedded script never executes.
 const ALLOWED_MIME = new Set([
   'image/jpeg',
   'image/png',
   'image/gif',
   'image/webp',
+  'image/svg+xml',
   'application/pdf',
 ])
 
@@ -56,7 +62,7 @@ export async function POST(req: NextRequest) {
   }
   if (!ALLOWED_MIME.has(file.type)) {
     return NextResponse.json(
-      { ok: false, error: { code: 'UNSUPPORTED_TYPE', message: 'Only JPG, PNG, GIF, WEBP, or PDF files are allowed.' } },
+      { ok: false, error: { code: 'UNSUPPORTED_TYPE', message: 'Only SVG, PDF, JPG, PNG, GIF, or WEBP files are allowed.' } },
       { status: 400 },
     )
   }

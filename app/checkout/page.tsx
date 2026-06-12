@@ -41,8 +41,9 @@ export default function CheckoutPage() {
   const [address, setAddress] = useState({ name: '', line1: '', line2: '', city: '', state: 'CO', postalCode: '', phone: '' })
   const [notes, setNotes] = useState('')
   // Guest-friendly file attachments (photo/logo) — uploaded immediately to
-  // /api/checkout/upload, keys submitted with the order.
-  const [attachments, setAttachments] = useState<Array<{ key: string; filename: string }>>([])
+  // /api/checkout/upload, keys submitted with the order. `warning` is local
+  // UX only (low-contrast advice) and is stripped from the order payload.
+  const [attachments, setAttachments] = useState<Array<{ key: string; filename: string; warning?: string }>>([])
   const [uploading, setUploading] = useState(false)
   const [options, setOptions] = useState<FulfillmentOption[]>([])
   const [chosenMethod, setChosenMethod] = useState<FulfillmentOption['method'] | null>(null)
@@ -163,6 +164,42 @@ export default function CheckoutPage() {
     return `${h.slice(0,8)}-${h.slice(8,12)}-${h.slice(12,16)}-${h.slice(16,20)}-${h.slice(20)}`
   }
 
+  // Lasers mark in one tone: a logo needs to read as near black-and-white.
+  // Vector files (SVG/PDF) are inherently fine; for raster images we sample a
+  // downscaled luminance histogram and warn (never block) when the 10th-90th
+  // percentile spread is narrow — i.e. the image is mostly midtones.
+  async function checkRasterContrast(file: File): Promise<string | undefined> {
+    if (!file.type.startsWith('image/') || file.type === 'image/svg+xml') return undefined
+    try {
+      const bmp = await createImageBitmap(file)
+      const scale = Math.min(1, 128 / Math.max(bmp.width, bmp.height))
+      const canvas = document.createElement('canvas')
+      canvas.width = Math.max(1, Math.round(bmp.width * scale))
+      canvas.height = Math.max(1, Math.round(bmp.height * scale))
+      const ctx = canvas.getContext('2d')
+      if (!ctx) return undefined
+      ctx.drawImage(bmp, 0, 0, canvas.width, canvas.height)
+      const { data } = ctx.getImageData(0, 0, canvas.width, canvas.height)
+      const lums: number[] = []
+      for (let i = 0; i < data.length; i += 4) {
+        const a = data[i + 3] / 255
+        // Composite on white — transparent pixels won't be marked.
+        const r = data[i] * a + 255 * (1 - a)
+        const g = data[i + 1] * a + 255 * (1 - a)
+        const b = data[i + 2] * a + 255 * (1 - a)
+        lums.push(0.2126 * r + 0.7152 * g + 0.0722 * b)
+      }
+      lums.sort((x, y) => x - y)
+      const spread = lums[Math.floor(lums.length * 0.9)] - lums[Math.floor(lums.length * 0.1)]
+      if (spread < 90) {
+        return 'This image reads low-contrast for laser marking. I can usually clean it up — or if you have an SVG or PDF version, that engraves best.'
+      }
+    } catch {
+      // Analysis is best-effort; never stop an upload over it.
+    }
+    return undefined
+  }
+
   async function uploadAttachment(file: File) {
     if (attachments.length >= 3) { setError('Up to 3 files per order'); return }
     setUploading(true)
@@ -177,7 +214,8 @@ export default function CheckoutPage() {
         return
       }
       const uploaded = json.data
-      setAttachments(prev => [...prev, { key: uploaded.key, filename: uploaded.filename }])
+      const warning = await checkRasterContrast(file)
+      setAttachments(prev => [...prev, { key: uploaded.key, filename: uploaded.filename, warning }])
     } catch {
       setError('Upload failed — try again or text me the file.')
     } finally {
@@ -226,7 +264,7 @@ export default function CheckoutPage() {
             country: 'US',
           } : null,
           notes,
-          attachments: attachments.length ? attachments : undefined,
+          attachments: attachments.length ? attachments.map(a => ({ key: a.key, filename: a.filename })) : undefined,
           handDelivery: chosenMethod === 'hand_deliver' ? {
             window: handDeliveryWindow || undefined,
             note: handDeliveryNote || undefined,
@@ -449,20 +487,25 @@ export default function CheckoutPage() {
             {/* Photo / logo attachments — works for guests, no account needed */}
             <div className="mt-3">
               <p className="text-xs text-[#6B6259] mb-2">
-                Have a photo or logo for the engraving? Attach it here — up to 3 files (JPG, PNG, or PDF, 10 MB each).
+                Have a logo or design? Attach it here — up to 3 files, 10 MB each. <span className="font-medium text-[#235158]">SVG or PDF engraves best</span> (crisp lines, high contrast). Photos and PNG/JPG work too — I&apos;ll clean them up if needed. No file? Just describe it above and we&apos;ll nail it down on the proof.
               </p>
               {attachments.length > 0 && (
                 <ul className="space-y-1 mb-2">
                   {attachments.map(a => (
-                    <li key={a.key} className="flex items-center justify-between text-sm bg-white/70 border border-[#235158]/12 rounded-sm px-3 py-1.5">
-                      <span className="truncate">📎 {a.filename}</span>
-                      <button
-                        type="button"
-                        onClick={() => setAttachments(prev => prev.filter(x => x.key !== a.key))}
-                        className="text-[#B16558] text-xs font-semibold ml-3 hover:underline flex-shrink-0"
-                      >
-                        Remove
-                      </button>
+                    <li key={a.key} className="text-sm bg-white/70 border border-[#235158]/12 rounded-sm px-3 py-1.5">
+                      <div className="flex items-center justify-between">
+                        <span className="truncate">📎 {a.filename}</span>
+                        <button
+                          type="button"
+                          onClick={() => setAttachments(prev => prev.filter(x => x.key !== a.key))}
+                          className="text-[#B16558] text-xs font-semibold ml-3 hover:underline flex-shrink-0"
+                        >
+                          Remove
+                        </button>
+                      </div>
+                      {a.warning && (
+                        <p className="text-xs text-[#8a6d1a] mt-1">⚠ {a.warning}</p>
+                      )}
                     </li>
                   ))}
                 </ul>
@@ -471,7 +514,7 @@ export default function CheckoutPage() {
                 <label className={`inline-flex items-center gap-2 px-4 py-2 border border-[#235158]/20 rounded-sm text-sm cursor-pointer hover:border-[#B16558] transition-colors ${uploading ? 'opacity-50 pointer-events-none' : ''}`}>
                   <input
                     type="file"
-                    accept="image/jpeg,image/png,image/gif,image/webp,application/pdf"
+                    accept="image/jpeg,image/png,image/gif,image/webp,image/svg+xml,application/pdf,.svg,.pdf"
                     className="hidden"
                     onChange={e => {
                       const f = e.target.files?.[0]
