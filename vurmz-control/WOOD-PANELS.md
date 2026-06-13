@@ -8,7 +8,7 @@ library and the photo-upload pipeline, that's a product line.
 1. **Wood Panel Art — Your Design, from $45** — library design / uploaded art /
    described idea onto a stocked panel; size named in instructions, final price
    confirmed on the proof. Base = $35 floor + panel.
-2. **Photo Engraved on Wood, from $55** — uses the checkout photo upload +
+2. **Photo Engraved on Wood, from $75** (premium — photo raster is hours on the machine, priced by size/detail, settled on proof) — uses the checkout photo upload +
    contrast warning that already exist. Pet portraits and memorials are the
    volume sellers in this lane.
 Both follow the established "from $X, settled at proof" pattern (same as BYO).
