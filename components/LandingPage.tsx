@@ -169,10 +169,9 @@ export default function LandingPage() {
             }
           `}</style>
         </div>
+        {/* Nothing visible under the logo — Zach wants it clean. Location +
+            brand line live in the footer; this H1 keeps the SEO. */}
         <h1 className="sr-only">VURMZ — Laser Engraving in {siteInfo.address}</h1>
-        <p className="text-gray-400 text-sm sm:text-base tracking-wide">
-          Need a guy with some lasers? That&apos;s me.
-        </p>
       </motion.div>
 
       {/* Split chooser */}
