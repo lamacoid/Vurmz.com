@@ -56,7 +56,7 @@ export default function SiteHero({ eyebrow, heading, accent = 'coral', baseColor
   const Tagline = heading ? motion.p : motion.h1
 
   return (
-    <section className="relative overflow-hidden -mt-[92px] sm:-mt-[100px] pt-[128px] sm:pt-[152px] pb-12 sm:pb-16">
+    <section className="relative overflow-hidden -mt-[92px] sm:-mt-[100px] pt-[108px] sm:pt-[120px] pb-8 sm:pb-10">
       {/* Rotating portfolio photos behind frosted teal glass */}
       <div className="absolute inset-0 pointer-events-none select-none overflow-hidden" aria-hidden>
         {heroBg.map((img, i) => (
@@ -108,7 +108,7 @@ export default function SiteHero({ eyebrow, heading, accent = 'coral', baseColor
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-[#F0E6D3] font-semibold tracking-tight leading-[1.05] text-4xl sm:text-6xl lg:text-7xl"
+          className="text-[#F0E6D3] font-semibold tracking-tight leading-[1.05] text-2xl sm:text-3xl lg:text-4xl"
           style={{ fontFamily: 'var(--font-display), Georgia, serif' }}
         >
           <span className="block">Let&apos;s put your</span>

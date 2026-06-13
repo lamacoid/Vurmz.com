@@ -8,7 +8,6 @@ import { BASIC } from '@/lib/pricing'
 import { shopTestimonials } from '@/lib/testimonials'
 import SiteHeader from '@/components/SiteHeader'
 import SiteFooter from '@/components/SiteFooter'
-import SiteHero from '@/components/SiteHero'
 import CategoryCard from '@/components/CategoryCard'
 import TestimonialCarousel from '@/components/TestimonialCarousel'
 import TrustedBy from '@/components/TrustedBy'
@@ -56,11 +55,37 @@ export default function Page() {
 
       <SiteHeader variant="shop" />
       <main id="main-content">
-        {/* ═══════════ HERO — one brand, two doors ═══════════ */}
-        <SiteHero eyebrow="Centennial, CO" accent="coral" baseColor="#1f4f57">
+        {/* ═══════════ HERO — animated teal VURMZ logo (compact, not a giant hero) ═══════════ */}
+        <section className="relative px-4 pt-32 sm:pt-36 pb-12 sm:pb-14 text-center overflow-hidden">
           <h1 className="sr-only">VURMZ — Laser Engraving in {siteInfo.address}</h1>
+          {/* Animated teal gradient visible only through the logo shape */}
+          <div className="relative h-14 sm:h-[72px] mx-auto mb-6 w-[280px]">
+            <div className="relative" style={{ WebkitMaskImage: 'url(/images/vurmz-logo-text.png)', WebkitMaskSize: 'contain', WebkitMaskRepeat: 'no-repeat', WebkitMaskPosition: 'center', maskImage: 'url(/images/vurmz-logo-text.png)', maskSize: 'contain', maskRepeat: 'no-repeat', maskPosition: 'center' }}>
+              <div className="h-14 sm:h-[72px] w-full relative overflow-hidden">
+                <div className="absolute w-24 h-24 rounded-full bg-[#2D9E97] blur-[30px] opacity-80" style={{ animation: 'blob1 7s ease-in-out infinite', top: '-20%', left: '0%' }} />
+                <div className="absolute w-20 h-20 rounded-full bg-[#8DCDC8] blur-[25px] opacity-80" style={{ animation: 'blob2 9s ease-in-out infinite', top: '-10%', left: '30%' }} />
+                <div className="absolute w-28 h-28 rounded-full bg-[#4AB5AE] blur-[35px] opacity-70" style={{ animation: 'blob3 6s ease-in-out infinite', top: '-30%', left: '55%' }} />
+                <div className="absolute w-20 h-20 rounded-full bg-[#A8DDD9] blur-[28px] opacity-80" style={{ animation: 'blob4 8s ease-in-out infinite', top: '0%', left: '75%' }} />
+                <div className="absolute w-16 h-16 rounded-full bg-[#3A8A84] blur-[22px] opacity-90" style={{ animation: 'blob5 10s ease-in-out infinite', top: '-15%', left: '15%' }} />
+                <div className="absolute w-24 h-24 rounded-full bg-[#5FBFB8] blur-[30px] opacity-70" style={{ animation: 'blob6 7.5s ease-in-out infinite', top: '-25%', left: '45%' }} />
+                <div className="absolute w-16 h-16 rounded-full bg-[#1F7872] blur-[26px] opacity-80" style={{ animation: 'blob1 8.5s ease-in-out infinite reverse', top: '-5%', left: '60%' }} />
+                <div className="absolute w-24 h-24 rounded-full bg-[#B5E5E1] blur-[32px] opacity-60" style={{ animation: 'blob3 9.5s ease-in-out infinite reverse', top: '-15%', left: '10%' }} />
+                <div className="absolute w-16 h-16 rounded-full bg-[#6BB8B2] blur-[24px] opacity-90" style={{ animation: 'blob5 6.5s ease-in-out infinite reverse', top: '-25%', left: '40%' }} />
+                <div className="absolute w-20 h-20 rounded-full bg-[#347D77] blur-[28px] opacity-75" style={{ animation: 'blob2 11s ease-in-out infinite reverse', top: '0%', left: '80%' }} />
+              </div>
+            </div>
+            <style>{`
+              @keyframes blob1 { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(40px,10px) scale(1.2)} 66%{transform:translate(-20px,-5px) scale(.9)} }
+              @keyframes blob2 { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(-30px,8px) scale(1.1)} 66%{transform:translate(25px,-10px) scale(.85)} }
+              @keyframes blob3 { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(20px,-12px) scale(.9)} 66%{transform:translate(-35px,6px) scale(1.15)} }
+              @keyframes blob4 { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(-25px,-8px) scale(1.1)} 66%{transform:translate(15px,12px) scale(.95)} }
+              @keyframes blob5 { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(35px,-6px) scale(1.15)} 66%{transform:translate(-15px,8px) scale(.9)} }
+              @keyframes blob6 { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(-20px,10px) scale(.85)} 66%{transform:translate(30px,-8px) scale(1.2)} }
+            `}</style>
+          </div>
+
           <p className="text-gray-300 text-base sm:text-lg leading-relaxed mb-7 max-w-lg mx-auto">
-            Gifts, knives, tumblers, decor — engraved and hand-delivered across the south Denver metro. One person, start to finish.
+            Gifts, tumblers, coasters, decor — engraved and hand-delivered across the south Denver metro. One person, start to finish.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
@@ -79,7 +104,7 @@ export default function Page() {
             </a>
           </div>
           <p className="text-gray-400 text-sm mt-4">Prices on the site. No quote forms that go nowhere.</p>
-        </SiteHero>
+        </section>
 
         {/* ═══════════ RECENT WORK ═══════════ */}
         <section className="pb-10 sm:pb-14">
