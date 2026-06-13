@@ -65,7 +65,7 @@ export const siteInfo = {
 
 // Navigation items — services section
 export const servicesNavigation = [
-  { name: 'Pricing', href: '/services/pricing' },
+  { name: 'Pricing', href: '/services' },
   { name: 'Materials', href: '/services/materials' },
   { name: 'Portfolio', href: '/services/portfolio' },
   { name: 'Community', href: '/services/centennial' },

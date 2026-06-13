@@ -6,7 +6,7 @@
   outline-offset: 2px;
 }
 [data-theme="shop"] *:focus-visible {
-  outline-color: #B16558;
+  outline-color: #E95C4E;
 }
 
 /* Hide site chrome on admin pages */
@@ -42,10 +42,10 @@ body.is-admin > main {
   --secondary: #8CC5CC;
   --accent: #7AC5BE;
 
-  /* Conversion CTA - Dusty terracotta coral */
-  --vurmz-cta: #C46B4D;
-  --vurmz-cta-hover: #AD5D42;
-  --vurmz-cta-active: #964F38;
+  /* Conversion CTA - reddish-pink-orange coral */
+  --vurmz-cta: #E95C4E;
+  --vurmz-cta-hover: #D24A3D;
+  --vurmz-cta-active: #B83E32;
   --vurmz-cta-cream: #F0E6D3;
   --vurmz-cta-cream-hover: #E5D9C4;
 
@@ -61,8 +61,8 @@ body.is-admin > main {
   --shop-text-sub: #6B6259;
   --shop-text-light: #7A7068;
   --shop-text-strong: #5C534A;
-  --shop-accent: #B16558;
-  --shop-accent-hover: #954E44;
+  --shop-accent: #E95C4E;
+  --shop-accent-hover: #D24A3D;
   --shop-accent-active: #7D4139;
   --shop-border: rgba(36, 59, 57, 0.12);
   --shop-border-strong: rgba(36, 59, 57, 0.2);
@@ -174,14 +174,11 @@ main [class*="mx-auto"][class*="px-4"] {
   color: var(--vurmz-cta);
 }
 
-/* Linked images shift warm on hover (logos, etc.) — services only */
-[data-theme="services"] a:hover img {
-  filter: brightness(0) invert(42%) sepia(60%) saturate(600%) hue-rotate(340deg) !important;
-  transition: filter 0.2s ease;
-}
-[data-theme="services"] a img {
-  transition: filter 0.2s ease;
-}
+/* NOTE: a previous rule recolored EVERY linked image to a solid coral
+   silhouette on hover (brightness(0) + hue-rotate). It turned portfolio and
+   product photos into opaque orange blobs, so it was removed. Logos keep their
+   own per-element hover (opacity) in TrustedBy; content images get a subtle
+   coral wash via their own component overlays. */
 
 /* ========================================
    GLASS EFFECT UTILITIES

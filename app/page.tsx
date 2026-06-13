@@ -44,7 +44,7 @@ const WORK = [
 const B2B_LANES = [
   { h: 'Metal service tags', p: 'Stickers fall off. A fiber-laser mark in stainless outlives the equipment. Packs of 10 from $30.', href: '/services/metal-tags' },
   { h: 'Knife crews', p: 'I pick up the whole line’s knives and return them engraved next day. $25 single, $8/knife for full kitchens.', href: '/services/knife-engraving' },
-  { h: 'Branded packs', p: 'Pens, coasters, keychains, metal cards. Stocked, engraved with your logo, delivered on a schedule.', href: '/services/pricing' },
+  { h: 'Branded packs', p: 'Pens, coasters, keychains, metal cards. Stocked, engraved with your logo, delivered on a schedule.', href: '/services' },
   { h: 'Custom & one-off', p: 'Awards, signage, faceplates, jobsite tools. If your work needs a permanent mark, that’s my lane.', href: '/services/portfolio' },
 ]
 
@@ -65,7 +65,7 @@ export default function Page() {
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
               href="/shop"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#B16558] text-white font-semibold text-base rounded-sm hover:bg-[#954E44] transition-colors shadow-lg shadow-black/20"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#E95C4E] text-white font-semibold text-base rounded-sm hover:bg-[#D24A3D] transition-colors shadow-lg shadow-black/20"
             >
               Shop engraved goods
               <ArrowRightIcon className="w-4 h-4" />

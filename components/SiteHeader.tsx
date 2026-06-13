@@ -10,7 +10,7 @@ import CartButton from '@/components/shop/CartButton'
 const NAV_LINKS = [
   { label: 'Shop', href: '/shop' },
   { label: 'Services', href: '/services' },
-  { label: 'Pricing', href: '/services/pricing' },
+  { label: 'Pricing', href: '/services' },
   { label: 'Portfolio', href: '/services/portfolio' },
   { label: 'About', href: '/about' },
   { label: 'Contact', href: '/services/contact' },
@@ -34,13 +34,13 @@ export default function SiteHeader({ variant = 'services' }: { variant?: 'shop' 
     : scrolled ? 'bg-[#1f474e]/90 backdrop-blur-2xl border-b border-white/10 shadow-lg shadow-black/10' : 'bg-transparent'
 
   const textColor = isShop ? 'text-gray-300' : 'text-gray-400'
-  const hoverColor = isShop ? 'hover:text-[#B16558]' : 'hover:text-vurmz-cta'
+  const hoverColor = isShop ? 'hover:text-[#E95C4E]' : 'hover:text-vurmz-cta'
   const logoFilter = 'brightness-0 invert'
   const logoSrc = '/images/vurmz-logo-full.svg'
 
   const mobileBg = isShop ? 'bg-[#102f33] border-white/10' : 'bg-[#162524] border-white/10'
   const mobileText = isShop ? 'text-gray-300' : 'text-gray-300'
-  const mobileHover = isShop ? 'hover:text-[#B16558] hover:bg-white/[0.06]' : 'hover:text-vurmz-cta hover:bg-white/[0.06]'
+  const mobileHover = isShop ? 'hover:text-[#E95C4E] hover:bg-white/[0.06]' : 'hover:text-vurmz-cta hover:bg-white/[0.06]'
   const menuIcon = isShop ? 'text-gray-300' : 'text-gray-300'
 
   return (

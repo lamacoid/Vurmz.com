@@ -44,7 +44,7 @@ export default function DesignElementPicker({
       <div className="flex items-center justify-between">
         <span className="text-[11px] uppercase tracking-wider text-gray-400">Add a design <span className="text-gray-600 normal-case tracking-normal">({CATALOG.length} to choose from)</span></span>
         {selected ? (
-          <button type="button" onClick={() => onSelect(null)} className="text-[11px] text-[#B16558] font-semibold hover:underline">
+          <button type="button" onClick={() => onSelect(null)} className="text-[11px] text-[#E95C4E] font-semibold hover:underline">
             Remove design
           </button>
         ) : (
@@ -72,7 +72,7 @@ export default function DesignElementPicker({
             value={query}
             onChange={e => setQuery(e.target.value)}
             placeholder="Search designs (anchor, rose, skull…)"
-            className="w-full bg-white/[0.06] border border-white/15 rounded-sm px-3 py-2 text-sm text-[#F0E6D3] placeholder:text-gray-500 outline-none focus:border-[#B16558]"
+            className="w-full bg-white/[0.06] border border-white/15 rounded-sm px-3 py-2 text-sm text-[#F0E6D3] placeholder:text-gray-500 outline-none focus:border-[#E95C4E]"
           />
           {!query && (
             <div className="flex flex-wrap gap-1.5 mt-2">

@@ -6,7 +6,7 @@ export default function CartButton({ className }: { className?: string }) {
   return (
     <button
       onClick={() => setOpen(true)}
-      className={`relative inline-flex items-center gap-2 text-[13px] text-gray-300 hover:text-[#B16558] transition-colors ${className ?? ''}`}
+      className={`relative inline-flex items-center gap-2 text-[13px] text-gray-300 hover:text-[#E95C4E] transition-colors ${className ?? ''}`}
       aria-label={`Open cart, ${itemCount} items`}
     >
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.75} stroke="currentColor" className="w-5 h-5">
@@ -14,7 +14,7 @@ export default function CartButton({ className }: { className?: string }) {
       </svg>
       <span className="hidden sm:inline">Cart</span>
       {itemCount > 0 && (
-        <span className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-1 bg-[#B16558] text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+        <span className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-1 bg-[#E95C4E] text-white text-[10px] font-bold rounded-full flex items-center justify-center">
           {itemCount}
         </span>
       )}

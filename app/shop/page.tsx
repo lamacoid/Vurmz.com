@@ -50,7 +50,7 @@ export default function ShopHome() {
         </p>
         <a
           href={getSmsLink("Hi, I'd like to get something engraved")}
-          className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#B16558] text-white font-semibold text-base rounded-sm hover:bg-[#954E44] transition-colors shadow-lg shadow-black/20"
+          className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#E95C4E] text-white font-semibold text-base rounded-sm hover:bg-[#D24A3D] transition-colors shadow-lg shadow-black/20"
         >
           <ChatBubbleLeftIcon className="w-5 h-5" />
           Text me — {siteInfo.phone}
@@ -164,7 +164,7 @@ export default function ShopHome() {
           </p>
           <a
             href={getSmsLink("Hi, I'd like to get something engraved")}
-            className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#B16558] text-white font-semibold text-base rounded-sm hover:bg-[#954E44] transition-colors shadow-lg shadow-black/20"
+            className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#E95C4E] text-white font-semibold text-base rounded-sm hover:bg-[#D24A3D] transition-colors shadow-lg shadow-black/20"
           >
             <ChatBubbleLeftIcon className="w-5 h-5" />
             Text {siteInfo.founder.name} — {siteInfo.phone}

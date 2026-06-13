@@ -11,7 +11,7 @@ interface BreadcrumbsProps {
 }
 
 const themeStyles = {
-  shop: { text: 'text-[#7A7068]', active: 'text-[#B16558]', separator: 'text-[#7A7068]/40' },
+  shop: { text: 'text-[#7A7068]', active: 'text-[#E95C4E]', separator: 'text-[#7A7068]/40' },
   services: { text: 'text-gray-500', active: 'text-vurmz-teal', separator: 'text-gray-600' },
   landing: { text: 'text-gray-500', active: 'text-gray-300', separator: 'text-gray-600' },
 }

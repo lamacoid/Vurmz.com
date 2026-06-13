@@ -37,12 +37,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly',
       priority: 0.9,
     },
-    {
-      url: `${baseUrl}/services/pricing`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
+    // /services/pricing merged into /services (308-redirects) — omitted.
     {
       url: `${baseUrl}/services/portfolio`,
       lastModified: new Date(),

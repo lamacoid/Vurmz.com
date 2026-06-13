@@ -339,7 +339,7 @@ export default async function CityPage({ params }: Props) {
               <ArrowRightIcon className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link
-              href="/services/pricing"
+              href="/services"
               className="inline-flex items-center gap-2 text-sm text-vurmz-teal font-mono tracking-wide hover:text-cream transition-colors group"
             >
               View pricing

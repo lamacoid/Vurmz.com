@@ -15,7 +15,7 @@ const PRODUCTS = [
 ]
 
 const BUSINESS = [
-  { label: 'Pricing', href: '/services/pricing' },
+  { label: 'Pricing', href: '/services' },
   { label: 'Portfolio', href: '/services/portfolio' },
   { label: 'Materials', href: '/services/materials' },
   { label: 'Service Tags', href: '/services/metal-tags' },

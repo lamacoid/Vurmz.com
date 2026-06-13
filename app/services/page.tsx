@@ -5,55 +5,62 @@ import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { ArrowRightIcon, ChatBubbleLeftIcon } from '@heroicons/react/24/outline'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
-import { BASIC, MARKING, TRADES, SIGNATURE, SOURCING } from '@/lib/pricing'
+import { SIGNATURE, SOURCING, DELIVERY, BASIC_PRICING_CARDS, LEAVE_YOUR_MARK_CARDS } from '@/lib/pricing'
 import { servicesTestimonials } from '@/lib/testimonials'
 import TestimonialCarousel from '@/components/TestimonialCarousel'
 import TrustedBy from '@/components/TrustedBy'
 import SiteHero from '@/components/SiteHero'
 
-// Headline pricing pulled from the single source of truth so it never drifts.
-const PACKS = [
-  { name: 'Branded Pens', price: `From $${BASIC.pens.basePerItem}/pen`, sub: `Packs of ${BASIC.pens.packSize} · text, logo, both sides`, href: '/shop/pens' },
-  { name: 'Metal Business Cards', price: `From $${BASIC.cards.matteBlackBase}/card`, sub: `Packs of ${BASIC.cards.packSize} · aluminum or stainless`, href: '/shop/metal-cards' },
-  { name: 'Coasters', price: `From $${BASIC.coasters.materials.wood}/ea`, sub: `Packs of ${BASIC.coasters.packSize} · wood, slate, steel`, href: '/shop/coasters' },
-  { name: 'Keychains', price: `From $${BASIC.keychains.materials.acrylic}/ea`, sub: `Packs of ${BASIC.keychains.packSize} · acrylic, wood, metal`, href: '/shop/keychains' },
-]
-const TRADES_SVC = [
-  { name: 'Metal Service Tags', price: `$${TRADES.serviceTags.range[0]}–$${TRADES.serviceTags.range[1]}`, sub: 'Pack of 10 · stainless or anodized, 3M backing', href: '/services/metal-tags' },
-  { name: 'Knife Engraving', price: `$${MARKING.knife.base}/knife`, sub: `Crews ${MARKING.knife.crew.minQty}+ at $${MARKING.knife.crew.perKnife} · full kitchen ${MARKING.knife.fullKitchen.minQty}+ at $${MARKING.knife.fullKitchen.perKnife}`, href: '/services/knife-engraving' },
-  { name: 'Tool & Jobsite Marking', price: `From $${MARKING.tool.jobsite.perPiece}/tool`, sub: `$${MARKING.tool.base} single · crews ${MARKING.tool.crew.minQty}+ at $${MARKING.tool.crew.perPiece}`, href: '/services/pricing' },
-  { name: 'Signature Tiles', price: 'Quote', sub: 'Your logo, set into the work you install', href: '/services/pricing' },
-]
-const CUSTOM = [
-  { name: 'Custom & Signature Work', price: `From $${SIGNATURE.startingPrice}`, sub: 'One-off pieces — your idea, built and engraved', href: '/services/pricing' },
-  { name: 'Concierge Sourcing', price: `$${SOURCING.fee} + cost`, sub: 'I find it, buy it, engrave it, deliver it', href: '/services/pricing' },
-]
-
-function PriceCard({ name, price, sub, href }: { name: string; price: string; sub: string; href: string }) {
-  return (
-    <Link
-      href={href}
-      className="group flex items-center justify-between gap-4 bg-white/[0.03] border border-white/[0.08] rounded-sm px-5 py-4 hover:border-vurmz-teal/40 hover:bg-white/[0.05] transition-colors"
-    >
-      <div className="min-w-0">
-        <h3 className="font-semibold text-cream text-sm flex items-center gap-1.5">
-          {name}
-          <ArrowRightIcon className="w-3.5 h-3.5 text-vurmz-teal opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
-        </h3>
-        <p className="text-gray-500 text-xs leading-relaxed mt-0.5">{sub}</p>
-      </div>
-      <span className="text-vurmz-teal font-bold text-sm whitespace-nowrap flex-shrink-0">{price}</span>
-    </Link>
-  )
-}
-
 const NAV = [
-  { label: 'Branded packs', href: '#packs' },
-  { label: 'For the trades', href: '#trades' },
   { label: 'Custom work', href: '#custom' },
-  { label: 'Full pricing', href: '/services/pricing' },
+  { label: 'Stock & packs', href: '#packs' },
+  { label: 'For the trades', href: '#trades' },
+  { label: 'How it works', href: '#process' },
   { label: 'Contact', href: '/services/contact' },
 ]
+
+type PriceCardData = {
+  category: string
+  packNote: string
+  packTotal: string
+  items: { name: string; price: string; note: string }[]
+}
+
+function PricingCard({ card }: { card: PriceCardData }) {
+  return (
+    <div className="bg-white/[0.03] border border-white/[0.08] rounded-sm overflow-hidden">
+      <div className="px-5 py-3 border-b border-white/[0.06] flex items-center justify-between">
+        <div>
+          <h3 className="text-sm font-semibold text-cream">{card.category}</h3>
+          <p className="text-xs text-gray-500">{card.packNote}</p>
+        </div>
+        {card.packTotal && (
+          <div className="text-right">
+            <p className="text-sm font-semibold text-vurmz-teal">{card.packTotal}</p>
+            <p className="text-[10px] text-gray-500">pack total</p>
+          </div>
+        )}
+      </div>
+      <div className="px-5 py-3">
+        <table className="w-full">
+          <tbody className="divide-y divide-white/[0.04]">
+            {card.items.map(item => (
+              <tr key={item.name}>
+                <td className="py-2">
+                  <p className="text-sm text-cream/80">{item.name}</p>
+                  {item.note && <p className="text-xs text-gray-500">{item.note}</p>}
+                </td>
+                <td className="py-2 text-right whitespace-nowrap">
+                  <p className="text-sm font-semibold text-vurmz-teal">{item.price}</p>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  )
+}
 
 export default function Home() {
   const serviceSchema = {
@@ -61,7 +68,7 @@ export default function Home() {
     '@type': 'Service',
     serviceType: 'Laser Engraving',
     name: 'VURMZ Laser Engraving Services',
-    description: 'Custom laser engraving for businesses, trades, restaurants, and individuals. Branded products, service tags, knife marking, custom gifts. Next-day turnaround, hand-delivered across the South Denver metro.',
+    description: 'Custom laser engraving for businesses, trades, restaurants, and individuals. Branded products, service tags, knife marking, custom gifts. Posted pricing, next-day turnaround, hand-delivered across the South Denver metro.',
     provider: {
       '@type': 'LocalBusiness',
       name: 'VURMZ LLC',
@@ -84,26 +91,25 @@ export default function Home() {
 
   return (
     <div className="bg-vurmz-dark">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
-      />
-      {/* ═══════════ HERO (shared) ═══════════ */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
+      <style dangerouslySetInnerHTML={{ __html: 'html{scroll-behavior:smooth}' }} />
+
+      {/* ═══════════ HERO ═══════════ */}
       <SiteHero
-        eyebrow="For Your Work"
+        eyebrow="Services & Pricing"
         heading="Laser Engraving Services for Businesses in the Denver Metro"
         accent="teal"
         baseColor="#235158"
       >
         <p className="text-gray-300 text-base sm:text-lg leading-relaxed mb-7 max-w-xl mx-auto">
-          Posted pricing, next-day turnaround, hand-to-hand delivery across the South Denver metro. One person, start to finish.
+          Every price is on this page. No quote forms that go nowhere. Next-day turnaround, hand-delivered across the South Denver metro.
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <a
             href="#packs"
             className="group inline-flex items-center justify-center gap-2 px-8 py-4 bg-vurmz-cta text-white font-semibold text-base rounded-sm hover:bg-vurmz-cta-hover transition-all shadow-lg shadow-vurmz-cta/20"
           >
-            See services &amp; pricing
+            See pricing
             <ArrowRightIcon className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </a>
           <a
@@ -131,65 +137,130 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* ═══════════ PRICING OVERVIEW ═══════════ */}
-      <section className="py-12 sm:py-16">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-
-          {/* Branded packs */}
-          <div id="packs" className="scroll-mt-16">
-            <p className="text-xs font-mono text-vurmz-teal tracking-[0.2em] uppercase mb-2">Branded Packs</p>
-            <h2 className="text-2xl sm:text-3xl font-bold text-cream tracking-tight mb-2">Stock items, your logo.</h2>
-            <p className="text-gray-400 text-sm leading-relaxed mb-6 max-w-2xl">
-              Items I keep on hand, engraved with your brand and delivered on a schedule that matches how fast you go through them.
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {PACKS.map((c) => <PriceCard key={c.name} {...c} />)}
-            </div>
-          </div>
-
-          {/* Trades */}
-          <div id="trades" className="scroll-mt-16">
-            <p className="text-xs font-mono text-vurmz-teal tracking-[0.2em] uppercase mb-2">For the Trades</p>
-            <h2 className="text-2xl sm:text-3xl font-bold text-cream tracking-tight mb-2">Leave your mark.</h2>
-            <p className="text-gray-400 text-sm leading-relaxed mb-6 max-w-2xl">
-              If you do the work, people should know who did it. Stickers fall off — a fiber-laser mark in steel outlives the equipment. HVAC, plumbing, electrical, kitchens.
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {TRADES_SVC.map((c) => <PriceCard key={c.name} {...c} />)}
-            </div>
-          </div>
-
-          {/* Custom */}
-          <div id="custom" className="scroll-mt-16">
-            <p className="text-xs font-mono text-vurmz-teal tracking-[0.2em] uppercase mb-2">Custom Work</p>
-            <h2 className="text-2xl sm:text-3xl font-bold text-cream tracking-tight mb-2">Bring me the idea.</h2>
-            <p className="text-gray-400 text-sm leading-relaxed mb-6 max-w-2xl">
-              One-off pieces, awards, signage — your idea, built and engraved. Don&apos;t have the item? I&apos;ll source it for you.
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {CUSTOM.map((c) => <PriceCard key={c.name} {...c} />)}
-            </div>
-          </div>
-
-          {/* Full pricing CTA */}
-          <div className="bg-white/[0.03] border border-white/[0.08] rounded-sm p-6 sm:p-7 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      {/* ═══════════ SIGNATURE / CUSTOM ═══════════ */}
+      <section id="custom" className="py-12 sm:py-16 bg-white/[0.02] scroll-mt-16">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-start">
             <div>
-              <h3 className="font-semibold text-cream mb-1">Want every number?</h3>
-              <p className="text-gray-400 text-sm leading-relaxed">Full price breakdowns, add-ons, and pack totals — all on one page. No setup fees, free delivery over $100.</p>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-vurmz-cta/10 border border-vurmz-cta/20 mb-4">
+                <span className="text-xs font-semibold text-vurmz-cta tracking-wide uppercase">Signature</span>
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-bold text-cream tracking-tight leading-tight mb-4">
+                Custom work, made to order.
+              </h2>
+              <p className="text-gray-400 text-base leading-relaxed mb-4">
+                A gift, a tool, a one-of-a-kind piece for your business. Your idea, built and engraved. Text me a photo and I&apos;ll quote you.
+              </p>
+              <ul className="space-y-2 text-gray-400 text-sm">
+                {SIGNATURE.includes.map((item) => (
+                  <li key={item} className="flex items-center gap-2">
+                    <span className="text-vurmz-cta">✓</span> {item}
+                  </li>
+                ))}
+              </ul>
             </div>
-            <Link
-              href="/services/pricing"
-              className="group inline-flex items-center justify-center gap-2 px-6 py-3 bg-vurmz-cta text-white font-semibold text-sm rounded-sm hover:bg-vurmz-cta-hover transition-all flex-shrink-0"
+
+            <div className="bg-white/[0.03] border border-white/[0.08] rounded-sm p-6 sm:p-8 text-center">
+              <p className="text-xs font-mono text-gray-500 tracking-[0.2em] uppercase mb-3">Starting at</p>
+              <p className="text-5xl sm:text-6xl font-bold text-cream mb-2">${SIGNATURE.startingPrice}</p>
+              <p className="text-gray-500 text-sm mb-6">per piece · custom engraving</p>
+              <a
+                href={getSmsLink("I have something I'd like engraved")}
+                className="group inline-flex items-center justify-center gap-2 w-full px-6 py-3 bg-vurmz-cta text-white font-semibold text-sm rounded-sm hover:bg-vurmz-cta-hover transition-all shadow-lg shadow-vurmz-cta/20"
+              >
+                <ChatBubbleLeftIcon className="w-4 h-4" />
+                Text me a photo
+              </a>
+            </div>
+          </div>
+
+          {/* Concierge */}
+          <div className="mt-8 bg-white/[0.03] border border-white/[0.08] rounded-sm p-5 sm:p-6">
+            <h3 className="text-sm font-semibold text-cream mb-2">Don&apos;t have the item yet?</h3>
+            <p className="text-gray-400 text-sm leading-relaxed">
+              {SOURCING.description}
+            </p>
+            <a
+              href={getSmsLink('I need help sourcing an item')}
+              className="inline-flex items-center gap-1.5 text-xs text-vurmz-teal font-mono tracking-wide hover:text-cream transition-colors group mt-3"
             >
-              See full pricing
-              <ArrowRightIcon className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              <ChatBubbleLeftIcon className="w-3.5 h-3.5" />
+              Tell me what you need
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════ STOCK & PACKS ═══════════ */}
+      <section id="packs" className="py-12 sm:py-16 scroll-mt-16">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-vurmz-teal/10 border border-vurmz-teal/20 mb-4">
+            <span className="text-xs font-semibold text-vurmz-teal tracking-wide uppercase">Stock &amp; Packs</span>
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-bold text-cream tracking-tight leading-tight mb-2">
+            Items I keep on hand.
+          </h2>
+          <p className="text-gray-400 text-base leading-relaxed mb-8 max-w-2xl">
+            Pens, coasters, keychains, metal cards — engraved with your logo or text. Plus knife and tool marking: bring yours, I&apos;ll mark them.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {BASIC_PRICING_CARDS.map((card) => (
+              <PricingCard key={card.category} card={card} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════ LEAVE YOUR MARK / TRADES ═══════════ */}
+      <section id="trades" className="py-12 sm:py-16 bg-white/[0.02] scroll-mt-16">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.06] border border-white/[0.1] mb-4">
+            <span className="text-xs font-semibold text-cream tracking-wide uppercase">Leave Your Mark</span>
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-bold text-cream tracking-tight leading-tight mb-2">
+            For the trades.
+          </h2>
+          <p className="text-gray-400 text-base leading-relaxed mb-8 max-w-2xl">
+            Metal service tags and installer signature tiles. The kind of thing that outlasts a sticker by 20 years. HVAC, plumbing, electrical, masonry, flooring — if you do the work, people should know who did it.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {LEAVE_YOUR_MARK_CARDS.map((card) => (
+              <PricingCard key={card.category} card={card} />
+            ))}
+          </div>
+
+          <div className="mt-6 flex flex-wrap items-center gap-4">
+            <Link href="/services/metal-tags" className="inline-flex items-center gap-2 text-sm text-vurmz-teal font-mono tracking-wide hover:text-cream transition-colors group">
+              Service tags &amp; nameplates
+              <ArrowRightIcon className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+            </Link>
+            <Link href="/services/knife-engraving" className="inline-flex items-center gap-2 text-sm text-vurmz-teal font-mono tracking-wide hover:text-cream transition-colors group">
+              Knife engraving for crews
+              <ArrowRightIcon className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
         </div>
       </section>
 
-      {/* ═══════════ HOW IT WORKS (B2B) ═══════════ */}
-      <section className="relative py-12 sm:py-16 bg-white/[0.015] border-t border-white/[0.06]">
+      {/* ═══════════ WHAT MOVES THE NUMBER ═══════════ */}
+      <section className="py-12 sm:py-14">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl sm:text-3xl font-bold text-cream tracking-tight leading-tight mb-6">
+            What moves the number.
+          </h2>
+          <p className="text-gray-400 text-base leading-relaxed mb-4">
+            Four things set the price of a job. Material, because steel marks differently than wood and some blanks cost more than others. Quantity, because setup is the expensive part and piece fifty costs less than piece one. Artwork, because a clean vector file is ready to run and a blurry photo of a logo needs rebuild time. And turnaround, because next-day is standard but same-day rush is possible when the schedule allows.
+          </p>
+          <p className="text-gray-400 text-base leading-relaxed">
+            Send me what you&apos;re thinking and I&apos;ll give you a real number, usually within a few hours. No quote forms that go nowhere. No &ldquo;starting at&rdquo; pricing that doubles later. Free hand-delivery on orders over ${DELIVERY.freeThreshold} in the {DELIVERY.area}.
+          </p>
+        </div>
+      </section>
+
+      {/* ═══════════ HOW IT WORKS ═══════════ */}
+      <section id="process" className="relative py-12 sm:py-16 bg-white/[0.02] border-t border-white/[0.06] scroll-mt-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="text-xs font-mono text-vurmz-teal tracking-[0.2em] uppercase mb-4">The Process</p>
           <h2 className="text-2xl sm:text-3xl font-bold text-cream tracking-tight mb-10">How it works.</h2>
@@ -198,7 +269,7 @@ export default function Home() {
               { step: 1, title: 'Text me', desc: 'Send me what you need. Photos, logos, quantities.' },
               { step: 2, title: 'I quote you', desc: 'Fast, transparent pricing. No setup fees. No surprises.' },
               { step: 3, title: 'I engrave it', desc: 'One person handles your job from setup to finish. No outsourcing, no handoffs.' },
-              { step: 4, title: 'Hand-delivered', desc: 'I deliver to your door across the South Denver metro. Free on orders $100+.' },
+              { step: 4, title: 'Hand-delivered', desc: `I deliver to your door across the South Denver metro. Free on orders $${DELIVERY.freeThreshold}+.` },
             ].map(s => (
               <motion.div
                 key={s.step}
@@ -236,7 +307,7 @@ export default function Home() {
                 Browse engraved products with pricing up front. Knives, tumblers, coasters, home decor, and more.
               </p>
             </div>
-            <Link href="/shop" className="inline-flex items-center gap-2 px-6 py-3 bg-[#B16558] text-white font-semibold text-sm rounded-sm hover:bg-[#954E44] transition-all flex-shrink-0">
+            <Link href="/shop" className="inline-flex items-center gap-2 px-6 py-3 bg-vurmz-cta text-white font-semibold text-sm rounded-sm hover:bg-vurmz-cta-hover transition-all flex-shrink-0">
               Visit the Shop
               <ArrowRightIcon className="w-4 h-4" />
             </Link>
@@ -244,16 +315,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══════════ ABOUT (two-column) ═══════════ */}
+      {/* ═══════════ ABOUT ═══════════ */}
       <section className="relative py-12 sm:py-16 bg-white/[0.015]">
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E")`,
-            backgroundSize: '256px 256px',
-          }}
-        />
-
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center"
@@ -263,33 +326,16 @@ export default function Home() {
             transition={{ duration: 0.6 }}
           >
             <div className="relative aspect-[4/3] overflow-hidden rounded-sm">
-              <Image
-                src="/images/zach.jpeg"
-                alt={`${siteInfo.founder.name}, owner of VURMZ`}
-                fill
-                className="object-cover"
-              />
-              <div
-                className="absolute bottom-0 left-0 right-0 h-1/3 pointer-events-none"
-                style={{
-                  background: 'linear-gradient(to top, rgba(26,47,46,0.6) 0%, transparent 100%)',
-                }}
-              />
+              <Image src="/images/zach.jpeg" alt={`${siteInfo.founder.name}, owner of VURMZ`} fill className="object-cover" />
+              <div className="absolute bottom-0 left-0 right-0 h-1/3 pointer-events-none" style={{ background: 'linear-gradient(to top, rgba(26,47,46,0.6) 0%, transparent 100%)' }} />
               <div className="absolute bottom-4 left-4">
-                <span className="text-xs font-mono text-cream/60 tracking-wider uppercase">
-                  {siteInfo.founder.name} &middot; Owner
-                </span>
+                <span className="text-xs font-mono text-cream/60 tracking-wider uppercase">{siteInfo.founder.name} &middot; Owner</span>
               </div>
             </div>
-
             <div>
-              <p className="text-xs font-mono text-vurmz-teal tracking-[0.2em] uppercase mb-4">
-                Who I Am
-              </p>
+              <p className="text-xs font-mono text-vurmz-teal tracking-[0.2em] uppercase mb-4">Who I Am</p>
               <h2 className="text-2xl sm:text-3xl font-bold text-cream tracking-tight leading-tight mb-4">
-                No department.
-                <br />
-                <span className="text-gray-500">Just me.</span>
+                No department.<br /><span className="text-gray-500">Just me.</span>
               </h2>
               <p className="text-gray-400 text-base leading-relaxed mb-4">
                 I&apos;m {siteInfo.founder.name}, and I run VURMZ out of {siteInfo.city}. I live here, I work here, and I deliver to Centennial, Lone Tree, Highlands Ranch, and everywhere in between. You text me, I quote you, and I handle your job personally.

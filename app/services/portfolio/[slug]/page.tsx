@@ -139,7 +139,7 @@ export default async function PortfolioDetailPage({ params }: Props) {
                 Want something like this?
               </a>
               <Link
-                href="/services/pricing"
+                href="/services"
                 className="group inline-flex items-center justify-center gap-2 px-6 py-3 bg-vurmz-cream text-vurmz-dark font-semibold text-sm rounded-sm hover:bg-vurmz-cream-hover transition-all"
               >
                 See pricing

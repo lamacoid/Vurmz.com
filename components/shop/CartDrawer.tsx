@@ -44,7 +44,7 @@ export default function CartDrawer() {
               <Link
                 href="/shop"
                 onClick={() => setOpen(false)}
-                className="inline-flex items-center text-[#B16558] text-sm font-semibold hover:underline"
+                className="inline-flex items-center text-[#E95C4E] text-sm font-semibold hover:underline"
               >
                 Browse the shop →
               </Link>
@@ -63,7 +63,7 @@ export default function CartDrawer() {
                   <Link
                     href={`/shop/p/${item.slug}`}
                     onClick={() => setOpen(false)}
-                    className="text-sm font-medium text-[#F0E6D3] hover:text-[#B16558] block truncate"
+                    className="text-sm font-medium text-[#F0E6D3] hover:text-[#E95C4E] block truncate"
                   >
                     {item.name}
                   </Link>
@@ -71,7 +71,7 @@ export default function CartDrawer() {
                   {(() => {
                     const eng = item.metadata?.engraving as { text?: string; fontLabel?: string } | undefined
                     return eng?.text ? (
-                      <p className="text-[11px] text-[#B16558] truncate" title={`Engraving: ${eng.text}`}>
+                      <p className="text-[11px] text-[#E95C4E] truncate" title={`Engraving: ${eng.text}`}>
                         ✎ “{eng.text}”{eng.fontLabel ? ` · ${eng.fontLabel}` : ''}
                       </p>
                     ) : null
@@ -82,7 +82,7 @@ export default function CartDrawer() {
                       <span className="min-w-[1.5rem] text-center text-xs font-semibold">{item.qty}</span>
                       <button onClick={() => setQty(item.productId, item.qty + 1)} className="px-2 py-1 text-gray-400 hover:text-[#F0E6D3]" aria-label="Increase">+</button>
                     </div>
-                    <button onClick={() => remove(item.productId)} className="text-xs text-gray-400 hover:text-[#B16558]">Remove</button>
+                    <button onClick={() => remove(item.productId)} className="text-xs text-gray-400 hover:text-[#E95C4E]">Remove</button>
                   </div>
                 </div>
                 <div className="text-sm font-semibold text-[#F0E6D3]">{money(item.priceCents * item.qty)}</div>
@@ -101,7 +101,7 @@ export default function CartDrawer() {
             <Link
               href="/checkout"
               onClick={() => setOpen(false)}
-              className="flex items-center justify-center h-11 bg-[#B16558] hover:bg-[#954E44] text-white text-sm font-semibold rounded-sm transition-colors"
+              className="flex items-center justify-center h-11 bg-[#E95C4E] hover:bg-[#D24A3D] text-white text-sm font-semibold rounded-sm transition-colors"
             >
               Checkout
             </Link>

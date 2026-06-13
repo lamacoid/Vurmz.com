@@ -22,7 +22,9 @@ const nextConfig: NextConfig = {
     return [
       { source: '/shop/contact', destination: '/services/contact', permanent: true },
       { source: '/contact', destination: '/services/contact', permanent: true },
-      { source: '/pricing', destination: '/services/pricing', permanent: true },
+      // Pricing merged into the services page (2026-06-13).
+      { source: '/pricing', destination: '/services', permanent: true },
+      { source: '/services/pricing', destination: '/services', permanent: true },
       { source: '/portfolio', destination: '/services/portfolio', permanent: true },
       // /centennial and the old /services/centennial hop both land on the city page.
       // Skip the Server Component redirect() (shadowed by the worker in prod) and 308
