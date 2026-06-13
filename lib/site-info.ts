@@ -79,7 +79,8 @@ export const navigation = servicesNavigation
 // Navigation items — shop section
 export const shopNavigation = [
   { name: 'Products', href: '/shop' },
-  { name: 'Contact', href: '/shop/contact' },
+  // Straight to the form — /shop/contact only 308s there anyway.
+  { name: 'Contact', href: '/services/contact' },
 ] as const
 
 // Quick helper functions

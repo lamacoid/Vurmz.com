@@ -5,7 +5,8 @@ import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import { ArrowRightIcon } from '@heroicons/react/24/outline'
-import { siteInfo } from '@/lib/site-info'
+import { siteInfo, getSmsLink } from '@/lib/site-info'
+import ContactForm from '@/components/ContactForm'
 import { aboutContent } from '@/lib/about'
 import { portfolioItems } from '@/lib/portfolio'
 import TrustBar from '@/components/TrustBar'
@@ -314,6 +315,22 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Contact — the form itself, on the front door. */}
+      <section id="contact" className="py-10 sm:py-14 bg-white/[0.015] border-t border-white/10 scroll-mt-8">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="text-xs font-mono text-vurmz-teal tracking-[0.2em] uppercase mb-3 text-center">Contact</p>
+          <h2 className="text-2xl sm:text-3xl font-bold text-cream tracking-tight mb-2 text-center">
+            Questions? Send it.
+          </h2>
+          <p className="text-gray-400 text-sm text-center mb-8">
+            Or skip the form and text me at{' '}
+            <a href={getSmsLink()} className="text-vurmz-teal font-semibold hover:underline">{siteInfo.phone}</a>
+            {' '}— that&apos;s usually faster.
+          </p>
+          <ContactForm />
+        </div>
+      </section>
+
       {/* Slogan — relocated from under the logo; lives above the bottom bar
           like the SiteFooter treatment on the rest of the site. */}
       <div className="border-t border-white/10 px-4 py-5 text-center">
@@ -325,6 +342,7 @@ export default function LandingPage() {
       {/* Bottom bar */}
       <div className="border-t border-white/10 px-4 py-3 flex justify-center gap-6 text-xs text-gray-500">
         <span>{siteInfo.legalName} &middot; {siteInfo.address}</span>
+        <a href="#contact" className="hover:text-gray-300 transition-colors">Contact</a>
         <Link href="/about" className="hover:text-gray-300 transition-colors">About</Link>
         <Link href="/privacy" className="hover:text-gray-300 transition-colors">Privacy</Link>
         <Link href="/terms" className="hover:text-gray-300 transition-colors">Terms</Link>
