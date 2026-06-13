@@ -314,6 +314,14 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Slogan — relocated from under the logo; lives above the bottom bar
+          like the SiteFooter treatment on the rest of the site. */}
+      <div className="border-t border-white/10 px-4 py-5 text-center">
+        <p className="text-vurmz-teal text-sm sm:text-base font-semibold tracking-wide italic">
+          Need a guy with some lasers? That&apos;s me.
+        </p>
+      </div>
+
       {/* Bottom bar */}
       <div className="border-t border-white/10 px-4 py-3 flex justify-center gap-6 text-xs text-gray-500">
         <span>{siteInfo.legalName} &middot; {siteInfo.address}</span>
