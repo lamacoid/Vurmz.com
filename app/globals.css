@@ -491,6 +491,38 @@ main [class*="mx-auto"][class*="px-4"] {
       0 1px 3px -1px rgba(0, 0, 0, 0.28);
   }
 
+  /* React to a light source: a soft sheen that tracks the pointer across the
+     raised surface (position fed by PuffyLight via --lx/--ly). */
+  .puffy, .puffy-light, .puffy-btn { position: relative; }
+  .puffy::after, .puffy-light::after, .puffy-btn::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 3;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    background: radial-gradient(
+      circle 170px at var(--lx, 50%) var(--ly, -10%),
+      rgba(255, 255, 255, 0.13),
+      rgba(255, 255, 255, 0) 60%
+    );
+  }
+  .puffy-btn::after {
+    background: radial-gradient(
+      circle 130px at var(--lx, 50%) var(--ly, -10%),
+      rgba(255, 255, 255, 0.30),
+      rgba(255, 255, 255, 0) 65%
+    );
+  }
+  .puffy:hover::after,
+  .puffy-light:hover::after,
+  .puffy-btn:hover::after { opacity: 1; }
+  @media (hover: none) {
+    .puffy::after, .puffy-light::after, .puffy-btn::after { display: none; }
+  }
+
   /* ── Shop utilities ── */
   .bg-shop { background-color: var(--shop-bg); }
   .bg-shop-subtle { background-color: var(--shop-bg-subtle); }

@@ -15,6 +15,7 @@ import ContactForm from '@/components/ContactForm'
 import RotatingHeroBg from '@/components/RotatingHeroBg'
 import ItemScroller from '@/components/ItemScroller'
 import GlassImage from '@/components/shop/GlassImage'
+import PuffyLight from '@/components/PuffyLight'
 
 // Single-page homepage: one brand, one scroll — shop first, then the anchored
 // "For businesses" half, then contact. Replaced the old split chooser.
@@ -57,6 +58,7 @@ export default function Page() {
       <style dangerouslySetInnerHTML={{ __html: 'html{scroll-behavior:smooth}#main-content>section+section{margin-top:0}' }} />
 
       <SiteHeader variant="shop" />
+      <PuffyLight />
       <main id="main-content">
         {/* ═══════════ HERO — animated teal VURMZ logo over rotating work photos ═══════════ */}
         <section className="relative px-4 pt-32 sm:pt-36 pb-12 sm:pb-14 text-center overflow-hidden">
@@ -90,7 +92,7 @@ export default function Page() {
           </div>
 
           <p className="text-gray-300 text-base sm:text-lg leading-relaxed mb-7 max-w-lg mx-auto">
-            Gifts, tumblers, coasters, decor — engraved and hand-delivered across the south Denver metro. One person, start to finish.
+            Custom laser engraving, hand-delivered across the south Denver metro. You approve a proof photo before a single line is cut.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
