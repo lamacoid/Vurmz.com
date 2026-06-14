@@ -57,7 +57,7 @@ export default function PortfolioPage() {
                     className="w-full h-auto object-cover"
                   />
                   {/* Subtle coral wash (~20%) + slim bottom gradient for label legibility */}
-                  <div className="absolute inset-0 bg-[#E95C4E]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute inset-0 bg-[#D96C5C]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <div className="absolute bottom-0 left-0 right-0 px-4 py-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
                     <p className="text-sm text-cream font-medium">{item.label}</p>

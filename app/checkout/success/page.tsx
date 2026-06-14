@@ -8,7 +8,7 @@ function Inner() {
   const number = params?.get('n') ?? ''
   return (
     <div className="max-w-xl mx-auto px-6 py-20 text-center">
-      <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#E95C4E]/10 text-[#E95C4E] mb-6">
+      <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#D96C5C]/10 text-[#D96C5C] mb-6">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-8 h-8">
           <path d="M20 6 9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
@@ -22,7 +22,7 @@ function Inner() {
         <Link href="/shop" className="px-5 h-11 inline-flex items-center bg-white/60 border border-[#1A4F48]/12 text-[#1A4F48] text-sm font-semibold rounded-sm">
           Keep shopping
         </Link>
-        <Link href="/account" className="px-5 h-11 inline-flex items-center bg-[#E95C4E] hover:bg-[#D24A3D] text-white text-sm font-semibold rounded-sm">
+        <Link href="/account" className="px-5 h-11 inline-flex items-center bg-[#D96C5C] hover:bg-[#C25A4B] text-white text-sm font-semibold rounded-sm">
           View account
         </Link>
       </div>

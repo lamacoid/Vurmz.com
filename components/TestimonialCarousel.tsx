@@ -14,14 +14,14 @@ interface TestimonialCarouselProps {
 const themeStyles = {
   shop: {
     card: 'bg-white/60 border border-[#1A4F48]/8',
-    quote: 'text-[#E95C4E]',
+    quote: 'text-[#D96C5C]',
     name: 'text-[#1A4F48]',
     role: 'text-[#6B6259]',
-    dot: 'bg-[#E95C4E]',
+    dot: 'bg-[#D96C5C]',
     dotInactive: 'bg-[#1A4F48]/15',
-    arrow: 'text-[#6B6259] hover:text-[#E95C4E]',
+    arrow: 'text-[#6B6259] hover:text-[#D96C5C]',
     heading: 'text-[#1A4F48]',
-    eyebrow: 'text-[#E95C4E]',
+    eyebrow: 'text-[#D96C5C]',
   },
   services: {
     card: 'bg-white/[0.03] border border-white/[0.06]',

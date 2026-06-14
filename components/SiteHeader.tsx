@@ -34,13 +34,13 @@ export default function SiteHeader({ variant = 'services' }: { variant?: 'shop' 
     : scrolled ? 'bg-[#1A4F48]/90 backdrop-blur-2xl border-b border-white/10 shadow-lg shadow-black/10' : 'bg-transparent'
 
   const textColor = isShop ? 'text-gray-300' : 'text-gray-400'
-  const hoverColor = isShop ? 'hover:text-[#E95C4E]' : 'hover:text-vurmz-cta'
+  const hoverColor = isShop ? 'hover:text-[#D96C5C]' : 'hover:text-vurmz-cta'
   const logoFilter = 'brightness-0 invert'
   const logoSrc = '/images/vurmz-logo-full.svg'
 
   const mobileBg = isShop ? 'bg-[#102f33] border-white/10' : 'bg-[#162524] border-white/10'
   const mobileText = isShop ? 'text-gray-300' : 'text-gray-300'
-  const mobileHover = isShop ? 'hover:text-[#E95C4E] hover:bg-white/[0.06]' : 'hover:text-vurmz-cta hover:bg-white/[0.06]'
+  const mobileHover = isShop ? 'hover:text-[#D96C5C] hover:bg-white/[0.06]' : 'hover:text-vurmz-cta hover:bg-white/[0.06]'
   const menuIcon = isShop ? 'text-gray-300' : 'text-gray-300'
 
   return (

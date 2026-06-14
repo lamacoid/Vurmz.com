@@ -94,7 +94,7 @@ export default function Page() {
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
               href="/shop"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#E95C4E] text-white font-semibold text-base rounded-sm hover:bg-[#D24A3D] transition-colors shadow-lg shadow-black/20"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#D96C5C] text-white font-semibold text-base rounded-sm hover:bg-[#C25A4B] transition-colors shadow-lg shadow-black/20"
             >
               Shop engraved goods
               <ArrowRightIcon className="w-4 h-4" />

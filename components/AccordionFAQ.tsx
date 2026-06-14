@@ -14,7 +14,7 @@ const themeStyles = {
     card: 'bg-white/60 border border-[#1A4F48]/8',
     question: 'text-[#1A4F48]',
     answer: 'text-[#6B6259]',
-    icon: 'text-[#E95C4E]',
+    icon: 'text-[#D96C5C]',
   },
   services: {
     card: 'bg-white/[0.03] border border-white/[0.06]',

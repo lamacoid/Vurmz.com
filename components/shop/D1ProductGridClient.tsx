@@ -54,7 +54,7 @@ export default function D1ProductGridClient({ categorySlug, heading, subheading,
             <Link
               key={p.id}
               href={`/shop/p/${p.slug}`}
-              className="group bg-white/[0.04] backdrop-blur-xl border border-white/10 rounded-sm overflow-hidden hover:border-[#E95C4E]/40 hover:bg-white/[0.06] transition-colors"
+              className="group bg-white/[0.04] backdrop-blur-xl border border-white/10 rounded-sm overflow-hidden hover:border-[#D96C5C]/40 hover:bg-white/[0.06] transition-colors"
             >
               <div className="aspect-square relative overflow-hidden">
                 {p.heroUrl ? (
@@ -67,7 +67,7 @@ export default function D1ProductGridClient({ categorySlug, heading, subheading,
                 <p className="text-sm font-semibold text-[#F0E6D3] truncate">{p.name}</p>
                 <p className="text-[11px] text-gray-400 mt-0.5 line-clamp-2">{p.shortDescription || `Pack of ${p.packSize}`}</p>
                 <div className="flex items-center justify-between mt-2">
-                  <span className="text-sm font-bold text-[#E95C4E]">${(p.priceCents / 100).toFixed(2)}</span>
+                  <span className="text-sm font-bold text-[#D96C5C]">${(p.priceCents / 100).toFixed(2)}</span>
                   {p.madeToOrder ? (
                     <span className="text-[9px] uppercase tracking-wider text-gray-400 bg-white/[0.06] px-1.5 py-0.5 rounded-sm">
                       {p.leadTimeDays > 0 ? `${p.leadTimeDays}d` : 'MTO'}

@@ -61,7 +61,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
             )}
 
             <div className="flex items-baseline gap-2 mb-6">
-              <span className="text-3xl font-bold text-[#E95C4E]">${price}</span>
+              <span className="text-3xl font-bold text-[#D96C5C]">${price}</span>
               {product.oneOff ? (
                 <span className="text-sm text-gray-400">one of a kind</span>
               ) : product.packSize > 1 ? (
@@ -72,7 +72,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
             </div>
 
             {product.oneOff && (
-              <div className="inline-flex items-center gap-2 text-xs bg-[#E95C4E]/15 text-[#E95C4E] border border-[#E95C4E]/30 px-3 py-1.5 rounded-sm mb-6">
+              <div className="inline-flex items-center gap-2 text-xs bg-[#D96C5C]/15 text-[#D96C5C] border border-[#D96C5C]/30 px-3 py-1.5 rounded-sm mb-6">
                 Only one available — once it&rsquo;s gone, it&rsquo;s gone.
               </div>
             )}
@@ -102,7 +102,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
             )}
 
             <div className="mt-10 text-xs text-gray-400">
-              Questions? <Link href="/shop/contact" className="text-[#E95C4E] hover:underline">Get in touch</Link>
+              Questions? <Link href="/shop/contact" className="text-[#D96C5C] hover:underline">Get in touch</Link>
             </div>
           </div>
         </div>

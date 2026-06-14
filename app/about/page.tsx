@@ -93,7 +93,7 @@ export default function AboutPage() {
           <h2 className="text-2xl sm:text-3xl font-bold text-cream tracking-tight mb-4">Ready to get started?</h2>
           <p className="text-gray-400 text-base mb-8">Browse engraved products or get a custom quote for your business.</p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link href="/shop" className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#E95C4E] text-white font-semibold text-sm rounded-sm hover:bg-[#D24A3D] transition-all">
+            <Link href="/shop" className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#D96C5C] text-white font-semibold text-sm rounded-sm hover:bg-[#C25A4B] transition-all">
               Browse the Shop
               <ArrowRightIcon className="w-4 h-4" />
             </Link>

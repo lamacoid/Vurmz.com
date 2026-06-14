@@ -49,7 +49,7 @@ export default function SiteHero({ eyebrow, heading, accent = 'coral', baseColor
     return () => clearInterval(t)
   }, [])
 
-  const accentColor = accent === 'teal' ? '#2FE6C4' : '#E95C4E'
+  const accentColor = accent === 'teal' ? '#2FE6C4' : '#D96C5C'
 
   // When a page-specific heading is supplied it owns the <h1>, so the rotating
   // brand tagline drops to a <p> (same big typography, just demoted in markup).
