@@ -92,7 +92,7 @@ export default function Page() {
 
           <RotatingTagline
             accentColor="#C67A6F"
-            className="text-cream text-lg sm:text-xl lg:text-2xl mb-8 max-w-lg mx-auto"
+            className="text-cream text-2xl sm:text-3xl lg:text-4xl mb-8 max-w-lg mx-auto"
           />
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
