@@ -110,7 +110,7 @@ function Field({ label, value, onSave, multiline, placeholder }: { label: string
           onBlur={() => local !== value && onSave(local)}
           placeholder={placeholder}
           rows={2}
-          className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#2FE6C4]"
+          className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6FB6AC]"
         />
       ) : (
         <input
@@ -118,7 +118,7 @@ function Field({ label, value, onSave, multiline, placeholder }: { label: string
           onChange={e => setLocal(e.target.value)}
           onBlur={() => local !== value && onSave(local)}
           placeholder={placeholder}
-          className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#2FE6C4]"
+          className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6FB6AC]"
         />
       )}
     </div>
@@ -143,7 +143,7 @@ function AreaList({ value, onChange }: { value: string[]; onChange: (v: string[]
           onChange={e => setNewArea(e.target.value)}
           onKeyDown={e => { if (e.key === 'Enter' && newArea.trim()) { onChange([...value, newArea.trim()]); setNewArea('') } }}
           placeholder="Add a city…"
-          className="flex-1 bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#2FE6C4]"
+          className="flex-1 bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6FB6AC]"
         />
         <button
           onClick={() => { if (newArea.trim()) { onChange([...value, newArea.trim()]); setNewArea('') } }}

@@ -103,7 +103,7 @@ export default async function ShopCategoryPage({ params }: { params: Promise<{ c
               <span className="inline-block text-[#D96C5C] text-xs font-mono tracking-[0.25em] uppercase mb-4 border border-[#D96C5C]/30 px-3 py-1.5 rounded-sm">
                 {cat.shortName}
               </span>
-              <h1 className="text-3xl sm:text-5xl font-bold text-[#F0E6D3] tracking-tight leading-tight mb-4">
+              <h1 className="text-3xl sm:text-5xl font-bold text-[#E7DFCB] tracking-tight leading-tight mb-4">
                 {cat.name}
               </h1>
               <p className="text-gray-300 text-base sm:text-lg leading-relaxed mb-6">{cat.tagline}</p>
@@ -117,7 +117,7 @@ export default async function ShopCategoryPage({ params }: { params: Promise<{ c
                 </a>
                 <a
                   href={getSmsLink()}
-                  className="inline-flex items-center gap-2 px-6 py-3 border border-white/15 text-gray-300 font-semibold text-sm rounded-sm hover:border-[#D96C5C]/40 hover:text-[#F0E6D3] transition-all"
+                  className="inline-flex items-center gap-2 px-6 py-3 border border-white/15 text-gray-300 font-semibold text-sm rounded-sm hover:border-[#D96C5C]/40 hover:text-[#E7DFCB] transition-all"
                 >
                   <ChatBubbleLeftIcon className="w-4 h-4" />
                   Text {siteInfo.phone}
@@ -146,7 +146,7 @@ export default async function ShopCategoryPage({ params }: { params: Promise<{ c
       <section className="py-12 sm:py-16 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="text-xs font-mono text-[#D96C5C] tracking-[0.2em] uppercase mb-4">Pricing</p>
-          <h2 className="text-2xl sm:text-3xl font-bold text-[#F0E6D3] tracking-tight mb-8">What it costs.</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#E7DFCB] tracking-tight mb-8">What it costs.</h2>
 
           {cat.pricingType === 'signature' && (
             <div className="bg-white/[0.04] backdrop-blur-xl border border-white/10 rounded-sm p-6 sm:p-8">
@@ -168,7 +168,7 @@ export default async function ShopCategoryPage({ params }: { params: Promise<{ c
           {pricingCard && (
             <div className="bg-white/[0.04] backdrop-blur-xl border border-white/10 rounded-sm p-6 sm:p-8">
               <div className="flex items-baseline justify-between mb-1">
-                <h3 className="text-lg font-bold text-[#F0E6D3]">{pricingCard.category}</h3>
+                <h3 className="text-lg font-bold text-[#E7DFCB]">{pricingCard.category}</h3>
                 {pricingCard.packTotal && <span className="text-[#D96C5C] font-bold text-sm">{pricingCard.packTotal}</span>}
               </div>
               <p className="text-gray-500 text-xs font-mono mb-4">{pricingCard.packNote}</p>
@@ -198,7 +198,7 @@ export default async function ShopCategoryPage({ params }: { params: Promise<{ c
         <section className="py-12 sm:py-16">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <p className="text-xs font-mono text-[#D96C5C] tracking-[0.2em] uppercase mb-4">Examples</p>
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#F0E6D3] tracking-tight mb-8">See the work.</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#E7DFCB] tracking-tight mb-8">See the work.</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {cat.galleryImages.map(img => (
                 <div key={img} className="group relative aspect-square rounded-sm overflow-hidden">
@@ -225,7 +225,7 @@ export default async function ShopCategoryPage({ params }: { params: Promise<{ c
       <section className="py-12 sm:py-16 bg-white/[0.02]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="text-xs font-mono text-[#D96C5C] tracking-[0.2em] uppercase mb-4">How to Order</p>
-          <h2 className="text-2xl sm:text-3xl font-bold text-[#F0E6D3] tracking-tight mb-8">Three steps.</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#E7DFCB] tracking-tight mb-8">Three steps.</h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             {cat.howItWorks.map((step, i) => (
               <div key={i}>
@@ -243,8 +243,8 @@ export default async function ShopCategoryPage({ params }: { params: Promise<{ c
       {cat.materialNote && (
         <section className="py-8">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="bg-[#2FE6C4]/10 border border-[#2FE6C4]/20 rounded-sm p-6 sm:p-8">
-              <p className="text-[#F0E6D3] text-sm font-medium leading-relaxed">{cat.materialNote}</p>
+            <div className="bg-[#6FB6AC]/10 border border-[#6FB6AC]/20 rounded-sm p-6 sm:p-8">
+              <p className="text-[#E7DFCB] text-sm font-medium leading-relaxed">{cat.materialNote}</p>
             </div>
           </div>
         </section>
@@ -254,7 +254,7 @@ export default async function ShopCategoryPage({ params }: { params: Promise<{ c
       <section className="py-12 sm:py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="text-xs font-mono text-[#D96C5C] tracking-[0.2em] uppercase mb-4">FAQ</p>
-          <h2 className="text-2xl sm:text-3xl font-bold text-[#F0E6D3] tracking-tight mb-8">Common questions.</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#E7DFCB] tracking-tight mb-8">Common questions.</h2>
           <AccordionFAQ faqs={cat.faqs} theme="services" />
         </div>
       </section>
@@ -263,7 +263,7 @@ export default async function ShopCategoryPage({ params }: { params: Promise<{ c
       {related.length > 0 && (
         <section className="py-12 sm:py-16 bg-white/[0.02]">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-xl font-bold text-[#F0E6D3] tracking-tight mb-6">You might also like</h2>
+            <h2 className="text-xl font-bold text-[#E7DFCB] tracking-tight mb-6">You might also like</h2>
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
               {related.map(r => (
                 <CategoryCard key={r.slug} category={r} compact />
@@ -279,7 +279,7 @@ export default async function ShopCategoryPage({ params }: { params: Promise<{ c
           <div className="flex items-start gap-4 bg-white/[0.04] backdrop-blur-xl border border-white/10 rounded-sm p-6">
             <ShieldCheckIcon className="w-8 h-8 text-[#D96C5C] flex-shrink-0 mt-0.5" />
             <div>
-              <h3 className="font-bold text-[#F0E6D3] text-sm mb-1">Satisfaction promise</h3>
+              <h3 className="font-bold text-[#E7DFCB] text-sm mb-1">Satisfaction promise</h3>
               <p className="text-gray-300 text-sm leading-relaxed">
                 One person handles your order from start to finish. I don&apos;t deliver until it&apos;s right. If something&apos;s off, I fix it.
               </p>
@@ -292,7 +292,7 @@ export default async function ShopCategoryPage({ params }: { params: Promise<{ c
       <section className="py-12 sm:py-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-[#1A4F48] rounded-sm p-8 sm:p-10 text-center">
-            <h2 className="text-2xl font-bold text-[#F0E6D3] mb-4">Ready to order?</h2>
+            <h2 className="text-2xl font-bold text-[#E7DFCB] mb-4">Ready to order?</h2>
             <p className="text-gray-400 text-sm mb-6 max-w-md mx-auto">Text me what you want and I&apos;ll get back to you with a quote.</p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <a
@@ -304,7 +304,7 @@ export default async function ShopCategoryPage({ params }: { params: Promise<{ c
               </a>
               <Link
                 href="/shop"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-white/20 text-[#F0E6D3] font-semibold text-sm rounded-sm hover:bg-white/10 transition-all"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-white/20 text-[#E7DFCB] font-semibold text-sm rounded-sm hover:bg-white/10 transition-all"
               >
                 See all products
               </Link>

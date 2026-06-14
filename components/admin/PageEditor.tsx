@@ -133,7 +133,7 @@ export default function PageEditor({ initial }: { initial: Page }) {
         <div className="px-3 py-3 border-t border-white/5 space-y-2">
           <div className="flex items-center justify-between text-[10px] text-gray-500">
             <span>{saving ? 'Saving…' : savedAt ? 'Draft saved' : 'Ready'}</span>
-            <a href={`/p/${page.slug}?preview=1`} target="_blank" rel="noreferrer" className="text-[#2FE6C4] hover:underline">Preview draft ↗</a>
+            <a href={`/p/${page.slug}?preview=1`} target="_blank" rel="noreferrer" className="text-[#6FB6AC] hover:underline">Preview draft ↗</a>
           </div>
           <div className="flex items-center gap-2">
             <button
@@ -177,7 +177,7 @@ export default function PageEditor({ initial }: { initial: Page }) {
         </div>
         <div className="flex-1 overflow-auto flex justify-center py-4">
           <div
-            className="bg-[color:var(--t-bg,#143E38)] text-[color:var(--t-cream,#F0E6D3)] border border-white/10 rounded overflow-hidden transition-all"
+            className="bg-[color:var(--t-bg,#143E38)] text-[color:var(--t-cream,#E7DFCB)] border border-white/10 rounded overflow-hidden transition-all"
             style={{ width: viewportWidth, minHeight: '80vh' }}
           >
             {renderBlocks(blocks)}
@@ -208,7 +208,7 @@ export default function PageEditor({ initial }: { initial: Page }) {
                 <button
                   key={def.type}
                   onClick={() => addBlock(def.type, inserterOpen)}
-                  className="text-left bg-[#1A4F48] hover:border-[#2FE6C4]/40 border border-white/5 rounded-md p-3 transition-colors"
+                  className="text-left bg-[#1A4F48] hover:border-[#6FB6AC]/40 border border-white/5 rounded-md p-3 transition-colors"
                 >
                   <p className="text-sm font-semibold text-cream">{def.label}</p>
                   <p className="text-[11px] text-gray-500 mt-0.5">{def.description}</p>
@@ -251,7 +251,7 @@ export default function PageEditor({ initial }: { initial: Page }) {
                             window.location.reload()
                           }
                         }}
-                        className="text-xs text-[#2FE6C4] hover:underline"
+                        className="text-xs text-[#6FB6AC] hover:underline"
                       >
                         Restore
                       </button>
@@ -271,12 +271,12 @@ function InserterButton({ onClick, active }: { onClick: () => void; active: bool
   return (
     <button
       onClick={onClick}
-      className={`w-full py-1 flex items-center justify-center text-gray-600 hover:text-[#2FE6C4] group ${active ? 'text-[#2FE6C4]' : ''}`}
+      className={`w-full py-1 flex items-center justify-center text-gray-600 hover:text-[#6FB6AC] group ${active ? 'text-[#6FB6AC]' : ''}`}
       aria-label="Insert block here"
     >
-      <span className="h-[1px] flex-1 bg-white/5 group-hover:bg-[#2FE6C4]/40" />
+      <span className="h-[1px] flex-1 bg-white/5 group-hover:bg-[#6FB6AC]/40" />
       <Icon name="plus" className="w-3.5 h-3.5 mx-1" />
-      <span className="h-[1px] flex-1 bg-white/5 group-hover:bg-[#2FE6C4]/40" />
+      <span className="h-[1px] flex-1 bg-white/5 group-hover:bg-[#6FB6AC]/40" />
     </button>
   )
 }
@@ -294,7 +294,7 @@ function BlockRow({ block, selected, onSelect, onRemove }: { block: Block; selec
       ref={setNodeRef}
       style={style}
       className={`mx-2 my-1 flex items-center gap-2 rounded-md px-2 py-2 cursor-pointer transition-colors ${
-        selected ? 'bg-[#2FE6C4]/15 border border-[#2FE6C4]/30' : 'hover:bg-white/5 border border-transparent'
+        selected ? 'bg-[#6FB6AC]/15 border border-[#6FB6AC]/30' : 'hover:bg-white/5 border border-transparent'
       }`}
       onClick={onSelect}
     >
@@ -379,14 +379,14 @@ function TextMeta({ label, value, onSave, multiline }: { label: string; value: s
           onChange={e => setLocal(e.target.value)}
           onBlur={() => local !== value && onSave(local)}
           rows={3}
-          className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#2FE6C4]"
+          className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6FB6AC]"
         />
       ) : (
         <input
           value={local}
           onChange={e => setLocal(e.target.value)}
           onBlur={() => local !== value && onSave(local)}
-          className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#2FE6C4]"
+          className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6FB6AC]"
         />
       )}
     </div>

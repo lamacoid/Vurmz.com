@@ -23,17 +23,17 @@ function money(c: number) { return `$${(c / 100).toLocaleString(undefined, { max
 const PROOF_CHIP: Record<string, { label: string; cls: string }> = {
   needed: { label: 'Proof needed', cls: 'bg-amber-500/15 text-amber-300 border-amber-500/30' },
   sent: { label: 'Proof sent', cls: 'bg-sky-500/15 text-sky-300 border-sky-500/30' },
-  approved: { label: 'Proof ✓', cls: 'bg-[#2FE6C4]/15 text-[#2FE6C4] border-[#2FE6C4]/30' },
+  approved: { label: 'Proof ✓', cls: 'bg-[#6FB6AC]/15 text-[#6FB6AC] border-[#6FB6AC]/30' },
 }
 
 function StatCard({ title, value, sub, href, icon, alert }: {
   title: string; value: string | number; sub?: string; href: string; icon: string; alert?: boolean
 }) {
   return (
-    <Link href={href} className={`group bg-[#1A4F48] rounded-xl p-5 border transition-colors ${alert ? 'border-amber-500/40 hover:border-amber-400/60' : 'border-white/5 hover:border-[#2FE6C4]/30'}`}>
+    <Link href={href} className={`group bg-[#1A4F48] rounded-xl p-5 border transition-colors ${alert ? 'border-amber-500/40 hover:border-amber-400/60' : 'border-white/5 hover:border-[#6FB6AC]/30'}`}>
       <div className="flex items-start justify-between mb-3">
         <p className="text-[11px] text-gray-400 uppercase tracking-wider">{title}</p>
-        <Icon name={icon} className={`w-4 h-4 opacity-70 ${alert ? 'text-amber-300' : 'text-[#2FE6C4]'}`} />
+        <Icon name={icon} className={`w-4 h-4 opacity-70 ${alert ? 'text-amber-300' : 'text-[#6FB6AC]'}`} />
       </div>
       <p className="text-3xl font-bold text-cream mb-1">{value}</p>
       {sub && <p className="text-xs text-gray-500">{sub}</p>}
@@ -102,7 +102,7 @@ export default function AdminToday() {
           <section className="mb-8">
             <div className="flex items-center justify-between mb-3">
               <h2 className="text-sm font-semibold text-cream">Needs attention</h2>
-              <Link href="/admin/orders" className="text-xs text-[#2FE6C4] hover:text-cream">Order board →</Link>
+              <Link href="/admin/orders" className="text-xs text-[#6FB6AC] hover:text-cream">Order board →</Link>
             </div>
             {dash.orders.length === 0 ? (
               <div className="bg-[#1A4F48] border border-white/5 rounded-xl p-8 text-center text-gray-400 text-sm">
@@ -153,9 +153,9 @@ function QuickAction({ href, icon, label, external }: { href: string; icon: stri
     <Component
       href={href}
       {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}
-      className="flex items-center gap-3 bg-[#1A4F48] hover:bg-[#2a4441] rounded-xl p-3 border border-white/5 hover:border-[#2FE6C4]/20 transition-all"
+      className="flex items-center gap-3 bg-[#1A4F48] hover:bg-[#2a4441] rounded-xl p-3 border border-white/5 hover:border-[#6FB6AC]/20 transition-all"
     >
-      <Icon name={icon} className="w-4 h-4 text-[#2FE6C4]" />
+      <Icon name={icon} className="w-4 h-4 text-[#6FB6AC]" />
       <span className="text-sm text-cream">{label}</span>
     </Component>
   )

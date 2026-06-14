@@ -52,7 +52,7 @@ export default function ServiceJobDetail() {
         <select
           value={job.status}
           onChange={e => patch({ status: e.target.value })}
-          className="bg-[#1A4F48] border border-white/10 rounded-md px-3 py-2 text-xs text-cream outline-none focus:border-[#2FE6C4]"
+          className="bg-[#1A4F48] border border-white/10 rounded-md px-3 py-2 text-xs text-cream outline-none focus:border-[#6FB6AC]"
         >
           {['intake','proofing','approved','in_production','qa','ready','delivered','cancelled'].map(s => <option key={s} value={s}>{s.replace('_', ' ')}</option>)}
         </select>
@@ -89,14 +89,14 @@ export default function ServiceJobDetail() {
           onChange={e => setJob({ ...job, notes: e.target.value })}
           onBlur={() => patch({ notes: job.notes })}
           rows={10}
-          className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#2FE6C4]"
+          className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6FB6AC]"
           placeholder="Production notes, specs, issues, anything useful…"
         />
         {saving && <p className="text-[10px] text-gray-500 mt-2">Saving…</p>}
       </div>
 
       {job.customerId && (
-        <Link href={`/admin/customers/${job.customerId}`} className="text-xs text-[#2FE6C4] hover:underline mt-4 inline-block">
+        <Link href={`/admin/customers/${job.customerId}`} className="text-xs text-[#6FB6AC] hover:underline mt-4 inline-block">
           View customer →
         </Link>
       )}

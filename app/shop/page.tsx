@@ -65,7 +65,7 @@ export default function ShopHome() {
       {/* Portfolio grid — every photo behind the glass */}
       <section className="pb-10 sm:pb-14">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-center text-xs font-mono text-[#2FE6C4] tracking-[0.2em] uppercase mb-6">Recent work</p>
+          <p className="text-center text-xs font-mono text-[#6FB6AC] tracking-[0.2em] uppercase mb-6">Recent work</p>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {WORK.map((item) => (
               <div key={item.label} className="group relative aspect-square rounded-sm overflow-hidden">
@@ -95,7 +95,7 @@ export default function ShopHome() {
       {/* Categories */}
       <section className="pb-10 sm:pb-14">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold text-[#F0E6D3] text-center mb-8">Browse by category</h2>
+          <h2 className="text-2xl font-bold text-[#E7DFCB] text-center mb-8">Browse by category</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {CONSUMER_CATEGORIES.map((cat) => (
               <CategoryCard key={cat.slug} category={cat} />
@@ -107,7 +107,7 @@ export default function ShopHome() {
       {/* How it works */}
       <section className="pb-10 sm:pb-14">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold text-[#F0E6D3] text-center mb-8">How it works</h2>
+          <h2 className="text-2xl font-bold text-[#E7DFCB] text-center mb-8">How it works</h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
             {[
               { n: 1, h: 'Text me', p: "Send a photo of what you want engraved. I'll get back to you with a quote." },
@@ -115,10 +115,10 @@ export default function ShopHome() {
               { n: 3, h: 'Hand-delivered', p: 'I bring it to your door across the South Denver metro.' },
             ].map((step) => (
               <div key={step.n}>
-                <div className="w-10 h-10 rounded-full bg-[#2FE6C4]/15 border border-[#2FE6C4]/20 flex items-center justify-center mb-3 mx-auto">
-                  <span className="text-[#2FE6C4] font-bold">{step.n}</span>
+                <div className="w-10 h-10 rounded-full bg-[#6FB6AC]/15 border border-[#6FB6AC]/20 flex items-center justify-center mb-3 mx-auto">
+                  <span className="text-[#6FB6AC] font-bold">{step.n}</span>
                 </div>
-                <h3 className="font-semibold text-[#F0E6D3] mb-1">{step.h}</h3>
+                <h3 className="font-semibold text-[#E7DFCB] mb-1">{step.h}</h3>
                 <p className="text-gray-400 text-sm leading-relaxed">{step.p}</p>
               </div>
             ))}
@@ -129,7 +129,7 @@ export default function ShopHome() {
       {/* Three options */}
       <section className="pb-10 sm:pb-14">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold text-[#F0E6D3] text-center mb-8">Three ways to work with me</h2>
+          <h2 className="text-2xl font-bold text-[#E7DFCB] text-center mb-8">Three ways to work with me</h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
             {[
               { h: 'Bring your own', p: 'Have a knife, tumbler, laptop, or anything else? Bring it. I engrave it and hand it back.' },
@@ -137,7 +137,7 @@ export default function ShopHome() {
               { h: 'Shop my stock', p: 'I keep pens, metal cards, tags, keychains, and other basics on hand — ready to engrave right away.' },
             ].map((opt) => (
               <div key={opt.h} className="bg-white/[0.04] backdrop-blur-xl border border-white/10 rounded-sm p-5">
-                <h3 className="font-bold text-[#F0E6D3] mb-2">{opt.h}</h3>
+                <h3 className="font-bold text-[#E7DFCB] mb-2">{opt.h}</h3>
                 <p className="text-gray-400 text-sm leading-relaxed">{opt.p}</p>
               </div>
             ))}
@@ -169,7 +169,7 @@ export default function ShopHome() {
       {/* Final CTA */}
       <section className="pb-10 sm:pb-14">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold text-[#F0E6D3] mb-4">Ready?</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#E7DFCB] mb-4">Ready?</h2>
           <p className="text-gray-300 text-base leading-relaxed mb-8">
             Text me a photo of what you want engraved. I&apos;ll tell you if I can do it, what it&apos;ll cost, and when it&apos;ll be done.
           </p>

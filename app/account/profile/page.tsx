@@ -76,7 +76,7 @@ export default function ProfilePage() {
           <button onClick={save} disabled={saving} className="px-4 h-9 bg-[#C46B4D] hover:bg-[#AD5D42] text-white text-sm font-semibold rounded-md">
             {saving ? 'Saving…' : 'Save'}
           </button>
-          {saved && <span className="text-xs text-[#2FE6C4]">Saved ✓</span>}
+          {saved && <span className="text-xs text-[#6FB6AC]">Saved ✓</span>}
           {saveError && <span className="text-xs text-red-400">{saveError}</span>}
         </div>
       </div>
@@ -98,7 +98,7 @@ export default function ProfilePage() {
                 <p className="text-sm text-cream">
                   {m.brand ?? 'Card'} •••• {m.last4}
                   {m.expMonth && m.expYear && <span className="text-gray-500 ml-2 text-xs">exp {m.expMonth}/{String(m.expYear).slice(-2)}</span>}
-                  {m.isDefault && <span className="ml-2 text-[10px] bg-[#2FE6C4]/20 text-[#2FE6C4] px-1.5 py-0.5 rounded-full uppercase tracking-wider font-semibold">default</span>}
+                  {m.isDefault && <span className="ml-2 text-[10px] bg-[#6FB6AC]/20 text-[#6FB6AC] px-1.5 py-0.5 rounded-full uppercase tracking-wider font-semibold">default</span>}
                 </p>
               </div>
             ))}
@@ -116,7 +116,7 @@ function Field({ label, value, onChange }: { label: string; value: string; onCha
       <input
         value={value}
         onChange={e => onChange(e.target.value)}
-        className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#2FE6C4]"
+        className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6FB6AC]"
       />
     </div>
   )
@@ -234,7 +234,7 @@ function Addresses() {
       <div className="flex items-center justify-between mb-3">
         <p className="text-[11px] uppercase tracking-wider text-gray-500 font-semibold">Shipping addresses</p>
         {!adding && !editingId && (
-          <button onClick={startAdd} className="text-xs text-[#2FE6C4] hover:underline">+ Add address</button>
+          <button onClick={startAdd} className="text-xs text-[#6FB6AC] hover:underline">+ Add address</button>
         )}
       </div>
 
@@ -265,7 +265,7 @@ function Addresses() {
                     <div className="min-w-0">
                       <p className="text-sm text-cream font-semibold">
                         {a.label}
-                        {a.isDefault && <span className="ml-2 text-[10px] bg-[#2FE6C4]/20 text-[#2FE6C4] px-1.5 py-0.5 rounded-full uppercase tracking-wider font-semibold">default</span>}
+                        {a.isDefault && <span className="ml-2 text-[10px] bg-[#6FB6AC]/20 text-[#6FB6AC] px-1.5 py-0.5 rounded-full uppercase tracking-wider font-semibold">default</span>}
                       </p>
                       <p className="text-xs text-gray-400 mt-1 leading-relaxed">
                         {a.line1}{a.line2 ? `, ${a.line2}` : ''}<br />
@@ -275,7 +275,7 @@ function Addresses() {
                     </div>
                     <div className="flex flex-col items-end gap-1 shrink-0 text-[11px]">
                       {!a.isDefault && (
-                        <button onClick={() => setDefault(a.id)} className="text-[#2FE6C4] hover:underline">Set default</button>
+                        <button onClick={() => setDefault(a.id)} className="text-[#6FB6AC] hover:underline">Set default</button>
                       )}
                       <button onClick={() => startEdit(a)} className="text-gray-400 hover:text-cream">Edit</button>
                       <button onClick={() => remove(a.id)} className="text-gray-500 hover:text-red-400">Delete</button>
@@ -318,7 +318,7 @@ function AddressForm({
 }) {
   const upd = (patch: Partial<AddressDraft>) => setDraft({ ...draft, ...patch })
   return (
-    <div className="bg-[#143E38] rounded-md p-3 border border-[#2FE6C4]/20 space-y-3">
+    <div className="bg-[#143E38] rounded-md p-3 border border-[#6FB6AC]/20 space-y-3">
       <FormField label="Label" value={draft.label} onChange={v => upd({ label: v })} />
       <FormField label="Street address" value={draft.line1} onChange={v => upd({ line1: v })} />
       <FormField label="Apt / Suite (optional)" value={draft.line2 ?? ''} onChange={v => upd({ line2: v })} />
@@ -351,7 +351,7 @@ function FormField({ label, value, onChange }: { label: string; value: string; o
       <input
         value={value}
         onChange={e => onChange(e.target.value)}
-        className="w-full bg-[#1A4F48] border border-white/5 rounded-md px-2.5 py-1.5 text-sm text-cream outline-none focus:border-[#2FE6C4]"
+        className="w-full bg-[#1A4F48] border border-white/5 rounded-md px-2.5 py-1.5 text-sm text-cream outline-none focus:border-[#6FB6AC]"
       />
     </div>
   )
@@ -439,7 +439,7 @@ function ReferenceImages() {
             <button
               onClick={() => inputRef.current?.click()}
               disabled={busy || atMax}
-              className="px-3 h-8 bg-[#2FE6C4]/15 hover:bg-[#2FE6C4]/25 disabled:opacity-40 disabled:cursor-not-allowed text-[#2FE6C4] text-xs font-semibold rounded-md border border-[#2FE6C4]/30"
+              className="px-3 h-8 bg-[#6FB6AC]/15 hover:bg-[#6FB6AC]/25 disabled:opacity-40 disabled:cursor-not-allowed text-[#6FB6AC] text-xs font-semibold rounded-md border border-[#6FB6AC]/30"
             >
               {busy ? 'Uploading…' : atMax ? 'Limit reached' : `Add image${remaining > 1 ? 's' : ''}`}
             </button>

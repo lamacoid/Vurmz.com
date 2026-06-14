@@ -52,7 +52,7 @@ export default function AccountDashboard() {
 
 function Card({ href, title, sub }: { href: string; title: string; sub: string }) {
   return (
-    <Link href={href} className="bg-[#1A4F48] border border-white/5 hover:border-[#2FE6C4]/30 rounded-xl p-5 transition-colors">
+    <Link href={href} className="bg-[#1A4F48] border border-white/5 hover:border-[#6FB6AC]/30 rounded-xl p-5 transition-colors">
       <p className="text-base font-semibold text-cream mb-2">{title}</p>
       <p className="text-xs text-gray-400 leading-relaxed">{sub}</p>
     </Link>

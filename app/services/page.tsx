@@ -300,7 +300,7 @@ export default function Home() {
       {/* ═══════════ SHOP CROSS-LINK ═══════════ */}
       <section className="relative py-12 sm:py-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-[#F0E6D3] rounded-sm p-8 sm:p-10 flex flex-col sm:flex-row gap-6 items-start sm:items-center justify-between">
+          <div className="bg-[#E7DFCB] rounded-sm p-8 sm:p-10 flex flex-col sm:flex-row gap-6 items-start sm:items-center justify-between">
             <div>
               <h3 className="text-xl font-bold text-[#1A4F48] mb-2">Shopping for yourself?</h3>
               <p className="text-[#6B6259] text-sm leading-relaxed max-w-lg">

@@ -2,7 +2,7 @@
 
 /* Accessible focus states */
 *:focus-visible {
-  outline: 2px solid var(--vurmz-teal, #2FE6C4);
+  outline: 2px solid var(--vurmz-teal, #6FB6AC);
   outline-offset: 2px;
 }
 [data-theme="shop"] *:focus-visible {
@@ -19,10 +19,10 @@ body.is-admin > main {
 
 :root {
   /* VURMZ Brand Colors - Tempered Glass Aesthetic */
-  --vurmz-teal: #2FE6C4;           /* Electric acid-teal (neon swamp accent) */
+  --vurmz-teal: #6FB6AC;           /* Electric acid-teal (neon swamp accent) */
   --vurmz-teal-dark: #4A9D97;      /* Deeper muted teal */
   --vurmz-teal-light: #8DCDC8;     /* Soft light teal */
-  --vurmz-teal-glow: #2FE6C4;      /* Neon glow */
+  --vurmz-teal-glow: #6FB6AC;      /* Neon glow */
   --vurmz-powder: #B5D8E0;         /* Frosted glass blue */
   --vurmz-powder-light: #D0E8ED;   /* Light frost */
   --vurmz-sky: #7BC8D4;            /* Clear sky through glass */
@@ -35,8 +35,8 @@ body.is-admin > main {
 
   /* Semantic Colors */
   --background: #1A4F48;
-  --foreground: #F0E6D3;
-  --primary: #2FE6C4;
+  --foreground: #E7DFCB;
+  --primary: #6FB6AC;
   --primary-dark: #4A9D97;
   --primary-light: #8DCDC8;
   --secondary: #8CC5CC;
@@ -46,7 +46,7 @@ body.is-admin > main {
   --vurmz-cta: #D96C5C;
   --vurmz-cta-hover: #C25A4B;
   --vurmz-cta-active: #A94C3F;
-  --vurmz-cta-cream: #F0E6D3;
+  --vurmz-cta-cream: #E7DFCB;
   --vurmz-cta-cream-hover: #E5D9C4;
 
   /* Status Colors */
@@ -55,7 +55,7 @@ body.is-admin > main {
   --error: #C75B55;
 
   /* ── Shop Palette (B2C) ── */
-  --shop-bg: #F0E6D3;
+  --shop-bg: #E7DFCB;
   --shop-bg-subtle: #EBE0CC;
   --shop-text: #1A4F48;
   --shop-text-sub: #6B6259;
@@ -343,28 +343,28 @@ main [class*="mx-auto"][class*="px-4"] {
     color: var(--vurmz-dark);
   }
   .text-cream {
-    color: #F0E6D3;
+    color: #E7DFCB;
   }
   .hover\:text-cream:hover {
-    color: #F0E6D3;
+    color: #E7DFCB;
   }
   .text-cream\/40 {
-    color: rgba(240, 230, 211, 0.4);
+    color: rgba(231, 223, 203, 0.4);
   }
   .text-cream\/50 {
-    color: rgba(240, 230, 211, 0.5);
+    color: rgba(231, 223, 203, 0.5);
   }
   .text-cream\/60 {
-    color: rgba(240, 230, 211, 0.6);
+    color: rgba(231, 223, 203, 0.6);
   }
   .hover\:text-cream\/60:hover {
-    color: rgba(240, 230, 211, 0.6);
+    color: rgba(231, 223, 203, 0.6);
   }
   .hover\:text-cream\/70:hover {
-    color: rgba(240, 230, 211, 0.7);
+    color: rgba(231, 223, 203, 0.7);
   }
   .text-cream\/80 {
-    color: rgba(240, 230, 211, 0.8);
+    color: rgba(231, 223, 203, 0.8);
   }
   .border-vurmz-teal {
     border-color: var(--vurmz-teal);

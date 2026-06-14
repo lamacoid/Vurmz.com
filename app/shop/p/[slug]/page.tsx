@@ -55,7 +55,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
           </div>
 
           <div>
-            <h1 className="text-3xl sm:text-4xl font-bold tracking-tight leading-tight mb-3 text-[#F0E6D3]">{product.name}</h1>
+            <h1 className="text-3xl sm:text-4xl font-bold tracking-tight leading-tight mb-3 text-[#E7DFCB]">{product.name}</h1>
             {product.shortDescription && (
               <p className="text-gray-300 text-base leading-relaxed mb-5">{product.shortDescription}</p>
             )}

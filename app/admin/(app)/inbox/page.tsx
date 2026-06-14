@@ -64,7 +64,7 @@ export default function InboxPage() {
   if (selected) {
     return (
       <div className="px-4 py-6 max-w-lg mx-auto">
-        <button onClick={() => { setSelected(null); load() }} className="text-xs text-[#2FE6C4] mb-4 flex items-center gap-1">
+        <button onClick={() => { setSelected(null); load() }} className="text-xs text-[#6FB6AC] mb-4 flex items-center gap-1">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-3 h-3"><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
           Back
         </button>
@@ -77,12 +77,12 @@ export default function InboxPage() {
 
           <div className="flex flex-wrap gap-2">
             {selected.email && (
-              <a href={`mailto:${selected.email}`} className="text-xs bg-[#1d474e] px-2.5 py-1 rounded-full text-[#2FE6C4]">
+              <a href={`mailto:${selected.email}`} className="text-xs bg-[#1d474e] px-2.5 py-1 rounded-full text-[#6FB6AC]">
                 {selected.email}
               </a>
             )}
             {selected.phone && (
-              <a href={`sms:${selected.phone}`} className="text-xs bg-[#1d474e] px-2.5 py-1 rounded-full text-[#2FE6C4]">
+              <a href={`sms:${selected.phone}`} className="text-xs bg-[#1d474e] px-2.5 py-1 rounded-full text-[#6FB6AC]">
                 {selected.phone}
               </a>
             )}
@@ -146,7 +146,7 @@ export default function InboxPage() {
             <button
               key={msg.id}
               onClick={() => markRead(msg)}
-              className="w-full text-left bg-[#1A4F48] rounded-xl p-3.5 border border-white/5 hover:border-[#2FE6C4]/20 transition-colors"
+              className="w-full text-left bg-[#1A4F48] rounded-xl p-3.5 border border-white/5 hover:border-[#6FB6AC]/20 transition-colors"
             >
               <div className="flex items-start justify-between gap-2">
                 <div className="min-w-0 flex-1">
@@ -157,7 +157,7 @@ export default function InboxPage() {
                     </p>
                   </div>
                   {msg.productInterest && (
-                    <p className="text-[10px] text-[#2FE6C4] mt-0.5">{msg.productInterest}</p>
+                    <p className="text-[10px] text-[#6FB6AC] mt-0.5">{msg.productInterest}</p>
                   )}
                   <p className="text-xs text-gray-500 mt-1 line-clamp-2">{msg.message}</p>
                 </div>

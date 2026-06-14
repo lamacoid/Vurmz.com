@@ -81,18 +81,18 @@ export default function CustomersPage() {
               placeholder="email@example.com"
               value={newEmail}
               onChange={e => setNewEmail(e.target.value)}
-              className="bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#2FE6C4]"
+              className="bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6FB6AC]"
             />
             <input
               placeholder="Name (optional)"
               value={newName}
               onChange={e => setNewName(e.target.value)}
-              className="bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#2FE6C4]"
+              className="bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6FB6AC]"
             />
             <button
               onClick={create}
               disabled={!newEmail || busy}
-              className="px-4 h-9 bg-[#2FE6C4] hover:bg-[#5aa49e] disabled:opacity-50 text-[#143E38] text-sm font-semibold rounded-md"
+              className="px-4 h-9 bg-[#6FB6AC] hover:bg-[#5aa49e] disabled:opacity-50 text-[#143E38] text-sm font-semibold rounded-md"
             >
               {busy ? 'Saving…' : 'Create'}
             </button>
@@ -104,7 +104,7 @@ export default function CustomersPage() {
         placeholder="Search by name, email, or company…"
         value={search}
         onChange={e => setSearch(e.target.value)}
-        className="w-full px-3 py-2 bg-[#1A4F48] border border-white/5 rounded-md text-sm text-cream placeholder:text-gray-500 outline-none focus:border-[#2FE6C4] mb-4"
+        className="w-full px-3 py-2 bg-[#1A4F48] border border-white/5 rounded-md text-sm text-cream placeholder:text-gray-500 outline-none focus:border-[#6FB6AC] mb-4"
       />
 
       {loading ? (
@@ -129,7 +129,7 @@ export default function CustomersPage() {
                 {c.tags && c.tags.length > 0 && (
                   <div className="flex gap-1 mt-1.5 flex-wrap">
                     {c.tags.slice(0, 4).map(t => (
-                      <span key={t} className="text-[9px] bg-[#2FE6C4]/10 text-[#2FE6C4] px-1.5 py-0.5 rounded-full uppercase tracking-wider font-semibold">{t}</span>
+                      <span key={t} className="text-[9px] bg-[#6FB6AC]/10 text-[#6FB6AC] px-1.5 py-0.5 rounded-full uppercase tracking-wider font-semibold">{t}</span>
                     ))}
                   </div>
                 )}

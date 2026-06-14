@@ -82,7 +82,7 @@ export default function PagesListPage() {
               <div className="flex items-center gap-3 text-[11px] text-gray-500">
                 <span className="font-mono">v{p.version}</span>
                 <span className={`px-2 py-0.5 rounded-full uppercase tracking-wider font-semibold ${
-                  p.isPublished ? 'bg-[#2FE6C4]/15 text-[#2FE6C4]' : 'bg-white/5 text-gray-500'
+                  p.isPublished ? 'bg-[#6FB6AC]/15 text-[#6FB6AC]' : 'bg-white/5 text-gray-500'
                 }`}>
                   {p.isPublished ? 'Published' : 'Draft'}
                 </span>

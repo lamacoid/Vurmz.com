@@ -34,7 +34,7 @@ export default function AnalyticsPage() {
       <div className="grid grid-cols-2 gap-3 mb-6">
         <div className="bg-[#1A4F48] rounded-xl p-4 border border-white/5">
           <p className="text-[10px] text-gray-500 uppercase">Today</p>
-          <p className="text-2xl font-bold text-[#2FE6C4] mt-1">{data.today.views}</p>
+          <p className="text-2xl font-bold text-[#6FB6AC] mt-1">{data.today.views}</p>
           <p className="text-[10px] text-gray-500">views</p>
         </div>
         <div className="bg-[#1A4F48] rounded-xl p-4 border border-white/5">
@@ -60,7 +60,7 @@ export default function AnalyticsPage() {
           {data.chart.map((d, i) => (
             <div key={i} className="flex-1 flex flex-col items-center justify-end" title={`${d.date}: ${d.views}`}>
               <div
-                className="w-full bg-[#2FE6C4] rounded-t-sm min-h-[2px] transition-all"
+                className="w-full bg-[#6FB6AC] rounded-t-sm min-h-[2px] transition-all"
                 style={{ height: `${(d.views / maxViews) * 100}%` }}
               />
             </div>
@@ -80,7 +80,7 @@ export default function AnalyticsPage() {
             {data.paths.map((p, i) => (
               <div key={i} className="flex items-center gap-2">
                 <span className="text-xs text-gray-300 font-mono flex-1 truncate">{p.path}</span>
-                <span className="text-xs text-[#2FE6C4] font-semibold">{p.views}</span>
+                <span className="text-xs text-[#6FB6AC] font-semibold">{p.views}</span>
               </div>
             ))}
           </div>
@@ -95,7 +95,7 @@ export default function AnalyticsPage() {
             {data.referrers.map((r, i) => (
               <div key={i} className="flex items-center gap-2">
                 <span className="text-xs text-gray-300 flex-1 truncate break-all">{r.referrer}</span>
-                <span className="text-xs text-[#2FE6C4] font-semibold">{r.views}</span>
+                <span className="text-xs text-[#6FB6AC] font-semibold">{r.views}</span>
               </div>
             ))}
           </div>

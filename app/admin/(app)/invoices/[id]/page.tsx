@@ -70,7 +70,7 @@ export default function AdminInvoiceDetail() {
           <select
             value={invoice.status}
             onChange={e => setStatus(e.target.value)}
-            className="bg-[#1A4F48] border border-white/10 rounded-md px-3 py-2 text-xs text-cream outline-none focus:border-[#2FE6C4]"
+            className="bg-[#1A4F48] border border-white/10 rounded-md px-3 py-2 text-xs text-cream outline-none focus:border-[#6FB6AC]"
           >
             {['draft','sent','viewed','paid','partially_paid','overdue','void','refunded'].map(s => <option key={s} value={s}>{s.replace('_', ' ')}</option>)}
           </select>
@@ -128,7 +128,7 @@ function Row({ label, value, bold, accent, coral }: { label: string; value: stri
   return (
     <div className="flex justify-between">
       <span className={`${bold ? 'text-cream font-bold' : 'text-gray-400'}`}>{label}</span>
-      <span className={`${bold ? 'text-cream font-bold' : accent ? 'text-[#2FE6C4]' : coral ? 'text-[#C46B4D] font-bold' : 'text-cream'}`}>{value}</span>
+      <span className={`${bold ? 'text-cream font-bold' : accent ? 'text-[#6FB6AC]' : coral ? 'text-[#C46B4D] font-bold' : 'text-cream'}`}>{value}</span>
     </div>
   )
 }

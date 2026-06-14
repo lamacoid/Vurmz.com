@@ -113,8 +113,8 @@ export default function LocalTicker() {
         {/* Left — live local anchor */}
         <div className="hidden sm:flex items-center gap-2">
           <span className="relative flex h-1.5 w-1.5" aria-hidden>
-            <span className="absolute inline-flex h-full w-full rounded-full bg-[#2FE6C4] opacity-60 animate-ping" />
-            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#2FE6C4]" />
+            <span className="absolute inline-flex h-full w-full rounded-full bg-[#6FB6AC] opacity-60 animate-ping" />
+            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#6FB6AC]" />
           </span>
           <span className="text-gray-300">Centennial, CO</span>
         </div>

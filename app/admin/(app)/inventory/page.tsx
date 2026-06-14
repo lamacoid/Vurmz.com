@@ -76,7 +76,7 @@ export default function InventoryPage() {
         <div className="text-gray-500 text-sm">Loading…</div>
       ) : items.length === 0 && untracked.length === 0 ? (
         <div className="bg-[#1A4F48] border border-white/5 rounded-xl p-10 text-center text-gray-400 text-sm">
-          No products yet. <Link href="/admin/products/new" className="text-[#2FE6C4] hover:underline">Add a product →</Link>
+          No products yet. <Link href="/admin/products/new" className="text-[#6FB6AC] hover:underline">Add a product →</Link>
         </div>
       ) : (
         <>
@@ -118,7 +118,7 @@ export default function InventoryPage() {
                     const v = parseInt(e.target.value, 10)
                     if (Number.isFinite(v) && v !== item.lowThreshold) setThreshold(item.id, v)
                   }}
-                  className="w-16 bg-[#143E38] border border-white/5 rounded px-2 py-1 text-xs text-cream text-center outline-none focus:border-[#2FE6C4]"
+                  className="w-16 bg-[#143E38] border border-white/5 rounded px-2 py-1 text-xs text-cream text-center outline-none focus:border-[#6FB6AC]"
                   title="Low-stock threshold"
                 />
               </div>
@@ -134,7 +134,7 @@ export default function InventoryPage() {
                   <button
                     key={p.id}
                     onClick={() => adjust(p.id, 0, 'initialize')}
-                    className="text-xs bg-[#143E38] hover:bg-[#143E38]/80 border border-white/5 hover:border-[#2FE6C4]/40 rounded-full px-3 py-1 text-cream"
+                    className="text-xs bg-[#143E38] hover:bg-[#143E38]/80 border border-white/5 hover:border-[#6FB6AC]/40 rounded-full px-3 py-1 text-cream"
                   >
                     + {p.name}
                   </button>

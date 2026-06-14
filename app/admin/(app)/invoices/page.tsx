@@ -11,8 +11,8 @@ function money(c: number) { return `$${(c / 100).toFixed(2)}` }
 
 const STATUS_COLORS: Record<string, string> = {
   draft:          'bg-white/5 text-gray-400 border-white/10',
-  sent:           'bg-[#2FE6C4]/10 text-[#2FE6C4] border-[#2FE6C4]/20',
-  viewed:         'bg-[#2FE6C4]/15 text-[#2FE6C4] border-[#2FE6C4]/30',
+  sent:           'bg-[#6FB6AC]/10 text-[#6FB6AC] border-[#6FB6AC]/20',
+  viewed:         'bg-[#6FB6AC]/15 text-[#6FB6AC] border-[#6FB6AC]/30',
   paid:           'bg-green-900/25 text-green-300 border-green-800/40',
   partially_paid: 'bg-yellow-900/25 text-yellow-300 border-yellow-800/40',
   overdue:        'bg-red-900/25 text-red-300 border-red-800/40',

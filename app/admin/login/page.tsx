@@ -67,7 +67,7 @@ export default function AdminLogin() {
             onChange={e => setPassword(e.target.value)}
             placeholder="Password"
             autoFocus
-            className="w-full px-4 py-3 bg-[#1A4F48] border border-[#2d4a47] rounded-lg text-cream text-sm placeholder:text-gray-500 focus:outline-none focus:border-[#2FE6C4]/50 transition-colors"
+            className="w-full px-4 py-3 bg-[#1A4F48] border border-[#2d4a47] rounded-lg text-cream text-sm placeholder:text-gray-500 focus:outline-none focus:border-[#6FB6AC]/50 transition-colors"
           />
 
           {error && (
@@ -90,7 +90,7 @@ export default function AdminLogin() {
         </div>
 
         {magicStatus === 'sent' ? (
-          <div className="bg-[#1A4F48] border border-[#2FE6C4]/20 rounded-lg p-4 text-center">
+          <div className="bg-[#1A4F48] border border-[#6FB6AC]/20 rounded-lg p-4 text-center">
             <p className="text-cream text-sm font-semibold mb-1">Check your email</p>
             <p className="text-xs text-gray-400">If that address is the admin, a sign-in link is on its way.</p>
             <button
@@ -108,7 +108,7 @@ export default function AdminLogin() {
               onChange={e => setMagicEmail(e.target.value)}
               placeholder="Email me a sign-in link"
               required
-              className="w-full px-4 py-2.5 bg-[#1A4F48] border border-[#2d4a47] rounded-lg text-cream text-sm placeholder:text-gray-500 focus:outline-none focus:border-[#2FE6C4]/50 transition-colors"
+              className="w-full px-4 py-2.5 bg-[#1A4F48] border border-[#2d4a47] rounded-lg text-cream text-sm placeholder:text-gray-500 focus:outline-none focus:border-[#6FB6AC]/50 transition-colors"
             />
             <button
               type="submit"

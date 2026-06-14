@@ -27,10 +27,10 @@ export default function CartDrawer() {
       >
         <header className="flex items-center justify-between px-5 py-4 border-b border-white/10">
           <div>
-            <p className="text-sm font-bold text-[#F0E6D3]">Your cart</p>
+            <p className="text-sm font-bold text-[#E7DFCB]">Your cart</p>
             <p className="text-xs text-gray-400">{itemCount} {itemCount === 1 ? 'item' : 'items'}</p>
           </div>
-          <button onClick={() => setOpen(false)} className="p-1 text-gray-400 hover:text-[#F0E6D3]" aria-label="Close cart">
+          <button onClick={() => setOpen(false)} className="p-1 text-gray-400 hover:text-[#E7DFCB]" aria-label="Close cart">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="w-5 h-5">
               <path d="M6 6l12 12M18 6 6 18" />
             </svg>
@@ -63,7 +63,7 @@ export default function CartDrawer() {
                   <Link
                     href={`/shop/p/${item.slug}`}
                     onClick={() => setOpen(false)}
-                    className="text-sm font-medium text-[#F0E6D3] hover:text-[#D96C5C] block truncate"
+                    className="text-sm font-medium text-[#E7DFCB] hover:text-[#D96C5C] block truncate"
                   >
                     {item.name}
                   </Link>
@@ -78,14 +78,14 @@ export default function CartDrawer() {
                   })()}
                   <div className="flex items-center gap-3 mt-2">
                     <div className="inline-flex items-center bg-white/[0.06] border border-white/15 rounded-sm text-sm text-gray-200">
-                      <button onClick={() => setQty(item.productId, item.qty - 1)} className="px-2 py-1 text-gray-400 hover:text-[#F0E6D3]" aria-label="Decrease">−</button>
+                      <button onClick={() => setQty(item.productId, item.qty - 1)} className="px-2 py-1 text-gray-400 hover:text-[#E7DFCB]" aria-label="Decrease">−</button>
                       <span className="min-w-[1.5rem] text-center text-xs font-semibold">{item.qty}</span>
-                      <button onClick={() => setQty(item.productId, item.qty + 1)} className="px-2 py-1 text-gray-400 hover:text-[#F0E6D3]" aria-label="Increase">+</button>
+                      <button onClick={() => setQty(item.productId, item.qty + 1)} className="px-2 py-1 text-gray-400 hover:text-[#E7DFCB]" aria-label="Increase">+</button>
                     </div>
                     <button onClick={() => remove(item.productId)} className="text-xs text-gray-400 hover:text-[#D96C5C]">Remove</button>
                   </div>
                 </div>
-                <div className="text-sm font-semibold text-[#F0E6D3]">{money(item.priceCents * item.qty)}</div>
+                <div className="text-sm font-semibold text-[#E7DFCB]">{money(item.priceCents * item.qty)}</div>
               </div>
             ))
           )}
@@ -95,7 +95,7 @@ export default function CartDrawer() {
           <footer className="border-t border-white/10 px-5 py-4 space-y-3">
             <div className="flex items-center justify-between text-sm">
               <span className="text-gray-400">Subtotal</span>
-              <span className="font-semibold text-[#F0E6D3]">{money(subtotalCents)}</span>
+              <span className="font-semibold text-[#E7DFCB]">{money(subtotalCents)}</span>
             </div>
             <p className="text-[11px] text-gray-500">Taxes and delivery calculated at checkout.</p>
             <Link

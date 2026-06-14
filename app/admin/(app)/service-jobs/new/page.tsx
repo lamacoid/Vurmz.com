@@ -53,7 +53,7 @@ export default function NewServiceJobPage() {
             value={title}
             onChange={e => setTitle(e.target.value)}
             placeholder="e.g. 50 engraved knives for Cherry Creek Kitchen"
-            className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#2FE6C4]"
+            className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6FB6AC]"
           />
         </div>
         <div>
@@ -79,12 +79,12 @@ export default function NewServiceJobPage() {
           </div>
           <div>
             <label className="text-[11px] uppercase tracking-wider text-gray-500 block mb-1 font-semibold">Due date</label>
-            <input type="date" value={dueDate} onChange={e => setDueDate(e.target.value)} className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#2FE6C4]" />
+            <input type="date" value={dueDate} onChange={e => setDueDate(e.target.value)} className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6FB6AC]" />
           </div>
         </div>
         <div>
           <label className="text-[11px] uppercase tracking-wider text-gray-500 block mb-1 font-semibold">Notes</label>
-          <textarea value={notes} onChange={e => setNotes(e.target.value)} rows={4} className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#2FE6C4]" placeholder="Details, specs, production notes…" />
+          <textarea value={notes} onChange={e => setNotes(e.target.value)} rows={4} className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6FB6AC]" placeholder="Details, specs, production notes…" />
         </div>
         <button onClick={save} disabled={saving || !title} className="px-4 h-9 bg-[#C46B4D] hover:bg-[#AD5D42] disabled:opacity-60 text-white text-sm font-semibold rounded-md">
           {saving ? 'Creating…' : 'Create job'}

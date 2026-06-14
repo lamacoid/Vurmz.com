@@ -15,7 +15,7 @@ export default function MobileTabBar() {
             <Link
               key={tab.href}
               href={tab.href}
-              className={`flex flex-col items-center gap-0.5 px-3 py-1 transition-colors ${active ? 'text-[#2FE6C4]' : 'text-gray-500 hover:text-gray-300'}`}
+              className={`flex flex-col items-center gap-0.5 px-3 py-1 transition-colors ${active ? 'text-[#6FB6AC]' : 'text-gray-500 hover:text-gray-300'}`}
             >
               <Icon name={tab.icon} className="w-5 h-5" />
               <span className="text-[10px] font-medium">{tab.label}</span>

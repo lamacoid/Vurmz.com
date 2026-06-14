@@ -34,7 +34,7 @@ export default function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
                         : 'text-gray-400 hover:text-cream hover:bg-white/[0.03]'
                     }`}
                   >
-                    <Icon name={item.icon} className={`w-4 h-4 ${active ? 'text-[#2FE6C4]' : ''}`} />
+                    <Icon name={item.icon} className={`w-4 h-4 ${active ? 'text-[#6FB6AC]' : ''}`} />
                     <span className="flex-1 truncate">{item.label}</span>
                     {item.chunk != null && (
                       <span className="text-[9px] text-gray-600 font-mono">soon</span>

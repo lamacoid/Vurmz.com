@@ -86,7 +86,7 @@ export default function MessagesPage() {
           }}
           rows={2}
           placeholder="Type a message… (⌘↵ to send)"
-          className="flex-1 bg-[#1A4F48] border border-white/5 rounded-xl px-4 py-2.5 text-sm text-cream outline-none focus:border-[#2FE6C4] resize-none"
+          className="flex-1 bg-[#1A4F48] border border-white/5 rounded-xl px-4 py-2.5 text-sm text-cream outline-none focus:border-[#6FB6AC] resize-none"
         />
         <button
           onClick={send}

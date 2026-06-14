@@ -92,7 +92,7 @@ export default function NavigationEditorPage() {
               <p className="text-sm font-semibold text-cream">{PLACEMENT_LABELS[p]}</p>
               <button
                 onClick={() => addItem(p)}
-                className="text-xs text-[#2FE6C4] hover:underline inline-flex items-center gap-1"
+                className="text-xs text-[#6FB6AC] hover:underline inline-flex items-center gap-1"
               >
                 <Icon name="plus" className="w-3 h-3" /> Add link
               </button>

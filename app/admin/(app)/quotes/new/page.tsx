@@ -83,7 +83,7 @@ export default function NewQuotePage() {
             value={email}
             onChange={e => setEmail(e.target.value)}
             placeholder="email@example.com"
-            className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#2FE6C4]"
+            className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6FB6AC]"
           />
         </div>
 
@@ -92,9 +92,9 @@ export default function NewQuotePage() {
           <div className="space-y-2">
             {lines.map((line, i) => (
               <div key={i} className="grid grid-cols-[1fr_70px_100px_32px] gap-2">
-                <input value={line.description} onChange={e => updateLine(i, { description: e.target.value })} placeholder="Description" className="bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#2FE6C4]" />
-                <input type="number" value={line.qty} min={1} onChange={e => updateLine(i, { qty: parseInt(e.target.value, 10) || 1 })} className="bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#2FE6C4]" />
-                <div className="flex items-center bg-[#143E38] border border-white/5 rounded-md focus-within:border-[#2FE6C4]">
+                <input value={line.description} onChange={e => updateLine(i, { description: e.target.value })} placeholder="Description" className="bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6FB6AC]" />
+                <input type="number" value={line.qty} min={1} onChange={e => updateLine(i, { qty: parseInt(e.target.value, 10) || 1 })} className="bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6FB6AC]" />
+                <div className="flex items-center bg-[#143E38] border border-white/5 rounded-md focus-within:border-[#6FB6AC]">
                   <span className="pl-2 text-gray-500 text-sm">$</span>
                   <input value={line.price} onChange={e => updateLine(i, { price: e.target.value })} className="flex-1 bg-transparent px-2 py-2 text-sm text-cream outline-none" />
                 </div>
@@ -102,7 +102,7 @@ export default function NewQuotePage() {
               </div>
             ))}
           </div>
-          <button onClick={() => setLines(p => [...p, { description: '', qty: 1, price: '0.00' }])} className="mt-3 text-xs text-[#2FE6C4] hover:underline">+ Add line</button>
+          <button onClick={() => setLines(p => [...p, { description: '', qty: 1, price: '0.00' }])} className="mt-3 text-xs text-[#6FB6AC] hover:underline">+ Add line</button>
           <div className="border-t border-white/5 mt-4 pt-3 text-right">
             <p className="text-[11px] uppercase tracking-wider text-gray-500">Total</p>
             <p className="text-xl font-bold text-cream">${centsToDollars(subtotal)}</p>
@@ -112,11 +112,11 @@ export default function NewQuotePage() {
         <div className="bg-[#1A4F48] border border-white/5 rounded-xl p-5">
           <div>
             <label className="text-[11px] uppercase tracking-wider text-gray-500 block mb-1 font-semibold">Valid until (optional)</label>
-            <input type="date" value={expiresAt} onChange={e => setExpiresAt(e.target.value)} className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#2FE6C4]" />
+            <input type="date" value={expiresAt} onChange={e => setExpiresAt(e.target.value)} className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6FB6AC]" />
           </div>
           <div className="mt-3">
             <label className="text-[11px] uppercase tracking-wider text-gray-500 block mb-1 font-semibold">Notes</label>
-            <textarea value={notes} onChange={e => setNotes(e.target.value)} rows={3} className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#2FE6C4]" />
+            <textarea value={notes} onChange={e => setNotes(e.target.value)} rows={3} className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6FB6AC]" />
           </div>
         </div>
 

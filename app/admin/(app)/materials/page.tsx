@@ -119,12 +119,12 @@ function Row({ material, onPatch, onRemove }: { material: Material; onPatch: (p:
               const v = parseInt(e.target.value, 10)
               if (Number.isFinite(v) && v !== material.qtyOnHand) onPatch({ qtyOnHand: v })
             }}
-            className="w-16 bg-[#143E38] border border-white/5 rounded px-2 py-1 text-xs text-cream text-center outline-none focus:border-[#2FE6C4]"
+            className="w-16 bg-[#143E38] border border-white/5 rounded px-2 py-1 text-xs text-cream text-center outline-none focus:border-[#6FB6AC]"
           />
           <span className="text-[10px] text-gray-500">{material.unit}</span>
         </div>
         <p className="text-sm text-cream min-w-[60px] text-right">{money(material.costCents)}</p>
-        <button onClick={() => setExpanded(!expanded)} className="text-xs text-[#2FE6C4] hover:underline">{expanded ? 'Hide' : 'Details'}</button>
+        <button onClick={() => setExpanded(!expanded)} className="text-xs text-[#6FB6AC] hover:underline">{expanded ? 'Hide' : 'Details'}</button>
         <button onClick={onRemove} className="text-xs text-red-300 hover:text-red-200">×</button>
       </div>
       {expanded && (
@@ -142,7 +142,7 @@ function Row({ material, onPatch, onRemove }: { material: Material; onPatch: (p:
               defaultValue={material.notes}
               onBlur={e => e.target.value !== material.notes && onPatch({ notes: e.target.value })}
               rows={2}
-              className="w-full bg-[#143E38] border border-white/5 rounded px-2 py-1.5 text-xs text-cream outline-none focus:border-[#2FE6C4]"
+              className="w-full bg-[#143E38] border border-white/5 rounded px-2 py-1.5 text-xs text-cream outline-none focus:border-[#6FB6AC]"
             />
           </div>
         </div>
@@ -158,7 +158,7 @@ function TinyField({ label, value, onSave }: { label: string; value: string; onS
       <input
         defaultValue={value}
         onBlur={e => e.target.value !== value && onSave(e.target.value)}
-        className="w-full bg-[#1A4F48] border border-white/5 rounded px-2 py-1 text-xs text-cream outline-none focus:border-[#2FE6C4]"
+        className="w-full bg-[#1A4F48] border border-white/5 rounded px-2 py-1 text-xs text-cream outline-none focus:border-[#6FB6AC]"
       />
     </label>
   )

@@ -57,7 +57,7 @@ function Row({ product, media, onToggle }: { product: Product; media: Map<string
     <div
       ref={setNodeRef}
       style={style}
-      className="group flex items-center gap-3 bg-[#1A4F48] border border-white/5 hover:border-[#2FE6C4]/20 rounded-lg px-3 py-2.5 transition-colors"
+      className="group flex items-center gap-3 bg-[#1A4F48] border border-white/5 hover:border-[#6FB6AC]/20 rounded-lg px-3 py-2.5 transition-colors"
     >
       <button
         {...attributes}
@@ -83,7 +83,7 @@ function Row({ product, media, onToggle }: { product: Product; media: Map<string
             <span className={`text-[9px] px-1.5 py-0.5 rounded font-semibold uppercase tracking-wider flex-shrink-0 ${
               product.soldAt
                 ? 'bg-[#C46B4D]/20 text-[#C46B4D] border border-[#C46B4D]/30'
-                : 'bg-[#F0E6D3]/15 text-[#F0E6D3] border border-[#F0E6D3]/20'
+                : 'bg-[#E7DFCB]/15 text-[#E7DFCB] border border-[#E7DFCB]/20'
             }`}>
               {product.soldAt ? 'Sold' : 'One-off'}
             </span>
@@ -96,9 +96,9 @@ function Row({ product, media, onToggle }: { product: Product; media: Map<string
       </Link>
       <span className={`text-[10px] px-1.5 py-0.5 rounded font-semibold uppercase tracking-wider ${
         product.audience === 'services'
-          ? 'bg-[#2FE6C4]/15 text-[#2FE6C4]'
+          ? 'bg-[#6FB6AC]/15 text-[#6FB6AC]'
           : product.audience === 'both'
-          ? 'bg-[#F0E6D3]/10 text-[#F0E6D3]'
+          ? 'bg-[#E7DFCB]/10 text-[#E7DFCB]'
           : 'bg-[#C46B4D]/15 text-[#C46B4D]'
       }`}>
         {product.audience === 'both' ? 'Both' : product.audience === 'services' ? 'Services' : 'Shop'}
@@ -107,7 +107,7 @@ function Row({ product, media, onToggle }: { product: Product; media: Map<string
         onClick={() => onToggle(product.id, !product.isPublished)}
         className={`text-[11px] px-2 py-1 rounded-full font-medium ${
           product.isPublished
-            ? 'bg-[#2FE6C4]/10 text-[#2FE6C4] border border-[#2FE6C4]/20'
+            ? 'bg-[#6FB6AC]/10 text-[#6FB6AC] border border-[#6FB6AC]/20'
             : 'bg-white/5 text-gray-500 border border-white/10'
         }`}
       >
@@ -214,12 +214,12 @@ export default function ProductsListPage() {
           value={search}
           onChange={e => setSearch(e.target.value)}
           placeholder="Search by name or slug…"
-          className="flex-1 bg-[#1A4F48] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#2FE6C4]"
+          className="flex-1 bg-[#1A4F48] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6FB6AC]"
         />
         <select
           value={filter}
           onChange={e => setFilter(e.target.value)}
-          className="bg-[#1A4F48] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#2FE6C4]"
+          className="bg-[#1A4F48] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6FB6AC]"
         >
           <option value="all">All categories</option>
           {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}

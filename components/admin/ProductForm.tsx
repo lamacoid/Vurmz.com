@@ -153,7 +153,7 @@ export default function ProductForm({ initial }: { initial: ProductDraft }) {
                 onChange={e => field('description', e.target.value)}
                 rows={6}
                 placeholder="Markdown supported. Details, specs, what's included…"
-                className="w-full bg-[#1A4F48] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#2FE6C4]"
+                className="w-full bg-[#1A4F48] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6FB6AC]"
               />
             </div>
           </Section>
@@ -262,9 +262,9 @@ export default function ProductForm({ initial }: { initial: ProductDraft }) {
                     className={`h-8 text-xs font-semibold rounded-md border transition-colors ${
                       active
                         ? a === 'services'
-                          ? 'bg-[#2FE6C4]/20 border-[#2FE6C4] text-[#2FE6C4]'
+                          ? 'bg-[#6FB6AC]/20 border-[#6FB6AC] text-[#6FB6AC]'
                           : a === 'both'
-                          ? 'bg-[#F0E6D3]/10 border-[#F0E6D3]/30 text-[#F0E6D3]'
+                          ? 'bg-[#E7DFCB]/10 border-[#E7DFCB]/30 text-[#E7DFCB]'
                           : 'bg-[#C46B4D]/20 border-[#C46B4D] text-[#C46B4D]'
                         : 'bg-white/5 border-white/10 text-gray-400 hover:text-cream'
                     }`}
@@ -283,7 +283,7 @@ export default function ProductForm({ initial }: { initial: ProductDraft }) {
             <select
               value={draft.categoryId ?? ''}
               onChange={e => field('categoryId', e.target.value || null)}
-              className="w-full bg-[#1A4F48] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#2FE6C4]"
+              className="w-full bg-[#1A4F48] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6FB6AC]"
             >
               <option value="">No category</option>
               {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
@@ -304,7 +304,7 @@ export default function ProductForm({ initial }: { initial: ProductDraft }) {
             ) : (
               <button
                 onClick={() => setMediaPickerOpen(true)}
-                className="w-full aspect-square border-2 border-dashed border-white/10 hover:border-[#2FE6C4]/40 rounded-lg flex flex-col items-center justify-center text-gray-500 hover:text-cream transition-colors"
+                className="w-full aspect-square border-2 border-dashed border-white/10 hover:border-[#6FB6AC]/40 rounded-lg flex flex-col items-center justify-center text-gray-500 hover:text-cream transition-colors"
               >
                 <Icon name="image" className="w-6 h-6 mb-1" />
                 <span className="text-xs">Select image</span>
@@ -323,14 +323,14 @@ export default function ProductForm({ initial }: { initial: ProductDraft }) {
             </div>
             <div className="flex-1 overflow-y-auto p-4">
               {media.length === 0 ? (
-                <p className="text-sm text-gray-500 text-center py-8">No images yet. Upload some in the <a href="/admin/content/media" className="text-[#2FE6C4] hover:underline">media library</a>.</p>
+                <p className="text-sm text-gray-500 text-center py-8">No images yet. Upload some in the <a href="/admin/content/media" className="text-[#6FB6AC] hover:underline">media library</a>.</p>
               ) : (
                 <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
                   {media.map(m => (
                     <button
                       key={m.id}
                       onClick={() => { field('heroMediaId', m.id); setHeroMedia(m); setMediaPickerOpen(false) }}
-                      className="aspect-square bg-[#1A4F48] border border-white/5 hover:border-[#2FE6C4]/40 rounded-lg overflow-hidden"
+                      className="aspect-square bg-[#1A4F48] border border-white/5 hover:border-[#6FB6AC]/40 rounded-lg overflow-hidden"
                     >
                       <img src={m.url} alt={m.altText} className="w-full h-full object-cover" />
                     </button>
@@ -358,7 +358,7 @@ function FieldText({ label, value, onChange, placeholder, prefix, hint }: { labe
   return (
     <div>
       <label className="text-[11px] uppercase tracking-wider text-gray-500 block mb-1">{label}</label>
-      <div className="flex items-center bg-[#143E38] border border-white/5 rounded-md focus-within:border-[#2FE6C4]">
+      <div className="flex items-center bg-[#143E38] border border-white/5 rounded-md focus-within:border-[#6FB6AC]">
         {prefix && <span className="pl-3 text-gray-500 text-sm">{prefix}</span>}
         <input
           value={value}
@@ -381,7 +381,7 @@ function FieldNum({ label, value, onChange, min, hint }: { label: string; value:
         value={value}
         min={min}
         onChange={e => onChange(parseInt(e.target.value, 10) || 0)}
-        className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#2FE6C4]"
+        className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6FB6AC]"
       />
       {hint && <p className="text-[10px] text-gray-600 mt-1">{hint}</p>}
     </div>

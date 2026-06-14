@@ -24,7 +24,7 @@ export default async function D1ProductGrid({ categoryId, limit = 24, heading, s
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {(heading || subheading) && (
           <div className="mb-6">
-            {heading && <h2 className="text-2xl sm:text-3xl font-bold text-[#F0E6D3] tracking-tight">{heading}</h2>}
+            {heading && <h2 className="text-2xl sm:text-3xl font-bold text-[#E7DFCB] tracking-tight">{heading}</h2>}
             {subheading && <p className="text-sm text-gray-400 mt-1">{subheading}</p>}
           </div>
         )}
@@ -45,7 +45,7 @@ export default async function D1ProductGrid({ categoryId, limit = 24, heading, s
                   )}
                 </div>
                 <div className="p-3">
-                  <p className="text-sm font-semibold text-[#F0E6D3] truncate">{p.name}</p>
+                  <p className="text-sm font-semibold text-[#E7DFCB] truncate">{p.name}</p>
                   <p className="text-[11px] text-gray-400 mt-0.5 line-clamp-2">{p.shortDescription || `Pack of ${p.packSize}`}</p>
                   <div className="flex items-center justify-between mt-2">
                     <span className="text-sm font-bold text-[#D96C5C]">{money(p.priceCents)}</span>

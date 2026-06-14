@@ -73,7 +73,7 @@ export default function NewInvoicePage() {
           <select
             value={customerId}
             onChange={e => setCustomerId(e.target.value)}
-            className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#2FE6C4]"
+            className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6FB6AC]"
           >
             <option value="">Choose a customer…</option>
             {customers.map(c => (
@@ -93,16 +93,16 @@ export default function NewInvoicePage() {
                   value={line.description}
                   onChange={e => updateLine(i, { description: e.target.value })}
                   placeholder="Description"
-                  className="bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#2FE6C4]"
+                  className="bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6FB6AC]"
                 />
                 <input
                   type="number"
                   value={line.qty}
                   min={1}
                   onChange={e => updateLine(i, { qty: parseInt(e.target.value, 10) || 1 })}
-                  className="bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#2FE6C4]"
+                  className="bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6FB6AC]"
                 />
-                <div className="flex items-center bg-[#143E38] border border-white/5 rounded-md focus-within:border-[#2FE6C4]">
+                <div className="flex items-center bg-[#143E38] border border-white/5 rounded-md focus-within:border-[#6FB6AC]">
                   <span className="pl-2 text-gray-500 text-sm">$</span>
                   <input
                     value={line.price}
@@ -123,7 +123,7 @@ export default function NewInvoicePage() {
           </div>
           <button
             onClick={() => setLines(prev => [...prev, { description: '', qty: 1, price: '0.00' }])}
-            className="mt-3 text-xs text-[#2FE6C4] hover:underline"
+            className="mt-3 text-xs text-[#6FB6AC] hover:underline"
           >
             + Add line
           </button>
@@ -141,7 +141,7 @@ export default function NewInvoicePage() {
                 type="date"
                 value={dueDate}
                 onChange={e => setDueDate(e.target.value)}
-                className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#2FE6C4]"
+                className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6FB6AC]"
               />
             </div>
           </div>
@@ -151,7 +151,7 @@ export default function NewInvoicePage() {
               value={notes}
               onChange={e => setNotes(e.target.value)}
               rows={3}
-              className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#2FE6C4]"
+              className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6FB6AC]"
               placeholder="Anything the customer should know about this invoice."
             />
           </div>

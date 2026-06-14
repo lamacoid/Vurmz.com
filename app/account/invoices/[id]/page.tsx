@@ -74,7 +74,7 @@ export default function InvoiceDetailPage() {
 
       <div className="flex items-baseline justify-between mb-5">
         <h1 className="text-2xl font-bold text-cream font-mono">{invoice.number}</h1>
-        <span className={`text-xs px-2.5 py-1 rounded-full uppercase tracking-wider font-semibold ${invoice.status === 'paid' ? 'bg-green-900/30 text-green-300' : 'bg-[#2FE6C4]/20 text-[#2FE6C4]'}`}>
+        <span className={`text-xs px-2.5 py-1 rounded-full uppercase tracking-wider font-semibold ${invoice.status === 'paid' ? 'bg-green-900/30 text-green-300' : 'bg-[#6FB6AC]/20 text-[#6FB6AC]'}`}>
           {invoice.status.replace('_', ' ')}
         </span>
       </div>
@@ -96,7 +96,7 @@ export default function InvoiceDetailPage() {
           {invoice.taxCents > 0 && <div className="flex justify-between"><span className="text-gray-400">Tax</span><span className="text-cream">{money(invoice.taxCents)}</span></div>}
           <div className="flex justify-between font-bold text-base pt-1 text-cream"><span>Total</span><span>{money(invoice.totalCents)}</span></div>
           {invoice.amountPaidCents > 0 && invoice.amountPaidCents < invoice.totalCents && (
-            <div className="flex justify-between text-[#2FE6C4]"><span>Paid</span><span>−{money(invoice.amountPaidCents)}</span></div>
+            <div className="flex justify-between text-[#6FB6AC]"><span>Paid</span><span>−{money(invoice.amountPaidCents)}</span></div>
           )}
           {owed > 0 && (
             <div className="flex justify-between font-bold text-base pt-1 text-[#C46B4D]"><span>Amount due</span><span>{money(owed)}</span></div>

@@ -31,7 +31,7 @@ interface Order {
 const PROOF_DOT: Record<string, string> = {
   needed: 'bg-amber-400',
   sent: 'bg-sky-400',
-  approved: 'bg-[#2FE6C4]',
+  approved: 'bg-[#6FB6AC]',
 }
 
 const COLUMNS: { key: OrderStatus; label: string }[] = [
@@ -56,10 +56,10 @@ function Card({ order }: { order: Order }) {
       style={style}
       {...attributes}
       {...listeners}
-      className="bg-[#143E38] rounded-md border border-white/5 px-3 py-2.5 hover:border-[#2FE6C4]/30 cursor-grab active:cursor-grabbing"
+      className="bg-[#143E38] rounded-md border border-white/5 px-3 py-2.5 hover:border-[#6FB6AC]/30 cursor-grab active:cursor-grabbing"
     >
       <div className="flex items-center justify-between mb-1">
-        <Link href={`/admin/orders/${order.id}`} className="text-xs font-mono text-cream hover:text-[#2FE6C4]">{order.number}</Link>
+        <Link href={`/admin/orders/${order.id}`} className="text-xs font-mono text-cream hover:text-[#6FB6AC]">{order.number}</Link>
         <span className="text-xs font-semibold text-cream">{money(order.totalCents)}</span>
       </div>
       <p className="text-[11px] text-gray-400 truncate">{order.email}</p>
@@ -83,7 +83,7 @@ function Column({ status, label, orders }: { status: OrderStatus; label: string;
   return (
     <div
       ref={setNodeRef}
-      className={`bg-[#1A4F48]/60 border rounded-lg p-3 min-h-[400px] transition-colors ${isOver ? 'border-[#2FE6C4]' : 'border-white/5'}`}
+      className={`bg-[#1A4F48]/60 border rounded-lg p-3 min-h-[400px] transition-colors ${isOver ? 'border-[#6FB6AC]' : 'border-white/5'}`}
     >
       <div className="flex items-center justify-between mb-3 px-1">
         <p className="text-xs font-semibold text-cream uppercase tracking-wider">{label}</p>

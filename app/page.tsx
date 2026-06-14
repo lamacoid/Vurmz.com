@@ -74,7 +74,7 @@ export default function Page() {
                 <div className="absolute w-24 h-24 rounded-full bg-[#5FBFB8] blur-[30px] opacity-70" style={{ animation: 'blob6 7.5s ease-in-out infinite', top: '-25%', left: '45%' }} />
                 <div className="absolute w-16 h-16 rounded-full bg-[#1F7872] blur-[26px] opacity-80" style={{ animation: 'blob1 8.5s ease-in-out infinite reverse', top: '-5%', left: '60%' }} />
                 <div className="absolute w-24 h-24 rounded-full bg-[#B5E5E1] blur-[32px] opacity-60" style={{ animation: 'blob3 9.5s ease-in-out infinite reverse', top: '-15%', left: '10%' }} />
-                <div className="absolute w-16 h-16 rounded-full bg-[#2FE6C4] blur-[24px] opacity-90" style={{ animation: 'blob5 6.5s ease-in-out infinite reverse', top: '-25%', left: '40%' }} />
+                <div className="absolute w-16 h-16 rounded-full bg-[#6FB6AC] blur-[24px] opacity-90" style={{ animation: 'blob5 6.5s ease-in-out infinite reverse', top: '-25%', left: '40%' }} />
                 <div className="absolute w-20 h-20 rounded-full bg-[#347D77] blur-[28px] opacity-75" style={{ animation: 'blob2 11s ease-in-out infinite reverse', top: '0%', left: '80%' }} />
               </div>
             </div>
@@ -101,7 +101,7 @@ export default function Page() {
             </Link>
             <a
               href="#services"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-[#2FE6C4]/40 text-[#2FE6C4] font-semibold text-base rounded-sm hover:bg-[#2FE6C4]/10 transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-[#6FB6AC]/40 text-[#6FB6AC] font-semibold text-base rounded-sm hover:bg-[#6FB6AC]/10 transition-colors"
             >
               <ArrowDownIcon className="w-4 h-4" />
               For businesses
@@ -110,11 +110,10 @@ export default function Page() {
           </div>
         </section>
 
-        {/* ═══════════ WHAT I ENGRAVE — scrolling marquee ═══════════ */}
-        <section className="relative z-10 py-8 sm:py-10 overflow-hidden">
-          <div className="max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 mb-5">
-            <p className="text-xs font-mono text-[#2FE6C4] tracking-[0.25em] uppercase mb-2">What I engrave</p>
-            <h2 className="text-2xl sm:text-3xl font-bold text-cream tracking-tight">Name it. I&apos;ll mark it.</h2>
+        {/* ═══════════ ENDLESS IDEAS — scrolling marquee ═══════════ */}
+        <section className="relative z-10 -mt-12 sm:-mt-14 pt-0 pb-8 sm:pb-10 overflow-hidden">
+          <div className="max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 mb-4">
+            <h2 className="text-2xl sm:text-3xl font-bold text-cream tracking-tight">Endless ideas.</h2>
           </div>
           <div className="relative pointer-events-none select-none" style={{ margin: '0 -20px' }}>
             <div className="absolute left-0 top-0 bottom-0 w-24 z-10" style={{ background: 'linear-gradient(to right, #1A4F48, transparent)' }} />
@@ -126,7 +125,7 @@ export default function Page() {
         {/* ═══════════ RECENT WORK ═══════════ */}
         <section className="pb-10 sm:pb-14">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <p className="text-center text-xs font-mono text-[#2FE6C4] tracking-[0.2em] uppercase mb-6">Recent work</p>
+            <p className="text-center text-xs font-mono text-[#6FB6AC] tracking-[0.2em] uppercase mb-6">Recent work</p>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {WORK.map((item) => (
                 <div key={item.label} className="group relative aspect-square rounded-sm overflow-hidden">
@@ -143,7 +142,7 @@ export default function Page() {
         {/* ═══════════ SHOP CATEGORIES ═══════════ */}
         <section className="pb-10 sm:pb-14">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl font-bold text-[#F0E6D3] text-center mb-8">Shop by category</h2>
+            <h2 className="text-2xl font-bold text-[#E7DFCB] text-center mb-8">Shop by category</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {CONSUMER_CATEGORIES.map((cat) => (
                 <CategoryCard key={cat.slug} category={cat} />
@@ -155,7 +154,7 @@ export default function Page() {
         {/* ═══════════ HOW IT WORKS ═══════════ */}
         <section className="pb-12 sm:pb-16">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl font-bold text-[#F0E6D3] text-center mb-8">How it works</h2>
+            <h2 className="text-2xl font-bold text-[#E7DFCB] text-center mb-8">How it works</h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
               {[
                 { n: 1, h: 'Pick or text', p: 'Order from the shop, or use Bring Your Own — $35 to engrave something you already have.' },
@@ -163,10 +162,10 @@ export default function Page() {
                 { n: 3, h: 'Hand-delivered', p: 'I bring it to your door across the south Denver metro. Free over $100.' },
               ].map((step) => (
                 <div key={step.n}>
-                  <div className="w-10 h-10 rounded-full bg-[#2FE6C4]/15 border border-[#2FE6C4]/20 flex items-center justify-center mb-3 mx-auto">
-                    <span className="text-[#2FE6C4] font-bold">{step.n}</span>
+                  <div className="w-10 h-10 rounded-full bg-[#6FB6AC]/15 border border-[#6FB6AC]/20 flex items-center justify-center mb-3 mx-auto">
+                    <span className="text-[#6FB6AC] font-bold">{step.n}</span>
                   </div>
-                  <h3 className="font-semibold text-[#F0E6D3] mb-1">{step.h}</h3>
+                  <h3 className="font-semibold text-[#E7DFCB] mb-1">{step.h}</h3>
                   <p className="text-gray-400 text-sm leading-relaxed">{step.p}</p>
                 </div>
               ))}

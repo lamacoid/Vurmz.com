@@ -49,7 +49,7 @@ export default function SiteHero({ eyebrow, heading, accent = 'coral', baseColor
     return () => clearInterval(t)
   }, [])
 
-  const accentColor = accent === 'teal' ? '#2FE6C4' : '#D96C5C'
+  const accentColor = accent === 'teal' ? '#6FB6AC' : '#D96C5C'
 
   // When a page-specific heading is supplied it owns the <h1>, so the rotating
   // brand tagline drops to a <p> (same big typography, just demoted in markup).
@@ -98,7 +98,7 @@ export default function SiteHero({ eyebrow, heading, accent = 'coral', baseColor
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.05 }}
-            className="text-[#F0E6D3] font-semibold tracking-tight text-xl sm:text-2xl mb-4"
+            className="text-[#E7DFCB] font-semibold tracking-tight text-xl sm:text-2xl mb-4"
           >
             {heading}
           </motion.h1>
@@ -108,7 +108,7 @@ export default function SiteHero({ eyebrow, heading, accent = 'coral', baseColor
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-[#F0E6D3] font-semibold tracking-tight leading-[1.05] text-2xl sm:text-3xl lg:text-4xl"
+          className="text-[#E7DFCB] font-semibold tracking-tight leading-[1.05] text-2xl sm:text-3xl lg:text-4xl"
           style={{ fontFamily: 'var(--font-display), Georgia, serif' }}
         >
           <span className="block">Let&apos;s put your</span>

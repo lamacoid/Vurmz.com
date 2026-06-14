@@ -131,7 +131,7 @@ export default function ThemeEditorPage() {
             value={val}
             onChange={e => updateColor(s.key, e.target.value)}
             onBlur={commitColors}
-            className="w-full bg-[#1A4F48] border border-white/5 rounded px-2 py-1 text-xs text-cream outline-none focus:border-[#2FE6C4] font-mono"
+            className="w-full bg-[#1A4F48] border border-white/5 rounded px-2 py-1 text-xs text-cream outline-none focus:border-[#6FB6AC] font-mono"
           />
         </div>
         <div className="flex-shrink-0 w-44 flex items-center justify-end">
@@ -183,7 +183,7 @@ export default function ThemeEditorPage() {
                 value={theme.fonts[k]}
                 onChange={e => setTheme({ ...theme, fonts: { ...theme.fonts, [k]: e.target.value } })}
                 onBlur={() => save({ fonts: theme.fonts })}
-                className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-xs text-cream outline-none focus:border-[#2FE6C4] font-mono"
+                className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-xs text-cream outline-none focus:border-[#6FB6AC] font-mono"
               />
             </div>
           ))}
@@ -200,7 +200,7 @@ export default function ThemeEditorPage() {
                 value={theme.spacing[k]}
                 onChange={e => setTheme({ ...theme, spacing: { ...theme.spacing, [k]: e.target.value } })}
                 onBlur={() => save({ spacing: theme.spacing })}
-                className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-xs text-cream outline-none focus:border-[#2FE6C4] font-mono"
+                className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-xs text-cream outline-none focus:border-[#6FB6AC] font-mono"
               />
             </div>
           ))}
