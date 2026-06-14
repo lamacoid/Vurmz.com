@@ -6,7 +6,7 @@
   outline-offset: 2px;
 }
 [data-theme="shop"] *:focus-visible {
-  outline-color: #D96C5C;
+  outline-color: #C67A6F;
 }
 
 /* Hide site chrome on admin pages */
@@ -43,9 +43,9 @@ body.is-admin > main {
   --accent: #7AC5BE;
 
   /* Conversion CTA - reddish-pink-orange coral */
-  --vurmz-cta: #D96C5C;
-  --vurmz-cta-hover: #C25A4B;
-  --vurmz-cta-active: #A94C3F;
+  --vurmz-cta: #C67A6F;
+  --vurmz-cta-hover: #B0675D;
+  --vurmz-cta-active: #99584F;
   --vurmz-cta-cream: #E7DFCB;
   --vurmz-cta-cream-hover: #E5D9C4;
 
@@ -61,8 +61,8 @@ body.is-admin > main {
   --shop-text-sub: #6B6259;
   --shop-text-light: #7A7068;
   --shop-text-strong: #5C534A;
-  --shop-accent: #D96C5C;
-  --shop-accent-hover: #C25A4B;
+  --shop-accent: #C67A6F;
+  --shop-accent-hover: #B0675D;
   --shop-accent-active: #7D4139;
   --shop-border: rgba(36, 59, 57, 0.12);
   --shop-border-strong: rgba(36, 59, 57, 0.2);

@@ -13,7 +13,7 @@ const items = [
 
 const themeStyles = {
   landing: { text: 'text-gray-400', icon: 'text-gray-500', bg: '' },
-  shop: { text: 'text-[#6B6259]', icon: 'text-[#D96C5C]', bg: '' },
+  shop: { text: 'text-[#6B6259]', icon: 'text-[#C67A6F]', bg: '' },
   services: { text: 'text-gray-400', icon: 'text-vurmz-teal', bg: '' },
 }
 

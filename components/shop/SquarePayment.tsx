@@ -99,7 +99,7 @@ export default function SquarePayment({
       <button
         onClick={pay}
         disabled={!card || submitting}
-        className="mt-3 w-full h-11 bg-[#D96C5C] hover:bg-[#C25A4B] disabled:opacity-60 text-white text-sm font-semibold rounded-sm transition-colors"
+        className="mt-3 w-full h-11 bg-[#C67A6F] hover:bg-[#B0675D] disabled:opacity-60 text-white text-sm font-semibold rounded-sm transition-colors"
       >
         {submitting ? 'Processing…' : `Pay $${(amountCents / 100).toFixed(2)}`}
       </button>

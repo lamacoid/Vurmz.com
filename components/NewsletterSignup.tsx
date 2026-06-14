@@ -178,7 +178,7 @@ export default function NewsletterSignup({ variant = 'full', theme = 'services' 
                     disabled={status === 'loading'}
                     className={`group inline-flex items-center justify-center gap-2 px-6 py-3 font-semibold text-sm rounded-sm transition-all disabled:opacity-50 ${
                       isShopTheme
-                        ? 'bg-[#D96C5C] text-white hover:bg-[#C25A4B] shadow-lg shadow-[#D96C5C]/20'
+                        ? 'bg-[#C67A6F] text-white hover:bg-[#B0675D] shadow-lg shadow-[#C67A6F]/20'
                         : 'bg-vurmz-cta text-white hover:bg-vurmz-cta-hover shadow-lg shadow-vurmz-cta/20'
                     }`}
                   >

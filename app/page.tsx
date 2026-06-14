@@ -95,7 +95,7 @@ export default function Page() {
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
               href="/shop"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#D96C5C] text-white font-semibold text-base rounded-sm hover:bg-[#C25A4B] transition-colors shadow-lg shadow-black/20"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#C67A6F] text-white font-semibold text-base rounded-sm hover:bg-[#B0675D] transition-colors shadow-lg shadow-black/20"
             >
               Shop engraved goods
               <ArrowRightIcon className="w-4 h-4" />
@@ -153,7 +153,7 @@ export default function Page() {
         </section>
 
         {/* ═══════════ HOW IT WORKS (dusty coral band) ═══════════ */}
-        <section className="bg-[#C25A4B] border-t border-white/[0.06] py-14 sm:py-16">
+        <section className="bg-[#B0675D] border-t border-white/[0.06] py-14 sm:py-16">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl font-bold text-white text-center mb-8">How it works</h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
@@ -243,7 +243,7 @@ export default function Page() {
                 <p className="text-[#4f5d5b] text-base leading-relaxed mb-4">
                   I&apos;m {siteInfo.founder.name}, and I run VURMZ out of {siteInfo.city}. You text me, I quote you, I engrave it, and I hand it to you. No middlemen at any step.
                 </p>
-                <Link href="/about" className="inline-flex items-center gap-2 text-[#C25A4B] font-semibold text-sm hover:gap-3 transition-all">
+                <Link href="/about" className="inline-flex items-center gap-2 text-[#B0675D] font-semibold text-sm hover:gap-3 transition-all">
                   About VURMZ
                   <ArrowRightIcon className="w-4 h-4" />
                 </Link>

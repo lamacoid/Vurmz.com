@@ -314,7 +314,7 @@ export default function CheckoutPage() {
     return (
       <div className="max-w-2xl mx-auto px-6 py-24 text-center">
         <h1 className="text-2xl font-bold mb-3">Your cart is empty</h1>
-        <Link href="/shop" className="inline-flex text-[#D96C5C] hover:underline">← Back to shop</Link>
+        <Link href="/shop" className="inline-flex text-[#C67A6F] hover:underline">← Back to shop</Link>
       </div>
     )
   }
@@ -343,7 +343,7 @@ export default function CheckoutPage() {
                   <label
                     className={`flex items-start gap-3 rounded-sm border p-3 cursor-pointer ${
                       chosenMethod === opt.method
-                        ? 'border-[#D96C5C] bg-[#D96C5C]/5'
+                        ? 'border-[#C67A6F] bg-[#C67A6F]/5'
                         : 'border-[#16525C]/12 bg-white/60 hover:border-[#16525C]/25'
                     }`}
                   >
@@ -375,8 +375,8 @@ export default function CheckoutPage() {
                               onClick={() => setHandDeliveryWindow(w.key)}
                               className={`text-xs px-3 py-1.5 rounded-sm border transition-colors ${
                                 handDeliveryWindow === w.key
-                                  ? 'border-[#D96C5C] bg-[#D96C5C] text-white'
-                                  : 'border-[#16525C]/15 bg-white/70 text-[#16525C] hover:border-[#D96C5C]/50'
+                                  ? 'border-[#C67A6F] bg-[#C67A6F] text-white'
+                                  : 'border-[#16525C]/15 bg-white/70 text-[#16525C] hover:border-[#C67A6F]/50'
                               }`}
                             >
                               {w.label}
@@ -393,7 +393,7 @@ export default function CheckoutPage() {
                           onChange={e => setHandDeliveryNote(e.target.value.slice(0, 500))}
                           rows={2}
                           placeholder="e.g. Gate code 1234, leave with front desk if I'm not home."
-                          className="w-full bg-white/70 border border-[#16525C]/12 rounded-sm px-3 py-2 text-xs outline-none focus:border-[#D96C5C]"
+                          className="w-full bg-white/70 border border-[#16525C]/12 rounded-sm px-3 py-2 text-xs outline-none focus:border-[#C67A6F]"
                         />
                       </div>
                     </div>
@@ -413,7 +413,7 @@ export default function CheckoutPage() {
                       key={a.id}
                       className={`flex items-start gap-3 rounded-sm border p-3 cursor-pointer ${
                         selectedAddressId === a.id
-                          ? 'border-[#D96C5C] bg-[#D96C5C]/5'
+                          ? 'border-[#C67A6F] bg-[#C67A6F]/5'
                           : 'border-[#16525C]/12 bg-white/60 hover:border-[#16525C]/25'
                       }`}
                     >
@@ -427,7 +427,7 @@ export default function CheckoutPage() {
                       <div className="flex-1 min-w-0">
                         <span className="text-sm font-semibold">
                           {a.label}
-                          {a.isDefault && <span className="ml-2 text-[10px] uppercase tracking-wider text-[#D96C5C]">default</span>}
+                          {a.isDefault && <span className="ml-2 text-[10px] uppercase tracking-wider text-[#C67A6F]">default</span>}
                         </span>
                         <p className="text-xs text-[#6B6259] mt-0.5 truncate">
                           {a.line1}{a.line2 ? `, ${a.line2}` : ''}, {a.city}, {a.state} {a.postalCode}
@@ -438,7 +438,7 @@ export default function CheckoutPage() {
                   <label
                     className={`flex items-center gap-3 rounded-sm border p-3 cursor-pointer ${
                       selectedAddressId === null
-                        ? 'border-[#D96C5C] bg-[#D96C5C]/5'
+                        ? 'border-[#C67A6F] bg-[#C67A6F]/5'
                         : 'border-[#16525C]/12 bg-white/60 hover:border-[#16525C]/25'
                     }`}
                   >
@@ -478,7 +478,7 @@ export default function CheckoutPage() {
               onChange={e => setNotes(e.target.value)}
               rows={3}
               placeholder="Placement, sizes, finishes, links to inspiration — anything I should know before I make your proof…"
-              className="w-full bg-white/70 border border-[#16525C]/12 rounded-sm px-3 py-2 text-sm outline-none focus:border-[#D96C5C]"
+              className="w-full bg-white/70 border border-[#16525C]/12 rounded-sm px-3 py-2 text-sm outline-none focus:border-[#C67A6F]"
             />
             <p className="mt-2 text-xs text-[#16525C] font-medium">
               ✓ I always send a proof photo before I engrave. Nothing runs until you approve it.
@@ -498,7 +498,7 @@ export default function CheckoutPage() {
                         <button
                           type="button"
                           onClick={() => setAttachments(prev => prev.filter(x => x.key !== a.key))}
-                          className="text-[#D96C5C] text-xs font-semibold ml-3 hover:underline flex-shrink-0"
+                          className="text-[#C67A6F] text-xs font-semibold ml-3 hover:underline flex-shrink-0"
                         >
                           Remove
                         </button>
@@ -511,7 +511,7 @@ export default function CheckoutPage() {
                 </ul>
               )}
               {attachments.length < 3 && (
-                <label className={`inline-flex items-center gap-2 px-4 py-2 border border-[#16525C]/20 rounded-sm text-sm cursor-pointer hover:border-[#D96C5C] transition-colors ${uploading ? 'opacity-50 pointer-events-none' : ''}`}>
+                <label className={`inline-flex items-center gap-2 px-4 py-2 border border-[#16525C]/20 rounded-sm text-sm cursor-pointer hover:border-[#C67A6F] transition-colors ${uploading ? 'opacity-50 pointer-events-none' : ''}`}>
                   <input
                     type="file"
                     accept="image/jpeg,image/png,image/gif,image/webp,image/svg+xml,application/pdf,.svg,.pdf"
@@ -548,7 +548,7 @@ export default function CheckoutPage() {
                 <button
                   onClick={() => submitOrder('invoice_later')}
                   disabled={!canCheckout}
-                  className="w-full h-11 bg-[#D96C5C] hover:bg-[#C25A4B] disabled:opacity-60 text-white text-sm font-semibold rounded-sm"
+                  className="w-full h-11 bg-[#C67A6F] hover:bg-[#B0675D] disabled:opacity-60 text-white text-sm font-semibold rounded-sm"
                 >
                   {submitting ? 'Placing order…' : 'Place order · pay by invoice'}
                 </button>
@@ -573,7 +573,7 @@ export default function CheckoutPage() {
                   {(() => {
                     const eng = item.metadata?.engraving as { text?: string; fontLabel?: string } | undefined
                     return eng?.text ? (
-                      <p className="text-[11px] text-[#D96C5C] truncate">✎ “{eng.text}”{eng.fontLabel ? ` · ${eng.fontLabel}` : ''}</p>
+                      <p className="text-[11px] text-[#C67A6F] truncate">✎ “{eng.text}”{eng.fontLabel ? ` · ${eng.fontLabel}` : ''}</p>
                     ) : null
                   })()}
                 </div>
@@ -626,7 +626,7 @@ function Input({
         value={value}
         placeholder={placeholder}
         onChange={e => onChange(e.target.value)}
-        className="w-full bg-white/70 border border-[#16525C]/12 rounded-sm px-3 py-2 text-sm outline-none focus:border-[#D96C5C]"
+        className="w-full bg-white/70 border border-[#16525C]/12 rounded-sm px-3 py-2 text-sm outline-none focus:border-[#C67A6F]"
       />
     </label>
   )

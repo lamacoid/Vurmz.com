@@ -59,7 +59,7 @@ export default function EngravingPicker({
         maxLength={maxLength}
         onChange={e => onChange({ ...value, text: e.target.value })}
         placeholder="Name, date, message…"
-        className="w-full bg-white/[0.06] border border-white/15 rounded-sm px-3 py-2.5 text-sm text-[#E7DFCB] placeholder:text-gray-500 outline-none focus:border-[#D96C5C]"
+        className="w-full bg-white/[0.06] border border-white/15 rounded-sm px-3 py-2.5 text-sm text-[#E7DFCB] placeholder:text-gray-500 outline-none focus:border-[#C67A6F]"
       />
       <div className="flex items-center justify-between mt-1">
         <span className="text-[11px] text-gray-500">Leave blank for no engraving</span>
@@ -71,7 +71,7 @@ export default function EngravingPicker({
         <select
           value={value.fontValue}
           onChange={e => onChange({ ...value, fontValue: e.target.value })}
-          className="w-full bg-white/[0.06] border border-white/15 rounded-sm px-3 py-2.5 text-sm text-[#E7DFCB] outline-none focus:border-[#D96C5C]"
+          className="w-full bg-white/[0.06] border border-white/15 rounded-sm px-3 py-2.5 text-sm text-[#E7DFCB] outline-none focus:border-[#C67A6F]"
         >
           {CATEGORY_ORDER.map(cat => {
             const opts = fontsByCategory[cat]
@@ -95,7 +95,7 @@ export default function EngravingPicker({
           maxLength={200}
           onChange={e => onChange({ ...value, placement: e.target.value })}
           placeholder="e.g. centered on the blade, about 1 inch, match my logo"
-          className="w-full bg-white/[0.06] border border-white/15 rounded-sm px-3 py-2.5 text-sm text-[#E7DFCB] placeholder:text-gray-500 outline-none focus:border-[#D96C5C]"
+          className="w-full bg-white/[0.06] border border-white/15 rounded-sm px-3 py-2.5 text-sm text-[#E7DFCB] placeholder:text-gray-500 outline-none focus:border-[#C67A6F]"
         />
         <span className="text-[11px] text-gray-500 block mt-1">Not sure? Leave it blank and I&apos;ll pick the spot that looks best.</span>
       </label>
