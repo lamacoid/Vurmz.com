@@ -113,21 +113,16 @@ export default function Page() {
           </div>
         </section>
 
-        {/* ═══════════ ENDLESS IDEAS — scrolling marquee ═══════════ */}
-        <section className="relative z-10 -mt-12 sm:-mt-14 pt-0 pb-8 sm:pb-10 overflow-hidden">
-          <div className="max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 mb-4">
-            <h2 className="text-2xl sm:text-3xl font-bold text-cream tracking-tight">Endless ideas.</h2>
+        {/* ═══════════ RECENT WORK — photos over the scrolling "ideas" backdrop ═══════════ */}
+        <section className="relative band-teal-deep border-t border-white/[0.06] py-12 sm:py-14 overflow-hidden">
+          {/* The "endless ideas" marquee, dropped behind the photos as a faint,
+              slow-moving texture. The photo grid sits on top. */}
+          <div className="absolute inset-0 pointer-events-none select-none flex flex-col justify-center" aria-hidden>
+            <ItemScroller opacityScale={0.28} />
+            <div className="absolute left-0 top-0 bottom-0 w-24" style={{ background: 'linear-gradient(to right, #123F47, transparent)' }} />
+            <div className="absolute right-0 top-0 bottom-0 w-24" style={{ background: 'linear-gradient(to left, #123F47, transparent)' }} />
           </div>
-          <div className="relative pointer-events-none select-none" style={{ margin: '0 -20px' }}>
-            <div className="absolute left-0 top-0 bottom-0 w-24 z-10" style={{ background: 'linear-gradient(to right, #16525C, transparent)' }} />
-            <div className="absolute right-0 top-0 bottom-0 w-24 z-10" style={{ background: 'linear-gradient(to left, #16525C, transparent)' }} />
-            <ItemScroller opacityScale={0.4} />
-          </div>
-        </section>
-
-        {/* ═══════════ RECENT WORK (darker teal band) ═══════════ */}
-        <section className="band-teal-deep border-t border-white/[0.06] py-12 sm:py-14">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <p className="text-center text-xs font-mono text-[#7FCFD4] tracking-[0.2em] uppercase mb-6">Recent work</p>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {WORK.map((item) => (
