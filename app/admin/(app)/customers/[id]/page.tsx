@@ -140,7 +140,7 @@ export default function AdminCustomerDetail() {
 
 function Section({ title, children, fullWidth }: { title: string; children: React.ReactNode; fullWidth?: boolean }) {
   return (
-    <div className={`bg-[#1A4F48] border border-white/5 rounded-xl p-5 ${fullWidth ? 'lg:col-span-2' : ''}`}>
+    <div className={`bg-[#16525C] border border-white/5 rounded-xl p-5 ${fullWidth ? 'lg:col-span-2' : ''}`}>
       <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-3 font-semibold">{title}</p>
       {children}
     </div>
@@ -167,7 +167,7 @@ function InlineInput({ value, onSave, placeholder, className }: { value: string;
       onChange={e => setLocal(e.target.value)}
       onBlur={() => local !== value && onSave(local)}
       placeholder={placeholder}
-      className={`w-full bg-transparent text-cream outline-none border-b border-transparent focus:border-[#6FB6AC]/40 ${className ?? 'text-sm'}`}
+      className={`w-full bg-transparent text-cream outline-none border-b border-transparent focus:border-[#7FCFD4]/40 ${className ?? 'text-sm'}`}
     />
   )
 }
@@ -182,7 +182,7 @@ function InlineTextarea({ value, onSave, placeholder }: { value: string; onSave:
       onBlur={() => local !== value && onSave(local)}
       placeholder={placeholder}
       rows={6}
-      className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6FB6AC] resize-none"
+      className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#7FCFD4] resize-none"
     />
   )
 }
@@ -197,7 +197,7 @@ function TagEditor({ value, onSave }: { value: string[]; onSave: (v: string[]) =
   return (
     <div className="flex flex-wrap items-center gap-1.5">
       {value.map(t => (
-        <span key={t} className="bg-[#6FB6AC]/10 border border-[#6FB6AC]/20 text-[#6FB6AC] text-[11px] px-2 py-0.5 rounded-full inline-flex items-center gap-1">
+        <span key={t} className="bg-[#7FCFD4]/10 border border-[#7FCFD4]/20 text-[#7FCFD4] text-[11px] px-2 py-0.5 rounded-full inline-flex items-center gap-1">
           {t}
           <button onClick={() => onSave(value.filter(v => v !== t))} className="hover:text-red-300" aria-label={`Remove ${t}`}>×</button>
         </span>

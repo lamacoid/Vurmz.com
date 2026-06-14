@@ -25,8 +25,8 @@ const STATUS_LABELS: Record<string, string> = {
 
 // Map each status to a pill color. Default keeps the original teal.
 const STATUS_STYLES: Record<string, string> = {
-  new: 'bg-[#6FB6AC]/20 text-[#6FB6AC]',
-  confirmed: 'bg-[#6FB6AC]/20 text-[#6FB6AC]',
+  new: 'bg-[#7FCFD4]/20 text-[#7FCFD4]',
+  confirmed: 'bg-[#7FCFD4]/20 text-[#7FCFD4]',
   in_progress: 'bg-amber-400/15 text-amber-300',
   ready: 'bg-indigo-400/15 text-indigo-300',
   delivered: 'bg-emerald-400/15 text-emerald-300',
@@ -77,12 +77,12 @@ export default function AccountOrderDetail() {
       <Link href="/account/orders" className="text-xs text-gray-500 hover:text-cream mb-4 inline-block">← All orders</Link>
       <div className="flex items-baseline justify-between mb-5">
         <h1 className="text-2xl font-bold text-cream font-mono">{order.number}</h1>
-        <span className={`text-xs px-2.5 py-1 rounded-full uppercase tracking-wider font-semibold ${STATUS_STYLES[order.status] ?? 'bg-[#6FB6AC]/20 text-[#6FB6AC]'}`}>
+        <span className={`text-xs px-2.5 py-1 rounded-full uppercase tracking-wider font-semibold ${STATUS_STYLES[order.status] ?? 'bg-[#7FCFD4]/20 text-[#7FCFD4]'}`}>
           {statusLabel(order.status)}
         </span>
       </div>
 
-      <div className="bg-[#1A4F48] border border-white/5 rounded-xl p-5 mb-5">
+      <div className="bg-[#16525C] border border-white/5 rounded-xl p-5 mb-5">
         <div className="divide-y divide-white/5">
           {items.map(it => (
             <div key={it.id} className="py-2.5 flex justify-between">
@@ -104,13 +104,13 @@ export default function AccountOrderDetail() {
       {(order.trackingNumber || order.fulfillmentEta) && (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
           {order.trackingNumber && (
-            <div className="bg-[#1A4F48] border border-white/5 rounded-xl p-4">
+            <div className="bg-[#16525C] border border-white/5 rounded-xl p-4">
               <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-1">Tracking number</p>
               <p className="text-sm text-cream font-mono break-all">{order.trackingNumber}</p>
             </div>
           )}
           {order.fulfillmentEta && (
-            <div className="bg-[#1A4F48] border border-white/5 rounded-xl p-4">
+            <div className="bg-[#16525C] border border-white/5 rounded-xl p-4">
               <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-1">Estimated fulfillment</p>
               <p className="text-sm text-cream">{order.fulfillmentEta}</p>
             </div>
@@ -119,13 +119,13 @@ export default function AccountOrderDetail() {
       )}
 
       {events.length > 0 && (
-        <div className="bg-[#1A4F48] border border-white/5 rounded-xl p-5 mb-5">
+        <div className="bg-[#16525C] border border-white/5 rounded-xl p-5 mb-5">
           <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-4 font-semibold">Status timeline</p>
           <ol className="space-y-0">
             {events.map((e, i) => (
               <li key={e.id} className="flex gap-3">
                 <div className="flex flex-col items-center">
-                  <span className={`mt-1 w-2.5 h-2.5 rounded-full shrink-0 ${i === events.length - 1 ? 'bg-[#6FB6AC]' : 'bg-gray-500'}`} />
+                  <span className={`mt-1 w-2.5 h-2.5 rounded-full shrink-0 ${i === events.length - 1 ? 'bg-[#7FCFD4]' : 'bg-gray-500'}`} />
                   {i < events.length - 1 && <span className="w-px flex-1 bg-white/10 my-0.5" />}
                 </div>
                 <div className="pb-4 min-w-0">
@@ -140,12 +140,12 @@ export default function AccountOrderDetail() {
       )}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
-        <div className="bg-[#1A4F48] border border-white/5 rounded-xl p-4">
+        <div className="bg-[#16525C] border border-white/5 rounded-xl p-4">
           <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-1">Fulfillment</p>
           <p className="text-sm text-cream">{order.fulfillmentMethod.replace('_', ' ')}</p>
         </div>
         {order.fulfillmentAddress && (
-          <div className="bg-[#1A4F48] border border-white/5 rounded-xl p-4">
+          <div className="bg-[#16525C] border border-white/5 rounded-xl p-4">
             <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-1">Ship to</p>
             <p className="text-xs text-cream leading-relaxed">
               {order.fulfillmentAddress.name}<br />
@@ -157,7 +157,7 @@ export default function AccountOrderDetail() {
       </div>
 
       {order.notes && (
-        <div className="bg-[#1A4F48] border border-white/5 rounded-xl p-4">
+        <div className="bg-[#16525C] border border-white/5 rounded-xl p-4">
           <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-1">Your notes</p>
           <p className="text-sm text-cream whitespace-pre-wrap">{order.notes}</p>
         </div>

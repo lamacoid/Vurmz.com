@@ -35,7 +35,7 @@ interface SiteHeroProps {
  *
  * Pulls up under the fixed SiteHeader via the negative top margin.
  */
-export default function SiteHero({ eyebrow, heading, accent = 'coral', baseColor = '#1A4F48', children }: SiteHeroProps) {
+export default function SiteHero({ eyebrow, heading, accent = 'coral', baseColor = '#16525C', children }: SiteHeroProps) {
   const [bg, setBg] = useState(0)
   const [w, setW] = useState(0)
 
@@ -49,7 +49,7 @@ export default function SiteHero({ eyebrow, heading, accent = 'coral', baseColor
     return () => clearInterval(t)
   }, [])
 
-  const accentColor = accent === 'teal' ? '#6FB6AC' : '#D96C5C'
+  const accentColor = accent === 'teal' ? '#7FCFD4' : '#D96C5C'
 
   // When a page-specific heading is supplied it owns the <h1>, so the rotating
   // brand tagline drops to a <p> (same big typography, just demoted in markup).

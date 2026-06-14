@@ -55,7 +55,7 @@ export default function CommandPalette() {
                         }}
                         className="flex items-center gap-3 px-3 py-2 rounded-md cursor-pointer text-sm text-gray-200 data-[selected=true]:bg-white/5 data-[selected=true]:text-cream"
                       >
-                        <Icon name={item.icon} className="w-4 h-4 text-[#6FB6AC]" />
+                        <Icon name={item.icon} className="w-4 h-4 text-[#7FCFD4]" />
                         <span className="flex-1">{item.label}</span>
                         {item.chunk != null && (
                           <span className="text-[9px] text-gray-500 font-mono">soon</span>

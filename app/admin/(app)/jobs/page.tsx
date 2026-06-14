@@ -22,7 +22,7 @@ const STATUS_COLORS: Record<string, string> = {
   accepted: 'bg-blue-500/20 text-blue-400',
   'in-progress': 'bg-purple-500/20 text-purple-400',
   done: 'bg-green-500/20 text-green-400',
-  delivered: 'bg-[#6FB6AC]/20 text-[#6FB6AC]',
+  delivered: 'bg-[#7FCFD4]/20 text-[#7FCFD4]',
   cancelled: 'bg-red-500/20 text-red-400',
 }
 
@@ -77,12 +77,12 @@ export default function JobsPage() {
 
     return (
       <div className="px-4 py-6 max-w-lg mx-auto">
-        <button onClick={() => { setSelected(null); load() }} className="text-xs text-[#6FB6AC] mb-4 flex items-center gap-1">
+        <button onClick={() => { setSelected(null); load() }} className="text-xs text-[#7FCFD4] mb-4 flex items-center gap-1">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-3 h-3"><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
           Back
         </button>
 
-        <div className="bg-[#1A4F48] rounded-xl p-4 border border-white/5 space-y-4">
+        <div className="bg-[#16525C] rounded-xl p-4 border border-white/5 space-y-4">
           <div className="flex items-start justify-between">
             <div>
               <p className="text-lg font-semibold text-cream">{selected.title}</p>
@@ -146,7 +146,7 @@ export default function JobsPage() {
             key={f}
             onClick={() => setFilter(f)}
             className={`py-1.5 px-2.5 text-[10px] font-medium rounded-md capitalize whitespace-nowrap transition-colors ${
-              filter === f ? 'bg-[#1A4F48] text-cream' : 'text-gray-500'
+              filter === f ? 'bg-[#16525C] text-cream' : 'text-gray-500'
             }`}
           >
             {f}
@@ -164,7 +164,7 @@ export default function JobsPage() {
             <button
               key={job.id}
               onClick={() => setSelected(job)}
-              className="w-full text-left bg-[#1A4F48] rounded-xl p-3.5 border border-white/5 hover:border-[#6FB6AC]/20 transition-colors"
+              className="w-full text-left bg-[#16525C] rounded-xl p-3.5 border border-white/5 hover:border-[#7FCFD4]/20 transition-colors"
             >
               <div className="flex items-start justify-between gap-2">
                 <div className="min-w-0 flex-1">
@@ -191,7 +191,7 @@ function NewJobForm({ onSave, onCancel }: { onSave: (data: any) => void; onCance
 
   return (
     <div className="px-4 py-6 max-w-lg mx-auto">
-      <button onClick={onCancel} className="text-xs text-[#6FB6AC] mb-4 flex items-center gap-1">
+      <button onClick={onCancel} className="text-xs text-[#7FCFD4] mb-4 flex items-center gap-1">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-3 h-3"><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
         Cancel
       </button>
@@ -203,12 +203,12 @@ function NewJobForm({ onSave, onCancel }: { onSave: (data: any) => void; onCance
           placeholder="Title"
           value={form.title}
           onChange={e => setForm(f => ({ ...f, title: e.target.value }))}
-          className="w-full px-3 py-2.5 bg-[#1A4F48] border border-[#2d4a47] rounded-lg text-sm text-cream placeholder:text-gray-500 focus:outline-none focus:border-[#6FB6AC]/50"
+          className="w-full px-3 py-2.5 bg-[#16525C] border border-[#2d4a47] rounded-lg text-sm text-cream placeholder:text-gray-500 focus:outline-none focus:border-[#7FCFD4]/50"
         />
         <select
           value={form.type}
           onChange={e => setForm(f => ({ ...f, type: e.target.value }))}
-          className="w-full px-3 py-2.5 bg-[#1A4F48] border border-[#2d4a47] rounded-lg text-sm text-cream focus:outline-none focus:border-[#6FB6AC]/50"
+          className="w-full px-3 py-2.5 bg-[#16525C] border border-[#2d4a47] rounded-lg text-sm text-cream focus:outline-none focus:border-[#7FCFD4]/50"
         >
           {['custom', 'pens', 'cards', 'coasters', 'keychains', 'knife', 'tool', 'labels', 'other'].map(t => (
             <option key={t} value={t}>{t}</option>
@@ -219,21 +219,21 @@ function NewJobForm({ onSave, onCancel }: { onSave: (data: any) => void; onCance
           type="number"
           value={form.price}
           onChange={e => setForm(f => ({ ...f, price: e.target.value }))}
-          className="w-full px-3 py-2.5 bg-[#1A4F48] border border-[#2d4a47] rounded-lg text-sm text-cream placeholder:text-gray-500 focus:outline-none focus:border-[#6FB6AC]/50"
+          className="w-full px-3 py-2.5 bg-[#16525C] border border-[#2d4a47] rounded-lg text-sm text-cream placeholder:text-gray-500 focus:outline-none focus:border-[#7FCFD4]/50"
         />
         <textarea
           placeholder="Description"
           value={form.description}
           onChange={e => setForm(f => ({ ...f, description: e.target.value }))}
           rows={3}
-          className="w-full px-3 py-2.5 bg-[#1A4F48] border border-[#2d4a47] rounded-lg text-sm text-cream placeholder:text-gray-500 focus:outline-none focus:border-[#6FB6AC]/50 resize-none"
+          className="w-full px-3 py-2.5 bg-[#16525C] border border-[#2d4a47] rounded-lg text-sm text-cream placeholder:text-gray-500 focus:outline-none focus:border-[#7FCFD4]/50 resize-none"
         />
         <textarea
           placeholder="Notes"
           value={form.notes}
           onChange={e => setForm(f => ({ ...f, notes: e.target.value }))}
           rows={2}
-          className="w-full px-3 py-2.5 bg-[#1A4F48] border border-[#2d4a47] rounded-lg text-sm text-cream placeholder:text-gray-500 focus:outline-none focus:border-[#6FB6AC]/50 resize-none"
+          className="w-full px-3 py-2.5 bg-[#16525C] border border-[#2d4a47] rounded-lg text-sm text-cream placeholder:text-gray-500 focus:outline-none focus:border-[#7FCFD4]/50 resize-none"
         />
         <button
           onClick={() => onSave({ ...form, price: parseFloat(form.price) || 0 })}

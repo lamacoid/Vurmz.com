@@ -110,7 +110,7 @@ export default function MediaLibraryPage() {
           onClick={() => fileInputRef.current?.click()}
           onDragOver={e => e.preventDefault()}
           onDrop={e => { e.preventDefault(); handleUpload(e.dataTransfer.files) }}
-          className="border-2 border-dashed border-white/10 rounded-xl p-16 text-center cursor-pointer hover:border-[#6FB6AC]/40 transition-colors"
+          className="border-2 border-dashed border-white/10 rounded-xl p-16 text-center cursor-pointer hover:border-[#7FCFD4]/40 transition-colors"
         >
           <Icon name="image" className="w-10 h-10 text-gray-600 mx-auto mb-3" />
           <p className="text-gray-400 text-sm">Drag files here or click to upload</p>
@@ -126,7 +126,7 @@ export default function MediaLibraryPage() {
             <button
               key={item.id}
               onClick={() => setSelected(item)}
-              className="group relative aspect-square bg-[#1A4F48] border border-white/5 hover:border-[#6FB6AC]/40 rounded-lg overflow-hidden transition-colors"
+              className="group relative aspect-square bg-[#16525C] border border-white/5 hover:border-[#7FCFD4]/40 rounded-lg overflow-hidden transition-colors"
             >
               {item.mimeType.startsWith('image/') ? (
                 <img src={item.url} alt={item.altText} className="w-full h-full object-cover" />
@@ -153,11 +153,11 @@ export default function MediaLibraryPage() {
               </button>
             </div>
             <div className="p-4 grid md:grid-cols-2 gap-5">
-              <div className="bg-[#1A4F48] rounded-lg overflow-hidden">
+              <div className="bg-[#16525C] rounded-lg overflow-hidden">
                 {selected.mimeType.startsWith('image/') ? (
                   <img src={selected.url} alt={selected.altText} className="w-full h-auto" />
                 ) : (
-                  <a href={selected.url} target="_blank" rel="noreferrer" className="flex items-center justify-center p-10 text-[#6FB6AC]">
+                  <a href={selected.url} target="_blank" rel="noreferrer" className="flex items-center justify-center p-10 text-[#7FCFD4]">
                     Open file
                   </a>
                 )}
@@ -169,7 +169,7 @@ export default function MediaLibraryPage() {
                     defaultValue={selected.altText}
                     onBlur={e => updateAlt(selected.id, e.target.value)}
                     placeholder="Describe this image…"
-                    className="w-full bg-[#1A4F48] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6FB6AC]"
+                    className="w-full bg-[#16525C] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#7FCFD4]"
                   />
                 </div>
                 <dl className="text-xs space-y-1 text-gray-400">
@@ -180,7 +180,7 @@ export default function MediaLibraryPage() {
                 <div className="flex gap-2 pt-2">
                   <button
                     onClick={() => { navigator.clipboard.writeText(window.location.origin + selected.url); }}
-                    className="flex-1 px-3 h-9 bg-[#1A4F48] hover:bg-[#2a4441] text-cream text-xs font-medium rounded-md border border-white/5"
+                    className="flex-1 px-3 h-9 bg-[#16525C] hover:bg-[#2a4441] text-cream text-xs font-medium rounded-md border border-white/5"
                   >
                     Copy URL
                   </button>

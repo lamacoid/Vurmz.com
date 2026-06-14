@@ -58,7 +58,7 @@ export default function GlassImage({
     // Always fill the (positioned, sized) parent. `absolute inset-0` here is the
     // single source of positioning — do NOT also set `relative`, or the box
     // collapses to 0 height and the fill image renders invisible.
-    <div className={`absolute inset-0 overflow-hidden bg-[#1A4F48] ${className}`}>
+    <div className={`absolute inset-0 overflow-hidden bg-[#16525C] ${className}`}>
       {/* The photo */}
       {plain ? (
         <img
@@ -79,13 +79,13 @@ export default function GlassImage({
 
       {/* Frosted teal film — the tint of the glass */}
       <div
-        className={`absolute inset-0 bg-[#1A4F48] transition-opacity duration-500 ${s.film}`}
+        className={`absolute inset-0 bg-[#16525C] transition-opacity duration-500 ${s.film}`}
         aria-hidden
       />
 
       {/* Surface sheen — the light catching the top of the glass */}
       <div
-        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/[0.12] via-transparent to-[#1A4F48]/20"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/[0.12] via-transparent to-[#16525C]/20"
         aria-hidden
       />
 

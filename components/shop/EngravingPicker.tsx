@@ -129,7 +129,7 @@ export default function EngravingPicker({
         </span>
       </div>
 
-      <p className="mt-3 text-[11px] text-[#6FB6AC]">
+      <p className="mt-3 text-[11px] text-[#7FCFD4]">
         ✓ I send a proof photo for your approval before anything gets engraved.
       </p>
     </div>

@@ -33,10 +33,10 @@ function Card({ job }: { job: Job }) {
       style={style}
       {...attributes}
       {...listeners}
-      className="bg-[#143E38] rounded-md border border-white/5 px-3 py-2.5 hover:border-[#6FB6AC]/30 cursor-grab active:cursor-grabbing"
+      className="bg-[#143E38] rounded-md border border-white/5 px-3 py-2.5 hover:border-[#7FCFD4]/30 cursor-grab active:cursor-grabbing"
     >
       <div className="flex items-center justify-between mb-1">
-        <Link href={`/admin/service-jobs/${job.id}`} className="text-xs font-mono text-cream hover:text-[#6FB6AC]">{job.number}</Link>
+        <Link href={`/admin/service-jobs/${job.id}`} className="text-xs font-mono text-cream hover:text-[#7FCFD4]">{job.number}</Link>
         {job.priority > 0 && <span className="text-[10px] bg-[#C46B4D]/30 text-[#C46B4D] px-1.5 py-0.5 rounded-full uppercase tracking-wider font-bold">P{job.priority}</span>}
       </div>
       <p className="text-sm text-cream line-clamp-2">{job.title}</p>
@@ -52,7 +52,7 @@ function Column({ status, label, jobs }: { status: JobStatus; label: string; job
   return (
     <div
       ref={setNodeRef}
-      className={`bg-[#1A4F48]/60 border rounded-lg p-3 min-h-[400px] transition-colors ${isOver ? 'border-[#6FB6AC]' : 'border-white/5'}`}
+      className={`bg-[#16525C]/60 border rounded-lg p-3 min-h-[400px] transition-colors ${isOver ? 'border-[#7FCFD4]' : 'border-white/5'}`}
     >
       <div className="flex items-center justify-between mb-3 px-1">
         <p className="text-xs font-semibold text-cream uppercase tracking-wider">{label}</p>
@@ -114,7 +114,7 @@ export default function ServiceJobsPage() {
       {loading ? (
         <div className="text-gray-500 text-sm">Loading…</div>
       ) : jobs.length === 0 ? (
-        <div className="bg-[#1A4F48] border border-white/5 rounded-xl p-10 text-center text-gray-400 text-sm">
+        <div className="bg-[#16525C] border border-white/5 rounded-xl p-10 text-center text-gray-400 text-sm">
           No jobs yet. Create one to start tracking production.
         </div>
       ) : (

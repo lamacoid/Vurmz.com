@@ -32,12 +32,12 @@ export default function AnalyticsPage() {
 
       {/* Stats */}
       <div className="grid grid-cols-2 gap-3 mb-6">
-        <div className="bg-[#1A4F48] rounded-xl p-4 border border-white/5">
+        <div className="bg-[#16525C] rounded-xl p-4 border border-white/5">
           <p className="text-[10px] text-gray-500 uppercase">Today</p>
-          <p className="text-2xl font-bold text-[#6FB6AC] mt-1">{data.today.views}</p>
+          <p className="text-2xl font-bold text-[#7FCFD4] mt-1">{data.today.views}</p>
           <p className="text-[10px] text-gray-500">views</p>
         </div>
-        <div className="bg-[#1A4F48] rounded-xl p-4 border border-white/5">
+        <div className="bg-[#16525C] rounded-xl p-4 border border-white/5">
           <p className="text-[10px] text-gray-500 uppercase">Last {data.period.days}d</p>
           <p className="text-2xl font-bold text-cream mt-1">{data.period.views.toLocaleString()}</p>
           <p className="text-[10px] text-gray-500">avg {Math.round(data.period.views / data.period.days)}/day</p>
@@ -47,20 +47,20 @@ export default function AnalyticsPage() {
       {/* Period tabs */}
       <div className="flex gap-1 mb-4 bg-[#1d474e] rounded-lg p-1">
         {[7, 14, 30].map(d => (
-          <button key={d} onClick={() => setDays(d)} className={`flex-1 py-1.5 text-xs font-medium rounded-md transition-colors ${days === d ? 'bg-[#1A4F48] text-cream' : 'text-gray-500'}`}>
+          <button key={d} onClick={() => setDays(d)} className={`flex-1 py-1.5 text-xs font-medium rounded-md transition-colors ${days === d ? 'bg-[#16525C] text-cream' : 'text-gray-500'}`}>
             {d}d
           </button>
         ))}
       </div>
 
       {/* Chart */}
-      <div className="bg-[#1A4F48] rounded-xl p-4 border border-white/5 mb-4">
+      <div className="bg-[#16525C] rounded-xl p-4 border border-white/5 mb-4">
         <p className="text-xs text-gray-400 mb-3">Daily Views</p>
         <div className="flex items-end gap-[2px] h-24">
           {data.chart.map((d, i) => (
             <div key={i} className="flex-1 flex flex-col items-center justify-end" title={`${d.date}: ${d.views}`}>
               <div
-                className="w-full bg-[#6FB6AC] rounded-t-sm min-h-[2px] transition-all"
+                className="w-full bg-[#7FCFD4] rounded-t-sm min-h-[2px] transition-all"
                 style={{ height: `${(d.views / maxViews) * 100}%` }}
               />
             </div>
@@ -74,13 +74,13 @@ export default function AnalyticsPage() {
 
       {/* Top Pages */}
       {data.paths.length > 0 && (
-        <div className="bg-[#1A4F48] rounded-xl p-4 border border-white/5 mb-4">
+        <div className="bg-[#16525C] rounded-xl p-4 border border-white/5 mb-4">
           <p className="text-xs text-gray-400 mb-3">Top Pages</p>
           <div className="space-y-2">
             {data.paths.map((p, i) => (
               <div key={i} className="flex items-center gap-2">
                 <span className="text-xs text-gray-300 font-mono flex-1 truncate">{p.path}</span>
-                <span className="text-xs text-[#6FB6AC] font-semibold">{p.views}</span>
+                <span className="text-xs text-[#7FCFD4] font-semibold">{p.views}</span>
               </div>
             ))}
           </div>
@@ -89,13 +89,13 @@ export default function AnalyticsPage() {
 
       {/* Referrers */}
       {data.referrers.length > 0 && (
-        <div className="bg-[#1A4F48] rounded-xl p-4 border border-white/5">
+        <div className="bg-[#16525C] rounded-xl p-4 border border-white/5">
           <p className="text-xs text-gray-400 mb-3">Top Referrers</p>
           <div className="space-y-2">
             {data.referrers.map((r, i) => (
               <div key={i} className="flex items-center gap-2">
                 <span className="text-xs text-gray-300 flex-1 truncate break-all">{r.referrer}</span>
-                <span className="text-xs text-[#6FB6AC] font-semibold">{r.views}</span>
+                <span className="text-xs text-[#7FCFD4] font-semibold">{r.views}</span>
               </div>
             ))}
           </div>

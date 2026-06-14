@@ -11,8 +11,8 @@ interface AccordionFAQProps {
 
 const themeStyles = {
   shop: {
-    card: 'bg-white/60 border border-[#1A4F48]/8',
-    question: 'text-[#1A4F48]',
+    card: 'bg-white/60 border border-[#16525C]/8',
+    question: 'text-[#16525C]',
     answer: 'text-[#6B6259]',
     icon: 'text-[#D96C5C]',
   },

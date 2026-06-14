@@ -68,12 +68,12 @@ export default function NewInvoicePage() {
       <h1 className="text-2xl font-bold text-cream mt-2 mb-6">New invoice</h1>
 
       <div className="space-y-5">
-        <div className="bg-[#1A4F48] border border-white/5 rounded-xl p-5">
+        <div className="bg-[#16525C] border border-white/5 rounded-xl p-5">
           <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-3 font-semibold">Customer</p>
           <select
             value={customerId}
             onChange={e => setCustomerId(e.target.value)}
-            className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6FB6AC]"
+            className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#7FCFD4]"
           >
             <option value="">Choose a customer…</option>
             {customers.map(c => (
@@ -84,7 +84,7 @@ export default function NewInvoicePage() {
           </select>
         </div>
 
-        <div className="bg-[#1A4F48] border border-white/5 rounded-xl p-5">
+        <div className="bg-[#16525C] border border-white/5 rounded-xl p-5">
           <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-3 font-semibold">Line items</p>
           <div className="space-y-2">
             {lines.map((line, i) => (
@@ -93,16 +93,16 @@ export default function NewInvoicePage() {
                   value={line.description}
                   onChange={e => updateLine(i, { description: e.target.value })}
                   placeholder="Description"
-                  className="bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6FB6AC]"
+                  className="bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#7FCFD4]"
                 />
                 <input
                   type="number"
                   value={line.qty}
                   min={1}
                   onChange={e => updateLine(i, { qty: parseInt(e.target.value, 10) || 1 })}
-                  className="bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6FB6AC]"
+                  className="bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#7FCFD4]"
                 />
-                <div className="flex items-center bg-[#143E38] border border-white/5 rounded-md focus-within:border-[#6FB6AC]">
+                <div className="flex items-center bg-[#143E38] border border-white/5 rounded-md focus-within:border-[#7FCFD4]">
                   <span className="pl-2 text-gray-500 text-sm">$</span>
                   <input
                     value={line.price}
@@ -123,7 +123,7 @@ export default function NewInvoicePage() {
           </div>
           <button
             onClick={() => setLines(prev => [...prev, { description: '', qty: 1, price: '0.00' }])}
-            className="mt-3 text-xs text-[#6FB6AC] hover:underline"
+            className="mt-3 text-xs text-[#7FCFD4] hover:underline"
           >
             + Add line
           </button>
@@ -133,7 +133,7 @@ export default function NewInvoicePage() {
           </div>
         </div>
 
-        <div className="bg-[#1A4F48] border border-white/5 rounded-xl p-5">
+        <div className="bg-[#16525C] border border-white/5 rounded-xl p-5">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-1 font-semibold">Due date (optional)</p>
@@ -141,7 +141,7 @@ export default function NewInvoicePage() {
                 type="date"
                 value={dueDate}
                 onChange={e => setDueDate(e.target.value)}
-                className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6FB6AC]"
+                className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#7FCFD4]"
               />
             </div>
           </div>
@@ -151,7 +151,7 @@ export default function NewInvoicePage() {
               value={notes}
               onChange={e => setNotes(e.target.value)}
               rows={3}
-              className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6FB6AC]"
+              className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#7FCFD4]"
               placeholder="Anything the customer should know about this invoice."
             />
           </div>

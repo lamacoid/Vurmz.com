@@ -70,7 +70,7 @@ export default function AdminInvoiceDetail() {
           <select
             value={invoice.status}
             onChange={e => setStatus(e.target.value)}
-            className="bg-[#1A4F48] border border-white/10 rounded-md px-3 py-2 text-xs text-cream outline-none focus:border-[#6FB6AC]"
+            className="bg-[#16525C] border border-white/10 rounded-md px-3 py-2 text-xs text-cream outline-none focus:border-[#7FCFD4]"
           >
             {['draft','sent','viewed','paid','partially_paid','overdue','void','refunded'].map(s => <option key={s} value={s}>{s.replace('_', ' ')}</option>)}
           </select>
@@ -84,7 +84,7 @@ export default function AdminInvoiceDetail() {
         <Pill label="Due" value={invoice.dueDate ? new Date(invoice.dueDate).toLocaleDateString() : 'On receipt'} />
       </div>
 
-      <div className="bg-[#1A4F48] border border-white/5 rounded-xl p-5 mb-5">
+      <div className="bg-[#16525C] border border-white/5 rounded-xl p-5 mb-5">
         <div className="divide-y divide-white/5">
           {items.map(it => (
             <div key={it.id} className="py-2 flex justify-between">
@@ -106,7 +106,7 @@ export default function AdminInvoiceDetail() {
       </div>
 
       {invoice.notes && (
-        <div className="bg-[#1A4F48] border border-white/5 rounded-xl p-4">
+        <div className="bg-[#16525C] border border-white/5 rounded-xl p-4">
           <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-1">Notes</p>
           <p className="text-sm text-cream whitespace-pre-wrap">{invoice.notes}</p>
         </div>
@@ -117,7 +117,7 @@ export default function AdminInvoiceDetail() {
 
 function Pill({ label, value }: { label: string; value: string }) {
   return (
-    <div className="bg-[#1A4F48] border border-white/5 rounded-lg px-3 py-2">
+    <div className="bg-[#16525C] border border-white/5 rounded-lg px-3 py-2">
       <p className="text-[10px] uppercase tracking-wider text-gray-500">{label}</p>
       <p className="text-sm text-cream truncate">{value}</p>
     </div>
@@ -128,7 +128,7 @@ function Row({ label, value, bold, accent, coral }: { label: string; value: stri
   return (
     <div className="flex justify-between">
       <span className={`${bold ? 'text-cream font-bold' : 'text-gray-400'}`}>{label}</span>
-      <span className={`${bold ? 'text-cream font-bold' : accent ? 'text-[#6FB6AC]' : coral ? 'text-[#C46B4D] font-bold' : 'text-cream'}`}>{value}</span>
+      <span className={`${bold ? 'text-cream font-bold' : accent ? 'text-[#7FCFD4]' : coral ? 'text-[#C46B4D] font-bold' : 'text-cream'}`}>{value}</span>
     </div>
   )
 }

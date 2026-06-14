@@ -81,7 +81,7 @@ export default function AccountFilesPage() {
           onClick={() => inputRef.current?.click()}
           onDragOver={e => e.preventDefault()}
           onDrop={e => { e.preventDefault(); upload(e.dataTransfer.files) }}
-          className="border-2 border-dashed border-white/10 rounded-xl p-14 text-center cursor-pointer hover:border-[#6FB6AC]/40 transition-colors"
+          className="border-2 border-dashed border-white/10 rounded-xl p-14 text-center cursor-pointer hover:border-[#7FCFD4]/40 transition-colors"
         >
           <p className="text-sm text-gray-400">Drag files here or click to upload</p>
         </div>
@@ -90,7 +90,7 @@ export default function AccountFilesPage() {
           {files.map(f => {
             const previewable = isImage(f.mimeType) || isPdf(f.mimeType)
             return (
-              <div key={f.id} className="flex items-center gap-3 bg-[#1A4F48] border border-white/5 rounded-lg px-3 py-2.5">
+              <div key={f.id} className="flex items-center gap-3 bg-[#16525C] border border-white/5 rounded-lg px-3 py-2.5">
                 <button
                   onClick={() => previewable ? setPreview(f) : window.open(f.url, '_blank')}
                   className="flex-shrink-0 w-14 h-14 bg-[#143E38] rounded-md overflow-hidden flex items-center justify-center group relative"
@@ -99,7 +99,7 @@ export default function AccountFilesPage() {
                   {isImage(f.mimeType) ? (
                     <img src={f.url} alt={f.filename} className="w-full h-full object-cover group-hover:opacity-80 transition-opacity" />
                   ) : isPdf(f.mimeType) ? (
-                    <span className="text-[10px] font-mono font-bold text-[#6FB6AC] tracking-wider">PDF</span>
+                    <span className="text-[10px] font-mono font-bold text-[#7FCFD4] tracking-wider">PDF</span>
                   ) : (
                     <svg className="w-6 h-6 text-gray-500" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
@@ -107,7 +107,7 @@ export default function AccountFilesPage() {
                   )}
                 </button>
                 <button onClick={() => previewable ? setPreview(f) : window.open(f.url, '_blank')} className="flex-1 min-w-0 text-left">
-                  <p className="text-sm text-cream hover:text-[#6FB6AC] truncate">{f.filename}</p>
+                  <p className="text-sm text-cream hover:text-[#7FCFD4] truncate">{f.filename}</p>
                   <p className="text-[11px] text-gray-500">{formatSize(f.sizeBytes)} · {new Date(f.uploadedAt).toLocaleDateString()}</p>
                 </button>
                 <a href={f.url} target="_blank" rel="noreferrer" download={f.filename} className="text-xs text-gray-500 hover:text-cream px-2">Open</a>

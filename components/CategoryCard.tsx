@@ -91,7 +91,7 @@ export default function CategoryCard({ category: cat, compact }: CategoryCardPro
         {cat.serviceLink && (
           <Link
             href={cat.serviceLink.href}
-            className="inline-flex items-center gap-1 text-xs text-[#6FB6AC] font-mono tracking-wide hover:text-[#E7DFCB] transition-colors mb-4"
+            className="inline-flex items-center gap-1 text-xs text-[#7FCFD4] font-mono tracking-wide hover:text-[#E7DFCB] transition-colors mb-4"
           >
             {cat.serviceLink.label}
             <ArrowRightIcon className="w-3 h-3" />

@@ -75,7 +75,7 @@ export default function MaterialsPage() {
       {loading ? (
         <div className="text-gray-500 text-sm">Loading…</div>
       ) : materials.length === 0 ? (
-        <div className="bg-[#1A4F48] border border-white/5 rounded-xl p-10 text-center">
+        <div className="bg-[#16525C] border border-white/5 rounded-xl p-10 text-center">
           <Icon name="layers" className="w-8 h-8 text-gray-600 mx-auto mb-3" />
           <p className="text-cream text-sm font-semibold mb-1">No materials yet</p>
           <p className="text-gray-500 text-xs">Track stock of substrates you engrave on.</p>
@@ -83,7 +83,7 @@ export default function MaterialsPage() {
       ) : (
         <div className="space-y-5">
           {Object.entries(byCategory).map(([cat, list]) => (
-            <div key={cat} className="bg-[#1A4F48] border border-white/5 rounded-xl overflow-hidden">
+            <div key={cat} className="bg-[#16525C] border border-white/5 rounded-xl overflow-hidden">
               <p className="text-[11px] uppercase tracking-wider text-gray-500 font-semibold px-4 py-2 border-b border-white/5">{cat}</p>
               <div className="divide-y divide-white/5">
                 {list.map(m => (
@@ -119,12 +119,12 @@ function Row({ material, onPatch, onRemove }: { material: Material; onPatch: (p:
               const v = parseInt(e.target.value, 10)
               if (Number.isFinite(v) && v !== material.qtyOnHand) onPatch({ qtyOnHand: v })
             }}
-            className="w-16 bg-[#143E38] border border-white/5 rounded px-2 py-1 text-xs text-cream text-center outline-none focus:border-[#6FB6AC]"
+            className="w-16 bg-[#143E38] border border-white/5 rounded px-2 py-1 text-xs text-cream text-center outline-none focus:border-[#7FCFD4]"
           />
           <span className="text-[10px] text-gray-500">{material.unit}</span>
         </div>
         <p className="text-sm text-cream min-w-[60px] text-right">{money(material.costCents)}</p>
-        <button onClick={() => setExpanded(!expanded)} className="text-xs text-[#6FB6AC] hover:underline">{expanded ? 'Hide' : 'Details'}</button>
+        <button onClick={() => setExpanded(!expanded)} className="text-xs text-[#7FCFD4] hover:underline">{expanded ? 'Hide' : 'Details'}</button>
         <button onClick={onRemove} className="text-xs text-red-300 hover:text-red-200">×</button>
       </div>
       {expanded && (
@@ -142,7 +142,7 @@ function Row({ material, onPatch, onRemove }: { material: Material; onPatch: (p:
               defaultValue={material.notes}
               onBlur={e => e.target.value !== material.notes && onPatch({ notes: e.target.value })}
               rows={2}
-              className="w-full bg-[#143E38] border border-white/5 rounded px-2 py-1.5 text-xs text-cream outline-none focus:border-[#6FB6AC]"
+              className="w-full bg-[#143E38] border border-white/5 rounded px-2 py-1.5 text-xs text-cream outline-none focus:border-[#7FCFD4]"
             />
           </div>
         </div>
@@ -158,7 +158,7 @@ function TinyField({ label, value, onSave }: { label: string; value: string; onS
       <input
         defaultValue={value}
         onBlur={e => e.target.value !== value && onSave(e.target.value)}
-        className="w-full bg-[#1A4F48] border border-white/5 rounded px-2 py-1 text-xs text-cream outline-none focus:border-[#6FB6AC]"
+        className="w-full bg-[#16525C] border border-white/5 rounded px-2 py-1 text-xs text-cream outline-none focus:border-[#7FCFD4]"
       />
     </label>
   )

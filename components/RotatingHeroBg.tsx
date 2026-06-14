@@ -11,7 +11,7 @@ const IMAGES = portfolioItems.map((i) => ({ src: i.src, alt: i.label }))
  * page's base color at the bottom. Client-only (timer); drop it as the first,
  * absolutely-positioned child of a `relative overflow-hidden` hero section.
  */
-export default function RotatingHeroBg({ baseColor = '#1A4F48' }: { baseColor?: string }) {
+export default function RotatingHeroBg({ baseColor = '#16525C' }: { baseColor?: string }) {
   const [i, setI] = useState(0)
   useEffect(() => {
     const t = setInterval(() => setI((p) => (p + 1) % IMAGES.length), 5000)

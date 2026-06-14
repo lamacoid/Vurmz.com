@@ -46,7 +46,7 @@ export default function ShopHome() {
         eyebrow="For You"
         heading="Custom Laser Engraving — Gifts, Knives, Tumblers & More"
         accent="coral"
-        baseColor="#1A4F48"
+        baseColor="#16525C"
       >
         <p className="text-gray-300 text-base sm:text-lg leading-relaxed mb-7 max-w-lg mx-auto">
           Engraved gifts, custom coasters, home decor — or hit Bring Your Own and I&apos;ll
@@ -65,7 +65,7 @@ export default function ShopHome() {
       {/* Portfolio grid — every photo behind the glass */}
       <section className="pb-10 sm:pb-14">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-center text-xs font-mono text-[#6FB6AC] tracking-[0.2em] uppercase mb-6">Recent work</p>
+          <p className="text-center text-xs font-mono text-[#7FCFD4] tracking-[0.2em] uppercase mb-6">Recent work</p>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {WORK.map((item) => (
               <div key={item.label} className="group relative aspect-square rounded-sm overflow-hidden">
@@ -115,8 +115,8 @@ export default function ShopHome() {
               { n: 3, h: 'Hand-delivered', p: 'I bring it to your door across the South Denver metro.' },
             ].map((step) => (
               <div key={step.n}>
-                <div className="w-10 h-10 rounded-full bg-[#6FB6AC]/15 border border-[#6FB6AC]/20 flex items-center justify-center mb-3 mx-auto">
-                  <span className="text-[#6FB6AC] font-bold">{step.n}</span>
+                <div className="w-10 h-10 rounded-full bg-[#7FCFD4]/15 border border-[#7FCFD4]/20 flex items-center justify-center mb-3 mx-auto">
+                  <span className="text-[#7FCFD4] font-bold">{step.n}</span>
                 </div>
                 <h3 className="font-semibold text-[#E7DFCB] mb-1">{step.h}</h3>
                 <p className="text-gray-400 text-sm leading-relaxed">{step.p}</p>

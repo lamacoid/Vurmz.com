@@ -9,8 +9,8 @@ interface Invoice {
 function money(c: number) { return `$${(c / 100).toFixed(2)}` }
 
 const statusColors: Record<string, string> = {
-  sent:           'bg-[#6FB6AC]/20 text-[#6FB6AC]',
-  viewed:         'bg-[#6FB6AC]/20 text-[#6FB6AC]',
+  sent:           'bg-[#7FCFD4]/20 text-[#7FCFD4]',
+  viewed:         'bg-[#7FCFD4]/20 text-[#7FCFD4]',
   paid:           'bg-green-900/30 text-green-300',
   partially_paid: 'bg-yellow-900/30 text-yellow-300',
   overdue:        'bg-red-900/30 text-red-300',
@@ -40,7 +40,7 @@ export default function AccountInvoicesPage() {
       {loading ? (
         <p className="text-gray-500 text-sm">Loading…</p>
       ) : invoices.length === 0 ? (
-        <div className="bg-[#1A4F48] border border-white/5 rounded-xl p-10 text-center text-gray-400 text-sm">
+        <div className="bg-[#16525C] border border-white/5 rounded-xl p-10 text-center text-gray-400 text-sm">
           No invoices yet.
         </div>
       ) : (
@@ -51,7 +51,7 @@ export default function AccountInvoicesPage() {
               <Link
                 key={inv.id}
                 href={`/account/invoices/${inv.id}`}
-                className="block bg-[#1A4F48] border border-white/5 hover:border-[#6FB6AC]/30 rounded-xl p-4 transition-colors"
+                className="block bg-[#16525C] border border-white/5 hover:border-[#7FCFD4]/30 rounded-xl p-4 transition-colors"
               >
                 <div className="flex items-center justify-between mb-1.5">
                   <p className="text-sm font-mono text-cream">{inv.number}</p>

@@ -30,11 +30,11 @@ export default function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
                     onClick={onNavigate}
                     className={`flex items-center gap-2.5 px-2.5 py-1.5 rounded-md text-[13px] transition-colors ${
                       active
-                        ? 'bg-[#1A4F48] text-cream'
+                        ? 'bg-[#16525C] text-cream'
                         : 'text-gray-400 hover:text-cream hover:bg-white/[0.03]'
                     }`}
                   >
-                    <Icon name={item.icon} className={`w-4 h-4 ${active ? 'text-[#6FB6AC]' : ''}`} />
+                    <Icon name={item.icon} className={`w-4 h-4 ${active ? 'text-[#7FCFD4]' : ''}`} />
                     <span className="flex-1 truncate">{item.label}</span>
                     {item.chunk != null && (
                       <span className="text-[9px] text-gray-600 font-mono">soon</span>

@@ -75,21 +75,21 @@ export default function QuoteDetail() {
             </button>
           ) : null}
           {quote.status !== 'converted' ? (
-            <button onClick={convert} disabled={working === 'convert'} className="px-4 h-9 bg-[#6FB6AC] hover:bg-[#5aa49e] text-[#143E38] text-sm font-semibold rounded-md">
+            <button onClick={convert} disabled={working === 'convert'} className="px-4 h-9 bg-[#7FCFD4] hover:bg-[#5aa49e] text-[#143E38] text-sm font-semibold rounded-md">
               {working === 'convert' ? 'Converting…' : '→ Invoice'}
             </button>
           ) : (
             quote.convertedOrderId && (
-              <Link href={`/admin/invoices/${quote.convertedOrderId}`} className="px-4 h-9 inline-flex items-center bg-[#6FB6AC]/20 text-[#6FB6AC] text-sm font-semibold rounded-md">View invoice</Link>
+              <Link href={`/admin/invoices/${quote.convertedOrderId}`} className="px-4 h-9 inline-flex items-center bg-[#7FCFD4]/20 text-[#7FCFD4] text-sm font-semibold rounded-md">View invoice</Link>
             )
           )}
-          <select value={quote.status} onChange={e => setStatus(e.target.value)} className="bg-[#1A4F48] border border-white/10 rounded-md px-3 py-2 text-xs text-cream outline-none focus:border-[#6FB6AC]">
+          <select value={quote.status} onChange={e => setStatus(e.target.value)} className="bg-[#16525C] border border-white/10 rounded-md px-3 py-2 text-xs text-cream outline-none focus:border-[#7FCFD4]">
             {['new','drafting','sent','accepted','declined','expired','converted'].map(s => <option key={s} value={s}>{s}</option>)}
           </select>
         </div>
       </div>
 
-      <div className="bg-[#1A4F48] border border-white/5 rounded-xl p-5 mb-5">
+      <div className="bg-[#16525C] border border-white/5 rounded-xl p-5 mb-5">
         <div className="divide-y divide-white/5">
           {items.map(it => (
             <div key={it.id} className="py-2 flex justify-between">
@@ -107,7 +107,7 @@ export default function QuoteDetail() {
       </div>
 
       {quote.notes && (
-        <div className="bg-[#1A4F48] border border-white/5 rounded-xl p-4">
+        <div className="bg-[#16525C] border border-white/5 rounded-xl p-4">
           <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-1">Notes</p>
           <p className="text-sm text-cream whitespace-pre-wrap">{quote.notes}</p>
         </div>

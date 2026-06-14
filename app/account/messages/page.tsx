@@ -53,7 +53,7 @@ export default function MessagesPage() {
 
       <div
         ref={scrollRef}
-        className="flex-1 overflow-y-auto bg-[#1A4F48] border border-white/5 rounded-xl p-4 space-y-3 mb-3"
+        className="flex-1 overflow-y-auto bg-[#16525C] border border-white/5 rounded-xl p-4 space-y-3 mb-3"
       >
         {loading ? (
           <p className="text-gray-500 text-sm text-center py-10">Loading…</p>
@@ -86,7 +86,7 @@ export default function MessagesPage() {
           }}
           rows={2}
           placeholder="Type a message… (⌘↵ to send)"
-          className="flex-1 bg-[#1A4F48] border border-white/5 rounded-xl px-4 py-2.5 text-sm text-cream outline-none focus:border-[#6FB6AC] resize-none"
+          className="flex-1 bg-[#16525C] border border-white/5 rounded-xl px-4 py-2.5 text-sm text-cream outline-none focus:border-[#7FCFD4] resize-none"
         />
         <button
           onClick={send}

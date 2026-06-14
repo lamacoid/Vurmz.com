@@ -87,12 +87,12 @@ export default function NavigationEditorPage() {
 
       <div className="space-y-5">
         {(Object.keys(PLACEMENT_LABELS) as Placement[]).map(p => (
-          <div key={p} className="bg-[#1A4F48] border border-white/5 rounded-xl p-4">
+          <div key={p} className="bg-[#16525C] border border-white/5 rounded-xl p-4">
             <div className="flex items-center justify-between mb-3">
               <p className="text-sm font-semibold text-cream">{PLACEMENT_LABELS[p]}</p>
               <button
                 onClick={() => addItem(p)}
-                className="text-xs text-[#6FB6AC] hover:underline inline-flex items-center gap-1"
+                className="text-xs text-[#7FCFD4] hover:underline inline-flex items-center gap-1"
               >
                 <Icon name="plus" className="w-3 h-3" /> Add link
               </button>

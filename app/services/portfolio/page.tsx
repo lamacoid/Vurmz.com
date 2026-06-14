@@ -27,7 +27,7 @@ export default function PortfolioPage() {
         eyebrow="Portfolio"
         heading="Laser Engraving Portfolio — Metal, Wood, Glass & More"
         accent="teal"
-        baseColor="#1A4F48"
+        baseColor="#16525C"
       >
         <p className="text-gray-300 text-base sm:text-lg leading-relaxed max-w-xl mx-auto">
           Some of those possibilities — client work, personal projects, and experiments in metal, wood, and glass.
