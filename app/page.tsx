@@ -107,7 +107,6 @@ export default function Page() {
               For businesses
             </a>
           </div>
-          <p className="text-gray-400 text-sm mt-4">Prices on the site. No quote forms that go nowhere.</p>
           </div>
         </section>
 
