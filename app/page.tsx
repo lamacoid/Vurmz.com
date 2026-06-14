@@ -13,6 +13,7 @@ import TestimonialCarousel from '@/components/TestimonialCarousel'
 import TrustedBy from '@/components/TrustedBy'
 import ContactForm from '@/components/ContactForm'
 import RotatingHeroBg from '@/components/RotatingHeroBg'
+import ItemScroller from '@/components/ItemScroller'
 import GlassImage from '@/components/shop/GlassImage'
 
 // Single-page homepage: one brand, one scroll — shop first, then the anchored
@@ -107,6 +108,19 @@ export default function Page() {
             </a>
           </div>
           <p className="text-gray-400 text-sm mt-4">Prices on the site. No quote forms that go nowhere.</p>
+          </div>
+        </section>
+
+        {/* ═══════════ WHAT I ENGRAVE — scrolling marquee ═══════════ */}
+        <section className="relative z-10 py-8 sm:py-10 overflow-hidden">
+          <div className="max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 mb-5">
+            <p className="text-xs font-mono text-[#2FE6C4] tracking-[0.25em] uppercase mb-2">What I engrave</p>
+            <h2 className="text-2xl sm:text-3xl font-bold text-cream tracking-tight">Name it. I&apos;ll mark it.</h2>
+          </div>
+          <div className="relative pointer-events-none select-none" style={{ margin: '0 -20px' }}>
+            <div className="absolute left-0 top-0 bottom-0 w-24 z-10" style={{ background: 'linear-gradient(to right, #1A4F48, transparent)' }} />
+            <div className="absolute right-0 top-0 bottom-0 w-24 z-10" style={{ background: 'linear-gradient(to left, #1A4F48, transparent)' }} />
+            <ItemScroller opacityScale={0.4} />
           </div>
         </section>
 
