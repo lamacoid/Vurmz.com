@@ -322,7 +322,7 @@ export default function CheckoutPage() {
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       <div className="mb-8">
-        <Link href="/shop" className="text-sm text-[#6B6259] hover:text-[#235158]">← Continue shopping</Link>
+        <Link href="/shop" className="text-sm text-[#6B6259] hover:text-[#1A4F48]">← Continue shopping</Link>
         <h1 className="text-3xl font-bold mt-2">Checkout</h1>
       </div>
 
@@ -344,7 +344,7 @@ export default function CheckoutPage() {
                     className={`flex items-start gap-3 rounded-sm border p-3 cursor-pointer ${
                       chosenMethod === opt.method
                         ? 'border-[#E95C4E] bg-[#E95C4E]/5'
-                        : 'border-[#235158]/12 bg-white/60 hover:border-[#235158]/25'
+                        : 'border-[#1A4F48]/12 bg-white/60 hover:border-[#1A4F48]/25'
                     }`}
                   >
                     <input
@@ -376,7 +376,7 @@ export default function CheckoutPage() {
                               className={`text-xs px-3 py-1.5 rounded-sm border transition-colors ${
                                 handDeliveryWindow === w.key
                                   ? 'border-[#E95C4E] bg-[#E95C4E] text-white'
-                                  : 'border-[#235158]/15 bg-white/70 text-[#235158] hover:border-[#E95C4E]/50'
+                                  : 'border-[#1A4F48]/15 bg-white/70 text-[#1A4F48] hover:border-[#E95C4E]/50'
                               }`}
                             >
                               {w.label}
@@ -393,7 +393,7 @@ export default function CheckoutPage() {
                           onChange={e => setHandDeliveryNote(e.target.value.slice(0, 500))}
                           rows={2}
                           placeholder="e.g. Gate code 1234, leave with front desk if I'm not home."
-                          className="w-full bg-white/70 border border-[#235158]/12 rounded-sm px-3 py-2 text-xs outline-none focus:border-[#E95C4E]"
+                          className="w-full bg-white/70 border border-[#1A4F48]/12 rounded-sm px-3 py-2 text-xs outline-none focus:border-[#E95C4E]"
                         />
                       </div>
                     </div>
@@ -414,7 +414,7 @@ export default function CheckoutPage() {
                       className={`flex items-start gap-3 rounded-sm border p-3 cursor-pointer ${
                         selectedAddressId === a.id
                           ? 'border-[#E95C4E] bg-[#E95C4E]/5'
-                          : 'border-[#235158]/12 bg-white/60 hover:border-[#235158]/25'
+                          : 'border-[#1A4F48]/12 bg-white/60 hover:border-[#1A4F48]/25'
                       }`}
                     >
                       <input
@@ -439,7 +439,7 @@ export default function CheckoutPage() {
                     className={`flex items-center gap-3 rounded-sm border p-3 cursor-pointer ${
                       selectedAddressId === null
                         ? 'border-[#E95C4E] bg-[#E95C4E]/5'
-                        : 'border-[#235158]/12 bg-white/60 hover:border-[#235158]/25'
+                        : 'border-[#1A4F48]/12 bg-white/60 hover:border-[#1A4F48]/25'
                     }`}
                   >
                     <input
@@ -478,21 +478,21 @@ export default function CheckoutPage() {
               onChange={e => setNotes(e.target.value)}
               rows={3}
               placeholder="Placement, sizes, finishes, links to inspiration — anything I should know before I make your proof…"
-              className="w-full bg-white/70 border border-[#235158]/12 rounded-sm px-3 py-2 text-sm outline-none focus:border-[#E95C4E]"
+              className="w-full bg-white/70 border border-[#1A4F48]/12 rounded-sm px-3 py-2 text-sm outline-none focus:border-[#E95C4E]"
             />
-            <p className="mt-2 text-xs text-[#235158] font-medium">
+            <p className="mt-2 text-xs text-[#1A4F48] font-medium">
               ✓ I always send a proof photo before I engrave. Nothing runs until you approve it.
             </p>
 
             {/* Photo / logo attachments — works for guests, no account needed */}
             <div className="mt-3">
               <p className="text-xs text-[#6B6259] mb-2">
-                Have a logo or design? Attach it here — up to 3 files, 10 MB each. <span className="font-medium text-[#235158]">SVG or PDF engraves best</span> (crisp lines, high contrast). Photos and PNG/JPG work too — I&apos;ll clean them up if needed. No file? Just describe it above and we&apos;ll nail it down on the proof.
+                Have a logo or design? Attach it here — up to 3 files, 10 MB each. <span className="font-medium text-[#1A4F48]">SVG or PDF engraves best</span> (crisp lines, high contrast). Photos and PNG/JPG work too — I&apos;ll clean them up if needed. No file? Just describe it above and we&apos;ll nail it down on the proof.
               </p>
               {attachments.length > 0 && (
                 <ul className="space-y-1 mb-2">
                   {attachments.map(a => (
-                    <li key={a.key} className="text-sm bg-white/70 border border-[#235158]/12 rounded-sm px-3 py-1.5">
+                    <li key={a.key} className="text-sm bg-white/70 border border-[#1A4F48]/12 rounded-sm px-3 py-1.5">
                       <div className="flex items-center justify-between">
                         <span className="truncate">📎 {a.filename}</span>
                         <button
@@ -511,7 +511,7 @@ export default function CheckoutPage() {
                 </ul>
               )}
               {attachments.length < 3 && (
-                <label className={`inline-flex items-center gap-2 px-4 py-2 border border-[#235158]/20 rounded-sm text-sm cursor-pointer hover:border-[#E95C4E] transition-colors ${uploading ? 'opacity-50 pointer-events-none' : ''}`}>
+                <label className={`inline-flex items-center gap-2 px-4 py-2 border border-[#1A4F48]/20 rounded-sm text-sm cursor-pointer hover:border-[#E95C4E] transition-colors ${uploading ? 'opacity-50 pointer-events-none' : ''}`}>
                   <input
                     type="file"
                     accept="image/jpeg,image/png,image/gif,image/webp,image/svg+xml,application/pdf,.svg,.pdf"
@@ -559,12 +559,12 @@ export default function CheckoutPage() {
         </div>
 
         {/* Summary */}
-        <aside className="lg:sticky lg:top-6 lg:self-start bg-white/70 border border-[#235158]/12 rounded-sm p-5">
+        <aside className="lg:sticky lg:top-6 lg:self-start bg-white/70 border border-[#1A4F48]/12 rounded-sm p-5">
           <p className="text-[11px] uppercase tracking-wider text-[#7A7068] mb-3 font-semibold">Summary</p>
           <div className="space-y-3">
             {items.map(item => (
               <div key={item.productId} className="flex gap-3 items-start">
-                <div className="w-14 h-14 bg-white border border-[#235158]/10 rounded-sm overflow-hidden flex-shrink-0">
+                <div className="w-14 h-14 bg-white border border-[#1A4F48]/10 rounded-sm overflow-hidden flex-shrink-0">
                   {item.heroUrl ? <img src={item.heroUrl} alt="" className="w-full h-full object-cover" /> : null}
                 </div>
                 <div className="flex-1 min-w-0">
@@ -581,7 +581,7 @@ export default function CheckoutPage() {
               </div>
             ))}
           </div>
-          <div className="border-t border-[#235158]/10 mt-4 pt-3 space-y-1 text-sm">
+          <div className="border-t border-[#1A4F48]/10 mt-4 pt-3 space-y-1 text-sm">
             <div className="flex justify-between"><span className="text-[#6B6259]">Subtotal</span><span>{money(subtotalCents)}</span></div>
             <div className="flex justify-between"><span className="text-[#6B6259]">{chosen?.label ?? 'Delivery'}</span><span>{chosen ? money(chosen.priceCents) : '—'}</span></div>
             <div className="flex justify-between text-base font-bold pt-2"><span>Total</span><span>{money(totalCents)}</span></div>
@@ -626,7 +626,7 @@ function Input({
         value={value}
         placeholder={placeholder}
         onChange={e => onChange(e.target.value)}
-        className="w-full bg-white/70 border border-[#235158]/12 rounded-sm px-3 py-2 text-sm outline-none focus:border-[#E95C4E]"
+        className="w-full bg-white/70 border border-[#1A4F48]/12 rounded-sm px-3 py-2 text-sm outline-none focus:border-[#E95C4E]"
       />
     </label>
   )

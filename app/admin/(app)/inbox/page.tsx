@@ -64,12 +64,12 @@ export default function InboxPage() {
   if (selected) {
     return (
       <div className="px-4 py-6 max-w-lg mx-auto">
-        <button onClick={() => { setSelected(null); load() }} className="text-xs text-[#6BB8B2] mb-4 flex items-center gap-1">
+        <button onClick={() => { setSelected(null); load() }} className="text-xs text-[#2FE6C4] mb-4 flex items-center gap-1">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-3 h-3"><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
           Back
         </button>
 
-        <div className="bg-[#235158] rounded-xl p-4 border border-white/5 space-y-4">
+        <div className="bg-[#1A4F48] rounded-xl p-4 border border-white/5 space-y-4">
           <div>
             <p className="text-lg font-semibold text-cream">{selected.name}</p>
             <p className="text-xs text-gray-400 mt-0.5">{timeAgo(selected.receivedAt)}</p>
@@ -77,12 +77,12 @@ export default function InboxPage() {
 
           <div className="flex flex-wrap gap-2">
             {selected.email && (
-              <a href={`mailto:${selected.email}`} className="text-xs bg-[#1d474e] px-2.5 py-1 rounded-full text-[#6BB8B2]">
+              <a href={`mailto:${selected.email}`} className="text-xs bg-[#1d474e] px-2.5 py-1 rounded-full text-[#2FE6C4]">
                 {selected.email}
               </a>
             )}
             {selected.phone && (
-              <a href={`sms:${selected.phone}`} className="text-xs bg-[#1d474e] px-2.5 py-1 rounded-full text-[#6BB8B2]">
+              <a href={`sms:${selected.phone}`} className="text-xs bg-[#1d474e] px-2.5 py-1 rounded-full text-[#2FE6C4]">
                 {selected.phone}
               </a>
             )}
@@ -128,7 +128,7 @@ export default function InboxPage() {
             key={f}
             onClick={() => setFilter(f)}
             className={`flex-1 py-1.5 text-xs font-medium rounded-md capitalize transition-colors ${
-              filter === f ? 'bg-[#235158] text-cream' : 'text-gray-500'
+              filter === f ? 'bg-[#1A4F48] text-cream' : 'text-gray-500'
             }`}
           >
             {f}
@@ -146,7 +146,7 @@ export default function InboxPage() {
             <button
               key={msg.id}
               onClick={() => markRead(msg)}
-              className="w-full text-left bg-[#235158] rounded-xl p-3.5 border border-white/5 hover:border-[#6BB8B2]/20 transition-colors"
+              className="w-full text-left bg-[#1A4F48] rounded-xl p-3.5 border border-white/5 hover:border-[#2FE6C4]/20 transition-colors"
             >
               <div className="flex items-start justify-between gap-2">
                 <div className="min-w-0 flex-1">
@@ -157,7 +157,7 @@ export default function InboxPage() {
                     </p>
                   </div>
                   {msg.productInterest && (
-                    <p className="text-[10px] text-[#6BB8B2] mt-0.5">{msg.productInterest}</p>
+                    <p className="text-[10px] text-[#2FE6C4] mt-0.5">{msg.productInterest}</p>
                   )}
                   <p className="text-xs text-gray-500 mt-1 line-clamp-2">{msg.message}</p>
                 </div>

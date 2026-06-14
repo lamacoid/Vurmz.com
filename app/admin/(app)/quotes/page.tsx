@@ -33,10 +33,10 @@ function Card({ quote }: { quote: Quote }) {
       style={style}
       {...attributes}
       {...listeners}
-      className="bg-[#1c474e] rounded-md border border-white/5 px-3 py-2.5 hover:border-[#6BB8B2]/30 cursor-grab active:cursor-grabbing"
+      className="bg-[#143E38] rounded-md border border-white/5 px-3 py-2.5 hover:border-[#2FE6C4]/30 cursor-grab active:cursor-grabbing"
     >
       <div className="flex items-center justify-between mb-1">
-        <Link href={`/admin/quotes/${quote.id}`} className="text-xs font-mono text-cream hover:text-[#6BB8B2]">{quote.number}</Link>
+        <Link href={`/admin/quotes/${quote.id}`} className="text-xs font-mono text-cream hover:text-[#2FE6C4]">{quote.number}</Link>
         <span className="text-xs font-semibold text-cream">{money(quote.totalCents)}</span>
       </div>
       <p className="text-[11px] text-gray-400 truncate">{quote.email}</p>
@@ -49,7 +49,7 @@ function Column({ status, label, quotes }: { status: QuoteStatus; label: string;
   return (
     <div
       ref={setNodeRef}
-      className={`bg-[#235158]/60 border rounded-lg p-3 min-h-[400px] transition-colors ${isOver ? 'border-[#6BB8B2]' : 'border-white/5'}`}
+      className={`bg-[#1A4F48]/60 border rounded-lg p-3 min-h-[400px] transition-colors ${isOver ? 'border-[#2FE6C4]' : 'border-white/5'}`}
     >
       <div className="flex items-center justify-between mb-3 px-1">
         <p className="text-xs font-semibold text-cream uppercase tracking-wider">{label}</p>
@@ -111,7 +111,7 @@ export default function QuotesPage() {
       {loading ? (
         <div className="text-gray-500 text-sm">Loading…</div>
       ) : quotes.length === 0 ? (
-        <div className="bg-[#235158] border border-white/5 rounded-xl p-10 text-center text-gray-400 text-sm">
+        <div className="bg-[#1A4F48] border border-white/5 rounded-xl p-10 text-center text-gray-400 text-sm">
           No quotes yet. Create your first quote to get started.
         </div>
       ) : (

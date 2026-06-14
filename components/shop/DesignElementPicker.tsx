@@ -48,14 +48,14 @@ export default function DesignElementPicker({
             Remove design
           </button>
         ) : (
-          <button type="button" onClick={() => setOpen(o => !o)} className="text-[11px] text-[#6BB8B2] font-semibold hover:underline">
+          <button type="button" onClick={() => setOpen(o => !o)} className="text-[11px] text-[#2FE6C4] font-semibold hover:underline">
             {open ? 'Close' : 'Browse designs'}
           </button>
         )}
       </div>
 
       {selected && (
-        <div className="mt-2 flex items-center gap-3 rounded-sm border border-[#6BB8B2]/30 bg-[#6BB8B2]/10 p-2">
+        <div className="mt-2 flex items-center gap-3 rounded-sm border border-[#2FE6C4]/30 bg-[#2FE6C4]/10 p-2">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={selected.thumb} alt={selected.label} className="h-12 w-12 object-contain bg-[#f0ebe0] rounded-sm p-1" />
           <div className="text-xs">
@@ -82,7 +82,7 @@ export default function DesignElementPicker({
                   type="button"
                   onClick={() => setCat(c)}
                   className={`text-[11px] px-2.5 py-1 rounded-full border transition-colors ${
-                    c === cat ? 'border-[#6BB8B2]/50 bg-[#6BB8B2]/15 text-[#F0E6D3]' : 'border-white/10 text-gray-400 hover:text-[#F0E6D3]'
+                    c === cat ? 'border-[#2FE6C4]/50 bg-[#2FE6C4]/15 text-[#F0E6D3]' : 'border-white/10 text-gray-400 hover:text-[#F0E6D3]'
                   }`}
                 >
                   {c}
@@ -97,7 +97,7 @@ export default function DesignElementPicker({
                 type="button"
                 onClick={() => { onSelect(el); setOpen(false); setQuery('') }}
                 title={el.label}
-                className="aspect-square rounded-sm border border-white/10 bg-[#f0ebe0] p-1.5 hover:border-[#6BB8B2] hover:ring-1 hover:ring-[#6BB8B2]/40 transition-all"
+                className="aspect-square rounded-sm border border-white/10 bg-[#f0ebe0] p-1.5 hover:border-[#2FE6C4] hover:ring-1 hover:ring-[#2FE6C4]/40 transition-all"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={el.thumb} alt={el.label} loading="lazy" className="h-full w-full object-contain" />

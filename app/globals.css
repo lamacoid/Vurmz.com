@@ -2,7 +2,7 @@
 
 /* Accessible focus states */
 *:focus-visible {
-  outline: 2px solid var(--vurmz-teal, #6BB8B2);
+  outline: 2px solid var(--vurmz-teal, #2FE6C4);
   outline-offset: 2px;
 }
 [data-theme="shop"] *:focus-visible {
@@ -19,10 +19,10 @@ body.is-admin > main {
 
 :root {
   /* VURMZ Brand Colors - Tempered Glass Aesthetic */
-  --vurmz-teal: #6BB8B2;           /* Dusty muted teal */
+  --vurmz-teal: #2FE6C4;           /* Electric acid-teal (neon swamp accent) */
   --vurmz-teal-dark: #4A9D97;      /* Deeper muted teal */
   --vurmz-teal-light: #8DCDC8;     /* Soft light teal */
-  --vurmz-teal-glow: #7AC5BE;      /* Muted glow */
+  --vurmz-teal-glow: #2FE6C4;      /* Neon glow */
   --vurmz-powder: #B5D8E0;         /* Frosted glass blue */
   --vurmz-powder-light: #D0E8ED;   /* Light frost */
   --vurmz-sky: #7BC8D4;            /* Clear sky through glass */
@@ -30,13 +30,13 @@ body.is-admin > main {
   --vurmz-sky-dark: #5BB8C4;
   --vurmz-sage: #7DAA8C;           /* Soft green tint */
   --vurmz-sage-light: #9DBDA8;
-  --vurmz-dark: #235158;           /* Lightened dark base */
+  --vurmz-dark: #1A4F48;           /* Neon-swamp deep teal base */
   --vurmz-light: #F5FAFA;          /* Clean glass surface */
 
   /* Semantic Colors */
-  --background: #235158;
+  --background: #1A4F48;
   --foreground: #F0E6D3;
-  --primary: #6BB8B2;
+  --primary: #2FE6C4;
   --primary-dark: #4A9D97;
   --primary-light: #8DCDC8;
   --secondary: #8CC5CC;
@@ -57,7 +57,7 @@ body.is-admin > main {
   /* ── Shop Palette (B2C) ── */
   --shop-bg: #F0E6D3;
   --shop-bg-subtle: #EBE0CC;
-  --shop-text: #235158;
+  --shop-text: #1A4F48;
   --shop-text-sub: #6B6259;
   --shop-text-light: #7A7068;
   --shop-text-strong: #5C534A;
@@ -674,7 +674,7 @@ html.light body {
     ) !important;
   background-size: 300% 300% !important;
   animation: aero-bg-drift 30s ease-in-out infinite;
-  color: #1c474e !important;
+  color: #143E38 !important;
 }
 
 @keyframes aero-bg-drift {

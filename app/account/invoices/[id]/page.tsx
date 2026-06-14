@@ -74,12 +74,12 @@ export default function InvoiceDetailPage() {
 
       <div className="flex items-baseline justify-between mb-5">
         <h1 className="text-2xl font-bold text-cream font-mono">{invoice.number}</h1>
-        <span className={`text-xs px-2.5 py-1 rounded-full uppercase tracking-wider font-semibold ${invoice.status === 'paid' ? 'bg-green-900/30 text-green-300' : 'bg-[#6BB8B2]/20 text-[#6BB8B2]'}`}>
+        <span className={`text-xs px-2.5 py-1 rounded-full uppercase tracking-wider font-semibold ${invoice.status === 'paid' ? 'bg-green-900/30 text-green-300' : 'bg-[#2FE6C4]/20 text-[#2FE6C4]'}`}>
           {invoice.status.replace('_', ' ')}
         </span>
       </div>
 
-      <div className="bg-[#235158] border border-white/5 rounded-xl p-5 mb-5">
+      <div className="bg-[#1A4F48] border border-white/5 rounded-xl p-5 mb-5">
         <div className="divide-y divide-white/5">
           {items.map(it => (
             <div key={it.id} className="py-2.5 flex justify-between">
@@ -96,7 +96,7 @@ export default function InvoiceDetailPage() {
           {invoice.taxCents > 0 && <div className="flex justify-between"><span className="text-gray-400">Tax</span><span className="text-cream">{money(invoice.taxCents)}</span></div>}
           <div className="flex justify-between font-bold text-base pt-1 text-cream"><span>Total</span><span>{money(invoice.totalCents)}</span></div>
           {invoice.amountPaidCents > 0 && invoice.amountPaidCents < invoice.totalCents && (
-            <div className="flex justify-between text-[#6BB8B2]"><span>Paid</span><span>−{money(invoice.amountPaidCents)}</span></div>
+            <div className="flex justify-between text-[#2FE6C4]"><span>Paid</span><span>−{money(invoice.amountPaidCents)}</span></div>
           )}
           {owed > 0 && (
             <div className="flex justify-between font-bold text-base pt-1 text-[#C46B4D]"><span>Amount due</span><span>{money(owed)}</span></div>
@@ -105,14 +105,14 @@ export default function InvoiceDetailPage() {
       </div>
 
       {invoice.notes && (
-        <div className="bg-[#235158] border border-white/5 rounded-xl p-4 mb-5">
+        <div className="bg-[#1A4F48] border border-white/5 rounded-xl p-4 mb-5">
           <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-1">Notes</p>
           <p className="text-sm text-cream whitespace-pre-wrap">{invoice.notes}</p>
         </div>
       )}
 
       {isPayable && (
-        <div className="bg-[#235158] border border-white/5 rounded-xl p-5">
+        <div className="bg-[#1A4F48] border border-white/5 rounded-xl p-5">
           <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-3">Pay now</p>
           {squareConfig ? (
             <SquarePayment

@@ -27,7 +27,7 @@ export default function TrustBar({ theme, variant = 'inline' }: TrustBarProps) {
           <div
             key={item.label}
             className={`flex items-center gap-3 p-4 rounded-sm ${
-              theme === 'shop' ? 'bg-white/60 border border-[#235158]/8' : 'bg-white/[0.03] border border-white/[0.06]'
+              theme === 'shop' ? 'bg-white/60 border border-[#1A4F48]/8' : 'bg-white/[0.03] border border-white/[0.06]'
             }`}
           >
             <item.icon className={`w-5 h-5 flex-shrink-0 ${styles.icon}`} />

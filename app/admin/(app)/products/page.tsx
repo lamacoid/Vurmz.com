@@ -57,7 +57,7 @@ function Row({ product, media, onToggle }: { product: Product; media: Map<string
     <div
       ref={setNodeRef}
       style={style}
-      className="group flex items-center gap-3 bg-[#235158] border border-white/5 hover:border-[#6BB8B2]/20 rounded-lg px-3 py-2.5 transition-colors"
+      className="group flex items-center gap-3 bg-[#1A4F48] border border-white/5 hover:border-[#2FE6C4]/20 rounded-lg px-3 py-2.5 transition-colors"
     >
       <button
         {...attributes}
@@ -71,7 +71,7 @@ function Row({ product, media, onToggle }: { product: Product; media: Map<string
           <circle cx="9" cy="19" r="1.5" /><circle cx="15" cy="19" r="1.5" />
         </svg>
       </button>
-      <div className="w-11 h-11 rounded-md bg-[#1c474e] overflow-hidden flex-shrink-0 border border-white/5">
+      <div className="w-11 h-11 rounded-md bg-[#143E38] overflow-hidden flex-shrink-0 border border-white/5">
         {hero ? <img src={hero.url} alt="" className="w-full h-full object-cover" /> : (
           <div className="w-full h-full flex items-center justify-center text-gray-600"><Icon name="image" className="w-4 h-4" /></div>
         )}
@@ -96,7 +96,7 @@ function Row({ product, media, onToggle }: { product: Product; media: Map<string
       </Link>
       <span className={`text-[10px] px-1.5 py-0.5 rounded font-semibold uppercase tracking-wider ${
         product.audience === 'services'
-          ? 'bg-[#6BB8B2]/15 text-[#6BB8B2]'
+          ? 'bg-[#2FE6C4]/15 text-[#2FE6C4]'
           : product.audience === 'both'
           ? 'bg-[#F0E6D3]/10 text-[#F0E6D3]'
           : 'bg-[#C46B4D]/15 text-[#C46B4D]'
@@ -107,7 +107,7 @@ function Row({ product, media, onToggle }: { product: Product; media: Map<string
         onClick={() => onToggle(product.id, !product.isPublished)}
         className={`text-[11px] px-2 py-1 rounded-full font-medium ${
           product.isPublished
-            ? 'bg-[#6BB8B2]/10 text-[#6BB8B2] border border-[#6BB8B2]/20'
+            ? 'bg-[#2FE6C4]/10 text-[#2FE6C4] border border-[#2FE6C4]/20'
             : 'bg-white/5 text-gray-500 border border-white/10'
         }`}
       >
@@ -195,13 +195,13 @@ export default function ProductsListPage() {
         </Link>
       </div>
 
-      <div className="flex items-center gap-1 mb-3 bg-[#235158] border border-white/5 rounded-md p-1 w-fit">
+      <div className="flex items-center gap-1 mb-3 bg-[#1A4F48] border border-white/5 rounded-md p-1 w-fit">
         {(['all','shop','services','both'] as const).map(a => (
           <button
             key={a}
             onClick={() => setAudience(a)}
             className={`px-3 py-1 text-xs font-semibold rounded transition-colors capitalize ${
-              audience === a ? 'bg-[#1c474e] text-cream' : 'text-gray-400 hover:text-cream'
+              audience === a ? 'bg-[#143E38] text-cream' : 'text-gray-400 hover:text-cream'
             }`}
           >
             {a === 'all' ? 'All' : a === 'both' ? 'Both' : a === 'services' ? 'Services' : 'Shop'}
@@ -214,12 +214,12 @@ export default function ProductsListPage() {
           value={search}
           onChange={e => setSearch(e.target.value)}
           placeholder="Search by name or slug…"
-          className="flex-1 bg-[#235158] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6BB8B2]"
+          className="flex-1 bg-[#1A4F48] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#2FE6C4]"
         />
         <select
           value={filter}
           onChange={e => setFilter(e.target.value)}
-          className="bg-[#235158] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6BB8B2]"
+          className="bg-[#1A4F48] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#2FE6C4]"
         >
           <option value="all">All categories</option>
           {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
@@ -229,7 +229,7 @@ export default function ProductsListPage() {
       {loading ? (
         <div className="text-gray-500 text-sm">Loading…</div>
       ) : filteredProducts.length === 0 ? (
-        <div className="bg-[#235158] border border-white/5 rounded-xl p-10 text-center">
+        <div className="bg-[#1A4F48] border border-white/5 rounded-xl p-10 text-center">
           <Icon name="tag" className="w-8 h-8 text-gray-600 mx-auto mb-3" />
           <p className="text-cream text-sm font-semibold mb-1">No products yet</p>
           <p className="text-gray-500 text-xs mb-5">Add your first product — name, price, pack size, photo.</p>

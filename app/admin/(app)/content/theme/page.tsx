@@ -55,7 +55,7 @@ function Preview({ kind, color }: { kind: Slot['preview']; color: string }) {
       )
     case 'cream-text':
       return (
-        <div className="px-3 py-1.5 rounded-md text-[11px] font-medium inline-block bg-[#1c474e]" style={{ color }}>
+        <div className="px-3 py-1.5 rounded-md text-[11px] font-medium inline-block bg-[#143E38]" style={{ color }}>
           Headline sample
         </div>
       )
@@ -116,7 +116,7 @@ export default function ThemeEditorPage() {
   function renderSlot(s: Slot) {
     const val = theme!.colors[s.key] ?? '#000000'
     return (
-      <div key={s.key} className="flex items-start gap-3 p-3 rounded-lg bg-[#1c474e] border border-white/5">
+      <div key={s.key} className="flex items-start gap-3 p-3 rounded-lg bg-[#143E38] border border-white/5">
         <input
           type="color"
           value={val.startsWith('#') ? val : '#000000'}
@@ -131,7 +131,7 @@ export default function ThemeEditorPage() {
             value={val}
             onChange={e => updateColor(s.key, e.target.value)}
             onBlur={commitColors}
-            className="w-full bg-[#235158] border border-white/5 rounded px-2 py-1 text-xs text-cream outline-none focus:border-[#6BB8B2] font-mono"
+            className="w-full bg-[#1A4F48] border border-white/5 rounded px-2 py-1 text-xs text-cream outline-none focus:border-[#2FE6C4] font-mono"
           />
         </div>
         <div className="flex-shrink-0 w-44 flex items-center justify-end">
@@ -153,7 +153,7 @@ export default function ThemeEditorPage() {
         </div>
       </div>
 
-      <div className="bg-[#235158] border border-white/5 rounded-xl p-5 mb-4">
+      <div className="bg-[#1A4F48] border border-white/5 rounded-xl p-5 mb-4">
         <div className="flex items-baseline justify-between mb-3">
           <p className="text-[11px] uppercase tracking-wider text-gray-400 font-semibold">Core palette</p>
           <p className="text-[10px] text-gray-500">Continuity across the site</p>
@@ -163,7 +163,7 @@ export default function ThemeEditorPage() {
         </div>
       </div>
 
-      <div className="bg-[#235158] border border-white/5 rounded-xl p-5 mb-4">
+      <div className="bg-[#1A4F48] border border-white/5 rounded-xl p-5 mb-4">
         <div className="flex items-baseline justify-between mb-3">
           <p className="text-[11px] uppercase tracking-wider text-gray-400 font-semibold">Shop palette</p>
           <p className="text-[10px] text-gray-500">Override on /shop pages</p>
@@ -173,7 +173,7 @@ export default function ThemeEditorPage() {
         </div>
       </div>
 
-      <div className="bg-[#235158] border border-white/5 rounded-xl p-5 mb-4">
+      <div className="bg-[#1A4F48] border border-white/5 rounded-xl p-5 mb-4">
         <p className="text-[11px] uppercase tracking-wider text-gray-500 font-semibold mb-3">Fonts</p>
         <div className="space-y-2">
           {(['heading','body','mono'] as const).map(k => (
@@ -183,14 +183,14 @@ export default function ThemeEditorPage() {
                 value={theme.fonts[k]}
                 onChange={e => setTheme({ ...theme, fonts: { ...theme.fonts, [k]: e.target.value } })}
                 onBlur={() => save({ fonts: theme.fonts })}
-                className="w-full bg-[#1c474e] border border-white/5 rounded-md px-3 py-2 text-xs text-cream outline-none focus:border-[#6BB8B2] font-mono"
+                className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-xs text-cream outline-none focus:border-[#2FE6C4] font-mono"
               />
             </div>
           ))}
         </div>
       </div>
 
-      <div className="bg-[#235158] border border-white/5 rounded-xl p-5">
+      <div className="bg-[#1A4F48] border border-white/5 rounded-xl p-5">
         <p className="text-[11px] uppercase tracking-wider text-gray-500 font-semibold mb-3">Spacing</p>
         <div className="grid grid-cols-2 gap-3">
           {(['container_max','radius_sm','radius_md','radius_lg'] as const).map(k => (
@@ -200,7 +200,7 @@ export default function ThemeEditorPage() {
                 value={theme.spacing[k]}
                 onChange={e => setTheme({ ...theme, spacing: { ...theme.spacing, [k]: e.target.value } })}
                 onBlur={() => save({ spacing: theme.spacing })}
-                className="w-full bg-[#1c474e] border border-white/5 rounded-md px-3 py-2 text-xs text-cream outline-none focus:border-[#6BB8B2] font-mono"
+                className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-xs text-cream outline-none focus:border-[#2FE6C4] font-mono"
               />
             </div>
           ))}

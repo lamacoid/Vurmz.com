@@ -7,7 +7,7 @@ interface TrustedByProps {
 const themeStyles = {
   landing: { label: 'text-gray-500', linkText: 'text-cream/40 hover:text-cream/60', logoClass: 'opacity-40 brightness-0 invert', bg: '' },
   services: { label: 'text-gray-500', linkText: 'text-cream/40 hover:text-cream/60', logoClass: 'opacity-40 brightness-0 invert', bg: '' },
-  shop: { label: 'text-[#7A7068]', linkText: 'text-[#235158]/40 hover:text-[#235158]/60', logoClass: 'opacity-30', bg: '' },
+  shop: { label: 'text-[#7A7068]', linkText: 'text-[#1A4F48]/40 hover:text-[#1A4F48]/60', logoClass: 'opacity-30', bg: '' },
 }
 
 export default function TrustedBy({ theme }: TrustedByProps) {

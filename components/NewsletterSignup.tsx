@@ -109,7 +109,7 @@ export default function NewsletterSignup({ variant = 'full', theme = 'services' 
   return (
     <section className={`relative py-12 sm:py-16 ${isShopTheme ? '' : 'border-t border-white/[0.06]'}`}>
       {isShopTheme ? (
-        <div className="absolute inset-0 bg-[#235158] rounded-sm mx-4 sm:mx-6 lg:mx-8" />
+        <div className="absolute inset-0 bg-[#1A4F48] rounded-sm mx-4 sm:mx-6 lg:mx-8" />
       ) : (
         <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, transparent 0%, rgba(60,185,178,0.03) 50%, transparent 100%)' }} />
       )}

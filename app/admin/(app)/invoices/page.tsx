@@ -11,8 +11,8 @@ function money(c: number) { return `$${(c / 100).toFixed(2)}` }
 
 const STATUS_COLORS: Record<string, string> = {
   draft:          'bg-white/5 text-gray-400 border-white/10',
-  sent:           'bg-[#6BB8B2]/10 text-[#6BB8B2] border-[#6BB8B2]/20',
-  viewed:         'bg-[#6BB8B2]/15 text-[#6BB8B2] border-[#6BB8B2]/30',
+  sent:           'bg-[#2FE6C4]/10 text-[#2FE6C4] border-[#2FE6C4]/20',
+  viewed:         'bg-[#2FE6C4]/15 text-[#2FE6C4] border-[#2FE6C4]/30',
   paid:           'bg-green-900/25 text-green-300 border-green-800/40',
   partially_paid: 'bg-yellow-900/25 text-yellow-300 border-yellow-800/40',
   overdue:        'bg-red-900/25 text-red-300 border-red-800/40',
@@ -53,7 +53,7 @@ export default function AdminInvoicesPage() {
       {loading ? (
         <div className="text-gray-500 text-sm">Loading…</div>
       ) : invoices.length === 0 ? (
-        <div className="bg-[#235158] border border-white/5 rounded-xl p-10 text-center">
+        <div className="bg-[#1A4F48] border border-white/5 rounded-xl p-10 text-center">
           <Icon name="file-invoice" className="w-8 h-8 text-gray-600 mx-auto mb-3" />
           <p className="text-cream text-sm font-semibold mb-1">No invoices yet</p>
           <p className="text-gray-500 text-xs mb-5">Create your first invoice to bill a customer.</p>
@@ -63,7 +63,7 @@ export default function AdminInvoicesPage() {
           </Link>
         </div>
       ) : (
-        <div className="bg-[#235158] border border-white/5 rounded-xl overflow-hidden">
+        <div className="bg-[#1A4F48] border border-white/5 rounded-xl overflow-hidden">
           <div className="divide-y divide-white/5">
             {invoices.map(inv => {
               const owed = inv.totalCents - inv.amountPaidCents

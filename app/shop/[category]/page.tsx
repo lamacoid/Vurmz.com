@@ -92,7 +92,7 @@ export default async function ShopCategoryPage({ params }: { params: Promise<{ c
         {cat.heroImage && (
           <div className="absolute inset-0 overflow-hidden" aria-hidden>
             <Image src={cat.heroImage} alt="" fill className="object-cover blur-2xl opacity-[0.18]" />
-            <div className="absolute inset-0 bg-[#1f4f57]/70" />
+            <div className="absolute inset-0 bg-[#1A4F48]/70" />
           </div>
         )}
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -243,7 +243,7 @@ export default async function ShopCategoryPage({ params }: { params: Promise<{ c
       {cat.materialNote && (
         <section className="py-8">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="bg-[#6BB8B2]/10 border border-[#6BB8B2]/20 rounded-sm p-6 sm:p-8">
+            <div className="bg-[#2FE6C4]/10 border border-[#2FE6C4]/20 rounded-sm p-6 sm:p-8">
               <p className="text-[#F0E6D3] text-sm font-medium leading-relaxed">{cat.materialNote}</p>
             </div>
           </div>
@@ -291,7 +291,7 @@ export default async function ShopCategoryPage({ params }: { params: Promise<{ c
       {/* Bottom CTA */}
       <section className="py-12 sm:py-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-[#235158] rounded-sm p-8 sm:p-10 text-center">
+          <div className="bg-[#1A4F48] rounded-sm p-8 sm:p-10 text-center">
             <h2 className="text-2xl font-bold text-[#F0E6D3] mb-4">Ready to order?</h2>
             <p className="text-gray-400 text-sm mb-6 max-w-md mx-auto">Text me what you want and I&apos;ll get back to you with a quote.</p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">

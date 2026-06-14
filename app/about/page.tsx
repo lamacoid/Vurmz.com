@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-[#1c474e]">
+    <div className="min-h-screen bg-[#143E38]">
       <SiteHeader variant="services" />
 
       {/* Breadcrumbs + Hero */}

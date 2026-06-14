@@ -7,8 +7,8 @@ interface Order { id: string; number: string; status: string; totalCents: number
 function money(c: number) { return `$${(c / 100).toFixed(2)}` }
 
 const statusColors: Record<string, string> = {
-  new:         'bg-[#6BB8B2]/20 text-[#6BB8B2]',
-  confirmed:   'bg-[#6BB8B2]/20 text-[#6BB8B2]',
+  new:         'bg-[#2FE6C4]/20 text-[#2FE6C4]',
+  confirmed:   'bg-[#2FE6C4]/20 text-[#2FE6C4]',
   in_progress: 'bg-yellow-900/30 text-yellow-300',
   ready:       'bg-yellow-900/30 text-yellow-300',
   delivered:   'bg-green-900/30 text-green-300',
@@ -35,8 +35,8 @@ export default function AccountOrdersPage() {
       {loading ? (
         <p className="text-gray-500 text-sm">Loading…</p>
       ) : orders.length === 0 ? (
-        <div className="bg-[#235158] border border-white/5 rounded-xl p-10 text-center text-gray-400 text-sm">
-          No orders yet. <Link href="/shop" className="text-[#6BB8B2] hover:underline">Shop now →</Link>
+        <div className="bg-[#1A4F48] border border-white/5 rounded-xl p-10 text-center text-gray-400 text-sm">
+          No orders yet. <Link href="/shop" className="text-[#2FE6C4] hover:underline">Shop now →</Link>
         </div>
       ) : (
         <div className="space-y-2">
@@ -44,7 +44,7 @@ export default function AccountOrdersPage() {
             <Link
               key={o.id}
               href={`/account/orders/${o.id}`}
-              className="block bg-[#235158] border border-white/5 hover:border-[#6BB8B2]/30 rounded-xl p-4 transition-colors"
+              className="block bg-[#1A4F48] border border-white/5 hover:border-[#2FE6C4]/30 rounded-xl p-4 transition-colors"
             >
               <div className="flex items-center justify-between mb-1.5">
                 <p className="text-sm font-mono text-cream">{o.number}</p>

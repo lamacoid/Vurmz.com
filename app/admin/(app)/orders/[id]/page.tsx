@@ -74,18 +74,18 @@ export default function OrderDetailPage() {
         <select
           value={order.status}
           onChange={e => setStatus(e.target.value)}
-          className="bg-[#235158] border border-white/10 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6BB8B2]"
+          className="bg-[#1A4F48] border border-white/10 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#2FE6C4]"
         >
           {['new','confirmed','in_progress','ready','delivered','cancelled','refunded'].map(s => <option key={s} value={s}>{s}</option>)}
         </select>
       </div>
 
       {/* Proof workflow — the promise is "nothing engraves until approved" */}
-      <div className="flex items-center gap-2 mb-6 bg-[#235158] border border-white/5 rounded-xl px-4 py-3">
+      <div className="flex items-center gap-2 mb-6 bg-[#1A4F48] border border-white/5 rounded-xl px-4 py-3">
         <span className="text-[11px] uppercase tracking-wider text-gray-500 mr-1">Proof</span>
         {([['needed', 'Needed'], ['sent', 'Sent to customer'], ['approved', 'Approved ✓']] as const).map(([key, label]) => {
           const current = order.metadata?.proof?.status === key
-          const accent = key === 'approved' ? 'border-[#6BB8B2] bg-[#6BB8B2]/15 text-[#6BB8B2]' : key === 'sent' ? 'border-sky-400 bg-sky-400/15 text-sky-300' : 'border-amber-400 bg-amber-400/15 text-amber-300'
+          const accent = key === 'approved' ? 'border-[#2FE6C4] bg-[#2FE6C4]/15 text-[#2FE6C4]' : key === 'sent' ? 'border-sky-400 bg-sky-400/15 text-sky-300' : 'border-amber-400 bg-amber-400/15 text-amber-300'
           return (
             <button
               key={key}
@@ -102,22 +102,22 @@ export default function OrderDetailPage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        <div className="bg-[#235158] border border-white/5 rounded-xl p-4">
+        <div className="bg-[#1A4F48] border border-white/5 rounded-xl p-4">
           <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-1">Customer</p>
           <p className="text-sm text-cream">{order.email}</p>
         </div>
-        <div className="bg-[#235158] border border-white/5 rounded-xl p-4">
+        <div className="bg-[#1A4F48] border border-white/5 rounded-xl p-4">
           <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-1">Fulfillment</p>
           <p className="text-sm text-cream">{order.fulfillmentMethod.replace('_', ' ')}</p>
         </div>
-        <div className="bg-[#235158] border border-white/5 rounded-xl p-4">
+        <div className="bg-[#1A4F48] border border-white/5 rounded-xl p-4">
           <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-1">Total</p>
           <p className="text-sm text-cream font-semibold">{money(order.totalCents)}</p>
         </div>
       </div>
 
       {order.fulfillmentAddress && (
-        <div className="bg-[#235158] border border-white/5 rounded-xl p-4 mb-6">
+        <div className="bg-[#1A4F48] border border-white/5 rounded-xl p-4 mb-6">
           <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-1">Ship to</p>
           <p className="text-sm text-cream">
             {order.fulfillmentAddress.name}<br />
@@ -128,7 +128,7 @@ export default function OrderDetailPage() {
         </div>
       )}
 
-      <div className="bg-[#235158] border border-white/5 rounded-xl p-4 mb-6">
+      <div className="bg-[#1A4F48] border border-white/5 rounded-xl p-4 mb-6">
         <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-3">Line items</p>
         <div className="divide-y divide-white/5">
           {items.map(it => (
@@ -137,7 +137,7 @@ export default function OrderDetailPage() {
                 <p className="text-sm text-cream">{it.nameSnapshot}</p>
                 <p className="text-xs text-gray-500">{it.qty} × {money(it.unitPriceCents)}</p>
                 {it.metadata?.engraving?.text && (
-                  <p className="text-xs mt-1 inline-flex items-center gap-1.5 bg-[#6BB8B2]/10 border border-[#6BB8B2]/30 text-[#6BB8B2] rounded px-2 py-1">
+                  <p className="text-xs mt-1 inline-flex items-center gap-1.5 bg-[#2FE6C4]/10 border border-[#2FE6C4]/30 text-[#2FE6C4] rounded px-2 py-1">
                     ✎ Engrave:&nbsp;<span className="text-cream font-medium">“{it.metadata.engraving.text}”</span>
                     {it.metadata.engraving.fontLabel ? <span className="text-gray-400">· {it.metadata.engraving.fontLabel}</span> : null}
                   </p>
@@ -165,8 +165,8 @@ export default function OrderDetailPage() {
       </div>
 
       {order.fulfillmentMethod === 'hand_deliver' && order.metadata?.handDelivery && (
-        <div className="bg-[#6BB8B2]/10 border border-[#6BB8B2]/30 rounded-xl p-4 mb-6">
-          <p className="text-[11px] uppercase tracking-wider text-[#6BB8B2] mb-2 font-semibold">Hand delivery</p>
+        <div className="bg-[#2FE6C4]/10 border border-[#2FE6C4]/30 rounded-xl p-4 mb-6">
+          <p className="text-[11px] uppercase tracking-wider text-[#2FE6C4] mb-2 font-semibold">Hand delivery</p>
           {order.metadata.handDelivery.windowLabel && (
             <p className="text-sm text-cream"><span className="text-gray-400">Window:</span> {order.metadata.handDelivery.windowLabel}</p>
           )}
@@ -177,14 +177,14 @@ export default function OrderDetailPage() {
       )}
 
       {order.notes && (
-        <div className="bg-[#235158] border border-white/5 rounded-xl p-4 mb-6">
+        <div className="bg-[#1A4F48] border border-white/5 rounded-xl p-4 mb-6">
           <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-1">Customer notes</p>
           <p className="text-sm text-cream whitespace-pre-wrap">{order.notes}</p>
         </div>
       )}
 
       {(order.metadata?.attachments?.length ?? 0) > 0 && (
-        <div className="bg-[#235158] border border-white/5 rounded-xl p-4">
+        <div className="bg-[#1A4F48] border border-white/5 rounded-xl p-4">
           <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-2">Customer files</p>
           <ul className="space-y-2">
             {order.metadata!.attachments!.map(a => (
@@ -193,7 +193,7 @@ export default function OrderDetailPage() {
                   href={`/api/admin/r2/${a.key}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-sm text-[#6BB8B2] hover:text-cream transition-colors"
+                  className="inline-flex items-center gap-2 text-sm text-[#2FE6C4] hover:text-cream transition-colors"
                 >
                   📎 {a.filename}
                 </a>

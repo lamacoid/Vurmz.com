@@ -73,7 +73,7 @@ export default function CustomersPage() {
       </div>
 
       {creating && (
-        <div className="bg-[#235158] border border-white/5 rounded-xl p-4 mb-5">
+        <div className="bg-[#1A4F48] border border-white/5 rounded-xl p-4 mb-5">
           <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-2 font-semibold">New customer</p>
           <div className="grid grid-cols-1 sm:grid-cols-[1fr_1fr_auto] gap-2">
             <input
@@ -81,18 +81,18 @@ export default function CustomersPage() {
               placeholder="email@example.com"
               value={newEmail}
               onChange={e => setNewEmail(e.target.value)}
-              className="bg-[#1c474e] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6BB8B2]"
+              className="bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#2FE6C4]"
             />
             <input
               placeholder="Name (optional)"
               value={newName}
               onChange={e => setNewName(e.target.value)}
-              className="bg-[#1c474e] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6BB8B2]"
+              className="bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#2FE6C4]"
             />
             <button
               onClick={create}
               disabled={!newEmail || busy}
-              className="px-4 h-9 bg-[#6BB8B2] hover:bg-[#5aa49e] disabled:opacity-50 text-[#1c474e] text-sm font-semibold rounded-md"
+              className="px-4 h-9 bg-[#2FE6C4] hover:bg-[#5aa49e] disabled:opacity-50 text-[#143E38] text-sm font-semibold rounded-md"
             >
               {busy ? 'Saving…' : 'Create'}
             </button>
@@ -104,19 +104,19 @@ export default function CustomersPage() {
         placeholder="Search by name, email, or company…"
         value={search}
         onChange={e => setSearch(e.target.value)}
-        className="w-full px-3 py-2 bg-[#235158] border border-white/5 rounded-md text-sm text-cream placeholder:text-gray-500 outline-none focus:border-[#6BB8B2] mb-4"
+        className="w-full px-3 py-2 bg-[#1A4F48] border border-white/5 rounded-md text-sm text-cream placeholder:text-gray-500 outline-none focus:border-[#2FE6C4] mb-4"
       />
 
       {loading ? (
         <div className="text-gray-500 text-sm">Loading…</div>
       ) : customers.length === 0 ? (
-        <div className="bg-[#235158] border border-white/5 rounded-xl p-10 text-center">
+        <div className="bg-[#1A4F48] border border-white/5 rounded-xl p-10 text-center">
           <Icon name="users" className="w-8 h-8 text-gray-600 mx-auto mb-3" />
           <p className="text-cream text-sm font-semibold mb-1">{search ? 'No matches' : 'No customers yet'}</p>
           <p className="text-gray-500 text-xs">{search ? 'Try a different search.' : 'They\'ll appear here automatically after the first order or sign-in.'}</p>
         </div>
       ) : (
-        <div className="bg-[#235158] border border-white/5 rounded-xl overflow-hidden divide-y divide-white/5">
+        <div className="bg-[#1A4F48] border border-white/5 rounded-xl overflow-hidden divide-y divide-white/5">
           {customers.map(c => (
             <Link
               key={c.id}
@@ -129,7 +129,7 @@ export default function CustomersPage() {
                 {c.tags && c.tags.length > 0 && (
                   <div className="flex gap-1 mt-1.5 flex-wrap">
                     {c.tags.slice(0, 4).map(t => (
-                      <span key={t} className="text-[9px] bg-[#6BB8B2]/10 text-[#6BB8B2] px-1.5 py-0.5 rounded-full uppercase tracking-wider font-semibold">{t}</span>
+                      <span key={t} className="text-[9px] bg-[#2FE6C4]/10 text-[#2FE6C4] px-1.5 py-0.5 rounded-full uppercase tracking-wider font-semibold">{t}</span>
                     ))}
                   </div>
                 )}

@@ -46,14 +46,14 @@ export default function NewServiceJobPage() {
       <Link href="/admin/service-jobs" className="text-xs text-gray-500 hover:text-cream">← All jobs</Link>
       <h1 className="text-2xl font-bold text-cream mt-2 mb-6">New service job</h1>
 
-      <div className="bg-[#235158] border border-white/5 rounded-xl p-5 space-y-4">
+      <div className="bg-[#1A4F48] border border-white/5 rounded-xl p-5 space-y-4">
         <div>
           <label className="text-[11px] uppercase tracking-wider text-gray-500 block mb-1 font-semibold">Title</label>
           <input
             value={title}
             onChange={e => setTitle(e.target.value)}
             placeholder="e.g. 50 engraved knives for Cherry Creek Kitchen"
-            className="w-full bg-[#1c474e] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6BB8B2]"
+            className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#2FE6C4]"
           />
         </div>
         <div>
@@ -61,7 +61,7 @@ export default function NewServiceJobPage() {
           <select
             value={customerId}
             onChange={e => setCustomerId(e.target.value)}
-            className="w-full bg-[#1c474e] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none"
+            className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none"
           >
             <option value="">— none —</option>
             {customers.map(c => <option key={c.id} value={c.id}>{c.name || c.email}</option>)}
@@ -70,7 +70,7 @@ export default function NewServiceJobPage() {
         <div className="grid grid-cols-2 gap-3">
           <div>
             <label className="text-[11px] uppercase tracking-wider text-gray-500 block mb-1 font-semibold">Priority</label>
-            <select value={priority} onChange={e => setPriority(parseInt(e.target.value, 10))} className="w-full bg-[#1c474e] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none">
+            <select value={priority} onChange={e => setPriority(parseInt(e.target.value, 10))} className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none">
               <option value={0}>Normal</option>
               <option value={1}>P1 — urgent</option>
               <option value={2}>P2 — rush</option>
@@ -79,12 +79,12 @@ export default function NewServiceJobPage() {
           </div>
           <div>
             <label className="text-[11px] uppercase tracking-wider text-gray-500 block mb-1 font-semibold">Due date</label>
-            <input type="date" value={dueDate} onChange={e => setDueDate(e.target.value)} className="w-full bg-[#1c474e] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6BB8B2]" />
+            <input type="date" value={dueDate} onChange={e => setDueDate(e.target.value)} className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#2FE6C4]" />
           </div>
         </div>
         <div>
           <label className="text-[11px] uppercase tracking-wider text-gray-500 block mb-1 font-semibold">Notes</label>
-          <textarea value={notes} onChange={e => setNotes(e.target.value)} rows={4} className="w-full bg-[#1c474e] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#6BB8B2]" placeholder="Details, specs, production notes…" />
+          <textarea value={notes} onChange={e => setNotes(e.target.value)} rows={4} className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#2FE6C4]" placeholder="Details, specs, production notes…" />
         </div>
         <button onClick={save} disabled={saving || !title} className="px-4 h-9 bg-[#C46B4D] hover:bg-[#AD5D42] disabled:opacity-60 text-white text-sm font-semibold rounded-md">
           {saving ? 'Creating…' : 'Create job'}

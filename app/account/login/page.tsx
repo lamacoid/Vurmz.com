@@ -35,12 +35,12 @@ export default function AccountLogin() {
       <p className="text-sm text-gray-400 mb-8">We&rsquo;ll email you a one-time link — no password.</p>
 
       {status === 'sent' ? (
-        <div className="bg-[#235158] border border-[#6BB8B2]/20 rounded-xl p-6">
+        <div className="bg-[#1A4F48] border border-[#2FE6C4]/20 rounded-xl p-6">
           <p className="text-cream font-semibold mb-2">Check your email</p>
           <p className="text-sm text-gray-400">
             We sent a sign-in link to <span className="text-cream">{email}</span>. The link expires in 15 minutes.
           </p>
-          <p className="text-xs text-gray-500 mt-4">Didn&rsquo;t get it? Check spam, or <button onClick={() => setStatus('idle')} className="text-[#6BB8B2] hover:underline">try again</button>.</p>
+          <p className="text-xs text-gray-500 mt-4">Didn&rsquo;t get it? Check spam, or <button onClick={() => setStatus('idle')} className="text-[#2FE6C4] hover:underline">try again</button>.</p>
         </div>
       ) : (
         <form onSubmit={submit} className="space-y-4">
@@ -53,7 +53,7 @@ export default function AccountLogin() {
               value={email}
               onChange={e => setEmail(e.target.value)}
               placeholder="you@example.com"
-              className="w-full bg-[#235158] border border-white/5 rounded-md px-3 py-2.5 text-sm text-cream outline-none focus:border-[#6BB8B2]"
+              className="w-full bg-[#1A4F48] border border-white/5 rounded-md px-3 py-2.5 text-sm text-cream outline-none focus:border-[#2FE6C4]"
             />
           </div>
           {error && <p className="text-xs text-red-400">{error}</p>}

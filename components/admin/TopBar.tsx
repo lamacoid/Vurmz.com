@@ -21,7 +21,7 @@ export default function TopBar({ onMenu, onOpenPalette }: { onMenu: () => void; 
   const crumbs = breadcrumbsFor(pathname)
 
   return (
-    <header className="sticky top-0 z-40 h-14 bg-[#1c474e]/90 backdrop-blur border-b border-white/5 flex items-center px-4 gap-3">
+    <header className="sticky top-0 z-40 h-14 bg-[#143E38]/90 backdrop-blur border-b border-white/5 flex items-center px-4 gap-3">
       <button
         onClick={onMenu}
         className="md:hidden p-2 -ml-2 text-gray-400 hover:text-cream rounded"

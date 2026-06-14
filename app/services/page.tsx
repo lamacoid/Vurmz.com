@@ -99,7 +99,7 @@ export default function Home() {
         eyebrow="Services & Pricing"
         heading="Laser Engraving Services for Businesses in the Denver Metro"
         accent="teal"
-        baseColor="#235158"
+        baseColor="#1A4F48"
       >
         <p className="text-gray-300 text-base sm:text-lg leading-relaxed mb-7 max-w-xl mx-auto">
           Every price is on this page. No quote forms that go nowhere. Next-day turnaround, hand-delivered across the South Denver metro.
@@ -302,7 +302,7 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-[#F0E6D3] rounded-sm p-8 sm:p-10 flex flex-col sm:flex-row gap-6 items-start sm:items-center justify-between">
             <div>
-              <h3 className="text-xl font-bold text-[#235158] mb-2">Shopping for yourself?</h3>
+              <h3 className="text-xl font-bold text-[#1A4F48] mb-2">Shopping for yourself?</h3>
               <p className="text-[#6B6259] text-sm leading-relaxed max-w-lg">
                 Browse engraved products with pricing up front. Knives, tumblers, coasters, home decor, and more.
               </p>

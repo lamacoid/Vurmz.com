@@ -49,7 +49,7 @@ const B2B_LANES = [
 
 export default function Page() {
   return (
-    <div className="bg-[#1f4f57] text-gray-300" data-theme="shop">
+    <div className="bg-[#1A4F48] text-gray-300" data-theme="shop">
       {/* Smooth anchor scrolling, this page only */}
       <style dangerouslySetInnerHTML={{ __html: 'html{scroll-behavior:smooth}' }} />
 
@@ -70,7 +70,7 @@ export default function Page() {
                 <div className="absolute w-24 h-24 rounded-full bg-[#5FBFB8] blur-[30px] opacity-70" style={{ animation: 'blob6 7.5s ease-in-out infinite', top: '-25%', left: '45%' }} />
                 <div className="absolute w-16 h-16 rounded-full bg-[#1F7872] blur-[26px] opacity-80" style={{ animation: 'blob1 8.5s ease-in-out infinite reverse', top: '-5%', left: '60%' }} />
                 <div className="absolute w-24 h-24 rounded-full bg-[#B5E5E1] blur-[32px] opacity-60" style={{ animation: 'blob3 9.5s ease-in-out infinite reverse', top: '-15%', left: '10%' }} />
-                <div className="absolute w-16 h-16 rounded-full bg-[#6BB8B2] blur-[24px] opacity-90" style={{ animation: 'blob5 6.5s ease-in-out infinite reverse', top: '-25%', left: '40%' }} />
+                <div className="absolute w-16 h-16 rounded-full bg-[#2FE6C4] blur-[24px] opacity-90" style={{ animation: 'blob5 6.5s ease-in-out infinite reverse', top: '-25%', left: '40%' }} />
                 <div className="absolute w-20 h-20 rounded-full bg-[#347D77] blur-[28px] opacity-75" style={{ animation: 'blob2 11s ease-in-out infinite reverse', top: '0%', left: '80%' }} />
               </div>
             </div>
@@ -97,7 +97,7 @@ export default function Page() {
             </Link>
             <a
               href="#services"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-[#6BB8B2]/40 text-[#6BB8B2] font-semibold text-base rounded-sm hover:bg-[#6BB8B2]/10 transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-[#2FE6C4]/40 text-[#2FE6C4] font-semibold text-base rounded-sm hover:bg-[#2FE6C4]/10 transition-colors"
             >
               <ArrowDownIcon className="w-4 h-4" />
               For businesses
@@ -109,7 +109,7 @@ export default function Page() {
         {/* ═══════════ RECENT WORK ═══════════ */}
         <section className="pb-10 sm:pb-14">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <p className="text-center text-xs font-mono text-[#6BB8B2] tracking-[0.2em] uppercase mb-6">Recent work</p>
+            <p className="text-center text-xs font-mono text-[#2FE6C4] tracking-[0.2em] uppercase mb-6">Recent work</p>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {WORK.map((item) => (
                 <div key={item.label} className="group relative aspect-square rounded-sm overflow-hidden">
@@ -146,8 +146,8 @@ export default function Page() {
                 { n: 3, h: 'Hand-delivered', p: 'I bring it to your door across the south Denver metro. Free over $100.' },
               ].map((step) => (
                 <div key={step.n}>
-                  <div className="w-10 h-10 rounded-full bg-[#6BB8B2]/15 border border-[#6BB8B2]/20 flex items-center justify-center mb-3 mx-auto">
-                    <span className="text-[#6BB8B2] font-bold">{step.n}</span>
+                  <div className="w-10 h-10 rounded-full bg-[#2FE6C4]/15 border border-[#2FE6C4]/20 flex items-center justify-center mb-3 mx-auto">
+                    <span className="text-[#2FE6C4] font-bold">{step.n}</span>
                   </div>
                   <h3 className="font-semibold text-[#F0E6D3] mb-1">{step.h}</h3>
                   <p className="text-gray-400 text-sm leading-relaxed">{step.p}</p>
