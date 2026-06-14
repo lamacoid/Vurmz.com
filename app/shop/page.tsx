@@ -6,8 +6,12 @@ import TestimonialCarousel from '@/components/TestimonialCarousel'
 import CategoryCard from '@/components/CategoryCard'
 import GlassImage from '@/components/shop/GlassImage'
 import SiteHero from '@/components/SiteHero'
+import D1ProductGrid from '@/components/shop/D1ProductGrid'
 import { SHOP_CATEGORIES } from '@/lib/categories'
 import { BASIC } from '@/lib/pricing'
+
+// D1ProductGrid reads the live catalog at request time → must run on the edge.
+export const runtime = 'edge'
 
 // Pack-based categories (coasters, keychains) are business-only — hide from consumer shop.
 const CONSUMER_CATEGORIES = SHOP_CATEGORIES.filter(cat => {
@@ -81,10 +85,17 @@ export default function ShopHome() {
         </div>
       </section>
 
+      {/* Shop ready to order — the live buy-now catalog (all categories) */}
+      <D1ProductGrid
+        heading="Shop ready to order"
+        subheading="In-stock and made-to-order, prices up front. Pick one and check out."
+        limit={24}
+      />
+
       {/* Categories */}
       <section className="pb-10 sm:pb-14">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold text-[#F0E6D3] text-center mb-8">Shop by category</h2>
+          <h2 className="text-2xl font-bold text-[#F0E6D3] text-center mb-8">Browse by category</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {CONSUMER_CATEGORIES.map((cat) => (
               <CategoryCard key={cat.slug} category={cat} />
