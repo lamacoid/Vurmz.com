@@ -54,7 +54,7 @@ export default function D1ProductGridClient({ categorySlug, heading, subheading,
             <Link
               key={p.id}
               href={`/shop/p/${p.slug}`}
-              className="group bg-white/[0.04] backdrop-blur-xl border border-white/10 rounded-sm overflow-hidden hover:border-[#C67A6F]/40 hover:bg-white/[0.06] transition-colors"
+              className="group bg-white/[0.04] backdrop-blur-xl border border-white/10 rounded-sm overflow-hidden hover:border-[#C67A6F]/40 hover:bg-white/[0.06] transition-colors puffy"
             >
               <div className="aspect-square relative overflow-hidden">
                 {p.heroUrl ? (

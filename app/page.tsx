@@ -95,7 +95,7 @@ export default function Page() {
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
               href="/shop"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#C67A6F] text-white font-semibold text-base rounded-sm hover:bg-[#B0675D] transition-colors shadow-lg shadow-black/20"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#C67A6F] text-white font-semibold text-base rounded-sm hover:bg-[#B0675D] transition-colors puffy-btn"
             >
               Shop engraved goods
               <ArrowRightIcon className="w-4 h-4" />
@@ -129,7 +129,7 @@ export default function Page() {
             <p className="text-center text-xs font-mono text-[#7FCFD4] tracking-[0.2em] uppercase mb-6">Recent work</p>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {WORK.map((item) => (
-                <div key={item.label} className="group relative aspect-square rounded-sm overflow-hidden">
+                <div key={item.label} className="group relative aspect-square rounded-sm overflow-hidden puffy">
                   <GlassImage src={item.src} alt={item.label} depth="card" sizes="(max-width: 640px) 50vw, 25vw" className="absolute inset-0" />
                   <div className="absolute inset-0 flex items-end p-3 opacity-0 group-hover:opacity-100 transition-opacity">
                     <span className="text-white text-xs font-medium drop-shadow">{item.label}</span>
@@ -163,7 +163,7 @@ export default function Page() {
                 { n: 3, h: 'Hand-delivered', p: 'I bring it to your door across the south Denver metro. Free over $100.' },
               ].map((step) => (
                 <div key={step.n}>
-                  <div className="w-10 h-10 rounded-full bg-white/15 border border-white/30 flex items-center justify-center mb-3 mx-auto">
+                  <div className="w-10 h-10 rounded-full bg-white/15 border border-white/30 flex items-center justify-center mb-3 mx-auto puffy">
                     <span className="text-white font-bold">{step.n}</span>
                   </div>
                   <h3 className="font-semibold text-white mb-1">{step.h}</h3>
@@ -191,7 +191,7 @@ export default function Page() {
                 <Link
                   key={lane.h}
                   href={lane.href}
-                  className="group bg-white/[0.03] border border-white/[0.08] rounded-sm p-6 hover:border-vurmz-teal/40 transition-colors"
+                  className="group bg-white/[0.03] border border-white/[0.08] rounded-sm p-6 hover:border-vurmz-teal/40 transition-colors puffy"
                 >
                   <h3 className="font-semibold text-cream mb-2 flex items-center justify-between">
                     {lane.h}
@@ -205,14 +205,14 @@ export default function Page() {
             <div className="flex flex-col sm:flex-row gap-3">
               <Link
                 href="/services"
-                className="group inline-flex items-center justify-center gap-2 px-6 py-3 bg-vurmz-cta text-white font-semibold text-sm rounded-sm hover:bg-vurmz-cta-hover transition-all shadow-lg shadow-vurmz-cta/20"
+                className="group inline-flex items-center justify-center gap-2 px-6 py-3 bg-vurmz-cta text-white font-semibold text-sm rounded-sm hover:bg-vurmz-cta-hover transition-all puffy-btn"
               >
                 Everything for business
                 <ArrowRightIcon className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
               <a
                 href={getSmsLink('Hi, I have a business engraving question')}
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-vurmz-cream text-vurmz-dark font-semibold text-sm rounded-sm hover:bg-vurmz-cream-hover transition-all"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-vurmz-cream text-vurmz-dark font-semibold text-sm rounded-sm hover:bg-vurmz-cream-hover transition-all puffy-btn"
               >
                 <ChatBubbleLeftIcon className="w-4 h-4" />
                 Text {siteInfo.phone}
@@ -229,7 +229,7 @@ export default function Page() {
         <section className="bg-[#DED6C3] border-t border-black/5">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
-              <div className="relative aspect-[4/3] overflow-hidden rounded-sm">
+              <div className="relative aspect-[4/3] overflow-hidden rounded-sm puffy-light">
                 <Image src="/images/zach.jpeg" alt={`${siteInfo.founder.name}, owner of VURMZ`} fill className="object-cover" />
                 <div className="absolute bottom-4 left-4">
                   <span className="text-xs font-mono text-white/80 tracking-wider uppercase drop-shadow">{siteInfo.founder.name} &middot; Owner</span>

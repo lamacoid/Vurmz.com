@@ -41,7 +41,7 @@ export default function CategoryCard({ category: cat, compact }: CategoryCardPro
     return (
       <Link
         href={`/shop/${cat.slug}`}
-        className="group block bg-white/[0.04] backdrop-blur-xl border border-white/10 rounded-sm overflow-hidden hover:border-[#C67A6F]/40 transition-all duration-300"
+        className="group block bg-white/[0.04] backdrop-blur-xl border border-white/10 rounded-sm overflow-hidden hover:border-[#C67A6F]/40 transition-all duration-300 puffy"
       >
         <div className="aspect-[16/9] relative overflow-hidden">
           {cat.heroImage ? (
@@ -66,7 +66,7 @@ export default function CategoryCard({ category: cat, compact }: CategoryCardPro
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.4 }}
-      className="group relative bg-white/[0.04] backdrop-blur-xl border border-white/10 rounded-sm overflow-hidden hover:border-[#C67A6F]/40 hover:bg-white/[0.06] transition-all duration-300"
+      className="group relative bg-white/[0.04] backdrop-blur-xl border border-white/10 rounded-sm overflow-hidden hover:border-[#C67A6F]/40 hover:bg-white/[0.06] transition-all duration-300 puffy"
     >
       <Link href={`/shop/${cat.slug}`}>
         <div className="aspect-[4/3] relative overflow-hidden">
