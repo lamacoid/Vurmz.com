@@ -491,8 +491,10 @@ main [class*="mx-auto"][class*="px-4"] {
       0 1px 3px -1px rgba(0, 0, 0, 0.28);
   }
 
-  /* React to a light source: a soft sheen that tracks the pointer across the
-     raised surface (position fed by PuffyLight via --lx/--ly). */
+  /* Lit by a fixed overhead "sun": a soft specular gloss across the top of each
+     raised surface, like sunlight catching the dome of a bubble sticker. The
+     highlight stays put (it's the sun, not a spotlight) and fades out before
+     the lower half so card text underneath stays clean. */
   .puffy, .puffy-light, .puffy-btn { position: relative; }
   .puffy::after, .puffy-light::after, .puffy-btn::after {
     content: "";
@@ -501,26 +503,20 @@ main [class*="mx-auto"][class*="px-4"] {
     border-radius: inherit;
     pointer-events: none;
     z-index: 3;
-    opacity: 0;
-    transition: opacity 0.3s ease;
     background: radial-gradient(
-      circle 170px at var(--lx, 50%) var(--ly, -10%),
-      rgba(255, 255, 255, 0.13),
-      rgba(255, 255, 255, 0) 60%
+      ellipse 80% 55% at 50% -15%,
+      rgba(255, 255, 255, 0.22) 0%,
+      rgba(255, 255, 255, 0.07) 40%,
+      rgba(255, 255, 255, 0) 68%
     );
   }
   .puffy-btn::after {
     background: radial-gradient(
-      circle 130px at var(--lx, 50%) var(--ly, -10%),
-      rgba(255, 255, 255, 0.30),
-      rgba(255, 255, 255, 0) 65%
+      ellipse 85% 60% at 50% -18%,
+      rgba(255, 255, 255, 0.34) 0%,
+      rgba(255, 255, 255, 0.10) 42%,
+      rgba(255, 255, 255, 0) 70%
     );
-  }
-  .puffy:hover::after,
-  .puffy-light:hover::after,
-  .puffy-btn:hover::after { opacity: 1; }
-  @media (hover: none) {
-    .puffy::after, .puffy-light::after, .puffy-btn::after { display: none; }
   }
 
   /* ── Shop utilities ── */

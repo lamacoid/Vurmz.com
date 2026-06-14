@@ -15,7 +15,6 @@ import ContactForm from '@/components/ContactForm'
 import RotatingHeroBg from '@/components/RotatingHeroBg'
 import ItemScroller from '@/components/ItemScroller'
 import GlassImage from '@/components/shop/GlassImage'
-import PuffyLight from '@/components/PuffyLight'
 import RotatingTagline from '@/components/RotatingTagline'
 
 // Single-page homepage: one brand, one scroll — shop first, then the anchored
@@ -59,7 +58,6 @@ export default function Page() {
       <style dangerouslySetInnerHTML={{ __html: 'html{scroll-behavior:smooth}#main-content>section+section{margin-top:0}' }} />
 
       <SiteHeader variant="shop" />
-      <PuffyLight />
       <main id="main-content">
         {/* ═══════════ HERO — animated teal VURMZ logo over rotating work photos ═══════════ */}
         <section className="relative px-4 pt-32 sm:pt-36 pb-12 sm:pb-14 text-center overflow-hidden">
@@ -94,7 +92,7 @@ export default function Page() {
 
           <RotatingTagline
             accentColor="#C67A6F"
-            className="text-cream text-2xl sm:text-3xl lg:text-4xl mb-8 max-w-lg mx-auto"
+            className="text-cream text-lg sm:text-xl lg:text-2xl mb-8 max-w-lg mx-auto"
           />
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
