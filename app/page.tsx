@@ -177,9 +177,9 @@ export default function Page() {
             <p className="text-xs font-mono text-vurmz-teal tracking-[0.25em] uppercase mb-3">For your work</p>
             <h2 className="text-3xl sm:text-4xl font-bold text-cream tracking-tight leading-tight mb-4">
               Laser engraving services<br />
-              <span className="text-gray-500">for businesses in the Denver metro.</span>
+              <span className="text-gray-400">for businesses in the Denver metro.</span>
             </h2>
-            <p className="text-gray-400 text-base sm:text-lg leading-relaxed max-w-2xl mb-10">
+            <p className="text-gray-300 text-base sm:text-lg leading-relaxed max-w-2xl mb-10">
               Next-day turnaround. Hand-to-hand delivery. Posted pricing — the competitors make you fill out a quote form to learn a number. I don&apos;t.
             </p>
 
@@ -194,7 +194,7 @@ export default function Page() {
                     {lane.h}
                     <ArrowRightIcon className="w-4 h-4 text-vurmz-teal opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
                   </h3>
-                  <p className="text-gray-400 text-sm leading-relaxed">{lane.p}</p>
+                  <p className="text-gray-300 text-sm leading-relaxed">{lane.p}</p>
                 </Link>
               ))}
             </div>
@@ -263,7 +263,7 @@ export default function Page() {
             <h2 className="text-2xl sm:text-3xl font-bold text-cream tracking-tight mb-2 text-center">
               Questions? Send it.
             </h2>
-            <p className="text-gray-400 text-sm text-center mb-8">
+            <p className="text-gray-300 text-sm text-center mb-8">
               Or skip the form and text me at{' '}
               <a href={getSmsLink()} className="text-vurmz-teal font-semibold hover:underline">{siteInfo.phone}</a>
               {' '}— that&apos;s usually faster.
