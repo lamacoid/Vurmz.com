@@ -102,7 +102,7 @@ export default function Home() {
         baseColor="#1A4F48"
       >
         <p className="text-gray-300 text-base sm:text-lg leading-relaxed mb-7 max-w-xl mx-auto">
-          Every price is on this page. No quote forms that go nowhere. Next-day turnaround, hand-delivered across the South Denver metro.
+          Next-day turnaround, hand-delivered across the South Denver metro. One person, start to finish.
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <a
