@@ -16,6 +16,7 @@ import RotatingHeroBg from '@/components/RotatingHeroBg'
 import ItemScroller from '@/components/ItemScroller'
 import GlassImage from '@/components/shop/GlassImage'
 import PuffyLight from '@/components/PuffyLight'
+import RotatingTagline from '@/components/RotatingTagline'
 
 // Single-page homepage: one brand, one scroll — shop first, then the anchored
 // "For businesses" half, then contact. Replaced the old split chooser.
@@ -91,9 +92,10 @@ export default function Page() {
             `}</style>
           </div>
 
-          <p className="text-gray-300 text-base sm:text-lg leading-relaxed mb-7 max-w-lg mx-auto">
-            Custom laser engraving, hand-delivered across the south Denver metro. You approve a proof photo before a single line is cut.
-          </p>
+          <RotatingTagline
+            accentColor="#C67A6F"
+            className="text-cream text-2xl sm:text-3xl lg:text-4xl mb-8 max-w-lg mx-auto"
+          />
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
               href="/shop"

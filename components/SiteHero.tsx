@@ -3,13 +3,10 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { portfolioItems } from '@/lib/portfolio'
+import { HERO_WORDS as WORDS } from '@/lib/hero-words'
 
-// The fill-in-the-blank: "Let's put your ___ on something."
-// Mixes personal + business since this hero is shared across the whole site.
-const WORDS = [
-  'name', 'logo', 'story', 'vows', 'initials', 'coordinates',
-  'recipe', 'signature', "kid's drawing", 'wedding date', 'brand', 'crest',
-]
+// The fill-in-the-blank ("Let's put your ___ on something.") shares HERO_WORDS
+// with the home-hero RotatingTagline so the list stays identical everywhere.
 
 const heroBg = portfolioItems.map((i) => ({ src: i.src, alt: i.label }))
 
