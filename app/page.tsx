@@ -52,8 +52,9 @@ const B2B_LANES = [
 export default function Page() {
   return (
     <div className="bg-[#16525C] text-gray-300" data-theme="shop">
-      {/* Smooth anchor scrolling, this page only */}
-      <style dangerouslySetInnerHTML={{ __html: 'html{scroll-behavior:smooth}' }} />
+      {/* Smooth anchor scrolling + let the color bands butt against their
+          divider lines (override the global 2.5rem section gap on this page). */}
+      <style dangerouslySetInnerHTML={{ __html: 'html{scroll-behavior:smooth}#main-content>section+section{margin-top:0}' }} />
 
       <SiteHeader variant="shop" />
       <main id="main-content">
@@ -122,8 +123,8 @@ export default function Page() {
           </div>
         </section>
 
-        {/* ═══════════ RECENT WORK ═══════════ */}
-        <section className="pb-10 sm:pb-14">
+        {/* ═══════════ RECENT WORK (darker teal band) ═══════════ */}
+        <section className="bg-[#123F47] border-t border-white/[0.06] py-12 sm:py-14">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <p className="text-center text-xs font-mono text-[#7FCFD4] tracking-[0.2em] uppercase mb-6">Recent work</p>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -139,8 +140,8 @@ export default function Page() {
           </div>
         </section>
 
-        {/* ═══════════ SHOP CATEGORIES ═══════════ */}
-        <section className="pb-10 sm:pb-14">
+        {/* ═══════════ SHOP CATEGORIES (base teal band) ═══════════ */}
+        <section className="bg-[#16525C] border-t border-white/[0.06] py-12 sm:py-14">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl font-bold text-[#E7DFCB] text-center mb-8">Shop by category</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -151,10 +152,10 @@ export default function Page() {
           </div>
         </section>
 
-        {/* ═══════════ HOW IT WORKS ═══════════ */}
-        <section className="pb-12 sm:pb-16">
+        {/* ═══════════ HOW IT WORKS (dusty coral band) ═══════════ */}
+        <section className="bg-[#C25A4B] border-t border-white/[0.06] py-14 sm:py-16">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl font-bold text-[#E7DFCB] text-center mb-8">How it works</h2>
+            <h2 className="text-2xl font-bold text-white text-center mb-8">How it works</h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
               {[
                 { n: 1, h: 'Pick or text', p: 'Order from the shop, or use Bring Your Own — $35 to engrave something you already have.' },
@@ -162,11 +163,11 @@ export default function Page() {
                 { n: 3, h: 'Hand-delivered', p: 'I bring it to your door across the south Denver metro. Free over $100.' },
               ].map((step) => (
                 <div key={step.n}>
-                  <div className="w-10 h-10 rounded-full bg-[#7FCFD4]/15 border border-[#7FCFD4]/20 flex items-center justify-center mb-3 mx-auto">
-                    <span className="text-[#7FCFD4] font-bold">{step.n}</span>
+                  <div className="w-10 h-10 rounded-full bg-white/15 border border-white/30 flex items-center justify-center mb-3 mx-auto">
+                    <span className="text-white font-bold">{step.n}</span>
                   </div>
-                  <h3 className="font-semibold text-[#E7DFCB] mb-1">{step.h}</h3>
-                  <p className="text-gray-400 text-sm leading-relaxed">{step.p}</p>
+                  <h3 className="font-semibold text-white mb-1">{step.h}</h3>
+                  <p className="text-white/85 text-sm leading-relaxed">{step.p}</p>
                 </div>
               ))}
             </div>
@@ -174,7 +175,7 @@ export default function Page() {
         </section>
 
         {/* ═══════════ SERVICES — the anchored business half ═══════════ */}
-        <section id="services" className="relative bg-vurmz-dark border-t border-white/[0.08] scroll-mt-16">
+        <section id="services" className="relative bg-[#123F47] border-t border-white/[0.08] scroll-mt-16">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
             <p className="text-xs font-mono text-vurmz-teal tracking-[0.25em] uppercase mb-3">For your work</p>
             <h2 className="text-3xl sm:text-4xl font-bold text-cream tracking-tight leading-tight mb-4">
@@ -224,25 +225,25 @@ export default function Page() {
           </div>
         </section>
 
-        {/* ═══════════ ABOUT ═══════════ */}
-        <section className="bg-vurmz-dark border-t border-white/[0.06]">
+        {/* ═══════════ ABOUT (oatmeal band, dark text) ═══════════ */}
+        <section className="bg-[#E7DFCB] border-t border-black/5">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
               <div className="relative aspect-[4/3] overflow-hidden rounded-sm">
                 <Image src="/images/zach.jpeg" alt={`${siteInfo.founder.name}, owner of VURMZ`} fill className="object-cover" />
                 <div className="absolute bottom-4 left-4">
-                  <span className="text-xs font-mono text-cream/60 tracking-wider uppercase">{siteInfo.founder.name} &middot; Owner</span>
+                  <span className="text-xs font-mono text-white/80 tracking-wider uppercase drop-shadow">{siteInfo.founder.name} &middot; Owner</span>
                 </div>
               </div>
               <div>
-                <p className="text-xs font-mono text-vurmz-teal tracking-[0.2em] uppercase mb-4">Who I Am</p>
-                <h2 className="text-2xl sm:text-3xl font-bold text-cream tracking-tight leading-tight mb-4">
-                  No department.<br /><span className="text-gray-500">Just me.</span>
+                <p className="text-xs font-mono text-[#16525C] tracking-[0.2em] uppercase mb-4">Who I Am</p>
+                <h2 className="text-2xl sm:text-3xl font-bold text-[#16525C] tracking-tight leading-tight mb-4">
+                  No department.<br /><span className="text-[#16525C]/50">Just me.</span>
                 </h2>
-                <p className="text-gray-400 text-base leading-relaxed mb-4">
+                <p className="text-[#4f5d5b] text-base leading-relaxed mb-4">
                   I&apos;m {siteInfo.founder.name}, and I run VURMZ out of {siteInfo.city}. You text me, I quote you, I engrave it, and I hand it to you. No middlemen at any step.
                 </p>
-                <Link href="/about" className="inline-flex items-center gap-2 text-vurmz-teal font-semibold text-sm hover:gap-3 transition-all">
+                <Link href="/about" className="inline-flex items-center gap-2 text-[#C25A4B] font-semibold text-sm hover:gap-3 transition-all">
                   About VURMZ
                   <ArrowRightIcon className="w-4 h-4" />
                 </Link>
@@ -251,15 +252,15 @@ export default function Page() {
           </div>
         </section>
 
-        {/* ═══════════ TESTIMONIALS ═══════════ */}
-        <section className="bg-vurmz-dark border-t border-white/[0.06]">
+        {/* ═══════════ TESTIMONIALS (base teal band) ═══════════ */}
+        <section className="bg-[#16525C] border-t border-white/[0.06]">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16">
             <TestimonialCarousel testimonials={shopTestimonials} theme="services" />
           </div>
         </section>
 
-        {/* ═══════════ CONTACT ═══════════ */}
-        <section id="contact" className="bg-vurmz-dark border-t border-white/[0.06] scroll-mt-16">
+        {/* ═══════════ CONTACT (darker teal band) ═══════════ */}
+        <section id="contact" className="bg-[#123F47] border-t border-white/[0.06] scroll-mt-16">
           <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16">
             <p className="text-xs font-mono text-vurmz-teal tracking-[0.2em] uppercase mb-3 text-center">Contact</p>
             <h2 className="text-2xl sm:text-3xl font-bold text-cream tracking-tight mb-2 text-center">
