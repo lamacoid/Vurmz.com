@@ -124,7 +124,7 @@ export default function Page() {
         </section>
 
         {/* ═══════════ RECENT WORK (darker teal band) ═══════════ */}
-        <section className="bg-[#123F47] border-t border-white/[0.06] py-12 sm:py-14">
+        <section className="band-teal-deep border-t border-white/[0.06] py-12 sm:py-14">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <p className="text-center text-xs font-mono text-[#7FCFD4] tracking-[0.2em] uppercase mb-6">Recent work</p>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -141,9 +141,9 @@ export default function Page() {
         </section>
 
         {/* ═══════════ SHOP CATEGORIES (base teal band) ═══════════ */}
-        <section className="bg-[#16525C] border-t border-white/[0.06] py-12 sm:py-14">
+        <section className="band-teal border-t border-white/[0.06] py-12 sm:py-14">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl font-bold text-[#E7DFCB] text-center mb-8">Shop by category</h2>
+            <h2 className="text-2xl font-bold text-[#DED6C3] text-center mb-8">Shop by category</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {CONSUMER_CATEGORIES.map((cat) => (
                 <CategoryCard key={cat.slug} category={cat} />
@@ -175,7 +175,7 @@ export default function Page() {
         </section>
 
         {/* ═══════════ SERVICES — the anchored business half ═══════════ */}
-        <section id="services" className="relative bg-[#123F47] border-t border-white/[0.08] scroll-mt-16">
+        <section id="services" className="relative band-teal-deep border-t border-white/[0.08] scroll-mt-16">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
             <p className="text-xs font-mono text-vurmz-teal tracking-[0.25em] uppercase mb-3">For your work</p>
             <h2 className="text-3xl sm:text-4xl font-bold text-cream tracking-tight leading-tight mb-4">
@@ -226,7 +226,7 @@ export default function Page() {
         </section>
 
         {/* ═══════════ ABOUT (oatmeal band, dark text) ═══════════ */}
-        <section className="bg-[#E7DFCB] border-t border-black/5">
+        <section className="bg-[#DED6C3] border-t border-black/5">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
               <div className="relative aspect-[4/3] overflow-hidden rounded-sm">
@@ -253,14 +253,14 @@ export default function Page() {
         </section>
 
         {/* ═══════════ TESTIMONIALS (base teal band) ═══════════ */}
-        <section className="bg-[#16525C] border-t border-white/[0.06]">
+        <section className="band-teal border-t border-white/[0.06]">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16">
             <TestimonialCarousel testimonials={shopTestimonials} theme="services" />
           </div>
         </section>
 
         {/* ═══════════ CONTACT (darker teal band) ═══════════ */}
-        <section id="contact" className="bg-[#123F47] border-t border-white/[0.06] scroll-mt-16">
+        <section id="contact" className="band-teal-deep border-t border-white/[0.06] scroll-mt-16">
           <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16">
             <p className="text-xs font-mono text-vurmz-teal tracking-[0.2em] uppercase mb-3 text-center">Contact</p>
             <h2 className="text-2xl sm:text-3xl font-bold text-cream tracking-tight mb-2 text-center">

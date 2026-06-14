@@ -177,7 +177,7 @@ export default function PageEditor({ initial }: { initial: Page }) {
         </div>
         <div className="flex-1 overflow-auto flex justify-center py-4">
           <div
-            className="bg-[color:var(--t-bg,#143E38)] text-[color:var(--t-cream,#E7DFCB)] border border-white/10 rounded overflow-hidden transition-all"
+            className="bg-[color:var(--t-bg,#143E38)] text-[color:var(--t-cream,#DED6C3)] border border-white/10 rounded overflow-hidden transition-all"
             style={{ width: viewportWidth, minHeight: '80vh' }}
           >
             {renderBlocks(blocks)}

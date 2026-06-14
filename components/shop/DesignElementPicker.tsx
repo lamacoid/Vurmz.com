@@ -59,7 +59,7 @@ export default function DesignElementPicker({
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={selected.thumb} alt={selected.label} className="h-12 w-12 object-contain bg-[#f0ebe0] rounded-sm p-1" />
           <div className="text-xs">
-            <p className="text-[#E7DFCB] font-medium">{selected.label}</p>
+            <p className="text-[#DED6C3] font-medium">{selected.label}</p>
             <p className="text-gray-500">{selected.category}</p>
           </div>
         </div>
@@ -72,7 +72,7 @@ export default function DesignElementPicker({
             value={query}
             onChange={e => setQuery(e.target.value)}
             placeholder="Search designs (anchor, rose, skull…)"
-            className="w-full bg-white/[0.06] border border-white/15 rounded-sm px-3 py-2 text-sm text-[#E7DFCB] placeholder:text-gray-500 outline-none focus:border-[#C67A6F]"
+            className="w-full bg-white/[0.06] border border-white/15 rounded-sm px-3 py-2 text-sm text-[#DED6C3] placeholder:text-gray-500 outline-none focus:border-[#C67A6F]"
           />
           {!query && (
             <div className="flex flex-wrap gap-1.5 mt-2">
@@ -82,7 +82,7 @@ export default function DesignElementPicker({
                   type="button"
                   onClick={() => setCat(c)}
                   className={`text-[11px] px-2.5 py-1 rounded-full border transition-colors ${
-                    c === cat ? 'border-[#7FCFD4]/50 bg-[#7FCFD4]/15 text-[#E7DFCB]' : 'border-white/10 text-gray-400 hover:text-[#E7DFCB]'
+                    c === cat ? 'border-[#7FCFD4]/50 bg-[#7FCFD4]/15 text-[#DED6C3]' : 'border-white/10 text-gray-400 hover:text-[#DED6C3]'
                   }`}
                 >
                   {c}

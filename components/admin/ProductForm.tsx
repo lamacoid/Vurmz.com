@@ -264,7 +264,7 @@ export default function ProductForm({ initial }: { initial: ProductDraft }) {
                         ? a === 'services'
                           ? 'bg-[#7FCFD4]/20 border-[#7FCFD4] text-[#7FCFD4]'
                           : a === 'both'
-                          ? 'bg-[#E7DFCB]/10 border-[#E7DFCB]/30 text-[#E7DFCB]'
+                          ? 'bg-[#DED6C3]/10 border-[#DED6C3]/30 text-[#DED6C3]'
                           : 'bg-[#C46B4D]/20 border-[#C46B4D] text-[#C46B4D]'
                         : 'bg-white/5 border-white/10 text-gray-400 hover:text-cream'
                     }`}

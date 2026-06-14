@@ -53,7 +53,7 @@ export default function CategoryCard({ category: cat, compact }: CategoryCardPro
           )}
         </div>
         <div className="p-4">
-          <h3 className="text-sm font-bold text-[#E7DFCB]">{cat.name}</h3>
+          <h3 className="text-sm font-bold text-[#DED6C3]">{cat.name}</h3>
           <span className="text-[#C67A6F] font-bold text-xs">{price}</span>
         </div>
       </Link>
@@ -82,7 +82,7 @@ export default function CategoryCard({ category: cat, compact }: CategoryCardPro
 
       <div className="p-5">
         <Link href={`/shop/${cat.slug}`}>
-          <h3 className="text-lg font-bold text-[#E7DFCB] mb-1.5 group-hover:text-[#C67A6F] transition-colors">{cat.name}</h3>
+          <h3 className="text-lg font-bold text-[#DED6C3] mb-1.5 group-hover:text-[#C67A6F] transition-colors">{cat.name}</h3>
         </Link>
         <p className="text-gray-400 text-sm leading-relaxed mb-2">{cat.tagline}</p>
         {cat.cardDescription && (
@@ -91,7 +91,7 @@ export default function CategoryCard({ category: cat, compact }: CategoryCardPro
         {cat.serviceLink && (
           <Link
             href={cat.serviceLink.href}
-            className="inline-flex items-center gap-1 text-xs text-[#7FCFD4] font-mono tracking-wide hover:text-[#E7DFCB] transition-colors mb-4"
+            className="inline-flex items-center gap-1 text-xs text-[#7FCFD4] font-mono tracking-wide hover:text-[#DED6C3] transition-colors mb-4"
           >
             {cat.serviceLink.label}
             <ArrowRightIcon className="w-3 h-3" />
@@ -106,7 +106,7 @@ export default function CategoryCard({ category: cat, compact }: CategoryCardPro
           <div className="flex items-center gap-2">
             <Link
               href={`/shop/${cat.slug}`}
-              className="inline-flex items-center gap-1 text-xs text-gray-300 font-semibold px-3 py-1.5 border border-white/15 rounded-sm hover:border-[#C67A6F]/40 hover:text-[#E7DFCB] transition-colors"
+              className="inline-flex items-center gap-1 text-xs text-gray-300 font-semibold px-3 py-1.5 border border-white/15 rounded-sm hover:border-[#C67A6F]/40 hover:text-[#DED6C3] transition-colors"
             >
               Details
               <ArrowRightIcon className="w-3 h-3" />

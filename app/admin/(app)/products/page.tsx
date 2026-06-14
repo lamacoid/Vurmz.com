@@ -83,7 +83,7 @@ function Row({ product, media, onToggle }: { product: Product; media: Map<string
             <span className={`text-[9px] px-1.5 py-0.5 rounded font-semibold uppercase tracking-wider flex-shrink-0 ${
               product.soldAt
                 ? 'bg-[#C46B4D]/20 text-[#C46B4D] border border-[#C46B4D]/30'
-                : 'bg-[#E7DFCB]/15 text-[#E7DFCB] border border-[#E7DFCB]/20'
+                : 'bg-[#DED6C3]/15 text-[#DED6C3] border border-[#DED6C3]/20'
             }`}>
               {product.soldAt ? 'Sold' : 'One-off'}
             </span>
@@ -98,7 +98,7 @@ function Row({ product, media, onToggle }: { product: Product; media: Map<string
         product.audience === 'services'
           ? 'bg-[#7FCFD4]/15 text-[#7FCFD4]'
           : product.audience === 'both'
-          ? 'bg-[#E7DFCB]/10 text-[#E7DFCB]'
+          ? 'bg-[#DED6C3]/10 text-[#DED6C3]'
           : 'bg-[#C46B4D]/15 text-[#C46B4D]'
       }`}>
         {product.audience === 'both' ? 'Both' : product.audience === 'services' ? 'Services' : 'Shop'}

@@ -37,7 +37,7 @@ export default async function BlockRenderedPage({
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: themeCss }} />
-      <main className="min-h-screen bg-[color:var(--t-bg,#143E38)] text-[color:var(--t-cream,#E7DFCB)]">
+      <main className="min-h-screen bg-[color:var(--t-bg,#143E38)] text-[color:var(--t-cream,#DED6C3)]">
         {renderBlocks(blocks as Block[])}
       </main>
     </>

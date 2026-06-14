@@ -49,7 +49,7 @@ export default function EngravingPicker({
   return (
     <div className="mb-5 rounded-sm border border-white/10 bg-white/[0.03] p-4">
       <div className="flex items-center justify-between mb-2">
-        <span className="text-xs font-semibold uppercase tracking-wider text-[#E7DFCB]">Add engraving</span>
+        <span className="text-xs font-semibold uppercase tracking-wider text-[#DED6C3]">Add engraving</span>
         <span className="text-[11px] text-gray-500">optional</span>
       </div>
 
@@ -59,7 +59,7 @@ export default function EngravingPicker({
         maxLength={maxLength}
         onChange={e => onChange({ ...value, text: e.target.value })}
         placeholder="Name, date, message…"
-        className="w-full bg-white/[0.06] border border-white/15 rounded-sm px-3 py-2.5 text-sm text-[#E7DFCB] placeholder:text-gray-500 outline-none focus:border-[#C67A6F]"
+        className="w-full bg-white/[0.06] border border-white/15 rounded-sm px-3 py-2.5 text-sm text-[#DED6C3] placeholder:text-gray-500 outline-none focus:border-[#C67A6F]"
       />
       <div className="flex items-center justify-between mt-1">
         <span className="text-[11px] text-gray-500">Leave blank for no engraving</span>
@@ -71,7 +71,7 @@ export default function EngravingPicker({
         <select
           value={value.fontValue}
           onChange={e => onChange({ ...value, fontValue: e.target.value })}
-          className="w-full bg-white/[0.06] border border-white/15 rounded-sm px-3 py-2.5 text-sm text-[#E7DFCB] outline-none focus:border-[#C67A6F]"
+          className="w-full bg-white/[0.06] border border-white/15 rounded-sm px-3 py-2.5 text-sm text-[#DED6C3] outline-none focus:border-[#C67A6F]"
         >
           {CATEGORY_ORDER.map(cat => {
             const opts = fontsByCategory[cat]
@@ -95,7 +95,7 @@ export default function EngravingPicker({
           maxLength={200}
           onChange={e => onChange({ ...value, placement: e.target.value })}
           placeholder="e.g. centered on the blade, about 1 inch, match my logo"
-          className="w-full bg-white/[0.06] border border-white/15 rounded-sm px-3 py-2.5 text-sm text-[#E7DFCB] placeholder:text-gray-500 outline-none focus:border-[#C67A6F]"
+          className="w-full bg-white/[0.06] border border-white/15 rounded-sm px-3 py-2.5 text-sm text-[#DED6C3] placeholder:text-gray-500 outline-none focus:border-[#C67A6F]"
         />
         <span className="text-[11px] text-gray-500 block mt-1">Not sure? Leave it blank and I&apos;ll pick the spot that looks best.</span>
       </label>
@@ -124,7 +124,7 @@ export default function EngravingPicker({
           /* eslint-disable-next-line @next/next/no-img-element */
           <img src={value.element.thumb} alt={value.element.label} className={`mx-auto mb-2 h-16 w-16 object-contain ${darkPreview ? 'invert' : ''}`} />
         )}
-        <span className={`text-2xl leading-tight break-words ${darkPreview ? 'text-[#E7DFCB]' : 'text-[#1a2f2e]'}`} style={selected.style}>
+        <span className={`text-2xl leading-tight break-words ${darkPreview ? 'text-[#DED6C3]' : 'text-[#1a2f2e]'}`} style={selected.style}>
           {value.text.trim() || (value.element ? '' : 'Your text here')}
         </span>
       </div>

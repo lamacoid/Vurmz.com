@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function CheckoutLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="bg-[#E7DFCB] text-[#16525C] min-h-screen" data-theme="shop">
+    <div className="bg-[#DED6C3] text-[#16525C] min-h-screen" data-theme="shop">
       {children}
     </div>
   )
