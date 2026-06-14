@@ -12,6 +12,7 @@ import CategoryCard from '@/components/CategoryCard'
 import TestimonialCarousel from '@/components/TestimonialCarousel'
 import TrustedBy from '@/components/TrustedBy'
 import ContactForm from '@/components/ContactForm'
+import RotatingHeroBg from '@/components/RotatingHeroBg'
 import GlassImage from '@/components/shop/GlassImage'
 
 // Single-page homepage: one brand, one scroll — shop first, then the anchored
@@ -55,8 +56,10 @@ export default function Page() {
 
       <SiteHeader variant="shop" />
       <main id="main-content">
-        {/* ═══════════ HERO — animated teal VURMZ logo (compact, not a giant hero) ═══════════ */}
+        {/* ═══════════ HERO — animated teal VURMZ logo over rotating work photos ═══════════ */}
         <section className="relative px-4 pt-32 sm:pt-36 pb-12 sm:pb-14 text-center overflow-hidden">
+          <RotatingHeroBg baseColor="#1A4F48" />
+          <div className="relative z-10">
           <h1 className="sr-only">VURMZ — Laser Engraving in {siteInfo.address}</h1>
           {/* Animated teal gradient visible only through the logo shape */}
           <div className="relative h-14 sm:h-[72px] mx-auto mb-6 w-[280px]">
@@ -104,6 +107,7 @@ export default function Page() {
             </a>
           </div>
           <p className="text-gray-400 text-sm mt-4">Prices on the site. No quote forms that go nowhere.</p>
+          </div>
         </section>
 
         {/* ═══════════ RECENT WORK ═══════════ */}

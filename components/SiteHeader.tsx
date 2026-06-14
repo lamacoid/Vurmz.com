@@ -8,9 +8,9 @@ import { siteInfo, getSmsLink } from '@/lib/site-info'
 import CartButton from '@/components/shop/CartButton'
 
 const NAV_LINKS = [
+  // Pricing lives ON the services page now — no separate nav item.
   { label: 'Shop', href: '/shop' },
   { label: 'Services', href: '/services' },
-  { label: 'Pricing', href: '/services' },
   { label: 'Portfolio', href: '/services/portfolio' },
   { label: 'About', href: '/about' },
   { label: 'Contact', href: '/services/contact' },
@@ -31,7 +31,7 @@ export default function SiteHeader({ variant = 'services' }: { variant?: 'shop' 
   // Shop now shares the landing/services dark teal scheme, but keeps its coral accent.
   const headerBg = isShop
     ? scrolled ? 'bg-[#1A4F48]/90 backdrop-blur-2xl border-b border-white/10 shadow-lg shadow-black/10' : 'bg-transparent'
-    : scrolled ? 'bg-[#1f474e]/90 backdrop-blur-2xl border-b border-white/10 shadow-lg shadow-black/10' : 'bg-transparent'
+    : scrolled ? 'bg-[#1A4F48]/90 backdrop-blur-2xl border-b border-white/10 shadow-lg shadow-black/10' : 'bg-transparent'
 
   const textColor = isShop ? 'text-gray-300' : 'text-gray-400'
   const hoverColor = isShop ? 'hover:text-[#E95C4E]' : 'hover:text-vurmz-cta'
