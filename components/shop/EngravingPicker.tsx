@@ -94,7 +94,7 @@ export default function EngravingPicker({
           value={value.placement}
           maxLength={200}
           onChange={e => onChange({ ...value, placement: e.target.value })}
-          placeholder="e.g. centered on the blade, about 1 inch, match my logo"
+          placeholder="e.g. centered, about 1 inch — or match my logo"
           className="w-full bg-white/[0.06] border border-white/15 rounded-sm px-3 py-2.5 text-sm text-[#DED6C3] placeholder:text-gray-500 outline-none focus:border-[#C67A6F]"
         />
         <span className="text-[11px] text-gray-500 block mt-1">Not sure? Leave it blank and I&apos;ll pick the spot that looks best.</span>
