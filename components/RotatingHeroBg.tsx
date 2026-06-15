@@ -34,6 +34,13 @@ export default function RotatingHeroBg({ baseColor = '#16525C' }: { baseColor?: 
         </div>
       ))}
       <div className="absolute inset-0" style={{ backgroundColor: `${baseColor}73` }} />
+      {/* Top fade — dissolves the photo up into the page's base teal so it
+          blends seamlessly into the nav area (which sits on the same color)
+          instead of meeting it with a hard line. */}
+      <div
+        className="absolute top-0 left-0 right-0 h-1/3"
+        style={{ background: `linear-gradient(to top, transparent 0%, ${baseColor} 88%)` }}
+      />
       <div
         className="absolute bottom-0 left-0 right-0 h-1/2"
         style={{ background: `linear-gradient(to bottom, transparent 0%, ${baseColor} 90%)` }}
