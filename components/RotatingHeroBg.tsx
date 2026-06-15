@@ -11,7 +11,11 @@ const IMAGES = portfolioItems.map((i) => ({ src: i.src, alt: i.label }))
  * page's base color at the bottom. Client-only (timer); drop it as the first,
  * absolutely-positioned child of a `relative overflow-hidden` hero section.
  */
-export default function RotatingHeroBg({ baseColor = '#16525C' }: { baseColor?: string }) {
+export default function RotatingHeroBg({ baseColor = '#16525C', bottomColor }: { baseColor?: string; bottomColor?: string }) {
+  // The bottom fade can dissolve into a different color than the top/film when
+  // the section *below* the hero is a different shade (e.g. the darker Recent
+  // work band), so the seam disappears at both edges.
+  const bottom = bottomColor ?? baseColor
   const [i, setI] = useState(0)
   useEffect(() => {
     const t = setInterval(() => setI((p) => (p + 1) % IMAGES.length), 5000)
@@ -43,7 +47,7 @@ export default function RotatingHeroBg({ baseColor = '#16525C' }: { baseColor?: 
       />
       <div
         className="absolute bottom-0 left-0 right-0 h-1/2"
-        style={{ background: `linear-gradient(to bottom, transparent 0%, ${baseColor} 90%)` }}
+        style={{ background: `linear-gradient(to bottom, transparent 0%, ${bottom} 90%)` }}
       />
     </div>
   )
