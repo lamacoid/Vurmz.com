@@ -42,12 +42,12 @@ export default function RotatingHeroBg({ baseColor = '#16525C', bottomColor }: {
           blends seamlessly into the nav area (which sits on the same color)
           instead of meeting it with a hard line. */}
       <div
-        className="absolute top-0 left-0 right-0 h-1/3"
-        style={{ background: `linear-gradient(to top, transparent 0%, ${baseColor} 88%)` }}
+        className="absolute top-0 left-0 right-0 h-20"
+        style={{ background: `linear-gradient(to top, transparent 0%, ${baseColor} 70%)` }}
       />
       <div
-        className="absolute bottom-0 left-0 right-0 h-1/2"
-        style={{ background: `linear-gradient(to bottom, transparent 0%, ${bottom} 90%)` }}
+        className="absolute bottom-0 left-0 right-0 h-24"
+        style={{ background: `linear-gradient(to bottom, transparent 0%, ${bottom} 70%)` }}
       />
     </div>
   )
