@@ -155,9 +155,9 @@ export default function Page() {
             <h2 className="text-2xl font-bold text-white text-center mb-8">How it works</h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
               {[
-                { n: 1, h: 'Pick or text', p: 'Order from the shop, or use Bring Your Own — $35 to engrave something you already have.' },
-                { n: 2, h: 'Approve the proof', p: 'I send a proof photo before anything runs. Nothing engraves until you sign off.' },
-                { n: 3, h: 'Hand-delivered', p: 'I bring it to your door across the south Denver metro. Free over $100.' },
+                { n: 1, h: 'Pick or text', p: 'Buy a ready product from the shop, or text me to engrave something you bring — from $35.' },
+                { n: 2, h: 'Approve your proof', p: 'Before anything is cut, I send a photo. Nothing runs until you say go.' },
+                { n: 3, h: 'Delivered to you', p: 'Hand-delivered free across the south Denver metro ($100+), or shipped if you’re farther out.' },
               ].map((step) => (
                 <div key={step.n}>
                   <div className="w-10 h-10 rounded-full bg-white/15 border border-white/30 flex items-center justify-center mb-3 mx-auto puffy">
