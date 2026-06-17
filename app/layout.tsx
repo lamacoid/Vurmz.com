@@ -3,6 +3,7 @@ import { Inter, Fraunces } from 'next/font/google'
 import './globals.css'
 import './fonts.css'
 import LocalTicker from '@/components/LocalTicker'
+import LaserCursor from '@/components/LaserCursor'
 import { CartProvider } from '@/lib/cart/store'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -183,6 +184,7 @@ export default function RootLayout({
         <CartProvider>
           <main id="main-content">{children}</main>
         </CartProvider>
+        <LaserCursor />
       </body>
     </html>
   )
