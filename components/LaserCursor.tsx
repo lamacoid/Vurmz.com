@@ -105,7 +105,7 @@ export default function LaserCursor() {
 
   // Armed (over something clickable) = locked on: head races faster + a faint
   // red fill, like the laser ready to fire.
-  const dur = armed ? 0.22 : 0.36
+  const dur = armed ? 0.022 : 0.036
 
   return (
     <>

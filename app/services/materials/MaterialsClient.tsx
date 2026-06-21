@@ -6,7 +6,6 @@ import { ShoppingBagIcon, HandRaisedIcon, WrenchScrewdriverIcon } from '@heroico
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import Link from 'next/link'
-import Image from 'next/image'
 
 const fadeUp = {
   initial: { opacity: 0, y: 20 },
@@ -187,11 +186,11 @@ export default function MaterialsClient() {
         </div>
       </section>
 
-      {/* Capabilities Grid */}
-      <section className="pb-16 sm:pb-20">
+      {/* Capabilities Grid — oatmeal band to break up the teal */}
+      <section className="bg-[#DED6C3] py-16 sm:py-20 border-y border-black/5">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-100 tracking-tight mb-2">What I can engrave</h2>
-          <p className="text-gray-400 text-sm mb-8 max-w-lg">
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#16525C] tracking-tight mb-2">What I can engrave</h2>
+          <p className="text-[#4f5d5b] text-sm mb-8 max-w-lg">
             Metal, wood, glass, acrylic, leather, plastic, stone. If it&apos;s solid, I can mark it.
           </p>
 
@@ -200,28 +199,17 @@ export default function MaterialsClient() {
             initial="initial"
             whileInView="animate"
             viewport={{ once: true }}
-            className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
           >
             {CAPABILITIES.map((cap) => (
               <motion.div
                 key={cap.name}
                 variants={fadeUp}
                 transition={{ duration: 0.35 }}
-                className="bg-white/[0.04] border border-white/[0.08] rounded-sm overflow-hidden"
+                className="bg-white/70 border border-[#16525C]/12 rounded-sm p-4 hover:border-[#C67A6F]/50 transition-colors puffy-light"
               >
-                <div className="aspect-square bg-[#1a2e2c] overflow-hidden relative">
-                  <Image
-                    src={cap.image}
-                    alt={cap.name}
-                    fill
-                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
-                    className="object-cover"
-                  />
-                </div>
-                <div className="p-3">
-                  <h3 className="text-[13px] font-semibold text-gray-100 leading-tight">{cap.name}</h3>
-                  <p className="text-[11px] text-gray-500 mt-1 leading-relaxed line-clamp-2">{cap.description}</p>
-                </div>
+                <h3 className="text-sm font-semibold text-[#16525C] leading-tight">{cap.name}</h3>
+                <p className="text-xs text-[#5a655f] mt-1.5 leading-relaxed">{cap.description}</p>
               </motion.div>
             ))}
           </motion.div>
