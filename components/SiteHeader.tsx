@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { Bars3Icon, XMarkIcon, ChatBubbleLeftIcon, UserIcon } from '@heroicons/react/24/outline'
+import { ChatBubbleOvalLeftEllipsisIcon } from '@heroicons/react/24/solid'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 import CartButton from '@/components/shop/CartButton'
 
@@ -53,7 +54,7 @@ export default function SiteHeader({ variant = 'services' }: { variant?: 'shop' 
             </Link>
 
             {/* Desktop nav */}
-            <div className="hidden md:flex items-center gap-0.5">
+            <div className="hidden lg:flex items-center gap-0.5">
               {NAV_LINKS.map((link) => (
                 <Link
                   key={link.href}
@@ -66,7 +67,7 @@ export default function SiteHeader({ variant = 'services' }: { variant?: 'shop' 
             </div>
 
             {/* Right side */}
-            <div className="hidden md:flex items-center gap-4">
+            <div className="hidden lg:flex items-center gap-3">
               {isShop && <CartButton />}
               <Link
                 href="/account"
@@ -76,8 +77,12 @@ export default function SiteHeader({ variant = 'services' }: { variant?: 'shop' 
                 <UserIcon className="w-4 h-4" />
                 <span>Account</span>
               </Link>
-              <a href={getSmsLink()} className={`text-[13px] ${textColor} hover:text-current transition-colors font-medium flex items-center gap-1.5`}>
-                <ChatBubbleLeftIcon className="w-3.5 h-3.5" />
+              <a
+                href={getSmsLink()}
+                aria-label={`Text ${siteInfo.phone}`}
+                className="inline-flex flex-shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full bg-[#0B93F6] hover:bg-[#0A84FF] pl-2.5 pr-3.5 py-1.5 text-[13px] font-semibold text-white shadow-sm shadow-black/20 transition-colors"
+              >
+                <ChatBubbleOvalLeftEllipsisIcon className="w-5 h-5" />
                 {siteInfo.phone}
               </a>
             </div>
@@ -85,7 +90,7 @@ export default function SiteHeader({ variant = 'services' }: { variant?: 'shop' 
             {/* Mobile menu button */}
             <button
               type="button"
-              className="md:hidden p-2 -mr-2 rounded-full transition-colors"
+              className="lg:hidden p-2 -mr-2 rounded-full transition-colors"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label="Toggle navigation menu"
               aria-expanded={mobileMenuOpen}
