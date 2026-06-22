@@ -29,20 +29,20 @@ export default function SiteHeader({ variant = 'services' }: { variant?: 'shop' 
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Shop now shares the landing/services dark teal scheme, but keeps its coral accent.
-  const headerBg = isShop
-    ? scrolled ? 'bg-[#16525C]/90 backdrop-blur-2xl border-b border-white/10 shadow-lg shadow-black/10' : 'bg-transparent'
-    : scrolled ? 'bg-[#16525C]/90 backdrop-blur-2xl border-b border-white/10 shadow-lg shadow-black/10' : 'bg-transparent'
+  // Mode-aware via tokens: light = paper header with teal ink, dark = old teal
+  // header with light ink. Coral hover accent in both.
+  const headerBg = scrolled
+    ? 'bg-[var(--header-bg)] backdrop-blur-2xl border-b border-[var(--header-border)] shadow-lg shadow-black/10'
+    : 'bg-transparent'
 
-  const textColor = isShop ? 'text-gray-300' : 'text-gray-400'
+  const textColor = 'text-[var(--ink-soft)]'
   const hoverColor = isShop ? 'hover:text-[#C67A6F]' : 'hover:text-vurmz-cta'
-  const logoFilter = 'brightness-0 invert'
   const logoSrc = '/images/vurmz-logo-full.svg'
 
-  const mobileBg = isShop ? 'bg-[#102f33] border-white/10' : 'bg-[#162524] border-white/10'
-  const mobileText = isShop ? 'text-gray-300' : 'text-gray-300'
-  const mobileHover = isShop ? 'hover:text-[#C67A6F] hover:bg-white/[0.06]' : 'hover:text-vurmz-cta hover:bg-white/[0.06]'
-  const menuIcon = isShop ? 'text-gray-300' : 'text-gray-300'
+  const mobileBg = 'bg-[var(--surface)] border-[var(--hairline)]'
+  const mobileText = 'text-[var(--ink-soft)]'
+  const mobileHover = isShop ? 'hover:text-[#C67A6F] hover:bg-[var(--ink)]/5' : 'hover:text-vurmz-cta hover:bg-[var(--ink)]/5'
+  const menuIcon = 'text-[var(--ink-soft)]'
 
   return (
     <>
@@ -50,7 +50,7 @@ export default function SiteHeader({ variant = 'services' }: { variant?: 'shop' 
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16 sm:h-[72px]">
             <Link href="/" className="flex-shrink-0">
-              <Image src={logoSrc} alt="VURMZ" width={120} height={32} className={`h-7 sm:h-8 w-auto ${logoFilter}`} priority />
+              <Image src={logoSrc} alt="VURMZ" width={120} height={32} className="h-7 sm:h-8 w-auto" style={{ filter: 'var(--logo-filter)' }} priority />
             </Link>
 
             {/* Desktop nav */}

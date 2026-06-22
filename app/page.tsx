@@ -180,7 +180,7 @@ export default function Page() {
               <span className="text-gray-400">for businesses in the Denver metro.</span>
             </h2>
             <p className="text-gray-300 text-base sm:text-lg leading-relaxed max-w-2xl mb-10">
-              Next-day turnaround. Hand-to-hand delivery. Posted pricing — the competitors make you fill out a quote form to learn a number. I don&apos;t.
+              Posted prices. Most jobs in 24 to 72 hours. Hand-delivered across the metro.
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">

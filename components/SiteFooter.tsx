@@ -31,7 +31,7 @@ const ABOUT = [
 
 export default function SiteFooter() {
   return (
-    <footer className="bg-[#0a1716] border-t border-white/10">
+    <footer className="bg-[var(--feature-deep)] border-t border-[var(--hairline)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 sm:gap-10">
           {/* Brand */}
@@ -114,6 +114,9 @@ export default function SiteFooter() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center">
           <p className="text-vurmz-teal text-sm sm:text-base font-semibold tracking-wide italic">
             Need a guy with some lasers? That&apos;s me.
+          </p>
+          <p className="mt-3 text-xs text-gray-500">
+            Built from scratch. Powered by <span className="text-vurmz-teal font-medium">VURMZ | webWorks</span>
           </p>
         </div>
       </div>

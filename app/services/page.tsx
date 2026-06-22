@@ -254,7 +254,7 @@ export default function Home() {
             Four things set the price of a job. Material, because steel marks differently than wood and some blanks cost more than others. Quantity, because setup is the expensive part and piece fifty costs less than piece one. Artwork, because a clean vector file is ready to run and a blurry photo of a logo needs rebuild time. And turnaround, because next-day is standard but same-day rush is possible when the schedule allows.
           </p>
           <p className="text-gray-400 text-base leading-relaxed">
-            Send me what you&apos;re thinking and I&apos;ll give you a real number, usually within a few hours. No quote forms that go nowhere. No &ldquo;starting at&rdquo; pricing that doubles later. Free hand-delivery on orders over ${DELIVERY.freeThreshold} in the {DELIVERY.area}.
+            Send me what you&apos;re thinking and I&apos;ll get you a real number, usually within a few hours. Free hand-delivery on orders over ${DELIVERY.freeThreshold} in the {DELIVERY.area}.
           </p>
         </div>
       </section>

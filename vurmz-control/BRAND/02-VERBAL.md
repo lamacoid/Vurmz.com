@@ -19,6 +19,10 @@
 
 **Banned:** worth it, worth every penny, premium, the best, top-notch, bulletproof, elevate, dressed for company, impossible to ignore, cutting-edge, one-stop, seamless, unleash, game-changer, and any hype adjective. No cheesy filler. No AI-sounding cadence. No em-dashes.
 
+**No comparison.** Never define VURMZ against anyone else. Cut "unlike the big shops", "competitors make you...", "others do X". It is all me, zero outside influence. Say what I do, full stop.
+
+**Concise, like a nice restaurant menu.** Short, confident lines. No filler, no warm-up, no wind-down. If a word is not doing work, cut it.
+
 ### Grammar and mechanics
 - First person singular. "I", not "we". Talk to one person ("you").
 - Sentence case for body copy. Keep headlines plain, not shouty.

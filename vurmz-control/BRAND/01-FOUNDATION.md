@@ -20,10 +20,10 @@ VURMZ has no literal meaning. It started as a personal handle. That is a strengt
 **Secondary: individuals.** Gifts, bring-your-own engraving. Real, but not the headline.
 
 ### Laser Engraving: the purpose (the vibe)
-One guy who actually cares about getting it right for you. Fast, well ahead of the bigger shops. Straight, in-the-loop back and forth, no sales desk and no runaround. Real attention to detail on every piece. Not chasing one sale, but making your business look good so you keep coming back.
+One guy who actually cares about getting it right for you. Fast. Straight, in-the-loop back and forth, no sales desk and no runaround. Real attention to detail on every piece. Not chasing one sale, but making your business look good so you keep coming back.
 
 ### What makes it different (the promise)
-- **Fast.** Most jobs turn around in 24 to 72 hours, far quicker than the typical shop.
+- **Fast.** Most jobs turn around in 24 to 72 hours.
 - **Direct.** You talk to the person doing the work, not a sales desk.
 - **Collaborative.** You see a proof and sign off before anything runs. Your input drives it.
 - **Honest price.** Posted up front. No quote-form runaround.
@@ -41,6 +41,8 @@ One guy who actually cares about getting it right for you. Fast, well ahead of t
 - No AI-sounding language, ever. No em-dashes.
 - No hype or overstated claims. Say what it actually is.
 - Never claim it is "worth it", "the best", or "premium". The customer decides that. Do the work and show it.
+- No comparing to anyone else. No "unlike the big shops", no "competitors do X", no "others". It is all me. Say what I do, not what they do not.
+- Keep copy concise. Read like a nice restaurant menu: short, confident lines, no filler.
 - No cutesy or trademarked art.
 - Muted tones, not neon.
 

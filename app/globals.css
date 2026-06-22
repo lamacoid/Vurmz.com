@@ -17,6 +17,54 @@ body.is-admin > main {
   min-height: 100vh;
 }
 
+/* ── Brand color modes ──
+   Light is the default: paper (oatmeal) with teal ink. Dark flips back to the
+   old look: deep teal with oatmeal ink. Same palette, the background and ink
+   roles swap. Pages use these tokens (var(--page), var(--ink), ...) so they
+   respond to the system color-scheme preference. */
+:root {
+  --page: #DED6C3;
+  --ink: #16525C;
+  --ink-soft: #4F5D5B;
+  --surface: #FFFDF8;
+  --hairline: rgba(22, 82, 92, 0.14);
+  --feature: #16525C;
+  --feature-deep: #123F47;
+  --feature-ink: #DED6C3;
+  --feature-soft: rgba(222, 214, 195, 0.72);
+  --feature-accent: #7FCFD4;
+  --eyebrow: #C67A6F;
+  --header-bg: rgba(222, 214, 195, 0.85);
+  --header-border: rgba(22, 82, 92, 0.12);
+  --logo-filter: brightness(0);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --page: #16525C;
+    --ink: #DED6C3;
+    --ink-soft: rgba(222, 214, 195, 0.72);
+    --surface: #123F47;
+    --hairline: rgba(255, 255, 255, 0.08);
+    --feature: #123F47;
+    --feature-deep: #0E333A;
+    --feature-ink: #DED6C3;
+    --feature-soft: rgba(222, 214, 195, 0.72);
+    --feature-accent: #7FCFD4;
+    --eyebrow: #7FCFD4;
+    --header-bg: rgba(22, 82, 92, 0.9);
+    --header-border: rgba(255, 255, 255, 0.1);
+    --logo-filter: brightness(0) invert(1);
+  }
+}
+/* Faint paper grain on the page, light mode only. */
+body:not(.is-admin) {
+  background-color: var(--page);
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='200'%20height='200'%3E%3Cfilter%20id='g'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.8'%20numOctaves='2'%20stitchTiles='stitch'/%3E%3C/filter%3E%3Crect%20width='100%25'%20height='100%25'%20filter='url(%23g)'%20opacity='0.05'/%3E%3C/svg%3E");
+}
+@media (prefers-color-scheme: dark) {
+  body:not(.is-admin) { background-image: none; }
+}
+
 :root {
   /* VURMZ Brand Colors - Tempered Glass Aesthetic */
   --vurmz-teal: #7FCFD4;           /* Electric acid-teal (neon swamp accent) */
