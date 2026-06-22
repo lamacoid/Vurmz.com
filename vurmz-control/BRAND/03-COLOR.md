@@ -39,6 +39,12 @@ A visitor scrolls mostly warm paper, punctuated by deep teal feature blocks, wit
 - Links on paper: deep teal or coral. Links on dark teal: glassy teal.
 - Laser red: cursor and small precision marks only.
 
+### Light and dark
+Light mode is the default: paper with teal ink. Dark mode flips back to the old look: deep teal background, oatmeal and light text, glassy teal accents. Same palette, the roles of "background" and "ink" simply swap. Coral and laser red stay the same in both modes. Driven by the system or browser color-scheme preference.
+
+### Paper texture
+A very light paper grain on the oatmeal background, light mode only. A faint fractal-noise overlay at about 5 percent. It should read as fiber, not as a pattern. No texture in dark mode (the teal stays clean).
+
 ### Do and do not
 - Do let the paper breathe. White space reads warm here, not empty.
 - Do keep coral rare, so it still means "click."
