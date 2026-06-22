@@ -33,7 +33,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
   const price = (product.priceCents / 100).toFixed(2)
 
   return (
-    <div className="text-gray-300 min-h-screen">
+    <div className="text-[var(--ink-soft)] min-h-screen">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16">
         <Breadcrumbs
           items={[
@@ -46,28 +46,28 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
         />
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mt-8">
-          <div className="group relative aspect-square bg-white/[0.04] border border-white/10 rounded-sm overflow-hidden">
+          <div className="group relative aspect-square bg-[var(--surface)] border border-[var(--hairline)] rounded-sm overflow-hidden">
             {hero?.url ? (
               <GlassImage src={hero.url} alt={hero.altText || product.name} depth="product" plain className="absolute inset-0" />
             ) : (
-              <div className="w-full h-full flex items-center justify-center text-gray-500 text-sm">No image yet</div>
+              <div className="w-full h-full flex items-center justify-center text-[var(--ink-soft)] text-sm">No image yet</div>
             )}
           </div>
 
           <div>
-            <h1 className="text-3xl sm:text-4xl font-bold tracking-tight leading-tight mb-3 text-[#DED6C3]">{product.name}</h1>
+            <h1 className="text-3xl sm:text-4xl font-bold tracking-tight leading-tight mb-3 text-[var(--ink)]">{product.name}</h1>
             {product.shortDescription && (
-              <p className="text-gray-300 text-base leading-relaxed mb-5">{product.shortDescription}</p>
+              <p className="text-[var(--ink-soft)] text-base leading-relaxed mb-5">{product.shortDescription}</p>
             )}
 
             <div className="flex items-baseline gap-2 mb-6">
               <span className="text-3xl font-bold text-[#C67A6F]">${price}</span>
               {product.oneOff ? (
-                <span className="text-sm text-gray-400">one of a kind</span>
+                <span className="text-sm text-[var(--ink-soft)]">one of a kind</span>
               ) : product.packSize > 1 ? (
-                <span className="text-sm text-gray-400">pack of {product.packSize}</span>
+                <span className="text-sm text-[var(--ink-soft)]">pack of {product.packSize}</span>
               ) : (
-                <span className="text-sm text-gray-400">each</span>
+                <span className="text-sm text-[var(--ink-soft)]">each</span>
               )}
             </div>
 
@@ -78,7 +78,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
             )}
 
             {product.madeToOrder && product.leadTimeDays > 0 && (
-              <div className="inline-flex items-center gap-2 text-xs bg-white/[0.06] text-gray-200 px-3 py-1.5 rounded-sm mb-6">
+              <div className="inline-flex items-center gap-2 text-xs bg-[var(--surface)] text-[var(--ink)] px-3 py-1.5 rounded-sm mb-6">
                 Made to order · ready in {product.leadTimeDays} {product.leadTimeDays === 1 ? 'day' : 'days'}
               </div>
             )}
@@ -95,13 +95,13 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
             />
 
             {product.description && (
-              <div className="mt-10 pt-8 border-t border-white/10">
-                <h2 className="text-sm font-semibold uppercase tracking-wider text-gray-400 mb-3">Details</h2>
-                <div className="prose prose-sm prose-invert text-gray-300 whitespace-pre-wrap">{product.description}</div>
+              <div className="mt-10 pt-8 border-t border-[var(--hairline)]">
+                <h2 className="text-sm font-semibold uppercase tracking-wider text-[var(--ink-soft)] mb-3">Details</h2>
+                <div className="prose prose-sm prose-invert text-[var(--ink-soft)] whitespace-pre-wrap">{product.description}</div>
               </div>
             )}
 
-            <div className="mt-10 text-xs text-gray-400">
+            <div className="mt-10 text-xs text-[var(--ink-soft)]">
               Questions? <Link href="/shop/contact" className="text-[#C67A6F] hover:underline">Get in touch</Link>
             </div>
           </div>

@@ -40,9 +40,9 @@ export default function DesignElementPicker({
   if (CATALOG.length === 0) return null
 
   return (
-    <div className="mt-3 border-t border-white/10 pt-3">
+    <div className="mt-3 border-t border-[var(--hairline)] pt-3">
       <div className="flex items-center justify-between">
-        <span className="text-[11px] uppercase tracking-wider text-gray-400">Add a design <span className="text-gray-600 normal-case tracking-normal">({CATALOG.length} to choose from)</span></span>
+        <span className="text-[11px] uppercase tracking-wider text-[var(--ink-soft)]">Add a design <span className="text-gray-600 normal-case tracking-normal">({CATALOG.length} to choose from)</span></span>
         {selected ? (
           <button type="button" onClick={() => onSelect(null)} className="text-[11px] text-[#C67A6F] font-semibold hover:underline">
             Remove design
@@ -59,8 +59,8 @@ export default function DesignElementPicker({
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={selected.thumb} alt={selected.label} className="h-12 w-12 object-contain bg-[#f0ebe0] rounded-sm p-1" />
           <div className="text-xs">
-            <p className="text-[#DED6C3] font-medium">{selected.label}</p>
-            <p className="text-gray-500">{selected.category}</p>
+            <p className="text-[var(--ink)] font-medium">{selected.label}</p>
+            <p className="text-[var(--ink-soft)]">{selected.category}</p>
           </div>
         </div>
       )}
@@ -72,7 +72,7 @@ export default function DesignElementPicker({
             value={query}
             onChange={e => setQuery(e.target.value)}
             placeholder="Search designs (anchor, rose, skull…)"
-            className="w-full bg-white/[0.06] border border-white/15 rounded-sm px-3 py-2 text-sm text-[#DED6C3] placeholder:text-gray-500 outline-none focus:border-[#C67A6F]"
+            className="w-full bg-[var(--surface)] border border-[var(--hairline)] rounded-sm px-3 py-2 text-sm text-[var(--ink)] placeholder:text-[var(--ink-soft)] outline-none focus:border-[#C67A6F]"
           />
           {!query && (
             <div className="flex flex-wrap gap-1.5 mt-2">
@@ -82,7 +82,7 @@ export default function DesignElementPicker({
                   type="button"
                   onClick={() => setCat(c)}
                   className={`text-[11px] px-2.5 py-1 rounded-full border transition-colors ${
-                    c === cat ? 'border-[#7FCFD4]/50 bg-[#7FCFD4]/15 text-[#DED6C3]' : 'border-white/10 text-gray-400 hover:text-[#DED6C3]'
+                    c === cat ? 'border-[#7FCFD4]/50 bg-[#7FCFD4]/15 text-[var(--ink)]' : 'border-[var(--hairline)] text-[var(--ink-soft)] hover:text-[var(--ink)]'
                   }`}
                 >
                   {c}
@@ -97,13 +97,13 @@ export default function DesignElementPicker({
                 type="button"
                 onClick={() => { onSelect(el); setOpen(false); setQuery('') }}
                 title={el.label}
-                className="aspect-square rounded-sm border border-white/10 bg-[#f0ebe0] p-1.5 hover:border-[#7FCFD4] hover:ring-1 hover:ring-[#7FCFD4]/40 transition-all"
+                className="aspect-square rounded-sm border border-[var(--hairline)] bg-[#f0ebe0] p-1.5 hover:border-[#7FCFD4] hover:ring-1 hover:ring-[#7FCFD4]/40 transition-all"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={el.thumb} alt={el.label} loading="lazy" className="h-full w-full object-contain" />
               </button>
             ))}
-            {shown.length === 0 && <p className="col-span-full text-xs text-gray-500 py-4 text-center">No designs match that search.</p>}
+            {shown.length === 0 && <p className="col-span-full text-xs text-[var(--ink-soft)] py-4 text-center">No designs match that search.</p>}
           </div>
         </div>
       )}

@@ -52,7 +52,7 @@ export default function KnifeEngravingPage() {
   }
 
   return (
-    <div className="bg-vurmz-dark">
+    <div className="bg-[var(--page)]">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
@@ -62,50 +62,50 @@ export default function KnifeEngravingPage() {
       <section className="pt-6 pb-12 sm:pt-10 sm:pb-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <Breadcrumbs items={[{ label: 'VURMZ', href: '/' }, { label: 'Services', href: '/services' }, { label: 'Knife Engraving' }]} theme="services" />
-          <p className="text-xs font-mono text-vurmz-teal tracking-[0.2em] uppercase mb-4">
+          <p className="text-xs font-mono text-[var(--eyebrow)] tracking-[0.2em] uppercase mb-4">
             In the Steel
           </p>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-cream tracking-tight leading-tight mb-6">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--ink)] tracking-tight leading-tight mb-6">
             Knife Engraving
           </h1>
-          <p className="text-gray-400 text-base sm:text-lg leading-relaxed max-w-2xl">
+          <p className="text-[var(--ink-soft)] text-base sm:text-lg leading-relaxed max-w-2xl">
             I spent fifteen years in professional kitchens before I picked up a laser, so I know what a knife means to the person who carries it. Chef knives, pocket knives, cleavers, hunting knives. A name on the blade, a date on the bolster, a logo on the handle plate. Fiber laser marking goes into the steel, not onto it, so it survives the sharpener and the dishwasher you shouldn&apos;t be using anyway. Bring me your knife or I&apos;ll source one. Next-day on most jobs.
           </p>
         </div>
       </section>
 
       {/* ═══════════ CREW PRICING ═══════════ */}
-      <section className="py-12 sm:py-16 border-t border-white/[0.06]">
+      <section className="py-12 sm:py-16 border-t border-[var(--hairline)]">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-xs font-mono text-gray-500 tracking-[0.2em] uppercase mb-8">
+          <p className="text-xs font-mono text-[var(--ink-soft)] tracking-[0.2em] uppercase mb-8">
             What it costs
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="bg-white/[0.03] border border-white/[0.08] rounded-sm p-6">
-              <p className="text-4xl font-bold text-cream mb-1">${MARKING.knife.base}</p>
-              <p className="text-sm font-semibold text-cream mb-2">One knife</p>
-              <p className="text-gray-500 text-sm leading-relaxed">Bring your blade. Name, date, or logo marked near the handle.</p>
+            <div className="bg-[var(--surface)] border border-[var(--hairline)] rounded-sm p-6">
+              <p className="text-4xl font-bold text-[var(--ink)] mb-1">${MARKING.knife.base}</p>
+              <p className="text-sm font-semibold text-[var(--ink)] mb-2">One knife</p>
+              <p className="text-[var(--ink-soft)] text-sm leading-relaxed">Bring your blade. Name, date, or logo marked near the handle.</p>
             </div>
-            <div className="bg-white/[0.03] border border-white/[0.08] rounded-sm p-6">
-              <p className="text-4xl font-bold text-cream mb-1">${MARKING.knife.crew.perKnife}<span className="text-lg text-gray-500 font-normal">/knife</span></p>
-              <p className="text-sm font-semibold text-cream mb-2">Crew rate · {MARKING.knife.crew.minQty}+ knives</p>
-              <p className="text-gray-500 text-sm leading-relaxed">The line gets matching blades. I pick up and return next day.</p>
+            <div className="bg-[var(--surface)] border border-[var(--hairline)] rounded-sm p-6">
+              <p className="text-4xl font-bold text-[var(--ink)] mb-1">${MARKING.knife.crew.perKnife}<span className="text-lg text-[var(--ink-soft)] font-normal">/knife</span></p>
+              <p className="text-sm font-semibold text-[var(--ink)] mb-2">Crew rate · {MARKING.knife.crew.minQty}+ knives</p>
+              <p className="text-[var(--ink-soft)] text-sm leading-relaxed">The line gets matching blades. I pick up and return next day.</p>
             </div>
-            <div className="bg-vurmz-teal/10 border border-vurmz-teal/30 rounded-sm p-6">
-              <p className="text-4xl font-bold text-cream mb-1">${MARKING.knife.fullKitchen.perKnife}<span className="text-lg text-gray-500 font-normal">/knife</span></p>
-              <p className="text-sm font-semibold text-vurmz-teal mb-2">Full kitchen · {MARKING.knife.fullKitchen.minQty}+ knives</p>
-              <p className="text-gray-500 text-sm leading-relaxed">The whole brigade, every station. Free pickup across the south Denver metro.</p>
+            <div className="bg-[var(--feature)]/10 border border-vurmz-teal/30 rounded-sm p-6">
+              <p className="text-4xl font-bold text-[var(--ink)] mb-1">${MARKING.knife.fullKitchen.perKnife}<span className="text-lg text-[var(--ink-soft)] font-normal">/knife</span></p>
+              <p className="text-sm font-semibold text-[var(--eyebrow)] mb-2">Full kitchen · {MARKING.knife.fullKitchen.minQty}+ knives</p>
+              <p className="text-[var(--ink-soft)] text-sm leading-relaxed">The whole brigade, every station. Free pickup across the south Denver metro.</p>
             </div>
           </div>
-          <p className="text-gray-500 text-xs mt-4">Deep marking +$5. Second line or logo +$3. Pickup is free in the south Denver metro.</p>
+          <p className="text-[var(--ink-soft)] text-xs mt-4">Deep marking +$5. Second line or logo +$3. Pickup is free in the south Denver metro.</p>
         </div>
       </section>
 
       {/* ═══════════ SHOWCASE ═══════════ */}
       {SHOWCASE.length > 0 && (
-        <section className="py-12 sm:py-16 border-t border-white/[0.06]">
+        <section className="py-12 sm:py-16 border-t border-[var(--hairline)]">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <p className="text-xs font-mono text-gray-500 tracking-[0.2em] uppercase mb-8">
+            <p className="text-xs font-mono text-[var(--ink-soft)] tracking-[0.2em] uppercase mb-8">
               Recent knife work
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -124,7 +124,7 @@ export default function KnifeEngravingPage() {
                       sizes="(max-width: 640px) 100vw, 50vw"
                     />
                   </div>
-                  <p className="mt-2 text-[11px] font-mono text-gray-500 tracking-[0.12em] uppercase">
+                  <p className="mt-2 text-[11px] font-mono text-[var(--ink-soft)] tracking-[0.12em] uppercase">
                     {item.material} &middot; {item.process}
                   </p>
                 </Link>
@@ -135,12 +135,12 @@ export default function KnifeEngravingPage() {
       )}
 
       {/* ═══════════ CTA ═══════════ */}
-      <section className="py-12 sm:py-16 border-t border-white/[0.06]">
+      <section className="py-12 sm:py-16 border-t border-[var(--hairline)]">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold text-cream tracking-tight mb-4">
+          <h2 className="text-2xl sm:text-3xl font-bold text-[var(--ink)] tracking-tight mb-4">
             Bring me your knife.
           </h2>
-          <p className="text-gray-400 text-base leading-relaxed mb-6">
+          <p className="text-[var(--ink-soft)] text-base leading-relaxed mb-6">
             Text me a photo and what you want marked. I&apos;ll quote you fast.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">

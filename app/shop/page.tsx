@@ -48,7 +48,7 @@ export default function ShopHome() {
         accent="coral"
         baseColor="#16525C"
       >
-        <p className="text-gray-300 text-base sm:text-lg leading-relaxed mb-7 max-w-lg mx-auto">
+        <p className="text-[var(--ink-soft)] text-base sm:text-lg leading-relaxed mb-7 max-w-lg mx-auto">
           Engraved gifts, custom coasters, home decor — or hit Bring Your Own and I&apos;ll
           mark the thing you already love. Hand-delivered across {siteInfo.city}.
         </p>
@@ -59,7 +59,7 @@ export default function ShopHome() {
           <ChatBubbleLeftIcon className="w-5 h-5" />
           Text me — {siteInfo.phone}
         </a>
-        <p className="text-gray-400 text-sm mt-4">No forms, no wait.</p>
+        <p className="text-[var(--ink-soft)] text-sm mt-4">No forms, no wait.</p>
       </SiteHero>
 
       {/* Portfolio grid — every photo behind the glass */}
@@ -95,7 +95,7 @@ export default function ShopHome() {
       {/* Categories */}
       <section className="pb-10 sm:pb-14">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold text-[#DED6C3] text-center mb-8">Browse by category</h2>
+          <h2 className="text-2xl font-bold text-[var(--ink)] text-center mb-8">Browse by category</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {CONSUMER_CATEGORIES.map((cat) => (
               <CategoryCard key={cat.slug} category={cat} />
@@ -107,7 +107,7 @@ export default function ShopHome() {
       {/* How it works */}
       <section className="pb-10 sm:pb-14">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold text-[#DED6C3] text-center mb-8">How it works</h2>
+          <h2 className="text-2xl font-bold text-[var(--ink)] text-center mb-8">How it works</h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
             {[
               { n: 1, h: 'Text me', p: "Send a photo of what you want engraved. I'll get back to you with a quote." },
@@ -118,8 +118,8 @@ export default function ShopHome() {
                 <div className="w-10 h-10 rounded-full bg-[#7FCFD4]/15 border border-[#7FCFD4]/20 flex items-center justify-center mb-3 mx-auto">
                   <span className="text-[#7FCFD4] font-bold">{step.n}</span>
                 </div>
-                <h3 className="font-semibold text-[#DED6C3] mb-1">{step.h}</h3>
-                <p className="text-gray-400 text-sm leading-relaxed">{step.p}</p>
+                <h3 className="font-semibold text-[var(--ink)] mb-1">{step.h}</h3>
+                <p className="text-[var(--ink-soft)] text-sm leading-relaxed">{step.p}</p>
               </div>
             ))}
           </div>
@@ -129,28 +129,28 @@ export default function ShopHome() {
       {/* Three options */}
       <section className="pb-10 sm:pb-14">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold text-[#DED6C3] text-center mb-8">Three ways to work with me</h2>
+          <h2 className="text-2xl font-bold text-[var(--ink)] text-center mb-8">Three ways to work with me</h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
             {[
               { h: 'Bring your own', p: 'Have a knife, tumbler, laptop, or anything else? Bring it. I engrave it and hand it back.' },
               { h: 'I source it', p: 'Tell me what you want. Cutting boards, tumblers, gifts — I find it, engrave it, and deliver it.' },
               { h: 'Shop my stock', p: 'I keep pens, metal cards, tags, keychains, and other basics on hand — ready to engrave right away.' },
             ].map((opt) => (
-              <div key={opt.h} className="bg-white/[0.04] backdrop-blur-xl border border-white/10 rounded-sm p-5">
-                <h3 className="font-bold text-[#DED6C3] mb-2">{opt.h}</h3>
-                <p className="text-gray-400 text-sm leading-relaxed">{opt.p}</p>
+              <div key={opt.h} className="bg-[var(--surface)] backdrop-blur-xl border border-[var(--hairline)] rounded-sm p-5">
+                <h3 className="font-bold text-[var(--ink)] mb-2">{opt.h}</h3>
+                <p className="text-[var(--ink-soft)] text-sm leading-relaxed">{opt.p}</p>
               </div>
             ))}
           </div>
           <div className="mt-8 text-center">
-            <p className="text-gray-400 text-sm mb-2">Metal, wood, glass, leather, acrylic, plastic, stone — if it&apos;s solid, I can mark it.</p>
+            <p className="text-[var(--ink-soft)] text-sm mb-2">Metal, wood, glass, leather, acrylic, plastic, stone — if it&apos;s solid, I can mark it.</p>
             <div className="flex flex-wrap justify-center gap-2 mt-4">
               {[
                 'Knives', 'Tumblers', 'Water Bottles', 'Cutting Boards', 'Laptops',
                 'Coasters', 'Keychains', 'Flasks', 'Wine Glasses', 'Pet Bowls',
                 'Wallets', 'Pens', 'Awards', 'Signs', 'Bring Your Own',
               ].map((item) => (
-                <span key={item} className="px-3 py-1.5 bg-white/[0.04] border border-white/10 rounded-full text-sm text-gray-300">
+                <span key={item} className="px-3 py-1.5 bg-[var(--surface)] border border-[var(--hairline)] rounded-full text-sm text-[var(--ink-soft)]">
                   {item}
                 </span>
               ))}
@@ -169,8 +169,8 @@ export default function ShopHome() {
       {/* Final CTA */}
       <section className="pb-10 sm:pb-14">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold text-[#DED6C3] mb-4">Ready?</h2>
-          <p className="text-gray-300 text-base leading-relaxed mb-8">
+          <h2 className="text-2xl sm:text-3xl font-bold text-[var(--ink)] mb-4">Ready?</h2>
+          <p className="text-[var(--ink-soft)] text-base leading-relaxed mb-8">
             Text me a photo of what you want engraved. I&apos;ll tell you if I can do it, what it&apos;ll cost, and when it&apos;ll be done.
           </p>
           <a

@@ -12,8 +12,8 @@ interface BreadcrumbsProps {
 
 const themeStyles = {
   shop: { text: 'text-[#7A7068]', active: 'text-[#C67A6F]', separator: 'text-[#7A7068]/40' },
-  services: { text: 'text-gray-500', active: 'text-vurmz-teal', separator: 'text-gray-600' },
-  landing: { text: 'text-gray-500', active: 'text-gray-300', separator: 'text-gray-600' },
+  services: { text: 'text-[var(--ink-soft)]', active: 'text-[var(--eyebrow)]', separator: 'text-gray-600' },
+  landing: { text: 'text-[var(--ink-soft)]', active: 'text-[var(--ink-soft)]', separator: 'text-gray-600' },
 }
 
 export default function Breadcrumbs({ items, theme }: BreadcrumbsProps) {

@@ -52,7 +52,7 @@ export default function NewsletterSignup({ variant = 'full', theme = 'services' 
   if (variant === 'compact') {
     return (
       <div>
-        <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4">
+        <h3 className="text-xs font-semibold text-[var(--ink-soft)] uppercase tracking-wider mb-4">
           Stay in the loop
         </h3>
 
@@ -62,7 +62,7 @@ export default function NewsletterSignup({ variant = 'full', theme = 'services' 
               key="success"
               initial={{ opacity: 0, y: 4 }}
               animate={{ opacity: 1, y: 0 }}
-              className="flex items-center gap-2 text-sm text-vurmz-teal"
+              className="flex items-center gap-2 text-sm text-[var(--eyebrow)]"
             >
               <CheckIcon className="w-4 h-4" />
               <span>You&apos;re on the list!</span>
@@ -80,12 +80,12 @@ export default function NewsletterSignup({ variant = 'full', theme = 'services' 
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Email"
                   required
-                  className="flex-1 min-w-0 bg-white/[0.06] border border-white/10 rounded-sm px-3 py-2 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:border-vurmz-teal/40 transition-colors"
+                  className="flex-1 min-w-0 bg-[var(--surface)] border border-[var(--hairline)] rounded-sm px-3 py-2 text-sm text-white placeholder:text-[var(--ink-soft)] focus:outline-none focus:border-vurmz-teal/40 transition-colors"
                 />
                 <button
                   type="submit"
                   disabled={status === 'loading'}
-                  className="px-4 py-2 bg-vurmz-teal text-white text-sm font-semibold rounded-sm hover:bg-vurmz-teal-dark transition-colors disabled:opacity-50 whitespace-nowrap"
+                  className="px-4 py-2 bg-[var(--feature)] text-white text-sm font-semibold rounded-sm hover:bg-[var(--feature-deep)] transition-colors disabled:opacity-50 whitespace-nowrap"
                 >
                   {status === 'loading' ? '...' : 'Sign up'}
                 </button>
@@ -107,9 +107,9 @@ export default function NewsletterSignup({ variant = 'full', theme = 'services' 
   const isShopTheme = theme === 'shop'
 
   return (
-    <section className={`relative py-12 sm:py-16 ${isShopTheme ? '' : 'border-t border-white/[0.06]'}`}>
+    <section className={`relative py-12 sm:py-16 ${isShopTheme ? '' : 'border-t border-[var(--hairline)]'}`}>
       {isShopTheme ? (
-        <div className="absolute inset-0 bg-[#16525C] rounded-sm mx-4 sm:mx-6 lg:mx-8" />
+        <div className="absolute inset-0 bg-[var(--page)] rounded-sm mx-4 sm:mx-6 lg:mx-8" />
       ) : (
         <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, transparent 0%, rgba(60,185,178,0.03) 50%, transparent 100%)' }} />
       )}
@@ -122,13 +122,13 @@ export default function NewsletterSignup({ variant = 'full', theme = 'services' 
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <p className="text-xs font-mono text-gray-500 tracking-[0.2em] uppercase mb-4">
+          <p className="text-xs font-mono text-[var(--ink-soft)] tracking-[0.2em] uppercase mb-4">
             Newsletter
           </p>
           <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight mb-3">
             See what I&apos;m making
           </h2>
-          <p className="text-gray-400 text-sm sm:text-base leading-relaxed mb-8">
+          <p className="text-[var(--ink-soft)] text-sm sm:text-base leading-relaxed mb-8">
             New products, new materials, and behind-the-scenes looks at what&apos;s coming off the laser. I only send emails when there&apos;s something worth sharing. Maybe a few times a year.
           </p>
 
@@ -141,12 +141,12 @@ export default function NewsletterSignup({ variant = 'full', theme = 'services' 
                 transition={{ duration: 0.3 }}
                 className="flex items-center justify-center gap-3 py-4"
               >
-                <div className="w-10 h-10 rounded-full bg-vurmz-teal/20 flex items-center justify-center">
-                  <CheckIcon className="w-5 h-5 text-vurmz-teal" />
+                <div className="w-10 h-10 rounded-full bg-[var(--feature)]/20 flex items-center justify-center">
+                  <CheckIcon className="w-5 h-5 text-[var(--eyebrow)]" />
                 </div>
                 <div className="text-left">
                   <p className="text-white font-medium">You&apos;re in!</p>
-                  <p className="text-gray-400 text-sm">Check your inbox for a welcome from me.</p>
+                  <p className="text-[var(--ink-soft)] text-sm">Check your inbox for a welcome from me.</p>
                 </div>
               </motion.div>
             ) : (
@@ -163,7 +163,7 @@ export default function NewsletterSignup({ variant = 'full', theme = 'services' 
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
                     placeholder="First name (optional)"
-                    className="sm:w-40 bg-white/[0.06] border border-white/10 rounded-sm px-4 py-3 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:border-vurmz-teal/40 transition-colors"
+                    className="sm:w-40 bg-[var(--surface)] border border-[var(--hairline)] rounded-sm px-4 py-3 text-sm text-white placeholder:text-[var(--ink-soft)] focus:outline-none focus:border-vurmz-teal/40 transition-colors"
                   />
                   <input
                     type="email"
@@ -171,7 +171,7 @@ export default function NewsletterSignup({ variant = 'full', theme = 'services' 
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Your email"
                     required
-                    className="flex-1 bg-white/[0.06] border border-white/10 rounded-sm px-4 py-3 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:border-vurmz-teal/40 transition-colors"
+                    className="flex-1 bg-[var(--surface)] border border-[var(--hairline)] rounded-sm px-4 py-3 text-sm text-white placeholder:text-[var(--ink-soft)] focus:outline-none focus:border-vurmz-teal/40 transition-colors"
                   />
                   <button
                     type="submit"

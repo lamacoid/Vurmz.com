@@ -28,7 +28,7 @@ function VerifyInner() {
 
   return (
     <div className="max-w-md mx-auto p-6 sm:p-10 text-center">
-      {status === 'loading' && <p className="text-gray-400 text-sm">Verifying your sign-in link…</p>}
+      {status === 'loading' && <p className="text-[var(--ink-soft)] text-sm">Verifying your sign-in link…</p>}
       {status === 'ok' && (
         <div className="min-h-[40vh] flex flex-col items-center justify-center">
           <div className="w-14 h-14 rounded-full bg-[#7FCFD4]/15 border border-[#7FCFD4]/30 flex items-center justify-center mb-5">
@@ -36,18 +36,18 @@ function VerifyInner() {
               {firstName ? firstName.charAt(0).toUpperCase() : '✓'}
             </span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-semibold text-cream">
+          <h1 className="text-2xl sm:text-3xl font-semibold text-[var(--ink)]">
             {firstName ? `Hi, ${firstName}` : 'Signed in'}
           </h1>
-          <p className="text-xs text-gray-500 mt-3 tracking-wide">
+          <p className="text-xs text-[var(--ink-soft)] mt-3 tracking-wide">
             {firstName ? 'Welcome back' : 'Welcome to VURMZ'}
           </p>
         </div>
       )}
       {status === 'error' && (
         <div>
-          <h1 className="text-xl font-bold text-cream mb-2">Link invalid or expired</h1>
-          <p className="text-sm text-gray-400 mb-6">Sign-in links expire after 15 minutes and can only be used once.</p>
+          <h1 className="text-xl font-bold text-[var(--ink)] mb-2">Link invalid or expired</h1>
+          <p className="text-sm text-[var(--ink-soft)] mb-6">Sign-in links expire after 15 minutes and can only be used once.</p>
           <a href="/account/login" className="text-sm text-[#7FCFD4] hover:underline">Request a new link →</a>
         </div>
       )}
@@ -57,7 +57,7 @@ function VerifyInner() {
 
 export default function VerifyPage() {
   return (
-    <Suspense fallback={<div className="p-10 text-center text-gray-500 text-sm">Loading…</div>}>
+    <Suspense fallback={<div className="p-10 text-center text-[var(--ink-soft)] text-sm">Loading…</div>}>
       <VerifyInner />
     </Suspense>
   )

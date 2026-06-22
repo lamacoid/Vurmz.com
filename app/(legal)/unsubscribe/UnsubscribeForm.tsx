@@ -32,8 +32,8 @@ export default function UnsubscribeForm({ initialEmail }: { initialEmail: string
 
   if (status === 'success') {
     return (
-      <div className="bg-vurmz-teal/10 border border-vurmz-teal/30 rounded-md p-6 text-center">
-        <p className="text-cream">{message}</p>
+      <div className="bg-[var(--feature)]/10 border border-vurmz-teal/30 rounded-md p-6 text-center">
+        <p className="text-[var(--ink)]">{message}</p>
       </div>
     )
   }
@@ -41,14 +41,14 @@ export default function UnsubscribeForm({ initialEmail }: { initialEmail: string
   return (
     <form onSubmit={onSubmit} className="space-y-4">
       <div>
-        <label htmlFor="email" className="block text-sm text-gray-300 mb-1.5">Email</label>
+        <label htmlFor="email" className="block text-sm text-[var(--ink-soft)] mb-1.5">Email</label>
         <input
           id="email"
           type="email"
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full px-4 py-3 bg-vurmz-dark border border-gray-700 rounded-md text-white placeholder-gray-500 focus:border-vurmz-teal focus:ring-1 focus:ring-vurmz-teal outline-none"
+          className="w-full px-4 py-3 bg-[var(--page)] border border-gray-700 rounded-md text-white placeholder-gray-500 focus:border-vurmz-teal focus:ring-1 focus:ring-vurmz-teal outline-none"
         />
       </div>
       {status === 'error' && <p className="text-red-400 text-sm">{message}</p>}

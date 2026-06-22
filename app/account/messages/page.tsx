@@ -48,27 +48,27 @@ export default function MessagesPage() {
 
   return (
     <div className="max-w-3xl mx-auto p-6 sm:p-10 flex flex-col h-[calc(100vh-70px)]">
-      <Link href="/account" className="text-xs text-gray-500 hover:text-cream mb-4 inline-block">← Back</Link>
-      <h1 className="text-2xl font-bold text-cream mb-4">Messages with Zach</h1>
+      <Link href="/account" className="text-xs text-[var(--ink-soft)] hover:text-[var(--ink)] mb-4 inline-block">← Back</Link>
+      <h1 className="text-2xl font-bold text-[var(--ink)] mb-4">Messages with Zach</h1>
 
       <div
         ref={scrollRef}
-        className="flex-1 overflow-y-auto bg-[#16525C] border border-white/5 rounded-xl p-4 space-y-3 mb-3"
+        className="flex-1 overflow-y-auto bg-[var(--page)] border border-white/5 rounded-xl p-4 space-y-3 mb-3"
       >
         {loading ? (
-          <p className="text-gray-500 text-sm text-center py-10">Loading…</p>
+          <p className="text-[var(--ink-soft)] text-sm text-center py-10">Loading…</p>
         ) : messages.length === 0 ? (
-          <p className="text-gray-500 text-sm text-center py-10">No messages yet — send one below.</p>
+          <p className="text-[var(--ink-soft)] text-sm text-center py-10">No messages yet — send one below.</p>
         ) : (
           messages.map(m => (
             <div key={m.id} className={`flex ${m.direction === 'inbound' ? 'justify-end' : 'justify-start'}`}>
               <div className={`max-w-[80%] rounded-2xl px-4 py-2.5 ${
                 m.direction === 'inbound'
                   ? 'bg-[#C46B4D] text-white rounded-br-sm'
-                  : 'bg-[#143E38] text-cream border border-white/5 rounded-bl-sm'
+                  : 'bg-[var(--page)] text-[var(--ink)] border border-white/5 rounded-bl-sm'
               }`}>
                 <p className="text-sm whitespace-pre-wrap">{m.body}</p>
-                <p className={`text-[10px] mt-1 ${m.direction === 'inbound' ? 'text-white/70' : 'text-gray-500'}`}>
+                <p className={`text-[10px] mt-1 ${m.direction === 'inbound' ? 'text-white/70' : 'text-[var(--ink-soft)]'}`}>
                   {when(m.createdAt)}
                 </p>
               </div>
@@ -86,7 +86,7 @@ export default function MessagesPage() {
           }}
           rows={2}
           placeholder="Type a message… (⌘↵ to send)"
-          className="flex-1 bg-[#16525C] border border-white/5 rounded-xl px-4 py-2.5 text-sm text-cream outline-none focus:border-[#7FCFD4] resize-none"
+          className="flex-1 bg-[var(--page)] border border-white/5 rounded-xl px-4 py-2.5 text-sm text-[var(--ink)] outline-none focus:border-[#7FCFD4] resize-none"
         />
         <button
           onClick={send}

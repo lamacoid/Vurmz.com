@@ -73,10 +73,10 @@ export default function AddToCart(props: {
         </button>
       ) : (
         <div className="flex flex-col sm:flex-row gap-3">
-          <div className="inline-flex items-center bg-white/[0.06] border border-white/15 rounded-sm text-gray-200">
+          <div className="inline-flex items-center bg-[var(--surface)] border border-[var(--hairline)] rounded-sm text-[var(--ink)]">
             <button
               onClick={() => setQty(q => Math.max(1, q - 1))}
-              className="px-3 py-2.5 text-gray-400 hover:text-[#DED6C3]"
+              className="px-3 py-2.5 text-[var(--ink-soft)] hover:text-[var(--ink)]"
               aria-label="Decrease quantity"
             >
               −
@@ -84,7 +84,7 @@ export default function AddToCart(props: {
             <span className="min-w-[2.5rem] text-center text-sm font-semibold">{qty}</span>
             <button
               onClick={() => setQty(q => q + 1)}
-              className="px-3 py-2.5 text-gray-400 hover:text-[#DED6C3]"
+              className="px-3 py-2.5 text-[var(--ink-soft)] hover:text-[var(--ink)]"
               aria-label="Increase quantity"
             >
               +
@@ -100,7 +100,7 @@ export default function AddToCart(props: {
       )}
 
       {engravable && hasPersonalization && (
-        <p className="mt-2 text-[11px] text-gray-500">
+        <p className="mt-2 text-[11px] text-[var(--ink-soft)]">
           {engText ? <>Engraving “{engText}”</> : 'Your design'}
           {engraving.element ? <> + {engraving.element.label} design</> : null}
           {' '}will be applied{props.oneOff ? '' : ' to each item in the pack'}.

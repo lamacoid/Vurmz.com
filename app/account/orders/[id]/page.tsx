@@ -30,7 +30,7 @@ const STATUS_STYLES: Record<string, string> = {
   in_progress: 'bg-amber-400/15 text-amber-300',
   ready: 'bg-indigo-400/15 text-indigo-300',
   delivered: 'bg-emerald-400/15 text-emerald-300',
-  cancelled: 'bg-gray-400/15 text-gray-400',
+  cancelled: 'bg-gray-400/15 text-[var(--ink-soft)]',
   refunded: 'bg-red-400/15 text-red-300',
 }
 
@@ -69,58 +69,58 @@ export default function AccountOrderDetail() {
       .finally(() => setLoading(false))
   }, [params?.id])
 
-  if (loading) return <div className="p-10 text-center text-gray-500 text-sm">Loading…</div>
-  if (!order) return <div className="p-10 text-center text-gray-500 text-sm">Order not found.</div>
+  if (loading) return <div className="p-10 text-center text-[var(--ink-soft)] text-sm">Loading…</div>
+  if (!order) return <div className="p-10 text-center text-[var(--ink-soft)] text-sm">Order not found.</div>
 
   return (
     <div className="max-w-3xl mx-auto p-6 sm:p-10">
-      <Link href="/account/orders" className="text-xs text-gray-500 hover:text-cream mb-4 inline-block">← All orders</Link>
+      <Link href="/account/orders" className="text-xs text-[var(--ink-soft)] hover:text-[var(--ink)] mb-4 inline-block">← All orders</Link>
       <div className="flex items-baseline justify-between mb-5">
-        <h1 className="text-2xl font-bold text-cream font-mono">{order.number}</h1>
+        <h1 className="text-2xl font-bold text-[var(--ink)] font-mono">{order.number}</h1>
         <span className={`text-xs px-2.5 py-1 rounded-full uppercase tracking-wider font-semibold ${STATUS_STYLES[order.status] ?? 'bg-[#7FCFD4]/20 text-[#7FCFD4]'}`}>
           {statusLabel(order.status)}
         </span>
       </div>
 
-      <div className="bg-[#16525C] border border-white/5 rounded-xl p-5 mb-5">
+      <div className="bg-[var(--page)] border border-white/5 rounded-xl p-5 mb-5">
         <div className="divide-y divide-white/5">
           {items.map(it => (
             <div key={it.id} className="py-2.5 flex justify-between">
               <div>
-                <p className="text-sm text-cream">{it.nameSnapshot}</p>
-                <p className="text-[11px] text-gray-500">{it.qty} × {money(it.unitPriceCents)}</p>
+                <p className="text-sm text-[var(--ink)]">{it.nameSnapshot}</p>
+                <p className="text-[11px] text-[var(--ink-soft)]">{it.qty} × {money(it.unitPriceCents)}</p>
               </div>
-              <p className="text-sm font-semibold text-cream">{money(it.qty * it.unitPriceCents)}</p>
+              <p className="text-sm font-semibold text-[var(--ink)]">{money(it.qty * it.unitPriceCents)}</p>
             </div>
           ))}
         </div>
         <div className="border-t border-white/5 mt-4 pt-3 space-y-1 text-sm">
-          <div className="flex justify-between"><span className="text-gray-400">Subtotal</span><span className="text-cream">{money(order.subtotalCents)}</span></div>
-          <div className="flex justify-between"><span className="text-gray-400">Delivery</span><span className="text-cream">{money(order.fulfillmentFeeCents)}</span></div>
-          <div className="flex justify-between font-bold text-base pt-1 text-cream"><span>Total</span><span>{money(order.totalCents)}</span></div>
+          <div className="flex justify-between"><span className="text-[var(--ink-soft)]">Subtotal</span><span className="text-[var(--ink)]">{money(order.subtotalCents)}</span></div>
+          <div className="flex justify-between"><span className="text-[var(--ink-soft)]">Delivery</span><span className="text-[var(--ink)]">{money(order.fulfillmentFeeCents)}</span></div>
+          <div className="flex justify-between font-bold text-base pt-1 text-[var(--ink)]"><span>Total</span><span>{money(order.totalCents)}</span></div>
         </div>
       </div>
 
       {(order.trackingNumber || order.fulfillmentEta) && (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
           {order.trackingNumber && (
-            <div className="bg-[#16525C] border border-white/5 rounded-xl p-4">
-              <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-1">Tracking number</p>
-              <p className="text-sm text-cream font-mono break-all">{order.trackingNumber}</p>
+            <div className="bg-[var(--page)] border border-white/5 rounded-xl p-4">
+              <p className="text-[11px] uppercase tracking-wider text-[var(--ink-soft)] mb-1">Tracking number</p>
+              <p className="text-sm text-[var(--ink)] font-mono break-all">{order.trackingNumber}</p>
             </div>
           )}
           {order.fulfillmentEta && (
-            <div className="bg-[#16525C] border border-white/5 rounded-xl p-4">
-              <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-1">Estimated fulfillment</p>
-              <p className="text-sm text-cream">{order.fulfillmentEta}</p>
+            <div className="bg-[var(--page)] border border-white/5 rounded-xl p-4">
+              <p className="text-[11px] uppercase tracking-wider text-[var(--ink-soft)] mb-1">Estimated fulfillment</p>
+              <p className="text-sm text-[var(--ink)]">{order.fulfillmentEta}</p>
             </div>
           )}
         </div>
       )}
 
       {events.length > 0 && (
-        <div className="bg-[#16525C] border border-white/5 rounded-xl p-5 mb-5">
-          <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-4 font-semibold">Status timeline</p>
+        <div className="bg-[var(--page)] border border-white/5 rounded-xl p-5 mb-5">
+          <p className="text-[11px] uppercase tracking-wider text-[var(--ink-soft)] mb-4 font-semibold">Status timeline</p>
           <ol className="space-y-0">
             {events.map((e, i) => (
               <li key={e.id} className="flex gap-3">
@@ -129,9 +129,9 @@ export default function AccountOrderDetail() {
                   {i < events.length - 1 && <span className="w-px flex-1 bg-white/10 my-0.5" />}
                 </div>
                 <div className="pb-4 min-w-0">
-                  <p className="text-sm text-cream">{eventLabel(e)}</p>
-                  <p className="text-[11px] text-gray-500">{fmtDate(e.createdAt)}</p>
-                  {e.note && <p className="text-xs text-gray-400 mt-0.5">{e.note}</p>}
+                  <p className="text-sm text-[var(--ink)]">{eventLabel(e)}</p>
+                  <p className="text-[11px] text-[var(--ink-soft)]">{fmtDate(e.createdAt)}</p>
+                  {e.note && <p className="text-xs text-[var(--ink-soft)] mt-0.5">{e.note}</p>}
                 </div>
               </li>
             ))}
@@ -140,14 +140,14 @@ export default function AccountOrderDetail() {
       )}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
-        <div className="bg-[#16525C] border border-white/5 rounded-xl p-4">
-          <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-1">Fulfillment</p>
-          <p className="text-sm text-cream">{order.fulfillmentMethod.replace('_', ' ')}</p>
+        <div className="bg-[var(--page)] border border-white/5 rounded-xl p-4">
+          <p className="text-[11px] uppercase tracking-wider text-[var(--ink-soft)] mb-1">Fulfillment</p>
+          <p className="text-sm text-[var(--ink)]">{order.fulfillmentMethod.replace('_', ' ')}</p>
         </div>
         {order.fulfillmentAddress && (
-          <div className="bg-[#16525C] border border-white/5 rounded-xl p-4">
-            <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-1">Ship to</p>
-            <p className="text-xs text-cream leading-relaxed">
+          <div className="bg-[var(--page)] border border-white/5 rounded-xl p-4">
+            <p className="text-[11px] uppercase tracking-wider text-[var(--ink-soft)] mb-1">Ship to</p>
+            <p className="text-xs text-[var(--ink)] leading-relaxed">
               {order.fulfillmentAddress.name}<br />
               {order.fulfillmentAddress.line1}{order.fulfillmentAddress.line2 ? `, ${order.fulfillmentAddress.line2}` : ''}<br />
               {order.fulfillmentAddress.city}, {order.fulfillmentAddress.state} {order.fulfillmentAddress.postalCode}
@@ -157,9 +157,9 @@ export default function AccountOrderDetail() {
       </div>
 
       {order.notes && (
-        <div className="bg-[#16525C] border border-white/5 rounded-xl p-4">
-          <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-1">Your notes</p>
-          <p className="text-sm text-cream whitespace-pre-wrap">{order.notes}</p>
+        <div className="bg-[var(--page)] border border-white/5 rounded-xl p-4">
+          <p className="text-[11px] uppercase tracking-wider text-[var(--ink-soft)] mb-1">Your notes</p>
+          <p className="text-sm text-[var(--ink)] whitespace-pre-wrap">{order.notes}</p>
         </div>
       )}
     </div>

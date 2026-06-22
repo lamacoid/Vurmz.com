@@ -322,7 +322,7 @@ export default function CheckoutPage() {
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       <div className="mb-8">
-        <Link href="/shop" className="text-sm text-[#6B6259] hover:text-[#16525C]">← Continue shopping</Link>
+        <Link href="/shop" className="text-sm text-[#6B6259] hover:text-[var(--ink)]">← Continue shopping</Link>
         <h1 className="text-3xl font-bold mt-2">Checkout</h1>
       </div>
 
@@ -376,7 +376,7 @@ export default function CheckoutPage() {
                               className={`text-xs px-3 py-1.5 rounded-sm border transition-colors ${
                                 handDeliveryWindow === w.key
                                   ? 'border-[#C67A6F] bg-[#C67A6F] text-white'
-                                  : 'border-[#16525C]/15 bg-white/70 text-[#16525C] hover:border-[#C67A6F]/50'
+                                  : 'border-[#16525C]/15 bg-white/70 text-[var(--ink)] hover:border-[#C67A6F]/50'
                               }`}
                             >
                               {w.label}
@@ -480,14 +480,14 @@ export default function CheckoutPage() {
               placeholder="Placement, sizes, finishes, links to inspiration — anything I should know before I make your proof…"
               className="w-full bg-white/70 border border-[#16525C]/12 rounded-sm px-3 py-2 text-sm outline-none focus:border-[#C67A6F]"
             />
-            <p className="mt-2 text-xs text-[#16525C] font-medium">
+            <p className="mt-2 text-xs text-[var(--ink)] font-medium">
               ✓ I always send a proof photo before I engrave. Nothing runs until you approve it.
             </p>
 
             {/* Photo / logo attachments — works for guests, no account needed */}
             <div className="mt-3">
               <p className="text-xs text-[#6B6259] mb-2">
-                Have a logo or design? Attach it here — up to 3 files, 10 MB each. <span className="font-medium text-[#16525C]">SVG or PDF engraves best</span> (crisp lines, high contrast). Photos and PNG/JPG work too — I&apos;ll clean them up if needed. No file? Just describe it above and we&apos;ll nail it down on the proof.
+                Have a logo or design? Attach it here — up to 3 files, 10 MB each. <span className="font-medium text-[var(--ink)]">SVG or PDF engraves best</span> (crisp lines, high contrast). Photos and PNG/JPG work too — I&apos;ll clean them up if needed. No file? Just describe it above and we&apos;ll nail it down on the proof.
               </p>
               {attachments.length > 0 && (
                 <ul className="space-y-1 mb-2">

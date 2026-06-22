@@ -95,7 +95,7 @@ export default function SiteHero({ eyebrow, heading, accent = 'coral', baseColor
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.05 }}
-            className="text-[#DED6C3] font-semibold tracking-tight text-xl sm:text-2xl mb-4"
+            className="text-[var(--feature-ink)] font-semibold tracking-tight text-xl sm:text-2xl mb-4"
           >
             {heading}
           </motion.h1>
@@ -105,7 +105,7 @@ export default function SiteHero({ eyebrow, heading, accent = 'coral', baseColor
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-[#DED6C3] font-semibold tracking-tight leading-[1.05] text-2xl sm:text-3xl lg:text-4xl"
+          className="text-[var(--feature-ink)] font-semibold tracking-tight leading-[1.05] text-2xl sm:text-3xl lg:text-4xl"
           style={{ fontFamily: 'var(--font-display), Georgia, serif' }}
         >
           <span className="block">Let&apos;s put your</span>

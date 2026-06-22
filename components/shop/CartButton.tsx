@@ -6,7 +6,7 @@ export default function CartButton({ className }: { className?: string }) {
   return (
     <button
       onClick={() => setOpen(true)}
-      className={`relative inline-flex items-center gap-2 text-[13px] text-gray-300 hover:text-[#C67A6F] transition-colors ${className ?? ''}`}
+      className={`relative inline-flex items-center gap-2 text-[13px] text-[var(--ink-soft)] hover:text-[#C67A6F] transition-colors ${className ?? ''}`}
       aria-label={`Open cart, ${itemCount} items`}
     >
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.75} stroke="currentColor" className="w-5 h-5">

@@ -57,9 +57,9 @@ export default function AccountFilesPage() {
 
   return (
     <div className="max-w-3xl mx-auto p-6 sm:p-10">
-      <Link href="/account" className="text-xs text-gray-500 hover:text-cream mb-4 inline-block">← Back</Link>
+      <Link href="/account" className="text-xs text-[var(--ink-soft)] hover:text-[var(--ink)] mb-4 inline-block">← Back</Link>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-cream">Files</h1>
+        <h1 className="text-2xl font-bold text-[var(--ink)]">Files</h1>
         <button
           onClick={() => inputRef.current?.click()}
           disabled={uploading}
@@ -70,30 +70,30 @@ export default function AccountFilesPage() {
         <input ref={inputRef} type="file" multiple hidden onChange={e => upload(e.target.files)} />
       </div>
 
-      <p className="text-xs text-gray-500 mb-5">
+      <p className="text-xs text-[var(--ink-soft)] mb-5">
         Store the designs, logos, and references Zach needs for your orders. Up to 50 MB per file.
       </p>
 
       {loading ? (
-        <p className="text-gray-500 text-sm">Loading…</p>
+        <p className="text-[var(--ink-soft)] text-sm">Loading…</p>
       ) : files.length === 0 ? (
         <div
           onClick={() => inputRef.current?.click()}
           onDragOver={e => e.preventDefault()}
           onDrop={e => { e.preventDefault(); upload(e.dataTransfer.files) }}
-          className="border-2 border-dashed border-white/10 rounded-xl p-14 text-center cursor-pointer hover:border-[#7FCFD4]/40 transition-colors"
+          className="border-2 border-dashed border-[var(--hairline)] rounded-xl p-14 text-center cursor-pointer hover:border-[#7FCFD4]/40 transition-colors"
         >
-          <p className="text-sm text-gray-400">Drag files here or click to upload</p>
+          <p className="text-sm text-[var(--ink-soft)]">Drag files here or click to upload</p>
         </div>
       ) : (
         <div className="space-y-2">
           {files.map(f => {
             const previewable = isImage(f.mimeType) || isPdf(f.mimeType)
             return (
-              <div key={f.id} className="flex items-center gap-3 bg-[#16525C] border border-white/5 rounded-lg px-3 py-2.5">
+              <div key={f.id} className="flex items-center gap-3 bg-[var(--page)] border border-white/5 rounded-lg px-3 py-2.5">
                 <button
                   onClick={() => previewable ? setPreview(f) : window.open(f.url, '_blank')}
-                  className="flex-shrink-0 w-14 h-14 bg-[#143E38] rounded-md overflow-hidden flex items-center justify-center group relative"
+                  className="flex-shrink-0 w-14 h-14 bg-[var(--page)] rounded-md overflow-hidden flex items-center justify-center group relative"
                   aria-label={previewable ? 'Preview' : 'Open'}
                 >
                   {isImage(f.mimeType) ? (
@@ -101,17 +101,17 @@ export default function AccountFilesPage() {
                   ) : isPdf(f.mimeType) ? (
                     <span className="text-[10px] font-mono font-bold text-[#7FCFD4] tracking-wider">PDF</span>
                   ) : (
-                    <svg className="w-6 h-6 text-gray-500" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                    <svg className="w-6 h-6 text-[var(--ink-soft)]" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
                     </svg>
                   )}
                 </button>
                 <button onClick={() => previewable ? setPreview(f) : window.open(f.url, '_blank')} className="flex-1 min-w-0 text-left">
-                  <p className="text-sm text-cream hover:text-[#7FCFD4] truncate">{f.filename}</p>
-                  <p className="text-[11px] text-gray-500">{formatSize(f.sizeBytes)} · {new Date(f.uploadedAt).toLocaleDateString()}</p>
+                  <p className="text-sm text-[var(--ink)] hover:text-[#7FCFD4] truncate">{f.filename}</p>
+                  <p className="text-[11px] text-[var(--ink-soft)]">{formatSize(f.sizeBytes)} · {new Date(f.uploadedAt).toLocaleDateString()}</p>
                 </button>
-                <a href={f.url} target="_blank" rel="noreferrer" download={f.filename} className="text-xs text-gray-500 hover:text-cream px-2">Open</a>
-                <button onClick={() => remove(f.id)} className="text-xs text-gray-500 hover:text-red-400 px-2">Remove</button>
+                <a href={f.url} target="_blank" rel="noreferrer" download={f.filename} className="text-xs text-[var(--ink-soft)] hover:text-[var(--ink)] px-2">Open</a>
+                <button onClick={() => remove(f.id)} className="text-xs text-[var(--ink-soft)] hover:text-red-400 px-2">Remove</button>
               </div>
             )
           })}
@@ -130,7 +130,7 @@ export default function AccountFilesPage() {
           >
             ×
           </button>
-          <div className="absolute top-4 left-4 right-16 text-cream text-sm truncate">{preview.filename}</div>
+          <div className="absolute top-4 left-4 right-16 text-[var(--ink)] text-sm truncate">{preview.filename}</div>
           <div className="max-w-full max-h-full" onClick={e => e.stopPropagation()}>
             {isImage(preview.mimeType) ? (
               <img src={preview.url} alt={preview.filename} className="max-w-[90vw] max-h-[85vh] object-contain rounded" />

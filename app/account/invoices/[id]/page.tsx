@@ -62,39 +62,39 @@ export default function InvoiceDetailPage() {
     load()
   }
 
-  if (loading) return <div className="p-10 text-center text-gray-500 text-sm">Loading…</div>
-  if (!invoice) return <div className="p-10 text-center text-gray-500 text-sm">Invoice not found.</div>
+  if (loading) return <div className="p-10 text-center text-[var(--ink-soft)] text-sm">Loading…</div>
+  if (!invoice) return <div className="p-10 text-center text-[var(--ink-soft)] text-sm">Invoice not found.</div>
 
   const owed = invoice.totalCents - invoice.amountPaidCents
   const isPayable = owed > 0 && !['paid', 'void', 'refunded'].includes(invoice.status)
 
   return (
     <div className="max-w-3xl mx-auto p-6 sm:p-10">
-      <Link href="/account/invoices" className="text-xs text-gray-500 hover:text-cream mb-4 inline-block">← All invoices</Link>
+      <Link href="/account/invoices" className="text-xs text-[var(--ink-soft)] hover:text-[var(--ink)] mb-4 inline-block">← All invoices</Link>
 
       <div className="flex items-baseline justify-between mb-5">
-        <h1 className="text-2xl font-bold text-cream font-mono">{invoice.number}</h1>
+        <h1 className="text-2xl font-bold text-[var(--ink)] font-mono">{invoice.number}</h1>
         <span className={`text-xs px-2.5 py-1 rounded-full uppercase tracking-wider font-semibold ${invoice.status === 'paid' ? 'bg-green-900/30 text-green-300' : 'bg-[#7FCFD4]/20 text-[#7FCFD4]'}`}>
           {invoice.status.replace('_', ' ')}
         </span>
       </div>
 
-      <div className="bg-[#16525C] border border-white/5 rounded-xl p-5 mb-5">
+      <div className="bg-[var(--page)] border border-white/5 rounded-xl p-5 mb-5">
         <div className="divide-y divide-white/5">
           {items.map(it => (
             <div key={it.id} className="py-2.5 flex justify-between">
               <div>
-                <p className="text-sm text-cream">{it.description}</p>
-                <p className="text-[11px] text-gray-500">{it.qty} × {money(it.unitPriceCents)}</p>
+                <p className="text-sm text-[var(--ink)]">{it.description}</p>
+                <p className="text-[11px] text-[var(--ink-soft)]">{it.qty} × {money(it.unitPriceCents)}</p>
               </div>
-              <p className="text-sm font-semibold text-cream">{money(it.totalCents)}</p>
+              <p className="text-sm font-semibold text-[var(--ink)]">{money(it.totalCents)}</p>
             </div>
           ))}
         </div>
         <div className="border-t border-white/5 mt-4 pt-3 space-y-1 text-sm">
-          <div className="flex justify-between"><span className="text-gray-400">Subtotal</span><span className="text-cream">{money(invoice.subtotalCents)}</span></div>
-          {invoice.taxCents > 0 && <div className="flex justify-between"><span className="text-gray-400">Tax</span><span className="text-cream">{money(invoice.taxCents)}</span></div>}
-          <div className="flex justify-between font-bold text-base pt-1 text-cream"><span>Total</span><span>{money(invoice.totalCents)}</span></div>
+          <div className="flex justify-between"><span className="text-[var(--ink-soft)]">Subtotal</span><span className="text-[var(--ink)]">{money(invoice.subtotalCents)}</span></div>
+          {invoice.taxCents > 0 && <div className="flex justify-between"><span className="text-[var(--ink-soft)]">Tax</span><span className="text-[var(--ink)]">{money(invoice.taxCents)}</span></div>}
+          <div className="flex justify-between font-bold text-base pt-1 text-[var(--ink)]"><span>Total</span><span>{money(invoice.totalCents)}</span></div>
           {invoice.amountPaidCents > 0 && invoice.amountPaidCents < invoice.totalCents && (
             <div className="flex justify-between text-[#7FCFD4]"><span>Paid</span><span>−{money(invoice.amountPaidCents)}</span></div>
           )}
@@ -105,15 +105,15 @@ export default function InvoiceDetailPage() {
       </div>
 
       {invoice.notes && (
-        <div className="bg-[#16525C] border border-white/5 rounded-xl p-4 mb-5">
-          <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-1">Notes</p>
-          <p className="text-sm text-cream whitespace-pre-wrap">{invoice.notes}</p>
+        <div className="bg-[var(--page)] border border-white/5 rounded-xl p-4 mb-5">
+          <p className="text-[11px] uppercase tracking-wider text-[var(--ink-soft)] mb-1">Notes</p>
+          <p className="text-sm text-[var(--ink)] whitespace-pre-wrap">{invoice.notes}</p>
         </div>
       )}
 
       {isPayable && (
-        <div className="bg-[#16525C] border border-white/5 rounded-xl p-5">
-          <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-3">Pay now</p>
+        <div className="bg-[var(--page)] border border-white/5 rounded-xl p-5">
+          <p className="text-[11px] uppercase tracking-wider text-[var(--ink-soft)] mb-3">Pay now</p>
           {squareConfig ? (
             <SquarePayment
               config={squareConfig}
@@ -122,7 +122,7 @@ export default function InvoiceDetailPage() {
               onError={setError}
             />
           ) : (
-            <p className="text-sm text-gray-400">Online payment not configured yet. Zach will send you a Square payment link.</p>
+            <p className="text-sm text-[var(--ink-soft)]">Online payment not configured yet. Zach will send you a Square payment link.</p>
           )}
           {error && <p className="text-xs text-red-400 mt-2">{error}</p>}
         </div>

@@ -22,12 +22,12 @@ export default function AccountDashboard() {
       .finally(() => setLoading(false))
   }, [router])
 
-  if (loading || !me) return <div className="p-10 text-center text-gray-500 text-sm">Loading…</div>
+  if (loading || !me) return <div className="p-10 text-center text-[var(--ink-soft)] text-sm">Loading…</div>
 
   return (
     <div className="max-w-3xl mx-auto p-6 sm:p-10">
-      <h1 className="text-3xl font-bold text-cream mb-2">My Account</h1>
-      <p className="text-sm text-gray-400 mb-8">Invoices, messages, files, orders, and profile — all in one place.</p>
+      <h1 className="text-3xl font-bold text-[var(--ink)] mb-2">My Account</h1>
+      <p className="text-sm text-[var(--ink-soft)] mb-8">Invoices, messages, files, orders, and profile — all in one place.</p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <Card href="/account/invoices" title="Invoices" sub="Pay open invoices, view receipts" />
@@ -42,7 +42,7 @@ export default function AccountDashboard() {
           await fetch('/api/account/logout', { method: 'POST' })
           router.push('/account/login')
         }}
-        className="mt-10 text-xs text-gray-500 hover:text-gray-300"
+        className="mt-10 text-xs text-[var(--ink-soft)] hover:text-[var(--ink-soft)]"
       >
         Sign out
       </button>
@@ -52,9 +52,9 @@ export default function AccountDashboard() {
 
 function Card({ href, title, sub }: { href: string; title: string; sub: string }) {
   return (
-    <Link href={href} className="bg-[#16525C] border border-white/5 hover:border-[#7FCFD4]/30 rounded-xl p-5 transition-colors">
-      <p className="text-base font-semibold text-cream mb-2">{title}</p>
-      <p className="text-xs text-gray-400 leading-relaxed">{sub}</p>
+    <Link href={href} className="bg-[var(--page)] border border-white/5 hover:border-[#7FCFD4]/30 rounded-xl p-5 transition-colors">
+      <p className="text-base font-semibold text-[var(--ink)] mb-2">{title}</p>
+      <p className="text-xs text-[var(--ink-soft)] leading-relaxed">{sub}</p>
     </Link>
   )
 }

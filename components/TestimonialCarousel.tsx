@@ -15,24 +15,24 @@ const themeStyles = {
   shop: {
     card: 'bg-white/60 border border-[#16525C]/8',
     quote: 'text-[#C67A6F]',
-    name: 'text-[#16525C]',
+    name: 'text-[var(--ink)]',
     role: 'text-[#6B6259]',
     dot: 'bg-[#C67A6F]',
-    dotInactive: 'bg-[#16525C]/15',
+    dotInactive: 'bg-[var(--page)]/15',
     arrow: 'text-[#6B6259] hover:text-[#C67A6F]',
-    heading: 'text-[#16525C]',
+    heading: 'text-[var(--ink)]',
     eyebrow: 'text-[#C67A6F]',
   },
   services: {
-    card: 'bg-white/[0.03] border border-white/[0.06]',
-    quote: 'text-vurmz-teal',
-    name: 'text-cream',
-    role: 'text-gray-400',
-    dot: 'bg-vurmz-teal',
+    card: 'bg-[var(--surface)] border border-[var(--hairline)]',
+    quote: 'text-[var(--eyebrow)]',
+    name: 'text-[var(--ink)]',
+    role: 'text-[var(--ink-soft)]',
+    dot: 'bg-[var(--feature)]',
     dotInactive: 'bg-white/10',
-    arrow: 'text-gray-500 hover:text-vurmz-teal',
-    heading: 'text-cream',
-    eyebrow: 'text-vurmz-teal',
+    arrow: 'text-[var(--ink-soft)] hover:text-[var(--eyebrow)]',
+    heading: 'text-[var(--ink)]',
+    eyebrow: 'text-[var(--eyebrow)]',
   },
 }
 
@@ -68,7 +68,7 @@ export default function TestimonialCarousel({ testimonials, theme, title = 'What
             className={`${styles.card} rounded-sm p-8 sm:p-10`}
           >
             <span className={`text-4xl font-serif leading-none ${styles.quote}`}>&ldquo;</span>
-            <blockquote className={`text-base sm:text-lg leading-relaxed mt-2 mb-6 ${theme === 'shop' ? 'text-[#16525C]' : 'text-gray-300'}`}>
+            <blockquote className={`text-base sm:text-lg leading-relaxed mt-2 mb-6 ${theme === 'shop' ? 'text-[var(--ink)]' : 'text-[var(--ink-soft)]'}`}>
               {t.quote}
             </blockquote>
             <div>

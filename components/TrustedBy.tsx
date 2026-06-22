@@ -5,9 +5,9 @@ interface TrustedByProps {
 }
 
 const themeStyles = {
-  landing: { label: 'text-gray-500', linkText: 'text-cream/40 hover:text-cream/60', logoClass: 'opacity-40 brightness-0 invert', bg: '' },
-  services: { label: 'text-gray-500', linkText: 'text-cream/40 hover:text-cream/60', logoClass: 'opacity-40 brightness-0 invert', bg: '' },
-  shop: { label: 'text-[#7A7068]', linkText: 'text-[#16525C]/40 hover:text-[#16525C]/60', logoClass: 'opacity-30', bg: '' },
+  landing: { label: 'text-[var(--ink-soft)]', linkText: 'text-[var(--ink)]/40 hover:text-[var(--ink)]/60', logoClass: 'opacity-40 brightness-0 invert', bg: '' },
+  services: { label: 'text-[var(--ink-soft)]', linkText: 'text-[var(--ink)]/40 hover:text-[var(--ink)]/60', logoClass: 'opacity-40 brightness-0 invert', bg: '' },
+  shop: { label: 'text-[#7A7068]', linkText: 'text-[var(--ink)]/40 hover:text-[var(--ink)]/60', logoClass: 'opacity-30', bg: '' },
 }
 
 export default function TrustedBy({ theme }: TrustedByProps) {

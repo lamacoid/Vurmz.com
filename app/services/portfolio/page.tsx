@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 
 export default function PortfolioPage() {
   return (
-    <div className="bg-vurmz-dark">
+    <div className="bg-[var(--page)]">
       {/* Hero (shared) */}
       <SiteHero
         eyebrow="Portfolio"
@@ -29,7 +29,7 @@ export default function PortfolioPage() {
         accent="teal"
         baseColor="#16525C"
       >
-        <p className="text-gray-300 text-base sm:text-lg leading-relaxed max-w-xl mx-auto">
+        <p className="text-[var(--ink-soft)] text-base sm:text-lg leading-relaxed max-w-xl mx-auto">
           Some of those possibilities — client work, personal projects, and experiments in metal, wood, and glass.
         </p>
       </SiteHero>
@@ -39,7 +39,7 @@ export default function PortfolioPage() {
       </div>
 
       {/* Portfolio Grid */}
-      <section className="py-10 sm:py-12 bg-vurmz-dark">
+      <section className="py-10 sm:py-12 bg-[var(--page)]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
             {portfolioItems.map((item) => (
@@ -60,13 +60,13 @@ export default function PortfolioPage() {
                   <div className="absolute inset-0 bg-[#C67A6F]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <div className="absolute bottom-0 left-0 right-0 px-4 py-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                    <p className="text-sm text-cream font-medium">{item.label}</p>
+                    <p className="text-sm text-[var(--ink)] font-medium">{item.label}</p>
                     {item.context && (
-                      <p className="text-xs text-cream/60 mt-0.5">{item.context}</p>
+                      <p className="text-xs text-[var(--ink)]/60 mt-0.5">{item.context}</p>
                     )}
                   </div>
                 </div>
-                <p className="mt-2 text-[11px] font-mono text-gray-500 tracking-[0.12em] uppercase">
+                <p className="mt-2 text-[11px] font-mono text-[var(--ink-soft)] tracking-[0.12em] uppercase">
                   {item.material} &middot; {item.process}
                 </p>
               </Link>
@@ -76,13 +76,13 @@ export default function PortfolioPage() {
       </section>
 
       {/* Cross-links */}
-      <section className="py-10 sm:py-12 border-t border-white/[0.06]">
+      <section className="py-10 sm:py-12 border-t border-[var(--hairline)]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold text-cream mb-4">
+          <h2 className="text-2xl sm:text-3xl font-bold text-[var(--ink)] mb-4">
             Like what you see?
           </h2>
-          <p className="text-gray-400 text-base leading-relaxed mb-6">
-            Check out <Link href="/services" className="text-vurmz-teal hover:text-cream transition-colors">transparent pricing</Link> or just text me a photo of what you want engraved.
+          <p className="text-[var(--ink-soft)] text-base leading-relaxed mb-6">
+            Check out <Link href="/services" className="text-[var(--eyebrow)] hover:text-[var(--ink)] transition-colors">transparent pricing</Link> or just text me a photo of what you want engraved.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link

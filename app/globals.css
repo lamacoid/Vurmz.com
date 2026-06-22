@@ -486,21 +486,26 @@ main [class*="mx-auto"][class*="px-4"] {
     background-color: var(--vurmz-sky-dark);
   }
 
-  /* ── Backlit frosted teal bands ──
-     Flat teal reads dead. Layering soft, diffuse luminous blooms over the deep
-     base makes each section feel like light glowing through frosted glass:
-     a broad backlight rising from the top edge, plus a faint corner scatter. */
-  .band-teal {
-    background-color: #16525C;
-    background-image:
-      radial-gradient(145% 120% at 50% -18%, rgba(127, 207, 212, 0.20) 0%, rgba(127, 207, 212, 0) 52%),
-      radial-gradient(90% 70% at 88% 115%, rgba(127, 207, 212, 0.09) 0%, rgba(127, 207, 212, 0) 60%);
+  /* ── Bands ──
+     Light mode: paper (the section is just the page), no glow. Dark mode: the
+     old backlit teal look, with the soft frosted blooms. */
+  .band-teal, .band-teal-deep {
+    background-color: var(--page);
+    background-image: none;
   }
-  .band-teal-deep {
-    background-color: #123F47;
-    background-image:
-      radial-gradient(145% 120% at 50% -18%, rgba(127, 207, 212, 0.16) 0%, rgba(127, 207, 212, 0) 54%),
-      radial-gradient(90% 70% at 12% 115%, rgba(127, 207, 212, 0.08) 0%, rgba(127, 207, 212, 0) 60%);
+  @media (prefers-color-scheme: dark) {
+    .band-teal {
+      background-color: #16525C;
+      background-image:
+        radial-gradient(145% 120% at 50% -18%, rgba(127, 207, 212, 0.20) 0%, rgba(127, 207, 212, 0) 52%),
+        radial-gradient(90% 70% at 88% 115%, rgba(127, 207, 212, 0.09) 0%, rgba(127, 207, 212, 0) 60%);
+    }
+    .band-teal-deep {
+      background-color: #123F47;
+      background-image:
+        radial-gradient(145% 120% at 50% -18%, rgba(127, 207, 212, 0.16) 0%, rgba(127, 207, 212, 0) 54%),
+        radial-gradient(90% 70% at 12% 115%, rgba(127, 207, 212, 0.08) 0%, rgba(127, 207, 212, 0) 60%);
+    }
   }
 
   /* ── Puffy: a soft "half a puffy sticker" raise ──

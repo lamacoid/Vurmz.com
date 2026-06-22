@@ -92,7 +92,7 @@ export default async function ShopCategoryPage({ params }: { params: Promise<{ c
         {cat.heroImage && (
           <div className="absolute inset-0 overflow-hidden" aria-hidden>
             <Image src={cat.heroImage} alt="" fill className="object-cover blur-2xl opacity-[0.18]" />
-            <div className="absolute inset-0 bg-[#16525C]/70" />
+            <div className="absolute inset-0 bg-[var(--page)]/70" />
           </div>
         )}
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -103,10 +103,10 @@ export default async function ShopCategoryPage({ params }: { params: Promise<{ c
               <span className="inline-block text-[#C67A6F] text-xs font-mono tracking-[0.25em] uppercase mb-4 border border-[#C67A6F]/30 px-3 py-1.5 rounded-sm">
                 {cat.shortName}
               </span>
-              <h1 className="text-3xl sm:text-5xl font-bold text-[#DED6C3] tracking-tight leading-tight mb-4">
+              <h1 className="text-3xl sm:text-5xl font-bold text-[var(--ink)] tracking-tight leading-tight mb-4">
                 {cat.name}
               </h1>
-              <p className="text-gray-300 text-base sm:text-lg leading-relaxed mb-6">{cat.tagline}</p>
+              <p className="text-[var(--ink-soft)] text-base sm:text-lg leading-relaxed mb-6">{cat.tagline}</p>
               <div className="flex flex-wrap gap-3">
                 <a
                   href={getSmsLink(cat.smsMessage)}
@@ -117,7 +117,7 @@ export default async function ShopCategoryPage({ params }: { params: Promise<{ c
                 </a>
                 <a
                   href={getSmsLink()}
-                  className="inline-flex items-center gap-2 px-6 py-3 border border-white/15 text-gray-300 font-semibold text-sm rounded-sm hover:border-[#C67A6F]/40 hover:text-[#DED6C3] transition-all"
+                  className="inline-flex items-center gap-2 px-6 py-3 border border-[var(--hairline)] text-[var(--ink-soft)] font-semibold text-sm rounded-sm hover:border-[#C67A6F]/40 hover:text-[var(--ink)] transition-all"
                 >
                   <ChatBubbleLeftIcon className="w-4 h-4" />
                   Text {siteInfo.phone}
@@ -143,20 +143,20 @@ export default async function ShopCategoryPage({ params }: { params: Promise<{ c
       )}
 
       {/* Pricing */}
-      <section className="py-12 sm:py-16 bg-white/[0.02]">
+      <section className="py-12 sm:py-16 bg-[var(--surface)]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="text-xs font-mono text-[#C67A6F] tracking-[0.2em] uppercase mb-4">Pricing</p>
-          <h2 className="text-2xl sm:text-3xl font-bold text-[#DED6C3] tracking-tight mb-8">What it costs.</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold text-[var(--ink)] tracking-tight mb-8">What it costs.</h2>
 
           {cat.pricingType === 'signature' && (
-            <div className="bg-white/[0.04] backdrop-blur-xl border border-white/10 rounded-sm p-6 sm:p-8">
+            <div className="bg-[var(--surface)] backdrop-blur-xl border border-[var(--hairline)] rounded-sm p-6 sm:p-8">
               <div className="flex items-baseline gap-2 mb-4">
                 <span className="text-3xl font-bold text-[#C67A6F]">${SIGNATURE.startingPrice}+</span>
-                <span className="text-gray-400 text-sm">Custom engraving</span>
+                <span className="text-[var(--ink-soft)] text-sm">Custom engraving</span>
               </div>
               <ul className="space-y-2">
                 {SIGNATURE.includes.map(item => (
-                  <li key={item} className="flex items-center gap-2 text-gray-300 text-sm">
+                  <li key={item} className="flex items-center gap-2 text-[var(--ink-soft)] text-sm">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#C67A6F]/60 flex-shrink-0" />
                     {item}
                   </li>
@@ -166,18 +166,18 @@ export default async function ShopCategoryPage({ params }: { params: Promise<{ c
           )}
 
           {pricingCard && (
-            <div className="bg-white/[0.04] backdrop-blur-xl border border-white/10 rounded-sm p-6 sm:p-8">
+            <div className="bg-[var(--surface)] backdrop-blur-xl border border-[var(--hairline)] rounded-sm p-6 sm:p-8">
               <div className="flex items-baseline justify-between mb-1">
-                <h3 className="text-lg font-bold text-[#DED6C3]">{pricingCard.category}</h3>
+                <h3 className="text-lg font-bold text-[var(--ink)]">{pricingCard.category}</h3>
                 {pricingCard.packTotal && <span className="text-[#C67A6F] font-bold text-sm">{pricingCard.packTotal}</span>}
               </div>
-              <p className="text-gray-500 text-xs font-mono mb-4">{pricingCard.packNote}</p>
+              <p className="text-[var(--ink-soft)] text-xs font-mono mb-4">{pricingCard.packNote}</p>
               <div className="space-y-2">
                 {pricingCard.items.map(item => (
-                  <div key={item.name} className="flex items-center justify-between py-1.5 border-b border-white/[0.08] last:border-0">
+                  <div key={item.name} className="flex items-center justify-between py-1.5 border-b border-[var(--hairline)] last:border-0">
                     <div>
-                      <span className="text-gray-200 text-sm">{item.name}</span>
-                      {item.note && <span className="text-gray-500 text-xs ml-2">{item.note}</span>}
+                      <span className="text-[var(--ink)] text-sm">{item.name}</span>
+                      {item.note && <span className="text-[var(--ink-soft)] text-xs ml-2">{item.note}</span>}
                     </div>
                     <span className="text-[#C67A6F] font-semibold text-sm">{item.price}</span>
                   </div>
@@ -186,7 +186,7 @@ export default async function ShopCategoryPage({ params }: { params: Promise<{ c
             </div>
           )}
 
-          <p className="text-gray-400 text-sm mt-6">
+          <p className="text-[var(--ink-soft)] text-sm mt-6">
             Questions about pricing?{' '}
             <a href={getSmsLink('Hi, I have a question about pricing')} className="text-[#C67A6F] font-medium hover:underline">Text me</a>.
           </p>
@@ -198,7 +198,7 @@ export default async function ShopCategoryPage({ params }: { params: Promise<{ c
         <section className="py-12 sm:py-16">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <p className="text-xs font-mono text-[#C67A6F] tracking-[0.2em] uppercase mb-4">Examples</p>
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#DED6C3] tracking-tight mb-8">See the work.</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-[var(--ink)] tracking-tight mb-8">See the work.</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {cat.galleryImages.map(img => (
                 <div key={img} className="group relative aspect-square rounded-sm overflow-hidden">
@@ -213,8 +213,8 @@ export default async function ShopCategoryPage({ params }: { params: Promise<{ c
       {cat.galleryImages.length === 0 && (
         <section className="py-12 sm:py-16">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="bg-white/[0.04] backdrop-blur-xl border border-white/10 rounded-sm p-8 text-center">
-              <p className="text-gray-400 text-sm mb-3">More photos coming soon.</p>
+            <div className="bg-[var(--surface)] backdrop-blur-xl border border-[var(--hairline)] rounded-sm p-8 text-center">
+              <p className="text-[var(--ink-soft)] text-sm mb-3">More photos coming soon.</p>
               <a href={getSmsLink('Hi, I have a question about this category')} className="text-[#C67A6F] font-semibold text-sm hover:underline">Text me for details</a>
             </div>
           </div>
@@ -222,17 +222,17 @@ export default async function ShopCategoryPage({ params }: { params: Promise<{ c
       )}
 
       {/* How to order */}
-      <section className="py-12 sm:py-16 bg-white/[0.02]">
+      <section className="py-12 sm:py-16 bg-[var(--surface)]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="text-xs font-mono text-[#C67A6F] tracking-[0.2em] uppercase mb-4">How to Order</p>
-          <h2 className="text-2xl sm:text-3xl font-bold text-[#DED6C3] tracking-tight mb-8">Three steps.</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold text-[var(--ink)] tracking-tight mb-8">Three steps.</h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             {cat.howItWorks.map((step, i) => (
               <div key={i}>
                 <div className="w-8 h-8 rounded-full bg-[#C67A6F]/15 border border-[#C67A6F]/20 flex items-center justify-center mb-3">
                   <span className="text-[#C67A6F] font-bold text-sm">{i + 1}</span>
                 </div>
-                <p className="text-gray-300 text-sm leading-relaxed">{step}</p>
+                <p className="text-[var(--ink-soft)] text-sm leading-relaxed">{step}</p>
               </div>
             ))}
           </div>
@@ -244,7 +244,7 @@ export default async function ShopCategoryPage({ params }: { params: Promise<{ c
         <section className="py-8">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="bg-[#7FCFD4]/10 border border-[#7FCFD4]/20 rounded-sm p-6 sm:p-8">
-              <p className="text-[#DED6C3] text-sm font-medium leading-relaxed">{cat.materialNote}</p>
+              <p className="text-[var(--ink)] text-sm font-medium leading-relaxed">{cat.materialNote}</p>
             </div>
           </div>
         </section>
@@ -254,16 +254,16 @@ export default async function ShopCategoryPage({ params }: { params: Promise<{ c
       <section className="py-12 sm:py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="text-xs font-mono text-[#C67A6F] tracking-[0.2em] uppercase mb-4">FAQ</p>
-          <h2 className="text-2xl sm:text-3xl font-bold text-[#DED6C3] tracking-tight mb-8">Common questions.</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold text-[var(--ink)] tracking-tight mb-8">Common questions.</h2>
           <AccordionFAQ faqs={cat.faqs} theme="services" />
         </div>
       </section>
 
       {/* Related categories */}
       {related.length > 0 && (
-        <section className="py-12 sm:py-16 bg-white/[0.02]">
+        <section className="py-12 sm:py-16 bg-[var(--surface)]">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-xl font-bold text-[#DED6C3] tracking-tight mb-6">You might also like</h2>
+            <h2 className="text-xl font-bold text-[var(--ink)] tracking-tight mb-6">You might also like</h2>
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
               {related.map(r => (
                 <CategoryCard key={r.slug} category={r} compact />
@@ -276,11 +276,11 @@ export default async function ShopCategoryPage({ params }: { params: Promise<{ c
       {/* Guarantee */}
       <section className="py-8">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-start gap-4 bg-white/[0.04] backdrop-blur-xl border border-white/10 rounded-sm p-6">
+          <div className="flex items-start gap-4 bg-[var(--surface)] backdrop-blur-xl border border-[var(--hairline)] rounded-sm p-6">
             <ShieldCheckIcon className="w-8 h-8 text-[#C67A6F] flex-shrink-0 mt-0.5" />
             <div>
-              <h3 className="font-bold text-[#DED6C3] text-sm mb-1">Satisfaction promise</h3>
-              <p className="text-gray-300 text-sm leading-relaxed">
+              <h3 className="font-bold text-[var(--ink)] text-sm mb-1">Satisfaction promise</h3>
+              <p className="text-[var(--ink-soft)] text-sm leading-relaxed">
                 One person handles your order from start to finish. I don&apos;t deliver until it&apos;s right. If something&apos;s off, I fix it.
               </p>
             </div>
@@ -291,9 +291,9 @@ export default async function ShopCategoryPage({ params }: { params: Promise<{ c
       {/* Bottom CTA */}
       <section className="py-12 sm:py-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-[#16525C] rounded-sm p-8 sm:p-10 text-center">
-            <h2 className="text-2xl font-bold text-[#DED6C3] mb-4">Ready to order?</h2>
-            <p className="text-gray-400 text-sm mb-6 max-w-md mx-auto">Text me what you want and I&apos;ll get back to you with a quote.</p>
+          <div className="bg-[var(--page)] rounded-sm p-8 sm:p-10 text-center">
+            <h2 className="text-2xl font-bold text-[var(--ink)] mb-4">Ready to order?</h2>
+            <p className="text-[var(--ink-soft)] text-sm mb-6 max-w-md mx-auto">Text me what you want and I&apos;ll get back to you with a quote.</p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <a
                 href={getSmsLink(cat.smsMessage)}
@@ -304,13 +304,13 @@ export default async function ShopCategoryPage({ params }: { params: Promise<{ c
               </a>
               <Link
                 href="/shop"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-white/20 text-[#DED6C3] font-semibold text-sm rounded-sm hover:bg-white/10 transition-all"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-[var(--hairline)] text-[var(--ink)] font-semibold text-sm rounded-sm hover:bg-white/10 transition-all"
               >
                 See all products
               </Link>
               <Link
                 href="/services"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-white/20 text-gray-400 font-medium text-sm rounded-sm hover:bg-white/10 transition-all"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-[var(--hairline)] text-[var(--ink-soft)] font-medium text-sm rounded-sm hover:bg-white/10 transition-all"
               >
                 Need custom work?
                 <ArrowRightIcon className="w-4 h-4" />

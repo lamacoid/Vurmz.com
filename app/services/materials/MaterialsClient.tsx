@@ -115,7 +115,7 @@ export default function MaterialsClient() {
 
           <motion.div variants={stagger} initial="initial" animate="animate" className="max-w-2xl">
             <motion.div variants={fadeUp} transition={{ duration: 0.5 }}>
-              <span className="inline-block text-vurmz-teal text-xs font-mono tracking-[0.25em] uppercase mb-6 border border-vurmz-teal/20 px-3 py-1.5 rounded-sm">
+              <span className="inline-block text-[var(--eyebrow)] text-xs font-mono tracking-[0.25em] uppercase mb-6 border border-vurmz-teal/20 px-3 py-1.5 rounded-sm">
                 How It Works
               </span>
             </motion.div>
@@ -123,16 +123,16 @@ export default function MaterialsClient() {
             <motion.h1
               variants={fadeUp}
               transition={{ duration: 0.6 }}
-              className="text-4xl sm:text-5xl font-bold text-gray-100 tracking-tight leading-[0.95] mb-6"
+              className="text-4xl sm:text-5xl font-bold text-[var(--ink)] tracking-tight leading-[0.95] mb-6"
             >
               Three ways to<br />
-              <span className="text-vurmz-teal">get it engraved.</span>
+              <span className="text-[var(--eyebrow)]">get it engraved.</span>
             </motion.h1>
 
             <motion.p
               variants={fadeUp}
               transition={{ duration: 0.5 }}
-              className="text-gray-400 text-base sm:text-lg leading-relaxed max-w-xl"
+              className="text-[var(--ink-soft)] text-base sm:text-lg leading-relaxed max-w-xl"
             >
               Shop from what I have on hand, use Bring Your Own for something you already have, or tell me what you need and I&apos;ll make it happen.
             </motion.p>
@@ -155,17 +155,17 @@ export default function MaterialsClient() {
                 key={opt.title}
                 variants={fadeUp}
                 transition={{ duration: 0.4 }}
-                className="bg-white/[0.04] border border-white/[0.08] rounded-sm p-6 flex flex-col"
+                className="bg-[var(--surface)] border border-[var(--hairline)] rounded-sm p-6 flex flex-col"
               >
-                <opt.icon className="w-8 h-8 text-vurmz-teal mb-4" />
-                <h3 className="text-lg font-bold text-gray-100 mb-2">{opt.title}</h3>
-                <p className="text-sm text-gray-400 leading-relaxed flex-1 mb-5">{opt.description}</p>
+                <opt.icon className="w-8 h-8 text-[var(--eyebrow)] mb-4" />
+                <h3 className="text-lg font-bold text-[var(--ink)] mb-2">{opt.title}</h3>
+                <p className="text-sm text-[var(--ink-soft)] leading-relaxed flex-1 mb-5">{opt.description}</p>
                 {(() => {
                   const o = opt as { type: string; href?: string; sms?: string; cta: string }
                   return o.type === 'link' && o.href ? (
                     <Link
                       href={o.href}
-                      className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-vurmz-teal text-white font-semibold text-sm rounded-sm hover:bg-vurmz-teal-dark transition-colors"
+                      className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-[var(--feature)] text-white font-semibold text-sm rounded-sm hover:bg-[var(--feature-deep)] transition-colors"
                     >
                       {o.cta}
                       <ArrowRightIcon className="w-4 h-4" />
@@ -173,7 +173,7 @@ export default function MaterialsClient() {
                   ) : (
                     <a
                       href={getSmsLink(o.sms)}
-                      className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-vurmz-teal text-white font-semibold text-sm rounded-sm hover:bg-vurmz-teal-dark transition-colors"
+                      className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-[var(--feature)] text-white font-semibold text-sm rounded-sm hover:bg-[var(--feature-deep)] transition-colors"
                     >
                       <ChatBubbleLeftIcon className="w-4 h-4" />
                       {o.cta}
@@ -187,9 +187,9 @@ export default function MaterialsClient() {
       </section>
 
       {/* Capabilities Grid — oatmeal band to break up the teal */}
-      <section className="bg-[#DED6C3] py-16 sm:py-20 border-y border-black/5">
+      <section className="bg-[var(--surface)] py-16 sm:py-20 border-y border-black/5">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl sm:text-3xl font-bold text-[#16525C] tracking-tight mb-2">What I can engrave</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold text-[var(--ink)] tracking-tight mb-2">What I can engrave</h2>
           <p className="text-[#4f5d5b] text-sm mb-8 max-w-lg">
             Metal, wood, glass, acrylic, leather, plastic, stone. If it&apos;s solid, I can mark it.
           </p>
@@ -208,7 +208,7 @@ export default function MaterialsClient() {
                 transition={{ duration: 0.35 }}
                 className="bg-white/70 border border-[#16525C]/12 rounded-sm p-4 hover:border-[#C67A6F]/50 transition-colors puffy-light"
               >
-                <h3 className="text-sm font-semibold text-[#16525C] leading-tight">{cap.name}</h3>
+                <h3 className="text-sm font-semibold text-[var(--ink)] leading-tight">{cap.name}</h3>
                 <p className="text-xs text-[#5a655f] mt-1.5 leading-relaxed">{cap.description}</p>
               </motion.div>
             ))}
@@ -219,16 +219,16 @@ export default function MaterialsClient() {
       {/* Bottom CTA */}
       <section className="pb-16 sm:pb-20">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white/[0.04] border border-white/[0.08] rounded-sm p-8 sm:p-10 text-center">
-            <h3 className="text-xl sm:text-2xl font-bold text-gray-100 mb-3">
+          <div className="bg-[var(--surface)] border border-[var(--hairline)] rounded-sm p-8 sm:p-10 text-center">
+            <h3 className="text-xl sm:text-2xl font-bold text-[var(--ink)] mb-3">
               Not sure if I can engrave it?
             </h3>
-            <p className="text-gray-400 text-sm leading-relaxed max-w-md mx-auto mb-6">
+            <p className="text-[var(--ink-soft)] text-sm leading-relaxed max-w-md mx-auto mb-6">
               Text me a photo. I&apos;ll tell you whether I can do it, what it&apos;ll look like, and what it&apos;ll cost.
             </p>
             <a
               href={getSmsLink("Hi, can you engrave this?")}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-vurmz-teal text-white font-semibold text-sm rounded-sm hover:bg-vurmz-teal-dark transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--feature)] text-white font-semibold text-sm rounded-sm hover:bg-[var(--feature-deep)] transition-colors"
             >
               <ChatBubbleLeftIcon className="w-4 h-4" />
               Text {siteInfo.founder.name}

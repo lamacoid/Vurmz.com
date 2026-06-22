@@ -12,15 +12,15 @@ interface AccordionFAQProps {
 const themeStyles = {
   shop: {
     card: 'bg-white/60 border border-[#16525C]/8',
-    question: 'text-[#16525C]',
+    question: 'text-[var(--ink)]',
     answer: 'text-[#6B6259]',
     icon: 'text-[#C67A6F]',
   },
   services: {
-    card: 'bg-white/[0.03] border border-white/[0.06]',
-    question: 'text-cream',
-    answer: 'text-gray-400',
-    icon: 'text-vurmz-teal',
+    card: 'bg-[var(--surface)] border border-[var(--hairline)]',
+    question: 'text-[var(--ink)]',
+    answer: 'text-[var(--ink-soft)]',
+    icon: 'text-[var(--eyebrow)]',
   },
 }
 

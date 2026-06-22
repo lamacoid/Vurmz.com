@@ -47,7 +47,7 @@ function dotBg(level: string): string {
 function TrafficDot({ label, level }: { label: string; level: string }) {
   return (
     <span className="inline-flex items-center gap-1.5" title={`${label}: ${level} traffic`}>
-      <span className="text-gray-400">{label}</span>
+      <span className="text-[var(--ink-soft)]">{label}</span>
       <span className={`inline-block h-1.5 w-1.5 rounded-full ${dotBg(level)}`} />
     </span>
   )
@@ -108,15 +108,15 @@ export default function LocalTicker() {
   if (pathname && HIDDEN_PREFIXES.some((p) => pathname.startsWith(p))) return null
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-[60] h-7 bg-[#15363b]/95 backdrop-blur-sm border-b border-white/10">
-      <div className="max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex items-center justify-between text-[11px] font-mono tracking-wide text-gray-400">
+    <div className="fixed top-0 left-0 right-0 z-[60] h-7 bg-[#15363b]/95 backdrop-blur-sm border-b border-[var(--hairline)]">
+      <div className="max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex items-center justify-between text-[11px] font-mono tracking-wide text-[var(--ink-soft)]">
         {/* Left — live local anchor */}
         <div className="hidden sm:flex items-center gap-2">
           <span className="relative flex h-1.5 w-1.5" aria-hidden>
             <span className="absolute inline-flex h-full w-full rounded-full bg-[#7FCFD4] opacity-60 animate-ping" />
             <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#7FCFD4]" />
           </span>
-          <span className="text-gray-300">Centennial, CO</span>
+          <span className="text-[var(--ink-soft)]">Centennial, CO</span>
         </div>
 
         {/* Right — date / time / weather / traffic */}
@@ -125,7 +125,7 @@ export default function LocalTicker() {
           {mounted && timeStr && <span>{timeStr}</span>}
           {mounted && weatherText && <><span className="text-gray-600" aria-hidden>·</span><span>{weatherText}</span></>}
           {mounted && traffic && (
-            <span className="hidden md:flex items-center gap-3 pl-1 border-l border-white/10 ml-1">
+            <span className="hidden md:flex items-center gap-3 pl-1 border-l border-[var(--hairline)] ml-1">
               <TrafficDot label="I-25" level={traffic.i25} />
               <TrafficDot label="C-470" level={traffic.c470} />
               <TrafficDot label="I-225" level={traffic.i225} />

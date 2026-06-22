@@ -60,20 +60,20 @@ export default function ContactPage() {
       />
 
       {/* Breadcrumbs */}
-      <div className="bg-vurmz-dark pt-6">
+      <div className="bg-[var(--page)] pt-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Breadcrumbs items={[{ label: 'VURMZ', href: '/' }, { label: 'Services', href: '/services' }, { label: 'Contact' }]} theme="services" />
         </div>
       </div>
 
       {/* Hero */}
-      <section className="bg-vurmz-dark text-cream py-10">
+      <section className="bg-[var(--page)] text-[var(--ink)] py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
               Let&apos;s Talk
             </h1>
-            <p className="text-xl text-gray-300">
+            <p className="text-xl text-[var(--ink-soft)]">
               Send a message or a text. You get Zach directly.
             </p>
           </div>
@@ -86,64 +86,64 @@ export default function ContactPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Contact Form */}
             <div>
-              <h2 className="text-2xl font-bold text-cream mb-6">Send a Message</h2>
+              <h2 className="text-2xl font-bold text-[var(--ink)] mb-6">Send a Message</h2>
               <ContactForm />
             </div>
 
             {/* Contact Details */}
             <div>
-              <h2 className="text-2xl font-bold text-cream mb-6">Get in Touch</h2>
+              <h2 className="text-2xl font-bold text-[var(--ink)] mb-6">Get in Touch</h2>
 
               <div className="space-y-6">
                 <div className="flex items-start gap-4">
-                  <div className="bg-vurmz-teal p-3 rounded-lg">
+                  <div className="bg-[var(--feature)] p-3 rounded-lg">
                     <ChatBubbleLeftIcon className="h-6 w-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-lg text-cream">Text Me</h3>
-                    <a href={getSmsLink()} className="text-vurmz-teal text-xl font-semibold hover:underline">
+                    <h3 className="font-semibold text-lg text-[var(--ink)]">Text Me</h3>
+                    <a href={getSmsLink()} className="text-[var(--eyebrow)] text-xl font-semibold hover:underline">
                       {siteInfo.phone}
                     </a>
-                    <p className="text-sm text-gray-400 mt-1">Fastest way to reach Zach — text only</p>
+                    <p className="text-sm text-[var(--ink-soft)] mt-1">Fastest way to reach Zach — text only</p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="bg-vurmz-teal p-3 rounded-lg">
+                  <div className="bg-[var(--feature)] p-3 rounded-lg">
                     <EnvelopeIcon className="h-6 w-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-lg text-cream">Email</h3>
-                    <a href={`mailto:${siteInfo.email}`} className="text-gray-400 hover:text-vurmz-teal transition-colors">
+                    <h3 className="font-semibold text-lg text-[var(--ink)]">Email</h3>
+                    <a href={`mailto:${siteInfo.email}`} className="text-[var(--ink-soft)] hover:text-[var(--eyebrow)] transition-colors">
                       {siteInfo.email}
                     </a>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="bg-vurmz-teal p-3 rounded-lg">
+                  <div className="bg-[var(--feature)] p-3 rounded-lg">
                     <MapPinIcon className="h-6 w-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-lg text-cream">Location</h3>
-                    <p className="text-gray-400">
+                    <h3 className="font-semibold text-lg text-[var(--ink)]">Location</h3>
+                    <p className="text-[var(--ink-soft)]">
                       South suburban Denver<br />
                       {siteInfo.city}, {siteInfo.state}
                     </p>
-                    <p className="text-sm text-gray-400 mt-1">
+                    <p className="text-sm text-[var(--ink-soft)] mt-1">
                       Pickup available by appointment
                     </p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="bg-vurmz-teal p-3 rounded-lg">
+                  <div className="bg-[var(--feature)] p-3 rounded-lg">
                     <ClockIcon className="h-6 w-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-lg text-cream">Availability</h3>
-                    <p className="text-gray-400">Flexible hours</p>
-                    <p className="text-sm text-gray-400 mt-1">
+                    <h3 className="font-semibold text-lg text-[var(--ink)]">Availability</h3>
+                    <p className="text-[var(--ink-soft)]">Flexible hours</p>
+                    <p className="text-sm text-[var(--ink-soft)] mt-1">
                       Text anytime. I will get back to you.
                     </p>
                   </div>
@@ -152,17 +152,17 @@ export default function ContactPage() {
 
               {/* Service Area */}
               <div className="mt-10">
-                <h3 className="font-semibold text-cream mb-3">Service Area</h3>
+                <h3 className="font-semibold text-[var(--ink)] mb-3">Service Area</h3>
                 <div className="flex flex-wrap gap-2">
                   {siteInfo.serviceAreas.map((area) => (
-                    <span key={area} className="bg-vurmz-dark border border-gray-700 text-gray-300 px-3 py-1 text-sm rounded">
+                    <span key={area} className="bg-[var(--page)] border border-gray-700 text-[var(--ink-soft)] px-3 py-1 text-sm rounded">
                       {area}
                     </span>
                   ))}
                 </div>
-                <div className="mt-4 p-4 bg-vurmz-teal/10 border border-vurmz-teal/30 rounded-lg">
-                  <p className="text-sm text-gray-300">
-                    <strong className="text-cream">Free delivery</strong> on orders $100+ in south suburban Denver.
+                <div className="mt-4 p-4 bg-[var(--feature)]/10 border border-vurmz-teal/30 rounded-lg">
+                  <p className="text-sm text-[var(--ink-soft)]">
+                    <strong className="text-[var(--ink)]">Free delivery</strong> on orders $100+ in south suburban Denver.
                   </p>
                 </div>
               </div>
@@ -172,14 +172,14 @@ export default function ContactPage() {
       </section>
 
       {/* FAQ */}
-      <section className="bg-vurmz-dark py-10">
+      <section className="bg-[var(--page)] py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold text-cream mb-6 text-center">Common Questions</h2>
+          <h2 className="text-2xl font-bold text-[var(--ink)] mb-6 text-center">Common Questions</h2>
           <div className="max-w-3xl mx-auto space-y-4">
             {faqItems.map((item) => (
               <div key={item.question} className="bg-[#1f2523] p-6 border border-gray-700 rounded-lg">
-                <h3 className="font-semibold text-cream mb-2">{item.question}</h3>
-                <p className="text-gray-400">{item.answer}</p>
+                <h3 className="font-semibold text-[var(--ink)] mb-2">{item.question}</h3>
+                <p className="text-[var(--ink-soft)]">{item.answer}</p>
               </div>
             ))}
           </div>
@@ -187,15 +187,15 @@ export default function ContactPage() {
       </section>
 
       {/* Trusted By */}
-      <section className="py-8 sm:py-10 border-t border-white/[0.06] overflow-hidden">
+      <section className="py-8 sm:py-10 border-t border-[var(--hairline)] overflow-hidden">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-xs font-mono text-gray-500 tracking-[0.2em] uppercase mb-5 text-center">
+          <p className="text-xs font-mono text-[var(--ink-soft)] tracking-[0.2em] uppercase mb-5 text-center">
             Trusted by
           </p>
         </div>
         <div className="relative">
           <div className="flex items-center justify-center gap-12 sm:gap-16">
-            <a href="https://www.nordstrom.com/store-details/nordstrom-cherry-creek-shopping-center" target="_blank" rel="noopener noreferrer" className="flex-shrink-0 text-sm font-medium text-cream/40 hover:text-cream/60 transition-colors">
+            <a href="https://www.nordstrom.com/store-details/nordstrom-cherry-creek-shopping-center" target="_blank" rel="noopener noreferrer" className="flex-shrink-0 text-sm font-medium text-[var(--ink)]/40 hover:text-[var(--ink)]/60 transition-colors">
               Nordstrom Beauty
             </a>
             <a href="http://countylineguitaramps.com" target="_blank" rel="noopener noreferrer" className="flex-shrink-0 hover:opacity-70 transition-opacity">

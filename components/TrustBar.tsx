@@ -12,9 +12,9 @@ const items = [
 ]
 
 const themeStyles = {
-  landing: { text: 'text-gray-400', icon: 'text-gray-500', bg: '' },
+  landing: { text: 'text-[var(--ink-soft)]', icon: 'text-[var(--ink-soft)]', bg: '' },
   shop: { text: 'text-[#6B6259]', icon: 'text-[#C67A6F]', bg: '' },
-  services: { text: 'text-gray-400', icon: 'text-vurmz-teal', bg: '' },
+  services: { text: 'text-[var(--ink-soft)]', icon: 'text-[var(--eyebrow)]', bg: '' },
 }
 
 export default function TrustBar({ theme, variant = 'inline' }: TrustBarProps) {
@@ -27,7 +27,7 @@ export default function TrustBar({ theme, variant = 'inline' }: TrustBarProps) {
           <div
             key={item.label}
             className={`flex items-center gap-3 p-4 rounded-sm ${
-              theme === 'shop' ? 'bg-white/60 border border-[#16525C]/8' : 'bg-white/[0.03] border border-white/[0.06]'
+              theme === 'shop' ? 'bg-white/60 border border-[#16525C]/8' : 'bg-[var(--surface)] border border-[var(--hairline)]'
             }`}
           >
             <item.icon className={`w-5 h-5 flex-shrink-0 ${styles.icon}`} />

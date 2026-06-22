@@ -78,13 +78,13 @@ export default function TermsPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero */}
-      <section className="bg-vurmz-dark text-cream py-16 sm:py-20">
+      <section className="bg-[var(--page)] text-[var(--ink)] py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <p className="text-vurmz-teal font-medium mb-2 uppercase tracking-wider text-sm">Legal</p>
+          <p className="text-[var(--eyebrow)] font-medium mb-2 uppercase tracking-wider text-sm">Legal</p>
           <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4">
             Terms & Conditions
           </h1>
-          <p className="text-xl text-gray-300">
+          <p className="text-xl text-[var(--ink-soft)]">
             Last updated: {lastUpdated}
           </p>
         </div>
@@ -102,7 +102,7 @@ export default function TermsPage() {
                   <div className="space-y-2">
                     {section.content.map((item) => (
                       <div key={item.label} className="flex flex-col sm:flex-row sm:justify-between gap-1">
-                        <span className="text-gray-500 text-sm">{item.label}</span>
+                        <span className="text-[var(--ink-soft)] text-sm">{item.label}</span>
                         <span className="text-gray-700 font-medium">{item.value}</span>
                       </div>
                     ))}
@@ -117,7 +117,7 @@ export default function TermsPage() {
                   <div className="space-y-3">
                     {section.items.map((item) => (
                       <div key={item.term}>
-                        <span className="text-vurmz-teal font-medium">{item.term}: </span>
+                        <span className="text-[var(--eyebrow)] font-medium">{item.term}: </span>
                         <span className="text-gray-600">{item.desc}</span>
                       </div>
                     ))}
@@ -127,7 +127,7 @@ export default function TermsPage() {
             ))}
 
             {/* Contact */}
-            <div className="p-6 rounded-xl bg-vurmz-teal/10 border border-vurmz-teal/20">
+            <div className="p-6 rounded-xl bg-[var(--feature)]/10 border border-vurmz-teal/20">
               <h2 className="text-xl font-bold text-vurmz-dark mb-3">Questions?</h2>
               <p className="text-gray-600 mb-4">
                 If you have questions about these terms, please contact me:
@@ -135,7 +135,7 @@ export default function TermsPage() {
               <div className="flex flex-wrap gap-3">
                 <a
                   href={getSmsLink()}
-                  className="inline-flex items-center px-5 py-2.5 bg-vurmz-teal text-white rounded-lg font-medium hover:bg-vurmz-teal-dark transition-all"
+                  className="inline-flex items-center px-5 py-2.5 bg-[var(--feature)] text-white rounded-lg font-medium hover:bg-[var(--feature-deep)] transition-all"
                 >
                   Text {siteInfo.phone}
                 </a>

@@ -52,7 +52,7 @@ const B2B_LANES = [
 
 export default function Page() {
   return (
-    <div className="bg-[#16525C] text-gray-300" data-theme="shop">
+    <div className="bg-[var(--page)] text-[var(--ink-soft)]" data-theme="shop">
       {/* Smooth anchor scrolling + let the color bands butt against their
           divider lines (override the global 2.5rem section gap on this page). */}
       <style dangerouslySetInnerHTML={{ __html: 'html{scroll-behavior:smooth}#main-content>section+section{margin-top:0}' }} />
@@ -92,7 +92,7 @@ export default function Page() {
 
           <RotatingTagline
             accentColor="#C67A6F"
-            className="text-cream text-3xl sm:text-4xl lg:text-5xl mb-8 max-w-xl mx-auto"
+            className="text-[var(--feature-ink)] text-3xl sm:text-4xl lg:text-5xl mb-8 max-w-xl mx-auto"
           />
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
@@ -138,9 +138,9 @@ export default function Page() {
         </section>
 
         {/* ═══════════ SHOP CATEGORIES (base teal band) ═══════════ */}
-        <section className="band-teal border-t border-white/[0.06] py-12 sm:py-14">
+        <section className="band-teal border-t border-[var(--hairline)] py-12 sm:py-14">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl font-bold text-[#DED6C3] text-center mb-8">Shop by category</h2>
+            <h2 className="text-2xl font-bold text-[var(--ink)] text-center mb-8">Shop by category</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {CONSUMER_CATEGORIES.map((cat) => (
                 <CategoryCard key={cat.slug} category={cat} />
@@ -150,7 +150,7 @@ export default function Page() {
         </section>
 
         {/* ═══════════ HOW IT WORKS (dusty coral band) ═══════════ */}
-        <section className="bg-[#B0675D] border-t border-white/[0.06] py-14 sm:py-16">
+        <section className="bg-[#B0675D] border-t border-[var(--hairline)] py-14 sm:py-16">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl font-bold text-white text-center mb-8">How it works</h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
@@ -172,14 +172,14 @@ export default function Page() {
         </section>
 
         {/* ═══════════ SERVICES — the anchored business half ═══════════ */}
-        <section id="services" className="relative band-teal-deep border-t border-white/[0.08] scroll-mt-16">
+        <section id="services" className="relative band-teal-deep border-t border-[var(--hairline)] scroll-mt-16">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
-            <p className="text-xs font-mono text-vurmz-teal tracking-[0.25em] uppercase mb-3">For your work</p>
-            <h2 className="text-3xl sm:text-4xl font-bold text-cream tracking-tight leading-tight mb-4">
+            <p className="text-xs font-mono text-[var(--eyebrow)] tracking-[0.25em] uppercase mb-3">For your work</p>
+            <h2 className="text-3xl sm:text-4xl font-bold text-[var(--ink)] tracking-tight leading-tight mb-4">
               Laser engraving services<br />
-              <span className="text-gray-400">for businesses in the Denver metro.</span>
+              <span className="text-[var(--ink-soft)]">for businesses in the Denver metro.</span>
             </h2>
-            <p className="text-gray-300 text-base sm:text-lg leading-relaxed max-w-2xl mb-10">
+            <p className="text-[var(--ink-soft)] text-base sm:text-lg leading-relaxed max-w-2xl mb-10">
               Posted prices. Most jobs in 24 to 72 hours. Hand-delivered across the metro.
             </p>
 
@@ -188,13 +188,13 @@ export default function Page() {
                 <Link
                   key={lane.h}
                   href={lane.href}
-                  className="group bg-white/[0.03] border border-white/[0.08] rounded-sm p-6 hover:border-vurmz-teal/40 transition-colors puffy"
+                  className="group bg-[var(--surface)] border border-[var(--hairline)] rounded-sm p-6 hover:border-vurmz-teal/40 transition-colors puffy"
                 >
-                  <h3 className="font-semibold text-cream mb-2 flex items-center justify-between">
+                  <h3 className="font-semibold text-[var(--ink)] mb-2 flex items-center justify-between">
                     {lane.h}
-                    <ArrowRightIcon className="w-4 h-4 text-vurmz-teal opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
+                    <ArrowRightIcon className="w-4 h-4 text-[var(--eyebrow)] opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
                   </h3>
-                  <p className="text-gray-300 text-sm leading-relaxed">{lane.p}</p>
+                  <p className="text-[var(--ink-soft)] text-sm leading-relaxed">{lane.p}</p>
                 </Link>
               ))}
             </div>
@@ -216,14 +216,14 @@ export default function Page() {
               </a>
             </div>
 
-            <div className="mt-12 border-t border-white/[0.06] pt-8">
+            <div className="mt-12 border-t border-[var(--hairline)] pt-8">
               <TrustedBy theme="services" />
             </div>
           </div>
         </section>
 
         {/* ═══════════ ABOUT (oatmeal band, dark text) ═══════════ */}
-        <section className="bg-[#DED6C3] border-t border-black/5">
+        <section className="bg-[var(--surface)] border-t border-black/5">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
               <div className="relative aspect-[4/3] overflow-hidden rounded-sm puffy-light">
@@ -233,9 +233,9 @@ export default function Page() {
                 </div>
               </div>
               <div>
-                <p className="text-xs font-mono text-[#16525C] tracking-[0.2em] uppercase mb-4">Who I Am</p>
-                <h2 className="text-2xl sm:text-3xl font-bold text-[#16525C] tracking-tight leading-tight mb-4">
-                  No department.<br /><span className="text-[#16525C]/50">Just me.</span>
+                <p className="text-xs font-mono text-[var(--ink)] tracking-[0.2em] uppercase mb-4">Who I Am</p>
+                <h2 className="text-2xl sm:text-3xl font-bold text-[var(--ink)] tracking-tight leading-tight mb-4">
+                  No department.<br /><span className="text-[var(--ink)]/50">Just me.</span>
                 </h2>
                 <p className="text-[#4f5d5b] text-base leading-relaxed mb-4">
                   I&apos;m {siteInfo.founder.name}, and I run VURMZ out of {siteInfo.city}. You text me, I quote you, I engrave it, and I hand it to you. No middlemen at any step.
@@ -250,22 +250,22 @@ export default function Page() {
         </section>
 
         {/* ═══════════ TESTIMONIALS (base teal band) ═══════════ */}
-        <section className="band-teal border-t border-white/[0.06]">
+        <section className="band-teal border-t border-[var(--hairline)]">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16">
             <TestimonialCarousel testimonials={shopTestimonials} theme="services" />
           </div>
         </section>
 
         {/* ═══════════ CONTACT (darker teal band) ═══════════ */}
-        <section id="contact" className="band-teal-deep border-t border-white/[0.06] scroll-mt-16">
+        <section id="contact" className="band-teal-deep border-t border-[var(--hairline)] scroll-mt-16">
           <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16">
-            <p className="text-xs font-mono text-vurmz-teal tracking-[0.2em] uppercase mb-3 text-center">Contact</p>
-            <h2 className="text-2xl sm:text-3xl font-bold text-cream tracking-tight mb-2 text-center">
+            <p className="text-xs font-mono text-[var(--eyebrow)] tracking-[0.2em] uppercase mb-3 text-center">Contact</p>
+            <h2 className="text-2xl sm:text-3xl font-bold text-[var(--ink)] tracking-tight mb-2 text-center">
               Questions? Send it.
             </h2>
-            <p className="text-gray-300 text-sm text-center mb-8">
+            <p className="text-[var(--ink-soft)] text-sm text-center mb-8">
               Or skip the form and text me at{' '}
-              <a href={getSmsLink()} className="text-vurmz-teal font-semibold hover:underline">{siteInfo.phone}</a>
+              <a href={getSmsLink()} className="text-[var(--eyebrow)] font-semibold hover:underline">{siteInfo.phone}</a>
               {' '}— that&apos;s usually faster.
             </p>
             <ContactForm />

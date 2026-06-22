@@ -240,7 +240,7 @@ export default async function CityPage({ params }: Props) {
   }
 
   return (
-    <div className="bg-vurmz-dark">
+    <div className="bg-[var(--page)]">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -250,24 +250,24 @@ export default async function CityPage({ params }: Props) {
       <section className="pt-6 pb-12 sm:pt-10 sm:pb-16 lg:pb-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <Breadcrumbs items={[{ label: 'VURMZ', href: '/' }, { label: 'Services', href: '/services' }, { label: 'Laser Engraving', href: '/services' }, { label: city.name }]} theme="services" />
-          <p className="text-xs font-mono text-vurmz-teal tracking-[0.2em] uppercase mb-4">
+          <p className="text-xs font-mono text-[var(--eyebrow)] tracking-[0.2em] uppercase mb-4">
             Service Area &middot; {city.name}, {siteInfo.stateAbbr}
           </p>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-cream tracking-tight leading-tight mb-6">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--ink)] tracking-tight leading-tight mb-6">
             Laser Engraving in {city.name}, Colorado
           </h1>
-          <p className="text-gray-400 text-base sm:text-lg leading-relaxed max-w-2xl">
+          <p className="text-[var(--ink-soft)] text-base sm:text-lg leading-relaxed max-w-2xl">
             Laser engraving for businesses and individuals in {city.name} and the surrounding area. Hand-delivered by {siteInfo.founder.name} from {siteInfo.name} in Centennial.
           </p>
         </div>
       </section>
 
       {/* ═══════════ ABOUT THE AREA ═══════════ */}
-      <section className="py-12 sm:py-16 border-t border-white/[0.06]">
+      <section className="py-12 sm:py-16 border-t border-[var(--hairline)]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="space-y-6">
             {city.paragraphs.map((paragraph, i) => (
-              <p key={i} className="text-gray-400 text-base leading-relaxed">
+              <p key={i} className="text-[var(--ink-soft)] text-base leading-relaxed">
                 {paragraph}
               </p>
             ))}
@@ -276,12 +276,12 @@ export default async function CityPage({ params }: Props) {
       </section>
 
       {/* ═══════════ SERVICES ═══════════ */}
-      <section className="py-12 sm:py-16 border-t border-white/[0.06]">
+      <section className="py-12 sm:py-16 border-t border-[var(--hairline)]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-xs font-mono text-gray-500 tracking-[0.2em] uppercase mb-4">
+          <p className="text-xs font-mono text-[var(--ink-soft)] tracking-[0.2em] uppercase mb-4">
             What I Offer
           </p>
-          <h2 className="text-2xl sm:text-3xl font-bold text-cream tracking-tight leading-tight mb-8">
+          <h2 className="text-2xl sm:text-3xl font-bold text-[var(--ink)] tracking-tight leading-tight mb-8">
             Services available in {city.name}
           </h2>
 
@@ -289,10 +289,10 @@ export default async function CityPage({ params }: Props) {
             {services.map((service) => (
               <div
                 key={service.name}
-                className="bg-white/[0.03] border border-white/[0.08] rounded-sm p-5"
+                className="bg-[var(--surface)] border border-[var(--hairline)] rounded-sm p-5"
               >
-                <h3 className="text-sm font-semibold text-cream mb-1">{service.name}</h3>
-                <p className="text-gray-500 text-sm leading-relaxed">{service.description}</p>
+                <h3 className="text-sm font-semibold text-[var(--ink)] mb-1">{service.name}</h3>
+                <p className="text-[var(--ink-soft)] text-sm leading-relaxed">{service.description}</p>
               </div>
             ))}
           </div>
@@ -300,12 +300,12 @@ export default async function CityPage({ params }: Props) {
       </section>
 
       {/* ═══════════ CTA ═══════════ */}
-      <section className="py-12 sm:py-16 border-t border-white/[0.06]">
+      <section className="py-12 sm:py-16 border-t border-[var(--hairline)]">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold text-cream tracking-tight mb-4">
+          <h2 className="text-2xl sm:text-3xl font-bold text-[var(--ink)] tracking-tight mb-4">
             Ready to get started in {city.name}?
           </h2>
-          <p className="text-gray-400 text-base leading-relaxed mb-6">
+          <p className="text-[var(--ink-soft)] text-base leading-relaxed mb-6">
             Text {siteInfo.founder.name} for a free quote. Fast turnaround on finished orders.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
@@ -328,26 +328,26 @@ export default async function CityPage({ params }: Props) {
       </section>
 
       {/* ═══════════ LINKS ═══════════ */}
-      <section className="py-12 sm:py-16 border-t border-white/[0.06]">
+      <section className="py-12 sm:py-16 border-t border-[var(--hairline)]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 sm:gap-10">
             <Link
               href="/services/portfolio"
-              className="inline-flex items-center gap-2 text-sm text-vurmz-teal font-mono tracking-wide hover:text-cream transition-colors group"
+              className="inline-flex items-center gap-2 text-sm text-[var(--eyebrow)] font-mono tracking-wide hover:text-[var(--ink)] transition-colors group"
             >
               View portfolio
               <ArrowRightIcon className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link
               href="/services"
-              className="inline-flex items-center gap-2 text-sm text-vurmz-teal font-mono tracking-wide hover:text-cream transition-colors group"
+              className="inline-flex items-center gap-2 text-sm text-[var(--eyebrow)] font-mono tracking-wide hover:text-[var(--ink)] transition-colors group"
             >
               View pricing
               <ArrowRightIcon className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
             </Link>
             <a
               href={getSmsLink()}
-              className="inline-flex items-center gap-2 text-sm text-gray-400 font-mono tracking-wide hover:text-cream transition-colors group"
+              className="inline-flex items-center gap-2 text-sm text-[var(--ink-soft)] font-mono tracking-wide hover:text-[var(--ink)] transition-colors group"
             >
               <ChatBubbleLeftIcon className="w-3.5 h-3.5" />
               Text me
@@ -357,9 +357,9 @@ export default async function CityPage({ params }: Props) {
       </section>
 
       {/* ═══════════ OTHER SERVICE AREAS ═══════════ */}
-      <section className="py-12 sm:py-16 border-t border-white/[0.06]">
+      <section className="py-12 sm:py-16 border-t border-[var(--hairline)]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-xs font-mono text-gray-500 tracking-[0.2em] uppercase mb-4">
+          <p className="text-xs font-mono text-[var(--ink-soft)] tracking-[0.2em] uppercase mb-4">
             Other Areas We Serve
           </p>
           <div className="flex flex-wrap gap-2">
@@ -369,7 +369,7 @@ export default async function CityPage({ params }: Props) {
                 <Link
                   key={c.slug}
                   href={`/services/laser-engraving/${c.slug}`}
-                  className="bg-white/[0.03] border border-white/[0.08] text-gray-300 px-3 py-1.5 text-sm rounded-sm hover:border-vurmz-teal/40 hover:text-cream transition-colors"
+                  className="bg-[var(--surface)] border border-[var(--hairline)] text-[var(--ink-soft)] px-3 py-1.5 text-sm rounded-sm hover:border-vurmz-teal/40 hover:text-[var(--ink)] transition-colors"
                 >
                   {c.name}
                 </Link>

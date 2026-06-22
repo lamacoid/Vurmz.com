@@ -31,21 +31,21 @@ export default function AccountLogin() {
 
   return (
     <div className="max-w-md mx-auto p-6 sm:p-10">
-      <h1 className="text-2xl font-bold text-cream mb-2">Sign in to your account</h1>
-      <p className="text-sm text-gray-400 mb-8">We&rsquo;ll email you a one-time link — no password.</p>
+      <h1 className="text-2xl font-bold text-[var(--ink)] mb-2">Sign in to your account</h1>
+      <p className="text-sm text-[var(--ink-soft)] mb-8">We&rsquo;ll email you a one-time link — no password.</p>
 
       {status === 'sent' ? (
-        <div className="bg-[#16525C] border border-[#7FCFD4]/20 rounded-xl p-6">
-          <p className="text-cream font-semibold mb-2">Check your email</p>
-          <p className="text-sm text-gray-400">
-            We sent a sign-in link to <span className="text-cream">{email}</span>. The link expires in 15 minutes.
+        <div className="bg-[var(--page)] border border-[#7FCFD4]/20 rounded-xl p-6">
+          <p className="text-[var(--ink)] font-semibold mb-2">Check your email</p>
+          <p className="text-sm text-[var(--ink-soft)]">
+            We sent a sign-in link to <span className="text-[var(--ink)]">{email}</span>. The link expires in 15 minutes.
           </p>
-          <p className="text-xs text-gray-500 mt-4">Didn&rsquo;t get it? Check spam, or <button onClick={() => setStatus('idle')} className="text-[#7FCFD4] hover:underline">try again</button>.</p>
+          <p className="text-xs text-[var(--ink-soft)] mt-4">Didn&rsquo;t get it? Check spam, or <button onClick={() => setStatus('idle')} className="text-[#7FCFD4] hover:underline">try again</button>.</p>
         </div>
       ) : (
         <form onSubmit={submit} className="space-y-4">
           <div>
-            <label className="text-[11px] uppercase tracking-wider text-gray-500 block mb-1">Email</label>
+            <label className="text-[11px] uppercase tracking-wider text-[var(--ink-soft)] block mb-1">Email</label>
             <input
               type="email"
               required
@@ -53,7 +53,7 @@ export default function AccountLogin() {
               value={email}
               onChange={e => setEmail(e.target.value)}
               placeholder="you@example.com"
-              className="w-full bg-[#16525C] border border-white/5 rounded-md px-3 py-2.5 text-sm text-cream outline-none focus:border-[#7FCFD4]"
+              className="w-full bg-[var(--page)] border border-white/5 rounded-md px-3 py-2.5 text-sm text-[var(--ink)] outline-none focus:border-[#7FCFD4]"
             />
           </div>
           {error && <p className="text-xs text-red-400">{error}</p>}
@@ -67,7 +67,7 @@ export default function AccountLogin() {
         </form>
       )}
 
-      <p className="mt-10 text-xs text-gray-500 text-center">
+      <p className="mt-10 text-xs text-[var(--ink-soft)] text-center">
         New here? Just enter your email — we&rsquo;ll create your account when you first sign in.
       </p>
     </div>

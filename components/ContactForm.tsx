@@ -59,15 +59,15 @@ export default function ContactForm() {
 
   if (status === 'success') {
     return (
-      <div className="bg-vurmz-teal/10 border border-vurmz-teal/30 rounded-xl p-8 text-center">
-        <CheckCircleIcon className="w-12 h-12 text-vurmz-teal mx-auto mb-4" />
+      <div className="bg-[var(--feature)]/10 border border-vurmz-teal/30 rounded-xl p-8 text-center">
+        <CheckCircleIcon className="w-12 h-12 text-[var(--eyebrow)] mx-auto mb-4" />
         <h3 className="text-xl font-semibold text-white mb-2">Message Sent</h3>
-        <p className="text-gray-400 mb-4">
+        <p className="text-[var(--ink-soft)] mb-4">
           Thanks for reaching out. {siteInfo.founder.name} will get back to you shortly.
         </p>
         <button
           onClick={() => setStatus('idle')}
-          className="text-vurmz-teal font-medium hover:text-white transition-colors"
+          className="text-[var(--eyebrow)] font-medium hover:text-[var(--ink)] transition-colors"
         >
           Send another message
         </button>
@@ -78,7 +78,7 @@ export default function ContactForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
       <div>
-        <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-1.5">
+        <label htmlFor="name" className="block text-sm font-medium text-[var(--ink-soft)] mb-1.5">
           Name *
         </label>
         <input
@@ -88,14 +88,14 @@ export default function ContactForm() {
           maxLength={100}
           value={formData.name}
           onChange={e => setFormData(prev => ({ ...prev, name: e.target.value }))}
-          className="w-full px-4 py-3 bg-vurmz-dark border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-vurmz-teal focus:ring-1 focus:ring-vurmz-teal outline-none transition-colors"
+          className="w-full px-4 py-3 bg-[var(--page)] border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-vurmz-teal focus:ring-1 focus:ring-vurmz-teal outline-none transition-colors"
           placeholder="Your name"
         />
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-1.5">
+          <label htmlFor="email" className="block text-sm font-medium text-[var(--ink-soft)] mb-1.5">
             Email *
           </label>
           <input
@@ -105,12 +105,12 @@ export default function ContactForm() {
             maxLength={254}
             value={formData.email}
             onChange={e => setFormData(prev => ({ ...prev, email: e.target.value }))}
-            className="w-full px-4 py-3 bg-vurmz-dark border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-vurmz-teal focus:ring-1 focus:ring-vurmz-teal outline-none transition-colors"
+            className="w-full px-4 py-3 bg-[var(--page)] border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-vurmz-teal focus:ring-1 focus:ring-vurmz-teal outline-none transition-colors"
             placeholder="you@company.com"
           />
         </div>
         <div>
-          <label htmlFor="phone" className="block text-sm font-medium text-gray-300 mb-1.5">
+          <label htmlFor="phone" className="block text-sm font-medium text-[var(--ink-soft)] mb-1.5">
             Phone
           </label>
           <input
@@ -119,21 +119,21 @@ export default function ContactForm() {
             maxLength={30}
             value={formData.phone}
             onChange={e => setFormData(prev => ({ ...prev, phone: e.target.value }))}
-            className="w-full px-4 py-3 bg-vurmz-dark border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-vurmz-teal focus:ring-1 focus:ring-vurmz-teal outline-none transition-colors"
+            className="w-full px-4 py-3 bg-[var(--page)] border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-vurmz-teal focus:ring-1 focus:ring-vurmz-teal outline-none transition-colors"
             placeholder="(555) 555-5555"
           />
         </div>
       </div>
 
       <div>
-        <label htmlFor="productInterest" className="block text-sm font-medium text-gray-300 mb-1.5">
+        <label htmlFor="productInterest" className="block text-sm font-medium text-[var(--ink-soft)] mb-1.5">
           What are you interested in?
         </label>
         <select
           id="productInterest"
           value={formData.productInterest}
           onChange={e => setFormData(prev => ({ ...prev, productInterest: e.target.value }))}
-          className="w-full px-4 py-3 bg-vurmz-dark border border-gray-700 rounded-lg text-white focus:border-vurmz-teal focus:ring-1 focus:ring-vurmz-teal outline-none transition-colors"
+          className="w-full px-4 py-3 bg-[var(--page)] border border-gray-700 rounded-lg text-white focus:border-vurmz-teal focus:ring-1 focus:ring-vurmz-teal outline-none transition-colors"
         >
           <option value="">Select a product (optional)</option>
           {productOptions.map(opt => (
@@ -143,7 +143,7 @@ export default function ContactForm() {
       </div>
 
       <div>
-        <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-1.5">
+        <label htmlFor="message" className="block text-sm font-medium text-[var(--ink-soft)] mb-1.5">
           Message *
         </label>
         <textarea
@@ -153,7 +153,7 @@ export default function ContactForm() {
           maxLength={5000}
           value={formData.message}
           onChange={e => setFormData(prev => ({ ...prev, message: e.target.value }))}
-          className="w-full px-4 py-3 bg-vurmz-dark border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-vurmz-teal focus:ring-1 focus:ring-vurmz-teal outline-none transition-colors resize-none"
+          className="w-full px-4 py-3 bg-[var(--page)] border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-vurmz-teal focus:ring-1 focus:ring-vurmz-teal outline-none transition-colors resize-none"
           placeholder="Tell me about your project. What you need, quantity, timeline..."
         />
       </div>

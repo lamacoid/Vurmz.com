@@ -19,7 +19,7 @@ interface PortfolioPreviewProps {
 }
 
 export default function PortfolioPreview({ items, theme, linkTo, linkLabel = 'See the full portfolio' }: PortfolioPreviewProps) {
-  const linkColor = theme === 'shop' ? 'text-[#C67A6F]' : 'text-vurmz-teal'
+  const linkColor = theme === 'shop' ? 'text-[#C67A6F]' : 'text-[var(--eyebrow)]'
 
   return (
     <div>

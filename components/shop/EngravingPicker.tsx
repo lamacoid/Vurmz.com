@@ -47,10 +47,10 @@ export default function EngravingPicker({
   const [darkPreview, setDarkPreview] = useState(true)
 
   return (
-    <div className="mb-5 rounded-sm border border-white/10 bg-white/[0.03] p-4">
+    <div className="mb-5 rounded-sm border border-[var(--hairline)] bg-[var(--surface)] p-4">
       <div className="flex items-center justify-between mb-2">
-        <span className="text-xs font-semibold uppercase tracking-wider text-[#DED6C3]">Add engraving</span>
-        <span className="text-[11px] text-gray-500">optional</span>
+        <span className="text-xs font-semibold uppercase tracking-wider text-[var(--ink)]">Add engraving</span>
+        <span className="text-[11px] text-[var(--ink-soft)]">optional</span>
       </div>
 
       <input
@@ -59,19 +59,19 @@ export default function EngravingPicker({
         maxLength={maxLength}
         onChange={e => onChange({ ...value, text: e.target.value })}
         placeholder="Name, date, message…"
-        className="w-full bg-white/[0.06] border border-white/15 rounded-sm px-3 py-2.5 text-sm text-[#DED6C3] placeholder:text-gray-500 outline-none focus:border-[#C67A6F]"
+        className="w-full bg-[var(--surface)] border border-[var(--hairline)] rounded-sm px-3 py-2.5 text-sm text-[var(--ink)] placeholder:text-[var(--ink-soft)] outline-none focus:border-[#C67A6F]"
       />
       <div className="flex items-center justify-between mt-1">
-        <span className="text-[11px] text-gray-500">Leave blank for no engraving</span>
-        <span className="text-[11px] text-gray-500">{value.text.length}/{maxLength}</span>
+        <span className="text-[11px] text-[var(--ink-soft)]">Leave blank for no engraving</span>
+        <span className="text-[11px] text-[var(--ink-soft)]">{value.text.length}/{maxLength}</span>
       </div>
 
       <label className="block mt-3">
-        <span className="text-[11px] uppercase tracking-wider text-gray-400 block mb-1">Font</span>
+        <span className="text-[11px] uppercase tracking-wider text-[var(--ink-soft)] block mb-1">Font</span>
         <select
           value={value.fontValue}
           onChange={e => onChange({ ...value, fontValue: e.target.value })}
-          className="w-full bg-white/[0.06] border border-white/15 rounded-sm px-3 py-2.5 text-sm text-[#DED6C3] outline-none focus:border-[#C67A6F]"
+          className="w-full bg-[var(--surface)] border border-[var(--hairline)] rounded-sm px-3 py-2.5 text-sm text-[var(--ink)] outline-none focus:border-[#C67A6F]"
         >
           {CATEGORY_ORDER.map(cat => {
             const opts = fontsByCategory[cat]
@@ -88,16 +88,16 @@ export default function EngravingPicker({
       </label>
 
       <label className="block mt-3">
-        <span className="text-[11px] uppercase tracking-wider text-gray-400 block mb-1">Placement &amp; details</span>
+        <span className="text-[11px] uppercase tracking-wider text-[var(--ink-soft)] block mb-1">Placement &amp; details</span>
         <input
           type="text"
           value={value.placement}
           maxLength={200}
           onChange={e => onChange({ ...value, placement: e.target.value })}
           placeholder="e.g. centered, about 1 inch — or match my logo"
-          className="w-full bg-white/[0.06] border border-white/15 rounded-sm px-3 py-2.5 text-sm text-[#DED6C3] placeholder:text-gray-500 outline-none focus:border-[#C67A6F]"
+          className="w-full bg-[var(--surface)] border border-[var(--hairline)] rounded-sm px-3 py-2.5 text-sm text-[var(--ink)] placeholder:text-[var(--ink-soft)] outline-none focus:border-[#C67A6F]"
         />
-        <span className="text-[11px] text-gray-500 block mt-1">Not sure? Leave it blank and I&apos;ll pick the spot that looks best.</span>
+        <span className="text-[11px] text-[var(--ink-soft)] block mt-1">Not sure? Leave it blank and I&apos;ll pick the spot that looks best.</span>
       </label>
 
       {/* Curated design-element library */}
@@ -107,13 +107,13 @@ export default function EngravingPicker({
       />
 
       {/* Live preview — renders in the actual selected font, on light/dark "material" */}
-      <div className={`mt-3 rounded-sm border px-4 py-5 text-center overflow-hidden transition-colors ${darkPreview ? 'border-white/10 bg-[#0c2529]' : 'border-black/10 bg-[#e9e2d4]'}`}>
+      <div className={`mt-3 rounded-sm border px-4 py-5 text-center overflow-hidden transition-colors ${darkPreview ? 'border-[var(--hairline)] bg-[#0c2529]' : 'border-black/10 bg-[#e9e2d4]'}`}>
         <div className="flex items-center justify-between mb-1.5">
-          <span className={`text-[10px] uppercase tracking-wider ${darkPreview ? 'text-gray-500' : 'text-gray-600'}`}>Preview</span>
+          <span className={`text-[10px] uppercase tracking-wider ${darkPreview ? 'text-white/50' : 'text-gray-600'}`}>Preview</span>
           <button
             type="button"
             onClick={() => setDarkPreview(d => !d)}
-            className={`text-[10px] px-2 py-0.5 rounded-full border ${darkPreview ? 'border-white/15 text-gray-400' : 'border-black/15 text-gray-600'}`}
+            className={`text-[10px] px-2 py-0.5 rounded-full border ${darkPreview ? 'border-white/20 text-white/60' : 'border-black/15 text-gray-600'}`}
           >
             {darkPreview ? 'On dark' : 'On light'}
           </button>

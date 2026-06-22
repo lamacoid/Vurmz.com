@@ -13,7 +13,7 @@ export default function NotFound() {
   function pct(s: number) { return ((s / cycle) * 100).toFixed(1) }
 
   return (
-    <div className="relative min-h-screen bg-vurmz-dark overflow-hidden flex items-center justify-center">
+    <div className="relative min-h-screen bg-[var(--page)] overflow-hidden flex items-center justify-center">
       <style>{`
         .engrave-wrap {
           display: flex;
@@ -209,7 +209,7 @@ export default function NotFound() {
         </div>
 
         <div className="mt-10">
-          <p className="text-xs font-mono text-gray-500 tracking-[0.3em] uppercase mb-6">
+          <p className="text-xs font-mono text-[var(--ink-soft)] tracking-[0.3em] uppercase mb-6">
             Page not found
           </p>
           <Link

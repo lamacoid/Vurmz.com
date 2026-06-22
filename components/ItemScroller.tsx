@@ -207,7 +207,7 @@ export default function ItemScroller({ opacityScale = 1 }: { opacityScale?: numb
         return (
           <div key={i} className="overflow-hidden whitespace-nowrap">
             <div
-              className={`inline-flex gap-0 ${line.size} font-light text-cream`}
+              className={`inline-flex gap-0 ${line.size} font-light text-[var(--ink)]`}
               style={{
                 opacity: line.opacity * opacityScale,
                 animation: `${animName} ${line.speed}s linear infinite`,
