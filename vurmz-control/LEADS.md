@@ -6,8 +6,7 @@ the opener with the "why this one" column, send it yourself, mark the row in
 `leads.csv` (status: new → contacted → replied → won/lost). The `/leads`
 command refreshes this list; a scheduled run adds new leads every Monday 7am.
 
-**Realtors / offices segment is pending** — that researcher hit the overnight
-rate limit. The Monday run fills it, or say "find realtor leads" anytime.
+**Realtors / offices filled 2026-06-22** (weekly run) — 13 new leads added below.
 
 ## Trades (HVAC / plumbing / electrical / property) — service tags & nameplates
 | Name | City | Segment | What VURMZ sells them | Why this one | Best first touch | Source |
@@ -51,4 +50,23 @@ rate limit. The Monday run fills it, or say "find realtor leads" anytime.
 | Spruce Mountain Ranch | Larkspur | Venue | Preferred-vendor favors, ceremony signage, gift boxes | 450-acre, multi-site venue — one of the south metro's highest-volume wedding operations | info@sprucemountainevents.com · 719-484-0800 | sprucemountainevents.com |
 | Leigh & Co. Events | Castle Rock | Planner | Per-wedding signage, favors, client gift boxes — repeat referrals | Featured in Rocky Mountain Bride and the NYT; planners spec favors/signage on every event | Contact form · 720-751-0855 · IG @leighandcoevents | leighandcoevents.com |
 
-## Realtors / offices / DTC — PENDING (Monday's scheduled run, or ask anytime)
+## Realtors / brokerage teams — engraved closing gifts (repeat monthly)
+| Name | City | Segment | What VURMZ sells them | Why this one | Best first touch | Source |
+|---|---|---|---|---|---|---|
+| The Thayer Group | Castle Rock | Realtor team | Name + closing-date boards ($45+) for every Meadows/Castle Rock close; wine boxes for Castle Pines luxury deals | Family team (Steve, Susan & Cooper Thayer); site claims "#1 for 16 years" in The Meadows, 199 transactions / $99M+ volume — a standing monthly gift order | thayergroup@kw.com · (720) 663-1224 | thethayergroup.com |
+| The Denver Trio | Lone Tree | Realtor team | Closing boards (client name + new address); wine boxes as the luxury-tier gift | 7-agent team across Highlands Ranch, Littleton, Lone Tree, Castle Pines; recent sales $2.7M–$6.8M — luxury client base where a quality gift fits | (303) 325-7336 · contact form | denvertrioteam.com |
+| Corken + Company | Englewood (GV/DTC) | Realtor team | Concierge-style closing gifts — engraved boards + wine boxes personalized per client | Self-described "concierge-style," two decades in Denver Metro, GV/DTC focus, listings $3.9M–$8.35M — a white-glove brand that buys premium gifts | (303) 858-8003 · contact form | corken.co |
+| Landmark Brokerage | Greenwood Village | Boutique brokerage | Name/date-engraved closing boards as the house standard; branded boards for agent self-promo gifting | "High communication, high producing" boutique; stated service area spans Centennial/Littleton/Lone Tree/HR/Englewood/Castle Rock/Parker/GV — exactly VURMZ's geography | team@landmarkcolorado.com · (720) 248-7653 | landmarkcolorado.com |
+| The Schossow Group | Denver (DTC) | Realtor team | High-end engraved wine boxes + premium boards matched to Cherry Hills / Castle Pines price points | 5-broker team, "100+ years combined," 5280 Double Black Diamond Top Producers; Littleton/HR/Lone Tree/Cherry Hills/Castle Pines luxury | Dale (303) 919-7176 · Nick (303) 903-2345 · contact form | schossowgroup.com |
+| Osgood Team Real Estate | Parker | Realtor team | Name + closing-date boards; locally-made (Centennial) is a selling point for their community focus | 8-agent family team since ~2011 (Leanne & Bob Osgood); Parker/Lone Tree/HR/Centennial; markets on community + integrity | team@osgoodteam.com · (303) 810-5757 | osgoodteam.com |
+| West + Main Homes (Littleton) | Littleton | Boutique brokerage | Name/date-engraved boards as the storefront's house closing gift; local-maker story fits their independent positioning | Independent, women-owned boutique with a Downtown Littleton storefront; markets on care over size — culture fit for a local engraver | (720) 314-8341 · contact form | westandmainhomes.com |
+
+## Offices — dental / vet / optometry / law: branded pens, nameplates, plaques
+| Name | City | Segment | What VURMZ sells them | Why this one | Best first touch | Source |
+|---|---|---|---|---|---|---|
+| EyeCare Consultants | Centennial | Optometry | Branded pens for front desk/exam lanes; engraved metal business cards; nameplate for Dr. Schachet | Founded by Dr. John Schachet in 1975, 40+ years, independent single-location right on the Arapahoe/DTC corridor — founder decides | (303) 771-4221 (ask for office manager) | eyecareconsultants.com |
+| Veterinary Center of Parker | Parker | Veterinary | Branded pens for reception; nameplate for Dr. Mamula-Crippen; engraved pet-memorial / new-puppy keepsakes | "Locally Owned Since 2016"; owner Dr. Lindsay Mamula-Crippen calls it her "final home" — independent, single location | info@vcparker.net · (720) 851-0820 | vcparker.net |
+| Meridian Animal Hospital | Parker | Veterinary | Nameplate for Dr. Dobkin; branded pens; milestone/anniversary recognition plaques | Owner Dr. Greg Dobkin; locally owned single location open since 2012 — a 13-year anniversary plaque is a natural hook | (303) 790-0800 (ask for practice manager) | meridiansmallanimalvet.com |
+| Littleton Dentistry (Dr. Tim Boeyink) | Centennial | Dental | Branded pens for front desk; nameplate for Dr. Boeyink; new-patient welcome-bag gifts | "Locally-owned since 1998," explicitly "privately owned" vs corporate dental — single owner-dentist decides | boeyink.front.office@gmail.com · (720) 489-7333 | littletondentistry.com |
+| Ken Caryl Dentistry | Littleton | Dental | Branded pens; his-and-hers nameplates for the two dentists; engraved metal business cards | Husband-and-wife family practice (Drs. Greg & Kayee Ho Herzberg), "not a revolving door of dentists" — single location, family-owned | contact form · (303) 973-5280 | kencaryldentistry.com |
+| Birch Grove Legal PLLC | Castle Rock | Law firm | Nameplate for the founder; branded pens for client signings; engraved keepsake for completed estate plans | Founder/Managing Attorney Nick Bjorklund; solo/small estate + business + real-estate firm — the named owner decides | info@birchgrovelegal.com · (720) 713-7093 | birchgrovelegal.com |
