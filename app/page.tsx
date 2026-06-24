@@ -120,15 +120,21 @@ export default function Page() {
 
         {/* ═══════════ RECENT WORK — photos over the scrolling "ideas" backdrop ═══════════ */}
         <section className="relative band-teal-deep py-12 sm:py-14 overflow-hidden">
-          {/* The "endless ideas" marquee, dropped behind the photos as a faint,
-              slow-moving texture. The photo grid sits on top. */}
-          <div className="absolute inset-0 pointer-events-none select-none flex flex-col justify-center" aria-hidden>
-            <ItemScroller opacityScale={0.28} />
-            <div className="absolute left-0 top-0 bottom-0 w-24" style={{ background: 'linear-gradient(to right, #123F47, transparent)' }} />
-            <div className="absolute right-0 top-0 bottom-0 w-24" style={{ background: 'linear-gradient(to left, #123F47, transparent)' }} />
+          {/* The "endless ideas" marquee, a faint background texture behind the
+              photos. Edges fade via a mask so it dissolves cleanly on any band
+              color (paper in light, teal in dark) with no dark smudges. */}
+          <div
+            className="absolute inset-0 pointer-events-none select-none flex flex-col justify-center"
+            aria-hidden
+            style={{
+              WebkitMaskImage: 'linear-gradient(to right, transparent, #000 14%, #000 86%, transparent)',
+              maskImage: 'linear-gradient(to right, transparent, #000 14%, #000 86%, transparent)',
+            }}
+          >
+            <ItemScroller opacityScale={0.22} />
           </div>
           <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <p className="text-center text-xs font-mono text-[#7FCFD4] tracking-[0.2em] uppercase mb-6">Recent work</p>
+            <p className="text-center text-xs font-mono text-[var(--eyebrow)] tracking-[0.2em] uppercase mb-6">Recent work</p>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {WORK.map((item) => (
                 <div key={item.label} className="group relative aspect-square rounded-sm overflow-hidden puffy">
