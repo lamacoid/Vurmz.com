@@ -4,9 +4,11 @@
 > Plain language, no em-dashes. Captures what is decided and what still needs producing.
 
 ### The logo
-**The logo is the VURMZ standalone wordmark** in the thin geometric all-caps letterforms. The signature is the **RM ligature**: the R's leg flows straight into the M so "RM" reads as one connected form. That join is the one thing nobody else has. This is the only logo for now, and it is the one Zach wants. The wordmark always leads.
+**The logo is the VURMZ wordmark** in the thin geometric all-caps letterforms, with the **RM ligature** (the R's leg flows into the M as one connected form). That join is the signature. **This is the one and only logo. No variants, no second mark.**
 
-**Lockup (secondary, optional):** "VURMZ | Laser Engraving" pairs the wordmark with a descriptor when the context needs spelling out (SEO, a first impression). The pipe lets the descriptor change later. It is a use of the logo, not a second logo.
+**Signature presentation:** on the landing page the wordmark runs with the animated teal-gradient "dynamic lighting" through it (the masked blob animation in the hero). That is the hero form of the same logo, not a different logo.
+
+"VURMZ | Laser Engraving" is just the wordmark plus a descriptor for context (SEO, first impression). It is a use of the logo, not a separate one.
 
 ### Casing
 VURMZ is always all caps. "Vurmz" in casual typing is fine, but the mark and brand name are VURMZ.
@@ -29,11 +31,8 @@ VURMZ is always all caps. "Vurmz" in casual typing is fine, but the mark and bra
 - Stretch, skew, rotate, or rebuild the ligature by hand.
 - Place dark-on-dark or light-on-light. Use the right version for the surface.
 
-### Open (production tasks)
-1. Vectorize the standalone RM-ligature mark as a clean SVG and export palette versions (deep teal, oatmeal/white, single-color).
-2. Make a real deep-teal light-mode logo and replace the interim black filter.
-3. Retire or recolor the legacy-orange source in `vurmz-logo-full.svg`.
-4. Decide if VURMZ needs a compact symbol (just the ligature, or a single glyph) for favicon, social avatar, and the app icon.
+### Open (one cleanup task)
+The small static placements (header, footer) currently rely on CSS filters over the legacy-orange source SVG, which makes the wordmark plain black on paper in light mode (interim). Cleanup: produce a clean palette SVG of the wordmark so those small placements show deep teal on light and white on dark, matching the brand. The animated landing version stays as is.
 
 ---
-**Status:** rules and inventory documented. Production tasks above are open and need Zach.
+**Status:** logo is decided and in use (the wordmark, animated on the landing). One cleanup task above.
