@@ -60,7 +60,7 @@ export default function AccountLogin() {
           <button
             type="submit"
             disabled={status === 'sending'}
-            className="w-full h-10 bg-[#C46B4D] hover:bg-[#AD5D42] disabled:opacity-60 text-white text-sm font-semibold rounded-md transition-colors"
+            className="w-full h-10 bg-[#C67A6F] hover:bg-[#B0675D] disabled:opacity-60 text-white text-sm font-semibold rounded-md transition-colors"
           >
             {status === 'sending' ? 'Sending link…' : 'Send sign-in link'}
           </button>

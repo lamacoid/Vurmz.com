@@ -63,7 +63,7 @@ export default function AccountFilesPage() {
         <button
           onClick={() => inputRef.current?.click()}
           disabled={uploading}
-          className="px-4 h-9 bg-[#C46B4D] hover:bg-[#AD5D42] disabled:opacity-60 text-white text-sm font-semibold rounded-md"
+          className="px-4 h-9 bg-[#C67A6F] hover:bg-[#B0675D] disabled:opacity-60 text-white text-sm font-semibold rounded-md"
         >
           {uploading ? 'Uploading…' : 'Upload'}
         </button>

@@ -73,7 +73,7 @@ export default function ProfilePage() {
         <Field label="Phone" value={customer.phone ?? ''} onChange={v => setCustomer({ ...customer, phone: v })} />
         <Field label="Company" value={customer.company ?? ''} onChange={v => setCustomer({ ...customer, company: v })} />
         <div className="flex items-center gap-3 pt-2">
-          <button onClick={save} disabled={saving} className="px-4 h-9 bg-[#C46B4D] hover:bg-[#AD5D42] text-white text-sm font-semibold rounded-md">
+          <button onClick={save} disabled={saving} className="px-4 h-9 bg-[#C67A6F] hover:bg-[#B0675D] text-white text-sm font-semibold rounded-md">
             {saving ? 'Saving…' : 'Save'}
           </button>
           {saved && <span className="text-xs text-[#7FCFD4]">Saved ✓</span>}
@@ -333,7 +333,7 @@ function AddressForm({
       <FormField label="Phone (optional)" value={draft.phone ?? ''} onChange={v => upd({ phone: v })} />
       {error && <p className="text-[11px] text-red-400">{error}</p>}
       <div className="flex items-center gap-2 pt-1">
-        <button onClick={onSave} disabled={busy} className="px-3 h-8 bg-[#C46B4D] hover:bg-[#AD5D42] disabled:opacity-60 text-white text-xs font-semibold rounded-md">
+        <button onClick={onSave} disabled={busy} className="px-3 h-8 bg-[#C67A6F] hover:bg-[#B0675D] disabled:opacity-60 text-white text-xs font-semibold rounded-md">
           {busy ? 'Saving…' : saveLabel}
         </button>
         <button onClick={onCancel} disabled={busy} className="px-3 h-8 text-[var(--ink-soft)] hover:text-[var(--ink)] text-xs">

@@ -30,7 +30,7 @@ async function sendEmail(env: CloudflareEnv, to: string, link: string) {
         <div style="font-family:system-ui,sans-serif;max-width:560px;margin:0 auto;padding:32px 20px;color:#111">
           <h2 style="margin:0 0 12px;font-size:20px">Sign in to your VURMZ account</h2>
           <p style="margin:0 0 24px;color:#555;line-height:1.5">Tap the button below to sign in. This link expires in 15 minutes and works only once.</p>
-          <a href="${link}" style="display:inline-block;padding:12px 22px;background:#C46B4D;color:#fff;text-decoration:none;border-radius:6px;font-weight:600">Sign in</a>
+          <a href="${link}" style="display:inline-block;padding:12px 22px;background:#C67A6F;color:#fff;text-decoration:none;border-radius:6px;font-weight:600">Sign in</a>
           <p style="margin:28px 0 0;color:#888;font-size:12px">If the button doesn't work, paste this link into your browser:<br/><span style="color:#555">${link}</span></p>
           <p style="margin:32px 0 0;color:#aaa;font-size:11px">If you didn't request this, you can safely ignore this email.</p>
         </div>

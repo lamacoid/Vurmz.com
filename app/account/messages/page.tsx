@@ -64,7 +64,7 @@ export default function MessagesPage() {
             <div key={m.id} className={`flex ${m.direction === 'inbound' ? 'justify-end' : 'justify-start'}`}>
               <div className={`max-w-[80%] rounded-2xl px-4 py-2.5 ${
                 m.direction === 'inbound'
-                  ? 'bg-[#C46B4D] text-white rounded-br-sm'
+                  ? 'bg-[#C67A6F] text-white rounded-br-sm'
                   : 'bg-[var(--page)] text-[var(--ink)] border border-white/5 rounded-bl-sm'
               }`}>
                 <p className="text-sm whitespace-pre-wrap">{m.body}</p>
@@ -91,7 +91,7 @@ export default function MessagesPage() {
         <button
           onClick={send}
           disabled={!draft.trim() || sending}
-          className="px-5 bg-[#C46B4D] hover:bg-[#AD5D42] disabled:opacity-60 text-white text-sm font-semibold rounded-xl"
+          className="px-5 bg-[#C67A6F] hover:bg-[#B0675D] disabled:opacity-60 text-white text-sm font-semibold rounded-xl"
         >
           Send
         </button>

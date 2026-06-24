@@ -99,7 +99,7 @@ export default function InvoiceDetailPage() {
             <div className="flex justify-between text-[#7FCFD4]"><span>Paid</span><span>−{money(invoice.amountPaidCents)}</span></div>
           )}
           {owed > 0 && (
-            <div className="flex justify-between font-bold text-base pt-1 text-[#C46B4D]"><span>Amount due</span><span>{money(owed)}</span></div>
+            <div className="flex justify-between font-bold text-base pt-1 text-[#C67A6F]"><span>Amount due</span><span>{money(owed)}</span></div>
           )}
         </div>
       </div>
