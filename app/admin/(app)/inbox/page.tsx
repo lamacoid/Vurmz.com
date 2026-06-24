@@ -1,8 +1,11 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
+import { money } from '@/lib/format'
 
 interface Reply { body: string; sentAt: string; by: string }
+interface CustomerCtx { id: string; email: string; name: string; orderCount: number; lifetimeValueCents: number; createdAt: string }
 interface Message {
   id: string
   name: string
@@ -37,6 +40,7 @@ export default function InboxPage() {
   const [sending, setSending] = useState(false)
   const [sendError, setSendError] = useState('')
   const [justSent, setJustSent] = useState(false)
+  const [ctx, setCtx] = useState<CustomerCtx | 'none' | null>(null)
 
   async function load() {
     const res = await fetch(`/api/admin/inbox?filter=${filter}`)
@@ -51,6 +55,20 @@ export default function InboxPage() {
   function open(msg: Message) {
     setReply(''); setSendError(''); setJustSent(false)
     setSelected(msg)
+    setCtx(null)
+    if (msg.email) {
+      const email = msg.email
+      fetch(`/api/admin/customers?q=${encodeURIComponent(email)}`)
+        .then(r => r.json())
+        .then((j) => {
+          const list = (j as { data?: { customers: CustomerCtx[] } }).data?.customers || []
+          const match = list.find(c => c.email.toLowerCase() === email.toLowerCase())
+          setCtx(match || 'none')
+        })
+        .catch(() => setCtx('none'))
+    } else {
+      setCtx('none')
+    }
     if (!msg.read) {
       fetch('/api/admin/inbox', {
         method: 'PUT',
@@ -124,6 +142,21 @@ export default function InboxPage() {
               <span className="text-xs bg-white/5 px-2.5 py-1 rounded-full text-[var(--a-accent)]">{selected.productInterest}</span>
             )}
           </div>
+
+          {/* Who is this? — returning customer vs new contact */}
+          {ctx && ctx !== 'none' && (
+            <Link href={`/admin/customers/${ctx.id}`} className="block bg-white/[0.04] border-l-2 border-[var(--a-accent)] rounded-lg p-3 hover:bg-white/[0.07] transition-colors">
+              <p className="text-sm text-[var(--a-ink)] font-medium">{ctx.orderCount > 0 ? 'Returning customer' : 'Known contact'}</p>
+              <p className="text-xs text-[var(--a-ink-soft)] mt-0.5">
+                {ctx.orderCount > 0 ? `${ctx.orderCount} order${ctx.orderCount === 1 ? '' : 's'} · ${money(ctx.lifetimeValueCents)} lifetime · ` : 'No orders yet · '}View profile →
+              </p>
+            </Link>
+          )}
+          {ctx === 'none' && (
+            <div className="bg-white/[0.03] rounded-lg p-3">
+              <p className="text-sm text-[var(--a-ink-soft)]">New contact — first time reaching out.</p>
+            </div>
+          )}
 
           {/* Their message */}
           <div className="bg-black/15 rounded-lg p-4">
