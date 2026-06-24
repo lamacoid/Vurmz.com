@@ -101,11 +101,11 @@ export default function PageEditor({ initial }: { initial: Page }) {
   return (
     <div className="flex h-[calc(100vh-56px)] bg-[#14201f]">
       {/* Left — block list */}
-      <div className="w-72 flex-shrink-0 border-r border-white/5 flex flex-col">
-        <div className="px-4 py-3 border-b border-white/5">
-          <Link href="/admin/content/pages" className="text-[10px] text-gray-500 hover:text-cream">← All pages</Link>
-          <p className="text-sm font-semibold text-cream truncate mt-1">{page.title}</p>
-          <p className="text-[10px] text-gray-500 truncate">/{page.slug}</p>
+      <div className="w-72 flex-shrink-0 border-r border-[var(--a-line)] flex flex-col">
+        <div className="px-4 py-3 border-b border-[var(--a-line)]">
+          <Link href="/admin/content/pages" className="text-[10px] text-[var(--a-ink-faint)] hover:text-[var(--a-ink)]">← All pages</Link>
+          <p className="text-sm font-semibold text-[var(--a-ink)] truncate mt-1">{page.title}</p>
+          <p className="text-[10px] text-[var(--a-ink-faint)] truncate">/{page.slug}</p>
         </div>
 
         <div className="flex-1 overflow-y-auto py-2">
@@ -126,20 +126,20 @@ export default function PageEditor({ initial }: { initial: Page }) {
             </SortableContext>
           </DndContext>
           {blocks.length === 0 && (
-            <p className="text-xs text-gray-500 text-center py-8 px-4">Empty page. Click a + above to add your first block.</p>
+            <p className="text-xs text-[var(--a-ink-faint)] text-center py-8 px-4">Empty page. Click a + above to add your first block.</p>
           )}
         </div>
 
-        <div className="px-3 py-3 border-t border-white/5 space-y-2">
-          <div className="flex items-center justify-between text-[10px] text-gray-500">
+        <div className="px-3 py-3 border-t border-[var(--a-line)] space-y-2">
+          <div className="flex items-center justify-between text-[10px] text-[var(--a-ink-faint)]">
             <span>{saving ? 'Saving…' : savedAt ? 'Draft saved' : 'Ready'}</span>
-            <a href={`/p/${page.slug}?preview=1`} target="_blank" rel="noreferrer" className="text-[#7FCFD4] hover:underline">Preview draft ↗</a>
+            <a href={`/p/${page.slug}?preview=1`} target="_blank" rel="noreferrer" className="text-[var(--a-accent)] hover:underline">Preview draft ↗</a>
           </div>
           <div className="flex items-center gap-2">
             <button
               onClick={publish}
               disabled={publishing}
-              className="flex-1 h-9 bg-[#C46B4D] hover:bg-[#AD5D42] disabled:opacity-60 text-white text-sm font-semibold rounded-md"
+              className="flex-1 h-9 bg-[var(--a-cta)] hover:bg-[var(--a-cta-hover)] disabled:opacity-60 text-white text-sm font-semibold rounded-md"
             >
               {publishing ? 'Publishing…' : page.isPublished ? `Publish · v${page.version + 1}` : 'Publish first version'}
             </button>
@@ -150,7 +150,7 @@ export default function PageEditor({ initial }: { initial: Page }) {
                 const j = (await res.json()) as { data?: { snapshots: typeof snapshots } }
                 setSnapshots(j.data?.snapshots ?? [])
               }}
-              className="h-9 px-3 bg-white/5 hover:bg-white/10 text-cream text-xs rounded-md border border-white/10"
+              className="h-9 px-3 bg-white/5 hover:bg-white/10 text-[var(--a-ink)] text-xs rounded-md border border-[var(--a-line)]"
               title="Version history"
             >
               History
@@ -161,23 +161,23 @@ export default function PageEditor({ initial }: { initial: Page }) {
 
       {/* Center — preview */}
       <div className="flex-1 flex flex-col min-w-0 bg-[#0f1918]">
-        <div className="flex items-center justify-between px-4 h-11 border-b border-white/5 text-xs">
+        <div className="flex items-center justify-between px-4 h-11 border-b border-[var(--a-line)] text-xs">
           <div className="flex items-center gap-2">
             {(['mobile','tablet','desktop'] as const).map(v => (
               <button
                 key={v}
                 onClick={() => setViewport(v)}
-                className={`px-2 py-1 rounded ${viewport === v ? 'bg-white/10 text-cream' : 'text-gray-400 hover:text-cream'}`}
+                className={`px-2 py-1 rounded ${viewport === v ? 'bg-white/10 text-[var(--a-ink)]' : 'text-[var(--a-ink-soft)] hover:text-[var(--a-ink)]'}`}
               >
                 {v}
               </button>
             ))}
           </div>
-          <button onClick={() => router.refresh()} className="text-gray-400 hover:text-cream">Refresh</button>
+          <button onClick={() => router.refresh()} className="text-[var(--a-ink-soft)] hover:text-[var(--a-ink)]">Refresh</button>
         </div>
         <div className="flex-1 overflow-auto flex justify-center py-4">
           <div
-            className="bg-[color:var(--t-bg,#143E38)] text-[color:var(--t-cream,#DED6C3)] border border-white/10 rounded overflow-hidden transition-all"
+            className="bg-[color:var(--t-bg,#143E38)] text-[color:var(--t-cream,#DED6C3)] border border-[var(--a-line)] rounded overflow-hidden transition-all"
             style={{ width: viewportWidth, minHeight: '80vh' }}
           >
             {renderBlocks(blocks)}
@@ -186,7 +186,7 @@ export default function PageEditor({ initial }: { initial: Page }) {
       </div>
 
       {/* Right — settings panel */}
-      <div className="w-80 flex-shrink-0 border-l border-white/5 overflow-y-auto">
+      <div className="w-80 flex-shrink-0 border-l border-[var(--a-line)] overflow-y-auto">
         {selected ? (
           <SelectedPanel
             block={selected}
@@ -201,17 +201,17 @@ export default function PageEditor({ initial }: { initial: Page }) {
       {/* Inserter modal */}
       {inserterOpen !== null && (
         <div className="fixed inset-0 z-[100] bg-black/60 flex items-start justify-center pt-24 px-4" onClick={() => setInserterOpen(null)}>
-          <div onClick={e => e.stopPropagation()} className="bg-[#143E38] border border-white/10 rounded-xl max-w-2xl w-full p-4">
-            <p className="text-sm font-semibold text-cream mb-3">Insert block</p>
+          <div onClick={e => e.stopPropagation()} className="bg-[var(--a-bg)] border border-[var(--a-line)] rounded-xl max-w-2xl w-full p-4">
+            <p className="text-sm font-semibold text-[var(--a-ink)] mb-3">Insert block</p>
             <div className="grid grid-cols-2 gap-2">
               {allBlockDefinitions.map(def => (
                 <button
                   key={def.type}
                   onClick={() => addBlock(def.type, inserterOpen)}
-                  className="text-left bg-[#16525C] hover:border-[#7FCFD4]/40 border border-white/5 rounded-md p-3 transition-colors"
+                  className="text-left bg-[var(--a-panel)] hover:border-[#7FCFD4]/40 border border-[var(--a-line)] rounded-md p-3 transition-colors"
                 >
-                  <p className="text-sm font-semibold text-cream">{def.label}</p>
-                  <p className="text-[11px] text-gray-500 mt-0.5">{def.description}</p>
+                  <p className="text-sm font-semibold text-[var(--a-ink)]">{def.label}</p>
+                  <p className="text-[11px] text-[var(--a-ink-faint)] mt-0.5">{def.description}</p>
                 </button>
               ))}
             </div>
@@ -222,21 +222,21 @@ export default function PageEditor({ initial }: { initial: Page }) {
       {/* History modal */}
       {historyOpen && (
         <div className="fixed inset-0 z-[100] bg-black/60 flex items-start justify-center pt-16 px-4" onClick={() => setHistoryOpen(false)}>
-          <div onClick={e => e.stopPropagation()} className="bg-[#143E38] border border-white/10 rounded-xl max-w-xl w-full max-h-[70vh] flex flex-col">
-            <div className="flex items-center justify-between p-4 border-b border-white/5">
-              <p className="text-sm font-semibold text-cream">Version history</p>
-              <button onClick={() => setHistoryOpen(false)} className="text-gray-400 hover:text-cream">×</button>
+          <div onClick={e => e.stopPropagation()} className="bg-[var(--a-bg)] border border-[var(--a-line)] rounded-xl max-w-xl w-full max-h-[70vh] flex flex-col">
+            <div className="flex items-center justify-between p-4 border-b border-[var(--a-line)]">
+              <p className="text-sm font-semibold text-[var(--a-ink)]">Version history</p>
+              <button onClick={() => setHistoryOpen(false)} className="text-[var(--a-ink-soft)] hover:text-[var(--a-ink)]">×</button>
             </div>
             <div className="flex-1 overflow-y-auto p-3">
               {snapshots.length === 0 ? (
-                <p className="text-sm text-gray-500 text-center py-8">No prior versions yet — snapshots are created each time you publish.</p>
+                <p className="text-sm text-[var(--a-ink-faint)] text-center py-8">No prior versions yet — snapshots are created each time you publish.</p>
               ) : (
                 <div className="space-y-2">
                   {snapshots.map(s => (
-                    <div key={s.id} className="flex items-center justify-between bg-[#16525C] border border-white/5 rounded-md px-3 py-2">
+                    <div key={s.id} className="flex items-center justify-between bg-[var(--a-panel)] border border-[var(--a-line)] rounded-md px-3 py-2">
                       <div className="flex-1">
-                        <p className="text-sm text-cream">{new Date(s.createdAt).toLocaleString()}</p>
-                        <p className="text-[11px] text-gray-500">{s.blockCount} block{s.blockCount === 1 ? '' : 's'}{s.createdBy ? ` · ${s.createdBy}` : ''}</p>
+                        <p className="text-sm text-[var(--a-ink)]">{new Date(s.createdAt).toLocaleString()}</p>
+                        <p className="text-[11px] text-[var(--a-ink-faint)]">{s.blockCount} block{s.blockCount === 1 ? '' : 's'}{s.createdBy ? ` · ${s.createdBy}` : ''}</p>
                       </div>
                       <button
                         onClick={async () => {
@@ -251,7 +251,7 @@ export default function PageEditor({ initial }: { initial: Page }) {
                             window.location.reload()
                           }
                         }}
-                        className="text-xs text-[#7FCFD4] hover:underline"
+                        className="text-xs text-[var(--a-accent)] hover:underline"
                       >
                         Restore
                       </button>
@@ -271,7 +271,7 @@ function InserterButton({ onClick, active }: { onClick: () => void; active: bool
   return (
     <button
       onClick={onClick}
-      className={`w-full py-1 flex items-center justify-center text-gray-600 hover:text-[#7FCFD4] group ${active ? 'text-[#7FCFD4]' : ''}`}
+      className={`w-full py-1 flex items-center justify-center text-[var(--a-ink-faint)] hover:text-[var(--a-accent)] group ${active ? 'text-[var(--a-accent)]' : ''}`}
       aria-label="Insert block here"
     >
       <span className="h-[1px] flex-1 bg-white/5 group-hover:bg-[#7FCFD4]/40" />
@@ -302,7 +302,7 @@ function BlockRow({ block, selected, onSelect, onRemove }: { block: Block; selec
         {...attributes}
         {...listeners}
         onClick={e => e.stopPropagation()}
-        className="cursor-grab active:cursor-grabbing text-gray-500 hover:text-cream"
+        className="cursor-grab active:cursor-grabbing text-[var(--a-ink-faint)] hover:text-[var(--a-ink)]"
         aria-label="Drag"
       >
         <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
@@ -312,11 +312,11 @@ function BlockRow({ block, selected, onSelect, onRemove }: { block: Block; selec
         </svg>
       </button>
       <div className="flex-1 min-w-0">
-        <p className="text-[13px] font-medium text-cream truncate">{def?.label ?? block.type}</p>
+        <p className="text-[13px] font-medium text-[var(--a-ink)] truncate">{def?.label ?? block.type}</p>
       </div>
       <button
         onClick={e => { e.stopPropagation(); onRemove() }}
-        className="text-gray-500 hover:text-red-300 opacity-0 group-hover:opacity-100 focus:opacity-100"
+        className="text-[var(--a-ink-faint)] hover:text-red-300 opacity-0 group-hover:opacity-100 focus:opacity-100"
         aria-label="Remove"
       >
         <Icon name="x" className="w-3.5 h-3.5" />
@@ -331,7 +331,7 @@ function SelectedPanel({ block, onChange, onRemove }: { block: Block; onChange: 
   return (
     <div className="p-4">
       <div className="flex items-center justify-between mb-3">
-        <p className="text-[11px] uppercase tracking-wider text-gray-500 font-semibold">{def?.label}</p>
+        <p className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)] font-semibold">{def?.label}</p>
         <button onClick={onRemove} className="text-xs text-red-300 hover:text-red-200">Delete block</button>
       </div>
       {Editor && <Editor props={block.props} onChange={onChange} />}
@@ -354,15 +354,15 @@ function PageMetaPanel({ page, onUpdate }: { page: Page; onUpdate: (p: Page) => 
   }
   return (
     <div className="p-4 space-y-4">
-      <p className="text-[11px] uppercase tracking-wider text-gray-500 font-semibold">Page settings</p>
+      <p className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)] font-semibold">Page settings</p>
       <TextMeta label="Title" value={page.title} onSave={v => save({ title: v })} />
       <TextMeta label="Slug" value={page.slug} onSave={v => save({ slug: v })} />
       <TextMeta label="Meta description" value={page.metaDescription ?? ''} onSave={v => save({ metaDescription: v })} multiline />
       <label className="flex items-center gap-2 cursor-pointer">
         <input type="checkbox" checked={page.noindex} onChange={e => save({ noindex: e.target.checked })} />
-        <span className="text-sm text-cream">Hide from search engines</span>
+        <span className="text-sm text-[var(--a-ink)]">Hide from search engines</span>
       </label>
-      {saving && <p className="text-[10px] text-gray-500">Saving…</p>}
+      {saving && <p className="text-[10px] text-[var(--a-ink-faint)]">Saving…</p>}
     </div>
   )
 }
@@ -372,21 +372,21 @@ function TextMeta({ label, value, onSave, multiline }: { label: string; value: s
   useEffect(() => setLocal(value), [value])
   return (
     <div>
-      <label className="text-[11px] uppercase tracking-wider text-gray-500 block mb-1 font-semibold">{label}</label>
+      <label className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)] block mb-1 font-semibold">{label}</label>
       {multiline ? (
         <textarea
           value={local}
           onChange={e => setLocal(e.target.value)}
           onBlur={() => local !== value && onSave(local)}
           rows={3}
-          className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#7FCFD4]"
+          className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]"
         />
       ) : (
         <input
           value={local}
           onChange={e => setLocal(e.target.value)}
           onBlur={() => local !== value && onSave(local)}
-          className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#7FCFD4]"
+          className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]"
         />
       )}
     </div>

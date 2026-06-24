@@ -62,7 +62,7 @@ export default function EditProductPage() {
       })
   }, [params?.id])
 
-  if (notFound) return <div className="p-8 text-gray-400 text-sm">Product not found.</div>
-  if (!draft) return <div className="p-8 text-gray-500 text-sm">Loading…</div>
+  if (notFound) return <div className="p-8 text-[var(--a-ink-soft)] text-sm">Product not found.</div>
+  if (!draft) return <div className="p-8 text-[var(--a-ink-faint)] text-sm">Loading…</div>
   return <ProductForm initial={draft} />
 }

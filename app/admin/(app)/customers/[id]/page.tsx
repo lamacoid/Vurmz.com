@@ -40,22 +40,22 @@ export default function AdminCustomerDetail() {
     setData({ ...data, customer: { ...data.customer, ...patch } })
   }
 
-  if (loading) return <div className="p-8 text-gray-500 text-sm">Loading…</div>
-  if (!data) return <div className="p-8 text-gray-400 text-sm">Customer not found.</div>
+  if (loading) return <div className="p-8 text-[var(--a-ink-faint)] text-sm">Loading…</div>
+  if (!data) return <div className="p-8 text-[var(--a-ink-soft)] text-sm">Customer not found.</div>
 
   const { customer, orders, invoices, messages, files } = data
 
   return (
     <div className="p-6 sm:p-8 max-w-5xl mx-auto">
-      <Link href="/admin/customers" className="text-xs text-gray-500 hover:text-cream">← Customers</Link>
+      <Link href="/admin/customers" className="text-xs text-[var(--a-ink-faint)] hover:text-[var(--a-ink)]">← Customers</Link>
       <div className="flex items-start justify-between mt-2 mb-6">
         <div className="flex-1 min-w-0">
           <InlineInput value={customer.name || ''} placeholder="Name" onSave={v => patch({ name: v })} className="text-2xl font-bold" />
-          <p className="text-sm text-gray-400 mt-1">{customer.email}</p>
+          <p className="text-sm text-[var(--a-ink-soft)] mt-1">{customer.email}</p>
         </div>
         <div className="text-right">
-          <p className="text-[11px] uppercase tracking-wider text-gray-500">Lifetime value</p>
-          <p className="text-lg font-bold text-cream">{money(customer.lifetimeValueCents)}</p>
+          <p className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)]">Lifetime value</p>
+          <p className="text-lg font-bold text-[var(--a-ink)]">{money(customer.lifetimeValueCents)}</p>
         </div>
       </div>
 
@@ -78,14 +78,14 @@ export default function AdminCustomerDetail() {
 
         <Section title={`Orders (${orders.length})`}>
           {orders.length === 0 ? <Empty text="No orders." /> : (
-            <div className="divide-y divide-white/5">
+            <div className="divide-y divide-[var(--a-line)]">
               {orders.map(o => (
                 <Link key={o.id} href={`/admin/orders/${o.id}`} className="flex justify-between py-2 hover:bg-white/[0.02] rounded px-2 -mx-2">
                   <div>
-                    <p className="text-sm font-mono text-cream">{o.number}</p>
-                    <p className="text-[10px] text-gray-500">{o.status.replace('_', ' ')} · {new Date(o.createdAt).toLocaleDateString()}</p>
+                    <p className="text-sm font-mono text-[var(--a-ink)]">{o.number}</p>
+                    <p className="text-[10px] text-[var(--a-ink-faint)]">{o.status.replace('_', ' ')} · {new Date(o.createdAt).toLocaleDateString()}</p>
                   </div>
-                  <p className="text-sm text-cream font-semibold">{money(o.totalCents)}</p>
+                  <p className="text-sm text-[var(--a-ink)] font-semibold">{money(o.totalCents)}</p>
                 </Link>
               ))}
             </div>
@@ -94,14 +94,14 @@ export default function AdminCustomerDetail() {
 
         <Section title={`Invoices (${invoices.length})`}>
           {invoices.length === 0 ? <Empty text="No invoices." /> : (
-            <div className="divide-y divide-white/5">
+            <div className="divide-y divide-[var(--a-line)]">
               {invoices.map(inv => (
                 <Link key={inv.id} href={`/admin/invoices/${inv.id}`} className="flex justify-between py-2 hover:bg-white/[0.02] rounded px-2 -mx-2">
                   <div>
-                    <p className="text-sm font-mono text-cream">{inv.number}</p>
-                    <p className="text-[10px] text-gray-500">{inv.status.replace('_', ' ')} · {new Date(inv.createdAt).toLocaleDateString()}</p>
+                    <p className="text-sm font-mono text-[var(--a-ink)]">{inv.number}</p>
+                    <p className="text-[10px] text-[var(--a-ink-faint)]">{inv.status.replace('_', ' ')} · {new Date(inv.createdAt).toLocaleDateString()}</p>
                   </div>
-                  <p className="text-sm text-cream font-semibold">{money(inv.totalCents)}</p>
+                  <p className="text-sm text-[var(--a-ink)] font-semibold">{money(inv.totalCents)}</p>
                 </Link>
               ))}
             </div>
@@ -112,9 +112,9 @@ export default function AdminCustomerDetail() {
           {messages.length === 0 ? <Empty text="No messages." /> : (
             <div className="space-y-2 max-h-[400px] overflow-y-auto">
               {messages.slice(-20).map(m => (
-                <div key={m.id} className={`p-2 rounded text-xs ${m.direction === 'inbound' ? 'bg-[#C46B4D]/10 text-cream' : 'bg-white/[0.03] text-gray-300'}`}>
+                <div key={m.id} className={`p-2 rounded text-xs ${m.direction === 'inbound' ? 'bg-[#C46B4D]/10 text-[var(--a-ink)]' : 'bg-white/[0.03] text-[var(--a-ink-soft)]'}`}>
                   <p className="whitespace-pre-wrap">{m.body}</p>
-                  <p className="text-[10px] text-gray-500 mt-1">{m.direction === 'inbound' ? 'Customer' : 'You'} · {new Date(m.createdAt).toLocaleString()}</p>
+                  <p className="text-[10px] text-[var(--a-ink-faint)] mt-1">{m.direction === 'inbound' ? 'Customer' : 'You'} · {new Date(m.createdAt).toLocaleString()}</p>
                 </div>
               ))}
             </div>
@@ -126,8 +126,8 @@ export default function AdminCustomerDetail() {
             <div className="space-y-1">
               {files.map(f => (
                 <div key={f.id} className="flex justify-between text-sm">
-                  <span className="text-cream truncate pr-3">{f.filename}</span>
-                  <span className="text-[10px] text-gray-500 whitespace-nowrap">{(f.sizeBytes / 1024).toFixed(0)} KB</span>
+                  <span className="text-[var(--a-ink)] truncate pr-3">{f.filename}</span>
+                  <span className="text-[10px] text-[var(--a-ink-faint)] whitespace-nowrap">{(f.sizeBytes / 1024).toFixed(0)} KB</span>
                 </div>
               ))}
             </div>
@@ -140,8 +140,8 @@ export default function AdminCustomerDetail() {
 
 function Section({ title, children, fullWidth }: { title: string; children: React.ReactNode; fullWidth?: boolean }) {
   return (
-    <div className={`bg-[#16525C] border border-white/5 rounded-xl p-5 ${fullWidth ? 'lg:col-span-2' : ''}`}>
-      <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-3 font-semibold">{title}</p>
+    <div className={`bg-[var(--a-panel)] border border-[var(--a-line)] rounded-xl p-5 ${fullWidth ? 'lg:col-span-2' : ''}`}>
+      <p className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)] mb-3 font-semibold">{title}</p>
       {children}
     </div>
   )
@@ -150,13 +150,13 @@ function Section({ title, children, fullWidth }: { title: string; children: Reac
 function Row({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="grid grid-cols-[80px_1fr] items-center gap-3 mb-2">
-      <span className="text-[11px] uppercase tracking-wider text-gray-500">{label}</span>
+      <span className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)]">{label}</span>
       {children}
     </div>
   )
 }
 
-function Empty({ text }: { text: string }) { return <p className="text-xs text-gray-500">{text}</p> }
+function Empty({ text }: { text: string }) { return <p className="text-xs text-[var(--a-ink-faint)]">{text}</p> }
 
 function InlineInput({ value, onSave, placeholder, className }: { value: string; onSave: (v: string) => void; placeholder?: string; className?: string }) {
   const [local, setLocal] = useState(value)
@@ -167,7 +167,7 @@ function InlineInput({ value, onSave, placeholder, className }: { value: string;
       onChange={e => setLocal(e.target.value)}
       onBlur={() => local !== value && onSave(local)}
       placeholder={placeholder}
-      className={`w-full bg-transparent text-cream outline-none border-b border-transparent focus:border-[#7FCFD4]/40 ${className ?? 'text-sm'}`}
+      className={`w-full bg-transparent text-[var(--a-ink)] outline-none border-b border-transparent focus:border-[#7FCFD4]/40 ${className ?? 'text-sm'}`}
     />
   )
 }
@@ -182,7 +182,7 @@ function InlineTextarea({ value, onSave, placeholder }: { value: string; onSave:
       onBlur={() => local !== value && onSave(local)}
       placeholder={placeholder}
       rows={6}
-      className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#7FCFD4] resize-none"
+      className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[#7FCFD4] resize-none"
     />
   )
 }
@@ -197,7 +197,7 @@ function TagEditor({ value, onSave }: { value: string[]; onSave: (v: string[]) =
   return (
     <div className="flex flex-wrap items-center gap-1.5">
       {value.map(t => (
-        <span key={t} className="bg-[#7FCFD4]/10 border border-[#7FCFD4]/20 text-[#7FCFD4] text-[11px] px-2 py-0.5 rounded-full inline-flex items-center gap-1">
+        <span key={t} className="bg-[#7FCFD4]/10 border border-[#7FCFD4]/20 text-[var(--a-accent)] text-[11px] px-2 py-0.5 rounded-full inline-flex items-center gap-1">
           {t}
           <button onClick={() => onSave(value.filter(v => v !== t))} className="hover:text-red-300" aria-label={`Remove ${t}`}>×</button>
         </span>
@@ -208,7 +208,7 @@ function TagEditor({ value, onSave }: { value: string[]; onSave: (v: string[]) =
         onKeyDown={e => { if (e.key === 'Enter' || e.key === ',') { e.preventDefault(); add() } }}
         onBlur={add}
         placeholder="+ tag"
-        className="bg-transparent text-xs text-cream outline-none w-20"
+        className="bg-transparent text-xs text-[var(--a-ink)] outline-none w-20"
       />
     </div>
   )

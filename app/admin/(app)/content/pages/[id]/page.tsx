@@ -23,6 +23,6 @@ export default function EditPage() {
     })
   }, [params?.id])
 
-  if (!data) return <div className="p-8 text-gray-500 text-sm">Loading…</div>
+  if (!data) return <div className="p-8 text-[var(--a-ink-faint)] text-sm">Loading…</div>
   return <PageEditor initial={data} />
 }

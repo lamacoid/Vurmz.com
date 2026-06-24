@@ -56,15 +56,15 @@ function Card({ order }: { order: Order }) {
       style={style}
       {...attributes}
       {...listeners}
-      className="bg-[#143E38] rounded-md border border-white/5 px-3 py-2.5 hover:border-[#7FCFD4]/30 cursor-grab active:cursor-grabbing"
+      className="bg-[var(--a-bg)] rounded-md border border-[var(--a-line)] px-3 py-2.5 hover:border-[#7FCFD4]/30 cursor-grab active:cursor-grabbing"
     >
       <div className="flex items-center justify-between mb-1">
-        <Link href={`/admin/orders/${order.id}`} className="text-xs font-mono text-cream hover:text-[#7FCFD4]">{order.number}</Link>
-        <span className="text-xs font-semibold text-cream">{money(order.totalCents)}</span>
+        <Link href={`/admin/orders/${order.id}`} className="text-xs font-mono text-[var(--a-ink)] hover:text-[var(--a-accent)]">{order.number}</Link>
+        <span className="text-xs font-semibold text-[var(--a-ink)]">{money(order.totalCents)}</span>
       </div>
-      <p className="text-[11px] text-gray-400 truncate">{order.email}</p>
+      <p className="text-[11px] text-[var(--a-ink-soft)] truncate">{order.email}</p>
       <div className="flex items-center justify-between mt-1">
-        <p className="text-[10px] text-gray-500">{order.fulfillmentMethod.replace('_', ' ')}</p>
+        <p className="text-[10px] text-[var(--a-ink-faint)]">{order.fulfillmentMethod.replace('_', ' ')}</p>
         <span className="flex items-center gap-1">
           {order.hasText && <span title="Engraving text" className="text-[10px]">✎</span>}
           {order.hasElement && <span title="Design element" className="text-[10px]">🎨</span>}
@@ -83,11 +83,11 @@ function Column({ status, label, orders }: { status: OrderStatus; label: string;
   return (
     <div
       ref={setNodeRef}
-      className={`bg-[#16525C]/60 border rounded-lg p-3 min-h-[400px] transition-colors ${isOver ? 'border-[#7FCFD4]' : 'border-white/5'}`}
+      className={`bg-[#16525C]/60 border rounded-lg p-3 min-h-[400px] transition-colors ${isOver ? 'border-[#7FCFD4]' : 'border-[var(--a-line)]'}`}
     >
       <div className="flex items-center justify-between mb-3 px-1">
-        <p className="text-xs font-semibold text-cream uppercase tracking-wider">{label}</p>
-        <span className="text-[10px] text-gray-500 font-mono">{orders.length}</span>
+        <p className="text-xs font-semibold text-[var(--a-ink)] uppercase tracking-wider">{label}</p>
+        <span className="text-[10px] text-[var(--a-ink-faint)] font-mono">{orders.length}</span>
       </div>
       <div className="space-y-2">
         {orders.map(o => <Card key={o.id} order={o} />)}
@@ -130,14 +130,14 @@ export default function OrdersPage() {
   return (
     <div className="p-6 sm:p-8 max-w-[1600px] mx-auto">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-cream">Orders</h1>
-        <p className="text-sm text-gray-500 mt-1">Drag cards between columns to update status.</p>
+        <h1 className="text-2xl font-bold text-[var(--a-ink)]">Orders</h1>
+        <p className="text-sm text-[var(--a-ink-faint)] mt-1">Drag cards between columns to update status.</p>
       </div>
 
       {loading ? (
-        <div className="text-gray-500 text-sm">Loading…</div>
+        <div className="text-[var(--a-ink-faint)] text-sm">Loading…</div>
       ) : orders.length === 0 ? (
-        <div className="bg-[#16525C] border border-white/5 rounded-xl p-10 text-center text-gray-400 text-sm">
+        <div className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-xl p-10 text-center text-[var(--a-ink-soft)] text-sm">
           No orders yet. Your first order will appear here.
         </div>
       ) : (

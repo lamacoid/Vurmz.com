@@ -33,13 +33,13 @@ function Card({ quote }: { quote: Quote }) {
       style={style}
       {...attributes}
       {...listeners}
-      className="bg-[#143E38] rounded-md border border-white/5 px-3 py-2.5 hover:border-[#7FCFD4]/30 cursor-grab active:cursor-grabbing"
+      className="bg-[var(--a-bg)] rounded-md border border-[var(--a-line)] px-3 py-2.5 hover:border-[#7FCFD4]/30 cursor-grab active:cursor-grabbing"
     >
       <div className="flex items-center justify-between mb-1">
-        <Link href={`/admin/quotes/${quote.id}`} className="text-xs font-mono text-cream hover:text-[#7FCFD4]">{quote.number}</Link>
-        <span className="text-xs font-semibold text-cream">{money(quote.totalCents)}</span>
+        <Link href={`/admin/quotes/${quote.id}`} className="text-xs font-mono text-[var(--a-ink)] hover:text-[var(--a-accent)]">{quote.number}</Link>
+        <span className="text-xs font-semibold text-[var(--a-ink)]">{money(quote.totalCents)}</span>
       </div>
-      <p className="text-[11px] text-gray-400 truncate">{quote.email}</p>
+      <p className="text-[11px] text-[var(--a-ink-soft)] truncate">{quote.email}</p>
     </div>
   )
 }
@@ -49,11 +49,11 @@ function Column({ status, label, quotes }: { status: QuoteStatus; label: string;
   return (
     <div
       ref={setNodeRef}
-      className={`bg-[#16525C]/60 border rounded-lg p-3 min-h-[400px] transition-colors ${isOver ? 'border-[#7FCFD4]' : 'border-white/5'}`}
+      className={`bg-[#16525C]/60 border rounded-lg p-3 min-h-[400px] transition-colors ${isOver ? 'border-[#7FCFD4]' : 'border-[var(--a-line)]'}`}
     >
       <div className="flex items-center justify-between mb-3 px-1">
-        <p className="text-xs font-semibold text-cream uppercase tracking-wider">{label}</p>
-        <span className="text-[10px] text-gray-500 font-mono">{quotes.length}</span>
+        <p className="text-xs font-semibold text-[var(--a-ink)] uppercase tracking-wider">{label}</p>
+        <span className="text-[10px] text-[var(--a-ink-faint)] font-mono">{quotes.length}</span>
       </div>
       <div className="space-y-2">
         {quotes.map(q => <Card key={q.id} quote={q} />)}
@@ -96,12 +96,12 @@ export default function QuotesPage() {
     <div className="p-6 sm:p-8 max-w-[1600px] mx-auto">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-cream">Quotes</h1>
-          <p className="text-sm text-gray-500 mt-1">Drag cards to move through the pipeline.</p>
+          <h1 className="text-2xl font-bold text-[var(--a-ink)]">Quotes</h1>
+          <p className="text-sm text-[var(--a-ink-faint)] mt-1">Drag cards to move through the pipeline.</p>
         </div>
         <Link
           href="/admin/quotes/new"
-          className="inline-flex items-center gap-2 px-4 h-9 bg-[#C46B4D] hover:bg-[#AD5D42] text-white text-sm font-semibold rounded-md"
+          className="inline-flex items-center gap-2 px-4 h-9 bg-[var(--a-cta)] hover:bg-[var(--a-cta-hover)] text-white text-sm font-semibold rounded-md"
         >
           <Icon name="plus" className="w-4 h-4" />
           New quote
@@ -109,9 +109,9 @@ export default function QuotesPage() {
       </div>
 
       {loading ? (
-        <div className="text-gray-500 text-sm">Loading…</div>
+        <div className="text-[var(--a-ink-faint)] text-sm">Loading…</div>
       ) : quotes.length === 0 ? (
-        <div className="bg-[#16525C] border border-white/5 rounded-xl p-10 text-center text-gray-400 text-sm">
+        <div className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-xl p-10 text-center text-[var(--a-ink-soft)] text-sm">
           No quotes yet. Create your first quote to get started.
         </div>
       ) : (

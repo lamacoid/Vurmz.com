@@ -55,7 +55,7 @@ function Preview({ kind, color }: { kind: Slot['preview']; color: string }) {
       )
     case 'cream-text':
       return (
-        <div className="px-3 py-1.5 rounded-md text-[11px] font-medium inline-block bg-[#143E38]" style={{ color }}>
+        <div className="px-3 py-1.5 rounded-md text-[11px] font-medium inline-block bg-[var(--a-bg)]" style={{ color }}>
           Headline sample
         </div>
       )
@@ -69,7 +69,7 @@ function Preview({ kind, color }: { kind: Slot['preview']; color: string }) {
       )
     case 'border':
       return (
-        <div className="px-3 py-1.5 rounded-md text-[11px] inline-block bg-transparent border-2 text-cream" style={{ borderColor: color }}>
+        <div className="px-3 py-1.5 rounded-md text-[11px] inline-block bg-transparent border-2 text-[var(--a-ink)]" style={{ borderColor: color }}>
           Card edge
         </div>
       )
@@ -102,7 +102,7 @@ export default function ThemeEditorPage() {
     setSavedAt(Date.now())
   }
 
-  if (!theme) return <div className="p-8 text-gray-500 text-sm">Loading…</div>
+  if (!theme) return <div className="p-8 text-[var(--a-ink-faint)] text-sm">Loading…</div>
 
   function updateColor(key: string, value: string) {
     if (!theme) return
@@ -116,22 +116,22 @@ export default function ThemeEditorPage() {
   function renderSlot(s: Slot) {
     const val = theme!.colors[s.key] ?? '#000000'
     return (
-      <div key={s.key} className="flex items-start gap-3 p-3 rounded-lg bg-[#143E38] border border-white/5">
+      <div key={s.key} className="flex items-start gap-3 p-3 rounded-lg bg-[var(--a-bg)] border border-[var(--a-line)]">
         <input
           type="color"
           value={val.startsWith('#') ? val : '#000000'}
           onChange={e => updateColor(s.key, e.target.value)}
           onBlur={commitColors}
-          className="w-12 h-12 flex-shrink-0 rounded cursor-pointer bg-transparent border border-white/10"
+          className="w-12 h-12 flex-shrink-0 rounded cursor-pointer bg-transparent border border-[var(--a-line)]"
         />
         <div className="flex-1 min-w-0">
-          <p className="text-sm text-cream font-medium">{s.label}</p>
-          <p className="text-[11px] text-gray-500 mb-2">{s.hint}</p>
+          <p className="text-sm text-[var(--a-ink)] font-medium">{s.label}</p>
+          <p className="text-[11px] text-[var(--a-ink-faint)] mb-2">{s.hint}</p>
           <input
             value={val}
             onChange={e => updateColor(s.key, e.target.value)}
             onBlur={commitColors}
-            className="w-full bg-[#16525C] border border-white/5 rounded px-2 py-1 text-xs text-cream outline-none focus:border-[#7FCFD4] font-mono"
+            className="w-full bg-[var(--a-panel)] border border-[var(--a-line)] rounded px-2 py-1 text-xs text-[var(--a-ink)] outline-none focus:border-[#7FCFD4] font-mono"
           />
         </div>
         <div className="flex-shrink-0 w-44 flex items-center justify-end">
@@ -145,62 +145,62 @@ export default function ThemeEditorPage() {
     <div className="p-6 sm:p-8 max-w-4xl mx-auto">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-cream">Theme</h1>
-          <p className="text-sm text-gray-500 mt-1">Colors, fonts, and spacing for block-rendered pages.</p>
+          <h1 className="text-2xl font-bold text-[var(--a-ink)]">Theme</h1>
+          <p className="text-sm text-[var(--a-ink-faint)] mt-1">Colors, fonts, and spacing for block-rendered pages.</p>
         </div>
-        <div className="text-[11px] text-gray-500">
+        <div className="text-[11px] text-[var(--a-ink-faint)]">
           {saving ? 'Saving…' : savedAt ? 'Saved ✓' : `Last updated ${new Date(theme.updatedAt).toLocaleString()}`}
         </div>
       </div>
 
-      <div className="bg-[#16525C] border border-white/5 rounded-xl p-5 mb-4">
+      <div className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-xl p-5 mb-4">
         <div className="flex items-baseline justify-between mb-3">
-          <p className="text-[11px] uppercase tracking-wider text-gray-400 font-semibold">Core palette</p>
-          <p className="text-[10px] text-gray-500">Continuity across the site</p>
+          <p className="text-[11px] uppercase tracking-wider text-[var(--a-ink-soft)] font-semibold">Core palette</p>
+          <p className="text-[10px] text-[var(--a-ink-faint)]">Continuity across the site</p>
         </div>
         <div className="space-y-2">
           {CORE_SLOTS.map(renderSlot)}
         </div>
       </div>
 
-      <div className="bg-[#16525C] border border-white/5 rounded-xl p-5 mb-4">
+      <div className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-xl p-5 mb-4">
         <div className="flex items-baseline justify-between mb-3">
-          <p className="text-[11px] uppercase tracking-wider text-gray-400 font-semibold">Shop palette</p>
-          <p className="text-[10px] text-gray-500">Override on /shop pages</p>
+          <p className="text-[11px] uppercase tracking-wider text-[var(--a-ink-soft)] font-semibold">Shop palette</p>
+          <p className="text-[10px] text-[var(--a-ink-faint)]">Override on /shop pages</p>
         </div>
         <div className="space-y-2">
           {SHOP_SLOTS.map(renderSlot)}
         </div>
       </div>
 
-      <div className="bg-[#16525C] border border-white/5 rounded-xl p-5 mb-4">
-        <p className="text-[11px] uppercase tracking-wider text-gray-500 font-semibold mb-3">Fonts</p>
+      <div className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-xl p-5 mb-4">
+        <p className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)] font-semibold mb-3">Fonts</p>
         <div className="space-y-2">
           {(['heading','body','mono'] as const).map(k => (
             <div key={k}>
-              <label className="text-[11px] uppercase tracking-wider text-gray-500 block mb-1">{k}</label>
+              <label className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)] block mb-1">{k}</label>
               <input
                 value={theme.fonts[k]}
                 onChange={e => setTheme({ ...theme, fonts: { ...theme.fonts, [k]: e.target.value } })}
                 onBlur={() => save({ fonts: theme.fonts })}
-                className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-xs text-cream outline-none focus:border-[#7FCFD4] font-mono"
+                className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-xs text-[var(--a-ink)] outline-none focus:border-[#7FCFD4] font-mono"
               />
             </div>
           ))}
         </div>
       </div>
 
-      <div className="bg-[#16525C] border border-white/5 rounded-xl p-5">
-        <p className="text-[11px] uppercase tracking-wider text-gray-500 font-semibold mb-3">Spacing</p>
+      <div className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-xl p-5">
+        <p className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)] font-semibold mb-3">Spacing</p>
         <div className="grid grid-cols-2 gap-3">
           {(['container_max','radius_sm','radius_md','radius_lg'] as const).map(k => (
             <div key={k}>
-              <label className="text-[11px] uppercase tracking-wider text-gray-500 block mb-1">{k.replace('_', ' ')}</label>
+              <label className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)] block mb-1">{k.replace('_', ' ')}</label>
               <input
                 value={theme.spacing[k]}
                 onChange={e => setTheme({ ...theme, spacing: { ...theme.spacing, [k]: e.target.value } })}
                 onBlur={() => save({ spacing: theme.spacing })}
-                className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-xs text-cream outline-none focus:border-[#7FCFD4] font-mono"
+                className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-xs text-[var(--a-ink)] outline-none focus:border-[#7FCFD4] font-mono"
               />
             </div>
           ))}

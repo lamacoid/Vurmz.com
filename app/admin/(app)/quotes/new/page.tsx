@@ -57,12 +57,12 @@ export default function NewQuotePage() {
 
   return (
     <div className="p-6 sm:p-8 max-w-3xl mx-auto">
-      <Link href="/admin/quotes" className="text-xs text-gray-500 hover:text-cream">← Quotes</Link>
-      <h1 className="text-2xl font-bold text-cream mt-2 mb-6">New quote</h1>
+      <Link href="/admin/quotes" className="text-xs text-[var(--a-ink-faint)] hover:text-[var(--a-ink)]">← Quotes</Link>
+      <h1 className="text-2xl font-bold text-[var(--a-ink)] mt-2 mb-6">New quote</h1>
 
       <div className="space-y-5">
-        <div className="bg-[#16525C] border border-white/5 rounded-xl p-5">
-          <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-3 font-semibold">Customer</p>
+        <div className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-xl p-5">
+          <p className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)] mb-3 font-semibold">Customer</p>
           <select
             value={customerId ?? ''}
             onChange={e => {
@@ -73,7 +73,7 @@ export default function NewQuotePage() {
                 if (c) setEmail(c.email)
               }
             }}
-            className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none mb-3"
+            className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none mb-3"
           >
             <option value="">— or enter a new email —</option>
             {customers.map(c => <option key={c.id} value={c.id}>{c.name || c.email}</option>)}
@@ -83,48 +83,48 @@ export default function NewQuotePage() {
             value={email}
             onChange={e => setEmail(e.target.value)}
             placeholder="email@example.com"
-            className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#7FCFD4]"
+            className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]"
           />
         </div>
 
-        <div className="bg-[#16525C] border border-white/5 rounded-xl p-5">
-          <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-3 font-semibold">Line items</p>
+        <div className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-xl p-5">
+          <p className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)] mb-3 font-semibold">Line items</p>
           <div className="space-y-2">
             {lines.map((line, i) => (
               <div key={i} className="grid grid-cols-[1fr_70px_100px_32px] gap-2">
-                <input value={line.description} onChange={e => updateLine(i, { description: e.target.value })} placeholder="Description" className="bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#7FCFD4]" />
-                <input type="number" value={line.qty} min={1} onChange={e => updateLine(i, { qty: parseInt(e.target.value, 10) || 1 })} className="bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#7FCFD4]" />
-                <div className="flex items-center bg-[#143E38] border border-white/5 rounded-md focus-within:border-[#7FCFD4]">
-                  <span className="pl-2 text-gray-500 text-sm">$</span>
-                  <input value={line.price} onChange={e => updateLine(i, { price: e.target.value })} className="flex-1 bg-transparent px-2 py-2 text-sm text-cream outline-none" />
+                <input value={line.description} onChange={e => updateLine(i, { description: e.target.value })} placeholder="Description" className="bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]" />
+                <input type="number" value={line.qty} min={1} onChange={e => updateLine(i, { qty: parseInt(e.target.value, 10) || 1 })} className="bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]" />
+                <div className="flex items-center bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md focus-within:border-[#7FCFD4]">
+                  <span className="pl-2 text-[var(--a-ink-faint)] text-sm">$</span>
+                  <input value={line.price} onChange={e => updateLine(i, { price: e.target.value })} className="flex-1 bg-transparent px-2 py-2 text-sm text-[var(--a-ink)] outline-none" />
                 </div>
-                <button onClick={() => setLines(p => p.filter((_, idx) => idx !== i))} disabled={lines.length === 1} className="text-gray-500 hover:text-red-300">×</button>
+                <button onClick={() => setLines(p => p.filter((_, idx) => idx !== i))} disabled={lines.length === 1} className="text-[var(--a-ink-faint)] hover:text-red-300">×</button>
               </div>
             ))}
           </div>
-          <button onClick={() => setLines(p => [...p, { description: '', qty: 1, price: '0.00' }])} className="mt-3 text-xs text-[#7FCFD4] hover:underline">+ Add line</button>
-          <div className="border-t border-white/5 mt-4 pt-3 text-right">
-            <p className="text-[11px] uppercase tracking-wider text-gray-500">Total</p>
-            <p className="text-xl font-bold text-cream">${centsToDollars(subtotal)}</p>
+          <button onClick={() => setLines(p => [...p, { description: '', qty: 1, price: '0.00' }])} className="mt-3 text-xs text-[var(--a-accent)] hover:underline">+ Add line</button>
+          <div className="border-t border-[var(--a-line)] mt-4 pt-3 text-right">
+            <p className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)]">Total</p>
+            <p className="text-xl font-bold text-[var(--a-ink)]">${centsToDollars(subtotal)}</p>
           </div>
         </div>
 
-        <div className="bg-[#16525C] border border-white/5 rounded-xl p-5">
+        <div className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-xl p-5">
           <div>
-            <label className="text-[11px] uppercase tracking-wider text-gray-500 block mb-1 font-semibold">Valid until (optional)</label>
-            <input type="date" value={expiresAt} onChange={e => setExpiresAt(e.target.value)} className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#7FCFD4]" />
+            <label className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)] block mb-1 font-semibold">Valid until (optional)</label>
+            <input type="date" value={expiresAt} onChange={e => setExpiresAt(e.target.value)} className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]" />
           </div>
           <div className="mt-3">
-            <label className="text-[11px] uppercase tracking-wider text-gray-500 block mb-1 font-semibold">Notes</label>
-            <textarea value={notes} onChange={e => setNotes(e.target.value)} rows={3} className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#7FCFD4]" />
+            <label className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)] block mb-1 font-semibold">Notes</label>
+            <textarea value={notes} onChange={e => setNotes(e.target.value)} rows={3} className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]" />
           </div>
         </div>
 
         <div className="flex gap-3">
-          <button onClick={() => save(false)} disabled={saving || !email} className="px-4 h-9 bg-white/5 hover:bg-white/10 text-cream text-sm font-semibold rounded-md border border-white/10">
+          <button onClick={() => save(false)} disabled={saving || !email} className="px-4 h-9 bg-white/5 hover:bg-white/10 text-[var(--a-ink)] text-sm font-semibold rounded-md border border-[var(--a-line)]">
             {saving ? 'Saving…' : 'Save draft'}
           </button>
-          <button onClick={() => save(true)} disabled={saving || !email} className="px-4 h-9 bg-[#C46B4D] hover:bg-[#AD5D42] disabled:opacity-60 text-white text-sm font-semibold rounded-md">
+          <button onClick={() => save(true)} disabled={saving || !email} className="px-4 h-9 bg-[var(--a-cta)] hover:bg-[var(--a-cta-hover)] disabled:opacity-60 text-white text-sm font-semibold rounded-md">
             {saving ? 'Sending…' : 'Save & send'}
           </button>
         </div>

@@ -50,7 +50,7 @@ export default function SettingsPage() {
     setSettings(prev => ({ ...prev, [key]: value }))
   }
 
-  if (loading || !settings) return <div className="p-8 text-gray-500 text-sm">Loading…</div>
+  if (loading || !settings) return <div className="p-8 text-[var(--a-ink-faint)] text-sm">Loading…</div>
 
   const biz = settings.business_info ?? {}
   const social = settings.social_links ?? {}
@@ -58,7 +58,7 @@ export default function SettingsPage() {
 
   return (
     <div className="p-6 sm:p-8 max-w-3xl mx-auto">
-      <h1 className="text-2xl font-bold text-cream mb-6">Site settings</h1>
+      <h1 className="text-2xl font-bold text-[var(--a-ink)] mb-6">Site settings</h1>
 
       <Section title="Business info" saving={saving === 'business_info'}>
         <Field label="Business name" value={biz.name ?? ''} onSave={v => save('business_info', { ...biz, name: v })} />
@@ -87,10 +87,10 @@ export default function SettingsPage() {
 
 function Section({ title, children, saving }: { title: string; children: React.ReactNode; saving: boolean }) {
   return (
-    <div className="bg-[#16525C] border border-white/5 rounded-xl p-5 mb-4">
+    <div className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-xl p-5 mb-4">
       <div className="flex items-center justify-between mb-3">
-        <p className="text-[11px] uppercase tracking-wider text-gray-500 font-semibold">{title}</p>
-        {saving && <span className="text-[10px] text-gray-500">Saving…</span>}
+        <p className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)] font-semibold">{title}</p>
+        {saving && <span className="text-[10px] text-[var(--a-ink-faint)]">Saving…</span>}
       </div>
       <div className="space-y-3">{children}</div>
     </div>
@@ -102,7 +102,7 @@ function Field({ label, value, onSave, multiline, placeholder }: { label: string
   useEffect(() => setLocal(value), [value])
   return (
     <div>
-      <label className="text-[11px] uppercase tracking-wider text-gray-500 block mb-1">{label}</label>
+      <label className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)] block mb-1">{label}</label>
       {multiline ? (
         <textarea
           value={local}
@@ -110,7 +110,7 @@ function Field({ label, value, onSave, multiline, placeholder }: { label: string
           onBlur={() => local !== value && onSave(local)}
           placeholder={placeholder}
           rows={2}
-          className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#7FCFD4]"
+          className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]"
         />
       ) : (
         <input
@@ -118,7 +118,7 @@ function Field({ label, value, onSave, multiline, placeholder }: { label: string
           onChange={e => setLocal(e.target.value)}
           onBlur={() => local !== value && onSave(local)}
           placeholder={placeholder}
-          className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#7FCFD4]"
+          className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]"
         />
       )}
     </div>
@@ -131,9 +131,9 @@ function AreaList({ value, onChange }: { value: string[]; onChange: (v: string[]
     <div>
       <div className="flex flex-wrap gap-2 mb-3">
         {value.map(a => (
-          <span key={a} className="bg-[#143E38] border border-white/5 rounded-full pl-3 pr-1 py-1 text-xs text-cream flex items-center gap-2">
+          <span key={a} className="bg-[var(--a-bg)] border border-[var(--a-line)] rounded-full pl-3 pr-1 py-1 text-xs text-[var(--a-ink)] flex items-center gap-2">
             {a}
-            <button onClick={() => onChange(value.filter(v => v !== a))} className="w-5 h-5 rounded-full hover:bg-white/10 flex items-center justify-center text-gray-400">×</button>
+            <button onClick={() => onChange(value.filter(v => v !== a))} className="w-5 h-5 rounded-full hover:bg-white/10 flex items-center justify-center text-[var(--a-ink-soft)]">×</button>
           </span>
         ))}
       </div>
@@ -143,11 +143,11 @@ function AreaList({ value, onChange }: { value: string[]; onChange: (v: string[]
           onChange={e => setNewArea(e.target.value)}
           onKeyDown={e => { if (e.key === 'Enter' && newArea.trim()) { onChange([...value, newArea.trim()]); setNewArea('') } }}
           placeholder="Add a city…"
-          className="flex-1 bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#7FCFD4]"
+          className="flex-1 bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]"
         />
         <button
           onClick={() => { if (newArea.trim()) { onChange([...value, newArea.trim()]); setNewArea('') } }}
-          className="px-3 h-9 bg-white/5 hover:bg-white/10 rounded-md text-xs text-cream"
+          className="px-3 h-9 bg-white/5 hover:bg-white/10 rounded-md text-xs text-[var(--a-ink)]"
         >
           Add
         </button>

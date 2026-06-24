@@ -57,12 +57,12 @@ function Row({ product, media, onToggle }: { product: Product; media: Map<string
     <div
       ref={setNodeRef}
       style={style}
-      className="group flex items-center gap-3 bg-[#16525C] border border-white/5 hover:border-[#7FCFD4]/20 rounded-lg px-3 py-2.5 transition-colors"
+      className="group flex items-center gap-3 bg-[var(--a-panel)] border border-[var(--a-line)] hover:border-[#7FCFD4]/20 rounded-lg px-3 py-2.5 transition-colors"
     >
       <button
         {...attributes}
         {...listeners}
-        className="cursor-grab active:cursor-grabbing p-1 text-gray-600 hover:text-cream"
+        className="cursor-grab active:cursor-grabbing p-1 text-[var(--a-ink-faint)] hover:text-[var(--a-ink)]"
         aria-label="Drag to reorder"
       >
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
@@ -71,35 +71,35 @@ function Row({ product, media, onToggle }: { product: Product; media: Map<string
           <circle cx="9" cy="19" r="1.5" /><circle cx="15" cy="19" r="1.5" />
         </svg>
       </button>
-      <div className="w-11 h-11 rounded-md bg-[#143E38] overflow-hidden flex-shrink-0 border border-white/5">
+      <div className="w-11 h-11 rounded-md bg-[var(--a-bg)] overflow-hidden flex-shrink-0 border border-[var(--a-line)]">
         {hero ? <img src={hero.url} alt="" className="w-full h-full object-cover" /> : (
-          <div className="w-full h-full flex items-center justify-center text-gray-600"><Icon name="image" className="w-4 h-4" /></div>
+          <div className="w-full h-full flex items-center justify-center text-[var(--a-ink-faint)]"><Icon name="image" className="w-4 h-4" /></div>
         )}
       </div>
       <Link href={`/admin/products/${product.id}`} className="flex-1 min-w-0">
-        <p className="text-sm font-medium text-cream truncate flex items-center gap-2">
+        <p className="text-sm font-medium text-[var(--a-ink)] truncate flex items-center gap-2">
           <span className="truncate">{product.name}</span>
           {product.oneOff && (
             <span className={`text-[9px] px-1.5 py-0.5 rounded font-semibold uppercase tracking-wider flex-shrink-0 ${
               product.soldAt
-                ? 'bg-[#C46B4D]/20 text-[#C46B4D] border border-[#C46B4D]/30'
+                ? 'bg-[#C46B4D]/20 text-[var(--a-cta)] border border-[#C46B4D]/30'
                 : 'bg-[#DED6C3]/15 text-[#DED6C3] border border-[#DED6C3]/20'
             }`}>
               {product.soldAt ? 'Sold' : 'One-off'}
             </span>
           )}
         </p>
-        <p className="text-[11px] text-gray-500 truncate">
+        <p className="text-[11px] text-[var(--a-ink-faint)] truncate">
           {money(product.priceCents)}{!product.oneOff && ` · pack of ${product.packSize}`}
           {product.madeToOrder && ` · made to order (${product.leadTimeDays}d)`}
         </p>
       </Link>
       <span className={`text-[10px] px-1.5 py-0.5 rounded font-semibold uppercase tracking-wider ${
         product.audience === 'services'
-          ? 'bg-[#7FCFD4]/15 text-[#7FCFD4]'
+          ? 'bg-[#7FCFD4]/15 text-[var(--a-accent)]'
           : product.audience === 'both'
           ? 'bg-[#DED6C3]/10 text-[#DED6C3]'
-          : 'bg-[#C46B4D]/15 text-[#C46B4D]'
+          : 'bg-[#C46B4D]/15 text-[var(--a-cta)]'
       }`}>
         {product.audience === 'both' ? 'Both' : product.audience === 'services' ? 'Services' : 'Shop'}
       </span>
@@ -107,13 +107,13 @@ function Row({ product, media, onToggle }: { product: Product; media: Map<string
         onClick={() => onToggle(product.id, !product.isPublished)}
         className={`text-[11px] px-2 py-1 rounded-full font-medium ${
           product.isPublished
-            ? 'bg-[#7FCFD4]/10 text-[#7FCFD4] border border-[#7FCFD4]/20'
-            : 'bg-white/5 text-gray-500 border border-white/10'
+            ? 'bg-[#7FCFD4]/10 text-[var(--a-accent)] border border-[#7FCFD4]/20'
+            : 'bg-white/5 text-[var(--a-ink-faint)] border border-[var(--a-line)]'
         }`}
       >
         {product.isPublished ? 'Published' : 'Draft'}
       </button>
-      <Link href={`/admin/products/${product.id}`} className="text-xs text-gray-400 hover:text-cream px-2">Edit</Link>
+      <Link href={`/admin/products/${product.id}`} className="text-xs text-[var(--a-ink-soft)] hover:text-[var(--a-ink)] px-2">Edit</Link>
     </div>
   )
 }
@@ -183,25 +183,25 @@ export default function ProductsListPage() {
     <div className="p-6 sm:p-8 max-w-5xl mx-auto">
       <div className="flex items-center justify-between mb-6 gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-cream">Products</h1>
-          <p className="text-sm text-gray-500 mt-1">Your shop catalog. Drag to reorder.</p>
+          <h1 className="text-2xl font-bold text-[var(--a-ink)]">Products</h1>
+          <p className="text-sm text-[var(--a-ink-faint)] mt-1">Your shop catalog. Drag to reorder.</p>
         </div>
         <Link
           href="/admin/products/new"
-          className="inline-flex items-center gap-2 px-4 h-9 bg-[#C46B4D] hover:bg-[#AD5D42] text-white text-sm font-semibold rounded-md transition-colors"
+          className="inline-flex items-center gap-2 px-4 h-9 bg-[var(--a-cta)] hover:bg-[var(--a-cta-hover)] text-white text-sm font-semibold rounded-md transition-colors"
         >
           <Icon name="plus" className="w-4 h-4" />
           New product
         </Link>
       </div>
 
-      <div className="flex items-center gap-1 mb-3 bg-[#16525C] border border-white/5 rounded-md p-1 w-fit">
+      <div className="flex items-center gap-1 mb-3 bg-[var(--a-panel)] border border-[var(--a-line)] rounded-md p-1 w-fit">
         {(['all','shop','services','both'] as const).map(a => (
           <button
             key={a}
             onClick={() => setAudience(a)}
             className={`px-3 py-1 text-xs font-semibold rounded transition-colors capitalize ${
-              audience === a ? 'bg-[#143E38] text-cream' : 'text-gray-400 hover:text-cream'
+              audience === a ? 'bg-[var(--a-bg)] text-[var(--a-ink)]' : 'text-[var(--a-ink-soft)] hover:text-[var(--a-ink)]'
             }`}
           >
             {a === 'all' ? 'All' : a === 'both' ? 'Both' : a === 'services' ? 'Services' : 'Shop'}
@@ -214,12 +214,12 @@ export default function ProductsListPage() {
           value={search}
           onChange={e => setSearch(e.target.value)}
           placeholder="Search by name or slug…"
-          className="flex-1 bg-[#16525C] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#7FCFD4]"
+          className="flex-1 bg-[var(--a-panel)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]"
         />
         <select
           value={filter}
           onChange={e => setFilter(e.target.value)}
-          className="bg-[#16525C] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#7FCFD4]"
+          className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]"
         >
           <option value="all">All categories</option>
           {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
@@ -227,13 +227,13 @@ export default function ProductsListPage() {
       </div>
 
       {loading ? (
-        <div className="text-gray-500 text-sm">Loading…</div>
+        <div className="text-[var(--a-ink-faint)] text-sm">Loading…</div>
       ) : filteredProducts.length === 0 ? (
-        <div className="bg-[#16525C] border border-white/5 rounded-xl p-10 text-center">
-          <Icon name="tag" className="w-8 h-8 text-gray-600 mx-auto mb-3" />
-          <p className="text-cream text-sm font-semibold mb-1">No products yet</p>
-          <p className="text-gray-500 text-xs mb-5">Add your first product — name, price, pack size, photo.</p>
-          <Link href="/admin/products/new" className="inline-flex items-center gap-2 px-4 h-9 bg-[#C46B4D] hover:bg-[#AD5D42] text-white text-xs font-semibold rounded-md">
+        <div className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-xl p-10 text-center">
+          <Icon name="tag" className="w-8 h-8 text-[var(--a-ink-faint)] mx-auto mb-3" />
+          <p className="text-[var(--a-ink)] text-sm font-semibold mb-1">No products yet</p>
+          <p className="text-[var(--a-ink-faint)] text-xs mb-5">Add your first product — name, price, pack size, photo.</p>
+          <Link href="/admin/products/new" className="inline-flex items-center gap-2 px-4 h-9 bg-[var(--a-cta)] hover:bg-[var(--a-cta-hover)] text-white text-xs font-semibold rounded-md">
             <Icon name="plus" className="w-4 h-4" />
             New product
           </Link>

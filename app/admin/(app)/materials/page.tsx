@@ -60,12 +60,12 @@ export default function MaterialsPage() {
     <div className="p-6 sm:p-8 max-w-5xl mx-auto">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-cream">Materials</h1>
-          <p className="text-sm text-gray-500 mt-1">Laser substrate stock, suppliers, and costs.</p>
+          <h1 className="text-2xl font-bold text-[var(--a-ink)]">Materials</h1>
+          <p className="text-sm text-[var(--a-ink-faint)] mt-1">Laser substrate stock, suppliers, and costs.</p>
         </div>
         <button
           onClick={create}
-          className="inline-flex items-center gap-2 px-4 h-9 bg-[#C46B4D] hover:bg-[#AD5D42] text-white text-sm font-semibold rounded-md"
+          className="inline-flex items-center gap-2 px-4 h-9 bg-[var(--a-cta)] hover:bg-[var(--a-cta-hover)] text-white text-sm font-semibold rounded-md"
         >
           <Icon name="plus" className="w-4 h-4" />
           New material
@@ -73,19 +73,19 @@ export default function MaterialsPage() {
       </div>
 
       {loading ? (
-        <div className="text-gray-500 text-sm">Loading…</div>
+        <div className="text-[var(--a-ink-faint)] text-sm">Loading…</div>
       ) : materials.length === 0 ? (
-        <div className="bg-[#16525C] border border-white/5 rounded-xl p-10 text-center">
-          <Icon name="layers" className="w-8 h-8 text-gray-600 mx-auto mb-3" />
-          <p className="text-cream text-sm font-semibold mb-1">No materials yet</p>
-          <p className="text-gray-500 text-xs">Track stock of substrates you engrave on.</p>
+        <div className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-xl p-10 text-center">
+          <Icon name="layers" className="w-8 h-8 text-[var(--a-ink-faint)] mx-auto mb-3" />
+          <p className="text-[var(--a-ink)] text-sm font-semibold mb-1">No materials yet</p>
+          <p className="text-[var(--a-ink-faint)] text-xs">Track stock of substrates you engrave on.</p>
         </div>
       ) : (
         <div className="space-y-5">
           {Object.entries(byCategory).map(([cat, list]) => (
-            <div key={cat} className="bg-[#16525C] border border-white/5 rounded-xl overflow-hidden">
-              <p className="text-[11px] uppercase tracking-wider text-gray-500 font-semibold px-4 py-2 border-b border-white/5">{cat}</p>
-              <div className="divide-y divide-white/5">
+            <div key={cat} className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-xl overflow-hidden">
+              <p className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)] font-semibold px-4 py-2 border-b border-[var(--a-line)]">{cat}</p>
+              <div className="divide-y divide-[var(--a-line)]">
                 {list.map(m => (
                   <Row key={m.id} material={m} onPatch={patch.bind(null, m.id)} onRemove={() => remove(m.id)} />
                 ))}
@@ -107,9 +107,9 @@ function Row({ material, onPatch, onRemove }: { material: Material; onPatch: (p:
           <input
             defaultValue={material.name}
             onBlur={e => e.target.value !== material.name && onPatch({ name: e.target.value })}
-            className="bg-transparent text-sm text-cream outline-none w-full font-medium"
+            className="bg-transparent text-sm text-[var(--a-ink)] outline-none w-full font-medium"
           />
-          {material.sku && <p className="text-[10px] text-gray-500 font-mono">{material.sku}</p>}
+          {material.sku && <p className="text-[10px] text-[var(--a-ink-faint)] font-mono">{material.sku}</p>}
         </div>
         <div className="flex items-center gap-1">
           <input
@@ -119,12 +119,12 @@ function Row({ material, onPatch, onRemove }: { material: Material; onPatch: (p:
               const v = parseInt(e.target.value, 10)
               if (Number.isFinite(v) && v !== material.qtyOnHand) onPatch({ qtyOnHand: v })
             }}
-            className="w-16 bg-[#143E38] border border-white/5 rounded px-2 py-1 text-xs text-cream text-center outline-none focus:border-[#7FCFD4]"
+            className="w-16 bg-[var(--a-bg)] border border-[var(--a-line)] rounded px-2 py-1 text-xs text-[var(--a-ink)] text-center outline-none focus:border-[#7FCFD4]"
           />
-          <span className="text-[10px] text-gray-500">{material.unit}</span>
+          <span className="text-[10px] text-[var(--a-ink-faint)]">{material.unit}</span>
         </div>
-        <p className="text-sm text-cream min-w-[60px] text-right">{money(material.costCents)}</p>
-        <button onClick={() => setExpanded(!expanded)} className="text-xs text-[#7FCFD4] hover:underline">{expanded ? 'Hide' : 'Details'}</button>
+        <p className="text-sm text-[var(--a-ink)] min-w-[60px] text-right">{money(material.costCents)}</p>
+        <button onClick={() => setExpanded(!expanded)} className="text-xs text-[var(--a-accent)] hover:underline">{expanded ? 'Hide' : 'Details'}</button>
         <button onClick={onRemove} className="text-xs text-red-300 hover:text-red-200">×</button>
       </div>
       {expanded && (
@@ -137,12 +137,12 @@ function Row({ material, onPatch, onRemove }: { material: Material; onPatch: (p:
             <TinyField label="Cost (cents)" value={String(material.costCents)} onSave={v => onPatch({ costCents: parseInt(v, 10) || 0 })} />
           </div>
           <div>
-            <label className="text-[10px] uppercase tracking-wider text-gray-500 block mb-1">Notes</label>
+            <label className="text-[10px] uppercase tracking-wider text-[var(--a-ink-faint)] block mb-1">Notes</label>
             <textarea
               defaultValue={material.notes}
               onBlur={e => e.target.value !== material.notes && onPatch({ notes: e.target.value })}
               rows={2}
-              className="w-full bg-[#143E38] border border-white/5 rounded px-2 py-1.5 text-xs text-cream outline-none focus:border-[#7FCFD4]"
+              className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded px-2 py-1.5 text-xs text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]"
             />
           </div>
         </div>
@@ -154,11 +154,11 @@ function Row({ material, onPatch, onRemove }: { material: Material; onPatch: (p:
 function TinyField({ label, value, onSave }: { label: string; value: string; onSave: (v: string) => void }) {
   return (
     <label className="block">
-      <span className="text-[10px] uppercase tracking-wider text-gray-500 block mb-1">{label}</span>
+      <span className="text-[10px] uppercase tracking-wider text-[var(--a-ink-faint)] block mb-1">{label}</span>
       <input
         defaultValue={value}
         onBlur={e => e.target.value !== value && onSave(e.target.value)}
-        className="w-full bg-[#16525C] border border-white/5 rounded px-2 py-1 text-xs text-cream outline-none focus:border-[#7FCFD4]"
+        className="w-full bg-[var(--a-panel)] border border-[var(--a-line)] rounded px-2 py-1 text-xs text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]"
       />
     </label>
   )

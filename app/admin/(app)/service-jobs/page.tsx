@@ -33,15 +33,15 @@ function Card({ job }: { job: Job }) {
       style={style}
       {...attributes}
       {...listeners}
-      className="bg-[#143E38] rounded-md border border-white/5 px-3 py-2.5 hover:border-[#7FCFD4]/30 cursor-grab active:cursor-grabbing"
+      className="bg-[var(--a-bg)] rounded-md border border-[var(--a-line)] px-3 py-2.5 hover:border-[#7FCFD4]/30 cursor-grab active:cursor-grabbing"
     >
       <div className="flex items-center justify-between mb-1">
-        <Link href={`/admin/service-jobs/${job.id}`} className="text-xs font-mono text-cream hover:text-[#7FCFD4]">{job.number}</Link>
-        {job.priority > 0 && <span className="text-[10px] bg-[#C46B4D]/30 text-[#C46B4D] px-1.5 py-0.5 rounded-full uppercase tracking-wider font-bold">P{job.priority}</span>}
+        <Link href={`/admin/service-jobs/${job.id}`} className="text-xs font-mono text-[var(--a-ink)] hover:text-[var(--a-accent)]">{job.number}</Link>
+        {job.priority > 0 && <span className="text-[10px] bg-[#C46B4D]/30 text-[var(--a-cta)] px-1.5 py-0.5 rounded-full uppercase tracking-wider font-bold">P{job.priority}</span>}
       </div>
-      <p className="text-sm text-cream line-clamp-2">{job.title}</p>
+      <p className="text-sm text-[var(--a-ink)] line-clamp-2">{job.title}</p>
       {job.dueDate && (
-        <p className="text-[10px] text-gray-500 mt-1">Due {new Date(job.dueDate).toLocaleDateString()}</p>
+        <p className="text-[10px] text-[var(--a-ink-faint)] mt-1">Due {new Date(job.dueDate).toLocaleDateString()}</p>
       )}
     </div>
   )
@@ -52,11 +52,11 @@ function Column({ status, label, jobs }: { status: JobStatus; label: string; job
   return (
     <div
       ref={setNodeRef}
-      className={`bg-[#16525C]/60 border rounded-lg p-3 min-h-[400px] transition-colors ${isOver ? 'border-[#7FCFD4]' : 'border-white/5'}`}
+      className={`bg-[#16525C]/60 border rounded-lg p-3 min-h-[400px] transition-colors ${isOver ? 'border-[#7FCFD4]' : 'border-[var(--a-line)]'}`}
     >
       <div className="flex items-center justify-between mb-3 px-1">
-        <p className="text-xs font-semibold text-cream uppercase tracking-wider">{label}</p>
-        <span className="text-[10px] text-gray-500 font-mono">{jobs.length}</span>
+        <p className="text-xs font-semibold text-[var(--a-ink)] uppercase tracking-wider">{label}</p>
+        <span className="text-[10px] text-[var(--a-ink-faint)] font-mono">{jobs.length}</span>
       </div>
       <div className="space-y-2">
         {jobs.map(j => <Card key={j.id} job={j} />)}
@@ -99,12 +99,12 @@ export default function ServiceJobsPage() {
     <div className="p-6 sm:p-8 max-w-[1800px] mx-auto">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-cream">Service jobs</h1>
-          <p className="text-sm text-gray-500 mt-1">Production pipeline. Drag cards to move through stages.</p>
+          <h1 className="text-2xl font-bold text-[var(--a-ink)]">Service jobs</h1>
+          <p className="text-sm text-[var(--a-ink-faint)] mt-1">Production pipeline. Drag cards to move through stages.</p>
         </div>
         <Link
           href="/admin/service-jobs/new"
-          className="inline-flex items-center gap-2 px-4 h-9 bg-[#C46B4D] hover:bg-[#AD5D42] text-white text-sm font-semibold rounded-md"
+          className="inline-flex items-center gap-2 px-4 h-9 bg-[var(--a-cta)] hover:bg-[var(--a-cta-hover)] text-white text-sm font-semibold rounded-md"
         >
           <Icon name="plus" className="w-4 h-4" />
           New job
@@ -112,9 +112,9 @@ export default function ServiceJobsPage() {
       </div>
 
       {loading ? (
-        <div className="text-gray-500 text-sm">Loading…</div>
+        <div className="text-[var(--a-ink-faint)] text-sm">Loading…</div>
       ) : jobs.length === 0 ? (
-        <div className="bg-[#16525C] border border-white/5 rounded-xl p-10 text-center text-gray-400 text-sm">
+        <div className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-xl p-10 text-center text-[var(--a-ink-soft)] text-sm">
           No jobs yet. Create one to start tracking production.
         </div>
       ) : (

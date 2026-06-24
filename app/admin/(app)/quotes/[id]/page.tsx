@@ -57,20 +57,20 @@ export default function QuoteDetail() {
     load()
   }
 
-  if (loading) return <div className="p-8 text-gray-500 text-sm">Loading…</div>
-  if (!quote) return <div className="p-8 text-gray-400 text-sm">Quote not found.</div>
+  if (loading) return <div className="p-8 text-[var(--a-ink-faint)] text-sm">Loading…</div>
+  if (!quote) return <div className="p-8 text-[var(--a-ink-soft)] text-sm">Quote not found.</div>
 
   return (
     <div className="p-6 sm:p-8 max-w-4xl mx-auto">
-      <Link href="/admin/quotes" className="text-xs text-gray-500 hover:text-cream">← Quotes</Link>
+      <Link href="/admin/quotes" className="text-xs text-[var(--a-ink-faint)] hover:text-[var(--a-ink)]">← Quotes</Link>
       <div className="flex items-start justify-between mt-2 mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-cream font-mono">{quote.number}</h1>
-          <p className="text-sm text-gray-400 mt-1">{quote.email} · {new Date(quote.createdAt).toLocaleDateString()}</p>
+          <h1 className="text-2xl font-bold text-[var(--a-ink)] font-mono">{quote.number}</h1>
+          <p className="text-sm text-[var(--a-ink-soft)] mt-1">{quote.email} · {new Date(quote.createdAt).toLocaleDateString()}</p>
         </div>
         <div className="flex items-center gap-2">
           {quote.status === 'new' || quote.status === 'drafting' ? (
-            <button onClick={send} disabled={working === 'send'} className="px-4 h-9 bg-[#C46B4D] hover:bg-[#AD5D42] text-white text-sm font-semibold rounded-md">
+            <button onClick={send} disabled={working === 'send'} className="px-4 h-9 bg-[var(--a-cta)] hover:bg-[var(--a-cta-hover)] text-white text-sm font-semibold rounded-md">
               {working === 'send' ? 'Sending…' : 'Send quote'}
             </button>
           ) : null}
@@ -80,36 +80,36 @@ export default function QuoteDetail() {
             </button>
           ) : (
             quote.convertedOrderId && (
-              <Link href={`/admin/invoices/${quote.convertedOrderId}`} className="px-4 h-9 inline-flex items-center bg-[#7FCFD4]/20 text-[#7FCFD4] text-sm font-semibold rounded-md">View invoice</Link>
+              <Link href={`/admin/invoices/${quote.convertedOrderId}`} className="px-4 h-9 inline-flex items-center bg-[#7FCFD4]/20 text-[var(--a-accent)] text-sm font-semibold rounded-md">View invoice</Link>
             )
           )}
-          <select value={quote.status} onChange={e => setStatus(e.target.value)} className="bg-[#16525C] border border-white/10 rounded-md px-3 py-2 text-xs text-cream outline-none focus:border-[#7FCFD4]">
+          <select value={quote.status} onChange={e => setStatus(e.target.value)} className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-md px-3 py-2 text-xs text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]">
             {['new','drafting','sent','accepted','declined','expired','converted'].map(s => <option key={s} value={s}>{s}</option>)}
           </select>
         </div>
       </div>
 
-      <div className="bg-[#16525C] border border-white/5 rounded-xl p-5 mb-5">
-        <div className="divide-y divide-white/5">
+      <div className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-xl p-5 mb-5">
+        <div className="divide-y divide-[var(--a-line)]">
           {items.map(it => (
             <div key={it.id} className="py-2 flex justify-between">
               <div>
-                <p className="text-sm text-cream">{it.description}</p>
-                <p className="text-[11px] text-gray-500">{it.qty} × {money(it.unitPriceCents)}</p>
+                <p className="text-sm text-[var(--a-ink)]">{it.description}</p>
+                <p className="text-[11px] text-[var(--a-ink-faint)]">{it.qty} × {money(it.unitPriceCents)}</p>
               </div>
-              <p className="text-sm font-semibold text-cream">{money(it.totalCents)}</p>
+              <p className="text-sm font-semibold text-[var(--a-ink)]">{money(it.totalCents)}</p>
             </div>
           ))}
         </div>
-        <div className="border-t border-white/5 mt-3 pt-3 flex justify-between text-base font-bold text-cream">
+        <div className="border-t border-[var(--a-line)] mt-3 pt-3 flex justify-between text-base font-bold text-[var(--a-ink)]">
           <span>Total</span><span>{money(quote.totalCents)}</span>
         </div>
       </div>
 
       {quote.notes && (
-        <div className="bg-[#16525C] border border-white/5 rounded-xl p-4">
-          <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-1">Notes</p>
-          <p className="text-sm text-cream whitespace-pre-wrap">{quote.notes}</p>
+        <div className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-xl p-4">
+          <p className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)] mb-1">Notes</p>
+          <p className="text-sm text-[var(--a-ink)] whitespace-pre-wrap">{quote.notes}</p>
         </div>
       )}
     </div>

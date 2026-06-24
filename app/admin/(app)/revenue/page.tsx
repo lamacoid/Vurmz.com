@@ -22,7 +22,7 @@ export default function RevenuePage() {
     })
   }, [])
 
-  if (!data) return <div className="p-8 text-gray-500 text-sm">Loading…</div>
+  if (!data) return <div className="p-8 text-[var(--a-ink-faint)] text-sm">Loading…</div>
 
   const maxMonth = data.monthly.reduce((m, row) => Math.max(m, row.revenue_cents), 1)
 
@@ -30,15 +30,15 @@ export default function RevenuePage() {
     <div className="p-6 sm:p-8 max-w-5xl mx-auto">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-cream">Revenue</h1>
-          <p className="text-sm text-gray-500 mt-1">Payments, outstanding invoices, and top products.</p>
+          <h1 className="text-2xl font-bold text-[var(--a-ink)]">Revenue</h1>
+          <p className="text-sm text-[var(--a-ink-faint)] mt-1">Payments, outstanding invoices, and top products.</p>
         </div>
         <div className="flex gap-2">
           {['orders','invoices','customers','payments'].map(t => (
             <a
               key={t}
               href={`/api/admin/export?type=${t}`}
-              className="text-xs px-3 h-8 inline-flex items-center bg-white/5 hover:bg-white/10 rounded-md text-cream border border-white/10"
+              className="text-xs px-3 h-8 inline-flex items-center bg-white/5 hover:bg-white/10 rounded-md text-[var(--a-ink)] border border-[var(--a-line)]"
             >
               Export {t}
             </a>
@@ -53,41 +53,41 @@ export default function RevenuePage() {
         <Stat title="Orders total" value={String(data.totals.orders_total)} icon="cart" sub={`${data.totals.customers_total} customers`} />
       </div>
 
-      <div className="bg-[#16525C] border border-white/5 rounded-xl p-5 mb-6">
-        <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-4 font-semibold">Monthly revenue</p>
+      <div className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-xl p-5 mb-6">
+        <p className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)] mb-4 font-semibold">Monthly revenue</p>
         {data.monthly.length === 0 ? (
-          <p className="text-sm text-gray-500">No payments yet.</p>
+          <p className="text-sm text-[var(--a-ink-faint)]">No payments yet.</p>
         ) : (
           <div className="space-y-2">
             {data.monthly.map(row => (
               <div key={row.month} className="flex items-center gap-3">
-                <span className="text-xs font-mono text-gray-400 w-16">{row.month}</span>
+                <span className="text-xs font-mono text-[var(--a-ink-soft)] w-16">{row.month}</span>
                 <div className="flex-1 h-6 bg-white/[0.03] rounded overflow-hidden relative">
                   <div
                     className="h-full bg-[#7FCFD4]/40 border-r border-[#7FCFD4]"
                     style={{ width: `${(row.revenue_cents / maxMonth) * 100}%` }}
                   />
                 </div>
-                <span className="text-sm font-semibold text-cream min-w-[90px] text-right">{money(row.revenue_cents)}</span>
-                <span className="text-[10px] text-gray-500 min-w-[40px] text-right">{row.order_count}×</span>
+                <span className="text-sm font-semibold text-[var(--a-ink)] min-w-[90px] text-right">{money(row.revenue_cents)}</span>
+                <span className="text-[10px] text-[var(--a-ink-faint)] min-w-[40px] text-right">{row.order_count}×</span>
               </div>
             ))}
           </div>
         )}
       </div>
 
-      <div className="bg-[#16525C] border border-white/5 rounded-xl p-5">
-        <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-4 font-semibold">Top products</p>
+      <div className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-xl p-5">
+        <p className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)] mb-4 font-semibold">Top products</p>
         {data.topProducts.length === 0 ? (
-          <p className="text-sm text-gray-500">No order data yet.</p>
+          <p className="text-sm text-[var(--a-ink-faint)]">No order data yet.</p>
         ) : (
-          <div className="divide-y divide-white/5">
+          <div className="divide-y divide-[var(--a-line)]">
             {data.topProducts.map(p => (
               <div key={p.name_snapshot} className="py-2 flex justify-between items-center">
-                <span className="text-sm text-cream truncate pr-3">{p.name_snapshot}</span>
+                <span className="text-sm text-[var(--a-ink)] truncate pr-3">{p.name_snapshot}</span>
                 <div className="flex items-center gap-3 text-xs">
-                  <span className="text-gray-500">{p.qty} sold</span>
-                  <span className="text-cream font-semibold min-w-[80px] text-right">{money(p.revenue_cents)}</span>
+                  <span className="text-[var(--a-ink-faint)]">{p.qty} sold</span>
+                  <span className="text-[var(--a-ink)] font-semibold min-w-[80px] text-right">{money(p.revenue_cents)}</span>
                 </div>
               </div>
             ))}
@@ -100,13 +100,13 @@ export default function RevenuePage() {
 
 function Stat({ title, value, sub, icon, accent }: { title: string; value: string; sub?: string; icon: string; accent?: 'coral' }) {
   return (
-    <div className="bg-[#16525C] border border-white/5 rounded-xl p-4">
+    <div className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-xl p-4">
       <div className="flex items-start justify-between mb-2">
-        <p className="text-[10px] text-gray-400 uppercase tracking-wider">{title}</p>
-        <Icon name={icon} className={`w-4 h-4 ${accent === 'coral' ? 'text-[#C46B4D]' : 'text-[#7FCFD4]'} opacity-70`} />
+        <p className="text-[10px] text-[var(--a-ink-soft)] uppercase tracking-wider">{title}</p>
+        <Icon name={icon} className={`w-4 h-4 ${accent === 'coral' ? 'text-[var(--a-cta)]' : 'text-[var(--a-accent)]'} opacity-70`} />
       </div>
-      <p className="text-2xl font-bold text-cream">{value}</p>
-      {sub && <p className="text-[11px] text-gray-500 mt-1">{sub}</p>}
+      <p className="text-2xl font-bold text-[var(--a-ink)]">{value}</p>
+      {sub && <p className="text-[11px] text-[var(--a-ink-faint)] mt-1">{sub}</p>}
     </div>
   )
 }

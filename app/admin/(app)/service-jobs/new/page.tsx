@@ -43,25 +43,25 @@ export default function NewServiceJobPage() {
 
   return (
     <div className="p-6 sm:p-8 max-w-2xl mx-auto">
-      <Link href="/admin/service-jobs" className="text-xs text-gray-500 hover:text-cream">← All jobs</Link>
-      <h1 className="text-2xl font-bold text-cream mt-2 mb-6">New service job</h1>
+      <Link href="/admin/service-jobs" className="text-xs text-[var(--a-ink-faint)] hover:text-[var(--a-ink)]">← All jobs</Link>
+      <h1 className="text-2xl font-bold text-[var(--a-ink)] mt-2 mb-6">New service job</h1>
 
-      <div className="bg-[#16525C] border border-white/5 rounded-xl p-5 space-y-4">
+      <div className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-xl p-5 space-y-4">
         <div>
-          <label className="text-[11px] uppercase tracking-wider text-gray-500 block mb-1 font-semibold">Title</label>
+          <label className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)] block mb-1 font-semibold">Title</label>
           <input
             value={title}
             onChange={e => setTitle(e.target.value)}
             placeholder="e.g. 50 engraved knives for Cherry Creek Kitchen"
-            className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#7FCFD4]"
+            className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]"
           />
         </div>
         <div>
-          <label className="text-[11px] uppercase tracking-wider text-gray-500 block mb-1 font-semibold">Customer</label>
+          <label className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)] block mb-1 font-semibold">Customer</label>
           <select
             value={customerId}
             onChange={e => setCustomerId(e.target.value)}
-            className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none"
+            className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none"
           >
             <option value="">— none —</option>
             {customers.map(c => <option key={c.id} value={c.id}>{c.name || c.email}</option>)}
@@ -69,8 +69,8 @@ export default function NewServiceJobPage() {
         </div>
         <div className="grid grid-cols-2 gap-3">
           <div>
-            <label className="text-[11px] uppercase tracking-wider text-gray-500 block mb-1 font-semibold">Priority</label>
-            <select value={priority} onChange={e => setPriority(parseInt(e.target.value, 10))} className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none">
+            <label className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)] block mb-1 font-semibold">Priority</label>
+            <select value={priority} onChange={e => setPriority(parseInt(e.target.value, 10))} className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none">
               <option value={0}>Normal</option>
               <option value={1}>P1 — urgent</option>
               <option value={2}>P2 — rush</option>
@@ -78,15 +78,15 @@ export default function NewServiceJobPage() {
             </select>
           </div>
           <div>
-            <label className="text-[11px] uppercase tracking-wider text-gray-500 block mb-1 font-semibold">Due date</label>
-            <input type="date" value={dueDate} onChange={e => setDueDate(e.target.value)} className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#7FCFD4]" />
+            <label className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)] block mb-1 font-semibold">Due date</label>
+            <input type="date" value={dueDate} onChange={e => setDueDate(e.target.value)} className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]" />
           </div>
         </div>
         <div>
-          <label className="text-[11px] uppercase tracking-wider text-gray-500 block mb-1 font-semibold">Notes</label>
-          <textarea value={notes} onChange={e => setNotes(e.target.value)} rows={4} className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#7FCFD4]" placeholder="Details, specs, production notes…" />
+          <label className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)] block mb-1 font-semibold">Notes</label>
+          <textarea value={notes} onChange={e => setNotes(e.target.value)} rows={4} className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]" placeholder="Details, specs, production notes…" />
         </div>
-        <button onClick={save} disabled={saving || !title} className="px-4 h-9 bg-[#C46B4D] hover:bg-[#AD5D42] disabled:opacity-60 text-white text-sm font-semibold rounded-md">
+        <button onClick={save} disabled={saving || !title} className="px-4 h-9 bg-[var(--a-cta)] hover:bg-[var(--a-cta-hover)] disabled:opacity-60 text-white text-sm font-semibold rounded-md">
           {saving ? 'Creating…' : 'Create job'}
         </button>
       </div>

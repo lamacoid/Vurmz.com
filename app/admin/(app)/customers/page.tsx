@@ -60,12 +60,12 @@ export default function CustomersPage() {
     <div className="p-6 sm:p-8 max-w-5xl mx-auto">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-cream">Customers</h1>
-          <p className="text-sm text-gray-500 mt-1">Everyone who&rsquo;s ordered, quoted, or signed up.</p>
+          <h1 className="text-2xl font-bold text-[var(--a-ink)]">Customers</h1>
+          <p className="text-sm text-[var(--a-ink-faint)] mt-1">Everyone who&rsquo;s ordered, quoted, or signed up.</p>
         </div>
         <button
           onClick={() => setCreating(v => !v)}
-          className="inline-flex items-center gap-2 px-4 h-9 bg-[#C46B4D] hover:bg-[#AD5D42] text-white text-sm font-semibold rounded-md"
+          className="inline-flex items-center gap-2 px-4 h-9 bg-[var(--a-cta)] hover:bg-[var(--a-cta-hover)] text-white text-sm font-semibold rounded-md"
         >
           <Icon name="plus" className="w-4 h-4" />
           New customer
@@ -73,21 +73,21 @@ export default function CustomersPage() {
       </div>
 
       {creating && (
-        <div className="bg-[#16525C] border border-white/5 rounded-xl p-4 mb-5">
-          <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-2 font-semibold">New customer</p>
+        <div className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-xl p-4 mb-5">
+          <p className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)] mb-2 font-semibold">New customer</p>
           <div className="grid grid-cols-1 sm:grid-cols-[1fr_1fr_auto] gap-2">
             <input
               type="email"
               placeholder="email@example.com"
               value={newEmail}
               onChange={e => setNewEmail(e.target.value)}
-              className="bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#7FCFD4]"
+              className="bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]"
             />
             <input
               placeholder="Name (optional)"
               value={newName}
               onChange={e => setNewName(e.target.value)}
-              className="bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#7FCFD4]"
+              className="bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]"
             />
             <button
               onClick={create}
@@ -104,19 +104,19 @@ export default function CustomersPage() {
         placeholder="Search by name, email, or company…"
         value={search}
         onChange={e => setSearch(e.target.value)}
-        className="w-full px-3 py-2 bg-[#16525C] border border-white/5 rounded-md text-sm text-cream placeholder:text-gray-500 outline-none focus:border-[#7FCFD4] mb-4"
+        className="w-full px-3 py-2 bg-[var(--a-panel)] border border-[var(--a-line)] rounded-md text-sm text-[var(--a-ink)] placeholder:text-[var(--a-ink-faint)] outline-none focus:border-[#7FCFD4] mb-4"
       />
 
       {loading ? (
-        <div className="text-gray-500 text-sm">Loading…</div>
+        <div className="text-[var(--a-ink-faint)] text-sm">Loading…</div>
       ) : customers.length === 0 ? (
-        <div className="bg-[#16525C] border border-white/5 rounded-xl p-10 text-center">
-          <Icon name="users" className="w-8 h-8 text-gray-600 mx-auto mb-3" />
-          <p className="text-cream text-sm font-semibold mb-1">{search ? 'No matches' : 'No customers yet'}</p>
-          <p className="text-gray-500 text-xs">{search ? 'Try a different search.' : 'They\'ll appear here automatically after the first order or sign-in.'}</p>
+        <div className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-xl p-10 text-center">
+          <Icon name="users" className="w-8 h-8 text-[var(--a-ink-faint)] mx-auto mb-3" />
+          <p className="text-[var(--a-ink)] text-sm font-semibold mb-1">{search ? 'No matches' : 'No customers yet'}</p>
+          <p className="text-[var(--a-ink-faint)] text-xs">{search ? 'Try a different search.' : 'They\'ll appear here automatically after the first order or sign-in.'}</p>
         </div>
       ) : (
-        <div className="bg-[#16525C] border border-white/5 rounded-xl overflow-hidden divide-y divide-white/5">
+        <div className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-xl overflow-hidden divide-y divide-[var(--a-line)]">
           {customers.map(c => (
             <Link
               key={c.id}
@@ -124,19 +124,19 @@ export default function CustomersPage() {
               className="flex items-center justify-between px-4 py-3 hover:bg-white/[0.02] transition-colors"
             >
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-cream truncate">{c.name || c.email}</p>
-                <p className="text-[11px] text-gray-500 truncate">{c.email}{c.company ? ` · ${c.company}` : ''}{c.phone ? ` · ${c.phone}` : ''}</p>
+                <p className="text-sm font-medium text-[var(--a-ink)] truncate">{c.name || c.email}</p>
+                <p className="text-[11px] text-[var(--a-ink-faint)] truncate">{c.email}{c.company ? ` · ${c.company}` : ''}{c.phone ? ` · ${c.phone}` : ''}</p>
                 {c.tags && c.tags.length > 0 && (
                   <div className="flex gap-1 mt-1.5 flex-wrap">
                     {c.tags.slice(0, 4).map(t => (
-                      <span key={t} className="text-[9px] bg-[#7FCFD4]/10 text-[#7FCFD4] px-1.5 py-0.5 rounded-full uppercase tracking-wider font-semibold">{t}</span>
+                      <span key={t} className="text-[9px] bg-[#7FCFD4]/10 text-[var(--a-accent)] px-1.5 py-0.5 rounded-full uppercase tracking-wider font-semibold">{t}</span>
                     ))}
                   </div>
                 )}
               </div>
               <div className="text-right flex-shrink-0 ml-3">
-                <p className="text-sm font-semibold text-cream">{money(c.lifetimeValueCents)}</p>
-                <p className="text-[10px] text-gray-500">{c.orderCount} order{c.orderCount === 1 ? '' : 's'}</p>
+                <p className="text-sm font-semibold text-[var(--a-ink)]">{money(c.lifetimeValueCents)}</p>
+                <p className="text-[10px] text-[var(--a-ink-faint)]">{c.orderCount} order{c.orderCount === 1 ? '' : 's'}</p>
               </div>
             </Link>
           ))}

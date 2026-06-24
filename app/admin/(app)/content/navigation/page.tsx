@@ -78,40 +78,40 @@ export default function NavigationEditorPage() {
     load()
   }
 
-  if (loading) return <div className="p-8 text-gray-500 text-sm">Loading…</div>
+  if (loading) return <div className="p-8 text-[var(--a-ink-faint)] text-sm">Loading…</div>
 
   return (
     <div className="p-6 sm:p-8 max-w-3xl mx-auto">
-      <h1 className="text-2xl font-bold text-cream mb-1">Navigation</h1>
-      <p className="text-sm text-gray-500 mb-6">Links shown in the site header, footer, and mobile menu.</p>
+      <h1 className="text-2xl font-bold text-[var(--a-ink)] mb-1">Navigation</h1>
+      <p className="text-sm text-[var(--a-ink-faint)] mb-6">Links shown in the site header, footer, and mobile menu.</p>
 
       <div className="space-y-5">
         {(Object.keys(PLACEMENT_LABELS) as Placement[]).map(p => (
-          <div key={p} className="bg-[#16525C] border border-white/5 rounded-xl p-4">
+          <div key={p} className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-xl p-4">
             <div className="flex items-center justify-between mb-3">
-              <p className="text-sm font-semibold text-cream">{PLACEMENT_LABELS[p]}</p>
+              <p className="text-sm font-semibold text-[var(--a-ink)]">{PLACEMENT_LABELS[p]}</p>
               <button
                 onClick={() => addItem(p)}
-                className="text-xs text-[#7FCFD4] hover:underline inline-flex items-center gap-1"
+                className="text-xs text-[var(--a-accent)] hover:underline inline-flex items-center gap-1"
               >
                 <Icon name="plus" className="w-3 h-3" /> Add link
               </button>
             </div>
             {nav[p].length === 0 ? (
-              <p className="text-xs text-gray-500">No links yet.</p>
+              <p className="text-xs text-[var(--a-ink-faint)]">No links yet.</p>
             ) : (
               <div className="space-y-1">
                 {nav[p].map(item => (
-                  <div key={item.id} className="flex items-center gap-2 bg-[#143E38] border border-white/5 rounded px-3 py-2">
+                  <div key={item.id} className="flex items-center gap-2 bg-[var(--a-bg)] border border-[var(--a-line)] rounded px-3 py-2">
                     <div className="flex flex-col">
-                      <button onClick={() => move(p, item.id, -1)} className="text-gray-500 hover:text-cream text-[10px]">▲</button>
-                      <button onClick={() => move(p, item.id, 1)} className="text-gray-500 hover:text-cream text-[10px]">▼</button>
+                      <button onClick={() => move(p, item.id, -1)} className="text-[var(--a-ink-faint)] hover:text-[var(--a-ink)] text-[10px]">▲</button>
+                      <button onClick={() => move(p, item.id, 1)} className="text-[var(--a-ink-faint)] hover:text-[var(--a-ink)] text-[10px]">▼</button>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm text-cream truncate">{item.label}</p>
-                      <p className="text-[10px] text-gray-500 truncate font-mono">{item.href}</p>
+                      <p className="text-sm text-[var(--a-ink)] truncate">{item.label}</p>
+                      <p className="text-[10px] text-[var(--a-ink-faint)] truncate font-mono">{item.href}</p>
                     </div>
-                    <button onClick={() => editItem(item)} className="text-xs text-gray-400 hover:text-cream px-2">Edit</button>
+                    <button onClick={() => editItem(item)} className="text-xs text-[var(--a-ink-soft)] hover:text-[var(--a-ink)] px-2">Edit</button>
                     <button onClick={() => removeItem(item.id)} className="text-xs text-red-300 hover:text-red-200 px-2">×</button>
                   </div>
                 ))}

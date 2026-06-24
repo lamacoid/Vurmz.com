@@ -7,7 +7,7 @@ function breadcrumbsFor(pathname: string): { label: string; href?: string }[] {
   if (pathname === '/admin' || pathname === '/admin/') return [{ label: 'Dashboard' }]
   for (const group of adminNav) {
     for (const item of group.items) {
-      if (pathname === item.href || pathname.startsWith(item.href + '/')) {
+      if (pathname === item.href || (item.href !== '/admin' && pathname.startsWith(item.href + '/'))) {
         return [{ label: group.label }, { label: item.label, href: item.href }]
       }
     }

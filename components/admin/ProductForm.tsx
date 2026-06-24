@@ -102,10 +102,10 @@ export default function ProductForm({ initial }: { initial: ProductDraft }) {
     <div className="p-6 sm:p-8 max-w-5xl mx-auto">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <button onClick={() => router.push('/admin/products')} className="text-xs text-gray-500 hover:text-cream mb-1 flex items-center gap-1">
+          <button onClick={() => router.push('/admin/products')} className="text-xs text-[var(--a-ink-faint)] hover:text-[var(--a-ink)] mb-1 flex items-center gap-1">
             <Icon name="chevron" className="w-3 h-3 rotate-180" /> Products
           </button>
-          <h1 className="text-2xl font-bold text-cream">{draft.name || 'New product'}</h1>
+          <h1 className="text-2xl font-bold text-[var(--a-ink)]">{draft.name || 'New product'}</h1>
         </div>
         <div className="flex items-center gap-2">
           {draft.id && (
@@ -120,7 +120,7 @@ export default function ProductForm({ initial }: { initial: ProductDraft }) {
           <button
             onClick={save}
             disabled={saving || !draft.name || !draft.slug}
-            className="px-4 h-9 bg-[#C46B4D] hover:bg-[#AD5D42] disabled:opacity-60 text-white text-sm font-semibold rounded-md"
+            className="px-4 h-9 bg-[var(--a-cta)] hover:bg-[var(--a-cta-hover)] disabled:opacity-60 text-white text-sm font-semibold rounded-md"
           >
             {saving ? 'Saving…' : 'Save'}
           </button>
@@ -147,13 +147,13 @@ export default function ProductForm({ initial }: { initial: ProductDraft }) {
               hint="About 80 characters. Shown on shop grid."
             />
             <div>
-              <label className="text-[11px] uppercase tracking-wider text-gray-500 block mb-1">Full description</label>
+              <label className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)] block mb-1">Full description</label>
               <textarea
                 value={draft.description}
                 onChange={e => field('description', e.target.value)}
                 rows={6}
                 placeholder="Markdown supported. Details, specs, what's included…"
-                className="w-full bg-[#16525C] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#7FCFD4]"
+                className="w-full bg-[var(--a-panel)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]"
               />
             </div>
           </Section>
@@ -172,7 +172,7 @@ export default function ProductForm({ initial }: { initial: ProductDraft }) {
           </Section>
 
           <Section title="One-off / unique item">
-            <label className="flex items-center gap-2 bg-[#16525C] border border-white/5 rounded-md px-3 py-2.5">
+            <label className="flex items-center gap-2 bg-[var(--a-panel)] border border-[var(--a-line)] rounded-md px-3 py-2.5">
               <input
                 type="checkbox"
                 checked={draft.oneOff}
@@ -181,10 +181,10 @@ export default function ProductForm({ initial }: { initial: ProductDraft }) {
                   setDraft(prev => ({ ...prev, oneOff: v, packSize: v ? 1 : prev.packSize }))
                 }}
               />
-              <span className="text-sm text-cream">This is a one-off — only one exists.</span>
+              <span className="text-sm text-[var(--a-ink)]">This is a one-off — only one exists.</span>
             </label>
             {draft.oneOff && (
-              <p className="text-[10px] text-gray-500 leading-snug">
+              <p className="text-[10px] text-[var(--a-ink-faint)] leading-snug">
                 Pack size is forced to 1. The shop will hide this item automatically once it sells.
               </p>
             )}
@@ -192,8 +192,8 @@ export default function ProductForm({ initial }: { initial: ProductDraft }) {
               draft.soldAt ? (
                 <div className="flex items-center justify-between bg-[#C46B4D]/15 border border-[#C46B4D]/30 rounded-md px-3 py-2">
                   <div>
-                    <p className="text-xs font-semibold text-[#C46B4D]">Sold</p>
-                    <p className="text-[10px] text-gray-400">on {new Date(draft.soldAt).toLocaleString()}</p>
+                    <p className="text-xs font-semibold text-[var(--a-cta)]">Sold</p>
+                    <p className="text-[10px] text-[var(--a-ink-soft)]">on {new Date(draft.soldAt).toLocaleString()}</p>
                   </div>
                   <button
                     onClick={async () => {
@@ -205,7 +205,7 @@ export default function ProductForm({ initial }: { initial: ProductDraft }) {
                       })
                       setDraft(prev => ({ ...prev, soldAt: null, isPublished: true }))
                     }}
-                    className="text-xs px-2 py-1 bg-white/5 hover:bg-white/10 rounded text-cream"
+                    className="text-xs px-2 py-1 bg-white/5 hover:bg-white/10 rounded text-[var(--a-ink)]"
                   >
                     Un-sell
                   </button>
@@ -221,7 +221,7 @@ export default function ProductForm({ initial }: { initial: ProductDraft }) {
                     })
                     setDraft(prev => ({ ...prev, soldAt: new Date().toISOString(), isPublished: false }))
                   }}
-                  className="text-xs px-2.5 py-1.5 bg-white/5 hover:bg-white/10 rounded text-cream"
+                  className="text-xs px-2.5 py-1.5 bg-white/5 hover:bg-white/10 rounded text-[var(--a-ink)]"
                 >
                   Mark sold
                 </button>
@@ -231,9 +231,9 @@ export default function ProductForm({ initial }: { initial: ProductDraft }) {
 
           <Section title="Fulfillment">
             <div className="grid grid-cols-2 gap-3">
-              <label className="flex items-center gap-2 bg-[#16525C] border border-white/5 rounded-md px-3 py-2.5">
+              <label className="flex items-center gap-2 bg-[var(--a-panel)] border border-[var(--a-line)] rounded-md px-3 py-2.5">
                 <input type="checkbox" checked={draft.madeToOrder} onChange={e => field('madeToOrder', e.target.checked)} />
-                <span className="text-sm text-cream">Made to order</span>
+                <span className="text-sm text-[var(--a-ink)]">Made to order</span>
               </label>
               <FieldNum label="Lead time (days)" value={draft.leadTimeDays} onChange={v => field('leadTimeDays', v)} min={0} />
             </div>
@@ -246,7 +246,7 @@ export default function ProductForm({ initial }: { initial: ProductDraft }) {
           <Section title="Status">
             <label className="flex items-center gap-2">
               <input type="checkbox" checked={draft.isPublished} onChange={e => field('isPublished', e.target.checked)} />
-              <span className="text-sm text-cream">Published (visible on the site)</span>
+              <span className="text-sm text-[var(--a-ink)]">Published (visible on the site)</span>
             </label>
           </Section>
 
@@ -262,11 +262,11 @@ export default function ProductForm({ initial }: { initial: ProductDraft }) {
                     className={`h-8 text-xs font-semibold rounded-md border transition-colors ${
                       active
                         ? a === 'services'
-                          ? 'bg-[#7FCFD4]/20 border-[#7FCFD4] text-[#7FCFD4]'
+                          ? 'bg-[#7FCFD4]/20 border-[#7FCFD4] text-[var(--a-accent)]'
                           : a === 'both'
                           ? 'bg-[#DED6C3]/10 border-[#DED6C3]/30 text-[#DED6C3]'
-                          : 'bg-[#C46B4D]/20 border-[#C46B4D] text-[#C46B4D]'
-                        : 'bg-white/5 border-white/10 text-gray-400 hover:text-cream'
+                          : 'bg-[#C46B4D]/20 border-[var(--a-cta)] text-[var(--a-cta)]'
+                        : 'bg-white/5 border-[var(--a-line)] text-[var(--a-ink-soft)] hover:text-[var(--a-ink)]'
                     }`}
                   >
                     {labels[a]}
@@ -274,7 +274,7 @@ export default function ProductForm({ initial }: { initial: ProductDraft }) {
                 )
               })}
             </div>
-            <p className="text-[10px] text-gray-500 mt-2 leading-snug">
+            <p className="text-[10px] text-[var(--a-ink-faint)] mt-2 leading-snug">
               Shop = B2C public catalog. Services = B2B page. Both = shows everywhere.
             </p>
           </Section>
@@ -283,7 +283,7 @@ export default function ProductForm({ initial }: { initial: ProductDraft }) {
             <select
               value={draft.categoryId ?? ''}
               onChange={e => field('categoryId', e.target.value || null)}
-              className="w-full bg-[#16525C] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#7FCFD4]"
+              className="w-full bg-[var(--a-panel)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]"
             >
               <option value="">No category</option>
               {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
@@ -293,18 +293,18 @@ export default function ProductForm({ initial }: { initial: ProductDraft }) {
           <Section title="Main image">
             {heroMedia ? (
               <div>
-                <div className="aspect-square w-full bg-[#143E38] rounded-lg overflow-hidden border border-white/5">
+                <div className="aspect-square w-full bg-[var(--a-bg)] rounded-lg overflow-hidden border border-[var(--a-line)]">
                   <img src={heroMedia.url} alt={heroMedia.altText} className="w-full h-full object-cover" />
                 </div>
                 <div className="flex gap-2 mt-2">
-                  <button onClick={() => setMediaPickerOpen(true)} className="flex-1 text-xs h-8 bg-white/5 hover:bg-white/10 rounded-md text-cream">Change</button>
+                  <button onClick={() => setMediaPickerOpen(true)} className="flex-1 text-xs h-8 bg-white/5 hover:bg-white/10 rounded-md text-[var(--a-ink)]">Change</button>
                   <button onClick={() => { field('heroMediaId', null); setHeroMedia(null) }} className="flex-1 text-xs h-8 bg-white/5 hover:bg-white/10 rounded-md text-red-300">Remove</button>
                 </div>
               </div>
             ) : (
               <button
                 onClick={() => setMediaPickerOpen(true)}
-                className="w-full aspect-square border-2 border-dashed border-white/10 hover:border-[#7FCFD4]/40 rounded-lg flex flex-col items-center justify-center text-gray-500 hover:text-cream transition-colors"
+                className="w-full aspect-square border-2 border-dashed border-[var(--a-line)] hover:border-[#7FCFD4]/40 rounded-lg flex flex-col items-center justify-center text-[var(--a-ink-faint)] hover:text-[var(--a-ink)] transition-colors"
               >
                 <Icon name="image" className="w-6 h-6 mb-1" />
                 <span className="text-xs">Select image</span>
@@ -316,21 +316,21 @@ export default function ProductForm({ initial }: { initial: ProductDraft }) {
 
       {mediaPickerOpen && (
         <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4" onClick={() => setMediaPickerOpen(false)}>
-          <div onClick={e => e.stopPropagation()} className="bg-[#143E38] border border-white/10 rounded-xl max-w-3xl w-full max-h-[80vh] flex flex-col">
-            <div className="flex items-center justify-between p-4 border-b border-white/5">
-              <p className="text-sm font-semibold text-cream">Choose image</p>
-              <button onClick={() => setMediaPickerOpen(false)} className="p-1 text-gray-400 hover:text-cream"><Icon name="x" className="w-4 h-4" /></button>
+          <div onClick={e => e.stopPropagation()} className="bg-[var(--a-bg)] border border-[var(--a-line)] rounded-xl max-w-3xl w-full max-h-[80vh] flex flex-col">
+            <div className="flex items-center justify-between p-4 border-b border-[var(--a-line)]">
+              <p className="text-sm font-semibold text-[var(--a-ink)]">Choose image</p>
+              <button onClick={() => setMediaPickerOpen(false)} className="p-1 text-[var(--a-ink-soft)] hover:text-[var(--a-ink)]"><Icon name="x" className="w-4 h-4" /></button>
             </div>
             <div className="flex-1 overflow-y-auto p-4">
               {media.length === 0 ? (
-                <p className="text-sm text-gray-500 text-center py-8">No images yet. Upload some in the <a href="/admin/content/media" className="text-[#7FCFD4] hover:underline">media library</a>.</p>
+                <p className="text-sm text-[var(--a-ink-faint)] text-center py-8">No images yet. Upload some in the <a href="/admin/content/media" className="text-[var(--a-accent)] hover:underline">media library</a>.</p>
               ) : (
                 <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
                   {media.map(m => (
                     <button
                       key={m.id}
                       onClick={() => { field('heroMediaId', m.id); setHeroMedia(m); setMediaPickerOpen(false) }}
-                      className="aspect-square bg-[#16525C] border border-white/5 hover:border-[#7FCFD4]/40 rounded-lg overflow-hidden"
+                      className="aspect-square bg-[var(--a-panel)] border border-[var(--a-line)] hover:border-[#7FCFD4]/40 rounded-lg overflow-hidden"
                     >
                       <img src={m.url} alt={m.altText} className="w-full h-full object-cover" />
                     </button>
@@ -347,8 +347,8 @@ export default function ProductForm({ initial }: { initial: ProductDraft }) {
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="bg-[#16525C] border border-white/5 rounded-xl p-5">
-      <p className="text-[11px] uppercase tracking-wider text-gray-500 mb-3 font-semibold">{title}</p>
+    <div className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-xl p-5">
+      <p className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)] mb-3 font-semibold">{title}</p>
       <div className="space-y-3">{children}</div>
     </div>
   )
@@ -357,17 +357,17 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 function FieldText({ label, value, onChange, placeholder, prefix, hint }: { label: string; value: string; onChange: (v: string) => void; placeholder?: string; prefix?: string; hint?: string }) {
   return (
     <div>
-      <label className="text-[11px] uppercase tracking-wider text-gray-500 block mb-1">{label}</label>
-      <div className="flex items-center bg-[#143E38] border border-white/5 rounded-md focus-within:border-[#7FCFD4]">
-        {prefix && <span className="pl-3 text-gray-500 text-sm">{prefix}</span>}
+      <label className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)] block mb-1">{label}</label>
+      <div className="flex items-center bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md focus-within:border-[#7FCFD4]">
+        {prefix && <span className="pl-3 text-[var(--a-ink-faint)] text-sm">{prefix}</span>}
         <input
           value={value}
           onChange={e => onChange(e.target.value)}
           placeholder={placeholder}
-          className="flex-1 bg-transparent px-3 py-2 text-sm text-cream outline-none"
+          className="flex-1 bg-transparent px-3 py-2 text-sm text-[var(--a-ink)] outline-none"
         />
       </div>
-      {hint && <p className="text-[10px] text-gray-600 mt-1">{hint}</p>}
+      {hint && <p className="text-[10px] text-[var(--a-ink-faint)] mt-1">{hint}</p>}
     </div>
   )
 }
@@ -375,15 +375,15 @@ function FieldText({ label, value, onChange, placeholder, prefix, hint }: { labe
 function FieldNum({ label, value, onChange, min, hint }: { label: string; value: number; onChange: (v: number) => void; min?: number; hint?: string }) {
   return (
     <div>
-      <label className="text-[11px] uppercase tracking-wider text-gray-500 block mb-1">{label}</label>
+      <label className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)] block mb-1">{label}</label>
       <input
         type="number"
         value={value}
         min={min}
         onChange={e => onChange(parseInt(e.target.value, 10) || 0)}
-        className="w-full bg-[#143E38] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#7FCFD4]"
+        className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]"
       />
-      {hint && <p className="text-[10px] text-gray-600 mt-1">{hint}</p>}
+      {hint && <p className="text-[10px] text-[var(--a-ink-faint)] mt-1">{hint}</p>}
     </div>
   )
 }

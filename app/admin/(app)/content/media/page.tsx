@@ -67,8 +67,8 @@ export default function MediaLibraryPage() {
     <div className="p-6 sm:p-8 max-w-6xl mx-auto">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-cream">Media library</h1>
-          <p className="text-sm text-gray-500 mt-1">Every image and asset used on the site.</p>
+          <h1 className="text-2xl font-bold text-[var(--a-ink)]">Media library</h1>
+          <p className="text-sm text-[var(--a-ink-faint)] mt-1">Every image and asset used on the site.</p>
         </div>
         <div className="flex items-center gap-2">
           <button
@@ -79,7 +79,7 @@ export default function MediaLibraryPage() {
               setSyncing(false)
             }}
             disabled={syncing}
-            className="inline-flex items-center gap-2 px-3 h-9 bg-white/5 hover:bg-white/10 disabled:opacity-60 text-cream text-sm rounded-md border border-white/10"
+            className="inline-flex items-center gap-2 px-3 h-9 bg-white/5 hover:bg-white/10 disabled:opacity-60 text-[var(--a-ink)] text-sm rounded-md border border-[var(--a-line)]"
             title="Register /public photos already shipped with the site"
           >
             {syncing ? 'Syncing…' : 'Sync site photos'}
@@ -87,7 +87,7 @@ export default function MediaLibraryPage() {
           <button
             onClick={() => fileInputRef.current?.click()}
             disabled={uploading}
-            className="inline-flex items-center gap-2 px-4 h-9 bg-[#C46B4D] hover:bg-[#AD5D42] disabled:opacity-60 text-white text-sm font-semibold rounded-md transition-colors"
+            className="inline-flex items-center gap-2 px-4 h-9 bg-[var(--a-cta)] hover:bg-[var(--a-cta-hover)] disabled:opacity-60 text-white text-sm font-semibold rounded-md transition-colors"
           >
             <Icon name="plus" className="w-4 h-4" />
             {uploading ? 'Uploading…' : 'Upload'}
@@ -104,17 +104,17 @@ export default function MediaLibraryPage() {
       </div>
 
       {loading ? (
-        <div className="text-gray-500 text-sm">Loading…</div>
+        <div className="text-[var(--a-ink-faint)] text-sm">Loading…</div>
       ) : items.length === 0 ? (
         <div
           onClick={() => fileInputRef.current?.click()}
           onDragOver={e => e.preventDefault()}
           onDrop={e => { e.preventDefault(); handleUpload(e.dataTransfer.files) }}
-          className="border-2 border-dashed border-white/10 rounded-xl p-16 text-center cursor-pointer hover:border-[#7FCFD4]/40 transition-colors"
+          className="border-2 border-dashed border-[var(--a-line)] rounded-xl p-16 text-center cursor-pointer hover:border-[#7FCFD4]/40 transition-colors"
         >
-          <Icon name="image" className="w-10 h-10 text-gray-600 mx-auto mb-3" />
-          <p className="text-gray-400 text-sm">Drag files here or click to upload</p>
-          <p className="text-gray-600 text-xs mt-1">Images, PDFs — up to 50 MB each</p>
+          <Icon name="image" className="w-10 h-10 text-[var(--a-ink-faint)] mx-auto mb-3" />
+          <p className="text-[var(--a-ink-soft)] text-sm">Drag files here or click to upload</p>
+          <p className="text-[var(--a-ink-faint)] text-xs mt-1">Images, PDFs — up to 50 MB each</p>
         </div>
       ) : (
         <div
@@ -126,16 +126,16 @@ export default function MediaLibraryPage() {
             <button
               key={item.id}
               onClick={() => setSelected(item)}
-              className="group relative aspect-square bg-[#16525C] border border-white/5 hover:border-[#7FCFD4]/40 rounded-lg overflow-hidden transition-colors"
+              className="group relative aspect-square bg-[var(--a-panel)] border border-[var(--a-line)] hover:border-[#7FCFD4]/40 rounded-lg overflow-hidden transition-colors"
             >
               {item.mimeType.startsWith('image/') ? (
                 <img src={item.url} alt={item.altText} className="w-full h-full object-cover" />
               ) : (
-                <div className="flex items-center justify-center h-full text-gray-500">
+                <div className="flex items-center justify-center h-full text-[var(--a-ink-faint)]">
                   <Icon name="doc" className="w-8 h-8" />
                 </div>
               )}
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-2 text-[10px] text-cream truncate">
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-2 text-[10px] text-[var(--a-ink)] truncate">
                 {item.filename}
               </div>
             </button>
@@ -145,34 +145,34 @@ export default function MediaLibraryPage() {
 
       {selected && (
         <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4" onClick={() => setSelected(null)}>
-          <div onClick={e => e.stopPropagation()} className="bg-[#143E38] border border-white/10 rounded-xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between p-4 border-b border-white/5">
-              <p className="text-sm font-semibold text-cream truncate pr-4">{selected.filename}</p>
-              <button onClick={() => setSelected(null)} className="p-1 text-gray-400 hover:text-cream">
+          <div onClick={e => e.stopPropagation()} className="bg-[var(--a-bg)] border border-[var(--a-line)] rounded-xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between p-4 border-b border-[var(--a-line)]">
+              <p className="text-sm font-semibold text-[var(--a-ink)] truncate pr-4">{selected.filename}</p>
+              <button onClick={() => setSelected(null)} className="p-1 text-[var(--a-ink-soft)] hover:text-[var(--a-ink)]">
                 <Icon name="x" className="w-4 h-4" />
               </button>
             </div>
             <div className="p-4 grid md:grid-cols-2 gap-5">
-              <div className="bg-[#16525C] rounded-lg overflow-hidden">
+              <div className="bg-[var(--a-panel)] rounded-lg overflow-hidden">
                 {selected.mimeType.startsWith('image/') ? (
                   <img src={selected.url} alt={selected.altText} className="w-full h-auto" />
                 ) : (
-                  <a href={selected.url} target="_blank" rel="noreferrer" className="flex items-center justify-center p-10 text-[#7FCFD4]">
+                  <a href={selected.url} target="_blank" rel="noreferrer" className="flex items-center justify-center p-10 text-[var(--a-accent)]">
                     Open file
                   </a>
                 )}
               </div>
               <div className="space-y-4">
                 <div>
-                  <label className="text-[11px] uppercase tracking-wider text-gray-500 block mb-1">Alt text</label>
+                  <label className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)] block mb-1">Alt text</label>
                   <input
                     defaultValue={selected.altText}
                     onBlur={e => updateAlt(selected.id, e.target.value)}
                     placeholder="Describe this image…"
-                    className="w-full bg-[#16525C] border border-white/5 rounded-md px-3 py-2 text-sm text-cream outline-none focus:border-[#7FCFD4]"
+                    className="w-full bg-[var(--a-panel)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]"
                   />
                 </div>
-                <dl className="text-xs space-y-1 text-gray-400">
+                <dl className="text-xs space-y-1 text-[var(--a-ink-soft)]">
                   <div className="flex justify-between"><dt>Type</dt><dd>{selected.mimeType}</dd></div>
                   <div className="flex justify-between"><dt>Size</dt><dd>{formatSize(selected.sizeBytes)}</dd></div>
                   <div className="flex justify-between"><dt>Uploaded</dt><dd>{new Date(selected.uploadedAt).toLocaleDateString()}</dd></div>
@@ -180,7 +180,7 @@ export default function MediaLibraryPage() {
                 <div className="flex gap-2 pt-2">
                   <button
                     onClick={() => { navigator.clipboard.writeText(window.location.origin + selected.url); }}
-                    className="flex-1 px-3 h-9 bg-[#16525C] hover:bg-[#2a4441] text-cream text-xs font-medium rounded-md border border-white/5"
+                    className="flex-1 px-3 h-9 bg-[var(--a-panel)] hover:bg-[#2a4441] text-[var(--a-ink)] text-xs font-medium rounded-md border border-[var(--a-line)]"
                   >
                     Copy URL
                   </button>

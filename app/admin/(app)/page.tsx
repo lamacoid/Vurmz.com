@@ -23,7 +23,7 @@ function money(c: number) { return `$${(c / 100).toLocaleString(undefined, { max
 const PROOF_CHIP: Record<string, { label: string; cls: string }> = {
   needed: { label: 'Proof needed', cls: 'bg-amber-500/15 text-amber-300 border-amber-500/30' },
   sent: { label: 'Proof sent', cls: 'bg-sky-500/15 text-sky-300 border-sky-500/30' },
-  approved: { label: 'Proof ✓', cls: 'bg-[#7FCFD4]/15 text-[#7FCFD4] border-[#7FCFD4]/30' },
+  approved: { label: 'Proof ✓', cls: 'bg-[#7FCFD4]/15 text-[var(--a-accent)] border-[#7FCFD4]/30' },
 }
 
 function StatCard({ title, value, sub, href, icon, alert }: {

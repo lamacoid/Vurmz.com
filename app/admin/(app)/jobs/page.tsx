@@ -22,7 +22,7 @@ const STATUS_COLORS: Record<string, string> = {
   accepted: 'bg-blue-500/20 text-blue-400',
   'in-progress': 'bg-purple-500/20 text-purple-400',
   done: 'bg-green-500/20 text-green-400',
-  delivered: 'bg-[#7FCFD4]/20 text-[#7FCFD4]',
+  delivered: 'bg-[#7FCFD4]/20 text-[var(--a-accent)]',
   cancelled: 'bg-red-500/20 text-red-400',
 }
 
@@ -77,16 +77,16 @@ export default function JobsPage() {
 
     return (
       <div className="px-4 py-6 max-w-lg mx-auto">
-        <button onClick={() => { setSelected(null); load() }} className="text-xs text-[#7FCFD4] mb-4 flex items-center gap-1">
+        <button onClick={() => { setSelected(null); load() }} className="text-xs text-[var(--a-accent)] mb-4 flex items-center gap-1">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-3 h-3"><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
           Back
         </button>
 
-        <div className="bg-[#16525C] rounded-xl p-4 border border-white/5 space-y-4">
+        <div className="bg-[var(--a-panel)] rounded-xl p-4 border border-[var(--a-line)] space-y-4">
           <div className="flex items-start justify-between">
             <div>
-              <p className="text-lg font-semibold text-cream">{selected.title}</p>
-              <p className="text-xs text-gray-400 mt-0.5">{selected.type}</p>
+              <p className="text-lg font-semibold text-[var(--a-ink)]">{selected.title}</p>
+              <p className="text-xs text-[var(--a-ink-soft)] mt-0.5">{selected.type}</p>
             </div>
             <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${STATUS_COLORS[selected.status] || ''}`}>
               {selected.status}
@@ -94,26 +94,26 @@ export default function JobsPage() {
           </div>
 
           {selected.description && (
-            <p className="text-sm text-gray-300">{selected.description}</p>
+            <p className="text-sm text-[var(--a-ink-soft)]">{selected.description}</p>
           )}
 
           <div className="flex gap-4">
             <div>
-              <p className="text-[10px] text-gray-500 uppercase">Price</p>
-              <p className="text-sm font-semibold text-cream">${selected.price}</p>
+              <p className="text-[10px] text-[var(--a-ink-faint)] uppercase">Price</p>
+              <p className="text-sm font-semibold text-[var(--a-ink)]">${selected.price}</p>
             </div>
             {selected.items && (
               <div>
-                <p className="text-[10px] text-gray-500 uppercase">Items</p>
-                <p className="text-sm text-gray-300">{selected.items}</p>
+                <p className="text-[10px] text-[var(--a-ink-faint)] uppercase">Items</p>
+                <p className="text-sm text-[var(--a-ink-soft)]">{selected.items}</p>
               </div>
             )}
           </div>
 
           {selected.notes && (
             <div className="bg-[#1d474e] rounded-lg p-3">
-              <p className="text-[10px] text-gray-500 uppercase mb-1">Notes</p>
-              <p className="text-xs text-gray-300 whitespace-pre-wrap">{selected.notes}</p>
+              <p className="text-[10px] text-[var(--a-ink-faint)] uppercase mb-1">Notes</p>
+              <p className="text-xs text-[var(--a-ink-soft)] whitespace-pre-wrap">{selected.notes}</p>
             </div>
           )}
 
@@ -133,7 +133,7 @@ export default function JobsPage() {
   return (
     <div className="px-4 py-6 max-w-lg mx-auto">
       <div className="flex items-center justify-between mb-4">
-        <h1 className="text-xl font-bold text-cream">Jobs</h1>
+        <h1 className="text-xl font-bold text-[var(--a-ink)]">Jobs</h1>
         <button onClick={() => setShowNew(true)} className="text-xs bg-vurmz-cta text-white px-3 py-1.5 rounded-lg font-semibold">
           + New
         </button>
@@ -146,7 +146,7 @@ export default function JobsPage() {
             key={f}
             onClick={() => setFilter(f)}
             className={`py-1.5 px-2.5 text-[10px] font-medium rounded-md capitalize whitespace-nowrap transition-colors ${
-              filter === f ? 'bg-[#16525C] text-cream' : 'text-gray-500'
+              filter === f ? 'bg-[var(--a-panel)] text-[var(--a-ink)]' : 'text-[var(--a-ink-faint)]'
             }`}
           >
             {f}
@@ -155,27 +155,27 @@ export default function JobsPage() {
       </div>
 
       {loading ? (
-        <p className="text-gray-500 text-sm">Loading...</p>
+        <p className="text-[var(--a-ink-faint)] text-sm">Loading...</p>
       ) : jobs.length === 0 ? (
-        <p className="text-gray-500 text-sm text-center py-8">No jobs</p>
+        <p className="text-[var(--a-ink-faint)] text-sm text-center py-8">No jobs</p>
       ) : (
         <div className="space-y-2">
           {jobs.map(job => (
             <button
               key={job.id}
               onClick={() => setSelected(job)}
-              className="w-full text-left bg-[#16525C] rounded-xl p-3.5 border border-white/5 hover:border-[#7FCFD4]/20 transition-colors"
+              className="w-full text-left bg-[var(--a-panel)] rounded-xl p-3.5 border border-[var(--a-line)] hover:border-[#7FCFD4]/20 transition-colors"
             >
               <div className="flex items-start justify-between gap-2">
                 <div className="min-w-0 flex-1">
-                  <p className="text-sm font-medium text-cream truncate">{job.title}</p>
-                  <p className="text-[10px] text-gray-400 mt-0.5">{job.type}</p>
+                  <p className="text-sm font-medium text-[var(--a-ink)] truncate">{job.title}</p>
+                  <p className="text-[10px] text-[var(--a-ink-soft)] mt-0.5">{job.type}</p>
                 </div>
                 <div className="text-right flex-shrink-0">
                   <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${STATUS_COLORS[job.status] || ''}`}>
                     {job.status}
                   </span>
-                  <p className="text-xs font-semibold text-cream mt-1">${job.price}</p>
+                  <p className="text-xs font-semibold text-[var(--a-ink)] mt-1">${job.price}</p>
                 </div>
               </div>
             </button>
@@ -191,24 +191,24 @@ function NewJobForm({ onSave, onCancel }: { onSave: (data: any) => void; onCance
 
   return (
     <div className="px-4 py-6 max-w-lg mx-auto">
-      <button onClick={onCancel} className="text-xs text-[#7FCFD4] mb-4 flex items-center gap-1">
+      <button onClick={onCancel} className="text-xs text-[var(--a-accent)] mb-4 flex items-center gap-1">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-3 h-3"><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
         Cancel
       </button>
 
-      <h2 className="text-lg font-bold text-cream mb-4">New Job</h2>
+      <h2 className="text-lg font-bold text-[var(--a-ink)] mb-4">New Job</h2>
 
       <div className="space-y-3">
         <input
           placeholder="Title"
           value={form.title}
           onChange={e => setForm(f => ({ ...f, title: e.target.value }))}
-          className="w-full px-3 py-2.5 bg-[#16525C] border border-[#2d4a47] rounded-lg text-sm text-cream placeholder:text-gray-500 focus:outline-none focus:border-[#7FCFD4]/50"
+          className="w-full px-3 py-2.5 bg-[var(--a-panel)] border border-[#2d4a47] rounded-lg text-sm text-[var(--a-ink)] placeholder:text-[var(--a-ink-faint)] focus:outline-none focus:border-[#7FCFD4]/50"
         />
         <select
           value={form.type}
           onChange={e => setForm(f => ({ ...f, type: e.target.value }))}
-          className="w-full px-3 py-2.5 bg-[#16525C] border border-[#2d4a47] rounded-lg text-sm text-cream focus:outline-none focus:border-[#7FCFD4]/50"
+          className="w-full px-3 py-2.5 bg-[var(--a-panel)] border border-[#2d4a47] rounded-lg text-sm text-[var(--a-ink)] focus:outline-none focus:border-[#7FCFD4]/50"
         >
           {['custom', 'pens', 'cards', 'coasters', 'keychains', 'knife', 'tool', 'labels', 'other'].map(t => (
             <option key={t} value={t}>{t}</option>
@@ -219,21 +219,21 @@ function NewJobForm({ onSave, onCancel }: { onSave: (data: any) => void; onCance
           type="number"
           value={form.price}
           onChange={e => setForm(f => ({ ...f, price: e.target.value }))}
-          className="w-full px-3 py-2.5 bg-[#16525C] border border-[#2d4a47] rounded-lg text-sm text-cream placeholder:text-gray-500 focus:outline-none focus:border-[#7FCFD4]/50"
+          className="w-full px-3 py-2.5 bg-[var(--a-panel)] border border-[#2d4a47] rounded-lg text-sm text-[var(--a-ink)] placeholder:text-[var(--a-ink-faint)] focus:outline-none focus:border-[#7FCFD4]/50"
         />
         <textarea
           placeholder="Description"
           value={form.description}
           onChange={e => setForm(f => ({ ...f, description: e.target.value }))}
           rows={3}
-          className="w-full px-3 py-2.5 bg-[#16525C] border border-[#2d4a47] rounded-lg text-sm text-cream placeholder:text-gray-500 focus:outline-none focus:border-[#7FCFD4]/50 resize-none"
+          className="w-full px-3 py-2.5 bg-[var(--a-panel)] border border-[#2d4a47] rounded-lg text-sm text-[var(--a-ink)] placeholder:text-[var(--a-ink-faint)] focus:outline-none focus:border-[#7FCFD4]/50 resize-none"
         />
         <textarea
           placeholder="Notes"
           value={form.notes}
           onChange={e => setForm(f => ({ ...f, notes: e.target.value }))}
           rows={2}
-          className="w-full px-3 py-2.5 bg-[#16525C] border border-[#2d4a47] rounded-lg text-sm text-cream placeholder:text-gray-500 focus:outline-none focus:border-[#7FCFD4]/50 resize-none"
+          className="w-full px-3 py-2.5 bg-[var(--a-panel)] border border-[#2d4a47] rounded-lg text-sm text-[var(--a-ink)] placeholder:text-[var(--a-ink-faint)] focus:outline-none focus:border-[#7FCFD4]/50 resize-none"
         />
         <button
           onClick={() => onSave({ ...form, price: parseFloat(form.price) || 0 })}
