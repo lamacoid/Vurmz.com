@@ -61,7 +61,7 @@ export default function Page() {
       <main id="main-content">
         {/* ═══════════ HERO — animated teal VURMZ logo over rotating work photos ═══════════ */}
         <section className="relative px-4 pt-32 sm:pt-36 pb-12 sm:pb-14 text-center overflow-hidden">
-          <RotatingHeroBg baseColor="#16525C" bottomColor="#123F47" />
+          <RotatingHeroBg />
           <div className="relative z-10">
           <h1 className="sr-only">VURMZ — Laser Engraving in {siteInfo.address}</h1>
           {/* Animated teal gradient visible only through the logo shape */}

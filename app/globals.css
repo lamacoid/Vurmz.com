@@ -37,6 +37,11 @@ body.is-admin > main {
   --header-bg: rgba(222, 214, 195, 0.85);
   --header-border: rgba(22, 82, 92, 0.12);
   --logo-filter: brightness(0);
+  /* Hero photo banner: a neutral dark stage in light mode (so the glowing logo
+     and light text read), the teal film in dark mode. Fades blend into the page. */
+  --hero-film: rgba(10, 26, 29, 0.62);
+  --hero-top: #DED6C3;
+  --hero-bottom: #DED6C3;
 }
 @media (prefers-color-scheme: dark) {
   :root {
@@ -54,6 +59,9 @@ body.is-admin > main {
     --header-bg: rgba(22, 82, 92, 0.9);
     --header-border: rgba(255, 255, 255, 0.1);
     --logo-filter: brightness(0) invert(1);
+    --hero-film: rgba(22, 82, 92, 0.45);
+    --hero-top: #16525C;
+    --hero-bottom: #123F47;
   }
 }
 /* Faint paper grain on the page, light mode only. */

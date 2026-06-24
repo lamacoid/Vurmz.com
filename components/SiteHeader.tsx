@@ -49,7 +49,7 @@ export default function SiteHeader({ variant = 'services' }: { variant?: 'shop' 
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16 sm:h-[72px]">
             <Link href="/" className="flex-shrink-0">
-              <VurmzLogo className="h-7 sm:h-8" />
+              <VurmzLogo className="h-7 sm:h-8" glow />
             </Link>
 
             {/* Desktop nav */}
