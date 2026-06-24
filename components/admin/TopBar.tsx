@@ -21,21 +21,21 @@ export default function TopBar({ onMenu, onOpenPalette }: { onMenu: () => void; 
   const crumbs = breadcrumbsFor(pathname)
 
   return (
-    <header className="sticky top-0 z-40 h-14 bg-[#143E38]/90 backdrop-blur border-b border-white/5 flex items-center px-4 gap-3">
+    <header className="sticky top-0 z-40 h-14 bg-[var(--a-bg)]/90 backdrop-blur border-b border-[var(--a-line)] flex items-center px-4 gap-3">
       <button
         onClick={onMenu}
-        className="md:hidden p-2 -ml-2 text-gray-400 hover:text-cream rounded"
+        className="md:hidden p-2 -ml-2 text-[var(--a-ink-soft)] hover:text-[var(--a-ink)] rounded"
         aria-label="Open navigation"
       >
         <Icon name="menu" className="w-5 h-5" />
       </button>
 
-      <nav className="flex items-center gap-2 text-xs font-medium text-gray-400">
+      <nav className="flex items-center gap-2 text-xs font-medium text-[var(--a-ink-soft)]">
         {crumbs.map((c, i) => (
           <span key={i} className="flex items-center gap-2">
-            {i > 0 && <Icon name="chevron" className="w-3 h-3 text-gray-600" />}
+            {i > 0 && <Icon name="chevron" className="w-3 h-3 text-[var(--a-ink-faint)]" />}
             {c.href ? (
-              <span className="text-cream">{c.label}</span>
+              <span className="text-[var(--a-ink)]">{c.label}</span>
             ) : (
               <span>{c.label}</span>
             )}
@@ -47,11 +47,11 @@ export default function TopBar({ onMenu, onOpenPalette }: { onMenu: () => void; 
 
       <button
         onClick={onOpenPalette}
-        className="hidden sm:inline-flex items-center gap-2 px-3 h-8 bg-white/[0.04] hover:bg-white/[0.08] rounded-md text-xs text-gray-400 transition-colors border border-white/5"
+        className="hidden sm:inline-flex items-center gap-2 px-3 h-8 bg-white/[0.04] hover:bg-white/[0.08] rounded-md text-xs text-[var(--a-ink-soft)] transition-colors border border-[var(--a-line)]"
       >
         <Icon name="search" className="w-3.5 h-3.5" />
         <span>Search…</span>
-        <kbd className="text-[10px] text-gray-500 bg-white/5 px-1.5 py-0.5 rounded ml-2">⌘K</kbd>
+        <kbd className="text-[10px] text-[var(--a-ink-faint)] bg-white/5 px-1.5 py-0.5 rounded ml-2">⌘K</kbd>
       </button>
 
       <button
@@ -59,7 +59,7 @@ export default function TopBar({ onMenu, onOpenPalette }: { onMenu: () => void; 
           await fetch('/api/admin/logout', { method: 'POST' })
           router.push('/admin/login')
         }}
-        className="p-2 text-gray-400 hover:text-cream rounded"
+        className="p-2 text-[var(--a-ink-soft)] hover:text-[var(--a-ink)] rounded"
         aria-label="Sign out"
       >
         <Icon name="logout" className="w-4 h-4" />

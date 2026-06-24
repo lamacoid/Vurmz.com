@@ -100,6 +100,23 @@ body:not(.is-admin) {
   background-color: color-mix(in srgb, var(--hero-ink) 8%, transparent);
 }
 
+/* ── Admin cockpit theme ──
+   The admin is always a focused dark teal cockpit, regardless of the visitor's
+   OS color scheme. These fixed tokens are the single source for the shell, and
+   they share the brand palette (deep teal + glassy accent + coral) so the admin
+   is on-brand and stays in sync. */
+.admin-root {
+  --a-bg: #123F47;          /* app + sidebar background (brand deep teal) */
+  --a-panel: #16525C;       /* cards, active nav, raised panels */
+  --a-ink: #DED6C3;         /* primary text (oatmeal) */
+  --a-ink-soft: rgba(222, 214, 195, 0.64);  /* secondary text */
+  --a-ink-faint: rgba(222, 214, 195, 0.40); /* tertiary / hints */
+  --a-line: rgba(255, 255, 255, 0.07);      /* hairlines */
+  --a-accent: #7FCFD4;      /* glassy teal accent */
+  --a-cta: #C67A6F;         /* brand coral (CTA) */
+  --a-cta-hover: #B0675D;
+}
+
 :root {
   /* VURMZ Brand Colors - Tempered Glass Aesthetic */
   --vurmz-teal: #7FCFD4;           /* Electric acid-teal (neon swamp accent) */

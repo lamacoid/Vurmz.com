@@ -28,8 +28,8 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
 
   if (authed === null) {
     return (
-      <div className="min-h-screen bg-[#143E38] flex items-center justify-center">
-        <div className="text-gray-500 text-sm">Loading…</div>
+      <div className="admin-root min-h-screen bg-[var(--a-bg)] flex items-center justify-center">
+        <div className="text-[var(--a-ink-faint)] text-sm">Loading…</div>
       </div>
     )
   }
@@ -42,7 +42,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
   }
 
   return (
-    <div className="min-h-screen bg-[#143E38] text-gray-100">
+    <div className="admin-root min-h-screen bg-[var(--a-bg)] text-[var(--a-ink)]">
       {/* Desktop sidebar */}
       <div className="hidden md:block fixed inset-y-0 left-0 w-60 z-30">
         <Sidebar />
@@ -57,7 +57,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
           </div>
           <button
             onClick={() => setDrawerOpen(false)}
-            className="absolute top-3 right-3 p-2 text-gray-400 hover:text-cream"
+            className="absolute top-3 right-3 p-2 text-[var(--a-ink-soft)] hover:text-[var(--a-ink)]"
             aria-label="Close"
           >
             <Icon name="x" className="w-5 h-5" />
