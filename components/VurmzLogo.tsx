@@ -23,7 +23,9 @@ export default function VurmzLogo({
       className={`inline-block ${className}`}
       style={{
         aspectRatio: '23.7 / 7.18',
-        backgroundColor: glow ? NEON : color,
+        // glow is mode-aware: solid deep teal on paper (light), glassy neon on
+        // dark. Driven by tokens so it flips with the color scheme.
+        backgroundColor: glow ? `var(--logo-fill, ${NEON})` : color,
         WebkitMaskImage: MASK,
         maskImage: MASK,
         WebkitMaskRepeat: 'no-repeat',
@@ -32,9 +34,7 @@ export default function VurmzLogo({
         maskSize: 'contain',
         WebkitMaskPosition: 'left center',
         maskPosition: 'left center',
-        filter: glow
-          ? 'drop-shadow(0 0 4px rgba(127,207,212,0.95)) drop-shadow(0 0 11px rgba(127,207,212,0.6)) drop-shadow(0 0 22px rgba(127,207,212,0.35))'
-          : undefined,
+        filter: glow ? 'var(--logo-glow)' : undefined,
       }}
     />
   )

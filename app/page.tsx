@@ -16,6 +16,7 @@ import RotatingHeroBg from '@/components/RotatingHeroBg'
 import ItemScroller from '@/components/ItemScroller'
 import GlassImage from '@/components/shop/GlassImage'
 import RotatingTagline from '@/components/RotatingTagline'
+import VurmzLogo from '@/components/VurmzLogo'
 
 // Single-page homepage: one brand, one scroll — shop first, then the anchored
 // "For businesses" half, then contact. Replaced the old split chooser.
@@ -64,8 +65,12 @@ export default function Page() {
           <RotatingHeroBg />
           <div className="relative z-10">
           <h1 className="sr-only">VURMZ — Laser Engraving in {siteInfo.address}</h1>
-          {/* Animated teal gradient visible only through the logo shape */}
-          <div className="relative h-14 sm:h-[72px] mx-auto mb-6 w-[280px]">
+          {/* Light mode: solid deep-teal wordmark on the airy paper hero. */}
+          <div className="hero-logo-light mx-auto mb-6 justify-center">
+            <VurmzLogo className="h-14 sm:h-[72px]" color="var(--ink)" />
+          </div>
+          {/* Dark mode: the signature animated teal gradient through the logo shape. */}
+          <div className="hero-logo-anim relative h-14 sm:h-[72px] mx-auto mb-6 w-[280px]">
             <div className="relative" style={{ WebkitMaskImage: 'url(/images/vurmz-logo-text.png)', WebkitMaskSize: 'contain', WebkitMaskRepeat: 'no-repeat', WebkitMaskPosition: 'center', maskImage: 'url(/images/vurmz-logo-text.png)', maskSize: 'contain', maskRepeat: 'no-repeat', maskPosition: 'center' }}>
               <div className="h-14 sm:h-[72px] w-full relative overflow-hidden">
                 <div className="absolute w-24 h-24 rounded-full bg-[#2FA6C0] blur-[30px] opacity-80" style={{ animation: 'blob1 7s ease-in-out infinite', top: '-20%', left: '0%' }} />
@@ -92,7 +97,7 @@ export default function Page() {
 
           <RotatingTagline
             accentColor="#C67A6F"
-            className="text-[var(--feature-ink)] text-3xl sm:text-4xl lg:text-5xl mb-8 max-w-xl mx-auto"
+            className="text-[var(--hero-ink)] text-3xl sm:text-4xl lg:text-5xl mb-8 max-w-xl mx-auto"
           />
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
@@ -104,7 +109,7 @@ export default function Page() {
             </Link>
             <a
               href="#services"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-[#7FCFD4]/40 text-[#7FCFD4] font-semibold text-base rounded-sm hover:bg-[#7FCFD4]/10 transition-colors"
+              className="btn-hero-ghost inline-flex items-center justify-center gap-2 px-8 py-4 font-semibold text-base rounded-sm"
             >
               <ArrowDownIcon className="w-4 h-4" />
               For businesses

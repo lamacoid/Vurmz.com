@@ -37,11 +37,15 @@ body.is-admin > main {
   --header-bg: rgba(222, 214, 195, 0.85);
   --header-border: rgba(22, 82, 92, 0.12);
   --logo-filter: brightness(0);
-  /* Hero photo banner: a neutral dark stage in light mode (so the glowing logo
-     and light text read), the teal film in dark mode. Fades blend into the page. */
-  --hero-film: rgba(10, 26, 29, 0.62);
+  /* Hero: light & airy in light mode. A warm paper wash lifts the photos so they
+     read bright, with deep-teal ink on top and a solid (non-glowing) logo. Dark
+     mode stays the glassy teal banner with light text and a glowing logo. */
+  --hero-film: rgba(222, 214, 195, 0.60);
   --hero-top: #DED6C3;
   --hero-bottom: #DED6C3;
+  --hero-ink: #16525C;
+  --logo-fill: #16525C;
+  --logo-glow: none;
 }
 @media (prefers-color-scheme: dark) {
   :root {
@@ -62,6 +66,9 @@ body.is-admin > main {
     --hero-film: rgba(22, 82, 92, 0.45);
     --hero-top: #16525C;
     --hero-bottom: #123F47;
+    --hero-ink: #DED6C3;
+    --logo-fill: #7FCFD4;
+    --logo-glow: drop-shadow(0 0 4px rgba(127,207,212,0.95)) drop-shadow(0 0 11px rgba(127,207,212,0.6)) drop-shadow(0 0 22px rgba(127,207,212,0.35));
   }
 }
 /* Faint paper grain on the page, light mode only. */
@@ -71,6 +78,26 @@ body:not(.is-admin) {
 }
 @media (prefers-color-scheme: dark) {
   body:not(.is-admin) { background-image: none; }
+}
+
+/* Hero logo: solid deep-teal wordmark on light (paper), the animated glassy
+   "dynamic lighting" logo on dark. Toggled by color-scheme so it is certain
+   regardless of Tailwind's dark-variant config. */
+.hero-logo-light { display: flex; }
+.hero-logo-anim { display: none; }
+@media (prefers-color-scheme: dark) {
+  .hero-logo-light { display: none; }
+  .hero-logo-anim { display: block; }
+}
+
+/* Hero secondary (ghost) button: mode-aware via --hero-ink. */
+.btn-hero-ghost {
+  border: 1px solid color-mix(in srgb, var(--hero-ink) 38%, transparent);
+  color: var(--hero-ink);
+  transition: background-color 0.2s ease;
+}
+.btn-hero-ghost:hover {
+  background-color: color-mix(in srgb, var(--hero-ink) 8%, transparent);
 }
 
 :root {
