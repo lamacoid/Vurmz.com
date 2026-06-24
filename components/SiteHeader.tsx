@@ -1,12 +1,12 @@
 'use client'
 
 import Link from 'next/link'
-import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { Bars3Icon, XMarkIcon, ChatBubbleLeftIcon, UserIcon } from '@heroicons/react/24/outline'
 import { ChatBubbleOvalLeftEllipsisIcon } from '@heroicons/react/24/solid'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 import CartButton from '@/components/shop/CartButton'
+import VurmzLogo from '@/components/VurmzLogo'
 
 const NAV_LINKS = [
   // Pricing lives ON the services page now — no separate nav item.
@@ -37,7 +37,6 @@ export default function SiteHeader({ variant = 'services' }: { variant?: 'shop' 
 
   const textColor = 'text-[var(--ink-soft)]'
   const hoverColor = isShop ? 'hover:text-[#C67A6F]' : 'hover:text-vurmz-cta'
-  const logoSrc = '/images/vurmz-logo-full.svg'
 
   const mobileBg = 'bg-[var(--surface)] border-[var(--hairline)]'
   const mobileText = 'text-[var(--ink-soft)]'
@@ -50,7 +49,7 @@ export default function SiteHeader({ variant = 'services' }: { variant?: 'shop' 
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16 sm:h-[72px]">
             <Link href="/" className="flex-shrink-0">
-              <Image src={logoSrc} alt="VURMZ" width={120} height={32} className="h-7 sm:h-8 w-auto" style={{ filter: 'var(--logo-filter)' }} priority />
+              <VurmzLogo className="h-7 sm:h-8" />
             </Link>
 
             {/* Desktop nav */}

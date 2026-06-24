@@ -1,7 +1,7 @@
 import Link from 'next/link'
-import Image from 'next/image'
 import { MapPinIcon, ChatBubbleLeftIcon, EnvelopeIcon } from '@heroicons/react/24/outline'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
+import VurmzLogo from '@/components/VurmzLogo'
 
 const PRODUCTS = [
   { label: 'Gifts', href: '/shop/gifts' },
@@ -36,13 +36,7 @@ export default function SiteFooter() {
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 sm:gap-10">
           {/* Brand */}
           <div className="col-span-2 sm:col-span-1">
-            <Image
-              src="/images/vurmz-logo-full.svg"
-              alt="VURMZ"
-              width={100}
-              height={28}
-              className="h-7 w-auto brightness-0 invert mb-4"
-            />
+            <VurmzLogo className="h-7 mb-4" color="var(--feature-ink)" />
             <p className="text-gray-400 text-sm leading-relaxed mb-5 max-w-xs">
               Laser engraving in {siteInfo.city}, {siteInfo.state}. Hand-delivered across the South Denver metro.
             </p>
