@@ -3,9 +3,23 @@ export const runtime = 'edge'
 import { NextRequest, NextResponse } from 'next/server'
 import { getRequestContext } from '@cloudflare/next-on-pages'
 import { hashPassword, createAdminSession } from '@/lib/auth/admin'
+import { getClientIp } from '@/lib/auth/session'
+import { getRateLimit } from '@/lib/db/client'
 
 export async function POST(req: NextRequest) {
   try {
+    // Throttle online password guessing: 10 attempts / 10 min per IP.
+    const ip = getClientIp(req) ?? 'unknown'
+    try {
+      const rl = getRateLimit()
+      const rlKey = `adminlogin:${ip}`
+      const attempts = parseInt((await rl.get(rlKey)) ?? '0', 10)
+      if (attempts >= 10) {
+        return NextResponse.json({ error: 'Too many attempts. Try again in a few minutes.' }, { status: 429 })
+      }
+      await rl.put(rlKey, String(attempts + 1), { expirationTtl: 600 })
+    } catch {}
+
     const body = await req.json() as { password?: string }
     const password = body.password
 

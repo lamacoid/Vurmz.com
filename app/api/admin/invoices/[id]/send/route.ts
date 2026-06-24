@@ -8,6 +8,11 @@ import { getEnv } from '@/lib/db/client'
 
 export const runtime = 'edge'
 
+// Escape values that flow into the email HTML (item descriptions, customer name,
+// notes). These are admin/customer-authored, so this is defense in depth.
+const esc = (s: string) =>
+  s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;')
+
 export async function POST(req: NextRequest, ctx: { params: Promise<{ id: string }> }) {
   return withAdminAuth(req, async (session) => {
     const { id } = await ctx.params
@@ -19,18 +24,18 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ id: string
     const env = getEnv()
 
     const dollars = (c: number) => `$${(c / 100).toFixed(2)}`
-    const rows = items.map(it => `<tr><td style="padding:6px 0;color:#333">${it.qty} × ${it.description}</td><td style="text-align:right;padding:6px 0">${dollars(it.totalCents)}</td></tr>`).join('')
+    const rows = items.map(it => `<tr><td style="padding:6px 0;color:#333">${it.qty} × ${esc(it.description)}</td><td style="text-align:right;padding:6px 0">${dollars(it.totalCents)}</td></tr>`).join('')
     const payLink = `${env.SITE_URL || 'https://vurmz.com'}/account/invoices/${id}`
     const html = `
       <div style="font-family:system-ui,sans-serif;max-width:560px;margin:0 auto;padding:32px 20px;color:#111">
         <h2 style="margin:0 0 12px;font-size:20px">Invoice ${invoice.number}</h2>
-        <p style="color:#555;line-height:1.5">Hi ${customer.name || customer.email}, here's your invoice from VURMZ.</p>
+        <p style="color:#555;line-height:1.5">Hi ${esc(customer.name || customer.email)}, here's your invoice from VURMZ.</p>
         <table style="width:100%;margin:16px 0;border-top:1px solid #eee;border-bottom:1px solid #eee">${rows}
           <tr><td style="padding:10px 0;font-weight:700">Total</td><td style="text-align:right;padding:10px 0;font-weight:700">${dollars(invoice.totalCents)}</td></tr>
         </table>
         <a href="${payLink}" style="display:inline-block;padding:12px 22px;background:#C46B4D;color:#fff;text-decoration:none;border-radius:6px;font-weight:600;margin:12px 0">View & pay invoice</a>
         ${invoice.dueDate ? `<p style="color:#555">Due: <strong>${new Date(invoice.dueDate).toLocaleDateString()}</strong></p>` : ''}
-        ${invoice.notes ? `<p style="color:#555;white-space:pre-wrap;border-left:3px solid #eee;padding-left:12px">${invoice.notes}</p>` : ''}
+        ${invoice.notes ? `<p style="color:#555;white-space:pre-wrap;border-left:3px solid #eee;padding-left:12px">${esc(invoice.notes)}</p>` : ''}
         <p style="margin-top:32px;color:#999;font-size:12px">VURMZ · Centennial, CO · zach@vurmz.com</p>
       </div>
     `

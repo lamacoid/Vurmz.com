@@ -8,6 +8,11 @@ import { getClientIp, getUserAgent } from '@/lib/auth/session'
 export const runtime = 'edge'
 
 const MAX_SIZE = 50 * 1024 * 1024 // 50 MB
+// Raster images + PDF only. SVG is intentionally excluded: it can carry inline
+// script and the public /api/media route would otherwise serve it same-origin.
+const ALLOWED_MIME = new Set([
+  'image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/avif', 'application/pdf',
+])
 
 export async function POST(req: NextRequest) {
   return withAdminAuth(req, async (session) => {
@@ -20,6 +25,9 @@ export async function POST(req: NextRequest) {
     }
     if (file.size > MAX_SIZE) {
       return NextResponse.json({ ok: false, error: { code: 'TOO_LARGE', message: 'file exceeds 50 MB' } }, { status: 413 })
+    }
+    if (!ALLOWED_MIME.has((file.type || '').toLowerCase())) {
+      return NextResponse.json({ ok: false, error: { code: 'UNSUPPORTED_TYPE', message: 'Only JPEG, PNG, WebP, GIF, AVIF, or PDF are allowed' } }, { status: 415 })
     }
     const buf = await file.arrayBuffer()
     const hash = await sha256Hex(buf)
