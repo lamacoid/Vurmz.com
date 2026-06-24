@@ -56,14 +56,14 @@ export const adminNav: NavGroup[] = [
     label: 'People',
     items: [
       { href: '/admin/customers', label: 'Customers', icon: 'users' },
-      { href: '/admin/inbox', label: 'Inbox', icon: 'inbox', badge: 'inbox-unread' },
+      { href: '/admin/inbox', label: 'Messages', icon: 'inbox', badge: 'inbox-unread' },
     ],
   },
 ]
 
 export const mobileTabs: NavItem[] = [
   { href: '/admin', label: 'Home', icon: 'home' },
-  { href: '/admin/inbox', label: 'Inbox', icon: 'inbox', badge: 'inbox-unread' },
+  { href: '/admin/inbox', label: 'Messages', icon: 'inbox', badge: 'inbox-unread' },
   { href: '/admin/service-jobs', label: 'Jobs', icon: 'briefcase' },
   { href: '/admin/customers', label: 'People', icon: 'users' },
   { href: '/admin/products', label: 'Shop', icon: 'tag' },
