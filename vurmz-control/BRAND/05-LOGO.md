@@ -3,9 +3,10 @@
 
 > Plain language, no em-dashes. Captures what is decided and what still needs producing.
 
-### The marks
-- **Standalone wordmark:** VURMZ, set in the thin geometric all-caps letterforms. The signature is the **RM ligature**: the R's leg flows straight into the M so "RM" reads as one connected form. This join is the one thing nobody else has. Keep it.
-- **Lockup:** "VURMZ | Laser Engraving" with a pipe. VURMZ all caps, the descriptor in title case. The pipe lets the descriptor swap later without a rebrand.
+### The logo
+**The logo is the VURMZ standalone wordmark** in the thin geometric all-caps letterforms. The signature is the **RM ligature**: the R's leg flows straight into the M so "RM" reads as one connected form. That join is the one thing nobody else has. This is the only logo for now, and it is the one Zach wants. The wordmark always leads.
+
+**Lockup (secondary, optional):** "VURMZ | Laser Engraving" pairs the wordmark with a descriptor when the context needs spelling out (SEO, a first impression). The pipe lets the descriptor change later. It is a use of the logo, not a second logo.
 
 ### Casing
 VURMZ is always all caps. "Vurmz" in casual typing is fine, but the mark and brand name are VURMZ.
