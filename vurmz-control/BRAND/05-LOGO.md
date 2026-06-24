@@ -33,8 +33,10 @@ VURMZ is always all caps. "Vurmz" in casual typing is fine, but the mark and bra
 - Stretch, skew, rotate, or rebuild the ligature by hand.
 - Place dark-on-dark or light-on-light. Use the right version for the surface.
 
-### How it renders (done 2026-06-22)
-The header and footer logo is the `VurmzLogo` component (`components/VurmzLogo.tsx`): it uses the logo shape as a CSS mask and fills it with a brand token, so it renders deep teal on paper (light) and oatmeal on teal (dark) automatically. No more interim black, no more legacy-orange filter hack. The animated dynamic-lighting version on the landing hero is unchanged.
+### Files and how it renders (done 2026-06-22)
+- `public/images/vurmz-wordmark.svg` — the clean standalone wordmark, extracted from the lockup (just V, U, R+M ligature, Z), `currentColor` fill. This is the logo file.
+- `components/VurmzLogo.tsx` — masks that wordmark and fills it with a brand token. The **banner** uses the neon glow form (`glow`): the wordmark in glassy teal with a soft drop-shadow glow, the lit look. The **footer** uses a flat oatmeal fill. Both color-correct in both modes.
+- The landing hero shows the same wordmark in the animated dynamic-lighting form (the masked teal-gradient blobs).
 
 Still nice-to-have later: a square favicon and social avatar derived from the wordmark.
 
