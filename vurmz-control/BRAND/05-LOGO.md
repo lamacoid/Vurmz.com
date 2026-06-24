@@ -6,6 +6,8 @@
 ### The logo
 **The logo is the VURMZ wordmark** in the thin geometric all-caps letterforms, with the **RM ligature** (the R's leg flows into the M as one connected form). That join is the signature. **This is the one and only logo. No variants, no second mark.**
 
+**How it is built:** the wordmark is set in **Zen Kurenaido** (Google Fonts), the thin even-stroke face. The **R and M were hand-edited** so the R's leg joins the M into the ligature. So the logo can be re-set or extended from Zen Kurenaido plus that custom RM join, and a clean palette SVG is straightforward to produce.
+
 **Signature presentation:** on the landing page the wordmark runs with the animated teal-gradient "dynamic lighting" through it (the masked blob animation in the hero). That is the hero form of the same logo, not a different logo.
 
 "VURMZ | Laser Engraving" is just the wordmark plus a descriptor for context (SEO, first impression). It is a use of the logo, not a separate one.
