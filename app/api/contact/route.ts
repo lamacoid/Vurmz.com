@@ -162,6 +162,32 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Capture the lead FIRST, before any email. Resend can fail or be spam
+    // filtered; storing up front means a real submission is NEVER lost even if
+    // the notification email never sends. The admin inbox reads these from the
+    // RATE_LIMIT KV namespace (inbox:<id> + inbox:_index).
+    try {
+      const { env } = getRequestContext()
+      const kv = env.RATE_LIMIT
+      if (kv) {
+        const submission = {
+          id: crypto.randomUUID().slice(0, 8),
+          name, email, phone, message, productInterest,
+          read: false,
+          archived: false,
+          receivedAt: new Date().toISOString(),
+          notes: '',
+        }
+        await kv.put(`inbox:${submission.id}`, JSON.stringify(submission), { expirationTtl: 7776000 })
+        const existingIds = await kv.get('inbox:_index')
+        const ids = existingIds ? JSON.parse(existingIds) : []
+        ids.unshift(submission.id)
+        await kv.put('inbox:_index', JSON.stringify(ids.slice(0, 500)))
+      }
+    } catch (e) {
+      await reportError(e, { route: 'contact', extra: { step: 'store' } })
+    }
+
     // Get API key from Cloudflare Pages env (secrets), fallback to process.env for local dev
     let resendApiKey: string | undefined
     try {
@@ -174,11 +200,10 @@ export async function POST(request: NextRequest) {
       resendApiKey = process.env.RESEND_API_KEY
     }
     if (!resendApiKey) {
-      console.error('RESEND_API_KEY not configured')
-      return NextResponse.json(
-        { error: 'Email service not configured. Please text instead.' },
-        { status: 500 }
-      )
+      // The lead is already captured in the inbox above, so don't fail the
+      // visitor — just skip the notification email.
+      console.error('RESEND_API_KEY not configured — lead stored, email skipped')
+      return NextResponse.json({ success: true })
     }
 
     const htmlBody = `
@@ -227,9 +252,11 @@ export async function POST(request: NextRequest) {
     })
 
     if (!res.ok) {
+      // Notification email failed, but the lead is already in the inbox. Log
+      // loudly and keep going so the visitor still gets a success (we have it).
       const errorData = await res.json().catch(() => ({}))
-      console.error('Resend API error:', errorData)
-      throw new Error('Failed to send email')
+      console.error('Resend API error (lead still captured in inbox):', errorData)
+      await reportError(new Error('Contact notification email failed'), { route: 'contact', extra: { step: 'notify', errorData } })
     }
 
     // Send confirmation email to the customer
@@ -273,31 +300,6 @@ export async function POST(request: NextRequest) {
     } catch {
       // Don't fail the whole request if confirmation email fails
       console.warn('Confirmation email failed to send')
-    }
-
-    // Store submission in KV for admin inbox
-    try {
-      const { env } = getRequestContext()
-      const kv = env.RATE_LIMIT
-      if (kv) {
-        const submission = {
-          id: crypto.randomUUID().slice(0, 8),
-          name, email, phone, message, productInterest,
-          read: false,
-          archived: false,
-          receivedAt: new Date().toISOString(),
-          notes: '',
-        }
-        // Store with a prefix and TTL of 90 days
-        await kv.put(`inbox:${submission.id}`, JSON.stringify(submission), { expirationTtl: 7776000 })
-        // Keep a list of IDs for easy retrieval
-        const existingIds = await kv.get('inbox:_index')
-        const ids = existingIds ? JSON.parse(existingIds) : []
-        ids.unshift(submission.id)
-        await kv.put('inbox:_index', JSON.stringify(ids.slice(0, 500)))
-      }
-    } catch {
-      console.warn('Failed to store submission in KV')
     }
 
     const response = NextResponse.json({ success: true })
