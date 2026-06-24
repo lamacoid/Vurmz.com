@@ -30,13 +30,13 @@ function StatCard({ title, value, sub, href, icon, alert }: {
   title: string; value: string | number; sub?: string; href: string; icon: string; alert?: boolean
 }) {
   return (
-    <Link href={href} className={`group bg-[#16525C] rounded-xl p-5 border transition-colors ${alert ? 'border-amber-500/40 hover:border-amber-400/60' : 'border-white/5 hover:border-[#7FCFD4]/30'}`}>
+    <Link href={href} className={`group bg-[var(--a-panel)] rounded-xl p-5 border transition-colors ${alert ? 'border-amber-500/40 hover:border-amber-400/60' : 'border-[var(--a-line)] hover:border-[var(--a-accent)]'}`}>
       <div className="flex items-start justify-between mb-3">
-        <p className="text-[11px] text-gray-400 uppercase tracking-wider">{title}</p>
-        <Icon name={icon} className={`w-4 h-4 opacity-70 ${alert ? 'text-amber-300' : 'text-[#7FCFD4]'}`} />
+        <p className="text-[11px] text-[var(--a-ink-soft)] uppercase tracking-wider">{title}</p>
+        <Icon name={icon} className={`w-4 h-4 opacity-70 ${alert ? 'text-amber-300' : 'text-[var(--a-accent)]'}`} />
       </div>
-      <p className="text-3xl font-bold text-cream mb-1">{value}</p>
-      {sub && <p className="text-xs text-gray-500">{sub}</p>}
+      <p className="text-3xl font-bold text-[var(--a-ink)] mb-1">{value}</p>
+      {sub && <p className="text-xs text-[var(--a-ink-faint)]">{sub}</p>}
     </Link>
   )
 }
@@ -58,12 +58,12 @@ export default function AdminToday() {
   return (
     <div className="p-6 sm:p-8 max-w-6xl mx-auto">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-cream">Today</h1>
-        <p className="text-sm text-gray-500 mt-1">What needs you, first.</p>
+        <h1 className="text-2xl font-bold text-[var(--a-ink)]">Today</h1>
+        <p className="text-sm text-[var(--a-ink-faint)] mt-1">What needs you, first.</p>
       </div>
 
       {!dash ? (
-        <div className="text-gray-500 text-sm">Loading…</div>
+        <div className="text-[var(--a-ink-faint)] text-sm">Loading…</div>
       ) : (
         <>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
@@ -83,15 +83,15 @@ export default function AdminToday() {
               icon="briefcase"
             />
             <StatCard
-              title="Unread inbox"
+              title="Unread messages"
               value={inbox.unread ?? 0}
-              sub={`${inbox.total ?? 0} total messages`}
+              sub={`${inbox.total ?? 0} total`}
               href="/admin/inbox"
               icon="inbox"
               alert={(inbox.unread ?? 0) > 0}
             />
             <StatCard
-              title="Collected (7d)"
+              title="Collected (7 days)"
               value={money(dash.revenue7dCents)}
               sub={`${money(dash.pipelineCents)} in the pipeline`}
               href="/admin/revenue"
@@ -101,20 +101,20 @@ export default function AdminToday() {
 
           <section className="mb-8">
             <div className="flex items-center justify-between mb-3">
-              <h2 className="text-sm font-semibold text-cream">Needs attention</h2>
-              <Link href="/admin/orders" className="text-xs text-[#7FCFD4] hover:text-cream">Order board →</Link>
+              <h2 className="text-sm font-semibold text-[var(--a-ink)]">Needs attention</h2>
+              <Link href="/admin/orders" className="text-xs text-[var(--a-accent)] hover:text-[var(--a-ink)]">Order board →</Link>
             </div>
             {dash.orders.length === 0 ? (
-              <div className="bg-[#16525C] border border-white/5 rounded-xl p-8 text-center text-gray-400 text-sm">
-                No open orders. Go send five outreach texts.
+              <div className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-xl p-8 text-center text-[var(--a-ink-soft)] text-sm">
+                No open orders right now.
               </div>
             ) : (
-              <div className="bg-[#16525C] border border-white/5 rounded-xl divide-y divide-white/5">
+              <div className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-xl divide-y divide-[var(--a-line)]">
                 {dash.orders.map(o => (
-                  <Link key={o.id} href={`/admin/orders/${o.id}`} className="flex items-center gap-3 px-4 py-3 hover:bg-white/[0.03] transition-colors">
-                    <span className="font-mono text-xs text-cream w-28 flex-shrink-0">{o.number}</span>
-                    <span className="text-[10px] uppercase tracking-wider text-gray-500 w-20 flex-shrink-0">{o.status.replace('_', ' ')}</span>
-                    <span className="text-xs text-gray-400 truncate flex-1">{o.email}</span>
+                  <Link key={o.id} href={`/admin/orders/${o.id}`} className="flex items-center gap-3 px-4 py-3 hover:bg-white/[0.04] transition-colors">
+                    <span className="font-mono text-xs text-[var(--a-ink)] w-28 flex-shrink-0">{o.number}</span>
+                    <span className="text-[10px] uppercase tracking-wider text-[var(--a-ink-faint)] w-20 flex-shrink-0">{o.status.replace('_', ' ')}</span>
+                    <span className="text-xs text-[var(--a-ink-soft)] truncate flex-1">{o.email}</span>
                     <span className="hidden sm:flex items-center gap-1.5 flex-shrink-0">
                       {o.hasText && <span title="Engraving text" className="text-[11px]">✎</span>}
                       {o.hasElement && <span title="Design element" className="text-[11px]">🎨</span>}
@@ -125,7 +125,7 @@ export default function AdminToday() {
                         {PROOF_CHIP[o.proofStatus].label}
                       </span>
                     )}
-                    <span className="text-xs font-semibold text-cream w-16 text-right flex-shrink-0">{money(o.totalCents)}</span>
+                    <span className="text-xs font-semibold text-[var(--a-ink)] w-16 text-right flex-shrink-0">{money(o.totalCents)}</span>
                   </Link>
                 ))}
               </div>
@@ -133,7 +133,7 @@ export default function AdminToday() {
           </section>
 
           <section>
-            <h2 className="text-sm font-semibold text-cream mb-3">Quick actions</h2>
+            <h2 className="text-sm font-semibold text-[var(--a-ink)] mb-3">Quick actions</h2>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               <QuickAction href="/admin/products" icon="image" label="Products & photos" />
               <QuickAction href="/admin/invoices/new" icon="dollar" label="New invoice" />
@@ -153,10 +153,10 @@ function QuickAction({ href, icon, label, external }: { href: string; icon: stri
     <Component
       href={href}
       {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}
-      className="flex items-center gap-3 bg-[#16525C] hover:bg-[#2a4441] rounded-xl p-3 border border-white/5 hover:border-[#7FCFD4]/20 transition-all"
+      className="flex items-center gap-3 bg-[var(--a-panel)] hover:bg-white/[0.04] rounded-xl p-3 border border-[var(--a-line)] hover:border-[var(--a-accent)] transition-all"
     >
-      <Icon name={icon} className="w-4 h-4 text-[#7FCFD4]" />
-      <span className="text-sm text-cream">{label}</span>
+      <Icon name={icon} className="w-4 h-4 text-[var(--a-accent)]" />
+      <span className="text-sm text-[var(--a-ink)]">{label}</span>
     </Component>
   )
 }
