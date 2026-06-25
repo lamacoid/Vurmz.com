@@ -9,6 +9,19 @@ interface Quote { id: string; number: string; status: string; email: string; tot
 
 function money(c: number) { return `$${(c / 100).toFixed(2)}` }
 
+const STATUS_LABEL: Record<string, string> = {
+  new: 'New', drafting: 'Drafting', sent: 'Sent', accepted: 'Accepted',
+  declined: 'Declined', expired: 'Expired', converted: 'Converted',
+}
+function nextStep(status: string): string {
+  if (status === 'new' || status === 'drafting') return 'Finish the quote and send it to the customer.'
+  if (status === 'sent') return 'Sent. Waiting on the customer to accept.'
+  if (status === 'accepted') return 'Accepted. Convert it to an invoice to get paid.'
+  if (status === 'expired') return 'Expired. Re-send it if it still applies.'
+  if (status === 'declined') return 'Declined.'
+  return 'Converted to an invoice.'
+}
+
 export default function QuoteDetail() {
   const params = useParams<{ id: string }>()
   const router = useRouter()
@@ -75,18 +88,22 @@ export default function QuoteDetail() {
             </button>
           ) : null}
           {quote.status !== 'converted' ? (
-            <button onClick={convert} disabled={working === 'convert'} className="px-4 h-9 bg-[#7FCFD4] hover:bg-[#5aa49e] text-[#143E38] text-sm font-semibold rounded-md">
+            <button onClick={convert} disabled={working === 'convert'} className="px-4 h-9 bg-[var(--a-accent)] hover:opacity-90 text-[var(--a-bg)] text-sm font-semibold rounded-md">
               {working === 'convert' ? 'Converting…' : '→ Invoice'}
             </button>
           ) : (
             quote.convertedOrderId && (
-              <Link href={`/admin/invoices/${quote.convertedOrderId}`} className="px-4 h-9 inline-flex items-center bg-[#7FCFD4]/20 text-[var(--a-accent)] text-sm font-semibold rounded-md">View invoice</Link>
+              <Link href={`/admin/invoices/${quote.convertedOrderId}`} className="px-4 h-9 inline-flex items-center bg-white/5 text-[var(--a-accent)] text-sm font-semibold rounded-md">View invoice</Link>
             )
           )}
-          <select value={quote.status} onChange={e => setStatus(e.target.value)} className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-md px-3 py-2 text-xs text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]">
-            {['new','drafting','sent','accepted','declined','expired','converted'].map(s => <option key={s} value={s}>{s}</option>)}
+          <select value={quote.status} onChange={e => setStatus(e.target.value)} className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-md px-3 py-2 text-xs text-[var(--a-ink)] outline-none focus:border-[var(--a-accent)]">
+            {['new','drafting','sent','accepted','declined','expired','converted'].map(s => <option key={s} value={s}>{STATUS_LABEL[s] ?? s}</option>)}
           </select>
         </div>
+      </div>
+
+      <div className="mb-5 bg-white/[0.04] border-l-2 border-[var(--a-accent)] rounded-lg px-4 py-3">
+        <p className="text-sm text-[var(--a-ink)]"><span className="font-semibold">Next step:</span> {nextStep(quote.status)}</p>
       </div>
 
       <div className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-xl p-5 mb-5">

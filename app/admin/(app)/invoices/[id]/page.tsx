@@ -13,6 +13,20 @@ interface Invoice {
 
 function money(c: number) { return `$${(c / 100).toFixed(2)}` }
 
+const STATUS_LABEL: Record<string, string> = {
+  draft: 'Draft', sent: 'Sent', viewed: 'Viewed', paid: 'Paid',
+  partially_paid: 'Partially paid', overdue: 'Overdue', void: 'Void', refunded: 'Refunded',
+}
+function nextStep(inv: Invoice): string {
+  const owed = inv.totalCents - inv.amountPaidCents
+  if (inv.status === 'draft') return 'Send the invoice to the customer.'
+  if (inv.status === 'paid') return 'Paid in full. Done.'
+  if (inv.status === 'overdue') return 'Overdue. Send the customer a reminder.'
+  if (inv.status === 'void' || inv.status === 'refunded') return ''
+  if (inv.amountPaidCents > 0 && owed > 0) return `Partly paid. ${money(owed)} still due.`
+  return 'Sent. Waiting on payment.'
+}
+
 export default function AdminInvoiceDetail() {
   const params = useParams<{ id: string }>()
   const [invoice, setInvoice] = useState<Invoice | null>(null)
@@ -70,12 +84,18 @@ export default function AdminInvoiceDetail() {
           <select
             value={invoice.status}
             onChange={e => setStatus(e.target.value)}
-            className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-md px-3 py-2 text-xs text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]"
+            className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-md px-3 py-2 text-xs text-[var(--a-ink)] outline-none focus:border-[var(--a-accent)]"
           >
-            {['draft','sent','viewed','paid','partially_paid','overdue','void','refunded'].map(s => <option key={s} value={s}>{s.replace('_', ' ')}</option>)}
+            {['draft','sent','viewed','paid','partially_paid','overdue','void','refunded'].map(s => <option key={s} value={s}>{STATUS_LABEL[s] ?? s}</option>)}
           </select>
         </div>
       </div>
+
+      {nextStep(invoice) && (
+        <div className="mb-5 bg-white/[0.04] border-l-2 border-[var(--a-accent)] rounded-lg px-4 py-3">
+          <p className="text-sm text-[var(--a-ink)]"><span className="font-semibold">Next step:</span> {nextStep(invoice)}</p>
+        </div>
+      )}
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5 text-xs">
         <Pill label="Sent" value={invoice.sentAt ? new Date(invoice.sentAt).toLocaleDateString() : '—'} />
