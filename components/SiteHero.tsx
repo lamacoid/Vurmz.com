@@ -32,7 +32,7 @@ interface SiteHeroProps {
  *
  * Pulls up under the fixed SiteHeader via the negative top margin.
  */
-export default function SiteHero({ eyebrow, heading, accent = 'coral', baseColor = '#16525C', children }: SiteHeroProps) {
+export default function SiteHero({ eyebrow, heading, accent = 'coral', children }: SiteHeroProps) {
   const [bg, setBg] = useState(0)
   const [w, setW] = useState(0)
 
@@ -70,10 +70,10 @@ export default function SiteHero({ eyebrow, heading, accent = 'coral', baseColor
             <img src={img.src} alt={img.alt} className="h-full w-full object-cover" />
           </div>
         ))}
-        <div className="absolute inset-0" style={{ backgroundColor: `${baseColor}73` }} />
+        <div className="absolute inset-0" style={{ backgroundColor: 'var(--hero-film)' }} />
         <div
           className="absolute bottom-0 left-0 right-0 h-1/2"
-          style={{ background: `linear-gradient(to bottom, transparent 0%, ${baseColor} 90%)` }}
+          style={{ background: 'linear-gradient(to bottom, transparent 0%, var(--hero-bottom) 90%)' }}
         />
       </div>
 
@@ -95,7 +95,7 @@ export default function SiteHero({ eyebrow, heading, accent = 'coral', baseColor
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.05 }}
-            className="text-[var(--feature-ink)] font-semibold tracking-tight text-xl sm:text-2xl mb-4"
+            className="text-[var(--hero-ink)] font-semibold tracking-tight text-xl sm:text-2xl mb-4"
           >
             {heading}
           </motion.h1>
@@ -105,7 +105,7 @@ export default function SiteHero({ eyebrow, heading, accent = 'coral', baseColor
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-[var(--feature-ink)] font-semibold tracking-tight leading-[1.05] text-2xl sm:text-3xl lg:text-4xl"
+          className="text-[var(--hero-ink)] font-semibold tracking-tight leading-[1.05] text-2xl sm:text-3xl lg:text-4xl"
           style={{ fontFamily: 'var(--font-display), Georgia, serif' }}
         >
           <span className="block">Let&apos;s put your</span>
