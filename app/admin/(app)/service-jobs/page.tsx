@@ -33,11 +33,11 @@ function Card({ job }: { job: Job }) {
       style={style}
       {...attributes}
       {...listeners}
-      className="bg-[var(--a-bg)] rounded-md border border-[var(--a-line)] px-3 py-2.5 hover:border-[#7FCFD4]/30 cursor-grab active:cursor-grabbing"
+      className="bg-[var(--a-bg)] rounded-md border border-[var(--a-line)] px-3 py-2.5 hover:border-[var(--a-accent)]/30 cursor-grab active:cursor-grabbing"
     >
       <div className="flex items-center justify-between mb-1">
         <Link href={`/admin/service-jobs/${job.id}`} className="text-xs font-mono text-[var(--a-ink)] hover:text-[var(--a-accent)]">{job.number}</Link>
-        {job.priority > 0 && <span className="text-[10px] bg-[#C46B4D]/30 text-[var(--a-cta)] px-1.5 py-0.5 rounded-full uppercase tracking-wider font-bold">P{job.priority}</span>}
+        {job.priority > 0 && <span className="text-[10px] bg-[var(--a-cta)]/30 text-[var(--a-cta)] px-1.5 py-0.5 rounded-full uppercase tracking-wider font-bold">P{job.priority}</span>}
       </div>
       <p className="text-sm text-[var(--a-ink)] line-clamp-2">{job.title}</p>
       {job.dueDate && (
@@ -52,7 +52,7 @@ function Column({ status, label, jobs }: { status: JobStatus; label: string; job
   return (
     <div
       ref={setNodeRef}
-      className={`bg-[#16525C]/60 border rounded-lg p-3 min-h-[400px] transition-colors ${isOver ? 'border-[#7FCFD4]' : 'border-[var(--a-line)]'}`}
+      className={`bg-[var(--a-panel)]/60 border rounded-lg p-3 min-h-[400px] transition-colors ${isOver ? 'border-[var(--a-accent)]' : 'border-[var(--a-line)]'}`}
     >
       <div className="flex items-center justify-between mb-3 px-1">
         <p className="text-xs font-semibold text-[var(--a-ink)] uppercase tracking-wider">{label}</p>

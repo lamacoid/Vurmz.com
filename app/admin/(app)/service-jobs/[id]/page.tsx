@@ -10,6 +10,23 @@ interface Job {
   customerId: string | null; orderId: string | null; quoteId: string | null
 }
 
+const STATUS_LABEL: Record<string, string> = {
+  intake: 'Intake', proofing: 'Proofing', approved: 'Approved', in_production: 'In production',
+  qa: 'QA', ready: 'Ready', delivered: 'Delivered', cancelled: 'Cancelled',
+}
+function nextStep(status: string): string {
+  switch (status) {
+    case 'intake': return 'Review the request and start a proof.'
+    case 'proofing': return 'Send the proof and get it approved.'
+    case 'approved': return 'Approved. Start production.'
+    case 'in_production': return 'In production. Engraving in progress.'
+    case 'qa': return 'Quality-check it before it goes out.'
+    case 'ready': return 'Ready. Deliver it, then mark Delivered.'
+    case 'delivered': return 'Delivered. Done.'
+    default: return ''
+  }
+}
+
 export default function ServiceJobDetail() {
   const params = useParams<{ id: string }>()
   const [job, setJob] = useState<Job | null>(null)
@@ -52,11 +69,17 @@ export default function ServiceJobDetail() {
         <select
           value={job.status}
           onChange={e => patch({ status: e.target.value })}
-          className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-md px-3 py-2 text-xs text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]"
+          className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-md px-3 py-2 text-xs text-[var(--a-ink)] outline-none focus:border-[var(--a-accent)]"
         >
-          {['intake','proofing','approved','in_production','qa','ready','delivered','cancelled'].map(s => <option key={s} value={s}>{s.replace('_', ' ')}</option>)}
+          {['intake','proofing','approved','in_production','qa','ready','delivered','cancelled'].map(s => <option key={s} value={s}>{STATUS_LABEL[s] ?? s}</option>)}
         </select>
       </div>
+
+      {nextStep(job.status) && (
+        <div className="mb-6 bg-white/[0.04] border-l-2 border-[var(--a-accent)] rounded-lg px-4 py-3">
+          <p className="text-sm text-[var(--a-ink)]"><span className="font-semibold">Next step:</span> {nextStep(job.status)}</p>
+        </div>
+      )}
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6 text-xs">
         <div className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-lg px-3 py-2">
@@ -89,7 +112,7 @@ export default function ServiceJobDetail() {
           onChange={e => setJob({ ...job, notes: e.target.value })}
           onBlur={() => patch({ notes: job.notes })}
           rows={10}
-          className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]"
+          className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[var(--a-accent)]"
           placeholder="Production notes, specs, issues, anything useful…"
         />
         {saving && <p className="text-[10px] text-[var(--a-ink-faint)] mt-2">Saving…</p>}
