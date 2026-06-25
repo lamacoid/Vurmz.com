@@ -41,7 +41,6 @@ export const adminNav: NavGroup[] = [
     items: [
       { href: '/admin/quotes', label: 'Quotes', icon: 'file-text' },
       { href: '/admin/service-jobs', label: 'Service jobs', icon: 'briefcase' },
-      { href: '/admin/jobs', label: 'Jobs (legacy)', icon: 'briefcase', badge: 'jobs-active' },
       { href: '/admin/materials', label: 'Materials', icon: 'layers' },
     ],
   },
