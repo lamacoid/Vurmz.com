@@ -31,7 +31,7 @@ interface Order {
 const PROOF_DOT: Record<string, string> = {
   needed: 'bg-amber-400',
   sent: 'bg-sky-400',
-  approved: 'bg-[#7FCFD4]',
+  approved: 'bg-[var(--a-accent)]',
 }
 
 const COLUMNS: { key: OrderStatus; label: string }[] = [

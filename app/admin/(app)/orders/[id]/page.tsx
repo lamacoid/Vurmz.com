@@ -90,7 +90,7 @@ export default function OrderDetailPage() {
         <select
           value={order.status}
           onChange={e => setStatus(e.target.value)}
-          className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]"
+          className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[var(--a-accent)]"
         >
           {['new','confirmed','in_progress','ready','delivered','cancelled','refunded'].map(s => <option key={s} value={s}>{STATUS_LABEL[s] ?? s}</option>)}
         </select>
@@ -107,7 +107,7 @@ export default function OrderDetailPage() {
         <span className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)] mr-1">Proof</span>
         {([['needed', 'Needed'], ['sent', 'Sent to customer'], ['approved', 'Approved ✓']] as const).map(([key, label]) => {
           const current = order.metadata?.proof?.status === key
-          const accent = key === 'approved' ? 'border-[#7FCFD4] bg-[#7FCFD4]/15 text-[var(--a-accent)]' : key === 'sent' ? 'border-sky-400 bg-sky-400/15 text-sky-300' : 'border-amber-400 bg-amber-400/15 text-amber-300'
+          const accent = key === 'approved' ? 'border-[var(--a-accent)] bg-[var(--a-accent)]/15 text-[var(--a-accent)]' : key === 'sent' ? 'border-sky-400 bg-sky-400/15 text-sky-300' : 'border-amber-400 bg-amber-400/15 text-amber-300'
           return (
             <button
               key={key}
@@ -165,7 +165,7 @@ export default function OrderDetailPage() {
                 <p className="text-sm text-[var(--a-ink)]">{it.nameSnapshot}</p>
                 <p className="text-xs text-[var(--a-ink-faint)]">{it.qty} × {money(it.unitPriceCents)}</p>
                 {it.metadata?.engraving?.text && (
-                  <p className="text-xs mt-1 inline-flex items-center gap-1.5 bg-[#7FCFD4]/10 border border-[#7FCFD4]/30 text-[var(--a-accent)] rounded px-2 py-1">
+                  <p className="text-xs mt-1 inline-flex items-center gap-1.5 bg-[var(--a-accent)]/10 border border-[var(--a-accent)]/30 text-[var(--a-accent)] rounded px-2 py-1">
                     ✎ Engrave:&nbsp;<span className="text-[var(--a-ink)] font-medium">“{it.metadata.engraving.text}”</span>
                     {it.metadata.engraving.fontLabel ? <span className="text-[var(--a-ink-soft)]">· {it.metadata.engraving.fontLabel}</span> : null}
                   </p>
@@ -193,7 +193,7 @@ export default function OrderDetailPage() {
       </div>
 
       {order.fulfillmentMethod === 'hand_deliver' && order.metadata?.handDelivery && (
-        <div className="bg-[#7FCFD4]/10 border border-[#7FCFD4]/30 rounded-xl p-4 mb-6">
+        <div className="bg-[var(--a-accent)]/10 border border-[var(--a-accent)]/30 rounded-xl p-4 mb-6">
           <p className="text-[11px] uppercase tracking-wider text-[var(--a-accent)] mb-2 font-semibold">Hand delivery</p>
           {order.metadata.handDelivery.windowLabel && (
             <p className="text-sm text-[var(--a-ink)]"><span className="text-[var(--a-ink-soft)]">Window:</span> {order.metadata.handDelivery.windowLabel}</p>

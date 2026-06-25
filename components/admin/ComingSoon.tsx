@@ -20,7 +20,7 @@ export default function ComingSoon({
 
       <div className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-xl p-8">
         <div className="flex items-start gap-4">
-          <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-[#7FCFD4]/10 border border-[#7FCFD4]/20 flex items-center justify-center text-[var(--a-accent)] font-mono text-sm">
+          <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-[var(--a-accent)]/10 border border-[var(--a-accent)]/20 flex items-center justify-center text-[var(--a-accent)] font-mono text-sm">
             C{chunk}
           </div>
           <div className="flex-1">

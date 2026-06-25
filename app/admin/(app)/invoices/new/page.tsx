@@ -73,7 +73,7 @@ export default function NewInvoicePage() {
           <select
             value={customerId}
             onChange={e => setCustomerId(e.target.value)}
-            className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]"
+            className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[var(--a-accent)]"
           >
             <option value="">Choose a customer…</option>
             {customers.map(c => (
@@ -93,16 +93,16 @@ export default function NewInvoicePage() {
                   value={line.description}
                   onChange={e => updateLine(i, { description: e.target.value })}
                   placeholder="Description"
-                  className="bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]"
+                  className="bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[var(--a-accent)]"
                 />
                 <input
                   type="number"
                   value={line.qty}
                   min={1}
                   onChange={e => updateLine(i, { qty: parseInt(e.target.value, 10) || 1 })}
-                  className="bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]"
+                  className="bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[var(--a-accent)]"
                 />
-                <div className="flex items-center bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md focus-within:border-[#7FCFD4]">
+                <div className="flex items-center bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md focus-within:border-[var(--a-accent)]">
                   <span className="pl-2 text-[var(--a-ink-faint)] text-sm">$</span>
                   <input
                     value={line.price}
@@ -141,7 +141,7 @@ export default function NewInvoicePage() {
                 type="date"
                 value={dueDate}
                 onChange={e => setDueDate(e.target.value)}
-                className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]"
+                className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[var(--a-accent)]"
               />
             </div>
           </div>
@@ -151,7 +151,7 @@ export default function NewInvoicePage() {
               value={notes}
               onChange={e => setNotes(e.target.value)}
               rows={3}
-              className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]"
+              className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[var(--a-accent)]"
               placeholder="Anything the customer should know about this invoice."
             />
           </div>

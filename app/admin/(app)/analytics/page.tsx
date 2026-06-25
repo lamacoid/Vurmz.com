@@ -60,7 +60,7 @@ export default function AnalyticsPage() {
           {data.chart.map((d, i) => (
             <div key={i} className="flex-1 flex flex-col items-center justify-end" title={`${d.date}: ${d.views}`}>
               <div
-                className="w-full bg-[#7FCFD4] rounded-t-sm min-h-[2px] transition-all"
+                className="w-full bg-[var(--a-accent)] rounded-t-sm min-h-[2px] transition-all"
                 style={{ height: `${(d.views / maxViews) * 100}%` }}
               />
             </div>

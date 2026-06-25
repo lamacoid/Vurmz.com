@@ -153,7 +153,7 @@ export default function ProductForm({ initial }: { initial: ProductDraft }) {
                 onChange={e => field('description', e.target.value)}
                 rows={6}
                 placeholder="Markdown supported. Details, specs, what's included…"
-                className="w-full bg-[var(--a-panel)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]"
+                className="w-full bg-[var(--a-panel)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[var(--a-accent)]"
               />
             </div>
           </Section>
@@ -190,7 +190,7 @@ export default function ProductForm({ initial }: { initial: ProductDraft }) {
             )}
             {draft.oneOff && draft.id && (
               draft.soldAt ? (
-                <div className="flex items-center justify-between bg-[#C46B4D]/15 border border-[#C46B4D]/30 rounded-md px-3 py-2">
+                <div className="flex items-center justify-between bg-[var(--a-cta)]/15 border border-[var(--a-cta)]/30 rounded-md px-3 py-2">
                   <div>
                     <p className="text-xs font-semibold text-[var(--a-cta)]">Sold</p>
                     <p className="text-[10px] text-[var(--a-ink-soft)]">on {new Date(draft.soldAt).toLocaleString()}</p>
@@ -262,10 +262,10 @@ export default function ProductForm({ initial }: { initial: ProductDraft }) {
                     className={`h-8 text-xs font-semibold rounded-md border transition-colors ${
                       active
                         ? a === 'services'
-                          ? 'bg-[#7FCFD4]/20 border-[#7FCFD4] text-[var(--a-accent)]'
+                          ? 'bg-[var(--a-accent)]/20 border-[var(--a-accent)] text-[var(--a-accent)]'
                           : a === 'both'
-                          ? 'bg-[#DED6C3]/10 border-[#DED6C3]/30 text-[#DED6C3]'
-                          : 'bg-[#C46B4D]/20 border-[var(--a-cta)] text-[var(--a-cta)]'
+                          ? 'bg-[var(--a-ink)]/10 border-[var(--a-ink)]/30 text-[var(--a-ink)]'
+                          : 'bg-[var(--a-cta)]/20 border-[var(--a-cta)] text-[var(--a-cta)]'
                         : 'bg-white/5 border-[var(--a-line)] text-[var(--a-ink-soft)] hover:text-[var(--a-ink)]'
                     }`}
                   >
@@ -283,7 +283,7 @@ export default function ProductForm({ initial }: { initial: ProductDraft }) {
             <select
               value={draft.categoryId ?? ''}
               onChange={e => field('categoryId', e.target.value || null)}
-              className="w-full bg-[var(--a-panel)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]"
+              className="w-full bg-[var(--a-panel)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[var(--a-accent)]"
             >
               <option value="">No category</option>
               {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
@@ -304,7 +304,7 @@ export default function ProductForm({ initial }: { initial: ProductDraft }) {
             ) : (
               <button
                 onClick={() => setMediaPickerOpen(true)}
-                className="w-full aspect-square border-2 border-dashed border-[var(--a-line)] hover:border-[#7FCFD4]/40 rounded-lg flex flex-col items-center justify-center text-[var(--a-ink-faint)] hover:text-[var(--a-ink)] transition-colors"
+                className="w-full aspect-square border-2 border-dashed border-[var(--a-line)] hover:border-[var(--a-accent)]/40 rounded-lg flex flex-col items-center justify-center text-[var(--a-ink-faint)] hover:text-[var(--a-ink)] transition-colors"
               >
                 <Icon name="image" className="w-6 h-6 mb-1" />
                 <span className="text-xs">Select image</span>
@@ -330,7 +330,7 @@ export default function ProductForm({ initial }: { initial: ProductDraft }) {
                     <button
                       key={m.id}
                       onClick={() => { field('heroMediaId', m.id); setHeroMedia(m); setMediaPickerOpen(false) }}
-                      className="aspect-square bg-[var(--a-panel)] border border-[var(--a-line)] hover:border-[#7FCFD4]/40 rounded-lg overflow-hidden"
+                      className="aspect-square bg-[var(--a-panel)] border border-[var(--a-line)] hover:border-[var(--a-accent)]/40 rounded-lg overflow-hidden"
                     >
                       <img src={m.url} alt={m.altText} className="w-full h-full object-cover" />
                     </button>
@@ -358,7 +358,7 @@ function FieldText({ label, value, onChange, placeholder, prefix, hint }: { labe
   return (
     <div>
       <label className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)] block mb-1">{label}</label>
-      <div className="flex items-center bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md focus-within:border-[#7FCFD4]">
+      <div className="flex items-center bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md focus-within:border-[var(--a-accent)]">
         {prefix && <span className="pl-3 text-[var(--a-ink-faint)] text-sm">{prefix}</span>}
         <input
           value={value}
@@ -381,7 +381,7 @@ function FieldNum({ label, value, onChange, min, hint }: { label: string; value:
         value={value}
         min={min}
         onChange={e => onChange(parseInt(e.target.value, 10) || 0)}
-        className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]"
+        className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[var(--a-accent)]"
       />
       {hint && <p className="text-[10px] text-[var(--a-ink-faint)] mt-1">{hint}</p>}
     </div>

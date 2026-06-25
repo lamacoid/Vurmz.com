@@ -118,7 +118,7 @@ export default function InventoryPage() {
                     const v = parseInt(e.target.value, 10)
                     if (Number.isFinite(v) && v !== item.lowThreshold) setThreshold(item.id, v)
                   }}
-                  className="w-16 bg-[var(--a-bg)] border border-[var(--a-line)] rounded px-2 py-1 text-xs text-[var(--a-ink)] text-center outline-none focus:border-[#7FCFD4]"
+                  className="w-16 bg-[var(--a-bg)] border border-[var(--a-line)] rounded px-2 py-1 text-xs text-[var(--a-ink)] text-center outline-none focus:border-[var(--a-accent)]"
                   title="Low-stock threshold"
                 />
               </div>
@@ -134,7 +134,7 @@ export default function InventoryPage() {
                   <button
                     key={p.id}
                     onClick={() => adjust(p.id, 0, 'initialize')}
-                    className="text-xs bg-[var(--a-bg)] hover:bg-[#143E38]/80 border border-[var(--a-line)] hover:border-[#7FCFD4]/40 rounded-full px-3 py-1 text-[var(--a-ink)]"
+                    className="text-xs bg-[var(--a-bg)] hover:bg-[#143E38]/80 border border-[var(--a-line)] hover:border-[var(--a-accent)]/40 rounded-full px-3 py-1 text-[var(--a-ink)]"
                   >
                     + {p.name}
                   </button>

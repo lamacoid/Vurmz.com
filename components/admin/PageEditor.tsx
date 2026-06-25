@@ -208,7 +208,7 @@ export default function PageEditor({ initial }: { initial: Page }) {
                 <button
                   key={def.type}
                   onClick={() => addBlock(def.type, inserterOpen)}
-                  className="text-left bg-[var(--a-panel)] hover:border-[#7FCFD4]/40 border border-[var(--a-line)] rounded-md p-3 transition-colors"
+                  className="text-left bg-[var(--a-panel)] hover:border-[var(--a-accent)]/40 border border-[var(--a-line)] rounded-md p-3 transition-colors"
                 >
                   <p className="text-sm font-semibold text-[var(--a-ink)]">{def.label}</p>
                   <p className="text-[11px] text-[var(--a-ink-faint)] mt-0.5">{def.description}</p>
@@ -274,9 +274,9 @@ function InserterButton({ onClick, active }: { onClick: () => void; active: bool
       className={`w-full py-1 flex items-center justify-center text-[var(--a-ink-faint)] hover:text-[var(--a-accent)] group ${active ? 'text-[var(--a-accent)]' : ''}`}
       aria-label="Insert block here"
     >
-      <span className="h-[1px] flex-1 bg-white/5 group-hover:bg-[#7FCFD4]/40" />
+      <span className="h-[1px] flex-1 bg-white/5 group-hover:bg-[var(--a-accent)]/40" />
       <Icon name="plus" className="w-3.5 h-3.5 mx-1" />
-      <span className="h-[1px] flex-1 bg-white/5 group-hover:bg-[#7FCFD4]/40" />
+      <span className="h-[1px] flex-1 bg-white/5 group-hover:bg-[var(--a-accent)]/40" />
     </button>
   )
 }
@@ -294,7 +294,7 @@ function BlockRow({ block, selected, onSelect, onRemove }: { block: Block; selec
       ref={setNodeRef}
       style={style}
       className={`mx-2 my-1 flex items-center gap-2 rounded-md px-2 py-2 cursor-pointer transition-colors ${
-        selected ? 'bg-[#7FCFD4]/15 border border-[#7FCFD4]/30' : 'hover:bg-white/5 border border-transparent'
+        selected ? 'bg-[var(--a-accent)]/15 border border-[var(--a-accent)]/30' : 'hover:bg-white/5 border border-transparent'
       }`}
       onClick={onSelect}
     >
@@ -379,14 +379,14 @@ function TextMeta({ label, value, onSave, multiline }: { label: string; value: s
           onChange={e => setLocal(e.target.value)}
           onBlur={() => local !== value && onSave(local)}
           rows={3}
-          className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]"
+          className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[var(--a-accent)]"
         />
       ) : (
         <input
           value={local}
           onChange={e => setLocal(e.target.value)}
           onBlur={() => local !== value && onSave(local)}
-          className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]"
+          className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[var(--a-accent)]"
         />
       )}
     </div>

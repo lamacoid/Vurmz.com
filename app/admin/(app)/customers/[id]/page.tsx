@@ -112,7 +112,7 @@ export default function AdminCustomerDetail() {
           {messages.length === 0 ? <Empty text="No messages." /> : (
             <div className="space-y-2 max-h-[400px] overflow-y-auto">
               {messages.slice(-20).map(m => (
-                <div key={m.id} className={`p-2 rounded text-xs ${m.direction === 'inbound' ? 'bg-[#C46B4D]/10 text-[var(--a-ink)]' : 'bg-white/[0.03] text-[var(--a-ink-soft)]'}`}>
+                <div key={m.id} className={`p-2 rounded text-xs ${m.direction === 'inbound' ? 'bg-[var(--a-cta)]/10 text-[var(--a-ink)]' : 'bg-white/[0.03] text-[var(--a-ink-soft)]'}`}>
                   <p className="whitespace-pre-wrap">{m.body}</p>
                   <p className="text-[10px] text-[var(--a-ink-faint)] mt-1">{m.direction === 'inbound' ? 'Customer' : 'You'} · {new Date(m.createdAt).toLocaleString()}</p>
                 </div>
@@ -167,7 +167,7 @@ function InlineInput({ value, onSave, placeholder, className }: { value: string;
       onChange={e => setLocal(e.target.value)}
       onBlur={() => local !== value && onSave(local)}
       placeholder={placeholder}
-      className={`w-full bg-transparent text-[var(--a-ink)] outline-none border-b border-transparent focus:border-[#7FCFD4]/40 ${className ?? 'text-sm'}`}
+      className={`w-full bg-transparent text-[var(--a-ink)] outline-none border-b border-transparent focus:border-[var(--a-accent)]/40 ${className ?? 'text-sm'}`}
     />
   )
 }
@@ -182,7 +182,7 @@ function InlineTextarea({ value, onSave, placeholder }: { value: string; onSave:
       onBlur={() => local !== value && onSave(local)}
       placeholder={placeholder}
       rows={6}
-      className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[#7FCFD4] resize-none"
+      className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[var(--a-accent)] resize-none"
     />
   )
 }
@@ -197,7 +197,7 @@ function TagEditor({ value, onSave }: { value: string[]; onSave: (v: string[]) =
   return (
     <div className="flex flex-wrap items-center gap-1.5">
       {value.map(t => (
-        <span key={t} className="bg-[#7FCFD4]/10 border border-[#7FCFD4]/20 text-[var(--a-accent)] text-[11px] px-2 py-0.5 rounded-full inline-flex items-center gap-1">
+        <span key={t} className="bg-[var(--a-accent)]/10 border border-[var(--a-accent)]/20 text-[var(--a-accent)] text-[11px] px-2 py-0.5 rounded-full inline-flex items-center gap-1">
           {t}
           <button onClick={() => onSave(value.filter(v => v !== t))} className="hover:text-red-300" aria-label={`Remove ${t}`}>×</button>
         </span>

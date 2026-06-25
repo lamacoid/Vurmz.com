@@ -22,7 +22,7 @@ const STATUS_COLORS: Record<string, string> = {
   accepted: 'bg-blue-500/20 text-blue-400',
   'in-progress': 'bg-purple-500/20 text-purple-400',
   done: 'bg-green-500/20 text-green-400',
-  delivered: 'bg-[#7FCFD4]/20 text-[var(--a-accent)]',
+  delivered: 'bg-[var(--a-accent)]/20 text-[var(--a-accent)]',
   cancelled: 'bg-red-500/20 text-red-400',
 }
 
@@ -164,7 +164,7 @@ export default function JobsPage() {
             <button
               key={job.id}
               onClick={() => setSelected(job)}
-              className="w-full text-left bg-[var(--a-panel)] rounded-xl p-3.5 border border-[var(--a-line)] hover:border-[#7FCFD4]/20 transition-colors"
+              className="w-full text-left bg-[var(--a-panel)] rounded-xl p-3.5 border border-[var(--a-line)] hover:border-[var(--a-accent)]/20 transition-colors"
             >
               <div className="flex items-start justify-between gap-2">
                 <div className="min-w-0 flex-1">
@@ -203,12 +203,12 @@ function NewJobForm({ onSave, onCancel }: { onSave: (data: any) => void; onCance
           placeholder="Title"
           value={form.title}
           onChange={e => setForm(f => ({ ...f, title: e.target.value }))}
-          className="w-full px-3 py-2.5 bg-[var(--a-panel)] border border-[#2d4a47] rounded-lg text-sm text-[var(--a-ink)] placeholder:text-[var(--a-ink-faint)] focus:outline-none focus:border-[#7FCFD4]/50"
+          className="w-full px-3 py-2.5 bg-[var(--a-panel)] border border-[#2d4a47] rounded-lg text-sm text-[var(--a-ink)] placeholder:text-[var(--a-ink-faint)] focus:outline-none focus:border-[var(--a-accent)]/50"
         />
         <select
           value={form.type}
           onChange={e => setForm(f => ({ ...f, type: e.target.value }))}
-          className="w-full px-3 py-2.5 bg-[var(--a-panel)] border border-[#2d4a47] rounded-lg text-sm text-[var(--a-ink)] focus:outline-none focus:border-[#7FCFD4]/50"
+          className="w-full px-3 py-2.5 bg-[var(--a-panel)] border border-[#2d4a47] rounded-lg text-sm text-[var(--a-ink)] focus:outline-none focus:border-[var(--a-accent)]/50"
         >
           {['custom', 'pens', 'cards', 'coasters', 'keychains', 'knife', 'tool', 'labels', 'other'].map(t => (
             <option key={t} value={t}>{t}</option>
@@ -219,21 +219,21 @@ function NewJobForm({ onSave, onCancel }: { onSave: (data: any) => void; onCance
           type="number"
           value={form.price}
           onChange={e => setForm(f => ({ ...f, price: e.target.value }))}
-          className="w-full px-3 py-2.5 bg-[var(--a-panel)] border border-[#2d4a47] rounded-lg text-sm text-[var(--a-ink)] placeholder:text-[var(--a-ink-faint)] focus:outline-none focus:border-[#7FCFD4]/50"
+          className="w-full px-3 py-2.5 bg-[var(--a-panel)] border border-[#2d4a47] rounded-lg text-sm text-[var(--a-ink)] placeholder:text-[var(--a-ink-faint)] focus:outline-none focus:border-[var(--a-accent)]/50"
         />
         <textarea
           placeholder="Description"
           value={form.description}
           onChange={e => setForm(f => ({ ...f, description: e.target.value }))}
           rows={3}
-          className="w-full px-3 py-2.5 bg-[var(--a-panel)] border border-[#2d4a47] rounded-lg text-sm text-[var(--a-ink)] placeholder:text-[var(--a-ink-faint)] focus:outline-none focus:border-[#7FCFD4]/50 resize-none"
+          className="w-full px-3 py-2.5 bg-[var(--a-panel)] border border-[#2d4a47] rounded-lg text-sm text-[var(--a-ink)] placeholder:text-[var(--a-ink-faint)] focus:outline-none focus:border-[var(--a-accent)]/50 resize-none"
         />
         <textarea
           placeholder="Notes"
           value={form.notes}
           onChange={e => setForm(f => ({ ...f, notes: e.target.value }))}
           rows={2}
-          className="w-full px-3 py-2.5 bg-[var(--a-panel)] border border-[#2d4a47] rounded-lg text-sm text-[var(--a-ink)] placeholder:text-[var(--a-ink-faint)] focus:outline-none focus:border-[#7FCFD4]/50 resize-none"
+          className="w-full px-3 py-2.5 bg-[var(--a-panel)] border border-[#2d4a47] rounded-lg text-sm text-[var(--a-ink)] placeholder:text-[var(--a-ink-faint)] focus:outline-none focus:border-[var(--a-accent)]/50 resize-none"
         />
         <button
           onClick={() => onSave({ ...form, price: parseFloat(form.price) || 0 })}

@@ -81,18 +81,18 @@ export default function CustomersPage() {
               placeholder="email@example.com"
               value={newEmail}
               onChange={e => setNewEmail(e.target.value)}
-              className="bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]"
+              className="bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[var(--a-accent)]"
             />
             <input
               placeholder="Name (optional)"
               value={newName}
               onChange={e => setNewName(e.target.value)}
-              className="bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]"
+              className="bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[var(--a-accent)]"
             />
             <button
               onClick={create}
               disabled={!newEmail || busy}
-              className="px-4 h-9 bg-[#7FCFD4] hover:bg-[#5aa49e] disabled:opacity-50 text-[#143E38] text-sm font-semibold rounded-md"
+              className="px-4 h-9 bg-[var(--a-accent)] hover:bg-[#5aa49e] disabled:opacity-50 text-[#143E38] text-sm font-semibold rounded-md"
             >
               {busy ? 'Saving…' : 'Create'}
             </button>
@@ -104,7 +104,7 @@ export default function CustomersPage() {
         placeholder="Search by name, email, or company…"
         value={search}
         onChange={e => setSearch(e.target.value)}
-        className="w-full px-3 py-2 bg-[var(--a-panel)] border border-[var(--a-line)] rounded-md text-sm text-[var(--a-ink)] placeholder:text-[var(--a-ink-faint)] outline-none focus:border-[#7FCFD4] mb-4"
+        className="w-full px-3 py-2 bg-[var(--a-panel)] border border-[var(--a-line)] rounded-md text-sm text-[var(--a-ink)] placeholder:text-[var(--a-ink-faint)] outline-none focus:border-[var(--a-accent)] mb-4"
       />
 
       {loading ? (
@@ -129,7 +129,7 @@ export default function CustomersPage() {
                 {c.tags && c.tags.length > 0 && (
                   <div className="flex gap-1 mt-1.5 flex-wrap">
                     {c.tags.slice(0, 4).map(t => (
-                      <span key={t} className="text-[9px] bg-[#7FCFD4]/10 text-[var(--a-accent)] px-1.5 py-0.5 rounded-full uppercase tracking-wider font-semibold">{t}</span>
+                      <span key={t} className="text-[9px] bg-[var(--a-accent)]/10 text-[var(--a-accent)] px-1.5 py-0.5 rounded-full uppercase tracking-wider font-semibold">{t}</span>
                     ))}
                   </div>
                 )}

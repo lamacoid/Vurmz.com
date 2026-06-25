@@ -83,7 +83,7 @@ export default function NewQuotePage() {
             value={email}
             onChange={e => setEmail(e.target.value)}
             placeholder="email@example.com"
-            className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]"
+            className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[var(--a-accent)]"
           />
         </div>
 
@@ -92,9 +92,9 @@ export default function NewQuotePage() {
           <div className="space-y-2">
             {lines.map((line, i) => (
               <div key={i} className="grid grid-cols-[1fr_70px_100px_32px] gap-2">
-                <input value={line.description} onChange={e => updateLine(i, { description: e.target.value })} placeholder="Description" className="bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]" />
-                <input type="number" value={line.qty} min={1} onChange={e => updateLine(i, { qty: parseInt(e.target.value, 10) || 1 })} className="bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]" />
-                <div className="flex items-center bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md focus-within:border-[#7FCFD4]">
+                <input value={line.description} onChange={e => updateLine(i, { description: e.target.value })} placeholder="Description" className="bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[var(--a-accent)]" />
+                <input type="number" value={line.qty} min={1} onChange={e => updateLine(i, { qty: parseInt(e.target.value, 10) || 1 })} className="bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[var(--a-accent)]" />
+                <div className="flex items-center bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md focus-within:border-[var(--a-accent)]">
                   <span className="pl-2 text-[var(--a-ink-faint)] text-sm">$</span>
                   <input value={line.price} onChange={e => updateLine(i, { price: e.target.value })} className="flex-1 bg-transparent px-2 py-2 text-sm text-[var(--a-ink)] outline-none" />
                 </div>
@@ -112,11 +112,11 @@ export default function NewQuotePage() {
         <div className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-xl p-5">
           <div>
             <label className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)] block mb-1 font-semibold">Valid until (optional)</label>
-            <input type="date" value={expiresAt} onChange={e => setExpiresAt(e.target.value)} className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]" />
+            <input type="date" value={expiresAt} onChange={e => setExpiresAt(e.target.value)} className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[var(--a-accent)]" />
           </div>
           <div className="mt-3">
             <label className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)] block mb-1 font-semibold">Notes</label>
-            <textarea value={notes} onChange={e => setNotes(e.target.value)} rows={3} className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]" />
+            <textarea value={notes} onChange={e => setNotes(e.target.value)} rows={3} className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[var(--a-accent)]" />
           </div>
         </div>
 

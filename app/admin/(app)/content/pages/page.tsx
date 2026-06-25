@@ -82,7 +82,7 @@ export default function PagesListPage() {
               <div className="flex items-center gap-3 text-[11px] text-[var(--a-ink-faint)]">
                 <span className="font-mono">v{p.version}</span>
                 <span className={`px-2 py-0.5 rounded-full uppercase tracking-wider font-semibold ${
-                  p.isPublished ? 'bg-[#7FCFD4]/15 text-[var(--a-accent)]' : 'bg-white/5 text-[var(--a-ink-faint)]'
+                  p.isPublished ? 'bg-[var(--a-accent)]/15 text-[var(--a-accent)]' : 'bg-white/5 text-[var(--a-ink-faint)]'
                 }`}>
                   {p.isPublished ? 'Published' : 'Draft'}
                 </span>

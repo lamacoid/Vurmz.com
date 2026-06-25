@@ -29,7 +29,7 @@ function VerifyInner() {
         {status === 'loading' && <p className="text-[var(--a-ink-soft)] text-sm">Verifying admin link…</p>}
         {status === 'ok' && (
           <>
-            <div className="w-14 h-14 rounded-full bg-[#7FCFD4]/15 border border-[#7FCFD4]/30 flex items-center justify-center mb-5 mx-auto">
+            <div className="w-14 h-14 rounded-full bg-[var(--a-accent)]/15 border border-[var(--a-accent)]/30 flex items-center justify-center mb-5 mx-auto">
               <span className="text-[var(--a-accent)] text-2xl">✓</span>
             </div>
             <h1 className="text-2xl font-semibold text-[var(--a-ink)]">Signed in</h1>

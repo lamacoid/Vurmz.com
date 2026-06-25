@@ -131,7 +131,7 @@ export default function ThemeEditorPage() {
             value={val}
             onChange={e => updateColor(s.key, e.target.value)}
             onBlur={commitColors}
-            className="w-full bg-[var(--a-panel)] border border-[var(--a-line)] rounded px-2 py-1 text-xs text-[var(--a-ink)] outline-none focus:border-[#7FCFD4] font-mono"
+            className="w-full bg-[var(--a-panel)] border border-[var(--a-line)] rounded px-2 py-1 text-xs text-[var(--a-ink)] outline-none focus:border-[var(--a-accent)] font-mono"
           />
         </div>
         <div className="flex-shrink-0 w-44 flex items-center justify-end">
@@ -183,7 +183,7 @@ export default function ThemeEditorPage() {
                 value={theme.fonts[k]}
                 onChange={e => setTheme({ ...theme, fonts: { ...theme.fonts, [k]: e.target.value } })}
                 onBlur={() => save({ fonts: theme.fonts })}
-                className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-xs text-[var(--a-ink)] outline-none focus:border-[#7FCFD4] font-mono"
+                className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-xs text-[var(--a-ink)] outline-none focus:border-[var(--a-accent)] font-mono"
               />
             </div>
           ))}
@@ -200,7 +200,7 @@ export default function ThemeEditorPage() {
                 value={theme.spacing[k]}
                 onChange={e => setTheme({ ...theme, spacing: { ...theme.spacing, [k]: e.target.value } })}
                 onBlur={() => save({ spacing: theme.spacing })}
-                className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-xs text-[var(--a-ink)] outline-none focus:border-[#7FCFD4] font-mono"
+                className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-xs text-[var(--a-ink)] outline-none focus:border-[var(--a-accent)] font-mono"
               />
             </div>
           ))}

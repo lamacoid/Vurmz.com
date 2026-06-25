@@ -57,7 +57,7 @@ function Row({ product, media, onToggle }: { product: Product; media: Map<string
     <div
       ref={setNodeRef}
       style={style}
-      className="group flex items-center gap-3 bg-[var(--a-panel)] border border-[var(--a-line)] hover:border-[#7FCFD4]/20 rounded-lg px-3 py-2.5 transition-colors"
+      className="group flex items-center gap-3 bg-[var(--a-panel)] border border-[var(--a-line)] hover:border-[var(--a-accent)]/20 rounded-lg px-3 py-2.5 transition-colors"
     >
       <button
         {...attributes}
@@ -82,8 +82,8 @@ function Row({ product, media, onToggle }: { product: Product; media: Map<string
           {product.oneOff && (
             <span className={`text-[9px] px-1.5 py-0.5 rounded font-semibold uppercase tracking-wider flex-shrink-0 ${
               product.soldAt
-                ? 'bg-[#C46B4D]/20 text-[var(--a-cta)] border border-[#C46B4D]/30'
-                : 'bg-[#DED6C3]/15 text-[#DED6C3] border border-[#DED6C3]/20'
+                ? 'bg-[var(--a-cta)]/20 text-[var(--a-cta)] border border-[var(--a-cta)]/30'
+                : 'bg-[var(--a-ink)]/15 text-[var(--a-ink)] border border-[var(--a-ink)]/20'
             }`}>
               {product.soldAt ? 'Sold' : 'One-off'}
             </span>
@@ -96,10 +96,10 @@ function Row({ product, media, onToggle }: { product: Product; media: Map<string
       </Link>
       <span className={`text-[10px] px-1.5 py-0.5 rounded font-semibold uppercase tracking-wider ${
         product.audience === 'services'
-          ? 'bg-[#7FCFD4]/15 text-[var(--a-accent)]'
+          ? 'bg-[var(--a-accent)]/15 text-[var(--a-accent)]'
           : product.audience === 'both'
-          ? 'bg-[#DED6C3]/10 text-[#DED6C3]'
-          : 'bg-[#C46B4D]/15 text-[var(--a-cta)]'
+          ? 'bg-[var(--a-ink)]/10 text-[var(--a-ink)]'
+          : 'bg-[var(--a-cta)]/15 text-[var(--a-cta)]'
       }`}>
         {product.audience === 'both' ? 'Both' : product.audience === 'services' ? 'Services' : 'Shop'}
       </span>
@@ -107,7 +107,7 @@ function Row({ product, media, onToggle }: { product: Product; media: Map<string
         onClick={() => onToggle(product.id, !product.isPublished)}
         className={`text-[11px] px-2 py-1 rounded-full font-medium ${
           product.isPublished
-            ? 'bg-[#7FCFD4]/10 text-[var(--a-accent)] border border-[#7FCFD4]/20'
+            ? 'bg-[var(--a-accent)]/10 text-[var(--a-accent)] border border-[var(--a-accent)]/20'
             : 'bg-white/5 text-[var(--a-ink-faint)] border border-[var(--a-line)]'
         }`}
       >
@@ -214,12 +214,12 @@ export default function ProductsListPage() {
           value={search}
           onChange={e => setSearch(e.target.value)}
           placeholder="Search by name or slug…"
-          className="flex-1 bg-[var(--a-panel)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]"
+          className="flex-1 bg-[var(--a-panel)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[var(--a-accent)]"
         />
         <select
           value={filter}
           onChange={e => setFilter(e.target.value)}
-          className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]"
+          className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[var(--a-accent)]"
         >
           <option value="all">All categories</option>
           {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}

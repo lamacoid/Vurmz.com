@@ -64,7 +64,7 @@ export default function RevenuePage() {
                 <span className="text-xs font-mono text-[var(--a-ink-soft)] w-16">{row.month}</span>
                 <div className="flex-1 h-6 bg-white/[0.03] rounded overflow-hidden relative">
                   <div
-                    className="h-full bg-[#7FCFD4]/40 border-r border-[#7FCFD4]"
+                    className="h-full bg-[var(--a-accent)]/40 border-r border-[var(--a-accent)]"
                     style={{ width: `${(row.revenue_cents / maxMonth) * 100}%` }}
                   />
                 </div>

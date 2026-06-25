@@ -110,7 +110,7 @@ function Field({ label, value, onSave, multiline, placeholder }: { label: string
           onBlur={() => local !== value && onSave(local)}
           placeholder={placeholder}
           rows={2}
-          className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]"
+          className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[var(--a-accent)]"
         />
       ) : (
         <input
@@ -118,7 +118,7 @@ function Field({ label, value, onSave, multiline, placeholder }: { label: string
           onChange={e => setLocal(e.target.value)}
           onBlur={() => local !== value && onSave(local)}
           placeholder={placeholder}
-          className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]"
+          className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[var(--a-accent)]"
         />
       )}
     </div>
@@ -143,7 +143,7 @@ function AreaList({ value, onChange }: { value: string[]; onChange: (v: string[]
           onChange={e => setNewArea(e.target.value)}
           onKeyDown={e => { if (e.key === 'Enter' && newArea.trim()) { onChange([...value, newArea.trim()]); setNewArea('') } }}
           placeholder="Add a city…"
-          className="flex-1 bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]"
+          className="flex-1 bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[var(--a-accent)]"
         />
         <button
           onClick={() => { if (newArea.trim()) { onChange([...value, newArea.trim()]); setNewArea('') } }}

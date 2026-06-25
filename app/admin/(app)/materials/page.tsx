@@ -119,7 +119,7 @@ function Row({ material, onPatch, onRemove }: { material: Material; onPatch: (p:
               const v = parseInt(e.target.value, 10)
               if (Number.isFinite(v) && v !== material.qtyOnHand) onPatch({ qtyOnHand: v })
             }}
-            className="w-16 bg-[var(--a-bg)] border border-[var(--a-line)] rounded px-2 py-1 text-xs text-[var(--a-ink)] text-center outline-none focus:border-[#7FCFD4]"
+            className="w-16 bg-[var(--a-bg)] border border-[var(--a-line)] rounded px-2 py-1 text-xs text-[var(--a-ink)] text-center outline-none focus:border-[var(--a-accent)]"
           />
           <span className="text-[10px] text-[var(--a-ink-faint)]">{material.unit}</span>
         </div>
@@ -142,7 +142,7 @@ function Row({ material, onPatch, onRemove }: { material: Material; onPatch: (p:
               defaultValue={material.notes}
               onBlur={e => e.target.value !== material.notes && onPatch({ notes: e.target.value })}
               rows={2}
-              className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded px-2 py-1.5 text-xs text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]"
+              className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded px-2 py-1.5 text-xs text-[var(--a-ink)] outline-none focus:border-[var(--a-accent)]"
             />
           </div>
         </div>
@@ -158,7 +158,7 @@ function TinyField({ label, value, onSave }: { label: string; value: string; onS
       <input
         defaultValue={value}
         onBlur={e => e.target.value !== value && onSave(e.target.value)}
-        className="w-full bg-[var(--a-panel)] border border-[var(--a-line)] rounded px-2 py-1 text-xs text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]"
+        className="w-full bg-[var(--a-panel)] border border-[var(--a-line)] rounded px-2 py-1 text-xs text-[var(--a-ink)] outline-none focus:border-[var(--a-accent)]"
       />
     </label>
   )
