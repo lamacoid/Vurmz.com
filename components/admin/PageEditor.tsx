@@ -44,6 +44,13 @@ export default function PageEditor({ initial }: { initial: Page }) {
 
   const selected = useMemo(() => blocks.find(b => b.id === selectedId) ?? null, [blocks, selectedId])
 
+  // Is what's on the public page different from the current draft? Drives the
+  // plain-language "live" status so it's never a mystery whether edits are live.
+  const hasUnpublished = useMemo(
+    () => JSON.stringify(blocks) !== JSON.stringify(page.publishedBlocks ?? []),
+    [blocks, page.publishedBlocks]
+  )
+
   // Auto-save draft when blocks change (debounced)
   useEffect(() => {
     const t = setTimeout(async () => {
@@ -67,6 +74,7 @@ export default function PageEditor({ initial }: { initial: Page }) {
     setInserterOpen(null)
   }
   function removeBlock(id: string) {
+    if (!window.confirm('Delete this block?')) return
     setBlocks(prev => prev.filter(b => b.id !== id))
     if (selectedId === id) setSelectedId(null)
   }
@@ -130,18 +138,29 @@ export default function PageEditor({ initial }: { initial: Page }) {
           )}
         </div>
 
-        <div className="px-3 py-3 border-t border-[var(--a-line)] space-y-2">
-          <div className="flex items-center justify-between text-[10px] text-[var(--a-ink-faint)]">
-            <span>{saving ? 'Saving…' : savedAt ? 'Draft saved' : 'Ready'}</span>
-            <a href={`/p/${page.slug}?preview=1`} target="_blank" rel="noreferrer" className="text-[var(--a-accent)] hover:underline">Preview draft ↗</a>
+        <div className="px-3 py-3 border-t border-[var(--a-line)] space-y-2.5">
+          {/* Plain-language live status so it's never a mystery whether the public
+              page is showing these edits. */}
+          <div className="flex items-center justify-between text-[11px]">
+            {!page.isPublished ? (
+              <span className="text-amber-300">● Not live yet</span>
+            ) : hasUnpublished ? (
+              <span className="text-amber-300">● Changes not live yet</span>
+            ) : (
+              <span className="text-[var(--a-accent)]">● Live &amp; up to date</span>
+            )}
+            <span className="text-[var(--a-ink-faint)]">{saving ? 'Saving…' : savedAt ? 'Draft saved' : ''}</span>
           </div>
+
+          <a href={`/p/${page.slug}?preview=1`} target="_blank" rel="noreferrer" className="block text-[11px] text-[var(--a-accent)] hover:underline">Preview draft ↗</a>
+
           <div className="flex items-center gap-2">
             <button
               onClick={publish}
-              disabled={publishing}
-              className="flex-1 h-9 bg-[var(--a-cta)] hover:bg-[var(--a-cta-hover)] disabled:opacity-60 text-white text-sm font-semibold rounded-md"
+              disabled={publishing || (page.isPublished && !hasUnpublished)}
+              className="flex-1 h-9 bg-[var(--a-cta)] hover:bg-[var(--a-cta-hover)] disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm font-semibold rounded-md"
             >
-              {publishing ? 'Publishing…' : page.isPublished ? `Publish · v${page.version + 1}` : 'Publish first version'}
+              {publishing ? 'Publishing…' : !page.isPublished ? 'Publish (go live)' : hasUnpublished ? 'Publish changes' : 'Published ✓'}
             </button>
             <button
               onClick={async () => {
@@ -156,6 +175,10 @@ export default function PageEditor({ initial }: { initial: Page }) {
               History
             </button>
           </div>
+
+          <p className="text-[10px] text-[var(--a-ink-faint)] leading-snug">
+            Edits save automatically as a private draft. Click Publish to update the live page.
+          </p>
         </div>
       </div>
 
@@ -293,7 +316,7 @@ function BlockRow({ block, selected, onSelect, onRemove }: { block: Block; selec
     <div
       ref={setNodeRef}
       style={style}
-      className={`mx-2 my-1 flex items-center gap-2 rounded-md px-2 py-2 cursor-pointer transition-colors ${
+      className={`group mx-2 my-1 flex items-center gap-2 rounded-md px-2 py-2 cursor-pointer transition-colors ${
         selected ? 'bg-[var(--a-accent)]/15 border border-[var(--a-accent)]/30' : 'hover:bg-white/5 border border-transparent'
       }`}
       onClick={onSelect}
