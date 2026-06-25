@@ -20,6 +20,22 @@ interface Order {
 
 function money(c: number) { return `$${(c / 100).toFixed(2)}` }
 
+const STATUS_LABEL: Record<string, string> = {
+  new: 'New', confirmed: 'Confirmed (paid)', in_progress: 'In progress',
+  ready: 'Ready', delivered: 'Delivered', cancelled: 'Cancelled', refunded: 'Refunded',
+}
+
+// Plain-language "what to do next" based on where the order is.
+function nextStep(order: Order): string {
+  if (order.status === 'cancelled' || order.status === 'refunded') return ''
+  if (order.status === 'delivered') return 'Delivered. Nothing left to do.'
+  const proof = order.metadata?.proof?.status
+  if (!proof || proof === 'needed') return 'Design the proof and send it to the customer to approve.'
+  if (proof === 'sent') return 'Waiting on the customer to approve the proof.'
+  if (order.status !== 'ready') return 'Proof approved. Engrave it, then move the order to Ready.'
+  return 'Engraved and ready. Deliver it, then mark it Delivered.'
+}
+
 export default function OrderDetailPage() {
   const params = useParams<{ id: string }>()
   const [order, setOrder] = useState<Order | null>(null)
@@ -76,9 +92,15 @@ export default function OrderDetailPage() {
           onChange={e => setStatus(e.target.value)}
           className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[#7FCFD4]"
         >
-          {['new','confirmed','in_progress','ready','delivered','cancelled','refunded'].map(s => <option key={s} value={s}>{s}</option>)}
+          {['new','confirmed','in_progress','ready','delivered','cancelled','refunded'].map(s => <option key={s} value={s}>{STATUS_LABEL[s] ?? s}</option>)}
         </select>
       </div>
+
+      {nextStep(order) && (
+        <div className="mb-6 bg-white/[0.04] border-l-2 border-[var(--a-accent)] rounded-lg px-4 py-3">
+          <p className="text-sm text-[var(--a-ink)]"><span className="font-semibold">Next step:</span> {nextStep(order)}</p>
+        </div>
+      )}
 
       {/* Proof workflow — the promise is "nothing engraves until approved" */}
       <div className="flex items-center gap-2 mb-6 bg-[var(--a-panel)] border border-[var(--a-line)] rounded-xl px-4 py-3">
@@ -104,7 +126,13 @@ export default function OrderDetailPage() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <div className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-xl p-4">
           <p className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)] mb-1">Customer</p>
-          <p className="text-sm text-[var(--a-ink)]">{order.email}</p>
+          <p className="text-sm text-[var(--a-ink)] break-all">{order.email}</p>
+          <div className="flex gap-2 mt-2">
+            <a href={`mailto:${order.email}`} className="text-xs px-2.5 py-1 rounded-md bg-white/5 hover:bg-white/10 text-[var(--a-ink-soft)] hover:text-[var(--a-ink)] transition-colors">Email</a>
+            {order.fulfillmentAddress?.phone && (
+              <a href={`sms:${order.fulfillmentAddress.phone}`} className="text-xs px-2.5 py-1 rounded-md bg-white/5 hover:bg-white/10 text-[var(--a-ink-soft)] hover:text-[var(--a-ink)] transition-colors">Text</a>
+            )}
+          </div>
         </div>
         <div className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-xl p-4">
           <p className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)] mb-1">Fulfillment</p>
