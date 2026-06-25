@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { portfolioItems } from '@/lib/portfolio'
 import { HERO_WORDS as WORDS } from '@/lib/hero-words'
@@ -66,8 +67,7 @@ export default function SiteHero({ eyebrow, heading, accent = 'coral', children 
               transform: i === bg ? 'scale(1)' : 'scale(1.08)',
             }}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={img.src} alt={img.alt} className="h-full w-full object-cover" />
+            <Image src={img.src} alt="" fill sizes="100vw" quality={55} priority={i === 0} className="object-cover" />
           </div>
         ))}
         <div className="absolute inset-0" style={{ backgroundColor: 'var(--hero-film)' }} />

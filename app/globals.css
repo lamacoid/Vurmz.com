@@ -34,7 +34,10 @@ body.is-admin > main {
   --feature-ink: #DED6C3;
   --feature-soft: rgba(222, 214, 195, 0.72);
   --feature-accent: #7FCFD4;
-  --eyebrow: #C67A6F;
+  /* Coral for small text/labels. Deepened from the display coral (#C67A6F) to a
+     dusty clay so it clears WCAG AA (≈4.6:1) on paper; the bright coral lives on
+     in large hero display type (SiteHero) and the laser-red accent. */
+  --eyebrow: #8A4943;
   --header-bg: rgba(222, 214, 195, 0.85);
   --header-border: rgba(22, 82, 92, 0.12);
   --logo-filter: brightness(0);

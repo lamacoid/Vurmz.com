@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/api/'],
+        disallow: ['/api/', '/account/', '/checkout/', '/admin/'],
       },
     ],
     sitemap: 'https://www.vurmz.com/sitemap.xml',

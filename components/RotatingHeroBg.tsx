@@ -1,6 +1,6 @@
 'use client'
-/* eslint-disable @next/next/no-img-element */
 import { useState, useEffect } from 'react'
+import Image from 'next/image'
 import { portfolioItems } from '@/lib/portfolio'
 
 const IMAGES = portfolioItems.map((i) => ({ src: i.src, alt: i.label }))
@@ -32,7 +32,7 @@ export default function RotatingHeroBg() {
             transform: idx === i ? 'scale(1)' : 'scale(1.08)',
           }}
         >
-          <img src={img.src} alt={img.alt} className="h-full w-full object-cover" />
+          <Image src={img.src} alt="" fill sizes="100vw" quality={55} priority={idx === 0} className="object-cover" />
         </div>
       ))}
       <div className="absolute inset-0" style={{ backgroundColor: 'var(--hero-film)' }} />
