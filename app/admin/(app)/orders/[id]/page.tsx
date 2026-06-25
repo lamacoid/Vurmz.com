@@ -18,7 +18,23 @@ interface Order {
   }
 }
 
+interface Customer {
+  id: string | null
+  name: string | null
+  phone: string | null
+  company: string | null
+  orderCount: number
+  lifetimeValueCents: number
+}
+
 function money(c: number) { return `$${(c / 100).toFixed(2)}` }
+
+const IMAGE_EXT = /\.(png|jpe?g|gif|webp|avif|svg|bmp|heic)$/i
+function isImage(filename: string) { return IMAGE_EXT.test(filename) }
+function fileKind(filename: string): string {
+  const m = filename.match(/\.([a-z0-9]+)$/i)
+  return m ? m[1].toUpperCase() : 'FILE'
+}
 
 const STATUS_LABEL: Record<string, string> = {
   new: 'New', confirmed: 'Confirmed (paid)', in_progress: 'In progress',
@@ -40,6 +56,7 @@ export default function OrderDetailPage() {
   const params = useParams<{ id: string }>()
   const [order, setOrder] = useState<Order | null>(null)
   const [items, setItems] = useState<OrderItem[]>([])
+  const [customer, setCustomer] = useState<Customer | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -47,10 +64,11 @@ export default function OrderDetailPage() {
     fetch(`/api/admin/orders/${params.id}`)
       .then(r => r.json())
       .then(j => {
-        const parsed = j as { data?: { order: Order; items: OrderItem[] } }
+        const parsed = j as { data?: { order: Order; items: OrderItem[]; customer?: Customer } }
         if (parsed.data) {
           setOrder(parsed.data.order)
           setItems(parsed.data.items)
+          setCustomer(parsed.data.customer ?? null)
         }
         setLoading(false)
       })
@@ -102,6 +120,44 @@ export default function OrderDetailPage() {
         </div>
       )}
 
+      {/* What to make — the at-a-glance job card so the actual ask is never buried */}
+      <div className="mb-6 bg-[var(--a-panel)] border border-[var(--a-line)] rounded-xl p-5">
+        <p className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)] mb-3">What to make</p>
+        <ul className="space-y-3">
+          {items.map(it => {
+            const eng = it.metadata?.engraving
+            const hasFiles = (order.metadata?.attachments?.length ?? 0) > 0
+            return (
+              <li key={it.id} className="flex gap-3">
+                {eng?.element?.thumb ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={eng.element.thumb} alt="" className="h-12 w-12 flex-shrink-0 object-contain bg-[#f0ebe0] rounded p-1" />
+                ) : (
+                  <span className="h-12 w-12 flex-shrink-0 rounded bg-white/5 grid place-items-center text-lg" aria-hidden>🛠️</span>
+                )}
+                <div className="min-w-0">
+                  <p className="text-sm font-medium text-[var(--a-ink)]">{it.qty}× {it.nameSnapshot}</p>
+                  {eng?.text ? (
+                    <p className="text-sm text-[var(--a-ink-soft)]">Engrave <span className="text-[var(--a-ink)] font-medium">“{eng.text}”</span>{eng.fontLabel ? ` in ${eng.fontLabel}` : ''}{eng.placement ? ` · ${eng.placement}` : ''}</p>
+                  ) : (
+                    <p className="text-sm text-[var(--a-ink-faint)]">No engraving text given{hasFiles ? ' — check the customer file below' : ''}</p>
+                  )}
+                  {eng?.element && (
+                    <p className="text-sm text-[var(--a-ink-soft)]">Design: <span className="text-[var(--a-ink)]">{eng.element.label}</span></p>
+                  )}
+                </div>
+              </li>
+            )
+          })}
+        </ul>
+        {(order.metadata?.attachments?.length ?? 0) > 0 && (
+          <p className="text-xs text-[var(--a-ink-faint)] mt-3 pt-3 border-t border-[var(--a-line)]">📎 {order.metadata!.attachments!.length} customer file{order.metadata!.attachments!.length === 1 ? '' : 's'} attached — see previews below.</p>
+        )}
+        {order.notes && (
+          <p className="text-sm text-[var(--a-ink-soft)] mt-3 pt-3 border-t border-[var(--a-line)] whitespace-pre-wrap"><span className="text-[var(--a-ink-faint)]">Note from customer:</span> {order.notes}</p>
+        )}
+      </div>
+
       {/* Proof workflow — the promise is "nothing engraves until approved" */}
       <div className="flex items-center gap-2 mb-6 bg-[var(--a-panel)] border border-[var(--a-line)] rounded-xl px-4 py-3">
         <span className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)] mr-1">Proof</span>
@@ -126,11 +182,24 @@ export default function OrderDetailPage() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <div className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-xl p-4">
           <p className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)] mb-1">Customer</p>
-          <p className="text-sm text-[var(--a-ink)] break-all">{order.email}</p>
+          {customer?.name
+            ? <p className="text-sm font-medium text-[var(--a-ink)]">{customer.name}</p>
+            : <p className="text-sm font-medium text-[var(--a-ink-faint)]">Guest (no name on file)</p>}
+          <p className="text-xs text-[var(--a-ink-soft)] break-all">{order.email}</p>
+          {customer?.company && <p className="text-xs text-[var(--a-ink-soft)]">{customer.company}</p>}
+          {customer && customer.orderCount > 1 && (
+            <p className="text-[11px] text-[var(--a-accent)] mt-1">Returning · {customer.orderCount} orders · {money(customer.lifetimeValueCents)} lifetime</p>
+          )}
+          {customer?.id && customer.orderCount <= 1 && (
+            <p className="text-[11px] text-[var(--a-ink-faint)] mt-1">Known contact</p>
+          )}
           <div className="flex gap-2 mt-2">
             <a href={`mailto:${order.email}`} className="text-xs px-2.5 py-1 rounded-md bg-white/5 hover:bg-white/10 text-[var(--a-ink-soft)] hover:text-[var(--a-ink)] transition-colors">Email</a>
-            {order.fulfillmentAddress?.phone && (
-              <a href={`sms:${order.fulfillmentAddress.phone}`} className="text-xs px-2.5 py-1 rounded-md bg-white/5 hover:bg-white/10 text-[var(--a-ink-soft)] hover:text-[var(--a-ink)] transition-colors">Text</a>
+            {(customer?.phone || order.fulfillmentAddress?.phone) && (
+              <a href={`sms:${customer?.phone || order.fulfillmentAddress?.phone}`} className="text-xs px-2.5 py-1 rounded-md bg-white/5 hover:bg-white/10 text-[var(--a-ink-soft)] hover:text-[var(--a-ink)] transition-colors">Text</a>
+            )}
+            {customer?.id && (
+              <Link href={`/admin/customers/${customer.id}`} className="text-xs px-2.5 py-1 rounded-md bg-white/5 hover:bg-white/10 text-[var(--a-ink-soft)] hover:text-[var(--a-ink)] transition-colors">Profile</Link>
             )}
           </div>
         </div>
@@ -213,21 +282,35 @@ export default function OrderDetailPage() {
 
       {(order.metadata?.attachments?.length ?? 0) > 0 && (
         <div className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-xl p-4">
-          <p className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)] mb-2">Customer files</p>
-          <ul className="space-y-2">
-            {order.metadata!.attachments!.map(a => (
-              <li key={a.key}>
+          <p className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)] mb-3">Customer files</p>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            {order.metadata!.attachments!.map(a => {
+              const href = `/api/admin/r2/${a.key}`
+              return (
                 <a
-                  href={`/api/admin/r2/${a.key}`}
+                  key={a.key}
+                  href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-sm text-[var(--a-accent)] hover:text-[var(--a-ink)] transition-colors"
+                  className="group block rounded-lg border border-[var(--a-line)] overflow-hidden hover:border-[var(--a-accent)] transition-colors"
+                  title={a.filename}
                 >
-                  📎 {a.filename}
+                  {isImage(a.filename) ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={href} alt={a.filename} className="h-32 w-full object-contain bg-[#f0ebe0]" loading="lazy" />
+                  ) : (
+                    <div className="h-32 w-full grid place-items-center bg-white/5">
+                      <div className="text-center">
+                        <div className="text-3xl" aria-hidden>📄</div>
+                        <div className="mt-1 text-[10px] font-mono text-[var(--a-ink-faint)]">{fileKind(a.filename)}</div>
+                      </div>
+                    </div>
+                  )}
+                  <p className="px-2 py-1.5 text-[11px] text-[var(--a-ink-soft)] group-hover:text-[var(--a-ink)] truncate">{a.filename}</p>
                 </a>
-              </li>
-            ))}
-          </ul>
+              )
+            })}
+          </div>
         </div>
       )}
     </div>

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import { withAdminAuth } from '@/lib/auth/admin'
 import { getOrderById, listOrderItems, updateOrderStatus, setOrderProof, type OrderStatus, type ProofStatus } from '@/lib/db/repos/orders'
+import { getCustomerById, getCustomerByEmail } from '@/lib/db/repos/customers'
 import { audit } from '@/lib/audit'
 import { getClientIp, getUserAgent } from '@/lib/auth/session'
 
@@ -13,7 +14,21 @@ export async function GET(req: NextRequest, ctx: { params: Promise<{ id: string 
     const order = await getOrderById(id)
     if (!order) return NextResponse.json({ ok: false, error: { code: 'NOT_FOUND' } }, { status: 404 })
     const items = await listOrderItems(id)
-    return NextResponse.json({ ok: true, data: { order, items } })
+    // Resolve who this is: prefer the linked customer record, fall back to a
+    // record matching the order email (covers guest checkouts that later get a
+    // customer row). Name also falls back to the ship-to name on the order.
+    const c = order.customerId
+      ? await getCustomerById(order.customerId)
+      : await getCustomerByEmail(order.email)
+    const customer = {
+      id: c?.id ?? null,
+      name: c?.name || order.fulfillmentAddress?.name || null,
+      phone: c?.phone || order.fulfillmentAddress?.phone || null,
+      company: c?.company ?? null,
+      orderCount: c?.orderCount ?? 0,
+      lifetimeValueCents: c?.lifetimeValueCents ?? 0,
+    }
+    return NextResponse.json({ ok: true, data: { order, items, customer } })
   })
 }
 

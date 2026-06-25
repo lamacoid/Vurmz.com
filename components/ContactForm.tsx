@@ -61,7 +61,7 @@ export default function ContactForm() {
     return (
       <div className="bg-[var(--feature)]/10 border border-vurmz-teal/30 rounded-xl p-8 text-center">
         <CheckCircleIcon className="w-12 h-12 text-[var(--eyebrow)] mx-auto mb-4" />
-        <h3 className="text-xl font-semibold text-white mb-2">Message Sent</h3>
+        <h3 className="text-xl font-semibold text-[var(--ink)] mb-2">Message Sent</h3>
         <p className="text-[var(--ink-soft)] mb-4">
           Thanks for reaching out. {siteInfo.founder.name} will get back to you shortly.
         </p>
@@ -88,7 +88,7 @@ export default function ContactForm() {
           maxLength={100}
           value={formData.name}
           onChange={e => setFormData(prev => ({ ...prev, name: e.target.value }))}
-          className="w-full px-4 py-3 bg-[var(--page)] border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-vurmz-teal focus:ring-1 focus:ring-vurmz-teal outline-none transition-colors"
+          className="w-full px-4 py-3 bg-[var(--surface)] border border-[var(--hairline)] rounded-lg text-[var(--ink)] placeholder-[var(--ink-soft)] focus:border-vurmz-teal focus:ring-1 focus:ring-vurmz-teal outline-none transition-colors"
           placeholder="Your name"
         />
       </div>
@@ -105,7 +105,7 @@ export default function ContactForm() {
             maxLength={254}
             value={formData.email}
             onChange={e => setFormData(prev => ({ ...prev, email: e.target.value }))}
-            className="w-full px-4 py-3 bg-[var(--page)] border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-vurmz-teal focus:ring-1 focus:ring-vurmz-teal outline-none transition-colors"
+            className="w-full px-4 py-3 bg-[var(--surface)] border border-[var(--hairline)] rounded-lg text-[var(--ink)] placeholder-[var(--ink-soft)] focus:border-vurmz-teal focus:ring-1 focus:ring-vurmz-teal outline-none transition-colors"
             placeholder="you@company.com"
           />
         </div>
@@ -119,7 +119,7 @@ export default function ContactForm() {
             maxLength={30}
             value={formData.phone}
             onChange={e => setFormData(prev => ({ ...prev, phone: e.target.value }))}
-            className="w-full px-4 py-3 bg-[var(--page)] border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-vurmz-teal focus:ring-1 focus:ring-vurmz-teal outline-none transition-colors"
+            className="w-full px-4 py-3 bg-[var(--surface)] border border-[var(--hairline)] rounded-lg text-[var(--ink)] placeholder-[var(--ink-soft)] focus:border-vurmz-teal focus:ring-1 focus:ring-vurmz-teal outline-none transition-colors"
             placeholder="(555) 555-5555"
           />
         </div>
@@ -133,7 +133,7 @@ export default function ContactForm() {
           id="productInterest"
           value={formData.productInterest}
           onChange={e => setFormData(prev => ({ ...prev, productInterest: e.target.value }))}
-          className="w-full px-4 py-3 bg-[var(--page)] border border-gray-700 rounded-lg text-white focus:border-vurmz-teal focus:ring-1 focus:ring-vurmz-teal outline-none transition-colors"
+          className="w-full px-4 py-3 bg-[var(--surface)] border border-[var(--hairline)] rounded-lg text-[var(--ink)] focus:border-vurmz-teal focus:ring-1 focus:ring-vurmz-teal outline-none transition-colors"
         >
           <option value="">Select a product (optional)</option>
           {productOptions.map(opt => (
@@ -153,7 +153,7 @@ export default function ContactForm() {
           maxLength={5000}
           value={formData.message}
           onChange={e => setFormData(prev => ({ ...prev, message: e.target.value }))}
-          className="w-full px-4 py-3 bg-[var(--page)] border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-vurmz-teal focus:ring-1 focus:ring-vurmz-teal outline-none transition-colors resize-none"
+          className="w-full px-4 py-3 bg-[var(--surface)] border border-[var(--hairline)] rounded-lg text-[var(--ink)] placeholder-[var(--ink-soft)] focus:border-vurmz-teal focus:ring-1 focus:ring-vurmz-teal outline-none transition-colors resize-none"
           placeholder="Tell me about your project. What you need, quantity, timeline..."
         />
       </div>

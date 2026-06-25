@@ -16,9 +16,9 @@ export default function ServicesLayout({ children }: { children: React.ReactNode
   return (
     <div className="bg-[var(--page)] text-[var(--ink)]" data-theme="services">
       <SiteHeader variant="services" />
-      <main className="min-h-screen">
+      <div className="min-h-screen">
         {children}
-      </main>
+      </div>
       <SiteFooter />
       <ScrollGlare />
     </div>

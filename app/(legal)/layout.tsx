@@ -8,7 +8,7 @@ export default function LegalLayout({ children }: { children: React.ReactNode })
   return (
     <div className="bg-[var(--page)] text-[var(--ink)]" data-theme="services">
       <SiteHeader variant="services" />
-      <main className="min-h-screen">{children}</main>
+      <div className="min-h-screen">{children}</div>
       <SiteFooter />
     </div>
   )

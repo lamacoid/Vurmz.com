@@ -48,7 +48,7 @@ export default function UnsubscribeForm({ initialEmail }: { initialEmail: string
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full px-4 py-3 bg-[var(--page)] border border-gray-700 rounded-md text-white placeholder-gray-500 focus:border-vurmz-teal focus:ring-1 focus:ring-vurmz-teal outline-none"
+          className="w-full px-4 py-3 bg-[var(--surface)] border border-[var(--hairline)] rounded-md text-[var(--ink)] placeholder-[var(--ink-soft)] focus:border-vurmz-teal focus:ring-1 focus:ring-vurmz-teal outline-none"
         />
       </div>
       {status === 'error' && <p className="text-red-400 text-sm">{message}</p>}

@@ -81,7 +81,7 @@ export default function ContactPage() {
       </section>
 
       {/* Contact Form + Info */}
-      <section className="py-10 bg-[#1f2523]">
+      <section className="py-10 bg-[var(--page)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Contact Form */}
@@ -155,7 +155,7 @@ export default function ContactPage() {
                 <h3 className="font-semibold text-[var(--ink)] mb-3">Service Area</h3>
                 <div className="flex flex-wrap gap-2">
                   {siteInfo.serviceAreas.map((area) => (
-                    <span key={area} className="bg-[var(--page)] border border-gray-700 text-[var(--ink-soft)] px-3 py-1 text-sm rounded">
+                    <span key={area} className="bg-[var(--surface)] border border-[var(--hairline)] text-[var(--ink-soft)] px-3 py-1 text-sm rounded">
                       {area}
                     </span>
                   ))}
@@ -177,7 +177,7 @@ export default function ContactPage() {
           <h2 className="text-2xl font-bold text-[var(--ink)] mb-6 text-center">Common Questions</h2>
           <div className="max-w-3xl mx-auto space-y-4">
             {faqItems.map((item) => (
-              <div key={item.question} className="bg-[#1f2523] p-6 border border-gray-700 rounded-lg">
+              <div key={item.question} className="bg-[var(--surface)] p-6 border border-[var(--hairline)] rounded-lg">
                 <h3 className="font-semibold text-[var(--ink)] mb-2">{item.question}</h3>
                 <p className="text-[var(--ink-soft)]">{item.answer}</p>
               </div>

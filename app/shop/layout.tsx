@@ -22,7 +22,7 @@ export default function ShopLayout({ children }: { children: React.ReactNode }) 
       />
       <div className="relative z-[1]">
         <SiteHeader variant="shop" />
-        <main className="min-h-screen">{children}</main>
+        <div className="min-h-screen">{children}</div>
         <CartDrawer />
         <SiteFooter />
       </div>

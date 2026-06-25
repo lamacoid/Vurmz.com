@@ -23,6 +23,7 @@ body.is-admin > main {
    roles swap. Pages use these tokens (var(--page), var(--ink), ...) so they
    respond to the system color-scheme preference. */
 :root {
+  color-scheme: light;
   --page: #DED6C3;
   --ink: #16525C;
   --ink-soft: #4F5D5B;
@@ -51,6 +52,7 @@ body.is-admin > main {
    choice, falling back to the system preference) so the header toggle can
    override the OS setting. */
 :root.dark {
+  color-scheme: dark;
   --page: #16525C;
   --ink: #DED6C3;
   --ink-soft: rgba(222, 214, 195, 0.72);

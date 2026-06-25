@@ -56,10 +56,10 @@ export default function Page() {
     <div className="bg-[var(--page)] text-[var(--ink-soft)]" data-theme="shop">
       {/* Smooth anchor scrolling + let the color bands butt against their
           divider lines (override the global 2.5rem section gap on this page). */}
-      <style dangerouslySetInnerHTML={{ __html: 'html{scroll-behavior:smooth}#main-content>section+section{margin-top:0}' }} />
+      <style dangerouslySetInnerHTML={{ __html: 'html{scroll-behavior:smooth}#home-sections>section+section{margin-top:0}' }} />
 
       <SiteHeader variant="shop" />
-      <main id="main-content">
+      <div id="home-sections">
         {/* ═══════════ HERO — animated teal VURMZ logo over rotating work photos ═══════════ */}
         <section className="relative px-4 pt-32 sm:pt-36 pb-12 sm:pb-14 text-center overflow-hidden">
           <RotatingHeroBg />
@@ -282,7 +282,7 @@ export default function Page() {
             <ContactForm />
           </div>
         </section>
-      </main>
+      </div>
       <SiteFooter />
     </div>
   )
