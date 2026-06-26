@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!product || !product.isPublished || product.soldAt) return { title: 'Not found' }
   return {
     title: product.name,
-    description: product.description || `${product.name} — custom laser engraved by VURMZ in Centennial, CO.`,
+    description: product.description || `${product.name}, custom laser engraved by VURMZ in Centennial, CO.`,
     alternates: { canonical: `/shop/p/${slug}` },
   }
 }

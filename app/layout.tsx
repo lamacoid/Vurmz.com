@@ -19,7 +19,7 @@ const fraunces = Fraunces({
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.vurmz.com'),
   title: {
-    default: 'VURMZ | Laser Engraving — Shop & Services',
+    default: 'VURMZ | Laser Engraving · Shop & Services',
     template: '%s | VURMZ Laser Engraving',
   },
   description: 'VURMZ laser engraving in Centennial, CO. Shop engraved products or get custom engraving services for your business. Next-day turnaround, hand-delivered in South Denver metro.',
@@ -34,20 +34,20 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: 'https://www.vurmz.com',
     siteName: 'VURMZ',
-    title: 'VURMZ | Laser Engraving — Shop & Services',
+    title: 'VURMZ | Laser Engraving · Shop & Services',
     description: 'VURMZ laser engraving in Centennial, CO. Shop engraved products or get custom services for your business.',
     images: [
       {
         url: 'https://www.vurmz.com/images/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'VURMZ Laser Engraving — Metal business card engraved with logo',
+        alt: 'VURMZ Laser Engraving. Metal business card engraved with logo',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'VURMZ | Laser Engraving — Shop & Services',
+    title: 'VURMZ | Laser Engraving · Shop & Services',
     description: 'VURMZ laser engraving in Centennial, CO. Shop or get custom services.',
     images: ['https://www.vurmz.com/images/og-image.jpg'],
   },

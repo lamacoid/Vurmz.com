@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Checkout | VURMZ',
-  description: 'Checkout — VURMZ',
+  description: 'Checkout · VURMZ',
   robots: { index: false, follow: false },
 }
 

@@ -64,7 +64,7 @@ export default function Page() {
         <section className="relative px-4 pt-32 sm:pt-36 pb-12 sm:pb-14 text-center overflow-hidden">
           <RotatingHeroBg />
           <div className="relative z-10">
-          <h1 className="sr-only">VURMZ — Laser Engraving in {siteInfo.address}</h1>
+          <h1 className="sr-only">VURMZ Laser Engraving in {siteInfo.address}</h1>
           {/* Light mode: solid deep-teal wordmark on the airy paper hero. */}
           <div className="hero-logo-light mx-auto mb-6 justify-center">
             <VurmzLogo className="h-14 sm:h-[72px]" color="var(--ink)" />
@@ -166,7 +166,7 @@ export default function Page() {
             <h2 className="text-2xl font-bold text-white text-center mb-8">How it works</h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
               {[
-                { n: 1, h: 'Pick or text', p: 'Buy a ready product from the shop, or text me to engrave something you bring — from $35.' },
+                { n: 1, h: 'Pick or text', p: 'Buy a ready product from the shop, or text me to engrave something you bring, from $35.' },
                 { n: 2, h: 'Approve your proof', p: 'Before anything is cut, I send a photo. Nothing runs until you say go.' },
                 { n: 3, h: 'Delivered to you', p: 'Hand-delivered free across the south Denver metro ($100+), or shipped if you’re farther out.' },
               ].map((step) => (
@@ -277,7 +277,7 @@ export default function Page() {
             <p className="text-[var(--ink-soft)] text-sm text-center mb-8">
               Or skip the form and text me at{' '}
               <a href={getSmsLink()} className="text-[var(--eyebrow)] font-semibold hover:underline">{siteInfo.phone}</a>
-              {' '}— that&apos;s usually faster.
+              , that&apos;s usually faster.
             </p>
             <ContactForm />
           </div>

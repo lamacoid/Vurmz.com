@@ -44,12 +44,12 @@ export default function ShopHome() {
       {/* Shared brand hero */}
       <SiteHero
         eyebrow="For You"
-        heading="Custom Laser Engraving — Gifts, Knives, Tumblers & More"
+        heading="Custom Laser Engraving: Gifts, Knives, Tumblers & More"
         accent="coral"
         baseColor="#16525C"
       >
         <p className="text-[var(--ink-soft)] text-base sm:text-lg leading-relaxed mb-7 max-w-lg mx-auto">
-          Engraved gifts, custom coasters, home decor — or hit Bring Your Own and I&apos;ll
+          Engraved gifts, custom coasters, home decor, or hit Bring Your Own and I&apos;ll
           mark the thing you already love. Hand-delivered across {siteInfo.city}.
         </p>
         <a
@@ -57,7 +57,7 @@ export default function ShopHome() {
           className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#C67A6F] text-white font-semibold text-base rounded-sm hover:bg-[#B0675D] transition-colors shadow-lg shadow-black/20"
         >
           <ChatBubbleLeftIcon className="w-5 h-5" />
-          Text me — {siteInfo.phone}
+          Text me at {siteInfo.phone}
         </a>
         <p className="text-[var(--ink-soft)] text-sm mt-4">No forms, no wait.</p>
       </SiteHero>
@@ -133,8 +133,8 @@ export default function ShopHome() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
             {[
               { h: 'Bring your own', p: 'Have a knife, tumbler, laptop, or anything else? Bring it. I engrave it and hand it back.' },
-              { h: 'I source it', p: 'Tell me what you want. Cutting boards, tumblers, gifts — I find it, engrave it, and deliver it.' },
-              { h: 'Shop my stock', p: 'I keep pens, metal cards, tags, keychains, and other basics on hand — ready to engrave right away.' },
+              { h: 'I source it', p: 'Tell me what you want. Cutting boards, tumblers, gifts. I find it, engrave it, and deliver it.' },
+              { h: 'Shop my stock', p: 'I keep pens, metal cards, tags, keychains, and other basics on hand, ready to engrave right away.' },
             ].map((opt) => (
               <div key={opt.h} className="bg-[var(--surface)] backdrop-blur-xl border border-[var(--hairline)] rounded-sm p-5">
                 <h3 className="font-bold text-[var(--ink)] mb-2">{opt.h}</h3>
@@ -143,7 +143,7 @@ export default function ShopHome() {
             ))}
           </div>
           <div className="mt-8 text-center">
-            <p className="text-[var(--ink-soft)] text-sm mb-2">Metal, wood, glass, leather, acrylic, plastic, stone — if it&apos;s solid, I can mark it.</p>
+            <p className="text-[var(--ink-soft)] text-sm mb-2">Metal, wood, glass, leather, acrylic, plastic, stone. If it&apos;s solid, I can mark it.</p>
             <div className="flex flex-wrap justify-center gap-2 mt-4">
               {[
                 'Knives', 'Tumblers', 'Water Bottles', 'Cutting Boards', 'Laptops',
@@ -178,7 +178,7 @@ export default function ShopHome() {
             className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#C67A6F] text-white font-semibold text-base rounded-sm hover:bg-[#B0675D] transition-colors shadow-lg shadow-black/20"
           >
             <ChatBubbleLeftIcon className="w-5 h-5" />
-            Text {siteInfo.founder.name} — {siteInfo.phone}
+            Text {siteInfo.founder.name} at {siteInfo.phone}
           </a>
         </div>
       </section>
