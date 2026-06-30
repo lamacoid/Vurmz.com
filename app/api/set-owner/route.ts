@@ -6,7 +6,11 @@ import { getRequestContext } from '@cloudflare/next-on-pages'
 export async function GET(req: NextRequest) {
   const key = req.nextUrl.searchParams.get('key')
   const { env } = getRequestContext()
-  const expectedKey = env.OWNER_KEY || 'vurmz-zach-2024'
+  const expectedKey = env.OWNER_KEY
+  // No guessable fallback: if the secret isn't set, the endpoint is closed.
+  if (!expectedKey) {
+    return NextResponse.json({ error: 'Server misconfigured' }, { status: 500 })
+  }
 
   if (key !== expectedKey) {
     return NextResponse.json({ error: 'nope' }, { status: 403 })

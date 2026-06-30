@@ -14,6 +14,9 @@ export const runtime = 'edge'
  * this prefix gate, any private R2 key could be fetched anonymously (IDOR).
  */
 const PUBLIC_KEY_RE = /^media\/[0-9a-f]{2}\/[0-9a-f]{2}\/[0-9a-f]{64}(\.[a-z0-9]+)?$/
+// Only these render inline. Any other stored type (e.g. an SVG) is forced to
+// download instead of executing as same-origin script (stored-XSS defense).
+const INLINE_TYPES = new Set(['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/avif'])
 
 export async function GET(_req: NextRequest, ctx: { params: Promise<{ key: string[] }> }) {
   const { key } = await ctx.params
@@ -21,8 +24,11 @@ export async function GET(_req: NextRequest, ctx: { params: Promise<{ key: strin
   if (!PUBLIC_KEY_RE.test(r2Key)) return new NextResponse('Not found', { status: 404 })
   const obj = await getObject(r2Key)
   if (!obj) return new NextResponse('Not found', { status: 404 })
+  const contentType = obj.httpMetadata?.contentType || 'application/octet-stream'
   const headers = new Headers()
-  headers.set('Content-Type', obj.httpMetadata?.contentType || 'application/octet-stream')
+  headers.set('Content-Type', contentType)
+  headers.set('X-Content-Type-Options', 'nosniff')
+  if (!INLINE_TYPES.has(contentType)) headers.set('Content-Disposition', 'attachment')
   headers.set('Cache-Control', 'public, max-age=31536000, immutable')
   if (obj.size) headers.set('Content-Length', String(obj.size))
   return new NextResponse(obj.body as unknown as ReadableStream, { headers })

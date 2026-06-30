@@ -33,9 +33,9 @@ export async function POST(req: NextRequest) {
     ).bind(path, date, hour, referrer, country).run()
 
     return NextResponse.json({ ok: true, tracked: true })
-  } catch (e: any) {
-    // Don't fail silently but don't break the page either
-    return NextResponse.json({ ok: false, error: e.message }, { status: 500 })
+  } catch {
+    // Don't leak internal error details to the client.
+    return NextResponse.json({ ok: false }, { status: 500 })
   }
 }
 

@@ -14,6 +14,12 @@ const ALLOWED_ORIGINS = [
 const RATE_LIMIT_MAX = 3
 const RATE_LIMIT_WINDOW_SECONDS = 600
 
+// Escape user-supplied values before they land in HTML emails. The email regex
+// below permits angle brackets/quotes (it only excludes whitespace and @), so
+// both name and address must be escaped.
+const escapeHtml = (s: string) =>
+  s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;')
+
 function getClientIp(request: NextRequest): string {
   return (
     request.headers.get('cf-connecting-ip') ||
@@ -68,6 +74,7 @@ export async function POST(request: NextRequest) {
 
     const body = await request.json() as { email?: string; firstName?: string }
     const { email, firstName } = body
+    const safeFirstName = firstName ? escapeHtml(String(firstName).slice(0, 100).trim()) : ''
 
     if (!email) {
       return NextResponse.json({ error: 'Email is required.' }, { status: 400 })
@@ -158,7 +165,7 @@ export async function POST(request: NextRequest) {
               <p style="color: #666; font-size: 13px; margin-top: 4px;">Laser Engraving &middot; Denver Metro</p>
             </div>
             <p style="color: #333; font-size: 16px; line-height: 1.6;">
-              Hey${firstName ? ` ${firstName}` : ''}! Thanks for signing up.
+              Hey${safeFirstName ? ` ${safeFirstName}` : ''}! Thanks for signing up.
             </p>
             <p style="color: #555; font-size: 15px; line-height: 1.6;">
               I'll send you occasional updates — new products, materials, and stuff I'm working on. No spam, just things I think you'll actually want to see.
@@ -195,8 +202,8 @@ export async function POST(request: NextRequest) {
         html: `
           <div style="font-family: sans-serif;">
             <h3 style="color: #3CB9B2;">New Newsletter Subscriber</h3>
-            <p><strong>Email:</strong> ${email}</p>
-            ${firstName ? `<p><strong>Name:</strong> ${firstName}</p>` : ''}
+            <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+            ${safeFirstName ? `<p><strong>Name:</strong> ${safeFirstName}</p>` : ''}
             <p style="color: #888; font-size: 13px;">${addedToAudience ? "They've been added to your Resend Audience automatically." : '⚠️ RESEND_AUDIENCE_ID is not set — add this contact to your Resend Audience manually (and set the secret to automate this).'}</p>
           </div>
         `,

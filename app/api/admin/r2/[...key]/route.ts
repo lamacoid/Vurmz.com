@@ -24,6 +24,7 @@ export async function GET(req: NextRequest, ctx: { params: Promise<{ key: string
     const filename = r2Key.split('/').pop() || 'file'
     const headers = new Headers()
     headers.set('Content-Type', contentType)
+    headers.set('X-Content-Type-Options', 'nosniff')
     headers.set('Cache-Control', 'private, max-age=3600')
     headers.set(
       'Content-Disposition',

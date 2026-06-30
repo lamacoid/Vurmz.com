@@ -7,6 +7,10 @@ import { getClientIp, getUserAgent } from '@/lib/auth/session'
 
 export const runtime = 'edge'
 
+// Escape values that flow into the email HTML (item descriptions, notes).
+const esc = (s: string) =>
+  s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;')
+
 export async function POST(req: NextRequest, ctx: { params: Promise<{ id: string }> }) {
   return withAdminAuth(req, async (session) => {
     const { id } = await ctx.params
@@ -16,7 +20,7 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ id: string
     const env = getEnv()
 
     const dollars = (c: number) => `$${(c / 100).toFixed(2)}`
-    const rows = items.map(it => `<tr><td style="padding:6px 0;color:#333">${it.qty} × ${it.description}</td><td style="text-align:right;padding:6px 0">${dollars(it.totalCents)}</td></tr>`).join('')
+    const rows = items.map(it => `<tr><td style="padding:6px 0;color:#333">${it.qty} × ${esc(it.description)}</td><td style="text-align:right;padding:6px 0">${dollars(it.totalCents)}</td></tr>`).join('')
 
     if (env.RESEND_API_KEY) {
       await fetch('https://api.resend.com/emails', {
@@ -34,7 +38,7 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ id: string
                 <tr><td style="padding:10px 0;font-weight:700">Total</td><td style="text-align:right;padding:10px 0;font-weight:700">${dollars(quote.totalCents)}</td></tr>
               </table>
               ${quote.expiresAt ? `<p style="color:#555">Valid until <strong>${new Date(quote.expiresAt).toLocaleDateString()}</strong>.</p>` : ''}
-              ${quote.notes ? `<p style="color:#555;white-space:pre-wrap;border-left:3px solid #eee;padding-left:12px">${quote.notes}</p>` : ''}
+              ${quote.notes ? `<p style="color:#555;white-space:pre-wrap;border-left:3px solid #eee;padding-left:12px">${esc(quote.notes)}</p>` : ''}
               <p style="margin-top:24px;color:#555">Reply to this email to accept, request changes, or ask questions.</p>
               <p style="margin-top:32px;color:#999;font-size:12px">VURMZ · Centennial, CO · zach@vurmz.com</p>
             </div>
