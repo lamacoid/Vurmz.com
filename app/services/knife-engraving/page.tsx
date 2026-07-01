@@ -8,7 +8,7 @@ import { MARKING } from '@/lib/pricing'
 import Breadcrumbs from '@/components/Breadcrumbs'
 
 export const metadata: Metadata = {
-  title: { absolute: 'Knife Engraving | VURMZ — Centennial, CO' },
+  title: { absolute: 'Knife Engraving | VURMZ, Centennial, CO' },
   description: 'Custom knife engraving in Centennial, CO. Chef knives, pocket knives, cleavers. Names, dates, and logos marked permanently in the steel. Next-day turnaround.',
   alternates: { canonical: '/services/knife-engraving' },
   openGraph: {

@@ -94,7 +94,7 @@ export default function EngravingPicker({
           value={value.placement}
           maxLength={200}
           onChange={e => onChange({ ...value, placement: e.target.value })}
-          placeholder="e.g. centered, about 1 inch — or match my logo"
+          placeholder="e.g. centered, about 1 inch, or match my logo"
           className="w-full bg-[var(--surface)] border border-[var(--hairline)] rounded-sm px-3 py-2.5 text-sm text-[var(--ink)] placeholder:text-[var(--ink-soft)] outline-none focus:border-[#C67A6F]"
         />
         <span className="text-[11px] text-[var(--ink-soft)] block mt-1">Not sure? Leave it blank and I&apos;ll pick the spot that looks best.</span>

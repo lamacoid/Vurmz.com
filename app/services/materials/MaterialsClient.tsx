@@ -83,7 +83,7 @@ const OPTIONS = [
   {
     icon: HandRaisedIcon,
     title: 'Bring your own thing',
-    description: 'Have something you want engraved? Bring it. A knife, a tumbler, a laptop, a cutting board — if it\'s solid, I can mark it.',
+    description: 'Have something you want engraved? Bring it. A knife, a tumbler, a laptop, a cutting board, if it\'s solid, I can mark it.',
     cta: 'Text me a photo',
     sms: "Hi, I have my own item I'd like engraved",
     type: 'sms' as const,
@@ -93,7 +93,7 @@ const OPTIONS = [
     title: 'I\'ll source it',
     description: 'Tell me what you need and I\'ll find it, order it, engrave it, and deliver it. Custom projects, bulk orders, unique materials.',
     cta: 'Tell me what you need',
-    sms: "Hi, I need something specific engraved — can you source the material?",
+    sms: "Hi, I need something specific engraved, can you source the material?",
     type: 'sms' as const,
   },
 ]

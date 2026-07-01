@@ -201,7 +201,7 @@ export default function Home() {
             Items I keep on hand.
           </h2>
           <p className="text-[var(--ink-soft)] text-base leading-relaxed mb-8 max-w-2xl">
-            Pens, coasters, keychains, metal cards — engraved with your logo or text. Plus knife and tool marking: bring yours, I&apos;ll mark them.
+            Pens, coasters, keychains, metal cards, engraved with your logo or text. Plus knife and tool marking: bring yours, I&apos;ll mark them.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -222,7 +222,7 @@ export default function Home() {
             For the trades.
           </h2>
           <p className="text-[var(--ink-soft)] text-base leading-relaxed mb-8 max-w-2xl">
-            Metal service tags and installer signature tiles. The kind of thing that outlasts a sticker by 20 years. HVAC, plumbing, electrical, masonry, flooring — if you do the work, people should know who did it.
+            Metal service tags and installer signature tiles. The kind of thing that outlasts a sticker by 20 years. HVAC, plumbing, electrical, masonry, flooring: if you do the work, people should know who did it.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

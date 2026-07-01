@@ -46,7 +46,7 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ id: string
         body: JSON.stringify({
           from: 'VURMZ Invoices <invoices@vurmz.com>',
           to: customer.email,
-          subject: `Invoice ${invoice.number} from VURMZ — ${dollars(invoice.totalCents)}`,
+          subject: `Invoice ${invoice.number} from VURMZ: ${dollars(invoice.totalCents)}`,
           html,
         }),
       })

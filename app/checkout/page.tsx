@@ -192,7 +192,7 @@ export default function CheckoutPage() {
       lums.sort((x, y) => x - y)
       const spread = lums[Math.floor(lums.length * 0.9)] - lums[Math.floor(lums.length * 0.1)]
       if (spread < 90) {
-        return 'This image reads low-contrast for laser marking. I can usually clean it up — or if you have an SVG or PDF version, that engraves best.'
+        return 'This image reads low-contrast for laser marking. I can usually clean it up, or if you have an SVG or PDF version, that engraves best.'
       }
     } catch {
       // Analysis is best-effort; never stop an upload over it.
@@ -210,14 +210,14 @@ export default function CheckoutPage() {
       const res = await fetch('/api/checkout/upload', { method: 'POST', body: fd })
       const json = (await res.json()) as { ok?: boolean; data?: { key: string; filename: string }; error?: { message?: string; code?: string } }
       if (!res.ok || !json.ok || !json.data) {
-        setError(json.error?.message ?? 'Upload failed — try again or text me the file.')
+        setError(json.error?.message ?? 'Upload failed. Try again or text me the file.')
         return
       }
       const uploaded = json.data
       const warning = await checkRasterContrast(file)
       setAttachments(prev => [...prev, { key: uploaded.key, filename: uploaded.filename, warning }])
     } catch {
-      setError('Upload failed — try again or text me the file.')
+      setError('Upload failed. Try again or text me the file.')
     } finally {
       setUploading(false)
     }
@@ -335,7 +335,7 @@ export default function CheckoutPage() {
 
           <Section title="2 · Fulfillment">
             {address.postalCode.length === 5 && (
-              <p className="text-xs text-[#6B6259] mb-2">ZIP recognized — options updated.</p>
+              <p className="text-xs text-[#6B6259] mb-2">ZIP recognized, options updated.</p>
             )}
             <div className="grid grid-cols-1 gap-2">
               {options.map(opt => (
@@ -477,7 +477,7 @@ export default function CheckoutPage() {
               value={notes}
               onChange={e => setNotes(e.target.value)}
               rows={3}
-              placeholder="Placement, sizes, finishes, links to inspiration — anything I should know before I make your proof…"
+              placeholder="Placement, sizes, finishes, links to inspiration, anything I should know before I make your proof…"
               className="w-full bg-white/70 border border-[#16525C]/12 rounded-sm px-3 py-2 text-sm outline-none focus:border-[#C67A6F]"
             />
             <p className="mt-2 text-xs text-[var(--ink)] font-medium">
@@ -487,7 +487,7 @@ export default function CheckoutPage() {
             {/* Photo / logo attachments — works for guests, no account needed */}
             <div className="mt-3">
               <p className="text-xs text-[#6B6259] mb-2">
-                Have a logo or design? Attach it here — up to 3 files, 10 MB each. <span className="font-medium text-[var(--ink)]">SVG or PDF engraves best</span> (crisp lines, high contrast). Photos and PNG/JPG work too — I&apos;ll clean them up if needed. No file? Just describe it above and we&apos;ll nail it down on the proof.
+                Have a logo or design? Attach it here (up to 3 files, 10 MB each). <span className="font-medium text-[var(--ink)]">SVG or PDF engraves best</span> (crisp lines, high contrast). Photos and PNG/JPG work too, I&apos;ll clean them up if needed. No file? Just describe it above and we&apos;ll nail it down on the proof.
               </p>
               {attachments.length > 0 && (
                 <ul className="space-y-1 mb-2">
@@ -543,7 +543,7 @@ export default function CheckoutPage() {
                 <p className="text-sm text-[#6B6259] mb-3">
                   {paymentMethodAvailable
                     ? `"${chosen?.label}" is invoice-based. I'll follow up with a Square invoice once I review the order.`
-                    : 'Online payment is not yet configured — I\'ll send you a Square invoice after confirming your order.'}
+                    : 'Online payment is not yet configured. I\'ll send you a Square invoice after confirming your order.'}
                 </p>
                 <button
                   onClick={() => submitOrder('invoice_later')}
@@ -583,7 +583,7 @@ export default function CheckoutPage() {
           </div>
           <div className="border-t border-[#16525C]/10 mt-4 pt-3 space-y-1 text-sm">
             <div className="flex justify-between"><span className="text-[#6B6259]">Subtotal</span><span>{money(subtotalCents)}</span></div>
-            <div className="flex justify-between"><span className="text-[#6B6259]">{chosen?.label ?? 'Delivery'}</span><span>{chosen ? money(chosen.priceCents) : '—'}</span></div>
+            <div className="flex justify-between"><span className="text-[#6B6259]">{chosen?.label ?? 'Delivery'}</span><span>{chosen ? money(chosen.priceCents) : 'TBD'}</span></div>
             <div className="flex justify-between text-base font-bold pt-2"><span>Total</span><span>{money(totalCents)}</span></div>
           </div>
         </aside>

@@ -110,7 +110,7 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ id: string
         ok: false,
         error: {
           code: 'PAYMENT_RECORD_FAILED',
-          message: `Payment processed but confirmation failed — contact support with order ${invoice.number}.`,
+          message: `Payment processed but confirmation failed. Contact support with order ${invoice.number}.`,
         },
       }, { status: 500 })
     }

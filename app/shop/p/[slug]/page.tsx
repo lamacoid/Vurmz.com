@@ -73,7 +73,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
 
             {product.oneOff && (
               <div className="inline-flex items-center gap-2 text-xs bg-[#C67A6F]/15 text-[#C67A6F] border border-[#C67A6F]/30 px-3 py-1.5 rounded-sm mb-6">
-                Only one available — once it&rsquo;s gone, it&rsquo;s gone.
+                Only one available. Once it&rsquo;s gone, it&rsquo;s gone.
               </div>
             )}
 

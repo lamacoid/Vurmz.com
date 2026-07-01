@@ -36,7 +36,7 @@ export const portfolioItems: PortfolioItem[] = [
     customerType: 'Personal',
     leadTimeDays: 3,
     tags: ['glass', 'art', 'personal'],
-    story: 'A vintage Denver street map laser-engraved onto a beveled mirror. The reflective surface makes the map feel like it floats. Mirror engraving needs careful power tuning — too hot and the silvering lifts; too cold and the lines disappear. This one took two test passes to dial in. Hand-delivered locally.',
+    story: 'A vintage Denver street map laser-engraved onto a beveled mirror. The reflective surface makes the map feel like it floats. Mirror engraving needs careful power tuning: too hot and the silvering lifts, too cold and the lines disappear. This one took two test passes to dial in. Hand-delivered locally.',
   },
   {
     slug: 'clga-amp-faceplate',
@@ -48,7 +48,7 @@ export const portfolioItems: PortfolioItem[] = [
     customerType: 'Business',
     leadTimeDays: 4,
     tags: ['metal', 'business', 'branded-product'],
-    story: 'County Line Guitar Amps builds tube amps in Denver. They needed branded faceplates for a small production run with sharp, durable logo marking. Brushed metal takes engraving cleanly and ages well — the marks won\'t fade or peel. Recurring order; we run a fresh batch when their builds catch up.',
+    story: 'County Line Guitar Amps builds tube amps in Denver. They needed branded faceplates for a small production run with sharp, durable logo marking. Brushed metal takes engraving cleanly and ages well. The marks won\'t fade or peel. Recurring order; we run a fresh batch when their builds catch up.',
   },
   {
     slug: 'medieval-water-bottle',
@@ -60,7 +60,7 @@ export const portfolioItems: PortfolioItem[] = [
     customerType: 'Personal',
     leadTimeDays: 2,
     tags: ['metal', 'personal', 'detailed'],
-    story: 'A 360° wrap of a medieval battle scene on a stainless steel water bottle. Full-wraps require a rotary attachment that spins the bottle in sync with the laser. The detail in the figures was the test — fine line work on curved metal is unforgiving. Came out crisp.',
+    story: 'A 360° wrap of a medieval battle scene on a stainless steel water bottle. Full-wraps require a rotary attachment that spins the bottle in sync with the laser. The detail in the figures was the test. Fine line work on curved metal is unforgiving. Came out crisp.',
   },
   {
     slug: 'macbook-personalization',
@@ -72,7 +72,7 @@ export const portfolioItems: PortfolioItem[] = [
     customerType: 'Personal',
     leadTimeDays: 1,
     tags: ['metal', 'tech', 'personal'],
-    story: 'Personalize a MacBook directly on the lid — name, monogram, quote, whatever. Anodized aluminum etches to a clean white-on-grey contrast that doesn\'t fade. We mask off everything else and run shallow so the laptop\'s structural integrity is untouched. Same-day if you can drop it off.',
+    story: 'Personalize a MacBook directly on the lid: name, monogram, quote, whatever. Anodized aluminum etches to a clean white-on-grey contrast that doesn\'t fade. We mask off everything else and run shallow so the laptop\'s structural integrity is untouched. Same-day if you can drop it off.',
   },
   {
     slug: 'culinary-cleaver',
@@ -84,7 +84,7 @@ export const portfolioItems: PortfolioItem[] = [
     customerType: 'Restaurant',
     leadTimeDays: 2,
     tags: ['metal', 'kitchen', 'gift'],
-    story: 'A cleaver engraved with the chef\'s name. Knife steel varies — some take engraving easily, some need deep marking to show through finishes. I always test on the spine before touching the bevel. If you run a kitchen, I can do crew pickups: drop a stack of knives, get them back the next day.',
+    story: 'A cleaver engraved with the chef\'s name. Knife steel varies. Some take engraving easily, some need deep marking to show through finishes. I always test on the spine before touching the bevel. If you run a kitchen, I can do crew pickups: drop a stack of knives, get them back the next day.',
   },
   {
     slug: 'eye-storm-mirror',
@@ -108,7 +108,7 @@ export const portfolioItems: PortfolioItem[] = [
     customerType: 'Personal',
     leadTimeDays: 1,
     tags: ['metal', 'personal', 'gift'],
-    story: 'Geometric pattern wrapped around the bolster of a folding pocket knife. Knives like this come in often — graduation gifts, Father\'s Day, retirements. Single-piece flat-rate. Bring your blade or pick from the shop.',
+    story: 'Geometric pattern wrapped around the bolster of a folding pocket knife. Knives like this come in often: graduation gifts, Father\'s Day, retirements. Single-piece flat-rate. Bring your blade or pick from the shop.',
   },
   {
     slug: 'ipad-personalization',
@@ -120,7 +120,7 @@ export const portfolioItems: PortfolioItem[] = [
     customerType: 'Personal',
     leadTimeDays: 1,
     tags: ['metal', 'tech', 'personal'],
-    story: 'iPad back panel engraving — same process as a MacBook lid, smaller surface. Apple won\'t do this; we will. Stays clean through years of use. Most iPads we run are personal gifts.',
+    story: 'iPad back panel engraving, same process as a MacBook lid, smaller surface. Apple won\'t do this; we will. Stays clean through years of use. Most iPads we run are personal gifts.',
   },
   {
     slug: 'branded-tumbler',
@@ -156,7 +156,7 @@ export const portfolioItems: PortfolioItem[] = [
     customerType: 'Personal',
     leadTimeDays: 1,
     tags: ['plastic', 'asset-marking', 'personal'],
-    story: 'Marked an Apple charger so the owner stops losing it to housemates. Plastic marking is a different beast — the laser doesn\'t cut, it bleaches the surface. Works clean on white plastics like this one. Tiny, simple, satisfies a real problem.',
+    story: 'Marked an Apple charger so the owner stops losing it to housemates. Plastic marking is a different beast. The laser doesn\'t cut, it bleaches the surface. Works clean on white plastics like this one. Tiny, simple, satisfies a real problem.',
   },
   {
     slug: 'aluminum-artwork',

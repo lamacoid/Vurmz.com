@@ -44,8 +44,8 @@ export const SHOP_CATEGORIES: ShopCategory[] = [
     smsMessage: "Hi, I'm interested in a custom engraved gift",
     faqs: [
       { question: 'What items can you engrave?', answer: 'Wood, metal, glass, acrylic, leather, and more. If you can hold it, I can probably engrave it. Text me a photo and I\'ll tell you right away.' },
-      { question: 'Can you personalize something I already have?', answer: 'Yes — bringing your own object to mark is the Bring Your Own service ($35). This category is for gifts and keepsakes I make for you.' },
-      { question: 'How long does it take?', answer: 'Most custom gift orders are done within a few days. Rush orders are often possible — just let me know your timeline.' },
+      { question: 'Can you personalize something I already have?', answer: 'Yes, bringing your own object to mark is the Bring Your Own service ($35). This category is for gifts and keepsakes I make for you.' },
+      { question: 'How long does it take?', answer: 'Most custom gift orders are done within a few days. Rush orders are often possible, just let me know your timeline.' },
       { question: "What if I don't have the item yet?", answer: "I can source it for you. There's a $25 flat finder's fee plus the cost of the item. I'll find exactly what you need." },
       { question: 'How do I know what it will look like?', answer: "Tell me what you want and I'll make sure we're on the same page before I engrave. I get it right." },
     ],
@@ -61,8 +61,8 @@ export const SHOP_CATEGORIES: ShopCategory[] = [
     name: 'Bring Your Own',
     shortName: 'Your Item',
     tagline: 'Your thing. Marked for good.',
-    cardDescription: 'A knife, a laptop, a tumbler, a tool, an heirloom — bring it or ship it and I engrave it. $35 flat within size, a little more for the big or complicated.',
-    description: `Bring your own item engraving in Centennial, CO. Knives, laptops, tumblers, flasks, tools, heirlooms — anything you bring, marked permanently. $${SIGNATURE.startingPrice} flat within size. Hand-delivered by VURMZ.`,
+    cardDescription: 'A knife, a laptop, a tumbler, a tool, an heirloom, bring it or ship it and I engrave it. $35 flat within size, a little more for the big or complicated.',
+    description: `Bring your own item engraving in Centennial, CO. Knives, laptops, tumblers, flasks, tools, heirlooms: anything you bring, marked permanently. $${SIGNATURE.startingPrice} flat within size. Hand-delivered by VURMZ.`,
     heroImage: '/portfolio/macbook-engraving.jpg',
     galleryImages: [
       '/portfolio/pocket-knife-engraved.jpg',
@@ -75,15 +75,15 @@ export const SHOP_CATEGORIES: ShopCategory[] = [
     smsMessage: "Hi, I've got something I'd like engraved",
     faqs: [
       { question: 'What can you engrave?', answer: 'If it\'s solid and fits the bed, it marks. Knives, laptops and tablets, tumblers and flasks, tools, lighters, watches, pet tags, instruments, the thing your grandfather left you. Metal, wood, glass, leather, acrylic, slate, plastic.' },
-      { question: 'What does $35 cover?', answer: 'One item, one spot, your text or one design from the library, within a palm-sized mark. That covers most jobs. Bigger marks, both sides, deep marking, full wraps, or a logo I have to rebuild add a little — I confirm any extra on the proof before anything runs.' },
+      { question: 'What does $35 cover?', answer: 'One item, one spot, your text or one design from the library, within a palm-sized mark. That covers most jobs. Bigger marks, both sides, deep marking, full wraps, or a logo I have to rebuild add a little. I confirm any extra on the proof before anything runs.' },
       { question: 'How do I get it to you?', answer: 'Drop it off in the South Denver metro or ship it in. Add your text or design here, pay the $35 to lock it in, and tell me what\'s coming in the instructions.' },
-      { question: 'Will engraving hurt it?', answer: 'No. The mark is surface-level and permanent — it won\'t weaken a blade\'s edge or a laptop\'s shell. On a knife I test on the spine first. You approve a proof photo before I touch the real thing.' },
+      { question: 'Will engraving hurt it?', answer: 'No. The mark is surface-level and permanent, it won\'t weaken a blade\'s edge or a laptop\'s shell. On a knife I test on the spine first. You approve a proof photo before I touch the real thing.' },
       { question: 'Can you engrave a laptop without voiding the warranty?', answer: 'Apple doesn\'t void warranties for cosmetic engraving; other makers vary. The mark is surface-level and never touches the internals.' },
     ],
     relatedCategories: ['gifts', 'tumblers', 'decor'],
     howItWorks: [
       'Add your text or a design and tell me what you\'re bringing',
-      'Pay $35 to lock it in — I confirm anything extra on the proof',
+      'Pay $35 to lock it in, I confirm anything extra on the proof',
       'Drop off or ship it; engraved and back fast',
     ],
     materialNote: 'Metal, wood, glass, leather, acrylic, slate, plastic. If it\'s solid and fits the bed, it marks. Bed handles pieces up to 24" x 16".',
@@ -104,7 +104,7 @@ export const SHOP_CATEGORIES: ShopCategory[] = [
     pricingType: 'signature',
     smsMessage: "Hi, I'd like a tumbler or bottle engraved",
     faqs: [
-      { question: 'Can you engrave a tumbler I already have?', answer: 'Yes — that\'s the Bring Your Own service ($35). This category is for tumblers I source and engrave for you, start to finish.' },
+      { question: 'Can you engrave a tumbler I already have?', answer: 'Yes, that\'s the Bring Your Own service ($35). This category is for tumblers I source and engrave for you, start to finish.' },
       { question: 'What about powder-coated tumblers?', answer: 'Laser engraving on powder-coated tumblers reveals the bare steel underneath for a clean, two-tone look. It\'s the most popular style.' },
       { question: 'Do you do full-wrap engraving?', answer: 'Yes. Full-wrap designs that cover the entire surface are available. Text me your design and I\'ll quote it.' },
       { question: "What if I don't have a tumbler?", answer: "I can source one for you. $25 finder's fee plus the cost of the tumbler. I'll find exactly what you need." },
@@ -135,7 +135,7 @@ export const SHOP_CATEGORIES: ShopCategory[] = [
       { question: 'What materials are available?', answer: `Pine/bamboo ($${BASIC.coasters.materials.wood}/ea), oak/acacia ($${BASIC.coasters.materials.hardwood}/ea), natural slate ($${BASIC.coasters.materials.slate}/ea), or stainless steel ($${BASIC.coasters.materials.steel}/ea). All in packs of ${BASIC.coasters.packSize}.` },
       { question: 'Are these good for wedding favors?', answer: 'Yes. Coasters are one of the most popular wedding favors I make. Names, date, a short message. They\'re functional keepsakes people actually use.' },
       { question: 'Can I order mixed materials?', answer: 'Each pack is one material. If you want different materials, that\'s separate packs. Text me what you\'re thinking and I\'ll work it out.' },
-      { question: 'Can I do a custom design?', answer: 'Yes. Logos, maps, artwork, monograms — anything you can send me as an image, I can engrave.' },
+      { question: 'Can I do a custom design?', answer: 'Yes. Logos, maps, artwork, monograms, anything you can send me as an image, I can engrave.' },
     ],
     relatedCategories: ['keychains', 'gifts'],
     howItWorks: [
@@ -196,7 +196,7 @@ export const SHOP_CATEGORIES: ShopCategory[] = [
       "I'll quote you and we'll confirm the design",
       'I engrave it and hand-deliver across South Denver',
     ],
-    materialNote: 'I keep wood panels in a variety of sizes in stock. Bring an idea, leave with art — no waiting on materials.',
+    materialNote: 'I keep wood panels in a variety of sizes in stock. Bring an idea, leave with art, no waiting on materials.',
   },
   {
     slug: 'pens',

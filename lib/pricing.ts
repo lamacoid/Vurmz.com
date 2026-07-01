@@ -20,7 +20,7 @@ export const TIERS = {
   basic: {
     name: "Basic",
     tagline: "Stock items & straightforward marking",
-    unit: "varies — see below",
+    unit: "varies, see below",
   },
 } as const
 
@@ -107,7 +107,7 @@ export const TRADES = {
   signatureTiles: {
     name: "Signature Tiles",
     unit: "per tile",
-    note: "Custom design — quote",
+    note: "Custom design, quote",
   },
 } as const
 

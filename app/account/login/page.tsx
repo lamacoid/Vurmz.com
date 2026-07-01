@@ -32,7 +32,7 @@ export default function AccountLogin() {
   return (
     <div className="max-w-md mx-auto p-6 sm:p-10">
       <h1 className="text-2xl font-bold text-[var(--ink)] mb-2">Sign in to your account</h1>
-      <p className="text-sm text-[var(--ink-soft)] mb-8">We&rsquo;ll email you a one-time link — no password.</p>
+      <p className="text-sm text-[var(--ink-soft)] mb-8">We&rsquo;ll email you a one-time link, no password.</p>
 
       {status === 'sent' ? (
         <div className="bg-[var(--page)] border border-[#7FCFD4]/20 rounded-xl p-6">
@@ -68,7 +68,7 @@ export default function AccountLogin() {
       )}
 
       <p className="mt-10 text-xs text-[var(--ink-soft)] text-center">
-        New here? Just enter your email — we&rsquo;ll create your account when you first sign in.
+        New here? Just enter your email, we&rsquo;ll create your account when you first sign in.
       </p>
     </div>
   )

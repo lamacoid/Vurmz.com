@@ -104,7 +104,7 @@ export async function POST(request: NextRequest) {
     if (!resendApiKey) {
       console.error('RESEND_API_KEY not configured')
       return NextResponse.json(
-        { error: 'Newsletter signups are paused right now — text me instead and I’ll add you.' },
+        { error: 'Newsletter signups are paused right now. Text me instead and I’ll add you.' },
         { status: 503 }
       )
     }
@@ -153,7 +153,7 @@ export async function POST(request: NextRequest) {
       body: JSON.stringify({
         from: 'VURMZ <noreply@vurmz.com>',
         to: email.trim().toLowerCase(),
-        subject: "You're in — welcome to the VURMZ list",
+        subject: "You're in: welcome to the VURMZ list",
         headers: {
           'List-Unsubscribe': '<mailto:zach@vurmz.com?subject=Unsubscribe>, <https://www.vurmz.com/unsubscribe>',
           'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
@@ -168,10 +168,10 @@ export async function POST(request: NextRequest) {
               Hey${safeFirstName ? ` ${safeFirstName}` : ''}! Thanks for signing up.
             </p>
             <p style="color: #555; font-size: 15px; line-height: 1.6;">
-              I'll send you occasional updates — new products, materials, and stuff I'm working on. No spam, just things I think you'll actually want to see.
+              I'll send you occasional updates: new products, materials, and stuff I'm working on. No spam, just things I think you'll actually want to see.
             </p>
             <p style="color: #555; font-size: 15px; line-height: 1.6;">
-              In the meantime, if you need anything engraved — text me anytime.
+              In the meantime, if you need anything engraved, text me anytime.
             </p>
             <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid #eee;">
               <p style="color: #888; font-size: 13px; margin: 0;">
@@ -204,7 +204,7 @@ export async function POST(request: NextRequest) {
             <h3 style="color: #3CB9B2;">New Newsletter Subscriber</h3>
             <p><strong>Email:</strong> ${escapeHtml(email)}</p>
             ${safeFirstName ? `<p><strong>Name:</strong> ${safeFirstName}</p>` : ''}
-            <p style="color: #888; font-size: 13px;">${addedToAudience ? "They've been added to your Resend Audience automatically." : '⚠️ RESEND_AUDIENCE_ID is not set — add this contact to your Resend Audience manually (and set the secret to automate this).'}</p>
+            <p style="color: #888; font-size: 13px;">${addedToAudience ? "They've been added to your Resend Audience automatically." : '⚠️ RESEND_AUDIENCE_ID is not set. Add this contact to your Resend Audience manually (and set the secret to automate this).'}</p>
           </div>
         `,
       }),

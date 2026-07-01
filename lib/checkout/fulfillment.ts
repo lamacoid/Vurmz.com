@@ -31,7 +31,7 @@ export const HAND_DELIVERY_WINDOWS: HandDeliveryWindow[] = [
   { key: 'midday',    label: 'Midday (11am–2pm)' },
   { key: 'afternoon', label: 'Afternoon (2pm–5pm)' },
   { key: 'evening',   label: 'Evening (5pm–8pm)' },
-  { key: 'flexible',  label: 'Flexible — text me when you head out' },
+  { key: 'flexible',  label: 'Flexible: text me when you head out' },
 ]
 
 export function isValidHandDeliveryWindow(key: string | null | undefined): boolean {
@@ -127,7 +127,7 @@ export function computeFulfillmentOptions(args: {
     label: 'Send me an invoice',
     priceCents: 0,
     eta: 'We\'ll be in touch',
-    description: 'Skip payment now — we\'ll email you an invoice with shipping options.',
+    description: 'Skip payment now. We\'ll email you an invoice with shipping options.',
   })
 
   return opts

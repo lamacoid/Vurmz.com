@@ -29,7 +29,7 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ id: string
         body: JSON.stringify({
           from: 'VURMZ Quotes <quotes@vurmz.com>',
           to: quote.email,
-          subject: `Quote ${quote.number} from VURMZ — ${dollars(quote.totalCents)}`,
+          subject: `Quote ${quote.number} from VURMZ: ${dollars(quote.totalCents)}`,
           html: `
             <div style="font-family:system-ui,sans-serif;max-width:560px;margin:0 auto;padding:32px 20px;color:#111">
               <h2 style="margin:0 0 12px;font-size:20px">Quote ${quote.number}</h2>

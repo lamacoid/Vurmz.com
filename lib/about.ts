@@ -7,10 +7,10 @@ export const aboutContent = {
   intro: `I'm ${siteInfo.founder.name}, and I run VURMZ out of ${siteInfo.city}. I live here, I work here, and I deliver to Centennial, Lone Tree, Highlands Ranch, and everywhere in between. You text me, I quote you, and I handle your job personally.`,
 
   storyParagraphs: [
-    `Got into it for fun. Turns out it's worth getting into for work. I started VURMZ because I wanted to build something with my hands — laser engraving lets me take a blank piece of metal, wood, or glass and turn it into something personal that lasts. Every mark is permanent. That matters to me.`,
+    `Got into it for fun. Turns out it's worth getting into for work. I started VURMZ because I wanted to build something with my hands. Laser engraving lets me take a blank piece of metal, wood, or glass and turn it into something personal that lasts. Every mark is permanent. That matters to me.`,
     `There's no team, no warehouse, no middleman. When you text ${siteInfo.phone}, you're texting the person who's going to engrave your order, drive it to your door, and hand it to you. That's how I want it.`,
-    `I work with individuals who want a meaningful gift and businesses who want their brand on something people keep. Whether it's one knife or sixty pens, I treat every job the same — I don't deliver until it's right.`,
-    `VURMZ is based in ${siteInfo.city}, Colorado. I deliver across the South Denver metro — Littleton, Lone Tree, Parker, Highlands Ranch, Englewood, Castle Rock, Aurora, Greenwood Village, Cherry Hills, and Denver.`,
+    `I work with individuals who want a meaningful gift and businesses who want their brand on something people keep. Whether it's one knife or sixty pens, I treat every job the same. I don't deliver until it's right.`,
+    `VURMZ is based in ${siteInfo.city}, Colorado. I deliver across the South Denver metro: Littleton, Lone Tree, Parker, Highlands Ranch, Englewood, Castle Rock, Aurora, Greenwood Village, Cherry Hills, and Denver.`,
   ],
 
   values: [

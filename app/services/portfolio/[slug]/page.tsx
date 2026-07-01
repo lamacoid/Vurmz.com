@@ -23,9 +23,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!item) return { title: 'Not found' }
   return {
     title: item.label,
-    description: `${item.context} — laser engraved by VURMZ in ${siteInfo.city}, ${siteInfo.stateAbbr}. Material: ${item.material}. ${item.leadTimeDays}-day turnaround.`,
+    description: `${item.context}, laser engraved by VURMZ in ${siteInfo.city}, ${siteInfo.stateAbbr}. Material: ${item.material}. ${item.leadTimeDays}-day turnaround.`,
     openGraph: {
-      title: `${item.label} — VURMZ`,
+      title: `${item.label} · VURMZ`,
       description: item.context,
       images: [{ url: `https://www.vurmz.com${item.src}`, width: 1200, height: 800, alt: item.label }],
     },

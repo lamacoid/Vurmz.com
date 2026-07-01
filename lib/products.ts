@@ -78,7 +78,7 @@ export const LEAVE_YOUR_MARK = {
   signatureTiles: {
     name: 'Signature Tiles',
     price: 15,
-    description: 'Small engraved tile with your logo or mark. Set into your finished work — floors, backsplashes, stonework. Like signing a painting.',
+    description: 'Small engraved tile with your logo or mark. Set into your finished work: floors, backsplashes, stonework. Like signing a painting.',
   },
 } as const
 

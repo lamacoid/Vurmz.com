@@ -6,7 +6,7 @@ import ContactForm from '@/components/ContactForm'
 import Breadcrumbs from '@/components/Breadcrumbs'
 
 export const metadata: Metadata = {
-  title: { absolute: 'Contact | VURMZ Laser Engraving — Centennial, CO' },
+  title: { absolute: 'Contact | VURMZ Laser Engraving, Centennial, CO' },
   description: `Contact ${siteInfo.founder.name} at ${siteInfo.name} for laser engraving in ${siteInfo.city} and Denver metro. Text ${siteInfo.phone} or email.`,
   alternates: { canonical: '/services/contact' },
 }
@@ -18,7 +18,7 @@ const faqItems = [
   },
   {
     question: 'How are orders structured?',
-    answer: 'Stock items like pens, coasters, and keychains come in packs of 15. Bring Your Own — engraving something you already have — is $35 within size. Industrial labels and trades work are quoted per job.',
+    answer: 'Stock items like pens, coasters, and keychains come in packs of 15. Bring Your Own (engraving something you already have) is $35 within size. Industrial labels and trades work are quoted per job.',
   },
   {
     question: 'Can I bring my own items to engrave?',
@@ -104,7 +104,7 @@ export default function ContactPage() {
                     <a href={getSmsLink()} className="text-[var(--eyebrow)] text-xl font-semibold hover:underline">
                       {siteInfo.phone}
                     </a>
-                    <p className="text-sm text-[var(--ink-soft)] mt-1">Fastest way to reach Zach — text only</p>
+                    <p className="text-sm text-[var(--ink-soft)] mt-1">Fastest way to reach Zach, text only</p>
                   </div>
                 </div>
 

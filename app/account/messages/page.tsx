@@ -58,7 +58,7 @@ export default function MessagesPage() {
         {loading ? (
           <p className="text-[var(--ink-soft)] text-sm text-center py-10">Loading…</p>
         ) : messages.length === 0 ? (
-          <p className="text-[var(--ink-soft)] text-sm text-center py-10">No messages yet — send one below.</p>
+          <p className="text-[var(--ink-soft)] text-sm text-center py-10">No messages yet. Send one below.</p>
         ) : (
           messages.map(m => (
             <div key={m.id} className={`flex ${m.direction === 'inbound' ? 'justify-end' : 'justify-start'}`}>

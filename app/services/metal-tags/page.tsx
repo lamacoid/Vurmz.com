@@ -7,7 +7,7 @@ import { portfolioBySlug } from '@/lib/portfolio'
 import Breadcrumbs from '@/components/Breadcrumbs'
 
 export const metadata: Metadata = {
-  title: { absolute: 'Metal Service Tags & Equipment Nameplates | VURMZ — Centennial, CO' },
+  title: { absolute: 'Metal Service Tags & Equipment Nameplates | VURMZ, Centennial, CO' },
   description: 'Engraved metal service tags, serial plates, and equipment nameplates for trades in the Denver metro. Durable fiber laser marking, next-day turnaround, hand-delivered.',
   alternates: { canonical: '/services/metal-tags' },
   openGraph: {

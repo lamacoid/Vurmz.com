@@ -50,7 +50,7 @@ export default function ProfilePage() {
       setSaved(true)
       setTimeout(() => setSaved(false), 1800)
     } catch {
-      setSaveError('Network error — your profile was not saved.')
+      setSaveError('Network error. Your profile was not saved.')
     } finally {
       setSaving(false)
     }

@@ -79,10 +79,10 @@ async function sendOrderEmails(env: CloudflareEnv, args: {
 }) {
   if (!env.RESEND_API_KEY) return
   const dollars = (c: number) => `$${(c / 100).toFixed(2)}`
-  const lines = args.items.map(i => `<li>${i.qty} × ${i.name} — ${dollars(i.unitPriceCents * i.qty)}${i.engraving ? `<br><span style="color:#888">✎ Engraving: ${i.engraving}</span>` : ''}</li>`).join('')
+  const lines = args.items.map(i => `<li>${i.qty} × ${i.name}: ${dollars(i.unitPriceCents * i.qty)}${i.engraving ? `<br><span style="color:#888">✎ Engraving: ${i.engraving}</span>` : ''}</li>`).join('')
   const html = `
     <div style="font-family:system-ui,sans-serif;max-width:560px;margin:0 auto;padding:32px 20px;color:#111">
-      <h2 style="margin:0 0 12px;font-size:20px">Thanks for your order — ${args.orderNumber}</h2>
+      <h2 style="margin:0 0 12px;font-size:20px">Thanks for your order: ${args.orderNumber}</h2>
       <p style="color:#555;line-height:1.5">${args.customerName ? `Hey ${args.customerName}, ` : ''}I got your order and I&rsquo;m on it. Here&rsquo;s the summary:</p>
       <ul style="padding-left:18px;color:#333;line-height:1.6">${lines}</ul>
       <table style="width:100%;margin:16px 0;border-top:1px solid #eee;border-bottom:1px solid #eee;padding:8px 0">
@@ -90,7 +90,7 @@ async function sendOrderEmails(env: CloudflareEnv, args: {
         <tr><td style="padding:4px 0;color:#666">${args.fulfillmentLabel}</td><td style="text-align:right">${dollars(args.fulfillmentFeeCents)}</td></tr>
         <tr><td style="padding:4px 0;font-weight:700">Total</td><td style="text-align:right;font-weight:700">${dollars(args.totalCents)}</td></tr>
       </table>
-      <p style="color:#555">If your order has engraving, I&rsquo;ll send you a proof photo to approve before anything runs. I&rsquo;ll reach out with next steps shortly &mdash; reply to this email anytime.</p>
+      <p style="color:#555">If your order has engraving, I&rsquo;ll send you a proof photo to approve before anything runs. I&rsquo;ll reach out with next steps shortly, reply to this email anytime.</p>
       <p style="margin-top:24px;color:#999;font-size:12px">VURMZ · Centennial, CO · zach@vurmz.com</p>
     </div>
   `
@@ -101,7 +101,7 @@ async function sendOrderEmails(env: CloudflareEnv, args: {
     body: JSON.stringify({
       from: 'VURMZ <orders@vurmz.com>',
       to: args.email,
-      subject: `Order ${args.orderNumber} — VURMZ`,
+      subject: `Order ${args.orderNumber} · VURMZ`,
       html,
     }),
   }).catch(() => {})
@@ -113,8 +113,8 @@ async function sendOrderEmails(env: CloudflareEnv, args: {
     body: JSON.stringify({
       from: 'VURMZ Orders <orders@vurmz.com>',
       to: 'zach@vurmz.com',
-      subject: `New order ${args.orderNumber} — ${dollars(args.totalCents)}`,
-      html: `<p>New order from <strong>${args.email}</strong>. ${args.fulfillmentLabel}.</p><ul style="padding-left:18px">${lines}</ul>${args.attachmentCount ? `<p>📎 ${args.attachmentCount} customer file${args.attachmentCount > 1 ? 's' : ''} attached — view in admin.</p>` : ''}<p><a href="https://www.vurmz.com/admin/orders/${args.orderId}">Open in admin →</a></p>`,
+      subject: `New order ${args.orderNumber}: ${dollars(args.totalCents)}`,
+      html: `<p>New order from <strong>${args.email}</strong>. ${args.fulfillmentLabel}.</p><ul style="padding-left:18px">${lines}</ul>${args.attachmentCount ? `<p>📎 ${args.attachmentCount} customer file${args.attachmentCount > 1 ? 's' : ''} attached, view in admin.</p>` : ''}<p><a href="https://www.vurmz.com/admin/orders/${args.orderId}">Open in admin →</a></p>`,
     }),
   }).catch(() => {})
 }
@@ -312,7 +312,7 @@ export async function POST(req: NextRequest) {
 
   // 7. Send emails (non-blocking)
   const fulfillmentLabel = handDeliveryMeta?.windowLabel
-    ? `${chosen.label} — ${handDeliveryMeta.windowLabel}`
+    ? `${chosen.label} (${handDeliveryMeta.windowLabel})`
     : chosen.label
   await sendOrderEmails(getEnv(), {
     email: orderEmail,

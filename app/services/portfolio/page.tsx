@@ -8,7 +8,7 @@ import SiteHero from '@/components/SiteHero'
 import { portfolioItems } from '@/lib/portfolio'
 
 export const metadata: Metadata = {
-  title: { absolute: 'Laser Engraving Portfolio | VURMZ — Centennial, CO' },
+  title: { absolute: 'Laser Engraving Portfolio | VURMZ, Centennial, CO' },
   description: 'Client work, personal projects, and experiments in laser engraving. Metal, wood, glass, and more from Centennial, CO.',
   alternates: { canonical: '/services/portfolio' },
   openGraph: {
@@ -25,12 +25,12 @@ export default function PortfolioPage() {
       {/* Hero (shared) */}
       <SiteHero
         eyebrow="Portfolio"
-        heading="Laser Engraving Portfolio — Metal, Wood, Glass & More"
+        heading="Laser Engraving Portfolio: Metal, Wood, Glass & More"
         accent="teal"
         baseColor="#16525C"
       >
         <p className="text-[var(--ink-soft)] text-base sm:text-lg leading-relaxed max-w-xl mx-auto">
-          Some of those possibilities — client work, personal projects, and experiments in metal, wood, and glass.
+          Some of those possibilities: client work, personal projects, and experiments in metal, wood, and glass.
         </p>
       </SiteHero>
 

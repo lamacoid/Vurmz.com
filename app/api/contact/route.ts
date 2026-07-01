@@ -246,7 +246,7 @@ export async function POST(request: NextRequest) {
         from: 'VURMZ Website <noreply@vurmz.com>',
         to: 'zach@vurmz.com',
         reply_to: email,
-        subject: `New Contact: ${name.slice(0, 80)}${productInterest ? ` — ${productInterest}` : ''}`,
+        subject: `New Contact: ${name.slice(0, 80)}${productInterest ? ` (${productInterest})` : ''}`,
         html: htmlBody,
       }),
     })
@@ -271,7 +271,7 @@ export async function POST(request: NextRequest) {
           from: 'Zach at VURMZ <noreply@vurmz.com>',
           to: email,
           reply_to: 'zach@vurmz.com',
-          subject: 'Got your message — VURMZ',
+          subject: 'Got your message · VURMZ',
           html: `
             <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 500px; margin: 0 auto; padding: 32px 0;">
               <div style="margin-bottom: 24px;">
