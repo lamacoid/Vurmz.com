@@ -3,8 +3,10 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Icon } from '@/components/admin/icons'
+import BusinessTierHint, { retierPatch, type TierableLine } from '@/components/admin/BusinessTierHint'
 
 interface Customer { id: string; email: string; name: string; company: string | null }
+type Line = TierableLine & { description: string }
 
 function centsToDollars(c: number) { return (c / 100).toFixed(2) }
 function dollarsToCents(s: string) {
@@ -16,7 +18,7 @@ export default function NewInvoicePage() {
   const router = useRouter()
   const [customers, setCustomers] = useState<Customer[]>([])
   const [customerId, setCustomerId] = useState('')
-  const [lines, setLines] = useState<Array<{ description: string; qty: number; price: string }>>([{ description: '', qty: 1, price: '0.00' }])
+  const [lines, setLines] = useState<Line[]>([{ description: '', qty: 1, price: '0.00' }])
   const [dueDate, setDueDate] = useState('')
   const [notes, setNotes] = useState('')
   const [saving, setSaving] = useState(false)
@@ -58,7 +60,7 @@ export default function NewInvoicePage() {
     router.push(`/admin/invoices/${id}`)
   }
 
-  function updateLine(i: number, patch: Partial<{ description: string; qty: number; price: string }>) {
+  function updateLine(i: number, patch: Partial<Line>) {
     setLines(prev => prev.map((l, idx) => idx === i ? { ...l, ...patch } : l))
   }
 
@@ -88,36 +90,39 @@ export default function NewInvoicePage() {
           <p className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)] mb-3 font-semibold">Line items</p>
           <div className="space-y-2">
             {lines.map((line, i) => (
-              <div key={i} className="grid grid-cols-[1fr_70px_100px_32px] gap-2 items-center">
-                <input
-                  value={line.description}
-                  onChange={e => updateLine(i, { description: e.target.value })}
-                  placeholder="Description"
-                  className="bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[var(--a-accent)]"
-                />
-                <input
-                  type="number"
-                  value={line.qty}
-                  min={1}
-                  onChange={e => updateLine(i, { qty: parseInt(e.target.value, 10) || 1 })}
-                  className="bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[var(--a-accent)]"
-                />
-                <div className="flex items-center bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md focus-within:border-[var(--a-accent)]">
-                  <span className="pl-2 text-[var(--a-ink-faint)] text-sm">$</span>
+              <div key={i} className="space-y-1">
+                <div className="grid grid-cols-[1fr_70px_100px_32px] gap-2 items-center">
                   <input
-                    value={line.price}
-                    onChange={e => updateLine(i, { price: e.target.value })}
-                    className="flex-1 bg-transparent px-2 py-2 text-sm text-[var(--a-ink)] outline-none"
+                    value={line.description}
+                    onChange={e => updateLine(i, { description: e.target.value })}
+                    placeholder="Description"
+                    className="bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[var(--a-accent)]"
                   />
+                  <input
+                    type="number"
+                    value={line.qty}
+                    min={1}
+                    onChange={e => updateLine(i, retierPatch(line, parseInt(e.target.value, 10) || 1))}
+                    className="bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[var(--a-accent)]"
+                  />
+                  <div className="flex items-center bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md focus-within:border-[var(--a-accent)]">
+                    <span className="pl-2 text-[var(--a-ink-faint)] text-sm">$</span>
+                    <input
+                      value={line.price}
+                      onChange={e => updateLine(i, { price: e.target.value, tierBase: undefined })}
+                      className="flex-1 bg-transparent px-2 py-2 text-sm text-[var(--a-ink)] outline-none"
+                    />
+                  </div>
+                  <button
+                    onClick={() => setLines(prev => prev.filter((_, idx) => idx !== i))}
+                    className="text-[var(--a-ink-faint)] hover:text-red-300"
+                    disabled={lines.length === 1}
+                    aria-label="Remove line"
+                  >
+                    ×
+                  </button>
                 </div>
-                <button
-                  onClick={() => setLines(prev => prev.filter((_, idx) => idx !== i))}
-                  className="text-[var(--a-ink-faint)] hover:text-red-300"
-                  disabled={lines.length === 1}
-                  aria-label="Remove line"
-                >
-                  ×
-                </button>
+                <BusinessTierHint line={line} onChange={patch => updateLine(i, patch)} />
               </div>
             ))}
           </div>
