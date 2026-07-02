@@ -29,16 +29,16 @@ export const metadata: Metadata = {
 export default function ShopHome() {
   return (
     <div>
-      {/* Slim brand band: deep teal ribbon, one line, then straight to the goods */}
-      <section className="bg-[var(--feature-deep)] py-4 sm:py-5">
+      {/* Slim brand band: the shop's dusty-coral ribbon, one line, then straight to the goods */}
+      <section className="bg-[#B0675D] py-4 sm:py-5">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-            <h1 className="text-lg sm:text-xl font-bold text-[var(--feature-ink)] tracking-tight">
+            <h1 className="text-lg sm:text-xl font-bold text-white tracking-tight">
               Custom Laser Engraving: Gifts, Knives, Tumblers &amp; More
             </h1>
-            <p className="text-sm text-[var(--feature-soft)]">
+            <p className="text-sm text-white/85">
               Hand-delivered across {siteInfo.city}.{' '}
-              <a href={getSmsLink("Hi, I'd like to get something engraved")} className="text-[#7FCFD4] font-semibold hover:underline">
+              <a href={getSmsLink("Hi, I'd like to get something engraved")} className="text-white font-semibold underline underline-offset-2 hover:no-underline">
                 Text {siteInfo.phone}
               </a>
             </p>
@@ -50,7 +50,7 @@ export default function ShopHome() {
               <Link
                 key={cat.slug}
                 href={`/shop/${cat.slug}`}
-                className="whitespace-nowrap px-3.5 py-1.5 rounded-full border border-white/15 bg-white/[0.07] text-sm text-[var(--feature-ink)]/90 hover:border-[#C67A6F] hover:bg-[#C67A6F]/15 hover:text-white transition-colors puffy-btn"
+                className="whitespace-nowrap px-3.5 py-1.5 rounded-full border border-white/30 bg-white/15 text-sm text-white hover:bg-white/25 transition-colors puffy-btn"
               >
                 {cat.shortName}
               </Link>
