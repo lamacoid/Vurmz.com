@@ -35,7 +35,7 @@ export default function RotatingTagline({
     return (
       <span className={className} style={{ fontFamily: 'var(--font-display), Georgia, serif' }}>
         Let&apos;s put your{' '}
-        <span className="relative inline-grid align-baseline text-center">
+        <span className="relative inline-grid align-baseline text-center border-b-2 border-[var(--ink)]/25">
           {/* Invisible sizer: the widest word reserves the slot. */}
           <span className="invisible whitespace-nowrap italic col-start-1 row-start-1" aria-hidden>
             kid&apos;s drawing

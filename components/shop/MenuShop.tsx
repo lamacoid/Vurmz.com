@@ -14,6 +14,11 @@ import type { Product } from '@/lib/db/repos/products'
 // loud accent: hovering a line engraves a thin laser-red rule under the
 // name.
 
+// Menus say $38, not $38.00. Cents only appear when they're real.
+function menuPrice(cents: number): string {
+  return cents % 100 === 0 ? `$${cents / 100}` : money(cents)
+}
+
 function metaLine(p: Product): string {
   const parts: string[] = []
   if (p.shortDescription) parts.push(p.shortDescription)
@@ -25,12 +30,12 @@ function metaLine(p: Product): string {
 
 function MenuRow({ p, thumb }: { p: Product; thumb: string | null }) {
   return (
-    <Link href={`/shop/p/${p.slug}`} className="group block py-2.5">
+    <Link href={`/shop/p/${p.slug}`} className="group block py-2.5 -mx-2 px-2 rounded-sm transition-colors hover:bg-[var(--ink)]/[0.04]">
       <span className="flex items-baseline gap-2.5">
         {thumb && (
           <img src={thumb} alt="" className="h-10 w-10 self-center flex-shrink-0 rounded-sm object-cover border border-[var(--hairline)]" />
         )}
-        <span className="relative font-semibold text-[var(--ink)] leading-snug">
+        <span className="relative font-semibold text-[var(--ink)] leading-snug underline decoration-dotted decoration-[var(--ink)]/30 underline-offset-4 group-hover:decoration-transparent transition-colors">
           {p.name}
           {/* The laser: a thin red rule engraves under the name on hover. */}
           <span
@@ -39,7 +44,7 @@ function MenuRow({ p, thumb }: { p: Product; thumb: string | null }) {
           />
         </span>
         <span className="flex-1 -translate-y-[3px] border-b border-dotted border-[var(--ink)]/25 min-w-[1.5rem]" aria-hidden />
-        <span className="font-semibold text-[var(--eyebrow)] whitespace-nowrap">{money(p.priceCents)}</span>
+        <span className="font-semibold text-[var(--eyebrow)] whitespace-nowrap">{menuPrice(p.priceCents)}</span>
       </span>
       {metaLine(p) && (
         <span className={`block text-sm text-[var(--ink-soft)] leading-snug mt-0.5 ${thumb ? 'pl-[3.125rem]' : ''}`}>
@@ -81,7 +86,7 @@ export default async function MenuShop() {
     <div>
       {/* Section nav: quiet anchor chips, stick under the header while browsing. */}
       <nav className="sticky top-0 z-30 bg-[var(--page)]/90 backdrop-blur border-y border-[var(--hairline)]">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 flex gap-1.5 overflow-x-auto no-scrollbar py-2.5">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 flex gap-1.5 overflow-x-auto no-scrollbar py-2.5 [mask-image:linear-gradient(to_right,#000_94%,transparent)]">
           {sections.map(s => (
             <a
               key={s.slug}
@@ -108,7 +113,7 @@ export default async function MenuShop() {
                   className="relative text-xl sm:text-2xl font-semibold text-[var(--ink)] tracking-tight"
                   style={{ fontFamily: 'var(--font-display), Georgia, serif' }}
                 >
-                  Bring your thing. {money(house.priceCents)} flat.
+                  Bring your thing. {menuPrice(house.priceCents)} flat.
                   <span aria-hidden className="absolute -bottom-0.5 left-0 h-px w-full bg-[#FF2A2A] shadow-[0_0_5px_rgba(255,42,42,0.8)] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out motion-reduce:transition-none" />
                 </span>
               </Link>
