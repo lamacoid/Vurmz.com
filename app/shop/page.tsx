@@ -5,7 +5,6 @@ import { siteInfo, getSmsLink } from '@/lib/site-info'
 import { shopTestimonials } from '@/lib/testimonials'
 import TestimonialCarousel from '@/components/TestimonialCarousel'
 import CategoryCard from '@/components/CategoryCard'
-import GlassImage from '@/components/shop/GlassImage'
 import D1ProductGrid from '@/components/shop/D1ProductGrid'
 import { SHOP_CATEGORIES } from '@/lib/categories'
 import { CATALOG } from '@/lib/pricing'
@@ -23,17 +22,6 @@ const CONSUMER_CATEGORIES = SHOP_CATEGORIES.filter(cat => {
   return true
 })
 
-const WORK = [
-  { src: '/portfolio/culinary-cleaver-engraved.jpg', label: 'Knife Engraving' },
-  { src: '/portfolio/water-bottle-full-wrap.jpg', label: 'Full-Wrap Bottle' },
-  { src: '/portfolio/eye-storm-hexagonal-mirror.jpg', label: 'Custom Mirror Art' },
-  { src: '/portfolio/pocket-knife-engraved.jpg', label: 'Pocket Knife' },
-  { src: '/portfolio/denver-map-glass-coaster.jpg', label: 'Glass Coaster' },
-  { src: '/portfolio/macbook-engraving.jpg', label: 'MacBook Engraving' },
-  { src: '/portfolio/engraved-hand-saw.jpg', label: 'Hand Saw' },
-  { src: '/portfolio/water-bottle-custom-engraved.jpg', label: 'Water Bottle' },
-]
-
 export const metadata: Metadata = {
   alternates: { canonical: '/shop' },
 }
@@ -41,28 +29,28 @@ export const metadata: Metadata = {
 export default function ShopHome() {
   return (
     <div>
-      {/* Slim header: one line, then straight to the goods */}
-      <section className="pt-2 pb-2">
+      {/* Slim brand band: deep teal ribbon, one line, then straight to the goods */}
+      <section className="bg-[var(--feature-deep)] py-4 sm:py-5">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-            <h1 className="text-lg sm:text-xl font-bold text-[var(--ink)] tracking-tight">
+            <h1 className="text-lg sm:text-xl font-bold text-[var(--feature-ink)] tracking-tight">
               Custom Laser Engraving: Gifts, Knives, Tumblers &amp; More
             </h1>
-            <p className="text-sm text-[var(--ink-soft)]">
+            <p className="text-sm text-[var(--feature-soft)]">
               Hand-delivered across {siteInfo.city}.{' '}
-              <a href={getSmsLink("Hi, I'd like to get something engraved")} className="text-[var(--eyebrow)] font-semibold hover:underline">
+              <a href={getSmsLink("Hi, I'd like to get something engraved")} className="text-[#7FCFD4] font-semibold hover:underline">
                 Text {siteInfo.phone}
               </a>
             </p>
           </div>
 
           {/* Category chips: pick a lane without scrolling */}
-          <div className="flex gap-2 overflow-x-auto no-scrollbar mt-3 -mx-1 px-1">
+          <div className="flex gap-2 overflow-x-auto no-scrollbar mt-3.5 -mx-1 px-1">
             {CONSUMER_CATEGORIES.map((cat) => (
               <Link
                 key={cat.slug}
                 href={`/shop/${cat.slug}`}
-                className="whitespace-nowrap px-3.5 py-1.5 rounded-full border border-[var(--hairline)] bg-[var(--surface)] text-sm text-[var(--ink-soft)] hover:border-[#C67A6F]/50 hover:text-[var(--ink)] transition-colors"
+                className="whitespace-nowrap px-3.5 py-1.5 rounded-full border border-white/15 bg-white/[0.07] text-sm text-[var(--feature-ink)]/90 hover:border-[#C67A6F] hover:bg-[#C67A6F]/15 hover:text-white transition-colors puffy-btn"
               >
                 {cat.shortName}
               </Link>
@@ -85,29 +73,6 @@ export default function ShopHome() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {CONSUMER_CATEGORIES.map((cat) => (
               <CategoryCard key={cat.slug} category={cat} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Recent work, below the goods */}
-      <section className="pb-10 sm:pb-14">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-center text-xs font-mono text-[#7FCFD4] tracking-[0.2em] uppercase mb-6">Recent work</p>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            {WORK.map((item) => (
-              <div key={item.label} className="group relative aspect-square rounded-sm overflow-hidden">
-                <GlassImage
-                  src={item.src}
-                  alt={item.label}
-                  depth="card"
-                  sizes="(max-width: 640px) 50vw, 25vw"
-                  className="absolute inset-0"
-                />
-                <div className="absolute inset-0 flex items-end p-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <span className="text-white text-xs font-medium drop-shadow">{item.label}</span>
-                </div>
-              </div>
             ))}
           </div>
         </div>
