@@ -1,27 +1,13 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import { ChatBubbleLeftIcon } from '@heroicons/react/24/outline'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 import { shopTestimonials } from '@/lib/testimonials'
 import TestimonialCarousel from '@/components/TestimonialCarousel'
-import CategoryCard from '@/components/CategoryCard'
 import RotatingTagline from '@/components/RotatingTagline'
-import D1ProductGrid from '@/components/shop/D1ProductGrid'
-import { SHOP_CATEGORIES } from '@/lib/categories'
-import { CATALOG } from '@/lib/pricing'
+import MenuShop from '@/components/shop/MenuShop'
 
-// D1ProductGrid reads the live catalog at request time → must run on the edge.
+// MenuShop reads the live catalog at request time → must run on the edge.
 export const runtime = 'edge'
-
-// Pack-based categories (coasters, keychains) are business-only — hide from consumer shop.
-const CONSUMER_CATEGORIES = SHOP_CATEGORIES.filter(cat => {
-  if (cat.pricingType === 'signature') return true
-  if (cat.pricingKey && cat.pricingKey in CATALOG) {
-    const data = CATALOG[cat.pricingKey]
-    return !('materials' in data)
-  }
-  return true
-})
 
 export const metadata: Metadata = {
   alternates: { canonical: '/shop' },
@@ -30,57 +16,31 @@ export const metadata: Metadata = {
 export default function ShopHome() {
   return (
     <div>
-      {/* Slim brand band: the shop's dusty-coral ribbon, one line, then straight to the goods */}
-      <section className="bg-[#B0675D] py-4 sm:py-5">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Menu cover: centered masthead, the tagline on one plane, a double rule */}
+      <section className="pt-8 sm:pt-10">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="sr-only">Custom Laser Engraving: Gifts, Knives, Tumblers &amp; More</h1>
-          <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-            <RotatingTagline
-              inline
-              accentColor="#DED6C3"
-              className="text-xl sm:text-2xl font-semibold tracking-tight text-white"
-            />
-            <p className="text-sm text-white/85">
-              Hand-delivered across {siteInfo.city}.{' '}
-              <a href={getSmsLink("Hi, I'd like to get something engraved")} className="text-white font-semibold underline underline-offset-2 hover:no-underline">
-                Text {siteInfo.phone}
-              </a>
-            </p>
-          </div>
-
-          {/* Category chips: pick a lane without scrolling */}
-          <div className="flex gap-2 overflow-x-auto no-scrollbar mt-3.5 -mx-1 px-1">
-            {CONSUMER_CATEGORIES.map((cat) => (
-              <Link
-                key={cat.slug}
-                href={`/shop/${cat.slug}`}
-                className="whitespace-nowrap px-3.5 py-1.5 rounded-full border border-white/30 bg-white/15 text-sm text-white hover:bg-white/25 transition-colors puffy-btn"
-              >
-                {cat.shortName}
-              </Link>
-            ))}
-          </div>
+          <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-[var(--eyebrow)] mb-3">
+            VURMZ · Centennial, Colorado
+          </p>
+          <RotatingTagline
+            inline
+            accentColor="#C67A6F"
+            className="text-2xl sm:text-3xl font-semibold tracking-tight text-[var(--ink)]"
+          />
+          <p className="text-sm text-[var(--ink-soft)] mt-3">
+            Engraved goods, hand-delivered across the South Denver metro ·{' '}
+            <a href={getSmsLink("Hi, I'd like to get something engraved")} className="text-[var(--eyebrow)] font-semibold hover:underline">
+              Text {siteInfo.phone}
+            </a>
+          </p>
+          <div className="mt-6 border-t-2 border-[var(--ink)]/25" aria-hidden />
+          <div className="mt-[3px] mb-4 border-t border-[var(--ink)]/25" aria-hidden />
         </div>
       </section>
 
-      {/* The goods, immediately */}
-      <D1ProductGrid
-        heading="Ready to order"
-        subheading="Prices up front. Pick one and check out."
-        limit={24}
-      />
-
-      {/* Categories (rich cards, for browsers) */}
-      <section className="pb-10 sm:pb-14">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold text-[var(--ink)] text-center mb-8">Browse by category</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {CONSUMER_CATEGORIES.map((cat) => (
-              <CategoryCard key={cat.slug} category={cat} />
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* The menu: every good on one typeset card */}
+      <MenuShop />
 
       {/* How it works */}
       <section className="pb-10 sm:pb-14">
