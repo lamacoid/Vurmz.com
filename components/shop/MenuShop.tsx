@@ -39,7 +39,7 @@ function MenuRow({ p, thumb }: { p: Product; thumb: string | null }) {
           />
         </span>
         <span className="flex-1 -translate-y-[3px] border-b border-dotted border-[var(--ink)]/25 min-w-[1.5rem]" aria-hidden />
-        <span className="font-semibold text-[var(--ink)] whitespace-nowrap">{money(p.priceCents)}</span>
+        <span className="font-semibold text-[var(--eyebrow)] whitespace-nowrap">{money(p.priceCents)}</span>
       </span>
       {metaLine(p) && (
         <span className={`block text-sm text-[var(--ink-soft)] leading-snug mt-0.5 ${thumb ? 'pl-[3.125rem]' : ''}`}>
@@ -95,10 +95,13 @@ export default async function MenuShop() {
       </nav>
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* The menu card: a cream panel on the paper page, like the physical
+            object on the table. Everything below lives on it. */}
+        <div className="mt-6 mb-4 bg-[var(--surface)] border border-[var(--hairline)] rounded-sm px-5 sm:px-10 pb-2 shadow-sm">
         {/* The house offer, boxed like a menu's standing special. */}
         {house && (
           <div className="mt-8 border border-[var(--ink)]/30 rounded-sm p-1">
-            <div className="border border-[var(--ink)]/15 rounded-sm px-5 py-6 text-center">
+            <div className="border border-[var(--ink)]/15 rounded-sm px-5 py-6 text-center bg-[var(--eyebrow)]/[0.06]">
               <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-[var(--eyebrow)] mb-2">The standing offer</p>
               <Link href={`/shop/p/${house.slug}`} className="group inline-block">
                 <span
@@ -125,7 +128,7 @@ export default async function MenuShop() {
             <section key={s.slug} id={`menu-${s.slug}`} className="break-inside-avoid mb-10 scroll-mt-20">
               <div className="flex items-center gap-3 mb-2">
                 <span className="flex-1 border-t border-[var(--ink)]/20" aria-hidden />
-                <h2 className="text-xs font-mono tracking-[0.3em] uppercase text-[var(--ink)]">{s.name}</h2>
+                <h2 className="text-xs font-mono tracking-[0.3em] uppercase text-[var(--eyebrow)]">{s.name}</h2>
                 <span className="flex-1 border-t border-[var(--ink)]/20" aria-hidden />
               </div>
               <div className="divide-y divide-[var(--hairline)]">
@@ -135,6 +138,7 @@ export default async function MenuShop() {
               </div>
             </section>
           ))}
+        </div>
         </div>
       </div>
     </div>
