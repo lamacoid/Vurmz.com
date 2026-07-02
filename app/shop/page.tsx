@@ -1,11 +1,11 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import { ChatBubbleLeftIcon } from '@heroicons/react/24/outline'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 import { shopTestimonials } from '@/lib/testimonials'
 import TestimonialCarousel from '@/components/TestimonialCarousel'
 import CategoryCard from '@/components/CategoryCard'
 import GlassImage from '@/components/shop/GlassImage'
-import SiteHero from '@/components/SiteHero'
 import D1ProductGrid from '@/components/shop/D1ProductGrid'
 import { SHOP_CATEGORIES } from '@/lib/categories'
 import { CATALOG } from '@/lib/pricing'
@@ -41,28 +41,56 @@ export const metadata: Metadata = {
 export default function ShopHome() {
   return (
     <div>
-      {/* Shared brand hero */}
-      <SiteHero
-        eyebrow="For You"
-        heading="Custom Laser Engraving: Gifts, Knives, Tumblers & More"
-        accent="coral"
-        baseColor="#16525C"
-      >
-        <p className="text-[var(--ink-soft)] text-base sm:text-lg leading-relaxed mb-7 max-w-lg mx-auto">
-          Engraved gifts, custom coasters, home decor, or hit Bring Your Own and I&apos;ll
-          mark the thing you already love. Hand-delivered across {siteInfo.city}.
-        </p>
-        <a
-          href={getSmsLink("Hi, I'd like to get something engraved")}
-          className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#C67A6F] text-white font-semibold text-base rounded-sm hover:bg-[#B0675D] transition-colors shadow-lg shadow-black/20"
-        >
-          <ChatBubbleLeftIcon className="w-5 h-5" />
-          Text me at {siteInfo.phone}
-        </a>
-        <p className="text-[var(--ink-soft)] text-sm mt-4">No forms, no wait.</p>
-      </SiteHero>
+      {/* Slim header: one line, then straight to the goods */}
+      <section className="pt-2 pb-2">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+            <h1 className="text-lg sm:text-xl font-bold text-[var(--ink)] tracking-tight">
+              Custom Laser Engraving: Gifts, Knives, Tumblers &amp; More
+            </h1>
+            <p className="text-sm text-[var(--ink-soft)]">
+              Hand-delivered across {siteInfo.city}.{' '}
+              <a href={getSmsLink("Hi, I'd like to get something engraved")} className="text-[var(--eyebrow)] font-semibold hover:underline">
+                Text {siteInfo.phone}
+              </a>
+            </p>
+          </div>
 
-      {/* Portfolio grid — every photo behind the glass */}
+          {/* Category chips: pick a lane without scrolling */}
+          <div className="flex gap-2 overflow-x-auto no-scrollbar mt-3 -mx-1 px-1">
+            {CONSUMER_CATEGORIES.map((cat) => (
+              <Link
+                key={cat.slug}
+                href={`/shop/${cat.slug}`}
+                className="whitespace-nowrap px-3.5 py-1.5 rounded-full border border-[var(--hairline)] bg-[var(--surface)] text-sm text-[var(--ink-soft)] hover:border-[#C67A6F]/50 hover:text-[var(--ink)] transition-colors"
+              >
+                {cat.shortName}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* The goods, immediately */}
+      <D1ProductGrid
+        heading="Ready to order"
+        subheading="Prices up front. Pick one and check out."
+        limit={24}
+      />
+
+      {/* Categories (rich cards, for browsers) */}
+      <section className="pb-10 sm:pb-14">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-bold text-[var(--ink)] text-center mb-8">Browse by category</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {CONSUMER_CATEGORIES.map((cat) => (
+              <CategoryCard key={cat.slug} category={cat} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Recent work, below the goods */}
       <section className="pb-10 sm:pb-14">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="text-center text-xs font-mono text-[#7FCFD4] tracking-[0.2em] uppercase mb-6">Recent work</p>
@@ -80,25 +108,6 @@ export default function ShopHome() {
                   <span className="text-white text-xs font-medium drop-shadow">{item.label}</span>
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Shop ready to order — the live buy-now catalog (all categories) */}
-      <D1ProductGrid
-        heading="Shop ready to order"
-        subheading="In-stock and made-to-order, prices up front. Pick one and check out."
-        limit={24}
-      />
-
-      {/* Categories */}
-      <section className="pb-10 sm:pb-14">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold text-[var(--ink)] text-center mb-8">Browse by category</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {CONSUMER_CATEGORIES.map((cat) => (
-              <CategoryCard key={cat.slug} category={cat} />
             ))}
           </div>
         </div>

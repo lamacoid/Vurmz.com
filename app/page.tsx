@@ -105,7 +105,7 @@ export default function Page() {
               href="/shop"
               className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#C67A6F] text-white font-semibold text-base rounded-sm hover:bg-[#B0675D] transition-colors puffy-btn"
             >
-              Shop engraved goods
+              Browse the shop
               <ArrowRightIcon className="w-4 h-4" />
             </Link>
             <a
