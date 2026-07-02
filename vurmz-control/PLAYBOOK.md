@@ -38,11 +38,22 @@ your phone's text shortcuts. Ask every single time; the ask is the system.
   CTA or pricing is the suspect.
 
 ## Pricing spine (already locked — defend it)
-$35 BYO floor · $25/knife · packs for volume · $25 sourcing fee · free delivery
-over $100. When someone pushes back on price, the answer is the work: "that's
-the rate — here's a photo of what you get." Discounting a one-person shop's
-labor is a habit that never reverses. Raise prices when you're booked solid for
-two weeks straight.
+**Individual customers:** $35 BYO floor · $25/knife · packs for volume · $25
+sourcing fee · free delivery over $75. When someone pushes back on price, the
+answer is the work: "that's the rate, here's a photo of what you get."
+Discounting a one-person shop's labor is a habit that never reverses. Raise
+prices when you're booked solid for two weeks straight.
+
+**Business and recurring customers (added 2026-07-02):** the individual rate
+is the floor, not the ceiling for a discount. Real orders (50+ units, or any
+standing/recurring account) get real volume tiers: 10% off at 50 to 149
+units, 15% off at 150+ or any standing order. Standing orders also get free
+delivery regardless of size and NET-30 terms (send the invoice, they pay
+within 30 days, using the existing "send me an invoice" checkout option). No
+setup or design fee, ever, that's a screen-printing/embroidery cost and it
+doesn't apply to a laser. Full detail in `vurmz-control/PRICING.md`. This is
+admin-mediated for now: you apply the tier when you build the quote or
+invoice, there's no self-serve discount toggle on the public checkout yet.
 
 ## When an order goes wrong (it will)
 Fix it fast and visibly: re-run the piece or refund, same day, no argument

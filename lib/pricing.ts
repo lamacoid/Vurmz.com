@@ -1,30 +1,25 @@
 // ═══════════════════════════════════════════
-// VURMZ PRICING — SINGLE SOURCE OF TRUTH
-// Two tiers: Signature (custom $35+) and Basic (stock packs & straightforward marking)
-// Every price rendered on the site MUST import from this file.
+// VURMZ PRICING. SINGLE SOURCE OF TRUTH.
+// Two customer lanes share one catalog: Individual (posted, no haggling)
+// and Business (volume tiers on bulk items, NET-30 via the existing
+// invoice_later fulfillment method). Every price rendered on the site
+// MUST import from this file.
 // ═══════════════════════════════════════════
 
-export const TIERS = {
-  signature: {
-    name: "Signature",
-    tagline: "Custom work, made to order",
-    startingAt: 35, // locked 2026-06-11: $35 bring-your-own floor (was 50)
-    unit: "per item",
-    bullets: [
-      "No setup fees",
-      "Single items welcome",
-      "Next-day turnaround",
-      "Free hand-delivery in South Denver metro",
-    ],
-  },
-  basic: {
-    name: "Basic",
-    tagline: "Stock items & straightforward marking",
-    unit: "varies, see below",
-  },
+export const SIGNATURE = {
+  name: "Signature",
+  tagline: "Custom work, made to order",
+  startingAt: 35, // locked 2026-06-11: $35 bring-your-own floor (was 50)
+  unit: "per item",
+  bullets: [
+    "No setup fees",
+    "Single items welcome",
+    "Next-day turnaround",
+    "Free hand-delivery in South Denver metro",
+  ],
 } as const
 
-export const STOCK = {
+export const CATALOG = {
   pens: {
     name: "Branded Pens",
     pack: 15,
@@ -59,10 +54,17 @@ export const STOCK = {
       { label: "Wood", price: 4 },
       { label: "Metal", price: 4 },
     ],
+    addOns: { sameOnBack: 2, differentOnBack: 3 },
   },
-} as const
-
-export const MARKING = {
+  cards: {
+    name: "Metal Business Cards",
+    pack: 10,
+    matteBlackBase: 3,
+    matteBlackLoaded: 6,
+    stainlessBase: 15,
+    stainlessLoaded: 18,
+    addOns: { logo: 1, qrCode: 1, backSide: 1 },
+  },
   knife: {
     name: "Knife Marking",
     base: 25,
@@ -91,9 +93,6 @@ export const MARKING = {
     jobsite: { minQty: 10, perPiece: 8 },
     note: "4-piece minimum for free delivery",
   },
-} as const
-
-export const TRADES = {
   serviceTags: {
     name: "Metal Service Tags",
     range: [30, 180] as const,
@@ -115,129 +114,141 @@ export const SOURCING = {
   label: "Concierge sourcing",
   fee: 25,
   description:
-    "I'll find it, buy it, engrave it, and deliver it. $25 flat finder's fee + cost of item.",
+    "I'll find it, buy it, engrave it, and deliver it. $25 flat finder's fee plus the cost of the item.",
 } as const
 
+// $75 matches what lib/checkout/fulfillment.ts actually enforces
+// (computeFulfillmentOptions: fee is $0 at subtotalCents >= 7500). This
+// was documented as $100 here previously; that number was never true at
+// checkout. $75 is the corrected, single number now, standardized
+// everywhere on the site.
 export const DELIVERY = {
-  freeThreshold: 100,
+  freeThreshold: 75,
   area: "South Denver metro",
 } as const
 
-// ─── Legacy compatibility ───
-// These re-exports match the old lib/products.ts shape so existing imports keep working
-// while we migrate pages to the new structure.
-export const SIGNATURE = {
-  startingPrice: TIERS.signature.startingAt,
-  description: TIERS.signature.tagline,
-  includes: TIERS.signature.bullets,
+// ─── Business / recurring lane ──────────────────────────────────────────
+// Volume tiers apply to per-unit bulk items: pens, coasters, keychains,
+// metal cards, service tags. Tiers are computed off EFFECTIVE UNIT COUNT,
+// not cart quantity. For a pack SKU (e.g. pens pack of 15), effective
+// units = qty (packs in cart) * packSize. Callers must do that
+// multiplication before calling businessUnitPrice.
+export const BUSINESS = {
+  tiers: [
+    { name: "Starter", minUnits: 15, maxUnits: 49, discount: 0 },
+    { name: "Regular", minUnits: 50, maxUnits: 149, discount: 0.10 },
+    { name: "Standing", minUnits: 150, maxUnits: null, discount: 0.15 },
+  ],
+  // Any recurring or standing order qualifies for Standing-tier terms
+  // (free delivery any size, NET-30) regardless of a single order's unit
+  // count. Zach sets this when he tags a customer/order as recurring,
+  // it is not derived from qty alone.
+  freeDeliveryAnySize: true,
+  netTermsDays: 30,
+  // No setup or design fee. Screen printing and embroidery charge setup
+  // because a physical plate or a digitized stitch file has a real
+  // production cost per design. Fiber laser engraving has none, the
+  // laser just runs a different file. There is no matching cost, so
+  // there is not a fee for it.
+  setupFee: 0,
 } as const
 
-export const BASIC = {
-  pens: {
-    name: STOCK.pens.name,
-    packSize: STOCK.pens.pack,
-    basePerItem: STOCK.pens.perItem[0],
-    withLogo: 5,
-    fullyLoaded: STOCK.pens.perItem[1],
-    get basePackPrice() { return this.basePerItem * this.packSize },
-    get logoPackPrice() { return this.withLogo * this.packSize },
-    get fullyLoadedPackPrice() { return this.fullyLoaded * this.packSize },
-    addOns: { secondLine: 0.5, logo: 2, bothSides: 2 },
-    description: 'Metal stylus pens with your text or logo',
-  },
-  coasters: {
-    name: STOCK.coasters.name,
-    packSize: STOCK.coasters.pack,
-    materials: { wood: 4, hardwood: 5, slate: 5, steel: 6 },
-    get basePackPrice() { return this.materials.wood * this.packSize },
-    description: 'Wood, slate, or steel with your logo',
-  },
-  keychains: {
-    name: STOCK.keychains.name,
-    packSize: STOCK.keychains.pack,
-    materials: { acrylic: 3, wood: 4, metal: 4 },
-    addOns: { sameOnBack: 2, differentOnBack: 3 },
-    get basePackPrice() { return this.materials.metal * this.packSize },
-    description: 'Metal, wood, or acrylic with your logo',
-  },
-  knives: {
-    name: MARKING.knife.name,
-    perKnife: MARKING.knife.base,
-    addOns: { deepMark: 5, secondLine: 3 },
-    description: 'Bring your own blade. Names near the handle, logos, custom text.',
-  },
-  cards: {
-    name: 'Metal Business Cards',
-    packSize: 10,
-    matteBlackBase: 3,
-    matteBlackLoaded: 6,
-    stainlessBase: 15,
-    stainlessLoaded: 18,
-    addOns: { logo: 1, qrCode: 1, backSide: 1 },
-    description: 'Anodized aluminum or stainless steel cards with your info engraved.',
-  },
-  tools: {
-    name: MARKING.tool.name,
-    perPiece: MARKING.tool.base,
-    minimum: MARKING.tool.minimum,
-    description: 'Names, IDs, or company info on power tools and equipment.',
-  },
+/**
+ * Per-unit price for a business or recurring order, in the same unit as
+ * basePriceCents (cents in, cents out; whole dollars in, whole dollars
+ * out, caller's choice, just be consistent).
+ *
+ * qty is EFFECTIVE UNITS, not cart line quantity. For pack SKUs, pass
+ * qty * packSize.
+ *
+ * Below 15 units this returns the base price unchanged. The business
+ * lane starts at the Starter floor; single-digit orders are priced at
+ * the individual per-item rate.
+ */
+export function businessUnitPrice(basePriceCents: number, qty: number): number {
+  const tier = businessTierFor(qty)
+  const discount = tier ? tier.discount : 0
+  return Math.round(basePriceCents * (1 - discount))
+}
+
+/** Which named tier a given effective unit count falls into, for display. */
+export function businessTierFor(qty: number): (typeof BUSINESS.tiers)[number] | null {
+  if (qty < BUSINESS.tiers[0].minUnits) return null
+  return [...BUSINESS.tiers].reverse().find(t => qty >= t.minUnits) ?? null
+}
+
+// ─── Rush fee ────────────────────────────────────────────────────────────
+// Documented rates, not yet wired into checkout automation. Zach quotes
+// this manually via admin quotes/invoices for now.
+export const RUSH = {
+  nextBusinessDay: 25,
+  sameDay: 35,
+  unit: "flat, per order",
 } as const
 
-export const LEAVE_YOUR_MARK = {
-  serviceTags: {
-    name: TRADES.serviceTags.name,
-    packSize: 10,
-    matteBlackBase: 3,
-    matteBlackLoaded: 6,
-    stainlessBase: 15,
-    stainlessLoaded: 18,
-    addOns: { logo: 1, qrCode: 1, backSide: 1 },
-    description: 'Credit card-sized metal tags with 3M adhesive backing.',
-  },
-  signatureTiles: {
-    name: TRADES.signatureTiles.name,
-    price: 15,
-    description: 'Small engraved tile with your logo or mark.',
-  },
-} as const
+// ─── Sales tax ───────────────────────────────────────────────────────────
+// orders.tax_cents and invoices.tax_cents exist in D1, and the admin
+// invoice/quote APIs already accept taxCents for manual entry. Shop
+// checkout does not compute tax and this file does not define a rate.
+// Colorado sales tax is jurisdiction-specific (state, county, Centennial
+// municipal, and any special district), and needs Zach plus an
+// accountant to confirm before any automatic calculation ships. See
+// vurmz-control/PRICING.md.
+
+// Shared list of what a contact-form visitor can say they're interested
+// in. Built from the catalog names so the option labels can't drift from
+// the real product names, and used by both the form and the API route
+// that validates submissions against it.
+export const CONTACT_PRODUCT_OPTIONS = [
+  `${CATALOG.pens.name} (pack)`,
+  `${CATALOG.serviceTags.name} (pack)`,
+  `${CATALOG.coasters.name} (pack)`,
+  `${CATALOG.keychains.name} (pack)`,
+  CATALOG.knife.name,
+  CATALOG.tool.name,
+  CATALOG.signatureTiles.name,
+  `Custom Engraving ($${SIGNATURE.startingAt}+)`,
+  "Business / Recurring Order",
+  "Concierge Sourcing",
+  "Other",
+] as const
 
 // Format a dollar amount with always-two decimals.
 const usd = (n: number) => `$${n.toFixed(2)}`
 const usdMod = (n: number) => `+$${n.toFixed(2)}`
 
-// ─── Pricing Page Cards ───
+// ─── Pricing page cards: Individual lane ────────────────────────────────
 
-export const BASIC_PRICING_CARDS = [
+export const INDIVIDUAL_PRICING_CARDS = [
   {
-    category: STOCK.pens.name,
-    packNote: `Pack of ${STOCK.pens.pack}`,
-    packTotal: `${usd(STOCK.pens.packPrice[0])} – ${usd(STOCK.pens.packPrice[1])}`,
+    category: CATALOG.pens.name,
+    packNote: `Pack of ${CATALOG.pens.pack}`,
+    packTotal: `${usd(CATALOG.pens.packPrice[0])} – ${usd(CATALOG.pens.packPrice[1])}`,
     items: [
-      { name: 'Text only', price: usd(STOCK.pens.perItem[0]), note: '' },
+      { name: 'Text only', price: usd(CATALOG.pens.perItem[0]), note: '' },
       { name: '+ Logo', price: usdMod(2), note: '' },
       { name: '+ Second line', price: usdMod(0.5), note: '' },
       { name: '+ Both sides', price: usdMod(2), note: '' },
-      { name: 'Fully loaded', price: usd(STOCK.pens.perItem[1]), note: '' },
+      { name: 'Fully loaded', price: usd(CATALOG.pens.perItem[1]), note: '' },
     ],
   },
   {
-    category: STOCK.coasters.name,
-    packNote: `Pack of ${STOCK.coasters.pack}`,
-    packTotal: `${usd(STOCK.coasters.packPrice[0])} – ${usd(STOCK.coasters.packPrice[1])}`,
-    items: STOCK.coasters.materials.map(m => ({ name: m.label, price: usd(m.price), note: '' })),
+    category: CATALOG.coasters.name,
+    packNote: `Pack of ${CATALOG.coasters.pack}`,
+    packTotal: `${usd(CATALOG.coasters.packPrice[0])} – ${usd(CATALOG.coasters.packPrice[1])}`,
+    items: CATALOG.coasters.materials.map(m => ({ name: m.label, price: usd(m.price), note: '' })),
   },
   {
-    category: STOCK.keychains.name,
-    packNote: `Pack of ${STOCK.keychains.pack}`,
-    packTotal: `${usd(STOCK.keychains.packPrice[0])} – ${usd(STOCK.keychains.packPrice[1])}`,
-    items: STOCK.keychains.materials.map(m => ({ name: m.label, price: usd(m.price), note: '' })),
+    category: CATALOG.keychains.name,
+    packNote: `Pack of ${CATALOG.keychains.pack}`,
+    packTotal: `${usd(CATALOG.keychains.packPrice[0])} – ${usd(CATALOG.keychains.packPrice[1])}`,
+    items: CATALOG.keychains.materials.map(m => ({ name: m.label, price: usd(m.price), note: '' })),
   },
   {
-    category: MARKING.knife.name,
-    packNote: MARKING.knife.unit,
+    category: CATALOG.knife.name,
+    packNote: CATALOG.knife.unit,
     packTotal: '',
-    items: MARKING.knife.options.map(o => {
+    items: CATALOG.knife.options.map(o => {
       const opt = o as { label: string; price: number | null; modifier?: boolean; note?: string }
       return {
         name: opt.label,
@@ -247,33 +258,33 @@ export const BASIC_PRICING_CARDS = [
     }),
   },
   {
-    category: MARKING.tool.name,
-    packNote: `${MARKING.tool.minimum} piece minimum for free delivery`,
+    category: CATALOG.tool.name,
+    packNote: `${CATALOG.tool.minimum} piece minimum for free delivery`,
     packTotal: '',
     items: [
-      { name: 'Name / ID marking', price: usd(MARKING.tool.base), note: '' },
-      { name: `Crew rate (${MARKING.tool.crew.minQty}+ tools)`, price: usd(MARKING.tool.crew.perPiece), note: 'per tool' },
-      { name: `Jobsite rate (${MARKING.tool.jobsite.minQty}+ tools)`, price: usd(MARKING.tool.jobsite.perPiece), note: 'per tool' },
+      { name: 'Name / ID marking', price: usd(CATALOG.tool.base), note: '' },
+      { name: `Crew rate (${CATALOG.tool.crew.minQty}+ tools)`, price: usd(CATALOG.tool.crew.perPiece), note: 'per tool' },
+      { name: `Jobsite rate (${CATALOG.tool.jobsite.minQty}+ tools)`, price: usd(CATALOG.tool.jobsite.perPiece), note: 'per tool' },
     ],
   },
   {
-    category: BASIC.cards.name,
-    packNote: `Pack of ${BASIC.cards.packSize} · credit card sized`,
-    packTotal: `${usd(BASIC.cards.matteBlackBase * BASIC.cards.packSize)} – ${usd(BASIC.cards.stainlessLoaded * BASIC.cards.packSize)}`,
+    category: CATALOG.cards.name,
+    packNote: `Pack of ${CATALOG.cards.pack} · credit card sized`,
+    packTotal: `${usd(CATALOG.cards.matteBlackBase * CATALOG.cards.pack)} – ${usd(CATALOG.cards.stainlessLoaded * CATALOG.cards.pack)}`,
     items: [
-      { name: 'Anodized aluminum (text)', price: usd(BASIC.cards.matteBlackBase), note: '' },
-      { name: '+ Logo / QR / back side', price: usdMod(BASIC.cards.addOns.logo), note: 'each' },
-      { name: 'Stainless steel', price: usd(BASIC.cards.stainlessBase), note: '' },
-      { name: 'Stainless fully loaded', price: usd(BASIC.cards.stainlessLoaded), note: '' },
+      { name: 'Anodized aluminum (text)', price: usd(CATALOG.cards.matteBlackBase), note: '' },
+      { name: '+ Logo / QR / back side', price: usdMod(CATALOG.cards.addOns.logo), note: 'each' },
+      { name: 'Stainless steel', price: usd(CATALOG.cards.stainlessBase), note: '' },
+      { name: 'Stainless fully loaded', price: usd(CATALOG.cards.stainlessLoaded), note: '' },
     ],
   },
 ]
 
-export const LEAVE_YOUR_MARK_CARDS = [
+export const TRADES_PRICING_CARDS = [
   {
-    category: TRADES.serviceTags.name,
+    category: CATALOG.serviceTags.name,
     packNote: 'Pack of 10 · credit card sized',
-    packTotal: `${usd(TRADES.serviceTags.range[0])} – ${usd(TRADES.serviceTags.range[1])}`,
+    packTotal: `${usd(CATALOG.serviceTags.range[0])} – ${usd(CATALOG.serviceTags.range[1])}`,
     items: [
       { name: 'Anodized aluminum (text)', price: usd(3), note: '' },
       { name: '+ Logo / QR / back', price: usdMod(1), note: '' },
@@ -282,7 +293,7 @@ export const LEAVE_YOUR_MARK_CARDS = [
     ],
   },
   {
-    category: TRADES.signatureTiles.name,
+    category: CATALOG.signatureTiles.name,
     packNote: 'Per tile',
     packTotal: '',
     items: [
@@ -291,3 +302,13 @@ export const LEAVE_YOUR_MARK_CARDS = [
     ],
   },
 ]
+
+// ─── Pricing page cards: Business lane (new) ────────────────────────────
+// Renders the 3-tier ladder on /services#business.
+export const BUSINESS_TIER_CARDS = BUSINESS.tiers.map(t => ({
+  name: t.name,
+  range: t.maxUnits ? `${t.minUnits} to ${t.maxUnits} units` : `${t.minUnits}+ units`,
+  discount: t.discount === 0 ? 'Standard bulk rate' : `${Math.round(t.discount * 100)}% off`,
+  freeDelivery: t.name === 'Standing',
+  netTerms: t.name === 'Standing',
+}))

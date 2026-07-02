@@ -162,7 +162,7 @@ export default function ContactPage() {
                 </div>
                 <div className="mt-4 p-4 bg-[var(--feature)]/10 border border-vurmz-teal/30 rounded-lg">
                   <p className="text-sm text-[var(--ink-soft)]">
-                    <strong className="text-[var(--ink)]">Free delivery</strong> on orders $100+ in south suburban Denver.
+                    <strong className="text-[var(--ink)]">Free delivery</strong> on orders $75+ in south suburban Denver.
                   </p>
                 </div>
               </div>

@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { ArrowRightIcon, ChatBubbleLeftIcon } from '@heroicons/react/24/outline'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
-import { SIGNATURE, SOURCING, DELIVERY, BASIC_PRICING_CARDS, LEAVE_YOUR_MARK_CARDS } from '@/lib/pricing'
+import { SIGNATURE, SOURCING, DELIVERY, BUSINESS, BUSINESS_TIER_CARDS, INDIVIDUAL_PRICING_CARDS, TRADES_PRICING_CARDS } from '@/lib/pricing'
 import { servicesTestimonials } from '@/lib/testimonials'
 import TestimonialCarousel from '@/components/TestimonialCarousel'
 import TrustedBy from '@/components/TrustedBy'
@@ -15,6 +15,7 @@ const NAV = [
   { label: 'Custom work', href: '#custom' },
   { label: 'Stock & packs', href: '#packs' },
   { label: 'For the trades', href: '#trades' },
+  { label: 'Volume & standing orders', href: '#business' },
   { label: 'How it works', href: '#process' },
   { label: 'Contact', href: '/services/contact' },
 ]
@@ -85,7 +86,7 @@ export default function Home() {
     offers: {
       '@type': 'Offer',
       priceCurrency: 'USD',
-      priceSpecification: { '@type': 'PriceSpecification', minPrice: SIGNATURE.startingPrice, priceCurrency: 'USD' },
+      priceSpecification: { '@type': 'PriceSpecification', minPrice: SIGNATURE.startingAt, priceCurrency: 'USD' },
     },
   }
 
@@ -152,7 +153,7 @@ export default function Home() {
                 A gift, a tool, a one-of-a-kind piece for your business. Your idea, built and engraved. Text me a photo and I&apos;ll quote you.
               </p>
               <ul className="space-y-2 text-[var(--ink-soft)] text-sm">
-                {SIGNATURE.includes.map((item) => (
+                {SIGNATURE.bullets.map((item) => (
                   <li key={item} className="flex items-center gap-2">
                     <span className="text-vurmz-cta">✓</span> {item}
                   </li>
@@ -162,7 +163,7 @@ export default function Home() {
 
             <div className="bg-[var(--surface)] border border-[var(--hairline)] rounded-sm p-6 sm:p-8 text-center">
               <p className="text-xs font-mono text-[var(--ink-soft)] tracking-[0.2em] uppercase mb-3">Starting at</p>
-              <p className="text-5xl sm:text-6xl font-bold text-[var(--ink)] mb-2">${SIGNATURE.startingPrice}</p>
+              <p className="text-5xl sm:text-6xl font-bold text-[var(--ink)] mb-2">${SIGNATURE.startingAt}</p>
               <p className="text-[var(--ink-soft)] text-sm mb-6">per piece · custom engraving</p>
               <a
                 href={getSmsLink("I have something I'd like engraved")}
@@ -205,7 +206,7 @@ export default function Home() {
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {BASIC_PRICING_CARDS.map((card) => (
+            {INDIVIDUAL_PRICING_CARDS.map((card) => (
               <PricingCard key={card.category} card={card} />
             ))}
           </div>
@@ -226,7 +227,7 @@ export default function Home() {
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {LEAVE_YOUR_MARK_CARDS.map((card) => (
+            {TRADES_PRICING_CARDS.map((card) => (
               <PricingCard key={card.category} card={card} />
             ))}
           </div>
@@ -240,6 +241,63 @@ export default function Home() {
               Knife engraving for crews
               <ArrowRightIcon className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════ VOLUME & STANDING ORDERS ═══════════ */}
+      <section id="business" className="py-12 sm:py-16 scroll-mt-16">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--feature)]/10 border border-vurmz-teal/20 mb-4">
+            <span className="text-xs font-semibold text-[var(--eyebrow)] tracking-wide uppercase">Volume &amp; Standing Orders</span>
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-bold text-[var(--ink)] tracking-tight leading-tight mb-2">
+            Real quantities get real discounts.
+          </h2>
+          <p className="text-[var(--ink-soft)] text-base leading-relaxed mb-8 max-w-2xl">
+            Pens, coasters, keychains, metal cards, and service tags all step down in price as the order gets bigger. No setup fee, no design fee, ever, that&apos;s a screen-printing and embroidery cost and it doesn&apos;t apply to a laser.
+          </p>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+            {BUSINESS_TIER_CARDS.map((tier) => (
+              <div
+                key={tier.name}
+                className={`rounded-sm border p-6 ${tier.name === 'Standing' ? 'bg-[var(--feature)]/10 border-vurmz-teal/30' : 'bg-[var(--surface)] border-[var(--hairline)]'}`}
+              >
+                <p className={`text-sm font-semibold mb-1 ${tier.name === 'Standing' ? 'text-[var(--eyebrow)]' : 'text-[var(--ink)]'}`}>{tier.name}</p>
+                <p className="text-xs text-[var(--ink-soft)] font-mono mb-4">{tier.range}</p>
+                <p className="text-2xl font-bold text-[var(--ink)] mb-3">{tier.discount}</p>
+                {(tier.freeDelivery || tier.netTerms) && (
+                  <ul className="space-y-1">
+                    {tier.freeDelivery && <li className="text-xs text-[var(--ink-soft)]">✓ Free delivery, any size</li>}
+                    {tier.netTerms && <li className="text-xs text-[var(--ink-soft)]">✓ NET-{BUSINESS.netTermsDays} terms available</li>}
+                  </ul>
+                )}
+              </div>
+            ))}
+          </div>
+
+          <div className="bg-[var(--surface)] border border-[var(--hairline)] rounded-sm p-5 sm:p-6 mb-8">
+            <p className="text-[var(--ink-soft)] text-sm leading-relaxed">
+              Tiers are based on the real quantity, not the number of packs. Standing orders (any recurring or scheduled account) get Standing-tier terms between reorders too. Choose &quot;Send me an invoice&quot; at checkout to pay within {BUSINESS.netTermsDays} days, no card required up front.
+            </p>
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-3">
+            <Link
+              href="/services/contact"
+              className="group inline-flex items-center justify-center gap-2 px-6 py-3 bg-vurmz-cta text-white font-semibold text-sm rounded-sm hover:bg-vurmz-cta-hover transition-all shadow-lg shadow-vurmz-cta/20"
+            >
+              Get a Quote
+              <ArrowRightIcon className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
+            <a
+              href={getSmsLink('Hi, I want to talk about a recurring or bulk order')}
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-vurmz-cream text-vurmz-dark font-semibold text-sm rounded-sm hover:bg-vurmz-cream-hover transition-all"
+            >
+              <ChatBubbleLeftIcon className="w-4 h-4" />
+              Text {siteInfo.phone}
+            </a>
           </div>
         </div>
       </section>

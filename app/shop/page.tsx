@@ -8,7 +8,7 @@ import GlassImage from '@/components/shop/GlassImage'
 import SiteHero from '@/components/SiteHero'
 import D1ProductGrid from '@/components/shop/D1ProductGrid'
 import { SHOP_CATEGORIES } from '@/lib/categories'
-import { BASIC } from '@/lib/pricing'
+import { CATALOG } from '@/lib/pricing'
 
 // D1ProductGrid reads the live catalog at request time → must run on the edge.
 export const runtime = 'edge'
@@ -16,8 +16,8 @@ export const runtime = 'edge'
 // Pack-based categories (coasters, keychains) are business-only — hide from consumer shop.
 const CONSUMER_CATEGORIES = SHOP_CATEGORIES.filter(cat => {
   if (cat.pricingType === 'signature') return true
-  if (cat.pricingKey && cat.pricingKey in BASIC) {
-    const data = BASIC[cat.pricingKey]
+  if (cat.pricingKey && cat.pricingKey in CATALOG) {
+    const data = CATALOG[cat.pricingKey]
     return !('materials' in data)
   }
   return true

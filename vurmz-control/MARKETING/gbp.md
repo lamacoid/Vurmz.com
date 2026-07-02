@@ -23,7 +23,7 @@ below is written to paste directly.
 > cutting boards, pens, metal business cards, closing gifts, and one-off custom
 > pieces. Fiber laser marking goes into steel, not onto it, so it survives the
 > dishwasher and the job site. Next-day turnaround on most work. I hand-deliver
-> across the south Denver metro, free on orders over $100. Custom work starts
+> across the south Denver metro, free on orders over $75. Custom work starts
 > at $35, knife engraving is $25 a blade. Text me a photo of what you want
 > marked and I'll quote you fast. No quote forms that go nowhere, no setup
 > fees, no surprises.
@@ -39,7 +39,7 @@ below is written to paste directly.
 ## Q&A — seed these yourself (you can post both Q and A)
 1. **Q: How fast can you turn something around?** A: Next-day on most jobs. Same-day is often possible on stock items. Text me the deadline and I'll tell you straight.
 2. **Q: Can I bring my own item?** A: Yes. Knives, tumblers, laptops, leather, glass. Text me a photo and I'll tell you if it'll mark. Custom work starts at $35.
-3. **Q: Do you deliver?** A: I hand-deliver across the south Denver metro. Free on orders over $100.
+3. **Q: Do you deliver?** A: I hand-deliver across the south Denver metro. Free on orders over $75.
 4. **Q: What file do you need for a logo?** A: Vector (SVG/AI/EPS) is ideal, a clean PNG works. If all you have is a photo of it, send it anyway — I can usually rebuild it.
 5. **Q: Do you do bulk orders for businesses?** A: Yes. Pens, coasters, keychains, and metal cards in packs, service tags by the run. Recurring orders welcome.
 

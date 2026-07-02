@@ -4,7 +4,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { ChatBubbleLeftIcon, ArrowRightIcon, ShieldCheckIcon } from '@heroicons/react/24/outline'
 import { SHOP_CATEGORIES, getCategoryBySlug, getCategoriesBySlugs } from '@/lib/categories'
-import { BASIC, BASIC_PRICING_CARDS, SIGNATURE } from '@/lib/pricing'
+import { CATALOG, INDIVIDUAL_PRICING_CARDS, SIGNATURE } from '@/lib/pricing'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import CategoryCard from '@/components/CategoryCard'
@@ -47,7 +47,7 @@ export default async function ShopCategoryPage({ params }: { params: Promise<{ c
 
   // Get pricing card if basic type
   const pricingCard = cat.pricingKey
-    ? BASIC_PRICING_CARDS.find(c => c.category === BASIC[cat.pricingKey!].name)
+    ? INDIVIDUAL_PRICING_CARDS.find(c => c.category === CATALOG[cat.pricingKey!].name)
     : null
 
   // Schema
@@ -65,7 +65,7 @@ export default async function ShopCategoryPage({ params }: { params: Promise<{ c
       seller: { '@type': 'LocalBusiness', name: siteInfo.legalName },
     } : {
       '@type': 'Offer',
-      price: String(SIGNATURE.startingPrice),
+      price: String(SIGNATURE.startingAt),
       priceCurrency: 'USD',
       availability: 'https://schema.org/InStock',
       seller: { '@type': 'LocalBusiness', name: siteInfo.legalName },
@@ -151,11 +151,11 @@ export default async function ShopCategoryPage({ params }: { params: Promise<{ c
           {cat.pricingType === 'signature' && (
             <div className="bg-[var(--surface)] backdrop-blur-xl border border-[var(--hairline)] rounded-sm p-6 sm:p-8">
               <div className="flex items-baseline gap-2 mb-4">
-                <span className="text-3xl font-bold text-[#C67A6F]">${SIGNATURE.startingPrice}+</span>
+                <span className="text-3xl font-bold text-[#C67A6F]">${SIGNATURE.startingAt}+</span>
                 <span className="text-[var(--ink-soft)] text-sm">Custom engraving</span>
               </div>
               <ul className="space-y-2">
-                {SIGNATURE.includes.map(item => (
+                {SIGNATURE.bullets.map(item => (
                   <li key={item} className="flex items-center gap-2 text-[var(--ink-soft)] text-sm">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#C67A6F]/60 flex-shrink-0" />
                     {item}

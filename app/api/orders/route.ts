@@ -11,6 +11,7 @@ import { getClientIp, getUserAgent } from '@/lib/auth/session'
 import { createPayment, isSquareEnabled } from '@/lib/payments/square'
 import { getDb, getEnv, newId, nowIso } from '@/lib/db/client'
 import { reportError } from '@/lib/error'
+import { businessTierFor } from '@/lib/pricing'
 
 export const runtime = 'edge'
 
@@ -46,6 +47,10 @@ const schema = z.object({
     }).nullish(),
   })).min(1),
   fulfillmentMethod: z.enum(['ship','hand_deliver','pickup','uber_direct','invoice_later']),
+  // Admin-mediated business/recurring order: applies volume-tier pricing
+  // (lib/pricing.ts businessUnitPrice). Never set by the public checkout UI
+  // today; reserved for an admin-built order flow.
+  isBusinessOrder: z.boolean().optional(),
   address: addressSchema.optional().nullable(),
   notes: z.string().max(2000).optional(),
   // Guest checkout uploads (photos/logos) — keys minted by /api/checkout/upload.
@@ -127,7 +132,7 @@ export async function POST(req: NextRequest) {
   const body = parsed.data
 
   // 1. Validate cart server-side (authoritative pricing)
-  const cart = await validateCart(body.items)
+  const cart = await validateCart(body.items, { isBusinessOrder: body.isBusinessOrder })
   if (cart.items.length === 0) {
     return NextResponse.json({ ok: false, error: { code: 'EMPTY_CART' } }, { status: 400 })
   }
@@ -139,11 +144,17 @@ export async function POST(req: NextRequest) {
     }, { status: 409 })
   }
 
+  // A business order reaches Standing-tier delivery terms (free at any
+  // size) when at least one line hits the 150-effective-unit threshold.
+  const isBusinessStanding = body.isBusinessOrder === true
+    && cart.items.some(i => businessTierFor(i.qty * i.packSize)?.name === 'Standing')
+
   // 2. Compute fulfillment options and match the chosen method
   const options = computeFulfillmentOptions({
     subtotalCents: cart.subtotalCents,
     totalWeightGrams: cart.totalWeightGrams,
     address: body.address ?? null,
+    isBusinessStanding,
   })
   const chosen = options.find(o => o.method === body.fulfillmentMethod)
   if (!chosen || chosen.disabled) {
@@ -224,6 +235,7 @@ export async function POST(req: NextRequest) {
       source: 'checkout',
       ...(handDeliveryMeta ? { handDelivery: handDeliveryMeta } : {}),
       ...(body.attachments?.length ? { attachments: body.attachments } : {}),
+      ...(body.isBusinessOrder ? { businessOrder: true, businessStanding: isBusinessStanding } : {}),
     },
   })
 

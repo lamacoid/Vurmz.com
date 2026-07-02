@@ -3,26 +3,12 @@ export const runtime = 'edge'
 import { NextRequest, NextResponse } from 'next/server'
 import { getRequestContext } from '@cloudflare/next-on-pages'
 import { reportError } from '@/lib/error'
-import { SIGNATURE } from '@/lib/pricing'
+import { CONTACT_PRODUCT_OPTIONS } from '@/lib/pricing'
 
 const ALLOWED_ORIGINS = [
   'https://vurmz.com',
   'https://www.vurmz.com',
   'http://localhost:3000',
-]
-
-const ALLOWED_PRODUCTS = [
-  'Branded Pens (pack)',
-  'Metal Service Tags (pack)',
-  'Coasters (pack)',
-  'Keychains (pack)',
-  'Knife Marking',
-  'Tool Marking',
-  'Signature Tiles',
-  // Must match ContactForm.tsx, which renders this from SIGNATURE.startingPrice.
-  `Custom Engraving ($${SIGNATURE.startingPrice}+)`,
-  'Concierge Sourcing',
-  'Other',
 ]
 
 const MAX_LENGTHS = {
@@ -150,7 +136,7 @@ export async function POST(request: NextRequest) {
     productInterest = productInterest ? stripControlChars(productInterest) : ''
 
     // Validate productInterest against allowed values
-    if (productInterest && !ALLOWED_PRODUCTS.includes(productInterest)) {
+    if (productInterest && !CONTACT_PRODUCT_OPTIONS.includes(productInterest as typeof CONTACT_PRODUCT_OPTIONS[number])) {
       productInterest = ''
     }
 

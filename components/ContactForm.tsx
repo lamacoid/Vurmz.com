@@ -3,20 +3,7 @@
 import { useState } from 'react'
 import { ArrowRightIcon, CheckCircleIcon } from '@heroicons/react/24/outline'
 import { siteInfo } from '@/lib/site-info'
-import { BASIC, LEAVE_YOUR_MARK, SIGNATURE } from '@/lib/pricing'
-
-const productOptions = [
-  `${BASIC.pens.name} (pack)`,
-  `${LEAVE_YOUR_MARK.serviceTags.name} (pack)`,
-  `${BASIC.coasters.name} (pack)`,
-  `${BASIC.keychains.name} (pack)`,
-  BASIC.knives.name,
-  BASIC.tools.name,
-  LEAVE_YOUR_MARK.signatureTiles.name,
-  `Custom Engraving ($${SIGNATURE.startingPrice}+)`,
-  'Concierge Sourcing',
-  'Other',
-]
+import { CONTACT_PRODUCT_OPTIONS } from '@/lib/pricing'
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -136,7 +123,7 @@ export default function ContactForm() {
           className="w-full px-4 py-3 bg-[var(--surface)] border border-[var(--hairline)] rounded-lg text-[var(--ink)] focus:border-vurmz-teal focus:ring-1 focus:ring-vurmz-teal outline-none transition-colors"
         >
           <option value="">Select a product (optional)</option>
-          {productOptions.map(opt => (
+          {CONTACT_PRODUCT_OPTIONS.map(opt => (
             <option key={opt} value={opt}>{opt}</option>
           ))}
         </select>

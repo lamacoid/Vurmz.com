@@ -1,4 +1,10 @@
-import { BASIC, SIGNATURE } from './pricing'
+import { CATALOG, SIGNATURE } from './pricing'
+
+// Convenience lookups into the coasters/keychains material arrays, used
+// repeatedly in the category copy below. Keeps one canonical price list
+// (CATALOG) instead of a second named-object copy of the same numbers.
+const COASTER_PRICE = Object.fromEntries(CATALOG.coasters.materials.map(m => [m.label, m.price])) as Record<string, number>
+const KEYCHAIN_PRICE = Object.fromEntries(CATALOG.keychains.materials.map(m => [m.label, m.price])) as Record<string, number>
 
 export interface CategoryFAQ {
   question: string
@@ -18,7 +24,7 @@ export interface ShopCategory {
   heroImage: string | null
   galleryImages: string[]
   pricingType: 'signature' | 'basic'
-  pricingKey?: keyof typeof BASIC
+  pricingKey?: keyof typeof CATALOG
   smsMessage: string
   faqs: CategoryFAQ[]
   relatedCategories: string[]
@@ -33,7 +39,7 @@ export const SHOP_CATEGORIES: ShopCategory[] = [
     shortName: 'Gifts',
     tagline: 'The kind of gift people actually keep.',
     cardDescription: 'Anniversaries, retirements, the gift for the person who has everything. Engraving turns an object into a record.',
-    description: `Custom laser engraved gifts in ${SIGNATURE.startingPrice > 0 ? `Centennial, CO. Starting at $${SIGNATURE.startingPrice}` : 'Centennial, CO'}. Cutting boards, plaques, trophies, and personalized keepsakes. Hand-delivered in South Denver.`,
+    description: `Custom laser engraved gifts in ${SIGNATURE.startingAt > 0 ? `Centennial, CO. Starting at $${SIGNATURE.startingAt}` : 'Centennial, CO'}. Cutting boards, plaques, trophies, and personalized keepsakes. Hand-delivered in South Denver.`,
     heroImage: '/portfolio/culinary-cleaver-engraved.jpg',
     galleryImages: [
       '/portfolio/culinary-cleaver-engraved.jpg',
@@ -62,7 +68,7 @@ export const SHOP_CATEGORIES: ShopCategory[] = [
     shortName: 'Your Item',
     tagline: 'Your thing. Marked for good.',
     cardDescription: 'A knife, a laptop, a tumbler, a tool, an heirloom, bring it or ship it and I engrave it. $35 flat within size, a little more for the big or complicated.',
-    description: `Bring your own item engraving in Centennial, CO. Knives, laptops, tumblers, flasks, tools, heirlooms: anything you bring, marked permanently. $${SIGNATURE.startingPrice} flat within size. Hand-delivered by VURMZ.`,
+    description: `Bring your own item engraving in Centennial, CO. Knives, laptops, tumblers, flasks, tools, heirlooms: anything you bring, marked permanently. $${SIGNATURE.startingAt} flat within size. Hand-delivered by VURMZ.`,
     heroImage: '/portfolio/macbook-engraving.jpg',
     galleryImages: [
       '/portfolio/pocket-knife-engraved.jpg',
@@ -94,7 +100,7 @@ export const SHOP_CATEGORIES: ShopCategory[] = [
     shortName: 'Tumblers',
     tagline: 'Your name on the cup nobody borrows.',
     cardDescription: 'Powder-coated tumblers, water bottles, flasks. The coating burns away clean and the mark never washes off, peels, or fades.',
-    description: `Custom engraved tumblers and water bottles in Centennial, CO. Starting at $${SIGNATURE.startingPrice}. Stainless steel, powder-coated, full-wrap available. Hand-delivered by VURMZ.`,
+    description: `Custom engraved tumblers and water bottles in Centennial, CO. Starting at $${SIGNATURE.startingAt}. Stainless steel, powder-coated, full-wrap available. Hand-delivered by VURMZ.`,
     heroImage: '/portfolio/water-bottle-full-wrap.jpg',
     galleryImages: [
       '/portfolio/water-bottle-full-wrap.jpg',
@@ -122,7 +128,7 @@ export const SHOP_CATEGORIES: ShopCategory[] = [
     name: 'Coasters',
     shortName: 'Coasters',
     tagline: 'The detail that gets noticed.',
-    description: `Laser engraved coasters in Centennial, CO. Wood, slate, or steel. Starting at $${BASIC.coasters.materials.wood}/ea in packs of ${BASIC.coasters.packSize}. Wedding favors, gifts, home decor. Hand-delivered by VURMZ.`,
+    description: `Laser engraved coasters in Centennial, CO. Wood, slate, or steel. Starting at $${COASTER_PRICE['Pine / Bamboo']}/ea in packs of ${CATALOG.coasters.pack}. Wedding favors, gifts, home decor. Hand-delivered by VURMZ.`,
     heroImage: '/portfolio/denver-map-glass-coaster.jpg',
     galleryImages: [
       '/portfolio/denver-map-glass-coaster.jpg',
@@ -132,7 +138,7 @@ export const SHOP_CATEGORIES: ShopCategory[] = [
     pricingKey: 'coasters',
     smsMessage: "Hi, I'm interested in engraved coasters",
     faqs: [
-      { question: 'What materials are available?', answer: `Pine/bamboo ($${BASIC.coasters.materials.wood}/ea), oak/acacia ($${BASIC.coasters.materials.hardwood}/ea), natural slate ($${BASIC.coasters.materials.slate}/ea), or stainless steel ($${BASIC.coasters.materials.steel}/ea). All in packs of ${BASIC.coasters.packSize}.` },
+      { question: 'What materials are available?', answer: `Pine/bamboo ($${COASTER_PRICE['Pine / Bamboo']}/ea), oak/acacia ($${COASTER_PRICE['Oak / Acacia']}/ea), natural slate ($${COASTER_PRICE['Natural Slate']}/ea), or stainless steel ($${COASTER_PRICE['Stainless Steel']}/ea). All in packs of ${CATALOG.coasters.pack}.` },
       { question: 'Are these good for wedding favors?', answer: 'Yes. Coasters are one of the most popular wedding favors I make. Names, date, a short message. They\'re functional keepsakes people actually use.' },
       { question: 'Can I order mixed materials?', answer: 'Each pack is one material. If you want different materials, that\'s separate packs. Text me what you\'re thinking and I\'ll work it out.' },
       { question: 'Can I do a custom design?', answer: 'Yes. Logos, maps, artwork, monograms, anything you can send me as an image, I can engrave.' },
@@ -140,7 +146,7 @@ export const SHOP_CATEGORIES: ShopCategory[] = [
     relatedCategories: ['keychains', 'gifts'],
     howItWorks: [
       'Text me your design or idea',
-      `I'll quote you (packs of ${BASIC.coasters.packSize}, from $${BASIC.coasters.materials.wood}/ea)`,
+      `I'll quote you (packs of ${CATALOG.coasters.pack}, from $${COASTER_PRICE['Pine / Bamboo']}/ea)`,
       'I engrave and hand-deliver across South Denver',
     ],
   },
@@ -149,22 +155,22 @@ export const SHOP_CATEGORIES: ShopCategory[] = [
     name: 'Keychains',
     shortName: 'Keychains',
     tagline: 'Small, useful, giftable.',
-    description: `Laser engraved keychains in Centennial, CO. Metal, wood, or acrylic. Starting at $${BASIC.keychains.materials.acrylic}/ea in packs of ${BASIC.keychains.packSize}. Hand-delivered by VURMZ.`,
+    description: `Laser engraved keychains in Centennial, CO. Metal, wood, or acrylic. Starting at $${KEYCHAIN_PRICE['Acrylic']}/ea in packs of ${CATALOG.keychains.pack}. Hand-delivered by VURMZ.`,
     heroImage: null,
     galleryImages: [],
     pricingType: 'basic',
     pricingKey: 'keychains',
     smsMessage: "Hi, I'm interested in engraved keychains",
     faqs: [
-      { question: 'What materials are available?', answer: `Acrylic ($${BASIC.keychains.materials.acrylic}/ea), wood ($${BASIC.keychains.materials.wood}/ea), or metal ($${BASIC.keychains.materials.metal}/ea). All in packs of ${BASIC.keychains.packSize}.` },
-      { question: 'Can I engrave on both sides?', answer: `Yes. Same design on back is +$${BASIC.keychains.addOns.sameOnBack}/ea. Different design on back is +$${BASIC.keychains.addOns.differentOnBack}/ea.` },
+      { question: 'What materials are available?', answer: `Acrylic ($${KEYCHAIN_PRICE['Acrylic']}/ea), wood ($${KEYCHAIN_PRICE['Wood']}/ea), or metal ($${KEYCHAIN_PRICE['Metal']}/ea). All in packs of ${CATALOG.keychains.pack}.` },
+      { question: 'Can I engrave on both sides?', answer: `Yes. Same design on back is +$${CATALOG.keychains.addOns.sameOnBack}/ea. Different design on back is +$${CATALOG.keychains.addOns.differentOnBack}/ea.` },
       { question: 'Can I add a logo?', answer: 'Yes. Send me your logo as a PNG, SVG, or AI file and I\'ll engrave it. Simple text works too.' },
       { question: 'Are these good for events?', answer: 'Yes. Keychains are great for wedding favors, party gifts, corporate giveaways, and promotional items.' },
     ],
     relatedCategories: ['coasters', 'gifts'],
     howItWorks: [
       'Text me your design or idea',
-      `I'll quote you (packs of ${BASIC.keychains.packSize}, from $${BASIC.keychains.materials.acrylic}/ea)`,
+      `I'll quote you (packs of ${CATALOG.keychains.pack}, from $${KEYCHAIN_PRICE['Acrylic']}/ea)`,
       'I engrave and hand-deliver across South Denver',
     ],
   },
@@ -174,7 +180,7 @@ export const SHOP_CATEGORIES: ShopCategory[] = [
     shortName: 'Decor',
     tagline: 'One-of-a-kind pieces for your walls.',
     cardDescription: 'Maps on mirrors, photos on slate, custom pieces on wood and metal. If you can send me an image, I can probably make it permanent.',
-    description: `Custom laser engraved art and home decor in Centennial, CO. Starting at $${SIGNATURE.startingPrice}. Mirrors, metal artwork, custom pieces. Hand-delivered by VURMZ.`,
+    description: `Custom laser engraved art and home decor in Centennial, CO. Starting at $${SIGNATURE.startingAt}. Mirrors, metal artwork, custom pieces. Hand-delivered by VURMZ.`,
     heroImage: '/portfolio/eye-storm-hexagonal-mirror.jpg',
     galleryImages: [
       '/portfolio/eye-storm-hexagonal-mirror.jpg',
@@ -204,14 +210,14 @@ export const SHOP_CATEGORIES: ShopCategory[] = [
     shortName: 'Pens',
     tagline: 'The giveaway people actually keep.',
     cardDescription: 'Soft-touch metal stylus pens with your name or logo etched clean. Buy one or a pack of 15.',
-    description: `Laser engraved pens in Centennial, CO. Soft-touch metal stylus pens from $${BASIC.pens.basePerItem}/pen in packs of ${BASIC.pens.packSize}, singles available. Hand-delivered by VURMZ.`,
+    description: `Laser engraved pens in Centennial, CO. Soft-touch metal stylus pens from $${CATALOG.pens.perItem[0]}/pen in packs of ${CATALOG.pens.pack}, singles available. Hand-delivered by VURMZ.`,
     heroImage: null,
     galleryImages: [],
     pricingType: 'basic',
     pricingKey: 'pens',
     smsMessage: "Hi, I'm interested in engraved pens",
     faqs: [
-      { question: 'How many pens do I have to order?', answer: `One. The single pen is for testing the waters or gifting. Packs of ${BASIC.pens.packSize} get you the $${BASIC.pens.basePerItem}/pen rate.` },
+      { question: 'How many pens do I have to order?', answer: `One. The single pen is for testing the waters or gifting. Packs of ${CATALOG.pens.pack} get you the $${CATALOG.pens.perItem[0]}/pen rate.` },
       { question: 'What goes on the pen?', answer: 'A name, a business name, a phone number, a short line of text, or a logo. One line engraves clean. Logos and both-sides marking are add-ons.' },
       { question: 'What colors are there?', answer: 'I stock a rotating range of barrel colors. Tell me your preference in the order notes and I will match it as close as stock allows.' },
       { question: 'Do you do recurring orders?', answer: 'Yes. If you burn through pens, I can keep your stock fresh on a schedule. You do not have to think about reordering.' },
@@ -229,7 +235,7 @@ export const SHOP_CATEGORIES: ShopCategory[] = [
     shortName: 'Metal Cards',
     tagline: 'The card they keep on the desk.',
     cardDescription: 'Anodized aluminum and stainless steel, engraved with your name, logo, or QR code. Cards that do not bend, fade, or get thrown out.',
-    description: `Metal business cards in Centennial, CO. Anodized aluminum from $${BASIC.cards.matteBlackBase}/card in packs of ${BASIC.cards.packSize}, stainless steel from $${BASIC.cards.stainlessBase}. Singles available. Hand-delivered by VURMZ.`,
+    description: `Metal business cards in Centennial, CO. Anodized aluminum from $${CATALOG.cards.matteBlackBase}/card in packs of ${CATALOG.cards.pack}, stainless steel from $${CATALOG.cards.stainlessBase}. Singles available. Hand-delivered by VURMZ.`,
     heroImage: null,
     galleryImages: [],
     pricingType: 'basic',
@@ -237,7 +243,7 @@ export const SHOP_CATEGORIES: ShopCategory[] = [
     smsMessage: "Hi, I'm interested in metal business cards",
     faqs: [
       { question: 'What can you put on a card?', answer: 'Name, title, phone, email, logo, QR code. Front and back. The laser strips the anodize to a bright mark, so fine detail reads sharp.' },
-      { question: 'Aluminum or stainless?', answer: `Anodized aluminum is light, comes in colors, and starts at $${BASIC.cards.matteBlackBase}/card. Stainless is heavier and reads premium at $${BASIC.cards.stainlessBase}/card. Both outlive paper by decades.` },
+      { question: 'Aluminum or stainless?', answer: `Anodized aluminum is light, comes in colors, and starts at $${CATALOG.cards.matteBlackBase}/card. Stainless is heavier and reads premium at $${CATALOG.cards.stainlessBase}/card. Both outlive paper by decades.` },
       { question: 'Can I order just one?', answer: 'Yes. The single wallet card in the shop is exactly that. Packs of 10 are for handing out.' },
       { question: 'Do QR codes actually scan?', answer: 'Yes. I test every QR before it leaves. Link it to your site, your booking page, or your contact card.' },
     ],

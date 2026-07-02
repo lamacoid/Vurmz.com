@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import { validateCart } from '@/lib/checkout/validate'
 import { computeFulfillmentOptions } from '@/lib/checkout/fulfillment'
+import { businessTierFor } from '@/lib/pricing'
 
 export const runtime = 'edge'
 
@@ -17,6 +18,8 @@ const schema = z.object({
     country: z.string().optional(),
     phone: z.string().nullable().optional(),
   }).partial().optional(),
+  // Admin-mediated business/recurring preview — mirrors app/api/orders.
+  isBusinessOrder: z.boolean().optional(),
 })
 
 export async function POST(req: NextRequest) {
@@ -24,14 +27,17 @@ export async function POST(req: NextRequest) {
   if (!body.success) {
     return NextResponse.json({ ok: false, error: { code: 'VALIDATION', details: body.error.issues } }, { status: 422 })
   }
-  const cart = await validateCart(body.data.items)
+  const cart = await validateCart(body.data.items, { isBusinessOrder: body.data.isBusinessOrder })
   if (cart.items.length === 0) {
     return NextResponse.json({ ok: false, error: { code: 'EMPTY_CART' } }, { status: 400 })
   }
+  const isBusinessStanding = body.data.isBusinessOrder === true
+    && cart.items.some(i => businessTierFor(i.qty * i.packSize)?.name === 'Standing')
   const options = computeFulfillmentOptions({
     subtotalCents: cart.subtotalCents,
     totalWeightGrams: cart.totalWeightGrams,
     address: body.data.address ?? null,
+    isBusinessStanding,
   })
   return NextResponse.json({
     ok: true,

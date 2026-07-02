@@ -4,7 +4,7 @@ import { Metadata } from 'next'
 import { ArrowRightIcon, ChatBubbleLeftIcon } from '@heroicons/react/24/outline'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 import { portfolioBySlug } from '@/lib/portfolio'
-import { MARKING } from '@/lib/pricing'
+import { CATALOG } from '@/lib/pricing'
 import Breadcrumbs from '@/components/Breadcrumbs'
 
 export const metadata: Metadata = {
@@ -82,18 +82,18 @@ export default function KnifeEngravingPage() {
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="bg-[var(--surface)] border border-[var(--hairline)] rounded-sm p-6">
-              <p className="text-4xl font-bold text-[var(--ink)] mb-1">${MARKING.knife.base}</p>
+              <p className="text-4xl font-bold text-[var(--ink)] mb-1">${CATALOG.knife.base}</p>
               <p className="text-sm font-semibold text-[var(--ink)] mb-2">One knife</p>
               <p className="text-[var(--ink-soft)] text-sm leading-relaxed">Bring your blade. Name, date, or logo marked near the handle.</p>
             </div>
             <div className="bg-[var(--surface)] border border-[var(--hairline)] rounded-sm p-6">
-              <p className="text-4xl font-bold text-[var(--ink)] mb-1">${MARKING.knife.crew.perKnife}<span className="text-lg text-[var(--ink-soft)] font-normal">/knife</span></p>
-              <p className="text-sm font-semibold text-[var(--ink)] mb-2">Crew rate · {MARKING.knife.crew.minQty}+ knives</p>
+              <p className="text-4xl font-bold text-[var(--ink)] mb-1">${CATALOG.knife.crew.perKnife}<span className="text-lg text-[var(--ink-soft)] font-normal">/knife</span></p>
+              <p className="text-sm font-semibold text-[var(--ink)] mb-2">Crew rate · {CATALOG.knife.crew.minQty}+ knives</p>
               <p className="text-[var(--ink-soft)] text-sm leading-relaxed">The line gets matching blades. I pick up and return next day.</p>
             </div>
             <div className="bg-[var(--feature)]/10 border border-vurmz-teal/30 rounded-sm p-6">
-              <p className="text-4xl font-bold text-[var(--ink)] mb-1">${MARKING.knife.fullKitchen.perKnife}<span className="text-lg text-[var(--ink-soft)] font-normal">/knife</span></p>
-              <p className="text-sm font-semibold text-[var(--eyebrow)] mb-2">Full kitchen · {MARKING.knife.fullKitchen.minQty}+ knives</p>
+              <p className="text-4xl font-bold text-[var(--ink)] mb-1">${CATALOG.knife.fullKitchen.perKnife}<span className="text-lg text-[var(--ink-soft)] font-normal">/knife</span></p>
+              <p className="text-sm font-semibold text-[var(--eyebrow)] mb-2">Full kitchen · {CATALOG.knife.fullKitchen.minQty}+ knives</p>
               <p className="text-[var(--ink-soft)] text-sm leading-relaxed">The whole brigade, every station. Free pickup across the south Denver metro.</p>
             </div>
           </div>

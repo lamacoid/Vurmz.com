@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { ArrowRightIcon, ArrowDownIcon, ChatBubbleLeftIcon } from '@heroicons/react/24/outline'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 import { SHOP_CATEGORIES } from '@/lib/categories'
-import { BASIC } from '@/lib/pricing'
+import { CATALOG } from '@/lib/pricing'
 import { shopTestimonials } from '@/lib/testimonials'
 import SiteHeader from '@/components/SiteHeader'
 import SiteFooter from '@/components/SiteFooter'
@@ -26,8 +26,8 @@ export const metadata: Metadata = {
 
 const CONSUMER_CATEGORIES = SHOP_CATEGORIES.filter(cat => {
   if (cat.pricingType === 'signature') return true
-  if (cat.pricingKey && cat.pricingKey in BASIC) {
-    const data = BASIC[cat.pricingKey]
+  if (cat.pricingKey && cat.pricingKey in CATALOG) {
+    const data = CATALOG[cat.pricingKey]
     return !('materials' in data)
   }
   return true
@@ -49,6 +49,7 @@ const B2B_LANES = [
   { h: 'Knife crews', p: 'I pick up the whole line’s knives and return them engraved next day. $25 single, $8/knife for full kitchens.', href: '/services/knife-engraving' },
   { h: 'Branded packs', p: 'Pens, coasters, keychains, metal cards. Stocked, engraved with your logo, delivered on a schedule.', href: '/services' },
   { h: 'Custom & one-off', p: 'Awards, signage, faceplates, jobsite tools. If your work needs a permanent mark, that’s my lane.', href: '/services/portfolio' },
+  { h: 'Volume & standing orders', p: 'Real quantities get real discounts. 10% off at 50+, 15% off at 150+ or any standing order. NET-30 available.', href: '/services#business' },
 ]
 
 export default function Page() {
@@ -168,7 +169,7 @@ export default function Page() {
               {[
                 { n: 1, h: 'Pick or text', p: 'Buy a ready product from the shop, or text me to engrave something you bring, from $35.' },
                 { n: 2, h: 'Approve your proof', p: 'Before anything is cut, I send a photo. Nothing runs until you say go.' },
-                { n: 3, h: 'Delivered to you', p: 'Hand-delivered free across the south Denver metro ($100+), or shipped if you’re farther out.' },
+                { n: 3, h: 'Delivered to you', p: 'Hand-delivered free across the south Denver metro ($75+), or shipped if you’re farther out.' },
               ].map((step) => (
                 <div key={step.n}>
                   <div className="w-10 h-10 rounded-full bg-white/15 border border-white/30 flex items-center justify-center mb-3 mx-auto puffy">
@@ -194,7 +195,7 @@ export default function Page() {
               Posted prices. Most jobs in 24 to 72 hours. Hand-delivered across the metro.
             </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
               {B2B_LANES.map((lane) => (
                 <Link
                   key={lane.h}

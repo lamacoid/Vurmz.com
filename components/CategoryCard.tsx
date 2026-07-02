@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 import { ChatBubbleLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline'
 import { getSmsLink } from '@/lib/site-info'
 import { trackEvent } from '@/lib/track'
-import { BASIC, SIGNATURE } from '@/lib/pricing'
+import { CATALOG, SIGNATURE } from '@/lib/pricing'
 import type { ShopCategory } from '@/lib/categories'
 import GlassImage from '@/components/shop/GlassImage'
 
@@ -14,24 +14,33 @@ interface CategoryCardProps {
   compact?: boolean
 }
 
+// Switches explicitly on pricingKey rather than duck-typing the CATALOG
+// entry's shape, so a field rename in lib/pricing.ts can't silently break
+// this (a missing case here is a visible blank price, not a wrong one).
 function getPrice(cat: ShopCategory): { price: string; note: string } {
   if (cat.pricingType === 'signature') {
-    return { price: `Starting at $${SIGNATURE.startingPrice}`, note: 'Custom engraving' }
+    return { price: `Starting at $${SIGNATURE.startingAt}`, note: 'Custom engraving' }
   }
-  if (cat.pricingKey && cat.pricingKey in BASIC) {
-    const data = BASIC[cat.pricingKey]
-    if ('perKnife' in data) return { price: `$${data.perKnife}/knife`, note: 'Bring your own blade' }
-    if ('basePerItem' in data) return { price: `From $${data.basePerItem}/pen`, note: `Packs of ${data.packSize} · singles in shop` }
-    if ('matteBlackBase' in data) return { price: `From $${data.matteBlackBase}/card`, note: `Packs of ${data.packSize} · singles in shop` }
-    if ('materials' in data) {
-      const vals = Object.values(data.materials) as number[]
-      const low = Math.min(...vals)
-      const high = Math.max(...vals)
-      return { price: `$${low}–$${high}/ea`, note: `Packs of ${data.packSize}` }
+  switch (cat.pricingKey) {
+    case 'knife':
+      return { price: `$${CATALOG.knife.base}/knife`, note: 'Bring your own blade' }
+    case 'tool':
+      return { price: `$${CATALOG.tool.base}/piece`, note: `${CATALOG.tool.minimum} piece minimum` }
+    case 'pens':
+      return { price: `From $${CATALOG.pens.perItem[0]}/pen`, note: `Packs of ${CATALOG.pens.pack} · singles in shop` }
+    case 'cards':
+      return { price: `From $${CATALOG.cards.matteBlackBase}/card`, note: `Packs of ${CATALOG.cards.pack} · singles in shop` }
+    case 'coasters': {
+      const vals = CATALOG.coasters.materials.map(m => m.price)
+      return { price: `$${Math.min(...vals)}–$${Math.max(...vals)}/ea`, note: `Packs of ${CATALOG.coasters.pack}` }
     }
-    if ('perPiece' in data) return { price: `$${data.perPiece}/piece`, note: `${data.minimum} piece minimum` }
+    case 'keychains': {
+      const vals = CATALOG.keychains.materials.map(m => m.price)
+      return { price: `$${Math.min(...vals)}–$${Math.max(...vals)}/ea`, note: `Packs of ${CATALOG.keychains.pack}` }
+    }
+    default:
+      return { price: `Starting at $${SIGNATURE.startingAt}`, note: '' }
   }
-  return { price: `Starting at $${SIGNATURE.startingPrice}`, note: '' }
 }
 
 export default function CategoryCard({ category: cat, compact }: CategoryCardProps) {

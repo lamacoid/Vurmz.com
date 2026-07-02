@@ -1,173 +1,99 @@
 # Pricing Guide
 
-> **STALE — kept for history (2026-06-12).** Site copy prices now live in
-> `lib/pricing.ts` (`lib/products.ts` is dead code, imported nowhere), and
-> shop product prices live in the D1 `products` table — edit them in
-> **admin → Products**. Current locked floors: $35 bring-your-own, $25/knife.
-> See `SESSION-LOG-2026-06-12-overnight.md` for the live catalog table.
+Rebuilt 2026-07-02. Replaces the old fragmented pricing (a stale
+`lib/products.ts`, mismatched free-delivery numbers between the code and this
+doc, and bulk pricing that existed in copy with no real product behind it).
+This is the current, single description of how VURMZ prices things.
 
-All pricing is controlled from ONE file: `lib/products.ts`
+## Where prices actually live
 
-When you change prices here, they automatically update on:
-- Homepage
-- Pricing page
-- Services page
-- Order builder
+- **`lib/pricing.ts`** is the source of truth for everything that isn't a
+  literal shop SKU: the Signature/bring-your-own floor, knife and tool
+  marking, service tags, sourcing fees, the free-delivery threshold, and the
+  business volume tiers. Every page that shows a price imports from here.
+- **The D1 `products` table** holds the actual purchasable shop catalog
+  (coasters, the survival knife, the business packs, etc). Edit these in
+  **admin → Products**, not in code.
+- There is no `lib/products.ts` anymore. It was a duplicate of `lib/pricing.ts`
+  that had drifted (it still said the Signature floor was $50 after the real
+  floor moved to $35). Deleted, not archived.
 
-## File Location
+## The two ways VURMZ sells
 
-```
-/Users/zacharydemillo/Desktop/WEBSITE PROJECT/lib/products.ts
-```
+**Individual** — posted prices, no haggling, no minimum. This is nearly
+everything on the site today: the $35 bring-your-own floor, $25/knife (with
+crew rates at 4+ and 10+), $15/tool, packs of pens/coasters/keychains/cards,
+service tags, and the one-off shop catalog. These numbers are checked against
+the real market (Etsy, national marketplaces, local quote-only competitors)
+and are already competitive. Don't discount them; see the Playbook's "answer
+is the work" note.
 
-## Current Pricing Structure
+**Business / recurring** — real volume tiers for local businesses buying
+in bulk (pens, coasters, keychains, metal cards, service tags):
 
-### Branded Pens
-```typescript
-pens: {
-  packSize: 15,
-  basePerItem: 3,      // 1 line of text = $3/pen
-  withLogo: 5,         // base + logo = $5/pen
-  fullyLoaded: 7.50,   // logo + 2 lines + both sides = $7.50/pen
-  addOns: {
-    secondLine: 0.50,
-    logo: 2,
-    bothSides: 2,
-  },
-}
-```
+| Tier | Units | Discount | Extras |
+|---|---|---|---|
+| Starter | 15 to 49 | Standard bulk rate (0% off) | |
+| Regular | 50 to 149 | 10% off | |
+| Standing | 150+, or any recurring/standing account | 15% off | Free delivery at any size, NET-30 terms |
 
-**To change pen prices:** Edit the numbers above. Pack prices calculate automatically.
+- Discounts apply to **effective units**, not cart quantity. A pack-of-15
+  pens SKU bought at cart quantity 10 is 150 effective units (Standing), not
+  10. See `businessUnitPrice()` / `businessTierFor()` in `lib/pricing.ts`.
+- **No setup or design fee, ever.** Screen printing and embroidery charge
+  setup because a physical plate or a digitized stitch file has a real
+  per-design production cost. A fiber laser just runs a different file, so
+  there's no matching cost to charge for.
+- **NET-30** reuses the existing "send me an invoice" checkout option
+  (`invoice_later` fulfillment method), nothing new to build.
+- **Admin-mediated for now.** There's no self-serve "I'm a business" toggle
+  on the public checkout. You apply the tier yourself when building a quote
+  or invoice for a customer you know is buying in volume or ordering on a
+  schedule. The pricing functions in `lib/pricing.ts` are there to compute
+  the right number consistently; nothing forces a customer into a tier
+  automatically.
+- Two real SKUs exist for this: **Coasters, Business Pack of 15** ($60) and
+  **Metal Business Cards, Pack of 10** ($30), both `audience: 'services'` in
+  D1 so they don't clutter the consumer shop grid but are fully buyable at
+  their own product page.
 
-### Metal Business Cards
-```typescript
-businessCards: {
-  packSize: 10,
-  matteBlackBase: 3,    // Text only = $3/card
-  matteBlackLoaded: 6,  // Text + logo + QR + back = $6/card
-  stainlessBase: 15,    // Premium material = $15/card
-  stainlessLoaded: 18,  // Premium fully loaded = $18/card
-  addOns: {
-    logo: 1,
-    qrCode: 1,
-    backSide: 1,
-  },
-}
-```
+## Free delivery
 
-### Coasters
-```typescript
-coasters: {
-  packSize: 15,
-  materials: {
-    wood: 4,      // Pine, bamboo
-    hardwood: 5,  // Oak, acacia
-    slate: 5,
-    steel: 6,     // Silver or gold
-  },
-}
-```
+**$75+**, South Denver metro. This used to be documented as $100 in this
+file while the actual checkout code enforced $75, so customers were always
+getting the better deal without it being written down correctly anywhere.
+$75 is now the one number, everywhere: `lib/pricing.ts` (`DELIVERY.freeThreshold`),
+the services page, the homepage, the city pages, the terms page, and the
+Google Business Profile copy.
 
-### Keychains
-```typescript
-keychains: {
-  packSize: 15,
-  materials: {
-    acrylic: 3,
-    wood: 4,
-    metal: 4,
-  },
-  addOns: {
-    sameOnBack: 2,
-    differentOnBack: 3,
-  },
-}
-```
+## Rush orders
 
-### Name Plates
-```typescript
-namePlates: {
-  packSize: 5,
-  sizes: {
-    standard: 6,    // 3" x 1"
-    large: 7.50,    // 3.5" x 1.5"
-    executive: 9,   // 3.5" x 2"
-    desk2x8: 8,     // 2" x 8" desk plate
-    desk2x10: 10,   // 2" x 10" desk plate
-  },
-  attachments: {
-    pin: 0,
-    clip: 1,
-    magnetic: 2,
-  },
-}
-```
+Documented rates, not yet automated in checkout: **$25 flat for next-business-day,
+$35 flat for same-day**, per order. Quote these manually if a customer asks
+for a rush job. (`RUSH` in `lib/pricing.ts` if you want the constants.)
 
-### Knives
-```typescript
-knives: {
-  base: 15,
-  addOns: {
-    deepMark: 5,
-    secondLine: 3,
-  },
-  fullyLoaded: 23,
-}
-```
+## Sales tax: not done yet
 
-### Tools
-```typescript
-tools: {
-  base: 10,
-}
-```
+`orders.tax_cents` and `invoices.tax_cents` exist in the database, and you
+can enter a tax amount by hand on an admin-created invoice. Shop checkout
+does **not** compute or charge tax automatically. Colorado sales tax is
+jurisdiction-specific (state, county, Centennial's own municipal rate, and
+possibly a special district depending on delivery address), so this needs
+you and an accountant (or the CO Department of Revenue) to confirm the real
+rate before it gets wired into checkout math. This is the Playbook's
+roadmap item #1 for a reason. No placeholder rate lives anywhere in the code
+on purpose, a copied placeholder becoming a real number by accident is worse
+than leaving it blank.
 
-### Industrial Labels
-```typescript
-industrialLabels: {
-  equipmentNameplates: { min: 8, max: 15 },
-  arcFlashLabels: { min: 12, max: 20 },
-  valveTags: { min: 5, max: 10 },
-  volumeDiscounts: {
-    '10+': 0.05,   // 5% off
-    '25+': 0.10,   // 10% off
-    '50+': 0.15,   // 15% off
-    '100+': 0.20,  // 20% off
-  },
-}
-```
+## How to change a price
 
-## How to Update a Price
+**Anything in `lib/pricing.ts`** (Signature floor, knife/tool rates, service
+tags, sourcing fee, delivery threshold, business tiers):
+1. Open `lib/pricing.ts`, find the value, change it.
+2. `npm run typecheck && npm run build` to confirm nothing broke.
+3. Deploy.
 
-1. Open `lib/products.ts`
-2. Find the product
-3. Change the number
-4. Save the file
-5. Run `npm run build` to verify no errors
-6. Deploy
-
-### Example: Change pen price from $7.50 to $8.00
-
-Find this line:
-```typescript
-fullyLoaded: 7.50,
-```
-
-Change to:
-```typescript
-fullyLoaded: 8.00,
-```
-
-## Pack Size
-
-The default promo pack size is set at the bottom of the file:
-
-```typescript
-export const PROMO_PACK_SIZE = 15
-```
-
-This affects messaging like "Packs of 15" throughout the site.
-
-## Gifts Page Pricing
-
-The gifts page (`app/gifts/page.tsx`) has its own hardcoded prices since it's a separate retail-focused page. To update those, edit the file directly.
+**An actual shop product's price** (coasters, the survival knife, the
+business packs, anything a customer buys through `/shop/p/[slug]`):
+1. Go to **admin → Products**, open the product, change the price, save.
+   No deploy needed, it's a database edit and takes effect immediately.
