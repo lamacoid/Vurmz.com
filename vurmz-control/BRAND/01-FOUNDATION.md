@@ -22,6 +22,27 @@ VURMZ has no literal meaning. It started as a personal handle. That is a strengt
 ### Laser Engraving: the purpose (the vibe)
 One guy who actually cares about getting it right for you. Fast. Straight, in-the-loop back and forth, no sales desk and no runaround. Real attention to detail on every piece. Not chasing one sale, but making your business look good so you keep coming back.
 
+### The look (locked 2026-07-02): lux approachable
+The Cherry Creek stall test: VURMZ should look like a small, careful stall
+you would find at Cherry Creek mall. Upscale enough to belong there, warm
+enough that anyone walks up. Not luxury-exclusive, not craft-fair casual.
+
+What produces it (name these, reuse these):
+- **Frames.** Things sit in frames: hairline borders, double rules, the
+  boxed standing offer, the menu card resting on the page. A frame says
+  someone arranged this on purpose.
+- **Slight color shifts.** Paper page, cream card, clay accents. Adjacent
+  surfaces differ by a step, never a shout. Depth comes from these shifts,
+  not from shadows or gradients.
+- **Quiet type doing the work.** Serif for the brand voice moments, mono
+  small-caps for labels, restrained sizes. Whitespace is part of the look.
+- **One loud accent, spent carefully.** The laser red appears only where
+  the laser would: a thin line, briefly. Everything else stays muted.
+
+The tension to hold: if it starts feeling showy or exclusive, pull back
+toward warm and plain. If it starts feeling cheap or cluttered, add a
+frame and take something away.
+
 ### What makes it different (the promise)
 - **Fast.** Most jobs turn around in 24 to 72 hours.
 - **Direct.** You talk to the person doing the work, not a sales desk.
