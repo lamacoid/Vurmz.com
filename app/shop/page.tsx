@@ -5,6 +5,7 @@ import { siteInfo, getSmsLink } from '@/lib/site-info'
 import { shopTestimonials } from '@/lib/testimonials'
 import TestimonialCarousel from '@/components/TestimonialCarousel'
 import CategoryCard from '@/components/CategoryCard'
+import RotatingTagline from '@/components/RotatingTagline'
 import D1ProductGrid from '@/components/shop/D1ProductGrid'
 import { SHOP_CATEGORIES } from '@/lib/categories'
 import { CATALOG } from '@/lib/pricing'
@@ -32,10 +33,13 @@ export default function ShopHome() {
       {/* Slim brand band: the shop's dusty-coral ribbon, one line, then straight to the goods */}
       <section className="bg-[#B0675D] py-4 sm:py-5">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h1 className="sr-only">Custom Laser Engraving: Gifts, Knives, Tumblers &amp; More</h1>
           <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-            <h1 className="text-lg sm:text-xl font-bold text-white tracking-tight">
-              Custom Laser Engraving: Gifts, Knives, Tumblers &amp; More
-            </h1>
+            <RotatingTagline
+              inline
+              accentColor="#DED6C3"
+              className="text-xl sm:text-2xl font-semibold tracking-tight text-white"
+            />
             <p className="text-sm text-white/85">
               Hand-delivered across {siteInfo.city}.{' '}
               <a href={getSmsLink("Hi, I'd like to get something engraved")} className="text-white font-semibold underline underline-offset-2 hover:no-underline">
