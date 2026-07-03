@@ -1,5 +1,11 @@
 # Pricing proposal, July 2026: "almost silly to compete with"
 
+> STATUS: APPROVED by Zach and EXECUTED 2026-07-03 (migration 0016,
+> commit a0b7349). Verified live: pine $28, labels $30, free delivery at
+> $50, Standing Plus tier rendering, both new SKUs at 200, framing strips
+> live, conversion events flowing. D1 backed up first
+> (vurmz-core-2026-07-03-0946.sql).
+
 Prepared 2026-07-03 from the sourced market analysis (per-price-point
 comparables: Seton, 4imprint, Lazer Designs, MetalKards, Etsy/CraftsTrack,
 PetSmart, Thumbtack Denver, Personalization Mall; full table with sources
