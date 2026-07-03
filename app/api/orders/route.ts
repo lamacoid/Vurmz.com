@@ -148,7 +148,7 @@ export async function POST(req: NextRequest) {
   // A business order reaches Standing-tier delivery terms (free at any
   // size) when at least one line hits the 150-effective-unit threshold.
   const isBusinessStanding = body.isBusinessOrder === true
-    && cart.items.some(i => businessTierFor(i.qty * i.packSize)?.name === 'Standing')
+    && cart.items.some(i => (businessTierFor(i.qty * i.packSize)?.name ?? '').startsWith('Standing'))
 
   // 2. Compute fulfillment options and match the chosen method
   const options = computeFulfillmentOptions({

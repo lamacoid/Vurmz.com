@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { trackConversion } from '@/lib/track'
 import { useCart } from '@/lib/cart/store'
 import SquarePayment from '@/components/shop/SquarePayment'
 
@@ -36,6 +37,15 @@ function money(c: number) { return `$${(c / 100).toFixed(2)}` }
 export default function CheckoutPage() {
   const { items, clear, subtotalCents } = useCart()
   const router = useRouter()
+
+  // Funnel: one begin_checkout per visit with a non-empty cart.
+  const [checkoutTracked, setCheckoutTracked] = useState(false)
+  useEffect(() => {
+    if (!checkoutTracked && items.length > 0) {
+      trackConversion('begin_checkout', subtotalCents)
+      setCheckoutTracked(true)
+    }
+  }, [checkoutTracked, items.length, subtotalCents])
 
   const [email, setEmail] = useState('')
   const [address, setAddress] = useState({ name: '', line1: '', line2: '', city: '', state: 'CO', postalCode: '', phone: '' })
@@ -302,6 +312,7 @@ export default function CheckoutPage() {
         }).catch(() => {})
       }
       clear()
+      try { sessionStorage.setItem('vurmz_order_total', String(totalCents)) } catch {}
       router.push(`/checkout/success?n=${encodeURIComponent(json.data!.order.number)}`)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Network error')

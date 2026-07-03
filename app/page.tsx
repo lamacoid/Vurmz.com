@@ -169,7 +169,7 @@ export default function Page() {
               {[
                 { n: 1, h: 'Pick or text', p: 'Buy a ready product from the shop, or text me to engrave something you bring, from $35.' },
                 { n: 2, h: 'Approve your proof', p: 'Before anything is cut, I send a photo. Nothing runs until you say go.' },
-                { n: 3, h: 'Delivered to you', p: 'Hand-delivered free across the south Denver metro ($75+), or shipped if you’re farther out.' },
+                { n: 3, h: 'Delivered to you', p: 'Hand-delivered free across the south Denver metro ($50+), or shipped if you’re farther out.' },
               ].map((step) => (
                 <div key={step.n}>
                   <div className="w-10 h-10 rounded-full bg-white/15 border border-white/30 flex items-center justify-center mb-3 mx-auto puffy">

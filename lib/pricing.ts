@@ -61,22 +61,22 @@ export const CATALOG = {
     pack: 10,
     matteBlackBase: 3,
     matteBlackLoaded: 6,
-    stainlessBase: 15,
-    stainlessLoaded: 18,
+    stainlessBase: 12,
+    stainlessLoaded: 15,
     addOns: { logo: 1, qrCode: 1, backSide: 1 },
   },
   knife: {
     name: "Knife Marking",
-    base: 25,
+    base: 20,
     unit: "per knife (bring your own)",
-    // Crew ladder locked 2026-06-12: $8 full-kitchen rate is Zach's number;
-    // $15 mid tier protects 4-9 knife jobs and tracks the mail-in market.
-    crew: { minQty: 4, perKnife: 15 },
-    fullKitchen: { minQty: 10, perKnife: 8 },
+    // Repriced 2026-07-03 (approved sheet): $20/$12/$6 beats the mail-in
+    // market's $35/$15/$7 without the two-way shipping or the two weeks.
+    crew: { minQty: 4, perKnife: 12 },
+    fullKitchen: { minQty: 10, perKnife: 6 },
     options: [
-      { label: "Name near handle (most common)", price: 25 },
-      { label: "Crew rate (4+ knives)", price: 15, note: "per knife" },
-      { label: "Full kitchen (10+ knives)", price: 8, note: "per knife" },
+      { label: "Name near handle (most common)", price: 20 },
+      { label: "Crew rate (4+ knives)", price: 12, note: "per knife" },
+      { label: "Full kitchen (10+ knives)", price: 6, note: "per knife" },
       { label: "+ Deep marking", price: 5, modifier: true },
       { label: "+ Second line / logo", price: 3, modifier: true },
       { label: "Kitchen crew pickup (South Denver)", price: 0, note: "Free" },
@@ -117,13 +117,12 @@ export const SOURCING = {
     "I'll find it, buy it, engrave it, and deliver it. $25 flat finder's fee plus the cost of the item.",
 } as const
 
-// $75 matches what lib/checkout/fulfillment.ts actually enforces
-// (computeFulfillmentOptions: fee is $0 at subtotalCents >= 7500). This
-// was documented as $100 here previously; that number was never true at
-// checkout. $75 is the corrected, single number now, standardized
-// everywhere on the site.
+// Lowered $75 -> $50 in the July 2026 repricing (approved sheet): the
+// cost of free delivery is time and gas, not money, and a lower bar makes
+// the cart's free-delivery nudge attainable on a single item. Must match
+// lib/checkout/fulfillment.ts (fee is $0 at subtotalCents >= threshold).
 export const DELIVERY = {
-  freeThreshold: 75,
+  freeThreshold: 50,
   area: "South Denver metro",
 } as const
 
@@ -137,7 +136,10 @@ export const BUSINESS = {
   tiers: [
     { name: "Starter", minUnits: 15, maxUnits: 49, discount: 0 },
     { name: "Regular", minUnits: 50, maxUnits: 149, discount: 0.10 },
-    { name: "Standing", minUnits: 150, maxUnits: null, discount: 0.15 },
+    { name: "Standing", minUnits: 150, maxUnits: 249, discount: 0.15 },
+    // 250+ is exactly the order size the promo industry lives on; 20% off
+    // with no setup fee and free delivery is the "frustrating" tier.
+    { name: "Standing Plus", minUnits: 250, maxUnits: null, discount: 0.20 },
   ],
   // Any recurring or standing order qualifies for Standing-tier terms
   // (free delivery any size, NET-30) regardless of a single order's unit
@@ -309,6 +311,6 @@ export const BUSINESS_TIER_CARDS = BUSINESS.tiers.map(t => ({
   name: t.name,
   range: t.maxUnits ? `${t.minUnits} to ${t.maxUnits} units` : `${t.minUnits}+ units`,
   discount: t.discount === 0 ? 'Standard bulk rate' : `${Math.round(t.discount * 100)}% off`,
-  freeDelivery: t.name === 'Standing',
-  netTerms: t.name === 'Standing',
+  freeDelivery: t.name.startsWith('Standing'),
+  netTerms: t.name.startsWith('Standing'),
 }))

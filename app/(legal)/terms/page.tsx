@@ -54,7 +54,7 @@ export default function TermsPage() {
       items: [
         { term: 'Standard', desc: 'Most orders are completed within 3-5 business days. Rush turnaround is often available.' },
         { term: 'Pickup', desc: `Free local pickup is available by appointment in ${siteInfo.city}.` },
-        { term: 'Delivery', desc: 'Free delivery on orders $75+ within south suburban Denver. Other areas may incur a fee.' },
+        { term: 'Delivery', desc: 'Free delivery on orders $50+ within south suburban Denver. Other areas may incur a fee.' },
       ],
     },
     {

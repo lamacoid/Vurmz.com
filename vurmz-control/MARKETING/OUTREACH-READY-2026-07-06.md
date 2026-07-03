@@ -63,7 +63,7 @@ Subject: Your sticker falls off. This doesn't.
 > and peel. I engrave stainless labels with 3M adhesive backing that
 > outlive the equipment. The photo is the one on my own laser.
 >
-> Packs of 10 are $40, posted at vurmz.com/services/metal-tags. I'll
+> Packs of 10 are $30, posted at vurmz.com/services/metal-tags, and it drops to $2 a tag at volume. I'll
 > engrave a free sample with your actual info and walk it over this week.
 > Worth a look?
 >
@@ -78,7 +78,7 @@ Attach: metal-label-black.jpg if the form takes files; otherwise mention the lin
 > means three different tags I could make you: service tags for the
 > installs, panel labels, and asset tags for the trucks. Stainless,
 > engraved, 3M adhesive backing, so it's still readable when the sticker
-> next to it isn't. Packs of 10 are $40. I'd like to drop a free sample
+> next to it isn't. Packs of 10 are $30 ($2 a tag at volume). I'd like to drop a free sample
 > engraved with your info at the shop this week. Text me at (719) 257-3834
 > if that's worth ten minutes.
 
@@ -90,7 +90,7 @@ Attach: metal-label-black.jpg
 > on Revere Pkwy. I engrave stainless panel tags and labels with your name
 > and number, 3M adhesive backing, so your info stays on the panel and the
 > EV chargers you install instead of peeling off in year two. Packs of 10
-> are $40. Can I drop a free sample with your info at the shop this week?
+> are $30. Can I drop a free sample with your info at the shop this week?
 
 Note: they are minutes away. If no reply by Wednesday, this is the walk-in.
 Bring two samples, one engraved PROMISE ELECTRIC, and a metal card.
@@ -103,7 +103,7 @@ Attach: metal-label-black.jpg
 > install ships with a sticker that's gone in two summers. I engrave
 > stainless labels with 3M adhesive backing, your name and number, made to
 > stay on a Chamberlain or LiftMaster for the life of the unit. Packs of
-> 10 are $40 at vurmz.com/services/metal-tags. Want a free sample with
+> 10 are $30 at vurmz.com/services/metal-tags. Want a free sample with
 > your info on it? I deliver to Parker.
 
 ### 5. Bergan & Company (Centennial, property management) · EMAIL
@@ -119,8 +119,8 @@ Subject: Asset tags for the portfolio, engraved, adhesive backed
 > adhesive backing: unit numbers, serial references, your office line,
 > whatever the tag needs to carry. They don't fade, peel, or wash off.
 >
-> Packs of 10 are $40, and at portfolio volume the price steps down (15%
-> off plus free delivery at 150 units, NET-30 available). I'll engrave a
+> Packs of 10 are $30, and at portfolio volume it drops to $2 a tag
+> (free delivery and NET-30 on standing orders). I'll engrave a
 > few free samples to your spec so your maintenance lead can judge them in
 > hand. Interested?
 >
@@ -136,7 +136,7 @@ Attach: metal-label-black.jpg
 > Hey, Zach here, VURMZ laser engraving in Centennial. Congrats on getting
 > the Parker shop open. New shop means naked equipment: I engrave stainless
 > labels with adhesive backing for your tint tools and gear, plus metal
-> business cards for the counter that customers keep. Labels are $40 for a
+> business cards for the counter that customers keep. Labels are $30 for a
 > pack of 10. I'm nearby and hand-deliver. Want me to bring samples by?
 
 ### 7. The Barn South Broadway (Englewood) · WALK-IN, daily 11 to 9
@@ -144,7 +144,7 @@ Cheat card (say roughly this, to the chef or GM, at 2 to 4pm):
 
 "I'm Zach, I run a laser engraving shop in Centennial. Fifteen years in
 kitchens before this. Two things, then I'm gone: I engrave crew knives,
-your cooks' names on their own blades, twenty-five a knife or fifteen each
+your cooks' names on their own blades, twenty a knife or twelve each
 for the whole crew, picked up and back before next service. And for a new
 buildout, I do menu boards, table numbers, and wayfinding, made local and
 hand-delivered. Here's a coaster I made; keep it. Text me if either lands."
@@ -188,7 +188,7 @@ Attach: the coaster photo in the DM
 > Hey, Zach here, I run VURMZ, a laser engraving shop in Centennial, and I
 > cooked for fifteen years before this. I engrave crew knives (each cook's
 > name on their blade, picked up during prep and back before service) and
-> branded serving boards for the dining room. $15 a knife for a crew.
+> branded serving boards for the dining room. $12 a knife for a crew.
 > You're a block off the light rail, so I can literally walk over. Worth a
 > quick stop some afternoon?
 
@@ -330,7 +330,7 @@ Attach: metal-label-black.jpg or a metal card photo
 > Two things built for a one-man outfit like yours: metal business cards
 > people actually keep on the fridge (paper ones don't survive a week),
 > and engraved labels for your tools and gear so nothing walks off a
-> jobsite unmarked. Cards and label packs both run about $40. Want me to
+> jobsite unmarked. Cards and label packs run $25 to $30. Want me to
 > engrave a sample card with your info? No charge for the first one.
 
 ### 18. Twin Pine Pursuits (Centennial) · TEXT or EMAIL

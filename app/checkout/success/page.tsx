@@ -1,11 +1,24 @@
 'use client'
-import { Suspense } from 'react'
+import { Suspense, useEffect } from 'react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
+import { trackConversion } from '@/lib/track'
 
 function Inner() {
   const params = useSearchParams()
   const number = params?.get('n') ?? ''
+
+  // Funnel: purchase, valued from the total stashed at order creation.
+  // Clearing the stash keeps a refresh from double-counting.
+  useEffect(() => {
+    try {
+      const stash = sessionStorage.getItem('vurmz_order_total')
+      if (stash !== null) {
+        sessionStorage.removeItem('vurmz_order_total')
+        trackConversion('purchase', parseInt(stash, 10) || undefined)
+      }
+    } catch {}
+  }, [])
   return (
     <div className="max-w-xl mx-auto px-6 py-20 text-center">
       <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#C67A6F]/10 text-[#C67A6F] mb-6">

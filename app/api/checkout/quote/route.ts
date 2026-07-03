@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: false, error: { code: 'EMPTY_CART' } }, { status: 400 })
   }
   const isBusinessStanding = body.data.isBusinessOrder === true
-    && cart.items.some(i => businessTierFor(i.qty * i.packSize)?.name === 'Standing')
+    && cart.items.some(i => (businessTierFor(i.qty * i.packSize)?.name ?? '').startsWith('Standing'))
   const options = computeFulfillmentOptions({
     subtotalCents: cart.subtotalCents,
     totalWeightGrams: cart.totalWeightGrams,

@@ -70,6 +70,9 @@ export default function MetalTagsPage() {
           <p className="text-[var(--ink-soft)] text-base sm:text-lg leading-relaxed max-w-2xl">
             Stickers fall off. Sharpie wipes away. A fiber-laser mark in stainless or anodized aluminum outlives the equipment it&apos;s on. I make service tags, serial plates, QC tags, and nameplates for HVAC techs, electricians, plumbers, and shops across the south Denver metro. Phone number, license number, QR code, logo, whatever your tag needs to carry. Standard sizes or cut to spec. Order ten or order five hundred. Next-day turnaround on most runs, hand-delivered.
           </p>
+          <p className="mt-5 text-[13px] font-mono tracking-wide text-[var(--eyebrow)]">
+            No setup fee. No minimums. No shipping. Down to $2 a tag at volume.
+          </p>
         </div>
       </section>
 
@@ -87,7 +90,7 @@ export default function MetalTagsPage() {
               <div className="flex-1 text-center sm:text-left">
                 <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-[var(--eyebrow)] mb-1.5">Ready to order</p>
                 <p className="text-lg font-semibold text-[var(--ink)]" style={{ fontFamily: 'var(--font-display), Georgia, serif' }}>
-                  Metal Equipment Labels, pack of 10. $40.
+                  Metal Equipment Labels, pack of 10. $30.
                 </p>
                 <p className="text-sm text-[var(--ink-soft)] mt-1">
                   stainless, engraved with your logo, 3M foam adhesive backing, peel and press

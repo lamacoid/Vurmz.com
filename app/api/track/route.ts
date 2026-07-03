@@ -12,10 +12,15 @@ export async function POST(req: NextRequest) {
     }
 
     const { env } = getRequestContext()
-    const db = env.TRACK_DB
 
     // Get path from request body
-    const body = await req.json().catch(() => ({} as any)) as { path?: string; referrer?: string }
+    const body = await req.json().catch(() => ({} as any)) as {
+      path?: string
+      referrer?: string
+      /** Conversion event name (add_to_cart | begin_checkout | purchase). Absent = pageview. */
+      event?: string
+      valueCents?: number
+    }
     const path = (body.path || '/').slice(0, 500)
     const referrer = (body.referrer || '').slice(0, 500)
 
@@ -25,10 +30,22 @@ export async function POST(req: NextRequest) {
     const date = mt.toISOString().split('T')[0]
     const hour = mt.getUTCHours()
 
+    // Conversion events land in the MAIN database (vurmz-core) so the
+    // funnel can be joined against orders; pageviews stay in TRACK_DB.
+    const ALLOWED_EVENTS = new Set(['add_to_cart', 'begin_checkout', 'purchase'])
+    if (body.event) {
+      if (!ALLOWED_EVENTS.has(body.event)) return NextResponse.json({ ok: true, tracked: false })
+      const value = Number.isFinite(body.valueCents) ? Math.max(0, Math.min(10_000_000, Math.round(body.valueCents!))) : null
+      await env.DB.prepare(
+        'INSERT INTO events (date, name, path, value_cents) VALUES (?, ?, ?, ?)'
+      ).bind(date, body.event, path, value).run()
+      return NextResponse.json({ ok: true, tracked: true })
+    }
+
     // Get country from Cloudflare header
     const country = req.headers.get('cf-ipcountry') || 'XX'
 
-    await db.prepare(
+    await env.TRACK_DB.prepare(
       'INSERT INTO pageviews (path, date, hour, referrer, country) VALUES (?, ?, ?, ?, ?)'
     ).bind(path, date, hour, referrer, country).run()
 

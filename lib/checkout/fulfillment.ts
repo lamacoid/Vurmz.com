@@ -72,17 +72,18 @@ export function computeFulfillmentOptions(args: {
   totalWeightGrams: number
   address?: Partial<ShippingAddress> | null
   /** Standing-tier business/recurring orders get free hand delivery at any
-   *  size (lib/pricing.ts BUSINESS.freeDeliveryAnySize), not just over $75. */
+   *  size (lib/pricing.ts BUSINESS.freeDeliveryAnySize), not just over $50. */
   isBusinessStanding?: boolean
 }): FulfillmentOption[] {
   const { subtotalCents, totalWeightGrams, address, isBusinessStanding } = args
   const postal = address?.postalCode
   const opts: FulfillmentOption[] = []
 
-  // Hand deliver — South Denver metro, flat $5 free over $75 (any size for
-  // a Standing-tier business/recurring order).
+  // Hand deliver — South Denver metro, flat $5 free over $50 (any size for
+  // a Standing-tier business/recurring order). Threshold must match
+  // lib/pricing.ts DELIVERY.freeThreshold.
   if (postal == null || isHandDeliverableZip(postal)) {
-    const fee = isBusinessStanding || subtotalCents >= 7500 ? 0 : 500
+    const fee = isBusinessStanding || subtotalCents >= 5000 ? 0 : 500
     opts.push({
       method: 'hand_deliver',
       label: 'Local hand delivery (South Denver)',
@@ -91,8 +92,8 @@ export function computeFulfillmentOptions(args: {
       description: isBusinessStanding
         ? 'Free for standing business orders. Hand-delivered by Zach. Pick a window below.'
         : fee === 0
-        ? 'Free when you spend $75+. Hand-delivered by Zach. Pick a window below.'
-        : 'Hand-delivered by Zach. Free over $75. Pick a window below.',
+        ? 'Free when you spend $50+. Hand-delivered by Zach. Pick a window below.'
+        : 'Hand-delivered by Zach. Free over $50. Pick a window below.',
       windows: HAND_DELIVERY_WINDOWS,
     })
   }

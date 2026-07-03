@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useCart } from '@/lib/cart/store'
 import { fontOptions } from '@/lib/fonts'
 import { menuPrice } from '@/lib/menu-format'
+import { trackConversion } from '@/lib/track'
 import EngravingPicker, { type EngravingValue } from './EngravingPicker'
 
 export interface PackOption {
@@ -86,6 +87,7 @@ export default function AddToCart(props: {
       },
       props.oneOff ? 1 : qty
     )
+    trackConversion('add_to_cart', selected.priceCents * (props.oneOff ? 1 : qty))
     setAdded(true)
     setTimeout(() => setAdded(false), 1400)
   }

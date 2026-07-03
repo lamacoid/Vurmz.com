@@ -59,7 +59,7 @@ in bulk (pens, coasters, keychains, metal cards, service tags):
 
 ## Free delivery
 
-**$75+**, South Denver metro. This used to be documented as $100 in this
+**$50+**, South Denver metro. This used to be documented as $100 in this
 file while the actual checkout code enforced $75, so customers were always
 getting the better deal without it being written down correctly anywhere.
 $75 is now the one number, everywhere: `lib/pricing.ts` (`DELIVERY.freeThreshold`),
@@ -97,3 +97,14 @@ tags, sourcing fee, delivery threshold, business tiers):
 business packs, anything a customer buys through `/shop/p/[slug]`):
 1. Go to **admin → Products**, open the product, change the price, save.
    No deploy needed, it's a database edit and takes effect immediately.
+
+
+## July 2026 repricing (approved 2026-07-03, PRICING-PROPOSAL-2026-07.md)
+Knives $20/$12/$6. Stainless cards $12 base / $15 loaded. Metal labels
+$30 per pack of 10 ($3/tag), $2/tag messaging at 100+ (admin-quoted).
+Anodized card business pack $25/10. Pine coaster set $28. Free delivery
+threshold $50. New tier: Standing Plus, 250+ units, 20% off, free
+delivery + NET-30. New SKUs: engraved pet tag $12, single keychain $10.
+Framing shipped: "the engraving is included", "no setup fee, no minimums,
+no shipping" strips on services pages. Held: BYO $35, boards, stainless
+coaster sets, photo panel, sourcing (premium shelf and Q4 protection).

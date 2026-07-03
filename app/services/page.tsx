@@ -257,14 +257,17 @@ export default function Home() {
           <p className="text-[var(--ink-soft)] text-base leading-relaxed mb-8 max-w-2xl">
             Pens, coasters, keychains, metal cards, and service tags all step down in price as the order gets bigger. No setup fee, no design fee, ever, that&apos;s a screen-printing and embroidery cost and it doesn&apos;t apply to a laser.
           </p>
+          <p className="text-[13px] font-mono tracking-wide text-[var(--eyebrow)] mb-8">
+            No setup fee. No minimums. No shipping. Proof before it runs.
+          </p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
             {BUSINESS_TIER_CARDS.map((tier) => (
               <div
                 key={tier.name}
-                className={`rounded-sm border p-6 ${tier.name === 'Standing' ? 'bg-[var(--feature)]/10 border-vurmz-teal/30' : 'bg-[var(--surface)] border-[var(--hairline)]'}`}
+                className={`rounded-sm border p-6 ${tier.name.startsWith('Standing') ? 'bg-[var(--feature)]/10 border-vurmz-teal/30' : 'bg-[var(--surface)] border-[var(--hairline)]'}`}
               >
-                <p className={`text-sm font-semibold mb-1 ${tier.name === 'Standing' ? 'text-[var(--eyebrow)]' : 'text-[var(--ink)]'}`}>{tier.name}</p>
+                <p className={`text-sm font-semibold mb-1 ${tier.name.startsWith('Standing') ? 'text-[var(--eyebrow)]' : 'text-[var(--ink)]'}`}>{tier.name}</p>
                 <p className="text-xs text-[var(--ink-soft)] font-mono mb-4">{tier.range}</p>
                 <p className="text-2xl font-bold text-[var(--ink)] mb-3">{tier.discount}</p>
                 {(tier.freeDelivery || tier.netTerms) && (

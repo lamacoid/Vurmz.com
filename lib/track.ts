@@ -19,3 +19,24 @@ export function trackEvent(action: string, label?: string) {
     // Silent fail — tracking should never break the UI
   }
 }
+
+/**
+ * Conversion funnel events (add_to_cart -> begin_checkout -> purchase).
+ * These land in the MAIN database's `events` table (migration 0016) via
+ * the same /api/track beacon, so the funnel can be joined against orders.
+ * Distinct from trackEvent above, which rides the pageview pipeline.
+ */
+export function trackConversion(event: 'add_to_cart' | 'begin_checkout' | 'purchase', valueCents?: number) {
+  if (typeof window === 'undefined') return
+  if (document.cookie.includes('vurmz_owner=1')) return
+  try {
+    const payload = JSON.stringify({ event, valueCents, path: window.location.pathname })
+    if (navigator.sendBeacon) {
+      navigator.sendBeacon('/api/track/', new Blob([payload], { type: 'application/json' }))
+    } else {
+      fetch('/api/track/', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: payload, keepalive: true }).catch(() => {})
+    }
+  } catch {
+    // Silent fail — tracking should never break the UI
+  }
+}

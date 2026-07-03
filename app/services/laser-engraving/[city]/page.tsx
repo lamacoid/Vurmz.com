@@ -101,7 +101,7 @@ const cityData: Record<string, CityData> = {
     paragraphs: [
       'Aurora is the largest city in the east Denver metro. From corporate offices near the Anschutz Medical Campus to restaurants and shops at Southlands, I do laser engraving with personal delivery across Aurora.',
       'Aurora businesses cover everything: medical, aerospace, food service, construction, retail, tech. Laser engraving gives you a durable way to brand your tools, gifts, promo items, and signage. Unlike printed labels, engraved marks are permanent.',
-      'I serve clients throughout Aurora, including the Southlands area, Tollgate Crossing, Smoky Hill, and along E-470 and Quincy Avenue. Delivery is free on orders over $75, and I am happy to meet locally for pickups and drop-offs.',
+      'I serve clients throughout Aurora, including the Southlands area, Tollgate Crossing, Smoky Hill, and along E-470 and Quincy Avenue. Delivery is free on orders over $50, and I am happy to meet locally for pickups and drop-offs.',
       'Single engraved gift or a recurring bulk order of branded pens and business cards, either way it is easy. Text me a photo or description of what you want and I will get back to you with a quote.',
     ],
   },
