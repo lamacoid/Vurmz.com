@@ -29,6 +29,19 @@ command refreshes this list; a scheduled run adds new leads every Monday 7am.
 | American Design & Landscape | Parker | Landscaping | Crew tool/equipment tags; trailer and asset tags | Second-generation since 1967; design, irrigation, and commercial-maintenance crews — a real equipment fleet to tag | info@americandl.com · (303) 841-2820 | americandl.com |
 | Modern Roofing Group | Littleton | Roofing | Branded crew tools; asset tags for ladders/equipment | Locally + veteran-owned, HQ on Shaffer Pkwy; asphalt/metal/flat crews at multiple sites daily | (720) 613-9927 | modroofgroup.com |
 
+## Retail / dispensary — branded counter merch (added 2026-07-03, Zach's own scouting)
+| Name | City | Segment | What VURMZ sells them | Why this one | Best first touch | Source |
+|---|---|---|---|---|---|---|
+| Silver Stem Fine Cannabis (Littleton) | Littleton (1086 W Littleton Blvd) | Dispensary | Engraved grinders, branded rolling trays, pens, counter merch | Zach visited both south-metro stores and saw little to no branded merch on the counters; 11-store chain so a win here can spread, but start with the store manager | Walk in, ask for the store manager; silverstemcannabis.com | Zach in person + silverstemcannabis.com |
+| Silver Stem Fine Cannabis (Denver South / Quincy) | Denver (3701 W Quincy Ave) | Dispensary | Same as Littleton; second location doubles any order | Same observation at this store; near Fort Logan, minutes from the shop | Walk in, ask for the store manager | Zach in person + silverstemcannabis.com |
+
+## Handymen — branded tools, metal cards, asset labels (added 2026-07-03)
+| Name | City | Segment | What VURMZ sells them | Why this one | Best first touch | Source |
+|---|---|---|---|---|---|---|
+| Hollyhock's Handyman | Centennial | Handyman | Engraved metal business cards (fridge-worthy leave-behind); branded tools; adhesive equipment labels | Owner-operated by Brian Hoch, ex-construction superintendent; one-man brand where a metal card outworks a paper one | hollyhock's listing via expertise.com/centennial; search "Hollyhock's Handyman Centennial" | expertise.com |
+| Twin Pine Pursuits | Centennial | Handyman / woodworking | Branded tool engraving; metal cards; shop labels | Owner Peter DeGoede does handyman work PLUS woodworking, so he gets tools and craft; natural peer-to-peer maker conversation | Search "Twin Pine Pursuits Centennial" for contact | expertise.com |
+| Adam's Handyman Service | Littleton | Handyman | Metal business cards; engraved tool marking (theft deterrence); truck/equipment labels | Littleton-based, 15+ years, owner-named business; jobsite tools walk away and engraving stops arguments | adamshandymanservice.com contact | adamshandymanservice.com |
+
 ## Restaurants / breweries — knife crews, barware, signage
 | Name | City | Segment | What VURMZ sells them | Why this one | Best first touch | Source |
 |---|---|---|---|---|---|---|
