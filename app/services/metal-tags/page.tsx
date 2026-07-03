@@ -73,6 +73,37 @@ export default function MetalTagsPage() {
         </div>
       </section>
 
+      {/* ═══════════ POSTED ITEM: adhesive equipment labels ═══════════ */}
+      <section className="pb-12 sm:pb-16">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="border border-[var(--ink)]/30 rounded-sm p-1">
+            <div className="border border-[var(--ink)]/15 rounded-sm bg-[var(--eyebrow)]/[0.06] px-5 py-5 sm:px-6 flex flex-col sm:flex-row items-center gap-5">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/api/media/media%2Fad%2F04%2Fad04f51666544fb7fe4b9fbd031c9745fa136b387b48b7cb8042d6324beff6a7.jpg"
+                alt="Black stainless metal label with adhesive foam backing"
+                className="w-28 h-28 flex-shrink-0 rounded-sm border border-[var(--hairline)] object-cover"
+              />
+              <div className="flex-1 text-center sm:text-left">
+                <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-[var(--eyebrow)] mb-1.5">Ready to order</p>
+                <p className="text-lg font-semibold text-[var(--ink)]" style={{ fontFamily: 'var(--font-display), Georgia, serif' }}>
+                  Metal Equipment Labels, pack of 10. $40.
+                </p>
+                <p className="text-sm text-[var(--ink-soft)] mt-1">
+                  stainless, engraved with your logo, 3M foam adhesive backing, peel and press
+                </p>
+              </div>
+              <Link
+                href="/shop/p/metal-labels-pack-10/"
+                className="inline-flex items-center justify-center px-6 h-10 border border-[var(--eyebrow)]/50 text-[var(--eyebrow)] text-sm font-semibold rounded-sm hover:bg-[var(--eyebrow)]/10 transition-colors whitespace-nowrap"
+              >
+                Order the pack
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ═══════════ SHOWCASE ═══════════ */}
       {SHOWCASE.length > 0 && (
         <section className="py-12 sm:py-16 border-t border-[var(--hairline)]">
