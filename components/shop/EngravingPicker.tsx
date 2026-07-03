@@ -47,10 +47,12 @@ export default function EngravingPicker({
   const [darkPreview, setDarkPreview] = useState(true)
 
   return (
-    <div className="mb-5 rounded-sm border border-[var(--hairline)] bg-[var(--surface)] p-4">
-      <div className="flex items-center justify-between mb-2">
-        <span className="text-xs font-semibold uppercase tracking-wider text-[var(--ink)]">Add engraving</span>
-        <span className="text-[11px] text-[var(--ink-soft)]">optional</span>
+    <div className="mb-5 rounded-sm border border-[var(--hairline)] bg-[var(--ink)]/[0.03] p-4 sm:p-5">
+      {/* Header matches the menu's section rules: hairline, small caps, hairline. */}
+      <div className="flex items-center gap-3 mb-4">
+        <span className="flex-1 border-t border-[var(--ink)]/20" aria-hidden />
+        <span className="text-[11px] font-mono tracking-[0.3em] uppercase text-[var(--eyebrow)]">The engraving</span>
+        <span className="flex-1 border-t border-[var(--ink)]/20" aria-hidden />
       </div>
 
       <input
@@ -59,7 +61,7 @@ export default function EngravingPicker({
         maxLength={maxLength}
         onChange={e => onChange({ ...value, text: e.target.value })}
         placeholder="Name, date, message…"
-        className="w-full bg-[var(--surface)] border border-[var(--hairline)] rounded-sm px-3 py-2.5 text-sm text-[var(--ink)] placeholder:text-[var(--ink-soft)] outline-none focus:border-[#C67A6F]"
+        className="w-full bg-[var(--page)] border border-[var(--hairline)] rounded-sm px-3 py-2.5 text-sm text-[var(--ink)] placeholder:text-[var(--ink-soft)] outline-none focus:border-[#C67A6F]"
       />
       <div className="flex items-center justify-between mt-1">
         <span className="text-[11px] text-[var(--ink-soft)]">Leave blank for no engraving</span>
@@ -71,7 +73,7 @@ export default function EngravingPicker({
         <select
           value={value.fontValue}
           onChange={e => onChange({ ...value, fontValue: e.target.value })}
-          className="w-full bg-[var(--surface)] border border-[var(--hairline)] rounded-sm px-3 py-2.5 text-sm text-[var(--ink)] outline-none focus:border-[#C67A6F]"
+          className="w-full bg-[var(--page)] border border-[var(--hairline)] rounded-sm px-3 py-2.5 text-sm text-[var(--ink)] outline-none focus:border-[#C67A6F]"
         >
           {CATEGORY_ORDER.map(cat => {
             const opts = fontsByCategory[cat]
@@ -95,7 +97,7 @@ export default function EngravingPicker({
           maxLength={200}
           onChange={e => onChange({ ...value, placement: e.target.value })}
           placeholder="e.g. centered, about 1 inch, or match my logo"
-          className="w-full bg-[var(--surface)] border border-[var(--hairline)] rounded-sm px-3 py-2.5 text-sm text-[var(--ink)] placeholder:text-[var(--ink-soft)] outline-none focus:border-[#C67A6F]"
+          className="w-full bg-[var(--page)] border border-[var(--hairline)] rounded-sm px-3 py-2.5 text-sm text-[var(--ink)] placeholder:text-[var(--ink-soft)] outline-none focus:border-[#C67A6F]"
         />
         <span className="text-[11px] text-[var(--ink-soft)] block mt-1">Not sure? Leave it blank and I&apos;ll pick the spot that looks best.</span>
       </label>

@@ -67,13 +67,13 @@ export default function AddToCart(props: {
         <button
           onClick={onAdd}
           disabled={alreadyInCart}
-          className="w-full sm:w-auto inline-flex items-center justify-center px-6 h-11 bg-[#C67A6F] hover:bg-[#B0675D] disabled:opacity-60 disabled:cursor-not-allowed text-white text-sm font-semibold rounded-sm transition-colors"
+          className="w-full inline-flex items-center justify-center px-6 h-11 bg-[#C67A6F] hover:bg-[#B0675D] disabled:opacity-60 disabled:cursor-not-allowed text-white text-sm font-semibold rounded-sm transition-colors"
         >
           {alreadyInCart ? 'Already in cart' : added ? 'Added ✓' : 'Add to cart'}
         </button>
       ) : (
         <div className="flex flex-col sm:flex-row gap-3">
-          <div className="inline-flex items-center bg-[var(--surface)] border border-[var(--hairline)] rounded-sm text-[var(--ink)]">
+          <div className="inline-flex items-center justify-center bg-[var(--page)] border border-[var(--hairline)] rounded-sm text-[var(--ink)]">
             <button
               onClick={() => setQty(q => Math.max(1, q - 1))}
               className="px-3 py-2.5 text-[var(--ink-soft)] hover:text-[var(--ink)]"

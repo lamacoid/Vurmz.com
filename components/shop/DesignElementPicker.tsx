@@ -5,8 +5,11 @@
  * category and pick one to add to their engraving. The source vectors stay
  * server-side; only the selected element's id/label/thumb travel with the
  * order, and Zach resolves the id to the real cut file via the admin source map.
+ *
+ * The library opens as a modal overlay, not an inline expansion: 500+
+ * thumbnails must never push the Add-to-cart button below the fold.
  */
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import catalogRaw from '@/lib/design/catalog.json'
 
 export interface DesignElement {
@@ -37,19 +40,42 @@ export default function DesignElementPicker({
     ).slice(0, 120)
   }, [cat, query])
 
+  // Escape closes the library; page scroll holds while it's open.
+  useEffect(() => {
+    if (!open) return
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpen(false) }
+    document.addEventListener('keydown', onKey)
+    const prev = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.removeEventListener('keydown', onKey)
+      document.body.style.overflow = prev
+    }
+  }, [open])
+
   if (CATALOG.length === 0) return null
 
+  function pick(el: DesignElement) {
+    onSelect(el)
+    setOpen(false)
+    setQuery('')
+  }
+
   return (
-    <div className="mt-3 border-t border-[var(--hairline)] pt-3">
-      <div className="flex items-center justify-between">
-        <span className="text-[11px] uppercase tracking-wider text-[var(--ink-soft)]">Add a design <span className="text-gray-600 normal-case tracking-normal">({CATALOG.length} to choose from)</span></span>
+    <div className="mt-4 border-t border-[var(--hairline)] pt-4">
+      <div className="flex items-center justify-between gap-3">
+        <span className="text-[11px] uppercase tracking-wider text-[var(--ink-soft)]">Add a design <span className="normal-case tracking-normal">(optional)</span></span>
         {selected ? (
           <button type="button" onClick={() => onSelect(null)} className="text-[11px] text-[#C67A6F] font-semibold hover:underline">
             Remove design
           </button>
         ) : (
-          <button type="button" onClick={() => setOpen(o => !o)} className="text-[11px] text-[#7FCFD4] font-semibold hover:underline">
-            {open ? 'Close' : 'Browse designs'}
+          <button
+            type="button"
+            onClick={() => setOpen(true)}
+            className="text-[11px] px-3 py-1.5 border border-[var(--eyebrow)]/50 text-[var(--eyebrow)] font-semibold rounded-sm hover:bg-[var(--eyebrow)]/10 transition-colors whitespace-nowrap"
+          >
+            Browse {CATALOG.length} designs
           </button>
         )}
       </div>
@@ -66,46 +92,80 @@ export default function DesignElementPicker({
       )}
 
       {open && !selected && (
-        <div className="mt-2">
-          <input
-            type="text"
-            value={query}
-            onChange={e => setQuery(e.target.value)}
-            placeholder="Search designs (anchor, rose, skull…)"
-            className="w-full bg-[var(--surface)] border border-[var(--hairline)] rounded-sm px-3 py-2 text-sm text-[var(--ink)] placeholder:text-[var(--ink-soft)] outline-none focus:border-[#C67A6F]"
+        <>
+          <div
+            className="fixed inset-0 z-[85] bg-black/40 backdrop-blur-sm"
+            onClick={() => setOpen(false)}
+            aria-hidden
           />
-          {!query && (
-            <div className="flex flex-wrap gap-1.5 mt-2">
-              {CATEGORIES.map(c => (
-                <button
-                  key={c}
-                  type="button"
-                  onClick={() => setCat(c)}
-                  className={`text-[11px] px-2.5 py-1 rounded-full border transition-colors ${
-                    c === cat ? 'border-[#7FCFD4]/50 bg-[#7FCFD4]/15 text-[var(--ink)]' : 'border-[var(--hairline)] text-[var(--ink-soft)] hover:text-[var(--ink)]'
-                  }`}
-                >
-                  {c}
-                </button>
-              ))}
-            </div>
-          )}
-          <div className="mt-2 grid grid-cols-4 sm:grid-cols-6 gap-2 max-h-64 overflow-y-auto pr-1">
-            {shown.map(el => (
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-label="Design library"
+            className="fixed z-[90] inset-x-3 sm:inset-x-auto sm:left-1/2 sm:-translate-x-1/2 top-[8vh] sm:w-full sm:max-w-2xl max-h-[80vh] flex flex-col bg-[var(--page)] border border-[var(--hairline)] rounded-sm shadow-2xl shadow-black/40"
+          >
+            <header className="flex items-start justify-between gap-3 px-4 sm:px-5 py-3 border-b border-[var(--hairline)]">
+              <div>
+                <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-[var(--eyebrow)]">The design library</p>
+                <p className="text-[11px] text-[var(--ink-soft)] mt-0.5">{CATALOG.length} designs, pick one and it joins your engraving</p>
+              </div>
               <button
-                key={el.id}
                 type="button"
-                onClick={() => { onSelect(el); setOpen(false); setQuery('') }}
-                title={el.label}
-                className="aspect-square rounded-sm border border-[var(--hairline)] bg-[#f0ebe0] p-1.5 hover:border-[#7FCFD4] hover:ring-1 hover:ring-[#7FCFD4]/40 transition-all"
+                onClick={() => setOpen(false)}
+                className="p-1 text-[var(--ink-soft)] hover:text-[var(--ink)]"
+                aria-label="Close design library"
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={el.thumb} alt={el.label} loading="lazy" className="h-full w-full object-contain" />
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="w-5 h-5">
+                  <path d="M6 6l12 12M18 6 6 18" />
+                </svg>
               </button>
-            ))}
-            {shown.length === 0 && <p className="col-span-full text-xs text-[var(--ink-soft)] py-4 text-center">No designs match that search.</p>}
+            </header>
+
+            <div className="px-4 sm:px-5 py-3 border-b border-[var(--hairline)]">
+              <input
+                type="text"
+                value={query}
+                onChange={e => setQuery(e.target.value)}
+                placeholder="Search designs (anchor, rose, skull…)"
+                className="w-full bg-[var(--surface)] border border-[var(--hairline)] rounded-sm px-3 py-2 text-sm text-[var(--ink)] placeholder:text-[var(--ink-soft)] outline-none focus:border-[#C67A6F]"
+              />
+              {!query && (
+                <div className="flex flex-wrap gap-1.5 mt-2">
+                  {CATEGORIES.map(c => (
+                    <button
+                      key={c}
+                      type="button"
+                      onClick={() => setCat(c)}
+                      className={`text-[11px] px-2.5 py-1 rounded-full border transition-colors ${
+                        c === cat ? 'border-[#7FCFD4]/50 bg-[#7FCFD4]/15 text-[var(--ink)]' : 'border-[var(--hairline)] text-[var(--ink-soft)] hover:text-[var(--ink)]'
+                      }`}
+                    >
+                      {c}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <div className="flex-1 overflow-y-auto px-4 sm:px-5 py-3">
+              <div className="grid grid-cols-4 sm:grid-cols-6 gap-2">
+                {shown.map(el => (
+                  <button
+                    key={el.id}
+                    type="button"
+                    onClick={() => pick(el)}
+                    title={el.label}
+                    className="aspect-square rounded-sm border border-[var(--hairline)] bg-[#f0ebe0] p-1.5 hover:border-[#7FCFD4] hover:ring-1 hover:ring-[#7FCFD4]/40 transition-all"
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={el.thumb} alt={el.label} loading="lazy" className="h-full w-full object-contain" />
+                  </button>
+                ))}
+                {shown.length === 0 && <p className="col-span-full text-xs text-[var(--ink-soft)] py-4 text-center">No designs match that search.</p>}
+              </div>
+            </div>
           </div>
-        </div>
+        </>
       )}
     </div>
   )

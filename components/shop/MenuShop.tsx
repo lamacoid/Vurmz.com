@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { listCategories, listProducts } from '@/lib/db/repos/products'
-import { money } from '@/lib/format'
+import { menuPrice, menuCase } from '@/lib/menu-format'
 import type { Product } from '@/lib/db/repos/products'
 
 // The Engraver's Menu: the shop laid out as a typeset menu instead of a
@@ -11,23 +11,6 @@ import type { Product } from '@/lib/db/repos/products'
 // product has a photo it joins the line as a small thumbnail. The one
 // loud accent: hovering a line engraves a thin laser-red rule under the
 // name.
-
-// Menus say $38, not $38.00. Cents only appear when they're real.
-function menuPrice(cents: number): string {
-  return cents % 100 === 0 ? `$${cents / 100}` : money(cents)
-}
-
-// Menu-case the subtext: all lowercase, sentence breaks become commas,
-// no trailing period. "Jet-black slate. Cork feet." reads as
-// "jet-black slate, cork feet" under the item name, like a menu.
-function menuCase(s: string): string {
-  return s
-    .replace(/\.(?=[”"'’])/g, '')
-    .replace(/\.\s+/g, ', ')
-    .replace(/[.]+\s*$/g, '')
-    .toLowerCase()
-    .trim()
-}
 
 function metaLine(p: Product): string {
   const parts: string[] = []
