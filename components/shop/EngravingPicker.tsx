@@ -6,7 +6,6 @@
  * selected face (the @font-face declarations in app/fonts.css are loaded
  * globally, so previews are real).
  */
-import { useState } from 'react'
 import { fontsByCategory, categoryLabels, fontOptions, type FontCategory } from '@/lib/fonts'
 import DesignElementPicker, { type DesignElement } from './DesignElementPicker'
 
@@ -43,8 +42,6 @@ export default function EngravingPicker({
   maxLength?: number
 }) {
   const selected = fontOptions.find(f => f.value === value.fontValue) ?? fontOptions[0]
-  // Preview the mark on light vs dark "material" — Benchmade's contrast toggle.
-  const [darkPreview, setDarkPreview] = useState(true)
 
   return (
     <div className="mb-5 rounded-sm border border-[var(--hairline)] bg-[var(--ink)]/[0.03] p-4 sm:p-5">
@@ -108,25 +105,18 @@ export default function EngravingPicker({
         onSelect={el => onChange({ ...value, element: el })}
       />
 
-      {/* Live preview — renders in the actual selected font, on light/dark "material" */}
-      <div className={`mt-3 rounded-sm border px-4 py-5 text-center overflow-hidden transition-colors ${darkPreview ? 'border-[var(--hairline)] bg-[#0c2529]' : 'border-black/10 bg-[#e9e2d4]'}`}>
-        <div className="flex items-center justify-between mb-1.5">
-          <span className={`text-[10px] uppercase tracking-wider ${darkPreview ? 'text-white/50' : 'text-gray-600'}`}>Preview</span>
-          <button
-            type="button"
-            onClick={() => setDarkPreview(d => !d)}
-            className={`text-[10px] px-2 py-0.5 rounded-full border ${darkPreview ? 'border-white/20 text-white/60' : 'border-black/15 text-gray-600'}`}
-          >
-            {darkPreview ? 'On dark' : 'On light'}
-          </button>
+      {/* Live preview — the mark rendered in the actual selected font, light
+          on a dark plate, the way a laser engraving reads. */}
+      <div className="mt-3 rounded-sm border border-[var(--hairline)] bg-[#0c2529] px-4 py-5 text-center overflow-hidden">
+        <div className="mb-1.5 text-left">
+          <span className="text-[10px] uppercase tracking-wider text-white/50">Preview</span>
         </div>
         {value.element && (
-          /* The art is black; on dark "material" the laser mark reads light, so
-             invert it there. On light material it stays black. */
+          /* The art is black; on the dark plate the laser mark reads light, so invert it. */
           /* eslint-disable-next-line @next/next/no-img-element */
-          <img src={value.element.thumb} alt={value.element.label} className={`mx-auto mb-2 h-16 w-16 object-contain ${darkPreview ? 'invert' : ''}`} />
+          <img src={value.element.thumb} alt={value.element.label} className="mx-auto mb-2 h-16 w-16 object-contain invert" />
         )}
-        <span className={`text-2xl leading-tight break-words ${darkPreview ? 'text-[#DED6C3]' : 'text-[#1a2f2e]'}`} style={selected.style}>
+        <span className="text-2xl leading-tight break-words text-[#DED6C3]" style={selected.style}>
           {value.text.trim() || (value.element ? '' : 'Your text here')}
         </span>
       </div>
