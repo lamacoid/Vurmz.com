@@ -134,7 +134,7 @@ export default function CheckoutPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          items: items.map(i => ({ productId: i.productId, qty: i.qty })),
+          items: items.map(i => ({ productId: i.productId, variantId: i.variantId ?? undefined, qty: i.qty })),
           address: address.postalCode ? { postalCode: address.postalCode, state: address.state } : undefined,
         }),
       })
@@ -246,6 +246,7 @@ export default function CheckoutPage() {
             const eng = i.metadata?.engraving as { text?: string; fontValue?: string; fontLabel?: string; placement?: string } | undefined
             return {
               productId: i.productId,
+              variantId: i.variantId ?? undefined,
               qty: i.qty,
               personalization: eng?.text
                 ? { text: eng.text, fontValue: eng.fontValue ?? '', fontLabel: eng.fontLabel ?? '', placement: eng.placement || undefined }
@@ -563,7 +564,7 @@ export default function CheckoutPage() {
           <p className="text-[11px] uppercase tracking-wider text-[#7A7068] mb-3 font-semibold">Summary</p>
           <div className="space-y-3">
             {items.map(item => (
-              <div key={item.productId} className="flex gap-3 items-start">
+              <div key={`${item.productId}:${item.variantId ?? ""}`} className="flex gap-3 items-start">
                 <div className="w-14 h-14 bg-white border border-[#16525C]/10 rounded-sm overflow-hidden flex-shrink-0">
                   {item.heroUrl ? <img src={item.heroUrl} alt="" className="w-full h-full object-cover" /> : null}
                 </div>

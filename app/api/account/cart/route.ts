@@ -7,6 +7,8 @@ export const runtime = 'edge'
 
 const itemSchema = z.object({
   productId: z.string().min(1),
+  variantId: z.string().nullable().optional(),
+  variantName: z.string().max(100).nullable().optional(),
   slug: z.string().min(1),
   name: z.string().min(1),
   priceCents: z.number().int().nonnegative(),

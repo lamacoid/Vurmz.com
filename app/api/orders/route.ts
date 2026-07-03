@@ -33,6 +33,7 @@ const schema = z.object({
   email: z.string().email().max(200),
   items: z.array(z.object({
     productId: z.string(),
+    variantId: z.string().optional(),
     qty: z.number().int().min(1),
     personalization: z.object({
       text: z.string().max(200),
@@ -224,6 +225,7 @@ export async function POST(req: NextRequest) {
       const eng = personalByProduct.get(i.productId)
       return {
         productId: i.productId,
+        variantId: i.variantId ?? undefined,
         nameSnapshot: i.name,
         qty: i.qty,
         unitPriceCents: i.unitPriceCents,

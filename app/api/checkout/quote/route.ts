@@ -7,7 +7,7 @@ import { businessTierFor } from '@/lib/pricing'
 export const runtime = 'edge'
 
 const schema = z.object({
-  items: z.array(z.object({ productId: z.string(), qty: z.number().int().min(1) })).min(1),
+  items: z.array(z.object({ productId: z.string(), variantId: z.string().optional(), qty: z.number().int().min(1) })).min(1),
   address: z.object({
     name: z.string().optional(),
     line1: z.string().optional(),

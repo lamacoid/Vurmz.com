@@ -6,6 +6,8 @@ import { getDb, newId, nowIso } from '../client'
 
 export interface ServerCartItem {
   productId: string
+  variantId?: string | null
+  variantName?: string | null
   slug: string
   name: string
   priceCents: number

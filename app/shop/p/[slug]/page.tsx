@@ -3,8 +3,8 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import AddToCart from '@/components/shop/AddToCart'
-import GlassImage from '@/components/shop/GlassImage'
-import { getProductBySlug, getCategoryById } from '@/lib/db/repos/products'
+import ProductGallery from '@/components/shop/ProductGallery'
+import { getProductBySlug, getCategoryById, listVariants, listProductImages } from '@/lib/db/repos/products'
 import { getMediaById } from '@/lib/db/repos/media'
 import { menuPrice, menuCase } from '@/lib/menu-format'
 import { DELIVERY } from '@/lib/pricing'
@@ -32,10 +32,23 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
   const product = await getProductBySlug(slug)
   if (!product || !product.isPublished || product.soldAt) return notFound()
 
-  const [category, hero] = await Promise.all([
+  const [category, hero, variants, galleryRows] = await Promise.all([
     product.categoryId ? getCategoryById(product.categoryId) : null,
     product.heroMediaId ? getMediaById(product.heroMediaId) : null,
+    listVariants(product.id),
+    listProductImages(product.id),
   ])
+
+  // Gallery = product_images rows; a product with only a hero photo still
+  // gets a one-image gallery so both paths render the same framed plate.
+  const gallery = galleryRows.length > 0
+    ? galleryRows.map(g => ({ url: g.url, alt: g.altText || product.name }))
+    : hero?.url
+      ? [{ url: hero.url, alt: hero.altText || product.name }]
+      : []
+
+  // With pack options the header shows the lowest price as "from $X".
+  const lowestCents = Math.min(product.priceCents, ...variants.map(v => v.priceCents))
 
   // Subtext reads like the menu line it came from. Timing lives in the
   // fulfillment notes under the button, not here, so it's never said twice.
@@ -57,9 +70,10 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
         name={product.name}
         priceCents={product.priceCents}
         packSize={product.packSize}
-        heroUrl={hero?.url ?? null}
+        heroUrl={gallery[0]?.url ?? null}
         oneOff={product.oneOff}
         engravable={product.metadata?.engravable !== false}
+        variants={variants.map(v => ({ id: v.id, name: v.name, packSize: v.packSize, priceCents: v.priceCents }))}
       />
 
       {/* Fulfillment facts, right where the decision happens. */}
@@ -115,7 +129,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
             )}
             <span className="hidden sm:block flex-1 -translate-y-[6px] border-b border-dotted border-[var(--ink)]/25 min-w-[2rem]" aria-hidden />
             <span className="text-2xl sm:text-3xl font-semibold text-[var(--eyebrow)] whitespace-nowrap">
-              {menuPrice(product.priceCents)}
+              {variants.length > 0 && lowestCents < product.priceCents ? `from ${menuPrice(lowestCents)}` : menuPrice(product.priceCents)}
             </span>
           </div>
 
@@ -127,15 +141,10 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
           <div className="mt-6 border-t-2 border-[var(--ink)]/25" aria-hidden />
           <div className="mt-[3px] border-t border-[var(--ink)]/25" aria-hidden />
 
-          {hero?.url ? (
+          {gallery.length > 0 ? (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mt-8">
               <div>
-                {/* The framed plate. */}
-                <div className="border border-[var(--ink)]/25 rounded-sm p-1.5">
-                  <div className="group relative aspect-square rounded-sm overflow-hidden">
-                    <GlassImage src={hero.url} alt={hero.altText || product.name} depth="product" plain className="absolute inset-0" />
-                  </div>
-                </div>
+                <ProductGallery images={gallery} name={product.name} />
                 {detailsSection}
               </div>
               <div className="lg:sticky lg:top-6 lg:self-start">{orderColumn}</div>

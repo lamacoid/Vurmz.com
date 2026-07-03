@@ -1,7 +1,7 @@
 'use client'
 /* eslint-disable @next/next/no-img-element */
 import Link from 'next/link'
-import { useCart } from '@/lib/cart/store'
+import { useCart, cartLineKey } from '@/lib/cart/store'
 import { DELIVERY } from '@/lib/pricing'
 
 function money(cents: number) {
@@ -54,7 +54,7 @@ export default function CartDrawer() {
             </div>
           ) : (
             items.map(item => (
-              <div key={item.productId} className="flex gap-3">
+              <div key={cartLineKey(item)} className="flex gap-3">
                 <div className="w-16 h-16 flex-shrink-0 bg-white/10 border border-white/10 rounded-sm overflow-hidden">
                   {item.heroUrl ? (
                     <img src={item.heroUrl} alt="" className="w-full h-full object-cover" />
@@ -70,7 +70,7 @@ export default function CartDrawer() {
                   >
                     {item.name}
                   </Link>
-                  <p className="text-xs text-[#DED6C3]/70">{item.packSize > 1 ? `pack of ${item.packSize} · ${money(item.priceCents)} ea` : `${money(item.priceCents)} each`}</p>
+                  <p className="text-xs text-[#DED6C3]/70">{(item.variantName ? `${item.variantName.toLowerCase()} · ` : item.packSize > 1 ? `pack of ${item.packSize} · ` : '') + money(item.priceCents) + (item.packSize > 1 || item.variantName ? ' ea' : ' each')}</p>
                   {(() => {
                     const eng = item.metadata?.engraving as { text?: string; fontLabel?: string } | undefined
                     return eng?.text ? (
@@ -81,11 +81,11 @@ export default function CartDrawer() {
                   })()}
                   <div className="flex items-center gap-3 mt-2">
                     <div className="inline-flex items-center bg-white/10 border border-white/10 rounded-sm text-sm text-[#DED6C3]">
-                      <button onClick={() => setQty(item.productId, item.qty - 1)} className="px-2 py-1 text-[#DED6C3]/70 hover:text-[#DED6C3]" aria-label="Decrease">−</button>
+                      <button onClick={() => setQty(cartLineKey(item), item.qty - 1)} className="px-2 py-1 text-[#DED6C3]/70 hover:text-[#DED6C3]" aria-label="Decrease">−</button>
                       <span className="min-w-[1.5rem] text-center text-xs font-semibold">{item.qty}</span>
-                      <button onClick={() => setQty(item.productId, item.qty + 1)} className="px-2 py-1 text-[#DED6C3]/70 hover:text-[#DED6C3]" aria-label="Increase">+</button>
+                      <button onClick={() => setQty(cartLineKey(item), item.qty + 1)} className="px-2 py-1 text-[#DED6C3]/70 hover:text-[#DED6C3]" aria-label="Increase">+</button>
                     </div>
-                    <button onClick={() => remove(item.productId)} className="text-xs text-[#DED6C3]/70 hover:text-[#C67A6F]">Remove</button>
+                    <button onClick={() => remove(cartLineKey(item))} className="text-xs text-[#DED6C3]/70 hover:text-[#C67A6F]">Remove</button>
                   </div>
                 </div>
                 <div className="text-sm font-semibold text-[#DED6C3]">{money(item.priceCents * item.qty)}</div>

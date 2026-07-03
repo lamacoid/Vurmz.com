@@ -51,9 +51,12 @@ export default function ProductForm({ initial }: { initial: ProductDraft }) {
   const [categories, setCategories] = useState<Category[]>([])
   const [mediaPickerOpen, setMediaPickerOpen] = useState(false)
   const [media, setMedia] = useState<MediaItem[]>([])
-  const [heroMedia, setHeroMedia] = useState<MediaItem | null>(null)
   const [priceStr, setPriceStr] = useState(initial.priceCents ? centsToDollars(initial.priceCents) : '')
   const [moreOpen, setMoreOpen] = useState(false)
+  // Gallery: ordered media ids; the first one is the main photo (heroMediaId).
+  const [imageIds, setImageIds] = useState<string[]>(initial.heroMediaId ? [initial.heroMediaId] : [])
+  // Additional pack-size options ("Pack of 15 at $60"), edited as strings.
+  const [variantRows, setVariantRows] = useState<Array<{ name: string; packStr: string; priceStr: string }>>([])
   // Slug is set automatically from the title while creating, until it's
   // edited by hand in More details. Existing products never auto-change
   // (their URL may be live).
@@ -66,14 +69,24 @@ export default function ProductForm({ initial }: { initial: ProductDraft }) {
     })
     fetch('/api/admin/media?limit=500').then(r => r.json()).then(j => {
       const parsed = j as { data?: { items: MediaItem[] } }
-      const items = parsed.data?.items ?? []
-      setMedia(items)
-      if (initial.heroMediaId) {
-        const h = items.find(m => m.id === initial.heroMediaId)
-        if (h) setHeroMedia(h)
-      }
+      setMedia(parsed.data?.items ?? [])
     })
-  }, [initial.heroMediaId])
+    // Existing products: load their saved gallery and pack options.
+    if (initial.id) {
+      fetch(`/api/admin/products/${initial.id}`).then(r => r.json()).then(j => {
+        const parsed = j as { data?: { variants?: Array<{ name: string; packSize: number; priceCents: number }>; images?: Array<{ mediaId: string }> } }
+        const imgs = parsed.data?.images ?? []
+        if (imgs.length > 0) setImageIds(imgs.map(i => i.mediaId))
+        setVariantRows(
+          (parsed.data?.variants ?? []).map(v => ({
+            name: v.name,
+            packStr: String(v.packSize),
+            priceStr: centsToDollars(v.priceCents),
+          }))
+        )
+      })
+    }
+  }, [initial.heroMediaId, initial.id])
 
   function field<K extends keyof ProductDraft>(key: K, value: ProductDraft[K]) {
     setDraft(prev => ({ ...prev, [key]: value }))
@@ -84,6 +97,21 @@ export default function ProductForm({ initial }: { initial: ProductDraft }) {
   }
 
   const priceCents = dollarsToCents(priceStr)
+  const mediaById = useMemo(() => new Map(media.map(m => [m.id, m])), [media])
+  const heroMedia = imageIds.length > 0 ? mediaById.get(imageIds[0]) ?? null : null
+  // The unit price ties price and pack size together: change one, the other
+  // recalculates through it, and it prefills new pack-size options.
+  const unitCents = draft.packSize > 0 ? priceCents / draft.packSize : priceCents
+
+  function onPackSizeChange(newPack: number) {
+    const prevPack = draft.packSize
+    const cents = dollarsToCents(priceStr)
+    field('packSize', newPack)
+    if (cents > 0 && prevPack > 0 && newPack > 0 && newPack !== prevPack) {
+      setPriceStr(centsToDollars(Math.round((cents / prevPack) * newPack)))
+    }
+  }
+
   const missing: string[] = []
   if (!draft.name.trim()) missing.push('a title')
   if (priceCents <= 0) missing.push('a price')
@@ -100,6 +128,17 @@ export default function ProductForm({ initial }: { initial: ProductDraft }) {
       ...draft,
       slug: draft.slug || slugify(draft.name),
       priceCents,
+      heroMediaId: imageIds[0] ?? null,
+      imageIds,
+      variants: draft.oneOff
+        ? []
+        : variantRows
+            .map(r => {
+              const packSize = parseInt(r.packStr, 10) || 0
+              const cents = dollarsToCents(r.priceStr)
+              return { name: r.name.trim() || `Pack of ${packSize}`, packSize, priceCents: cents }
+            })
+            .filter(v => v.packSize > 0 && v.priceCents > 0),
       ...(publish === null ? {} : { isPublished: publish }),
     }
     try {
@@ -153,18 +192,59 @@ export default function ProductForm({ initial }: { initial: ProductDraft }) {
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-6 items-start">
         {/* ── The form (photo first, then the required basics) ── */}
         <div className="space-y-4">
-          {/* Photo */}
-          {heroMedia ? (
+          {/* Photos: multiple slots, first one is the main photo everywhere. */}
+          {imageIds.length > 0 ? (
             <div className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-xl p-4">
-              <div className="flex items-center gap-4">
-                <div className="w-28 h-28 flex-shrink-0 bg-[var(--a-bg)] rounded-lg overflow-hidden border border-[var(--a-line)]">
-                  <img src={heroMedia.url} alt={heroMedia.altText} className="w-full h-full object-cover" />
-                </div>
-                <div className="space-y-2">
-                  <button onClick={() => setMediaPickerOpen(true)} className="block text-xs px-3 h-8 bg-white/5 hover:bg-white/10 rounded-md text-[var(--a-ink)]">Change photo</button>
-                  <button onClick={() => { field('heroMediaId', null); setHeroMedia(null) }} className="block text-xs px-3 h-8 bg-white/5 hover:bg-white/10 rounded-md text-red-300">Remove</button>
-                </div>
+              <div className="flex flex-wrap gap-3">
+                {imageIds.map((id, i) => {
+                  const m = mediaById.get(id)
+                  return (
+                    <div key={id} className="w-24">
+                      <div className="relative w-24 h-24 bg-[var(--a-bg)] rounded-lg overflow-hidden border border-[var(--a-line)]">
+                        {m ? <img src={m.url} alt={m.altText} className="w-full h-full object-cover" /> : <div className="w-full h-full" />}
+                        {i === 0 && (
+                          <span className="absolute top-1 left-1 text-[9px] font-semibold uppercase tracking-wide bg-[var(--a-accent)] text-black rounded px-1.5 py-px">Main</span>
+                        )}
+                        <button
+                          onClick={() => setImageIds(prev => prev.filter(x => x !== id))}
+                          aria-label="Remove photo"
+                          className="absolute top-1 right-1 w-5 h-5 flex items-center justify-center bg-black/60 hover:bg-black/80 rounded text-white text-xs"
+                        >
+                          ✕
+                        </button>
+                      </div>
+                      <div className="flex justify-center gap-1 mt-1">
+                        <button
+                          onClick={() => setImageIds(prev => { const a = [...prev]; if (i > 0) { [a[i-1], a[i]] = [a[i], a[i-1]] } return a })}
+                          disabled={i === 0}
+                          aria-label="Move left"
+                          className="px-2 py-0.5 text-xs bg-white/5 hover:bg-white/10 disabled:opacity-30 rounded text-[var(--a-ink)]"
+                        >
+                          ←
+                        </button>
+                        <button
+                          onClick={() => setImageIds(prev => { const a = [...prev]; if (i < a.length - 1) { [a[i+1], a[i]] = [a[i], a[i+1]] } return a })}
+                          disabled={i === imageIds.length - 1}
+                          aria-label="Move right"
+                          className="px-2 py-0.5 text-xs bg-white/5 hover:bg-white/10 disabled:opacity-30 rounded text-[var(--a-ink)]"
+                        >
+                          →
+                        </button>
+                      </div>
+                    </div>
+                  )
+                })}
+                {imageIds.length < 12 && (
+                  <button
+                    onClick={() => setMediaPickerOpen(true)}
+                    className="w-24 h-24 border-2 border-dashed border-[var(--a-line)] hover:border-[var(--a-accent)]/50 rounded-lg flex flex-col items-center justify-center text-[var(--a-ink-faint)] hover:text-[var(--a-ink)] transition-colors"
+                  >
+                    <Icon name="image" className="w-5 h-5 mb-1" />
+                    <span className="text-[10px] font-medium">Add</span>
+                  </button>
+                )}
               </div>
+              <p className="text-[10px] text-[var(--a-ink-faint)] mt-2">The first photo is the main one. Use the arrows to reorder.</p>
             </div>
           ) : (
             <button
@@ -172,8 +252,8 @@ export default function ProductForm({ initial }: { initial: ProductDraft }) {
               className="w-full h-36 border-2 border-dashed border-[var(--a-line)] hover:border-[var(--a-accent)]/50 rounded-xl flex flex-col items-center justify-center text-[var(--a-ink-faint)] hover:text-[var(--a-ink)] transition-colors bg-[var(--a-panel)]/40"
             >
               <Icon name="image" className="w-7 h-7 mb-1.5" />
-              <span className="text-sm font-medium">Add a photo</span>
-              <span className="text-[11px] mt-0.5">Listings with photos sell. You can add it later.</span>
+              <span className="text-sm font-medium">Add photos</span>
+              <span className="text-[11px] mt-0.5">Listings with photos sell. Add as many angles as you have.</span>
             </button>
           )}
 
@@ -207,7 +287,11 @@ export default function ProductForm({ initial }: { initial: ProductDraft }) {
                     className="flex-1 min-w-0 bg-transparent px-2 py-2.5 text-sm text-[var(--a-ink)] outline-none"
                   />
                 </div>
-                {draft.packSize > 1 && <p className="text-[10px] text-[var(--a-ink-faint)] mt-1">Price for the whole pack of {draft.packSize}, not per item.</p>}
+                {draft.packSize > 1 && priceCents > 0 && (
+                  <p className="text-[10px] text-[var(--a-ink-faint)] mt-1">
+                    Whole pack of {draft.packSize} = <span className="text-[var(--a-accent)] font-semibold">${(unitCents / 100).toFixed(2)} each</span>
+                  </p>
+                )}
               </div>
               <div>
                 <label className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)] block mb-1">Category</label>
@@ -292,10 +376,10 @@ export default function ProductForm({ initial }: { initial: ProductDraft }) {
                       min={1}
                       value={draft.oneOff ? 1 : draft.packSize}
                       disabled={draft.oneOff}
-                      onChange={e => field('packSize', parseInt(e.target.value, 10) || 1)}
+                      onChange={e => onPackSizeChange(parseInt(e.target.value, 10) || 1)}
                       className="w-full bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[var(--a-accent)] disabled:opacity-50"
                     />
-                    <p className="text-[10px] text-[var(--a-ink-faint)] mt-1">{draft.oneOff ? 'One-off, locked to 1.' : 'Leave at 1 unless it sells as a pack.'}</p>
+                    <p className="text-[10px] text-[var(--a-ink-faint)] mt-1">{draft.oneOff ? 'One-off, locked to 1.' : 'Changing this recalculates the price from the per-item rate.'}</p>
                   </div>
                   <div>
                     <label className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)] block mb-1">Shipping weight (grams)</label>
@@ -309,6 +393,72 @@ export default function ProductForm({ initial }: { initial: ProductDraft }) {
                     <p className="text-[10px] text-[var(--a-ink-faint)] mt-1">Only matters if it ships. 0 is fine for local.</p>
                   </div>
                 </div>
+
+                {/* More pack sizes: one listing, several quantities. */}
+                {!draft.oneOff && (
+                  <div>
+                    <label className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)] block mb-1">More pack sizes</label>
+                    <p className="text-[10px] text-[var(--a-ink-faint)] mb-2">
+                      Sell the same thing in more than one quantity. The customer picks the size on the product page.
+                      New sizes price themselves from the per-item rate; change the price if you want to reward bigger packs.
+                    </p>
+                    <div className="space-y-2">
+                      {variantRows.map((row, i) => (
+                        <div key={i} className="flex items-center gap-2">
+                          <input
+                            type="number"
+                            min={1}
+                            value={row.packStr}
+                            placeholder="Qty"
+                            onChange={e => {
+                              const packStr = e.target.value
+                              const pack = parseInt(packStr, 10) || 0
+                              setVariantRows(prev => prev.map((r, j) => j === i
+                                ? {
+                                    packStr,
+                                    name: !r.name || /^Pack of \d+$/.test(r.name) ? (pack > 0 ? `Pack of ${pack}` : '') : r.name,
+                                    priceStr: r.priceStr === '' && pack > 0 && unitCents > 0 ? centsToDollars(Math.round(unitCents * pack)) : r.priceStr,
+                                  }
+                                : r))
+                            }}
+                            className="w-20 bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-2 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[var(--a-accent)]"
+                          />
+                          <input
+                            value={row.name}
+                            placeholder={row.packStr ? `Pack of ${row.packStr}` : 'Name'}
+                            onChange={e => setVariantRows(prev => prev.map((r, j) => j === i ? { ...r, name: e.target.value } : r))}
+                            className="flex-1 min-w-0 bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-2 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[var(--a-accent)]"
+                          />
+                          <div className="flex items-center bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md focus-within:border-[var(--a-accent)] w-28">
+                            <span className="pl-2 text-[var(--a-ink-faint)] text-sm">$</span>
+                            <input
+                              value={row.priceStr}
+                              placeholder="0.00"
+                              inputMode="decimal"
+                              onChange={e => setVariantRows(prev => prev.map((r, j) => j === i ? { ...r, priceStr: e.target.value } : r))}
+                              className="flex-1 min-w-0 bg-transparent px-1 py-2 text-sm text-[var(--a-ink)] outline-none"
+                            />
+                          </div>
+                          <button
+                            onClick={() => setVariantRows(prev => prev.filter((_, j) => j !== i))}
+                            aria-label="Remove pack size"
+                            className="px-2 py-2 text-xs text-red-300 hover:text-red-200"
+                          >
+                            ✕
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                    {variantRows.length < 8 && (
+                      <button
+                        onClick={() => setVariantRows(prev => [...prev, { name: '', packStr: '', priceStr: '' }])}
+                        className="mt-2 text-xs px-3 h-8 bg-white/5 hover:bg-white/10 rounded-md text-[var(--a-ink)] border border-[var(--a-line)]"
+                      >
+                        + Add a pack size
+                      </button>
+                    )}
+                  </div>
+                )}
 
                 <div className="grid grid-cols-2 gap-3">
                   <label className="flex items-center gap-2 bg-[var(--a-bg)] border border-[var(--a-line)] rounded-md px-3 py-2.5">
@@ -503,7 +653,10 @@ export default function ProductForm({ initial }: { initial: ProductDraft }) {
                   {media.map(m => (
                     <button
                       key={m.id}
-                      onClick={() => { field('heroMediaId', m.id); setHeroMedia(m); setMediaPickerOpen(false) }}
+                      onClick={() => {
+                        setImageIds(prev => (prev.includes(m.id) ? prev : [...prev, m.id]))
+                        setMediaPickerOpen(false)
+                      }}
                       className="aspect-square bg-[var(--a-panel)] border border-[var(--a-line)] hover:border-[var(--a-accent)]/40 rounded-lg overflow-hidden"
                     >
                       <img src={m.url} alt={m.altText} className="w-full h-full object-cover" />

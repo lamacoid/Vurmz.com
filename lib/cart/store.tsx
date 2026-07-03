@@ -15,6 +15,10 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useRef, use
 
 export interface CartItem {
   productId: string
+  /** Pack-size option (product_variants row). Null/absent = the default pack. */
+  variantId?: string | null
+  /** Display label for the chosen option, e.g. "Pack of 15". */
+  variantName?: string | null
   slug: string
   name: string
   priceCents: number
@@ -23,6 +27,14 @@ export interface CartItem {
   heroUrl: string | null
   oneOff?: boolean
   metadata?: Record<string, unknown>
+}
+
+/**
+ * A cart line is identified by product + chosen pack option: the same
+ * product in two pack sizes is two lines. All mutations key off this.
+ */
+export function cartLineKey(i: { productId: string; variantId?: string | null }): string {
+  return `${i.productId}::${i.variantId ?? ''}`
 }
 
 interface CartState {
@@ -34,8 +46,8 @@ interface CartContextValue {
   itemCount: number
   subtotalCents: number
   add: (item: Omit<CartItem, 'qty'>, qty?: number) => void
-  remove: (productId: string) => void
-  setQty: (productId: string, qty: number) => void
+  remove: (lineKey: string) => void
+  setQty: (lineKey: string, qty: number) => void
   clear: () => void
   isOpen: boolean
   setOpen: (open: boolean) => void
@@ -69,12 +81,12 @@ function saveToStorage(state: CartState) {
  * device A is what I see on device B".
  */
 function mergeCarts(serverItems: CartItem[], localItems: CartItem[]): CartItem[] {
-  const byId = new Map<string, CartItem>()
-  for (const it of serverItems) byId.set(it.productId, it)
+  const byKey = new Map<string, CartItem>()
+  for (const it of serverItems) byKey.set(cartLineKey(it), it)
   for (const it of localItems) {
-    if (!byId.has(it.productId)) byId.set(it.productId, it)
+    if (!byKey.has(cartLineKey(it))) byKey.set(cartLineKey(it), it)
   }
-  return Array.from(byId.values())
+  return Array.from(byKey.values())
 }
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
@@ -158,8 +170,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   }, [state, hydrated, pushToServer])
 
   const add = useCallback<CartContextValue['add']>((item, qty = 1) => {
+    const key = cartLineKey(item)
     setState(prev => {
-      const existing = prev.items.find(i => i.productId === item.productId)
+      const existing = prev.items.find(i => cartLineKey(i) === key)
       if (existing) {
         // One-off items are unique — never increment past 1, but still let a
         // fresh engraving choice replace the old one.
@@ -167,13 +180,13 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
           if (!item.metadata) return prev
           return {
             items: prev.items.map(i =>
-              i.productId === item.productId ? { ...i, metadata: item.metadata } : i
+              cartLineKey(i) === key ? { ...i, metadata: item.metadata } : i
             ),
           }
         }
         return {
           items: prev.items.map(i =>
-            i.productId === item.productId
+            cartLineKey(i) === key
               ? { ...i, qty: i.qty + qty, metadata: item.metadata ?? i.metadata }
               : i
           ),
@@ -184,20 +197,20 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     setOpen(true)
   }, [])
 
-  const setQty = useCallback<CartContextValue['setQty']>((productId, qty) => {
+  const setQty = useCallback<CartContextValue['setQty']>((lineKey, qty) => {
     if (qty <= 0) {
-      setState(prev => ({ items: prev.items.filter(i => i.productId !== productId) }))
+      setState(prev => ({ items: prev.items.filter(i => cartLineKey(i) !== lineKey) }))
       return
     }
     setState(prev => ({
       items: prev.items.map(i =>
-        i.productId === productId ? { ...i, qty: i.oneOff ? 1 : qty } : i
+        cartLineKey(i) === lineKey ? { ...i, qty: i.oneOff ? 1 : qty } : i
       ),
     }))
   }, [])
 
-  const remove = useCallback<CartContextValue['remove']>(productId => {
-    setState(prev => ({ items: prev.items.filter(i => i.productId !== productId) }))
+  const remove = useCallback<CartContextValue['remove']>(lineKey => {
+    setState(prev => ({ items: prev.items.filter(i => cartLineKey(i) !== lineKey) }))
   }, [])
 
   const clear = useCallback(() => {

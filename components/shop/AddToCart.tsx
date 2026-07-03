@@ -2,7 +2,16 @@
 import { useState } from 'react'
 import { useCart } from '@/lib/cart/store'
 import { fontOptions } from '@/lib/fonts'
+import { menuPrice } from '@/lib/menu-format'
 import EngravingPicker, { type EngravingValue } from './EngravingPicker'
+
+export interface PackOption {
+  /** null = the product's own default pack. */
+  variantId: string | null
+  name: string
+  packSize: number
+  priceCents: number
+}
 
 export default function AddToCart(props: {
   productId: string
@@ -14,11 +23,27 @@ export default function AddToCart(props: {
   oneOff?: boolean
   /** Whether this product can be personalized. Defaults to true. */
   engravable?: boolean
+  /** Additional pack-size options (product_variants). The default pack is added automatically. */
+  variants?: Array<{ id: string; name: string; packSize: number; priceCents: number }>
 }) {
   const { add, items } = useCart()
   const [qty, setQty] = useState(1)
   const [added, setAdded] = useState(false)
   const [engraving, setEngraving] = useState<EngravingValue>({ text: '', fontValue: 'kerf', placement: '', element: null })
+
+  // The default pack plus any admin-defined options, sorted by pack size.
+  const options: PackOption[] = [
+    {
+      variantId: null,
+      name: props.packSize === 1 ? 'Single' : `Pack of ${props.packSize}`,
+      packSize: props.packSize,
+      priceCents: props.priceCents,
+    },
+    ...(props.variants ?? []).map(v => ({ variantId: v.id, name: v.name, packSize: v.packSize, priceCents: v.priceCents })),
+  ].sort((a, b) => a.packSize - b.packSize)
+  const [selectedKey, setSelectedKey] = useState<string | null>(null)
+  const selected = options.find(o => (o.variantId ?? '') === (selectedKey ?? '')) ?? options.find(o => o.variantId === null) ?? options[0]
+  const hasOptions = options.length > 1
 
   const engravable = props.engravable !== false
   const alreadyInCart = props.oneOff && items.some(i => i.productId === props.productId)
@@ -45,10 +70,16 @@ export default function AddToCart(props: {
     add(
       {
         productId: props.productId,
+        variantId: selected.variantId,
+        variantName: selected.variantId ? selected.name : null,
         slug: props.slug,
-        name: props.name,
-        priceCents: props.priceCents,
-        packSize: props.packSize,
+        // Names like "Labels (Pack of 10)" drop their own pack suffix when a
+        // chosen option replaces it, so it never reads "(Pack of 10) (Pack of 25)".
+        name: selected.variantId
+          ? `${props.name.replace(/\s*\((?:pack|set) of \d+\)\s*$/i, '')} (${selected.name})`
+          : props.name,
+        priceCents: selected.priceCents,
+        packSize: selected.packSize,
         heroUrl: props.heroUrl,
         oneOff: props.oneOff,
         metadata: buildMetadata(),
@@ -62,6 +93,33 @@ export default function AddToCart(props: {
   return (
     <div>
       {engravable && <EngravingPicker value={engraving} onChange={setEngraving} />}
+
+      {/* Pack-size options: framed chips, price on each, menu-quiet. */}
+      {hasOptions && !props.oneOff && (
+        <div className="mb-4">
+          <span className="block text-[11px] uppercase tracking-wider text-[var(--ink-soft)] mb-2">Size</span>
+          <div className="flex flex-wrap gap-2">
+            {options.map(o => {
+              const isSel = (o.variantId ?? '') === (selected.variantId ?? '')
+              return (
+                <button
+                  key={o.variantId ?? 'base'}
+                  type="button"
+                  onClick={() => setSelectedKey(o.variantId)}
+                  aria-pressed={isSel}
+                  className={`px-4 py-2 rounded-sm border text-sm transition-colors ${
+                    isSel
+                      ? 'border-[var(--eyebrow)] bg-[var(--eyebrow)]/10 text-[var(--ink)] font-semibold'
+                      : 'border-[var(--hairline)] text-[var(--ink-soft)] hover:border-[var(--ink)]/40 hover:text-[var(--ink)]'
+                  }`}
+                >
+                  {o.name} <span className={isSel ? 'text-[var(--eyebrow)]' : ''}>{menuPrice(o.priceCents)}</span>
+                </button>
+              )
+            })}
+          </div>
+        </div>
+      )}
 
       {props.oneOff ? (
         <button

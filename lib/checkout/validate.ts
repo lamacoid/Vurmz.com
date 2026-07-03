@@ -2,16 +2,19 @@
  * Server-side cart validation — re-reads product prices from D1 so the
  * client can't tamper with amounts sent to the order API.
  */
-import { getProductById } from '@/lib/db/repos/products'
+import { getProductById, getVariantById } from '@/lib/db/repos/products'
 import { businessUnitPrice } from '@/lib/pricing'
 
 export interface ClientCartItem {
   productId: string
   qty: number
+  /** Optional pack-size option (product_variants row). Server-verified. */
+  variantId?: string
 }
 
 export interface ValidatedCartItem {
   productId: string
+  variantId: string | null
   name: string
   slug: string
   qty: number
@@ -55,19 +58,42 @@ export async function validateCart(clientItems: ClientCartItem[], opts: { isBusi
       unavailable.push({ productId: raw.productId, reason: 'unpublished' })
       continue
     }
+    // Pack-size option: the variant's price and pack override the product's
+    // defaults. Everything is re-read from D1; a variant must belong to this
+    // product and be published or the line is dropped.
+    let variant = null
+    if (raw.variantId) {
+      variant = await getVariantById(raw.variantId)
+      if (!variant || variant.productId !== product.id || !variant.isPublished) {
+        unavailable.push({ productId: raw.productId, reason: 'missing' })
+        continue
+      }
+    }
+    const basePriceCents = variant ? variant.priceCents : product.priceCents
+    const packSize = variant ? variant.packSize : product.packSize
+    // Same suffix rule as the client: the chosen option replaces a pack/set
+    // suffix baked into the product name rather than stacking behind it.
+    const name = variant
+      ? `${product.name.replace(/\s*\((?:pack|set) of \d+\)\s*$/i, '')} (${variant.name})`
+      : product.name
     // One-off items can only ever be qty 1.
     const qty = product.oneOff ? 1 : Math.min(raw.qty, 999)
     const unitPriceCents = opts.isBusinessOrder && !product.oneOff
-      ? businessUnitPrice(product.priceCents, qty * product.packSize)
-      : product.priceCents
+      ? businessUnitPrice(basePriceCents, qty * packSize)
+      : basePriceCents
+    // Per-unit weight scales with the pack when a variant changes the count.
+    const weightGrams = variant && product.packSize > 0
+      ? Math.round((product.weightGrams / product.packSize) * packSize)
+      : product.weightGrams
     items.push({
       productId: product.id,
-      name: product.name,
+      variantId: variant?.id ?? null,
+      name,
       slug: product.slug,
       qty,
       unitPriceCents,
-      packSize: product.packSize,
-      weightGrams: product.weightGrams,
+      packSize,
+      weightGrams,
       oneOff: product.oneOff,
     })
   }

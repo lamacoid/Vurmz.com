@@ -346,3 +346,124 @@ export async function reorderProducts(items: Array<{ id: string; position: numbe
     )
   )
 }
+
+// ============================================================
+// PACK-SIZE VARIANTS (activated 2026-07-03, migration 0015)
+// A variant is an additional pack option with an ABSOLUTE price:
+// "pack of N at $X total". The product's own priceCents/packSize
+// stay the default option; products without variant rows behave
+// exactly as before.
+// ============================================================
+
+export interface ProductVariant {
+  id: string
+  productId: string
+  name: string
+  packSize: number
+  priceCents: number
+  position: number
+  isPublished: boolean
+}
+
+interface VariantRow {
+  id: string
+  product_id: string
+  name: string
+  pack_size: number
+  price_cents: number
+  position: number
+  is_published: number
+}
+
+function hydrateVariant(row: VariantRow): ProductVariant {
+  return {
+    id: row.id,
+    productId: row.product_id,
+    name: row.name,
+    packSize: row.pack_size,
+    priceCents: row.price_cents,
+    position: row.position,
+    isPublished: row.is_published === 1,
+  }
+}
+
+export async function listVariants(productId: string, opts: { includeUnpublished?: boolean } = {}): Promise<ProductVariant[]> {
+  const db = getDb()
+  const pub = opts.includeUnpublished ? '' : 'AND is_published = 1'
+  const { results } = await db
+    .prepare(`SELECT * FROM product_variants WHERE product_id = ? ${pub} ORDER BY position, pack_size`)
+    .bind(productId)
+    .all<VariantRow>()
+  return results.map(hydrateVariant)
+}
+
+export async function getVariantById(id: string): Promise<ProductVariant | null> {
+  const db = getDb()
+  const row = await db.prepare('SELECT * FROM product_variants WHERE id = ? LIMIT 1').bind(id).first<VariantRow>()
+  return row ? hydrateVariant(row) : null
+}
+
+/** Admin save: replace a product's variant set wholesale (delete + insert). */
+export async function replaceVariants(
+  productId: string,
+  variants: Array<{ name: string; packSize: number; priceCents: number }>
+): Promise<void> {
+  const db = getDb()
+  const stmts = [db.prepare('DELETE FROM product_variants WHERE product_id = ?').bind(productId)]
+  variants.forEach((v, i) => {
+    stmts.push(
+      db
+        .prepare(
+          'INSERT INTO product_variants (id, product_id, name, pack_size, price_cents, position, is_published) VALUES (?, ?, ?, ?, ?, ?, 1)'
+        )
+        .bind(newId('var'), productId, v.name, v.packSize, v.priceCents, i)
+    )
+  })
+  await db.batch(stmts)
+}
+
+// ============================================================
+// PRODUCT IMAGE GALLERY (activated 2026-07-03)
+// product_images was shipped dormant in 0001; hero_media_id stays
+// the primary pointer (menu/cart thumbnails), kept in sync with
+// the first gallery slot by the admin form.
+// ============================================================
+
+export interface ProductImage {
+  mediaId: string
+  position: number
+  url: string
+  altText: string
+}
+
+export async function listProductImages(productId: string): Promise<ProductImage[]> {
+  const db = getDb()
+  const { results } = await db
+    .prepare(
+      `SELECT pi.media_id, pi.position, m.r2_key, m.external_url, m.alt_text
+       FROM product_images pi JOIN media m ON m.id = pi.media_id AND m.deleted_at IS NULL
+       WHERE pi.product_id = ? ORDER BY pi.position`
+    )
+    .bind(productId)
+    .all<{ media_id: string; position: number; r2_key: string; external_url: string | null; alt_text: string }>()
+  return results.map(r => ({
+    mediaId: r.media_id,
+    position: r.position,
+    url: r.external_url || `/api/media/${encodeURIComponent(r.r2_key)}`,
+    altText: r.alt_text,
+  }))
+}
+
+/** Admin save: replace a product's gallery wholesale, in the given order. */
+export async function replaceProductImages(productId: string, mediaIds: string[]): Promise<void> {
+  const db = getDb()
+  const stmts = [db.prepare('DELETE FROM product_images WHERE product_id = ?').bind(productId)]
+  mediaIds.forEach((mediaId, i) => {
+    stmts.push(
+      db
+        .prepare('INSERT INTO product_images (id, product_id, media_id, position, is_primary) VALUES (?, ?, ?, ?, ?)')
+        .bind(newId('pimg'), productId, mediaId, i, i === 0 ? 1 : 0)
+    )
+  })
+  await db.batch(stmts)
+}

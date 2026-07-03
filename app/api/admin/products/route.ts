@@ -3,7 +3,8 @@ import { z } from 'zod'
 import { withAdminAuth } from '@/lib/auth/admin'
 import { audit } from '@/lib/audit'
 import { getClientIp, getUserAgent } from '@/lib/auth/session'
-import { createProduct, listProducts } from '@/lib/db/repos/products'
+import { createProduct, listProducts, replaceVariants, replaceProductImages } from '@/lib/db/repos/products'
+import { variantsSchema, imageIdsSchema } from './schemas'
 
 export const runtime = 'edge'
 
@@ -24,6 +25,8 @@ const createSchema = z.object({
   heroMediaId: z.string().nullable().optional(),
   oneOff: z.boolean().optional(),
   metadata: z.record(z.string(), z.unknown()).optional(),
+  variants: variantsSchema.optional(),
+  imageIds: imageIdsSchema.optional(),
 })
 
 export async function GET(req: NextRequest) {
@@ -48,7 +51,10 @@ export async function POST(req: NextRequest) {
     if (!body.success) {
       return NextResponse.json({ ok: false, error: { code: 'VALIDATION', details: body.error.issues } }, { status: 422 })
     }
-    const product = await createProduct(body.data)
+    const { variants, imageIds, ...productInput } = body.data
+    const product = await createProduct(productInput)
+    if (variants !== undefined) await replaceVariants(product.id, product.oneOff ? [] : variants)
+    if (imageIds !== undefined) await replaceProductImages(product.id, imageIds)
     await audit({
       actorType: 'admin',
       actorId: session.email ?? null,
