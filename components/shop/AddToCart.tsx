@@ -106,6 +106,15 @@ export default function AddToCart(props: {
           {' '}will be applied{props.oneOff ? '' : ' to each item in the pack'}.
         </p>
       )}
+
+      {/* Risk reversal at the exact moment of doubt. Engravable products
+          already carry this promise inside the engraving picker, so this
+          line only renders where it isn't already said. */}
+      {!engravable && (
+        <p className="mt-2 text-[11px] text-[var(--ink-soft)]">
+          ✓ You approve a proof photo before anything runs.
+        </p>
+      )}
     </div>
   )
 }

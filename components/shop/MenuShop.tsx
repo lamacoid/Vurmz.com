@@ -23,8 +23,7 @@ function metaLine(p: Product): string {
   const parts: string[] = []
   if (p.shortDescription) parts.push(p.shortDescription)
   if (p.packSize > 1) parts.push(`pack of ${p.packSize}`)
-  if (p.oneOff) parts.push('one of one')
-  else if (p.madeToOrder && p.leadTimeDays > 0) parts.push(`made to order, ${p.leadTimeDays} day${p.leadTimeDays === 1 ? '' : 's'}`)
+  if (!p.oneOff && p.madeToOrder && p.leadTimeDays > 0) parts.push(`made to order, ${p.leadTimeDays} day${p.leadTimeDays === 1 ? '' : 's'}`)
   return parts.join(' · ')
 }
 
@@ -43,6 +42,12 @@ function MenuRow({ p, thumb }: { p: Product; thumb: string | null }) {
             className="absolute -bottom-0.5 left-0 h-px w-full bg-[#FF2A2A] shadow-[0_0_5px_rgba(255,42,42,0.8)] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out motion-reduce:transition-none"
           />
         </span>
+        {/* Honest scarcity, visible: only one exists. */}
+        {p.oneOff && (
+          <span className="self-center flex-shrink-0 text-[9px] font-mono uppercase tracking-[0.15em] text-[var(--eyebrow)] border border-[var(--eyebrow)]/40 rounded-sm px-1.5 py-px whitespace-nowrap">
+            1 of 1
+          </span>
+        )}
         <span className="flex-1 -translate-y-[3px] border-b border-dotted border-[var(--ink)]/25 min-w-[1.5rem]" aria-hidden />
         <span className="font-semibold text-[var(--eyebrow)] whitespace-nowrap">{menuPrice(p.priceCents)}</span>
       </span>
@@ -107,7 +112,7 @@ export default async function MenuShop() {
         {house && (
           <div className="mt-8 border border-[var(--ink)]/30 rounded-sm p-1">
             <div className="border border-[var(--ink)]/15 rounded-sm px-5 py-6 text-center bg-[var(--eyebrow)]/[0.06]">
-              <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-[var(--eyebrow)] mb-2">The standing offer</p>
+              <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-[var(--eyebrow)] mb-2">The house offer</p>
               <Link href={`/shop/p/${house.slug}`} className="group inline-block">
                 <span
                   className="relative text-xl sm:text-2xl font-semibold text-[var(--ink)] tracking-tight"
@@ -120,7 +125,10 @@ export default async function MenuShop() {
               <p className="text-sm text-[var(--ink-soft)] mt-2 max-w-md mx-auto">
                 {house.shortDescription || 'Your thing, engraved. Flat within size, a little more for big or complicated.'}
               </p>
-              <Link href={`/shop/p/${house.slug}`} className="inline-block mt-3 text-sm font-semibold text-[var(--eyebrow)] hover:underline">
+              <Link
+                href={`/shop/p/${house.slug}`}
+                className="inline-flex items-center justify-center mt-4 px-6 h-9 border border-[var(--eyebrow)]/50 text-[var(--eyebrow)] text-sm font-semibold rounded-sm hover:bg-[var(--eyebrow)]/10 transition-colors"
+              >
                 Start yours
               </Link>
             </div>

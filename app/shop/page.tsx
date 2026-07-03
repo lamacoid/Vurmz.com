@@ -34,6 +34,9 @@ export default function ShopHome() {
               Text {siteInfo.phone}
             </a>
           </p>
+          <p className="text-[13px] text-[var(--ink-soft)] mt-1.5">
+            Most pieces in 24 to 72 hours. You approve a proof photo before anything runs.
+          </p>
           <div className="mt-6 border-t-2 border-[var(--ink)]/25" aria-hidden />
           <div className="mt-[3px] mb-4 border-t border-[var(--ink)]/25" aria-hidden />
         </div>
