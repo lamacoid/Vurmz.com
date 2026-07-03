@@ -1,7 +1,5 @@
-/* eslint-disable @next/next/no-img-element */
 import Link from 'next/link'
 import { listCategories, listProducts } from '@/lib/db/repos/products'
-import { getMediaByIds } from '@/lib/db/repos/media'
 import { money } from '@/lib/format'
 import type { Product } from '@/lib/db/repos/products'
 
@@ -19,21 +17,32 @@ function menuPrice(cents: number): string {
   return cents % 100 === 0 ? `$${cents / 100}` : money(cents)
 }
 
-function metaLine(p: Product): string {
-  const parts: string[] = []
-  if (p.shortDescription) parts.push(p.shortDescription)
-  if (p.packSize > 1) parts.push(`pack of ${p.packSize}`)
-  if (!p.oneOff && p.madeToOrder && p.leadTimeDays > 0) parts.push(`made to order, ${p.leadTimeDays} day${p.leadTimeDays === 1 ? '' : 's'}`)
-  return parts.join(' · ')
+// Menu-case the subtext: all lowercase, sentence breaks become commas,
+// no trailing period. "Jet-black slate. Cork feet." reads as
+// "jet-black slate, cork feet" under the item name, like a menu.
+function menuCase(s: string): string {
+  return s
+    .replace(/\.(?=[”"'’])/g, '')
+    .replace(/\.\s+/g, ', ')
+    .replace(/[.]+\s*$/g, '')
+    .toLowerCase()
+    .trim()
 }
 
-function MenuRow({ p, thumb }: { p: Product; thumb: string | null }) {
+function metaLine(p: Product): string {
+  const parts: string[] = []
+  if (p.shortDescription) parts.push(menuCase(p.shortDescription))
+  if (p.packSize > 1) parts.push(`pack of ${p.packSize}`)
+  if (!p.oneOff && p.madeToOrder && p.leadTimeDays > 0) parts.push(`made to order, ${p.leadTimeDays} day${p.leadTimeDays === 1 ? '' : 's'}`)
+  return parts.join(', ')
+}
+
+// Deliberately photo-free: the menu stays typeset (Zach's call, and it
+// reads like a real menu because of it). Photos live on the product page.
+function MenuRow({ p }: { p: Product }) {
   return (
     <Link href={`/shop/p/${p.slug}`} className="group block py-2.5 -mx-2 px-2 rounded-sm transition-colors hover:bg-[var(--ink)]/[0.04]">
       <span className="flex items-baseline gap-2.5">
-        {thumb && (
-          <img src={thumb} alt="" className="h-10 w-10 self-center flex-shrink-0 rounded-sm object-cover border border-[var(--hairline)]" />
-        )}
         <span className="relative font-semibold text-[var(--ink)] leading-snug underline decoration-dotted decoration-[var(--ink)]/30 underline-offset-4 group-hover:decoration-transparent transition-colors">
           {p.name}
           {/* The laser: a thin red rule engraves under the name on hover. */}
@@ -52,7 +61,7 @@ function MenuRow({ p, thumb }: { p: Product; thumb: string | null }) {
         <span className="font-semibold text-[var(--eyebrow)] whitespace-nowrap">{menuPrice(p.priceCents)}</span>
       </span>
       {metaLine(p) && (
-        <span className={`block text-sm text-[var(--ink-soft)] leading-snug mt-0.5 ${thumb ? 'pl-[3.125rem]' : ''}`}>
+        <span className="block text-sm text-[var(--ink-soft)] leading-snug mt-0.5">
           {metaLine(p)}
         </span>
       )}
@@ -66,10 +75,6 @@ export default async function MenuShop() {
     listProducts({ limit: 200, includeUnpublished: false, audience: 'shop_visible' }),
   ])
   if (products.length === 0) return null
-
-  const heroIds = products.map(p => p.heroMediaId).filter(Boolean) as string[]
-  const mediaById = await getMediaByIds(heroIds)
-  const thumbFor = (p: Product) => (p.heroMediaId ? mediaById.get(p.heroMediaId)?.url ?? null : null)
 
   // The house offer gets its own box above the sections.
   const house = products.find(p => p.slug === 'engrave-your-item') ?? null
@@ -123,7 +128,7 @@ export default async function MenuShop() {
                 </span>
               </Link>
               <p className="text-sm text-[var(--ink-soft)] mt-2 max-w-md mx-auto">
-                {house.shortDescription || 'Your thing, engraved. Flat within size, a little more for big or complicated.'}
+                {menuCase(house.shortDescription || 'your thing, engraved, flat within size, a little more for big or complicated')}
               </p>
               <Link
                 href={`/shop/p/${house.slug}`}
@@ -146,7 +151,7 @@ export default async function MenuShop() {
               </div>
               <div className="divide-y divide-[var(--hairline)]">
                 {s.items.map(p => (
-                  <MenuRow key={p.id} p={p} thumb={thumbFor(p)} />
+                  <MenuRow key={p.id} p={p} />
                 ))}
               </div>
             </section>
