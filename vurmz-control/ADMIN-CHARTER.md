@@ -146,6 +146,40 @@ Inventory of every number the system computes the moment it can:
 - No dead ends: every screen has an obvious way forward and back.
 - Undoable data model: soft-delete everywhere it isn't already.
 
+## Two-way customer messaging (added 2026-07-03, Zach found the hole)
+
+There are TWO message systems and they do not meet: the contact-form KV
+inbox (admin sees it, replies leave as email) and the customer-portal D1
+messages (customers write from /account/messages; the admin cannot reply
+into the thread or start one). The fix, pulled forward ahead of the
+Phase 3 People room because it is a functional hole, not polish:
+- One thread per person in the admin, unifying portal messages and
+  contact-form messages chronologically.
+- Admin can REPLY into the portal thread and START a new thread to any
+  customer; the customer gets a branded email nudge ("Zach sent you a
+  message") deep-linking to their portal.
+- The compose-email feature (shipped 2026-07-03) remains for people
+  without accounts; the thread view shows which channel each message
+  used.
+
+## Connected to the shop floor (added 2026-07-03: "the native Mac app")
+
+VURMZ Library.app (the design-asset organizer) was never connected to
+the site; its rebuild is task #40. The connection Zach actually wants is
+order-to-laser, in minutes-saved order:
+1. **Auto job folders + LightBurn launch**: ticket start creates a local
+   folder (order number, customer file, resolved design CUT FILE from
+   the library source map, ticket.txt with text/font/placement);
+   "Start engraving" opens it in LightBurn.
+2. **Print the ticket**: kitchen-style physical ticket at the machine,
+   big type, one button from the rail.
+3. **Menu-bar companion**: today's rail + badge on new order/message,
+   click-through to the ticket. (Native Swift or Tauri; source in git.)
+4. **Proof photo from phone to ticket**: snap, attach, send-proof in
+   one more tap.
+5. **Delivery run to Apple Maps** with stops pre-ordered.
+These ride behind the web admin's API; the Mac layer stays thin.
+
 ## Non-negotiables
 
 - Payments/webhook/checkout logic untouched; presentation only.
