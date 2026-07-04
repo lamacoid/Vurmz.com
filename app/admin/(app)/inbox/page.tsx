@@ -39,6 +39,7 @@ export default function InboxPage() {
   const [reply, setReply] = useState('')
   const [sending, setSending] = useState(false)
   const [sendError, setSendError] = useState('')
+  const [composeOpen, setComposeOpen] = useState(false)
   const [justSent, setJustSent] = useState(false)
   const [ctx, setCtx] = useState<CustomerCtx | 'none' | null>(null)
 
@@ -220,8 +221,18 @@ export default function InboxPage() {
     <div className="px-4 py-6 max-w-xl mx-auto">
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-2xl font-bold text-[var(--a-ink)]">Messages</h1>
-        {unread > 0 && <span className="bg-[var(--a-cta)] text-white text-xs font-bold px-2.5 py-1 rounded-full">{unread} new</span>}
+        <div className="flex items-center gap-2">
+          {unread > 0 && <span className="bg-[var(--a-cta)] text-white text-xs font-bold px-2.5 py-1 rounded-full">{unread} new</span>}
+          <button
+            onClick={() => setComposeOpen(true)}
+            className="px-3.5 h-9 bg-[var(--a-cta)] hover:bg-[var(--a-cta-hover)] text-white text-sm font-semibold rounded-md"
+          >
+            New email
+          </button>
+        </div>
       </div>
+
+      {composeOpen && <ComposeModal onClose={() => { setComposeOpen(false); load() }} />}
 
       <div className="flex gap-1 mb-4 bg-black/15 rounded-lg p-1">
         {(['all', 'unread', 'archived'] as const).map(f => (
@@ -274,6 +285,120 @@ export default function InboxPage() {
           ))}
         </div>
       )}
+    </div>
+  )
+}
+
+// ── Compose: send any email as zach@vurmz.com, wrapped in the site's
+// branded card. Sent emails appear in the Messages list as history.
+function ComposeModal({ onClose }: { onClose: () => void }) {
+  const [to, setTo] = useState('')
+  const [subject, setSubject] = useState('')
+  const [heading, setHeading] = useState('')
+  const [body, setBody] = useState('')
+  const [styled, setStyled] = useState(true)
+  const [sending, setSending] = useState(false)
+  const [sent, setSent] = useState(false)
+  const [error, setError] = useState('')
+
+  const ready = /.+@.+\..+/.test(to.trim()) && subject.trim().length > 0 && body.trim().length > 0
+
+  async function send() {
+    setSending(true)
+    setError('')
+    try {
+      const res = await fetch('/api/admin/messages/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          to: to.trim(),
+          subject: subject.trim(),
+          body: body.trim(),
+          heading: heading.trim() || undefined,
+          styled,
+        }),
+      })
+      const data = await res.json() as { ok?: boolean; error?: { message?: string } }
+      if (!res.ok || !data.ok) throw new Error(data.error?.message || 'Could not send. Please try again.')
+      setSent(true)
+      setTimeout(onClose, 1200)
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Could not send. Please try again.')
+    } finally {
+      setSending(false)
+    }
+  }
+
+  return (
+    <div className="fixed inset-0 z-50 bg-black/60 flex items-start sm:items-center justify-center p-4 overflow-y-auto" onClick={onClose}>
+      <div onClick={e => e.stopPropagation()} className="bg-[var(--a-bg)] border border-[var(--a-line)] rounded-xl w-full max-w-lg my-8">
+        <div className="flex items-center justify-between p-4 border-b border-[var(--a-line)]">
+          <div>
+            <p className="text-sm font-semibold text-[var(--a-ink)]">New email</p>
+            <p className="text-[11px] text-[var(--a-ink-faint)]">Sends as Zach at VURMZ (zach@vurmz.com). Replies come to your regular inbox.</p>
+          </div>
+          <button onClick={onClose} className="p-1 text-[var(--a-ink-soft)] hover:text-[var(--a-ink)] text-lg leading-none">✕</button>
+        </div>
+
+        <div className="p-4 space-y-3">
+          <div>
+            <label className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)] block mb-1">To</label>
+            <input
+              value={to}
+              onChange={e => setTo(e.target.value)}
+              placeholder="them@example.com"
+              inputMode="email"
+              className="w-full bg-[var(--a-panel)] border border-[var(--a-line)] rounded-md px-3 py-2.5 text-sm text-[var(--a-ink)] outline-none focus:border-[var(--a-accent)]"
+            />
+          </div>
+          <div>
+            <label className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)] block mb-1">Subject</label>
+            <input
+              value={subject}
+              onChange={e => setSubject(e.target.value)}
+              placeholder="What it's about"
+              className="w-full bg-[var(--a-panel)] border border-[var(--a-line)] rounded-md px-3 py-2.5 text-sm text-[var(--a-ink)] outline-none focus:border-[var(--a-accent)]"
+            />
+          </div>
+          {styled && (
+            <div>
+              <label className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)] block mb-1">Headline on the card <span className="normal-case tracking-normal">(optional)</span></label>
+              <input
+                value={heading}
+                onChange={e => setHeading(e.target.value)}
+                placeholder="e.g. Your coasters are ready."
+                className="w-full bg-[var(--a-panel)] border border-[var(--a-line)] rounded-md px-3 py-2.5 text-sm text-[var(--a-ink)] outline-none focus:border-[var(--a-accent)]"
+              />
+            </div>
+          )}
+          <div>
+            <label className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)] block mb-1">Message</label>
+            <textarea
+              value={body}
+              onChange={e => setBody(e.target.value)}
+              rows={7}
+              placeholder="Write it the way you'd say it. Blank lines make paragraphs."
+              className="w-full bg-[var(--a-panel)] border border-[var(--a-line)] rounded-md px-3 py-2.5 text-sm text-[var(--a-ink)] outline-none focus:border-[var(--a-accent)]"
+            />
+          </div>
+          <label className="flex items-center gap-2 text-sm text-[var(--a-ink-soft)]">
+            <input type="checkbox" checked={styled} onChange={e => setStyled(e.target.checked)} />
+            Dress it like the site (the cream card with your signature)
+          </label>
+          {error && <p className="text-sm text-red-300">{error}</p>}
+        </div>
+
+        <div className="flex items-center justify-between p-4 border-t border-[var(--a-line)]">
+          <p className="text-[11px] text-[var(--a-ink-faint)]">It sends the moment you press the button.</p>
+          <button
+            onClick={send}
+            disabled={!ready || sending || sent}
+            className="px-5 h-10 bg-[var(--a-cta)] hover:bg-[var(--a-cta-hover)] disabled:opacity-50 text-white text-sm font-semibold rounded-md"
+          >
+            {sent ? 'Sent ✓' : sending ? 'Sending…' : 'Send email'}
+          </button>
+        </div>
+      </div>
     </div>
   )
 }
