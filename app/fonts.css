@@ -79,3 +79,17 @@
 /* Gothic / Blackletter */
 @font-face { font-family: 'Olde English'; src: url('/fonts/OldeEnglishRegular-Zd2J.ttf') format('truetype'); font-display: swap; }
 @font-face { font-family: 'Stencil Gothic BE'; src: url('/fonts/StencilGothicBe-jEE9.ttf') format('truetype'); font-display: swap; }
+
+/* World scripts — real typefaces for real text (SIL OFL, Google Fonts).
+   Added 2026-07-03. The engrave-exactly-what-you-type policy applies:
+   no machine translation, ever. font-display swap keeps the heavy CJK
+   files lazy: they download only when a preview renders those glyphs. */
+@font-face { font-family: 'Noto Naskh Arabic'; src: url('/fonts/Noto-Naskh-Arabic.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Reem Kufi'; src: url('/fonts/Reem-Kufi.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Amiri'; src: url('/fonts/Amiri-Regular.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Frank Ruhl Libre'; src: url('/fonts/Frank-Ruhl-Libre.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Secular One'; src: url('/fonts/Secular-One.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Noto Sans JP'; src: url('/fonts/Noto-Sans-JP.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Shippori Mincho'; src: url('/fonts/Shippori-Mincho.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Noto Sans KR'; src: url('/fonts/Noto-Sans-KR.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Noto Sans SC'; src: url('/fonts/Noto-Sans-SC.ttf') format('truetype'); font-display: swap; }

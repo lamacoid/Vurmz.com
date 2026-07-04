@@ -9,6 +9,11 @@ export type FontCategory =
   | 'vurmz'
   | 'professional-sans'
   | 'professional-serif'
+  | 'arabic'
+  | 'hebrew'
+  | 'japanese'
+  | 'korean'
+  | 'chinese'
   | 'script'
   | 'industrial'
   | 'display'
@@ -127,6 +132,20 @@ export const fontOptions: FontOption[] = [
   // ============================================
   { value: 'olde-english', label: 'Olde English', category: 'gothic', style: { fontFamily: "'Olde English', serif" } },
   { value: 'stencil-gothic', label: 'Stencil Gothic', category: 'gothic', style: { fontFamily: "'Stencil Gothic BE', sans-serif" } },
+
+  // ============================================
+  // WORLD SCRIPTS — real typefaces for real text.
+  // Engraved exactly as typed; we never translate.
+  // ============================================
+  { value: 'noto-naskh-arabic', label: 'Naskh (العربية)', category: 'arabic', style: { fontFamily: "'Noto Naskh Arabic', serif" } },
+  { value: 'reem-kufi', label: 'Reem Kufi (العربية)', category: 'arabic', style: { fontFamily: "'Reem Kufi', sans-serif" } },
+  { value: 'amiri', label: 'Amiri (العربية)', category: 'arabic', style: { fontFamily: "'Amiri', serif" } },
+  { value: 'frank-ruhl', label: 'Frank Ruhl (עברית)', category: 'hebrew', style: { fontFamily: "'Frank Ruhl Libre', serif" } },
+  { value: 'secular-one', label: 'Secular One (עברית)', category: 'hebrew', style: { fontFamily: "'Secular One', sans-serif" } },
+  { value: 'noto-sans-jp', label: 'Noto Sans (日本語)', category: 'japanese', style: { fontFamily: "'Noto Sans JP', sans-serif" } },
+  { value: 'shippori-mincho', label: 'Shippori Mincho (日本語)', category: 'japanese', style: { fontFamily: "'Shippori Mincho', serif" } },
+  { value: 'noto-sans-kr', label: 'Noto Sans (한국어)', category: 'korean', style: { fontFamily: "'Noto Sans KR', sans-serif" } },
+  { value: 'noto-sans-sc', label: 'Noto Sans (中文)', category: 'chinese', style: { fontFamily: "'Noto Sans SC', sans-serif" } },
 ]
 
 // Group fonts by category for UI display
@@ -141,6 +160,11 @@ export const fontsByCategory: Record<FontCategory, FontOption[]> = {
   fun: fontOptions.filter(f => f.category === 'fun'),
   western: fontOptions.filter(f => f.category === 'western'),
   gothic: fontOptions.filter(f => f.category === 'gothic'),
+  arabic: fontOptions.filter(f => f.category === 'arabic'),
+  hebrew: fontOptions.filter(f => f.category === 'hebrew'),
+  japanese: fontOptions.filter(f => f.category === 'japanese'),
+  korean: fontOptions.filter(f => f.category === 'korean'),
+  chinese: fontOptions.filter(f => f.category === 'chinese'),
 }
 
 export const categoryLabels: Record<FontCategory, string> = {
@@ -154,4 +178,9 @@ export const categoryLabels: Record<FontCategory, string> = {
   fun: 'Fun & Creative',
   western: 'Western & Vintage',
   gothic: 'Gothic & Blackletter',
+  arabic: 'Arabic · العربية',
+  hebrew: 'Hebrew · עברית',
+  japanese: 'Japanese · 日本語',
+  korean: 'Korean · 한국어',
+  chinese: 'Chinese · 中文',
 }

@@ -30,6 +30,11 @@ const CATEGORY_ORDER: FontCategory[] = [
   'fun',
   'western',
   'gothic',
+  'arabic',
+  'hebrew',
+  'japanese',
+  'korean',
+  'chinese',
 ]
 
 export default function EngravingPicker({
@@ -54,6 +59,7 @@ export default function EngravingPicker({
 
       <input
         type="text"
+        dir="auto"
         value={value.text}
         maxLength={maxLength}
         onChange={e => onChange({ ...value, text: e.target.value })}
@@ -116,7 +122,7 @@ export default function EngravingPicker({
           /* eslint-disable-next-line @next/next/no-img-element */
           <img src={value.element.thumb} alt={value.element.label} className="mx-auto mb-2 h-16 w-16 object-contain invert" />
         )}
-        <span className="text-2xl leading-tight break-words text-[#DED6C3]" style={selected.style}>
+        <span dir="auto" className="text-2xl leading-tight break-words text-[#DED6C3]" style={selected.style}>
           {value.text.trim() || (value.element ? '' : 'Your text here')}
         </span>
       </div>
