@@ -77,6 +77,8 @@ export interface BuilderSubmission {
   mark?: 'light' | 'dark'
   shape?: 'rect' | 'rounded-rect' | 'circle'
   cornerRadiusIn?: number
+  /** Silhouette snapshot: the outline the design was placed on. */
+  outlinePath?: string
   layoutKey?: string
   widthIn: number
   heightIn: number

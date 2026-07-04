@@ -6,7 +6,7 @@ import { menuPrice } from '@/lib/menu-format'
 import { trackConversion } from '@/lib/track'
 import EngravingPicker, { type EngravingValue } from './EngravingPicker'
 import BuilderPanel from '@/components/builder/BuilderPanel'
-import type { CanvasBuilderConfig, BuilderSubmission } from '@/lib/builder/types'
+import type { BuilderConfig, BuilderSubmission } from '@/lib/builder/types'
 
 export interface PackOption {
   /** null = the product's own default pack. */
@@ -28,8 +28,8 @@ export default function AddToCart(props: {
   engravable?: boolean
   /** Additional pack-size options (product_variants). The default pack is added automatically. */
   variants?: Array<{ id: string; name: string; packSize: number; priceCents: number }>
-  /** Canvas-mode Builder config (metadata.builder). Replaces the engraving picker when present. */
-  builderConfig?: CanvasBuilderConfig | null
+  /** Builder config (metadata.builder), canvas or silhouette. Replaces the engraving picker when present. */
+  builderConfig?: BuilderConfig | null
 }) {
   const { add, items } = useCart()
   const [qty, setQty] = useState(1)

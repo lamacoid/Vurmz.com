@@ -75,7 +75,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
         oneOff={product.oneOff}
         engravable={product.metadata?.engravable !== false}
         variants={variants.map(v => ({ id: v.id, name: v.name, packSize: v.packSize, priceCents: v.priceCents }))}
-        builderConfig={(() => { const c = builderConfigFrom(product.metadata); return c && c.mode === 'canvas' ? c : null })()}
+        builderConfig={builderConfigFrom(product.metadata)}
       />
 
       {/* Fulfillment facts, right where the decision happens. */}

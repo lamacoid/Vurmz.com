@@ -25,7 +25,9 @@ export default function PlacementDiagram({ submission, maxWidth = 360 }: { submi
         aria-label="Customer's layout"
         style={{ display: 'block', borderRadius: 4 }}
       >
-        {submission.shape === 'circle' ? (
+        {submission.outlinePath ? (
+          <path d={submission.outlinePath} fill={surface} stroke="rgba(0,0,0,0.3)" strokeWidth={0.02} />
+        ) : submission.shape === 'circle' ? (
           <circle cx={widthIn / 2} cy={heightIn / 2} r={Math.min(widthIn, heightIn) / 2} fill={surface} stroke="rgba(0,0,0,0.3)" strokeWidth={0.02} />
         ) : (
           <rect x={0.01} y={0.01} width={widthIn - 0.02} height={heightIn - 0.02} rx={r} fill={surface} stroke="rgba(0,0,0,0.3)" strokeWidth={0.02} />

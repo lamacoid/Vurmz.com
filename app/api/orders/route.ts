@@ -43,6 +43,7 @@ const schema = z.object({
       mark: z.enum(['light', 'dark']).optional(),
       shape: z.enum(['rect', 'rounded-rect', 'circle']).optional(),
       cornerRadiusIn: z.number().min(0).max(10).optional(),
+      outlinePath: z.string().max(4000).optional(),
       layoutKey: z.string().max(40).optional(),
       widthIn: z.number().positive().max(60),
       heightIn: z.number().positive().max(60),
