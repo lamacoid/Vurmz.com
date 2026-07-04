@@ -18,6 +18,9 @@ export default function AdminCustomerDetail() {
     customer: Customer; orders: Order[]; invoices: Invoice[]; messages: Message[]; files: FileItem[]
   } | null>(null)
   const [loading, setLoading] = useState(true)
+  const [draft, setDraft] = useState('')
+  const [sendingMsg, setSendingMsg] = useState(false)
+  const [msgError, setMsgError] = useState('')
 
   const load = useCallback(async () => {
     if (!params?.id) return
@@ -38,6 +41,27 @@ export default function AdminCustomerDetail() {
     })
     // Optimistic merge
     setData({ ...data, customer: { ...data.customer, ...patch } })
+  }
+
+  async function sendPortalMessage() {
+    if (!data || !draft.trim()) return
+    setSendingMsg(true)
+    setMsgError('')
+    try {
+      const res = await fetch(`/api/admin/customers/${data.customer.id}/messages`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ body: draft.trim() }),
+      })
+      const json = (await res.json()) as { ok?: boolean; error?: { message?: string } }
+      if (!res.ok || !json.ok) throw new Error(json.error?.message || 'Could not send. Please try again.')
+      setDraft('')
+      await load()
+    } catch (e) {
+      setMsgError(e instanceof Error ? e.message : 'Could not send. Please try again.')
+    } finally {
+      setSendingMsg(false)
+    }
   }
 
   if (loading) return <div className="p-8 text-[var(--a-ink-faint)] text-sm">Loading…</div>
@@ -109,7 +133,9 @@ export default function AdminCustomerDetail() {
         </Section>
 
         <Section title={`Messages (${messages.length})`}>
-          {messages.length === 0 ? <Empty text="No messages." /> : (
+          {messages.length === 0 ? (
+            <Empty text="No messages yet. Start the conversation below; they see it in their account and get an email." />
+          ) : (
             <div className="space-y-2 max-h-[400px] overflow-y-auto">
               {messages.slice(-20).map(m => (
                 <div key={m.id} className={`p-2 rounded text-xs ${m.direction === 'inbound' ? 'bg-[var(--a-cta)]/10 text-[var(--a-ink)]' : 'bg-white/[0.03] text-[var(--a-ink-soft)]'}`}>
@@ -119,6 +145,24 @@ export default function AdminCustomerDetail() {
               ))}
             </div>
           )}
+          {/* Two-way at last: replies land in their portal thread AND email. */}
+          <div className="mt-3 flex gap-2">
+            <textarea
+              value={draft}
+              onChange={e => setDraft(e.target.value)}
+              rows={2}
+              placeholder={`Message ${customer.name?.split(' ')[0] || 'them'}. They see it in their account and get an email.`}
+              className="flex-1 bg-black/20 border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[var(--a-accent)] resize-none"
+            />
+            <button
+              onClick={sendPortalMessage}
+              disabled={!draft.trim() || sendingMsg}
+              className="px-4 self-end h-9 bg-[var(--a-cta)] hover:bg-[var(--a-cta-hover)] disabled:opacity-50 text-white text-sm font-semibold rounded-md"
+            >
+              {sendingMsg ? 'Sending…' : 'Send'}
+            </button>
+          </div>
+          {msgError && <p className="text-xs text-red-300 mt-1.5">{msgError}</p>}
         </Section>
 
         <Section title={`Files (${files.length})`}>
