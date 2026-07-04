@@ -162,6 +162,19 @@ Phase 3 People room because it is a functional hole, not polish:
   without accounts; the thread view shows which channel each message
   used.
 
+## Attach-anything messages with smart routing (added 2026-07-03)
+
+The customer composer gains an ATTACH menu: proof photo (from the order's
+proof workflow or fresh upload), a quote (renders as a branded summary
+card with line items and total, not a bare link), an invoice, any
+photo/file. The channel routes ITSELF: customer has a portal account ->
+portal message + branded email nudge; no account -> branded email only.
+Zach writes to a PERSON and attaches a THING; the system picks the pipe.
+Plumbing notes: messages.attachments column exists unused; quotes/
+invoices/proofs are existing records to reference by id; R2 for files;
+renderBrandedEmail already takes a CTA. Builds right after the Today
+rail, before the rooms consolidation.
+
 ## Connected to the shop floor (added 2026-07-03: "the native Mac app")
 
 VURMZ Library.app (the design-asset organizer) was never connected to
