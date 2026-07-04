@@ -80,7 +80,10 @@ export const fontOptions: FontOption[] = [
   { value: 'ruler-stencil', label: 'Ruler Stencil', category: 'industrial', style: { fontFamily: "'Ruler Stencil', sans-serif" } },
   { value: 'battlefield', label: 'Battlefield', category: 'industrial', style: { fontFamily: "'Battlefield', sans-serif" } },
   { value: 'alpha-taurus', label: 'Alpha Taurus', category: 'industrial', style: { fontFamily: "'Alpha Taurus', sans-serif" } },
-  { value: 'ben-zion', label: 'Ben-Zion', category: 'industrial', style: { fontFamily: "'Ben-Zion', sans-serif" } },
+  // 'ben-zion' delisted 2026-07-03: faux-Hebrew costume face. Real-script
+  // support (actual Hebrew/Arabic/CJK fonts rendering real text) is the
+  // honest version of this; see ADMIN-CHARTER notes. @font-face retained
+  // so past orders keep rendering.
   { value: 'archery-black', label: 'Archery Black', category: 'industrial', style: { fontFamily: "'Archery Black', sans-serif" } },
   { value: 'blacktop', label: 'Blacktop', category: 'industrial', style: { fontFamily: "'Blacktop', sans-serif" } },
 
