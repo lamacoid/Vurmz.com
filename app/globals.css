@@ -107,6 +107,14 @@ body:not(.is-admin) {
    OS color scheme. These fixed tokens are the single source for the shell, and
    they share the brand palette (deep teal + glassy accent + coral) so the admin
    is on-brand and stays in sync. */
+/* While any admin screen is mounted, the page canvas itself is the
+   cockpit teal: no cream flash during loading, no cream bleed below
+   short pages. */
+html:has(.admin-root),
+body:has(.admin-root) {
+  background: #123F47;
+}
+
 .admin-root {
   --a-bg: #123F47;          /* app + sidebar background (brand deep teal) */
   --a-panel: #16525C;       /* cards, active nav, raised panels */

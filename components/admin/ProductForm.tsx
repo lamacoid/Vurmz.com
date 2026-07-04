@@ -289,7 +289,7 @@ export default function ProductForm({ initial }: { initial: ProductDraft }) {
                 </div>
                 {draft.packSize > 1 && priceCents > 0 && (
                   <p className="text-[10px] text-[var(--a-ink-faint)] mt-1">
-                    Whole pack of {draft.packSize} = <span className="text-[var(--a-accent)] font-semibold">${(unitCents / 100).toFixed(2)} each</span>
+                    This is the price for the whole pack. <span className="text-[var(--a-accent)] font-semibold">${(unitCents / 100).toFixed(2)} each</span>
                   </p>
                 )}
               </div>

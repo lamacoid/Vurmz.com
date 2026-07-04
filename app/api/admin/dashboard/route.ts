@@ -2,22 +2,28 @@ import { NextRequest, NextResponse } from 'next/server'
 import { withAdminAuth } from '@/lib/auth/admin'
 import { getDb } from '@/lib/db/client'
 import { listOrderItemFlags } from '@/lib/db/repos/orders'
+import type { RailTicket } from '@/lib/admin/next-action'
 
 export const runtime = 'edge'
 
 /**
- * One round trip for the Today view: actionable orders (with proof state and
- * personalization flags), status counts, and money (7d collected + pipeline).
+ * One round trip for the Today view: the ticket rail (every order not yet
+ * delivered, as a RailTicket with customer, items, and engraving), status
+ * counts, and money (7d collected + pipeline).
  */
 export async function GET(req: NextRequest) {
   return withAdminAuth(req, async () => {
     const db = getDb()
-    const [actionRows, countRows, collected, pipeline, flags] = await Promise.all([
+    const [actionRows, countRows, collected, pipeline, flags, itemRows, dueTodayRow, newSinceRow] = await Promise.all([
+      // The rail: everything not yet delivered, customer joined in.
       db.prepare(
-        `SELECT id, number, email, status, total_cents, fulfillment_method, notes, metadata, created_at
-         FROM orders WHERE status IN ('new','confirmed','in_progress')
-         ORDER BY created_at DESC LIMIT 10`
-      ).all<{ id: string; number: string; email: string; status: string; total_cents: number; fulfillment_method: string; notes: string; metadata: string; created_at: string }>(),
+        `SELECT o.id, o.number, o.email, o.status, o.total_cents, o.fulfillment_method,
+                o.fulfillment_eta, o.metadata, o.created_at,
+                c.name AS customer_name, c.phone AS customer_phone
+         FROM orders o LEFT JOIN customers c ON c.id = o.customer_id
+         WHERE o.status IN ('new','confirmed','in_progress','ready')
+         ORDER BY o.created_at ASC LIMIT 50`
+      ).all<{ id: string; number: string; email: string; status: string; total_cents: number; fulfillment_method: string; fulfillment_eta: string | null; metadata: string; created_at: string; customer_name: string | null; customer_phone: string | null }>(),
       db.prepare(`SELECT status, COUNT(*) n FROM orders GROUP BY status`).all<{ status: string; n: number }>(),
       db.prepare(
         `SELECT COALESCE(SUM(amount_cents),0) c FROM payments WHERE status='succeeded' AND created_at >= datetime('now','-7 day')`
@@ -26,36 +32,79 @@ export async function GET(req: NextRequest) {
         `SELECT COALESCE(SUM(total_cents),0) c FROM orders WHERE status IN ('new','confirmed','in_progress','ready')`
       ).first<{ c: number }>(),
       listOrderItemFlags(),
+      // Item lines for the WHAT on each ticket.
+      db.prepare(
+        `SELECT oi.order_id, oi.name_snapshot, oi.qty, oi.metadata
+         FROM order_items oi JOIN orders o ON o.id = oi.order_id
+         WHERE o.status IN ('new','confirmed','in_progress','ready')
+         ORDER BY oi.position`
+      ).all<{ order_id: string; name_snapshot: string; qty: number; metadata: string }>(),
+      db.prepare(
+        `SELECT COUNT(*) c FROM orders WHERE status IN ('new','confirmed','in_progress','ready') AND date(fulfillment_eta) = date('now')`
+      ).first<{ c: number }>(),
+      db.prepare(
+        `SELECT COUNT(*) c FROM orders WHERE created_at >= datetime('now','-1 day')`
+      ).first<{ c: number }>(),
     ])
 
+    // Fold items into per-order summary + the first engraving payload.
+    const itemsByOrder = new Map<string, { summary: string[]; engraving: RailTicket['engraving'] }>()
+    for (const it of itemRows.results) {
+      const entry = itemsByOrder.get(it.order_id) ?? { summary: [], engraving: null }
+      entry.summary.push(it.qty > 1 ? `${it.qty}× ${it.name_snapshot}` : it.name_snapshot)
+      if (!entry.engraving) {
+        try {
+          const m = JSON.parse(it.metadata || '{}') as { engraving?: { text?: string; fontValue?: string; fontLabel?: string; placement?: string; element?: { label?: string; thumb?: string } } }
+          if (m.engraving) {
+            entry.engraving = {
+              text: m.engraving.text,
+              fontValue: m.engraving.fontValue,
+              fontLabel: m.engraving.fontLabel,
+              placement: m.engraving.placement,
+              elementLabel: m.engraving.element?.label,
+              elementThumb: m.engraving.element?.thumb,
+            }
+          }
+        } catch {}
+      }
+      itemsByOrder.set(it.order_id, entry)
+    }
+
     const counts = Object.fromEntries(countRows.results.map(r => [r.status, r.n]))
-    const orders = actionRows.results.map(r => {
+    const tickets: RailTicket[] = actionRows.results.map(r => {
       let meta: { attachments?: unknown[]; proof?: { status?: string } } = {}
       try { meta = JSON.parse(r.metadata || '{}') } catch {}
       const f = flags[r.id] ?? { hasText: false, hasElement: false }
       const personalized = f.hasText || f.hasElement
+      const items = itemsByOrder.get(r.id) ?? { summary: [], engraving: null }
       return {
+        kind: 'order' as const,
         id: r.id,
         number: r.number,
-        email: r.email,
-        status: r.status,
-        totalCents: r.total_cents,
-        fulfillmentMethod: r.fulfillment_method,
-        createdAt: r.created_at,
-        hasText: f.hasText,
-        hasElement: f.hasElement,
-        attachmentCount: Array.isArray(meta.attachments) ? meta.attachments.length : 0,
+        status: r.status as RailTicket['status'],
         // Personalized orders default to "proof needed" until marked otherwise.
-        proofStatus: meta.proof?.status ?? (personalized ? 'needed' : null),
+        proofStatus: (meta.proof?.status as RailTicket['proofStatus']) ?? (personalized ? 'needed' : null),
+        personalized,
+        customerName: r.customer_name || r.email.split('@')[0],
+        email: r.email,
+        phone: r.customer_phone,
+        totalCents: r.total_cents,
+        itemsSummary: items.summary.join(' · '),
+        engraving: items.engraving,
+        fulfillmentMethod: r.fulfillment_method,
+        eta: r.fulfillment_eta,
+        createdAt: r.created_at,
       }
     })
 
     return NextResponse.json({
       ok: true,
       data: {
-        orders,
+        tickets,
         counts,
-        proofsOwed: orders.filter(o => o.proofStatus === 'needed').length,
+        proofsOwed: tickets.filter(t => t.proofStatus === 'needed').length,
+        dueToday: dueTodayRow?.c ?? 0,
+        newSinceYesterday: newSinceRow?.c ?? 0,
         revenue7dCents: collected?.c ?? 0,
         pipelineCents: pipeline?.c ?? 0,
       },
