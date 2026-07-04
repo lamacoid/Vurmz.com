@@ -7,6 +7,7 @@ import ProductGallery from '@/components/shop/ProductGallery'
 import { getProductBySlug, getCategoryById, listVariants, listProductImages } from '@/lib/db/repos/products'
 import { getMediaById } from '@/lib/db/repos/media'
 import { menuPrice, menuCase } from '@/lib/menu-format'
+import { builderConfigFrom } from '@/lib/builder/types'
 import { DELIVERY } from '@/lib/pricing'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 
@@ -74,6 +75,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
         oneOff={product.oneOff}
         engravable={product.metadata?.engravable !== false}
         variants={variants.map(v => ({ id: v.id, name: v.name, packSize: v.packSize, priceCents: v.priceCents }))}
+        builderConfig={(() => { const c = builderConfigFrom(product.metadata); return c && c.mode === 'canvas' ? c : null })()}
       />
 
       {/* Fulfillment facts, right where the decision happens. */}

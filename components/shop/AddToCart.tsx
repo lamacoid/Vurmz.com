@@ -5,6 +5,8 @@ import { fontOptions } from '@/lib/fonts'
 import { menuPrice } from '@/lib/menu-format'
 import { trackConversion } from '@/lib/track'
 import EngravingPicker, { type EngravingValue } from './EngravingPicker'
+import BuilderPanel from '@/components/builder/BuilderPanel'
+import type { CanvasBuilderConfig, BuilderSubmission } from '@/lib/builder/types'
 
 export interface PackOption {
   /** null = the product's own default pack. */
@@ -26,11 +28,14 @@ export default function AddToCart(props: {
   engravable?: boolean
   /** Additional pack-size options (product_variants). The default pack is added automatically. */
   variants?: Array<{ id: string; name: string; packSize: number; priceCents: number }>
+  /** Canvas-mode Builder config (metadata.builder). Replaces the engraving picker when present. */
+  builderConfig?: CanvasBuilderConfig | null
 }) {
   const { add, items } = useCart()
   const [qty, setQty] = useState(1)
   const [added, setAdded] = useState(false)
   const [engraving, setEngraving] = useState<EngravingValue>({ text: '', fontValue: 'kerf', placement: '', element: null })
+  const [builderSub, setBuilderSub] = useState<BuilderSubmission | null>(null)
 
   // The default pack plus any admin-defined options, sorted by pack size.
   const options: PackOption[] = [
@@ -47,13 +52,15 @@ export default function AddToCart(props: {
   const hasOptions = options.length > 1
 
   const engravable = props.engravable !== false
+  const hasBuilder = Boolean(props.builderConfig)
   const alreadyInCart = props.oneOff && items.some(i => i.productId === props.productId)
   const engText = engraving.text.trim()
-  // An order is personalized if it has text OR a chosen design element.
-  const hasPersonalization = Boolean(engText) || Boolean(engraving.element)
+  // An order is personalized if it has text OR a chosen design element OR a builder layout.
+  const hasPersonalization = Boolean(engText) || Boolean(engraving.element) || Boolean(builderSub)
 
   function buildMetadata(): Record<string, unknown> | undefined {
     if (!engravable || !hasPersonalization) return undefined
+    if (builderSub) return { builder: builderSub }
     const font = fontOptions.find(f => f.value === engraving.fontValue)
     const placement = engraving.placement.trim()
     return {
@@ -94,7 +101,8 @@ export default function AddToCart(props: {
 
   return (
     <div>
-      {engravable && <EngravingPicker value={engraving} onChange={setEngraving} />}
+      {engravable && hasBuilder && props.builderConfig && <BuilderPanel config={props.builderConfig} onChange={setBuilderSub} />}
+      {engravable && !hasBuilder && <EngravingPicker value={engraving} onChange={setEngraving} />}
 
       {/* Pack-size options: framed chips, price on each, menu-quiet. */}
       {hasOptions && !props.oneOff && (
@@ -161,7 +169,7 @@ export default function AddToCart(props: {
 
       {engravable && hasPersonalization && (
         <p className="mt-2 text-[11px] text-[var(--ink-soft)]">
-          {engText ? <>Engraving “{engText}”</> : 'Your design'}
+          {builderSub ? <>Your layout ({builderSub.elements.length} element{builderSub.elements.length === 1 ? '' : 's'})</> : engText ? <>Engraving “{engText}”</> : 'Your design'}
           {engraving.element ? <> + {engraving.element.label} design</> : null}
           {' '}will be applied{props.oneOff ? '' : ' to each item in the pack'}.
         </p>

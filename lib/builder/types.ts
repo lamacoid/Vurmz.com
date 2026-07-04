@@ -70,6 +70,13 @@ export interface PlacedElement {
 export interface BuilderSubmission {
   mode: 'canvas' | 'silhouette'
   materialKey: string
+  /** Snapshot of the chosen material so the order replays as purchased
+   *  even if the product's config changes later. */
+  materialLabel?: string
+  surface?: string
+  mark?: 'light' | 'dark'
+  shape?: 'rect' | 'rounded-rect' | 'circle'
+  cornerRadiusIn?: number
   layoutKey?: string
   widthIn: number
   heightIn: number

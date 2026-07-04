@@ -35,6 +35,33 @@ const schema = z.object({
     productId: z.string(),
     variantId: z.string().optional(),
     qty: z.number().int().min(1),
+    builder: z.object({
+      mode: z.enum(['canvas', 'silhouette']),
+      materialKey: z.string().max(40),
+      materialLabel: z.string().max(60).optional(),
+      surface: z.string().max(30).optional(),
+      mark: z.enum(['light', 'dark']).optional(),
+      shape: z.enum(['rect', 'rounded-rect', 'circle']).optional(),
+      cornerRadiusIn: z.number().min(0).max(10).optional(),
+      layoutKey: z.string().max(40).optional(),
+      widthIn: z.number().positive().max(60),
+      heightIn: z.number().positive().max(60),
+      elements: z.array(z.object({
+        id: z.string().max(40),
+        kind: z.enum(['text', 'design', 'upload']),
+        xIn: z.number().min(-60).max(60),
+        yIn: z.number().min(-60).max(60),
+        wIn: z.number().positive().max(60),
+        hIn: z.number().positive().max(60),
+        rotationDeg: z.number().min(-360).max(360),
+        text: z.string().max(120).optional(),
+        fontValue: z.string().max(60).optional(),
+        designId: z.string().max(80).optional(),
+        designLabel: z.string().max(120).optional(),
+        designThumb: z.string().max(500).optional(),
+        uploadUrl: z.string().max(500).optional(),
+      })).max(20),
+    }).optional(),
     personalization: z.object({
       text: z.string().max(200),
       fontValue: z.string().max(60).optional(),
@@ -195,7 +222,9 @@ export async function POST(req: NextRequest) {
   // Per-line personalization (engraving), keyed by product.
   type Personal = { text: string; fontValue?: string; fontLabel?: string; placement?: string; element?: { id: string; label: string; thumb: string } }
   const personalByProduct = new Map<string, Personal>()
+  const builderByProduct = new Map<string, unknown>()
   for (const it of body.items) {
+    if (it.builder && it.builder.elements.length > 0) builderByProduct.set(it.productId, it.builder)
     const t = it.personalization?.text?.trim()
     const el = it.personalization?.element
     // Persist personalization when there's engraving text OR a chosen design.
@@ -223,13 +252,17 @@ export async function POST(req: NextRequest) {
     notes: body.notes ?? '',
     items: cart.items.map(i => {
       const eng = personalByProduct.get(i.productId)
+      const builder = builderByProduct.get(i.productId)
+      const meta: Record<string, unknown> = {}
+      if (eng) meta.engraving = eng
+      if (builder) meta.builder = builder
       return {
         productId: i.productId,
         variantId: i.variantId ?? undefined,
         nameSnapshot: i.name,
         qty: i.qty,
         unitPriceCents: i.unitPriceCents,
-        metadata: eng ? { engraving: eng } : undefined,
+        metadata: Object.keys(meta).length ? meta : undefined,
       }
     }),
     channel: 'shop',

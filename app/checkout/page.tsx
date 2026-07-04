@@ -258,6 +258,7 @@ export default function CheckoutPage() {
               productId: i.productId,
               variantId: i.variantId ?? undefined,
               qty: i.qty,
+              builder: (i.metadata?.builder as undefined) ?? undefined,
               personalization: eng?.text
                 ? { text: eng.text, fontValue: eng.fontValue ?? '', fontLabel: eng.fontLabel ?? '', placement: eng.placement || undefined }
                 : undefined,

@@ -4,7 +4,10 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
 
-interface OrderItem { id: string; nameSnapshot: string; qty: number; unitPriceCents: number; metadata?: { engraving?: { text?: string; fontValue?: string; fontLabel?: string; placement?: string; element?: { id: string; label: string; thumb: string } } } }
+import PlacementDiagram from '@/components/admin/PlacementDiagram'
+import type { BuilderSubmission } from '@/lib/builder/types'
+
+interface OrderItem { id: string; nameSnapshot: string; qty: number; unitPriceCents: number; metadata?: { engraving?: { text?: string; fontValue?: string; fontLabel?: string; placement?: string; element?: { id: string; label: string; thumb: string } }; builder?: BuilderSubmission } }
 interface Order {
   id: string; number: string; email: string; status: string
   subtotalCents: number; fulfillmentFeeCents: number; totalCents: number
@@ -126,7 +129,17 @@ export default function OrderDetailPage() {
         <ul className="space-y-3">
           {items.map(it => {
             const eng = it.metadata?.engraving
+            const builder = it.metadata?.builder
             const hasFiles = (order.metadata?.attachments?.length ?? 0) > 0
+            if (builder) {
+              return (
+                <li key={it.id} className="flex flex-col gap-2">
+                  <p className="text-sm font-medium text-[var(--a-ink)]">{it.qty}× {it.nameSnapshot} · customer-designed layout</p>
+                  <PlacementDiagram submission={builder} />
+                  <p className="text-xs text-[var(--a-ink-soft)]">Match this as closely as the material allows, then send the proof.</p>
+                </li>
+              )
+            }
             return (
               <li key={it.id} className="flex gap-3">
                 {eng?.element?.thumb ? (
