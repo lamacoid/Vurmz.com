@@ -68,6 +68,8 @@ Subject: Your sticker falls off. This doesn't.
 > Worth a look?
 >
 > Zach · (719) 257-3834 (text) · vurmz.com
+>
+> P.S. Launch pricing through July 31 while I get VURMZ off the ground: ten engraved pens for $20 (first ten packs), slate coaster sets for $24. Posted at vurmz.com/shop.
 
 ### 2. Rock Plumbing, Heating, Air & Electrical (Littleton) · CONTACT FORM
 Via: rockheating.com/contact-us (or call 720-410-5239)
@@ -125,6 +127,8 @@ Subject: Asset tags for the portfolio, engraved, adhesive backed
 > hand. Interested?
 >
 > Zach · (719) 257-3834 (text) · vurmz.com
+>
+> P.S. Launch pricing through July 31 while I get VURMZ off the ground: ten engraved pens for $20 (first ten packs), slate coaster sets for $24. Posted at vurmz.com/shop.
 
 ---
 
@@ -171,6 +175,8 @@ Subject: 54 taps, local engraver for the markers and paddles
 > few samples by some afternoon and leave them with you?
 >
 > Zach · (719) 257-3834 (text) · vurmz.com
+>
+> P.S. Launch pricing through July 31 while I get VURMZ off the ground: ten engraved pens for $20 (first ten packs), slate coaster sets for $24. Posted at vurmz.com/shop.
 
 ### 9. Sunroom Brewing (Englewood) · TEXT
 To: 720-401-3239
@@ -214,6 +220,8 @@ Subject: A closing gift they keep on the counter
 > up a standing arrangement so it's automatic.
 >
 > Zach · (719) 257-3834 (text) · vurmz.com
+>
+> P.S. Launch pricing through July 31 while I get VURMZ off the ground: ten engraved pens for $20 (first ten packs), slate coaster sets for $24. Posted at vurmz.com/shop.
 
 ### 12. West + Main Homes, Littleton storefront · EMAIL via contact form (or call 720-314-8341)
 Attach/reference: paddle-board.jpg
@@ -232,6 +240,8 @@ Subject: Local maker for your closing gifts
 > you can judge it in hand. No commitment past that first board.
 >
 > Zach · (719) 257-3834 (text) · vurmz.com
+>
+> P.S. Launch pricing through July 31 while I get VURMZ off the ground: ten engraved pens for $20 (first ten packs), slate coaster sets for $24. Posted at vurmz.com/shop.
 
 ### 13. Osgood Team Real Estate (Parker) · EMAIL
 To: team@osgoodteam.com
@@ -248,6 +258,8 @@ Subject: Closing gifts made in Centennial
 > one as a test run. If the team likes it, I'll make it automatic.
 >
 > Zach · (719) 257-3834 (text) · vurmz.com
+>
+> P.S. Launch pricing through July 31 while I get VURMZ off the ground: ten engraved pens for $20 (first ten packs), slate coaster sets for $24. Posted at vurmz.com/shop.
 
 ### 14. Veterinary Center of Parker · EMAIL
 To: info@vcparker.net
@@ -267,6 +279,8 @@ Subject: Engraved pet tags and a nameplate for Dr. Mamula-Crippen
 > sample tag with your clinic's info to see the quality?
 >
 > Zach · (719) 257-3834 (text) · vurmz.com
+>
+> P.S. Launch pricing through July 31 while I get VURMZ off the ground: ten engraved pens for $20 (first ten packs), slate coaster sets for $24. Posted at vurmz.com/shop.
 
 ### 15. Littleton Dentistry, Dr. Boeyink (Centennial) · EMAIL
 To: boeyink.front.office@gmail.com
@@ -283,6 +297,8 @@ Subject: A pen with your practice name that patients actually keep
 > Want a free sample pen with your logo on it? Takes me a day.
 >
 > Zach · (719) 257-3834 (text) · vurmz.com
+>
+> P.S. Launch pricing through July 31 while I get VURMZ off the ground: ten engraved pens for $20 (first ten packs), slate coaster sets for $24. Posted at vurmz.com/shop.
 
 ---
 
@@ -332,6 +348,8 @@ Attach: metal-label-black.jpg or a metal card photo
 > and engraved labels for your tools and gear so nothing walks off a
 > jobsite unmarked. Cards and label packs run $25 to $30. Want me to
 > engrave a sample card with your info? No charge for the first one.
+>
+> P.S. Launch pricing through July 31 while I get VURMZ off the ground: ten engraved pens for $20 (first ten packs), slate coaster sets for $24. Posted at vurmz.com/shop.
 
 ### 18. Twin Pine Pursuits (Centennial) · TEXT or EMAIL
 Attach: metal-label-black.jpg
@@ -341,6 +359,8 @@ Attach: metal-label-black.jpg
 > engrave branding onto tools, metal business cards, and adhesive shop
 > labels. One maker to another, I'd trade you a free sample card with your
 > info on it for ten minutes of your opinion on it. Interested?
+>
+> P.S. Launch pricing through July 31 while I get VURMZ off the ground: ten engraved pens for $20 (first ten packs), slate coaster sets for $24. Posted at vurmz.com/shop.
 
 ### 19. Adam's Handyman Service (Littleton) · CONTACT FORM at adamshandymanservice.com
 > Hi Adam, I'm Zach, I run VURMZ, a laser engraving shop in Centennial.

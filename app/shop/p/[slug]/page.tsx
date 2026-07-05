@@ -4,7 +4,8 @@ import Link from 'next/link'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import AddToCart from '@/components/shop/AddToCart'
 import ProductGallery from '@/components/shop/ProductGallery'
-import { getProductBySlug, getCategoryById, listVariants, listProductImages } from '@/lib/db/repos/products'
+import { getProductBySlug, getCategoryById, listVariants, listProductImages, soldUnitsFor } from '@/lib/db/repos/products'
+import { saleFrom, saleWindowOpen, liveSale, saleEndsLabel } from '@/lib/sale'
 import { getMediaById } from '@/lib/db/repos/media'
 import { menuPrice, menuCase } from '@/lib/menu-format'
 import { builderConfigFrom } from '@/lib/builder/types'
@@ -51,6 +52,12 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
   // With pack options the header shows the lowest price as "from $X".
   const lowestCents = Math.min(product.priceCents, ...variants.map(v => v.priceCents))
 
+  // Launch/sale pricing: same helper checkout uses, so the page can never
+  // show a price the cart won't honor. Capped sales count real orders.
+  const saleDef = saleFrom(product.metadata)
+  const soldUnits = saleDef?.capUnits !== undefined && saleWindowOpen(saleDef) ? await soldUnitsFor(product.id) : 0
+  const sale = liveSale(product.metadata, soldUnits)
+
   // Subtext reads like the menu line it came from. Timing lives in the
   // fulfillment notes under the button, not here, so it's never said twice.
   const metaParts: string[] = []
@@ -69,7 +76,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
         productId={product.id}
         slug={product.slug}
         name={product.name}
-        priceCents={product.priceCents}
+        priceCents={sale ? sale.priceCents : product.priceCents}
         packSize={product.packSize}
         heroUrl={gallery[0]?.url ?? null}
         oneOff={product.oneOff}
@@ -132,10 +139,27 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
             )}
             <span className="hidden sm:block flex-1 -translate-y-[6px] border-b border-dotted border-[var(--ink)]/25 min-w-[2rem]" aria-hidden />
             <span className="text-2xl sm:text-3xl font-semibold text-[var(--eyebrow)] whitespace-nowrap">
-              {variants.length > 0 && lowestCents < product.priceCents ? `from ${menuPrice(lowestCents)}` : menuPrice(product.priceCents)}
+              {sale ? (
+                <>
+                  {/* Strikethrough only when the regular price was really charged before. */}
+                  {sale.compareAt && (
+                    <s className="text-xl sm:text-2xl font-normal text-[var(--ink-soft)]/70 mr-2.5">{menuPrice(product.priceCents)}</s>
+                  )}
+                  {menuPrice(sale.priceCents)}
+                </>
+              ) : variants.length > 0 && lowestCents < product.priceCents ? (
+                `from ${menuPrice(lowestCents)}`
+              ) : (
+                menuPrice(product.priceCents)
+              )}
             </span>
           </div>
 
+          {sale && (
+            <p className="text-xs font-semibold text-[var(--eyebrow)] mt-2">
+              Launch price through {saleEndsLabel(sale)}{sale.capLabel ? `, ${sale.capLabel}` : ''}.
+            </p>
+          )}
           {subtext && <p className="text-sm text-[var(--ink-soft)] mt-2 max-w-2xl">{subtext}</p>}
           {product.oneOff && (
             <p className="text-xs text-[var(--ink-soft)] mt-1.5">only one exists, once it&rsquo;s gone, it&rsquo;s gone</p>

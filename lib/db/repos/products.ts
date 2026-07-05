@@ -467,3 +467,21 @@ export async function replaceProductImages(productId: string, mediaIds: string[]
   })
   await db.batch(stmts)
 }
+
+/**
+ * Units of a product ordered to date (cart qty, cancelled and refunded
+ * orders excluded). Feeds capped launch sales: "first 20 boards" stays
+ * honest because the sale price stops applying at 20.
+ */
+export async function soldUnitsFor(productId: string): Promise<number> {
+  const db = getDb()
+  const row = await db
+    .prepare(
+      `SELECT COALESCE(SUM(oi.qty), 0) AS units
+       FROM order_items oi JOIN orders o ON o.id = oi.order_id
+       WHERE oi.product_id = ? AND o.status NOT IN ('cancelled', 'refunded')`
+    )
+    .bind(productId)
+    .first<{ units: number }>()
+  return row?.units ?? 0
+}

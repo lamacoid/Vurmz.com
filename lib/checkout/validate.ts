@@ -2,8 +2,9 @@
  * Server-side cart validation — re-reads product prices from D1 so the
  * client can't tamper with amounts sent to the order API.
  */
-import { getProductById, getVariantById } from '@/lib/db/repos/products'
+import { getProductById, getVariantById, soldUnitsFor } from '@/lib/db/repos/products'
 import { businessUnitPrice } from '@/lib/pricing'
+import { saleFrom, saleWindowOpen, liveSale } from '@/lib/sale'
 
 export interface ClientCartItem {
   productId: string
@@ -69,8 +70,21 @@ export async function validateCart(clientItems: ClientCartItem[], opts: { isBusi
         continue
       }
     }
-    const basePriceCents = variant ? variant.priceCents : product.priceCents
+    let basePriceCents = variant ? variant.priceCents : product.priceCents
     const packSize = variant ? variant.packSize : product.packSize
+    // Sale pricing, server-authoritative: the same lib/sale helper the
+    // display uses, read against the same clock, so what the menu shows
+    // is what checkout charges (and both revert together when the window
+    // closes). Base product only; pack-size options carry their own
+    // prices. Business orders keep tier pricing, never stacked.
+    if (!variant && !opts.isBusinessOrder) {
+      const sale = saleFrom(product.metadata)
+      if (sale && saleWindowOpen(sale)) {
+        const sold = sale.capUnits !== undefined ? await soldUnitsFor(product.id) : 0
+        const live = liveSale(product.metadata, sold)
+        if (live) basePriceCents = live.priceCents
+      }
+    }
     // Same suffix rule as the client: the chosen option replaces a pack/set
     // suffix baked into the product name rather than stacking behind it.
     const name = variant
