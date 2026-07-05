@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
+import { portfolioItems, type PortfolioItem } from '@/lib/portfolio'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import AddToCart from '@/components/shop/AddToCart'
 import ProductGallery from '@/components/shop/ProductGallery'
@@ -183,6 +185,8 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
             </div>
           )}
 
+          {product.slug === 'engrave-your-item' && <RecentWork />}
+
           <p className="mt-10 pt-5 border-t border-[var(--hairline)] text-xs text-[var(--ink-soft)] text-center">
             Questions about this piece?{' '}
             <a
@@ -195,6 +199,61 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
           </p>
         </div>
       </div>
+    </div>
+  )
+}
+
+// The house offer earns its proof: a strip of finished work, the kind of
+// thing people actually bring in. Only shown on engrave-your-item.
+const RECENT_WORK_SLUGS = [
+  'macbook-personalization',
+  'ipad-personalization',
+  'culinary-cleaver',
+  'pocket-knife',
+  'medieval-water-bottle',
+  'branded-tumbler',
+  'plastic-charger-marking',
+  'denver-map-mirror',
+]
+
+function RecentWork() {
+  const items = RECENT_WORK_SLUGS
+    .map(s => portfolioItems.find(p => p.slug === s))
+    .filter((p): p is PortfolioItem => Boolean(p))
+  if (items.length === 0) return null
+  return (
+    <div className="mt-10">
+      <div className="flex items-center gap-3 mb-2">
+        <span className="flex-1 border-t border-[var(--ink)]/20" aria-hidden />
+        <h2 className="text-xs font-mono tracking-[0.3em] uppercase text-[var(--eyebrow)]">Recent work</h2>
+        <span className="flex-1 border-t border-[var(--ink)]/20" aria-hidden />
+      </div>
+      <p className="text-sm text-[var(--ink-soft)] text-center mb-5 max-w-md mx-auto">
+        MacBooks and iPads, knives, tumblers, bottles. If it&rsquo;s solid and fits the bed, it marks.
+      </p>
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        {items.map(p => (
+          <Link key={p.slug} href={`/services/portfolio/${p.slug}`} className="group block">
+            <span className="block relative aspect-square overflow-hidden rounded-sm border border-[var(--hairline)] bg-[var(--page)]">
+              <Image
+                src={p.src}
+                alt={p.label}
+                fill
+                sizes="(min-width: 640px) 25vw, 50vw"
+                className="object-cover transition-transform duration-300 group-hover:scale-[1.03] motion-reduce:transition-none"
+              />
+            </span>
+            <span className="block mt-1.5 text-xs text-[var(--ink-soft)] leading-snug group-hover:text-[var(--ink)] transition-colors">
+              {p.label}
+            </span>
+          </Link>
+        ))}
+      </div>
+      <p className="mt-4 text-center">
+        <Link href="/services/portfolio" className="text-xs text-[var(--eyebrow)] font-semibold hover:underline">
+          See the full portfolio
+        </Link>
+      </p>
     </div>
   )
 }

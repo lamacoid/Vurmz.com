@@ -188,7 +188,7 @@ export default function Page() {
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
             <p className="text-xs font-mono text-[var(--eyebrow)] tracking-[0.25em] uppercase mb-3">For your work</p>
             <h2 className="text-3xl sm:text-4xl font-bold text-[var(--ink)] tracking-tight leading-tight mb-4">
-              Laser engraving services<br />
+              Precision laser engraving<br />
               <span className="text-[var(--ink-soft)]">for businesses in the Denver metro.</span>
             </h2>
             <p className="text-[var(--ink-soft)] text-base sm:text-lg leading-relaxed max-w-2xl mb-10">

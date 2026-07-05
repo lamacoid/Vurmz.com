@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     default: 'VURMZ | Laser Engraving · Shop & Services',
     template: '%s | VURMZ Laser Engraving',
   },
-  description: 'VURMZ laser engraving in Centennial, CO. Shop engraved products or get custom engraving services for your business. Next-day turnaround, hand-delivered in South Denver metro.',
+  description: 'VURMZ precision laser engraving in Centennial, CO. Shop engraved products or get custom engraving services for your business. Next-day turnaround, hand-delivered in South Denver metro.',
   authors: [{ name: 'VURMZ' }],
   creator: 'VURMZ',
   icons: {
@@ -96,7 +96,7 @@ export default function RootLayout({
               "@type": "LocalBusiness",
               "name": "VURMZ LLC",
               "alternateName": "VURMZ Laser Engraving",
-              "description": "Professional laser engraving services for businesses and individuals in the South Denver metro area. Branded pen packs, metal service tags, coasters, keychains, custom engraving, concierge sourcing. Next-day turnaround, hand-delivered.",
+              "description": "Precision laser engraving services for businesses and individuals in the South Denver metro area. Branded pen packs, metal service tags, coasters, keychains, custom engraving, concierge sourcing. Next-day turnaround, hand-delivered.",
               "url": "https://www.vurmz.com",
               "telephone": "(719) 257-3834",
               "email": "zach@vurmz.com",

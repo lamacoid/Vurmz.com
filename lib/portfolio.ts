@@ -66,7 +66,7 @@ export const portfolioItems: PortfolioItem[] = [
     slug: 'macbook-personalization',
     src: '/portfolio/macbook-engraving.jpg',
     label: 'MacBook Lid Engraving',
-    context: 'Direct engraving on premium aluminum',
+    context: 'Direct engraving on anodized aluminum',
     material: 'Anodized aluminum (MacBook lid)',
     process: 'fiber laser',
     customerType: 'Personal',

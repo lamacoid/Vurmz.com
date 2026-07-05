@@ -38,7 +38,7 @@ export default function SiteFooter() {
           <div className="col-span-2 sm:col-span-1">
             <VurmzLogo className="h-7 mb-4" color="var(--feature-ink)" />
             <p className="text-gray-400 text-sm leading-relaxed mb-5 max-w-xs">
-              Laser engraving in {siteInfo.city}, {siteInfo.state}. Hand-delivered across the South Denver metro.
+              Precision laser engraving in {siteInfo.city}, {siteInfo.state}. Hand-delivered across the South Denver metro.
             </p>
             <div className="space-y-2">
               <div className="flex items-center gap-2 text-sm text-gray-400">

@@ -5,7 +5,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Shop',
-  description: 'Custom laser engraving in Centennial, CO. Engraved gifts, tumblers, coasters, pens, and decor, or use Bring Your Own to get something you already have engraved for $35. Hand-delivered across South Denver.',
+  description: 'Precision laser engraving in Centennial, CO. Engraved gifts, tumblers, coasters, pens, and decor, or use Bring Your Own to get something you already have engraved for $35. Hand-delivered across South Denver.',
 }
 
 export default function ShopLayout({ children }: { children: React.ReactNode }) {

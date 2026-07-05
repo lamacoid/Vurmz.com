@@ -69,7 +69,7 @@ export default function Home() {
     '@type': 'Service',
     serviceType: 'Laser Engraving',
     name: 'VURMZ Laser Engraving Services',
-    description: 'Custom laser engraving for businesses, trades, restaurants, and individuals. Branded products, service tags, knife marking, custom gifts. Posted pricing, next-day turnaround, hand-delivered across the South Denver metro.',
+    description: 'Precision laser engraving for businesses, trades, restaurants, and individuals. Branded products, service tags, knife marking, custom gifts. Posted pricing, next-day turnaround, hand-delivered across the South Denver metro.',
     provider: {
       '@type': 'LocalBusiness',
       name: 'VURMZ LLC',
