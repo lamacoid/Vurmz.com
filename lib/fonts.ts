@@ -167,6 +167,27 @@ export const fontsByCategory: Record<FontCategory, FontOption[]> = {
   chinese: fontOptions.filter(f => f.category === 'chinese'),
 }
 
+// The canonical browse order: VURMZ Originals first, then Latin groups,
+// then the world scripts. Every font UI (font book, admin) reads this so
+// the catalog never disagrees with itself.
+export const FONT_CATEGORY_ORDER: FontCategory[] = [
+  'vurmz',
+  'professional-sans',
+  'professional-serif',
+  'script',
+  'industrial',
+  'display',
+  'monospace',
+  'fun',
+  'western',
+  'gothic',
+  'arabic',
+  'hebrew',
+  'japanese',
+  'korean',
+  'chinese',
+]
+
 export const categoryLabels: Record<FontCategory, string> = {
   vurmz: 'VURMZ Originals',
   'professional-sans': 'Clean & Modern',

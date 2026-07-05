@@ -7,8 +7,9 @@
  */
 import { useState } from 'react'
 import dynamic from 'next/dynamic'
-import { fontsByCategory, categoryLabels, type FontCategory } from '@/lib/fonts'
+import { fontOptions } from '@/lib/fonts'
 import DesignElementPicker from '@/components/shop/DesignElementPicker'
+import FontBook from '@/components/shop/FontBook'
 import type { BuilderConfig, CanvasBuilderConfig, SilhouetteBuilderConfig, BuilderSubmission, PlacedElement } from '@/lib/builder/types'
 
 const BuilderCanvas = dynamic(() => import('./BuilderCanvas'), {
@@ -19,12 +20,6 @@ const SilhouetteBuilder = dynamic(() => import('./SilhouetteBuilder'), {
   ssr: false,
   loading: () => <div className="h-16 bg-[var(--ink)]/[0.05] rounded-sm animate-pulse" />,
 })
-
-const FONT_ORDER: FontCategory[] = [
-  'vurmz', 'professional-sans', 'professional-serif', 'script', 'industrial',
-  'display', 'monospace', 'fun', 'western', 'gothic',
-  'arabic', 'hebrew', 'japanese', 'korean', 'chinese',
-]
 
 let elementCounter = 0
 function newElementId() { return `el_${++elementCounter}_${Math.random().toString(36).slice(2, 7)}` }
@@ -166,7 +161,7 @@ function CanvasPanel({ config, onChange }: {
 
       {/* Selected element editor */}
       {selected && selected.kind === 'text' && (
-        <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-2">
+        <div className="mt-3 space-y-2">
           <input
             type="text"
             dir="auto"
@@ -176,21 +171,11 @@ function CanvasPanel({ config, onChange }: {
             placeholder="Your text"
             className="w-full bg-[var(--page)] border border-[var(--hairline)] rounded-sm px-3 py-2 text-sm text-[var(--ink)] outline-none focus:border-[#C67A6F]"
           />
-          <select
+          <FontBook
             value={selected.fontValue ?? 'kerf'}
-            onChange={e => patchSelected({ fontValue: e.target.value })}
-            className="w-full bg-[var(--page)] border border-[var(--hairline)] rounded-sm px-3 py-2 text-sm text-[var(--ink)] outline-none focus:border-[#C67A6F]"
-          >
-            {FONT_ORDER.map(cat => {
-              const opts = fontsByCategory[cat]
-              if (!opts || opts.length === 0) return null
-              return (
-                <optgroup key={cat} label={categoryLabels[cat]}>
-                  {opts.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
-                </optgroup>
-              )
-            })}
-          </select>
+            onChange={v => patchSelected({ fontValue: v })}
+            sampleText={selected.text ?? ''}
+          />
         </div>
       )}
       {selected && (
@@ -233,13 +218,7 @@ function SilhouettePanel({ config, onChange }: {
   const layout = config.layouts.find(l => l.key === layoutKey) ?? config.layouts[0]
   const textZones = layout.zones.filter(z => z.kind === 'text')
   const material = config.materials.find(m => m.key === materialKey) ?? config.materials[0]
-  const fontFamily = (fontsByCategory && (() => {
-    for (const cat of FONT_ORDER) {
-      const hit = fontsByCategory[cat]?.find(f => f.value === fontValue)
-      if (hit) return (hit.style.fontFamily as string) ?? 'sans-serif'
-    }
-    return 'sans-serif'
-  })()) as string
+  const fontFamily = (fontOptions.find(f => f.value === fontValue)?.style.fontFamily as string) ?? 'sans-serif'
 
   function emit(nextTexts: string[], nextMaterial = materialKey, nextLayout = layoutKey, nextFont = fontValue) {
     const lay = config.layouts.find(l => l.key === nextLayout) ?? config.layouts[0]
@@ -343,21 +322,11 @@ function SilhouettePanel({ config, onChange }: {
             className="w-full bg-[var(--page)] border border-[var(--hairline)] rounded-sm px-3 py-2 text-sm text-[var(--ink)] outline-none focus:border-[#C67A6F]"
           />
         ))}
-        <select
+        <FontBook
           value={fontValue}
-          onChange={e => { setFontValue(e.target.value); emit(texts, materialKey, layoutKey, e.target.value) }}
-          className="w-full bg-[var(--page)] border border-[var(--hairline)] rounded-sm px-3 py-2 text-sm text-[var(--ink)] outline-none focus:border-[#C67A6F]"
-        >
-          {FONT_ORDER.map(cat => {
-            const opts = fontsByCategory[cat]
-            if (!opts || opts.length === 0) return null
-            return (
-              <optgroup key={cat} label={categoryLabels[cat]}>
-                {opts.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
-              </optgroup>
-            )
-          })}
-        </select>
+          onChange={v => { setFontValue(v); emit(texts, materialKey, layoutKey, v) }}
+          sampleText={texts.find(t => (t ?? '').trim()) ?? ''}
+        />
       </div>
 
       <p className="mt-3 text-[11px] text-[#7FCFD4]">

@@ -6,8 +6,9 @@
  * selected face (the @font-face declarations in app/fonts.css are loaded
  * globally, so previews are real).
  */
-import { fontsByCategory, categoryLabels, fontOptions, type FontCategory } from '@/lib/fonts'
+import { fontOptions } from '@/lib/fonts'
 import DesignElementPicker, { type DesignElement } from './DesignElementPicker'
+import FontBook from './FontBook'
 
 export interface EngravingValue {
   text: string
@@ -17,25 +18,6 @@ export interface EngravingValue {
   /** Optional design element chosen from the curated library. */
   element: DesignElement | null
 }
-
-// VURMZ Originals first, then the rest in a sensible browse order.
-const CATEGORY_ORDER: FontCategory[] = [
-  'vurmz',
-  'professional-sans',
-  'professional-serif',
-  'script',
-  'industrial',
-  'display',
-  'monospace',
-  'fun',
-  'western',
-  'gothic',
-  'arabic',
-  'hebrew',
-  'japanese',
-  'korean',
-  'chinese',
-]
 
 export default function EngravingPicker({
   value,
@@ -71,26 +53,13 @@ export default function EngravingPicker({
         <span className="text-[11px] text-[var(--ink-soft)]">{value.text.length}/{maxLength}</span>
       </div>
 
-      <label className="block mt-3">
-        <span className="text-[11px] uppercase tracking-wider text-[var(--ink-soft)] block mb-1">Font</span>
-        <select
+      <div className="mt-3">
+        <FontBook
           value={value.fontValue}
-          onChange={e => onChange({ ...value, fontValue: e.target.value })}
-          className="w-full bg-[var(--page)] border border-[var(--hairline)] rounded-sm px-3 py-2.5 text-sm text-[var(--ink)] outline-none focus:border-[#C67A6F]"
-        >
-          {CATEGORY_ORDER.map(cat => {
-            const opts = fontsByCategory[cat]
-            if (!opts || opts.length === 0) return null
-            return (
-              <optgroup key={cat} label={categoryLabels[cat]}>
-                {opts.map(o => (
-                  <option key={o.value} value={o.value}>{o.label}</option>
-                ))}
-              </optgroup>
-            )
-          })}
-        </select>
-      </label>
+          onChange={v => onChange({ ...value, fontValue: v })}
+          sampleText={value.text}
+        />
+      </div>
 
       <label className="block mt-3">
         <span className="text-[11px] uppercase tracking-wider text-[var(--ink-soft)] block mb-1">Placement &amp; details</span>
