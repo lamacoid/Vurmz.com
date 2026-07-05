@@ -350,3 +350,53 @@ export async function updateOrderStatus(orderId: string, to: OrderStatus, actor:
     ).bind(newId('evt'), orderId, before.status, to, actor.type, actor.id ?? null, actor.note ?? null, now),
   ])
 }
+
+/**
+ * Compare-and-swap status change (RAIL-SYSTEM-PLAN I4): the UPDATE only
+ * lands if the order is still in the state the caller saw. Returns false
+ * on a stale expectation instead of writing, which is what makes bump
+ * retries and USB-button double-taps safe: the second attempt is a
+ * no-op. The event row is only written when the swap really happened.
+ */
+export async function updateOrderStatusCas(
+  orderId: string,
+  from: OrderStatus,
+  to: OrderStatus,
+  actor: { type: 'admin' | 'customer' | 'system' | 'webhook'; id?: string | null; note?: string },
+): Promise<boolean> {
+  const db = getDb()
+  const now = nowIso()
+  const res = await db
+    .prepare('UPDATE orders SET status = ?, updated_at = ? WHERE id = ? AND status = ?')
+    .bind(to, now, orderId, from)
+    .run()
+  const changed = (res.meta?.changes ?? 0) > 0
+  if (changed) {
+    await db.prepare(
+      `INSERT INTO order_events (id, order_id, type, from_status, to_status, actor_type, actor_id, note, created_at)
+       VALUES (?, ?, 'status_change', ?, ?, ?, ?, ?, ?)`
+    ).bind(newId('evt'), orderId, from, to, actor.type, actor.id ?? null, actor.note ?? null, now).run()
+  }
+  return changed
+}
+
+/** CAS variant of setOrderProof: only writes if the proof state is still what the caller saw. */
+export async function setOrderProofCas(orderId: string, from: ProofStatus, to: ProofStatus, actor: { id?: string | null }): Promise<boolean> {
+  const db = getDb()
+  const now = nowIso()
+  const res = await db
+    .prepare(
+      `UPDATE orders SET metadata = json_set(COALESCE(metadata, '{}'), '$.proof', json(?)), updated_at = ?
+       WHERE id = ? AND json_extract(COALESCE(metadata, '{}'), '$.proof.status') = ?`
+    )
+    .bind(JSON.stringify({ status: to, at: now }), now, orderId, from)
+    .run()
+  const changed = (res.meta?.changes ?? 0) > 0
+  if (changed) {
+    await db.prepare(
+      `INSERT INTO order_events (id, order_id, type, from_status, to_status, actor_type, actor_id, note, created_at)
+       VALUES (?, ?, 'proof', NULL, NULL, 'admin', ?, ?, ?)`
+    ).bind(newId('evt'), orderId, actor.id ?? null, `Proof ${to}`, now).run()
+  }
+  return changed
+}

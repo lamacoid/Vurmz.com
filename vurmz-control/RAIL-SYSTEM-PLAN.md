@@ -155,3 +155,58 @@ The gap: phone, walk-in, and Bark orders cannot enter the system today.
    Square flows stay frozen (standing rule).
 4. Every phase updates the charter's status line so the plan and the
    code never drift.
+
+## Part 4: Reliability layer (added 2026-07-05; Zach's clarification:
+## "strong and full of redundancy so I don't get errors")
+
+**I8. Zach never sees a raw error while working.** Every failure either
+retries itself to success, degrades to a queued retry with a calm
+one-line note, or explains itself in plain words with a recovery action.
+An error screen during production work is a bug by definition.
+
+What this means concretely, layered from the metal up:
+
+1. **Storage redundancy is already real and should be leaned on, not
+   rebuilt.** Cloudflare D1 has built-in Time Travel (point-in-time
+   restore of the whole database to any minute in the last 30 days) and
+   R2 is 11-nines durable. Add to that our file backups before every
+   migration. Action: document the Time Travel restore command in
+   RUNBOOK.md and schedule an automatic weekly db:backup so the local
+   file copies stop depending on memory.
+
+2. **Bumps retry themselves.** The rail's PATCH calls get automatic
+   retry with backoff (3 attempts) on network/5xx failures. Because
+   bumps are CAS-idempotent (I4), retrying is always safe: the worst
+   case is a no-op. While a retry is pending the ticket shows a quiet
+   "saving..." state, never an alert.
+
+3. **A pending-writes queue that survives refresh.** If retries exhaust
+   (dead spot in the shop, Cloudflare hiccup), the bump is parked in
+   localStorage and replayed on the next page load or connectivity
+   return. The ticket shows "queued, will send itself" and the rail
+   keeps working. Nothing requires Zach to remember to redo anything.
+
+4. **Side effects never break the core.** Audit writes, email nudges,
+   inventory moves: all wrapped fail-soft (audit already is). An order
+   bump succeeds even if its side effect fails; failed side effects are
+   recorded in order metadata as pending and re-applied by the next bump
+   or page load (self-healing, not silent loss: I6 still holds).
+
+5. **Optimistic UI with truth reconciliation.** The rail updates
+   instantly on tap, then reconciles against the server response; a CAS
+   conflict refreshes the ticket to reality with a one-line note. Fast
+   in the hand, correct in the ledger.
+
+6. **Errors page Zach only when they matter.** Sentry reportError is
+   wired; verify coverage on all admin mutation routes. Repeated
+   failures (a queue that will not drain) surface ONE plain-language
+   banner on Today: "Something is not saving. Your work is safe and
+   queued. Text Claude." Not a stack trace, ever.
+
+7. **Scheduled smoke.** The existing /smoke health check runs on a
+   weekly schedule and reports only on failure.
+
+Build placement: items 2, 3, 5 land inside Phase C (bump hardening),
+which becomes "Phase C: bump hardening and reliability." Items 1, 6, 7
+are a half-day hygiene pass that can ship any time. Item 4 lands with
+each side effect as its phase ships (B: settlement, E: inventory).

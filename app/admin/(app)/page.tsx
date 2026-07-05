@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { Icon } from '@/components/admin/icons'
 import Ticket from '@/components/admin/Ticket'
 import { type RailTicket, fireOrder } from '@/lib/admin/next-action'
+import { drainQueue, pendingBumps } from '@/lib/admin/rail-client'
 
 // Today: the kitchen rail (Admin Charter, Phase 1). Three numbers, the
 // tickets in fire order, decisions below. Answers "what do I do right
@@ -46,6 +47,25 @@ export default function AdminToday() {
 
   useEffect(() => { load() }, [load])
 
+  // Self-healing (RAIL-SYSTEM-PLAN I8): bumps parked while offline replay
+  // themselves on load, on reconnect, and once a minute. CAS on the server
+  // makes replays provably safe.
+  const [pending, setPending] = useState(0)
+  useEffect(() => {
+    let alive = true
+    const drain = async () => {
+      const left = await drainQueue()
+      if (!alive) return
+      setPending(left)
+      if (left < pendingBumps() || left === 0) load()
+    }
+    drain()
+    window.addEventListener('online', drain)
+    const iv = setInterval(drain, 60_000)
+    return () => { alive = false; window.removeEventListener('online', drain); clearInterval(iv) }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   const rail = dash ? [...dash.tickets].sort(fireOrder) : []
 
   return (
@@ -56,6 +76,15 @@ export default function AdminToday() {
           {rail.length === 0 ? 'Nothing on the rail.' : rail.length === 1 ? 'One ticket on the rail.' : `${rail.length} tickets on the rail.`}
         </p>
       </div>
+
+      {/* Calm, not alarming: parked work is safe and sends itself. */}
+      {pending > 0 && (
+        <div className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-xl px-4 py-3 mb-4">
+          <p className="text-sm text-[var(--a-ink)]">
+            {pending} update{pending === 1 ? '' : 's'} saved on this device, waiting for connection. They send themselves; nothing is lost.
+          </p>
+        </div>
+      )}
 
       {!dash ? (
         <div className="text-[var(--a-ink-faint)] text-sm">Loading…</div>

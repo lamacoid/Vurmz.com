@@ -6,6 +6,8 @@ import { useParams } from 'next/navigation'
 
 import PlacementDiagram from '@/components/admin/PlacementDiagram'
 import type { BuilderSubmission } from '@/lib/builder/types'
+import { reverseOf, type BumpStatus } from '@/lib/admin/transitions'
+import { railBump } from '@/lib/admin/rail-client'
 
 interface OrderItem { id: string; nameSnapshot: string; qty: number; unitPriceCents: number; metadata?: { engraving?: { text?: string; fontValue?: string; fontLabel?: string; placement?: string; element?: { id: string; label: string; thumb: string } }; builder?: BuilderSubmission } }
 interface Order {
@@ -87,6 +89,15 @@ export default function OrderDetailPage() {
     setOrder({ ...order, status })
   }
 
+  async function undoStep() {
+    if (!order) return
+    const back = reverseOf(order.status as BumpStatus)
+    if (!back) return
+    const r = await railBump(order.id, { status: back, expectedStatus: order.status, note: 'undo' }).catch(() => 'stale' as const)
+    if (r === 'ok') setOrder({ ...order, status: back })
+    else window.location.reload()
+  }
+
   async function setProof(proof: 'needed' | 'sent' | 'approved') {
     if (!order) return
     await fetch(`/api/admin/orders/${order.id}`, {
@@ -108,13 +119,26 @@ export default function OrderDetailPage() {
           <h1 className="text-2xl font-bold text-[var(--a-ink)] font-mono">{order.number}</h1>
           <p className="text-sm text-[var(--a-ink-soft)] mt-1">{new Date(order.createdAt).toLocaleString()}</p>
         </div>
-        <select
-          value={order.status}
-          onChange={e => setStatus(e.target.value)}
-          className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[var(--a-accent)]"
-        >
-          {['new','confirmed','in_progress','ready','delivered','cancelled','refunded'].map(s => <option key={s} value={s}>{STATUS_LABEL[s] ?? s}</option>)}
-        </select>
+        <div className="flex flex-col items-end gap-1.5">
+          <select
+            value={order.status}
+            onChange={e => setStatus(e.target.value)}
+            className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-md px-3 py-2 text-sm text-[var(--a-ink)] outline-none focus:border-[var(--a-accent)]"
+          >
+            {['new','confirmed','in_progress','ready','delivered','cancelled','refunded'].map(s => <option key={s} value={s}>{STATUS_LABEL[s] ?? s}</option>)}
+          </select>
+          {/* One-step undo (I7): the exact reverse of the last bump, guarded
+              by CAS so it can never rewind past where reality actually is. */}
+          {reverseOf(order.status as BumpStatus) && (
+            <button
+              type="button"
+              onClick={undoStep}
+              className="text-[11px] text-[var(--a-ink-faint)] hover:text-[var(--a-ink)] underline decoration-dotted"
+            >
+              Undo last step (back to {STATUS_LABEL[reverseOf(order.status as BumpStatus)!] ?? reverseOf(order.status as BumpStatus)})
+            </button>
+          )}
+        </div>
       </div>
 
       {nextStep(order) && (

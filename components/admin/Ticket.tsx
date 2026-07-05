@@ -10,6 +10,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { fontOptions } from '@/lib/fonts'
 import { type RailTicket, nextAction, urgency } from '@/lib/admin/next-action'
+import { railBump, type BumpBody } from '@/lib/admin/rail-client'
 
 function money(c: number) { return `$${(c / 100).toLocaleString(undefined, { maximumFractionDigits: 0 })}` }
 
@@ -42,24 +43,29 @@ function when(t: RailTicket): string {
 export default function Ticket({ ticket, onAdvanced }: { ticket: RailTicket; onAdvanced: () => void }) {
   const [busy, setBusy] = useState(false)
   const [err, setErr] = useState('')
+  const [parked, setParked] = useState('')
   const action = nextAction(ticket)
   const u = urgency(ticket)
   const fontStyle = ticket.engraving?.fontValue
     ? fontOptions.find(f => f.value === ticket.engraving!.fontValue)?.style
     : undefined
 
+  // The failproof pipe: guarded CAS bump, self-retrying, self-queueing.
+  // A stale ticket is not an error; reality just moved first, so refresh.
   async function advance() {
     if (!action?.patch) return
     setBusy(true)
     setErr('')
+    setParked('')
     try {
-      const res = await fetch(`/api/admin/orders/${ticket.id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(action.patch),
-      })
-      const json = await res.json() as { ok?: boolean }
-      if (!res.ok || !json.ok) throw new Error('Could not update. Try again.')
+      const body: BumpBody = { ...action.patch }
+      if (action.patch.status) body.expectedStatus = ticket.status
+      if (action.patch.proof && ticket.proofStatus) body.expectedProof = ticket.proofStatus
+      const r = await railBump(ticket.id, body)
+      if (r === 'queued') {
+        setParked('No connection right now. This step is saved on this device and will send itself.')
+        return
+      }
       onAdvanced()
     } catch (e) {
       setErr(e instanceof Error ? e.message : 'Could not update. Try again.')
@@ -139,6 +145,7 @@ export default function Ticket({ ticket, onAdvanced }: { ticket: RailTicket; onA
           )}
         </div>
         {err && <p className="text-xs text-red-300 mt-1.5">{err}</p>}
+        {parked && <p className="text-xs text-[var(--a-accent)] mt-1.5">{parked}</p>}
       </div>
     </div>
   )
