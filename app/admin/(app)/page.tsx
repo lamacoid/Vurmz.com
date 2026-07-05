@@ -94,10 +94,10 @@ export default function AdminToday() {
           {/* Quick actions stay quick. */}
           <section className="mt-8">
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+              <QuickAction href="/admin/orders/new" icon="briefcase" label="New order" />
               <QuickAction href="/admin/products/new" icon="image" label="New listing" />
               <QuickAction href="/admin/invoices/new" icon="dollar" label="New invoice" />
               <QuickAction href="/admin/customers" icon="users" label="Customers" />
-              <QuickAction href="/admin/orders" icon="briefcase" label="Order board" />
             </div>
           </section>
         </>

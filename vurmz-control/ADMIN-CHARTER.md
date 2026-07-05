@@ -232,3 +232,36 @@ These ride behind the web admin's API; the Mac layer stays thin.
   chart without a single click deeper.
 - Grandma test: she processes a real order proof-to-delivered with no
   instruction beyond "tap the big button."
+
+## The rail is the hub (locked 2026-07-05, Zach's words: "a full order and book keeping system that basically handles itself, through the rail, like a bump system")
+
+Every subsystem updates as a SIDE EFFECT of bumping a ticket. Nothing is
+ever entered twice. The map:
+
+- Order enters (web checkout, admin wizard, accepted quote): rail ticket,
+  customer linked, pricing computed with tier math, inventory soft-reserved.
+- Confirm bump: order locked, materials committed.
+- Ready bump: inventory decremented, production timestamped.
+- Delivered/picked-up bump: paid orders book revenue and leave the rail;
+  unpaid orders grow a COLLECT step (one tap = send invoice or mark cash)
+  and stay on the rail until money settles.
+- Every bump is audit-logged; the books reconstruct from bump history.
+
+Physical bump bar: any USB HID button (sends a keystroke). The Today page
+listens for the key and advances the most urgent ticket's next step via
+the same PATCH. Ten lines, day-one feature of the bump build.
+
+Venture note (Zach, same session): the rail could be a standalone product
+for maker shops (production rail + books-as-side-effect; nothing in the
+KDS market serves makers). VURMZ dogfoods first; the shop is the demo.
+
+Build order: (1) order wizard so phone/walk-in/Bark orders can enter,
+(2) collect step + auto-invoice on delivered-unpaid, (3) inventory
+decrement hooks, (4) USB bump listener.
+
+Addendum (Zach, same session): the mental model is a pizza dispatch
+board with loose timing. Orders line up, go in fire order, pump through
+each step to ON THE RACK (ready) then OUT FOR DELIVERY then delivered.
+Missing piece vs today: a delivery RUN, grouping ready tickets, flipping
+them to out-for-delivery together, handing the stops to Apple Maps.
+Timing is promise-date urgency (red/amber/green), never fixed windows.

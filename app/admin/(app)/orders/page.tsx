@@ -129,9 +129,17 @@ export default function OrdersPage() {
 
   return (
     <div className="p-6 sm:p-8 max-w-[1600px] mx-auto">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-[var(--a-ink)]">Orders</h1>
-        <p className="text-sm text-[var(--a-ink-faint)] mt-1">Drag cards between columns to update status.</p>
+      <div className="mb-6 flex items-start justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold text-[var(--a-ink)]">Orders</h1>
+          <p className="text-sm text-[var(--a-ink-faint)] mt-1">Drag cards between columns to update status.</p>
+        </div>
+        <Link
+          href="/admin/orders/new"
+          className="shrink-0 px-4 py-2 rounded-md bg-[var(--a-accent)] text-[#10282c] font-bold text-sm"
+        >
+          + New order
+        </Link>
       </div>
 
       {loading ? (
