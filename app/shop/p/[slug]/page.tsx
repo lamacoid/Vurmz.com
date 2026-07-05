@@ -193,7 +193,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                 slugs={RECENT_WORK_SLUGS}
               />
               <PortfolioStrip
-                title="Made & designed here"
+                title="VURMZ Originals"
                 blurb={<>My own designs, drawn and engraved start to finish. Want something like one of these? Say so in the instructions.</>}
                 slugs={DESIGNED_HERE_SLUGS}
                 portfolioLink
@@ -218,7 +218,8 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
 }
 
 // The house offer earns its proof, in two honest strips: things people
-// brought in, and pieces designed here start to finish. No overlap.
+// brought in, and VURMZ Originals (pieces designed here start to finish,
+// same "Originals" label the font book uses for house type). No overlap.
 // Only shown on engrave-your-item.
 const RECENT_WORK_SLUGS = [
   'macbook-personalization',
