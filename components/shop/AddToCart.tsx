@@ -34,7 +34,7 @@ export default function AddToCart(props: {
   const { add, items } = useCart()
   const [qty, setQty] = useState(1)
   const [added, setAdded] = useState(false)
-  const [engraving, setEngraving] = useState<EngravingValue>({ text: '', fontValue: 'kerf', placement: '', element: null })
+  const [engraving, setEngraving] = useState<EngravingValue>({ text: '', fontValue: 'zen-kurenaido', placement: '', element: null })
   const [builderSub, setBuilderSub] = useState<BuilderSubmission | null>(null)
 
   // The default pack plus any admin-defined options, sorted by pack size.

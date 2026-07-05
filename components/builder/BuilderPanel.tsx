@@ -78,7 +78,7 @@ function CanvasPanel({ config, onChange }: {
       id: newElementId(),
       kind: 'text',
       text: 'Your text',
-      fontValue: 'kerf',
+      fontValue: 'zen-kurenaido',
       xIn: config.widthIn * 0.15,
       yIn: config.heightIn * 0.4,
       wIn: config.widthIn * 0.7,
@@ -188,7 +188,7 @@ function CanvasPanel({ config, onChange }: {
             className="w-full bg-[var(--page)] border border-[var(--hairline)] rounded-sm px-3 py-2 text-sm text-[var(--ink)] outline-none focus:border-[#C67A6F]"
           />
           <FontBook
-            value={selected.fontValue ?? 'kerf'}
+            value={selected.fontValue ?? 'zen-kurenaido'}
             onChange={v => patchSelected({ fontValue: v })}
             sampleText={selected.text ?? ''}
           />
@@ -229,7 +229,7 @@ function SilhouettePanel({ config, onChange }: {
   const SilhouetteBuilder = useClientOnly<typeof SilhouetteBuilderComponent>(loadSilhouetteBuilder)
   const [materialKey, setMaterialKey] = useState(config.materials[0]?.key ?? '')
   const [layoutKey, setLayoutKey] = useState(config.layouts[0]?.key ?? '')
-  const [fontValue, setFontValue] = useState('kerf')
+  const [fontValue, setFontValue] = useState('zen-kurenaido')
   const [texts, setTexts] = useState<string[]>([])
 
   const layout = config.layouts.find(l => l.key === layoutKey) ?? config.layouts[0]

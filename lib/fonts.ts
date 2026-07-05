@@ -31,9 +31,12 @@ export interface FontOption {
 
 export const fontOptions: FontOption[] = [
   // ============================================
-  // VURMZ ORIGINALS — exclusive house type, only on VURMZ
+  // THE HOUSE FACE — Zach's brand font, the engraving default.
+  // 'kerf' delisted 2026-07-04: machine-generated in a June session,
+  // never Zach's pick. @font-face retained in fonts.css so past orders
+  // keep rendering; new work defaults to Zen Kurenaido.
   // ============================================
-  { value: 'kerf', label: 'Kerf', category: 'vurmz', style: { fontFamily: "'Kerf', sans-serif", letterSpacing: '1px' } },
+  { value: 'zen-kurenaido', label: 'Zen Kurenaido', category: 'vurmz', style: { fontFamily: "'Zen Kurenaido', sans-serif" } },
 
   // ============================================
   // PROFESSIONAL SANS-SERIF (10)
@@ -189,7 +192,7 @@ export const FONT_CATEGORY_ORDER: FontCategory[] = [
 ]
 
 export const categoryLabels: Record<FontCategory, string> = {
-  vurmz: 'VURMZ Originals',
+  vurmz: 'The House Face',
   'professional-sans': 'Clean & Modern',
   'professional-serif': 'Classic & Professional',
   script: 'Script & Elegant',
