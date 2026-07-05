@@ -5,7 +5,7 @@
  * the cart item's metadata. Konva can't render on the server, so the
  * canvas itself loads dynamically.
  */
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { fontOptions } from '@/lib/fonts'
 import DesignElementPicker from '@/components/shop/DesignElementPicker'
 import FontBook from '@/components/shop/FontBook'
@@ -56,22 +56,86 @@ function CanvasPanel({ config, onChange }: {
     elements: [],
   })
   const [selectedId, setSelectedId] = useState<string | null>(null)
+  /** Local object URLs for uploaded images, keyed by element id. Preview
+   *  only; the order carries the R2 key, never these. */
+  const [previews, setPreviews] = useState<Record<string, string>>({})
+  const [uploadError, setUploadError] = useState<string | null>(null)
+  const fileRef = useRef<HTMLInputElement>(null)
 
   function update(v: BuilderSubmission) {
     const m = config.materials.find(x => x.key === v.materialKey) ?? config.materials[0]
-    const snap: BuilderSubmission = {
+    setValue({
       ...v,
       materialLabel: m?.label,
       surface: m?.surface,
       mark: m?.mark,
       shape: config.shape,
       cornerRadiusIn: config.cornerRadiusIn,
-    }
-    setValue(snap)
-    onChange(snap.elements.length > 0 ? snap : null)
+    })
   }
 
+  /** Async-safe patch: uploads finish after state has moved on. */
+  function patchById(id: string, patch: Partial<PlacedElement>) {
+    setValue(prev => ({ ...prev, elements: prev.elements.map(e => (e.id === id ? { ...e, ...patch } : e)) }))
+  }
+
+  // What rides the cart. Uploads only count once their R2 key is home, so
+  // an order can never reference a file that never finished uploading.
+  useEffect(() => {
+    const sendable = value.elements.filter(e => e.kind !== 'upload' || !!e.uploadUrl)
+    onChange(sendable.length > 0 ? { ...value, elements: sendable } : null)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value])
+
   const selected = value.elements.find(e => e.id === selectedId) ?? null
+
+  async function addUpload(file: File) {
+    setUploadError(null)
+    if (!/^image\/(jpeg|png|webp|gif|svg\+xml)$/.test(file.type)) {
+      setUploadError('JPG, PNG, WEBP, GIF, or SVG here. Other formats can go in the order instructions.')
+      return
+    }
+    if (file.size > 10 * 1024 * 1024) {
+      setUploadError('Max file size is 10 MB.')
+      return
+    }
+    const url = URL.createObjectURL(file)
+    const dims = await new Promise<{ w: number; h: number } | null>(resolve => {
+      const img = new window.Image()
+      img.onload = () => resolve({ w: img.naturalWidth || 300, h: img.naturalHeight || 300 })
+      img.onerror = () => resolve(null)
+      img.src = url
+    })
+    if (!dims) {
+      URL.revokeObjectURL(url)
+      setUploadError('That file would not open as an image.')
+      return
+    }
+    const wIn = Math.min(config.widthIn * 0.5, 1.4)
+    const hIn = Math.min(config.heightIn * 0.85, wIn * (dims.h / dims.w))
+    const el: PlacedElement = {
+      id: newElementId(),
+      kind: 'upload',
+      xIn: (config.widthIn - wIn) / 2,
+      yIn: (config.heightIn - hIn) / 2,
+      wIn,
+      hIn,
+      rotationDeg: 0,
+    }
+    setPreviews(p => ({ ...p, [el.id]: url }))
+    update({ ...value, elements: [...value.elements, el] })
+    setSelectedId(el.id)
+    try {
+      const form = new FormData()
+      form.append('file', file)
+      const res = await fetch('/api/checkout/upload/', { method: 'POST', body: form })
+      const json = (await res.json()) as { ok?: boolean; data?: { key?: string }; error?: { message?: string } }
+      if (!json?.ok || !json.data?.key) throw new Error(json?.error?.message || 'upload failed')
+      patchById(el.id, { uploadUrl: json.data.key })
+    } catch {
+      setUploadError('The upload did not go through, so this image will not ride the order yet. Remove it and try again.')
+    }
+  }
 
   function addText() {
     const el: PlacedElement = {
@@ -153,7 +217,7 @@ function CanvasPanel({ config, onChange }: {
 
       {/* The canvas */}
       {BuilderCanvas ? (
-        <BuilderCanvas config={config} value={value} onChange={update} selectedId={selectedId} onSelect={setSelectedId} />
+        <BuilderCanvas config={config} value={value} onChange={update} selectedId={selectedId} onSelect={setSelectedId} previews={previews} />
       ) : (
         <div className="aspect-[3.375/2.125] bg-[var(--ink)]/[0.05] rounded-sm animate-pulse" />
       )}
@@ -168,12 +232,31 @@ function CanvasPanel({ config, onChange }: {
           + Add text
         </button>
         <DesignPickerButton onPick={addDesign} />
+        <button
+          type="button"
+          onClick={() => fileRef.current?.click()}
+          className="text-[11px] px-3 py-1.5 border border-[var(--eyebrow)]/50 text-[var(--eyebrow)] font-semibold rounded-sm hover:bg-[var(--eyebrow)]/10 transition-colors"
+        >
+          + Your logo or image
+        </button>
+        <input
+          ref={fileRef}
+          type="file"
+          accept="image/jpeg,image/png,image/webp,image/gif,image/svg+xml"
+          className="hidden"
+          onChange={e => {
+            const f = e.target.files?.[0]
+            if (f) addUpload(f)
+            e.target.value = ''
+          }}
+        />
         {selected && (
           <button type="button" onClick={removeSelected} className="text-[11px] px-3 py-1.5 text-[#C67A6F] font-semibold hover:underline">
             Remove selected
           </button>
         )}
       </div>
+      {uploadError && <p className="mt-1.5 text-[11px] text-[#8A4943]">{uploadError}</p>}
 
       {/* Selected element editor */}
       {selected && selected.kind === 'text' && (

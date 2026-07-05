@@ -67,7 +67,25 @@ export default function PlacementDiagram({ submission, maxWidth = 360 }: { submi
               />
             )
           }
-          // Upload or unknown: show the zone.
+          if (el.kind === 'upload' && el.uploadUrl) {
+            // Customer's own file, served through the admin-gated r2 route.
+            // Grayscale to match how the mark reads; the original file sits
+            // in the order's attachment list.
+            return (
+              <image
+                key={el.id}
+                href={`/api/admin/r2/${el.uploadUrl}`}
+                x={el.xIn}
+                y={el.yIn}
+                width={el.wIn}
+                height={el.hIn}
+                preserveAspectRatio="xMidYMid meet"
+                transform={transform}
+                style={{ filter: `grayscale(1)${markLight ? ' invert(1)' : ''}` }}
+              />
+            )
+          }
+          // Unknown or keyless upload: show the zone.
           return <rect key={el.id} x={el.xIn} y={el.yIn} width={el.wIn} height={el.hIn} fill="none" stroke="#FF2A2A" strokeWidth={0.02} strokeDasharray="0.06 0.04" transform={transform} />
         })}
       </svg>

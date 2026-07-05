@@ -60,7 +60,9 @@ const schema = z.object({
         designId: z.string().max(80).optional(),
         designLabel: z.string().max(120).optional(),
         designThumb: z.string().max(500).optional(),
-        uploadUrl: z.string().max(500).optional(),
+        // Same private-prefix shape rule as order attachments: only keys
+        // minted by /api/checkout/upload are accepted.
+        uploadUrl: z.string().regex(/^checkout\/gup_[a-z0-9]+\/[A-Za-z0-9._-]{1,180}$/).optional(),
       })).max(20),
     }).optional(),
     personalization: z.object({
@@ -240,6 +242,16 @@ export async function POST(req: NextRequest) {
     }
   }
 
+  // Builder uploads join the order's file list, so the original art (not
+  // just the layout replay) is one click away on the ticket.
+  const builderUploads = body.items
+    .flatMap(i => i.builder?.elements ?? [])
+    .filter(e => e.kind === 'upload' && e.uploadUrl)
+    .map(e => ({ key: e.uploadUrl as string, filename: (e.uploadUrl as string).split('/').pop() || 'upload' }))
+  const allAttachments = [...(body.attachments ?? []), ...builderUploads]
+    .filter((a, i, arr) => arr.findIndex(x => x.key === a.key) === i)
+    .slice(0, 12)
+
   // 4. Create order
   const order = await createOrder({
     customerId: customer.id,
@@ -270,7 +282,7 @@ export async function POST(req: NextRequest) {
     metadata: {
       source: 'checkout',
       ...(handDeliveryMeta ? { handDelivery: handDeliveryMeta } : {}),
-      ...(body.attachments?.length ? { attachments: body.attachments } : {}),
+      ...(allAttachments.length ? { attachments: allAttachments } : {}),
       ...(body.isBusinessOrder ? { businessOrder: true, businessStanding: isBusinessStanding } : {}),
     },
   })
@@ -384,7 +396,7 @@ export async function POST(req: NextRequest) {
       }
     }),
     fulfillmentLabel,
-    attachmentCount: body.attachments?.length ?? 0,
+    attachmentCount: allAttachments.length,
   })
 
   await audit({

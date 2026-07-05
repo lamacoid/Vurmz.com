@@ -28,21 +28,47 @@ function useImage(url: string | undefined): HTMLImageElement | null {
   return img
 }
 
-function DesignNode({ el, ppi, isSelected, markLight, onSelect, onChange }: {
-  el: PlacedElement; ppi: number; isSelected: boolean; markLight: boolean
+function DesignNode({ el, src, ppi, isSelected, markLight, onSelect, onChange }: {
+  el: PlacedElement; src?: string; ppi: number; isSelected: boolean; markLight: boolean
   onSelect: () => void; onChange: (patch: Partial<PlacedElement>) => void
 }) {
-  const img = useImage(el.designThumb)
+  const isUpload = el.kind === 'upload'
+  const img = useImage(src)
   const ref = useRef<Konva.Image>(null)
   useEffect(() => {
     // The library art is black; on dark surfaces the laser mark reads light.
+    // Customer uploads also drop to grayscale: a laser marks tone, not color,
+    // so the preview should never promise a color print.
     if (ref.current) {
       ref.current.cache()
-      ref.current.filters(markLight ? [KonvaFilters.Invert] : [])
+      const filters = isUpload ? [KonvaFilters.Grayscale] : []
+      if (markLight) filters.push(KonvaFilters.Invert)
+      ref.current.filters(filters)
       ref.current.getLayer()?.batchDraw()
     }
-  }, [img, markLight])
-  if (!img) return null
+  }, [img, markLight, isUpload])
+  if (!img) {
+    // An upload whose preview is gone (or still decoding) stays visible and
+    // removable instead of silently vanishing from the layout.
+    if (!isUpload) return null
+    return (
+      <Rect
+        name={el.id}
+        x={el.xIn * ppi}
+        y={el.yIn * ppi}
+        width={el.wIn * ppi}
+        height={el.hIn * ppi}
+        rotation={el.rotationDeg}
+        stroke="#FF2A2A"
+        strokeWidth={1}
+        dash={[5, 3]}
+        draggable
+        onClick={onSelect}
+        onTap={onSelect}
+        onDragEnd={e => onChange({ xIn: e.target.x() / ppi, yIn: e.target.y() / ppi })}
+      />
+    )
+  }
   return (
     <KImage
       ref={ref}
@@ -72,12 +98,14 @@ function DesignNode({ el, ppi, isSelected, markLight, onSelect, onChange }: {
   )
 }
 
-export default function BuilderCanvas({ config, value, onChange, selectedId, onSelect }: {
+export default function BuilderCanvas({ config, value, onChange, selectedId, onSelect, previews }: {
   config: CanvasBuilderConfig
   value: BuilderSubmission
   onChange: (v: BuilderSubmission) => void
   selectedId: string | null
   onSelect: (id: string | null) => void
+  /** Object URLs for upload elements, keyed by element id. */
+  previews?: Record<string, string>
 }) {
   const containerRef = useRef<HTMLDivElement>(null)
   const [stageW, setStageW] = useState(520)
@@ -171,6 +199,7 @@ export default function BuilderCanvas({ config, value, onChange, selectedId, onS
               <DesignNode
                 key={el.id}
                 el={el}
+                src={el.kind === 'upload' ? previews?.[el.id] : el.designThumb}
                 ppi={ppi}
                 markLight={markLight}
                 isSelected={selectedId === el.id}
