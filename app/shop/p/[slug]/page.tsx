@@ -185,7 +185,21 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
             </div>
           )}
 
-          {product.slug === 'engrave-your-item' && <RecentWork />}
+          {product.slug === 'engrave-your-item' && (
+            <>
+              <PortfolioStrip
+                title="Recent work"
+                blurb={<>MacBooks and iPads, knives, tumblers, bottles. If it&rsquo;s solid and fits the bed, it marks.</>}
+                slugs={RECENT_WORK_SLUGS}
+              />
+              <PortfolioStrip
+                title="Made & designed here"
+                blurb={<>My own designs, drawn and engraved start to finish. Want something like one of these? Say so in the instructions.</>}
+                slugs={DESIGNED_HERE_SLUGS}
+                portfolioLink
+              />
+            </>
+          )}
 
           <p className="mt-10 pt-5 border-t border-[var(--hairline)] text-xs text-[var(--ink-soft)] text-center">
             Questions about this piece?{' '}
@@ -203,21 +217,29 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
   )
 }
 
-// The house offer earns its proof: a strip of finished work, the kind of
-// thing people actually bring in. Only shown on engrave-your-item.
+// The house offer earns its proof, in two honest strips: things people
+// brought in, and pieces designed here start to finish. No overlap.
+// Only shown on engrave-your-item.
 const RECENT_WORK_SLUGS = [
   'macbook-personalization',
   'ipad-personalization',
   'culinary-cleaver',
   'pocket-knife',
-  'medieval-water-bottle',
   'branded-tumbler',
+  'custom-water-bottle',
   'plastic-charger-marking',
-  'denver-map-mirror',
+  'clga-amp-faceplate',
 ]
 
-function RecentWork() {
-  const items = RECENT_WORK_SLUGS
+const DESIGNED_HERE_SLUGS = [
+  'denver-map-mirror',
+  'eye-storm-mirror',
+  'medieval-water-bottle',
+  'aluminum-artwork',
+]
+
+function PortfolioStrip({ title, blurb, slugs, portfolioLink = false }: { title: string; blurb: React.ReactNode; slugs: string[]; portfolioLink?: boolean }) {
+  const items = slugs
     .map(s => portfolioItems.find(p => p.slug === s))
     .filter((p): p is PortfolioItem => Boolean(p))
   if (items.length === 0) return null
@@ -225,12 +247,10 @@ function RecentWork() {
     <div className="mt-10">
       <div className="flex items-center gap-3 mb-2">
         <span className="flex-1 border-t border-[var(--ink)]/20" aria-hidden />
-        <h2 className="text-xs font-mono tracking-[0.3em] uppercase text-[var(--eyebrow)]">Recent work</h2>
+        <h2 className="text-xs font-mono tracking-[0.3em] uppercase text-[var(--eyebrow)]">{title}</h2>
         <span className="flex-1 border-t border-[var(--ink)]/20" aria-hidden />
       </div>
-      <p className="text-sm text-[var(--ink-soft)] text-center mb-5 max-w-md mx-auto">
-        MacBooks and iPads, knives, tumblers, bottles. If it&rsquo;s solid and fits the bed, it marks.
-      </p>
+      <p className="text-sm text-[var(--ink-soft)] text-center mb-5 max-w-md mx-auto">{blurb}</p>
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {items.map(p => (
           <Link key={p.slug} href={`/services/portfolio/${p.slug}`} className="group block">
@@ -249,11 +269,13 @@ function RecentWork() {
           </Link>
         ))}
       </div>
-      <p className="mt-4 text-center">
-        <Link href="/services/portfolio" className="text-xs text-[var(--eyebrow)] font-semibold hover:underline">
-          See the full portfolio
-        </Link>
-      </p>
+      {portfolioLink && (
+        <p className="mt-4 text-center">
+          <Link href="/services/portfolio" className="text-xs text-[var(--eyebrow)] font-semibold hover:underline">
+            See the full portfolio
+          </Link>
+        </p>
+      )}
     </div>
   )
 }
