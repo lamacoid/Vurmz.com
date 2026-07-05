@@ -5,21 +5,32 @@
  * the cart item's metadata. Konva can't render on the server, so the
  * canvas itself loads dynamically.
  */
-import { useState } from 'react'
-import dynamic from 'next/dynamic'
+import { useEffect, useState } from 'react'
 import { fontOptions } from '@/lib/fonts'
 import DesignElementPicker from '@/components/shop/DesignElementPicker'
 import FontBook from '@/components/shop/FontBook'
 import type { BuilderConfig, CanvasBuilderConfig, SilhouetteBuilderConfig, BuilderSubmission, PlacedElement } from '@/lib/builder/types'
+import type BuilderCanvasComponent from './BuilderCanvas'
+import type SilhouetteBuilderComponent from './SilhouetteBuilder'
 
-const BuilderCanvas = dynamic(() => import('./BuilderCanvas'), {
-  ssr: false,
-  loading: () => <div className="aspect-[3.375/2.125] bg-[var(--ink)]/[0.05] rounded-sm animate-pulse" />,
-})
-const SilhouetteBuilder = dynamic(() => import('./SilhouetteBuilder'), {
-  ssr: false,
-  loading: () => <div className="h-16 bg-[var(--ink)]/[0.05] rounded-sm animate-pulse" />,
-})
+// next/dynamic is off-limits in this file: its module-scope async-chunk
+// reference is exactly what next-on-pages leaves undefined in the edge
+// bundle, which threw during SSR and silently dropped the entire
+// AddToCart subtree from the served HTML (the buy box only appeared
+// after hydration). Loading inside an effect keeps the import() out of
+// the server evaluation path entirely; the Konva canvas is client-only
+// regardless.
+function useClientOnly<T>(load: () => Promise<{ default: T }>): T | null {
+  const [comp, setComp] = useState<T | null>(null)
+  useEffect(() => {
+    let alive = true
+    load().then(m => { if (alive) setComp(() => m.default) })
+    return () => { alive = false }
+  }, [load])
+  return comp
+}
+const loadBuilderCanvas = () => import('./BuilderCanvas')
+const loadSilhouetteBuilder = () => import('./SilhouetteBuilder')
 
 let elementCounter = 0
 function newElementId() { return `el_${++elementCounter}_${Math.random().toString(36).slice(2, 7)}` }
@@ -36,6 +47,7 @@ function CanvasPanel({ config, onChange }: {
   config: CanvasBuilderConfig
   onChange: (v: BuilderSubmission | null) => void
 }) {
+  const BuilderCanvas = useClientOnly<typeof BuilderCanvasComponent>(loadBuilderCanvas)
   const [value, setValue] = useState<BuilderSubmission>({
     mode: 'canvas',
     materialKey: config.materials[0]?.key ?? '',
@@ -140,7 +152,11 @@ function CanvasPanel({ config, onChange }: {
       )}
 
       {/* The canvas */}
-      <BuilderCanvas config={config} value={value} onChange={update} selectedId={selectedId} onSelect={setSelectedId} />
+      {BuilderCanvas ? (
+        <BuilderCanvas config={config} value={value} onChange={update} selectedId={selectedId} onSelect={setSelectedId} />
+      ) : (
+        <div className="aspect-[3.375/2.125] bg-[var(--ink)]/[0.05] rounded-sm animate-pulse" />
+      )}
 
       {/* Tools */}
       <div className="mt-3 flex flex-wrap items-center gap-2">
@@ -210,6 +226,7 @@ function SilhouettePanel({ config, onChange }: {
   config: SilhouetteBuilderConfig
   onChange: (v: BuilderSubmission | null) => void
 }) {
+  const SilhouetteBuilder = useClientOnly<typeof SilhouetteBuilderComponent>(loadSilhouetteBuilder)
   const [materialKey, setMaterialKey] = useState(config.materials[0]?.key ?? '')
   const [layoutKey, setLayoutKey] = useState(config.layouts[0]?.key ?? '')
   const [fontValue, setFontValue] = useState('kerf')
@@ -304,7 +321,11 @@ function SilhouettePanel({ config, onChange }: {
         </div>
       )}
 
-      <SilhouetteBuilder config={config} materialKey={materialKey} layoutKey={layoutKey} texts={texts} fontFamily={fontFamily} />
+      {SilhouetteBuilder ? (
+        <SilhouetteBuilder config={config} materialKey={materialKey} layoutKey={layoutKey} texts={texts} fontFamily={fontFamily} />
+      ) : (
+        <div className="h-16 bg-[var(--ink)]/[0.05] rounded-sm animate-pulse" />
+      )}
 
       <div className="mt-3 space-y-2">
         {textZones.map((z, i) => (
