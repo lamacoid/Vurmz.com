@@ -18,6 +18,7 @@ export interface BumpBody {
   proof?: string
   expectedStatus?: string
   expectedProof?: string
+  settle?: 'cash'
   note?: string
 }
 
@@ -76,7 +77,8 @@ export async function railBump(orderId: string, body: BumpBody): Promise<BumpRes
     if (i < RETRIES.length) await sleep(RETRIES[i])
   }
   // Only guarded bumps park: CAS makes their replay provably safe.
-  if (body.expectedStatus || body.expectedProof) {
+  // (settle is CAS on the settled flag itself, so it parks too.)
+  if (body.expectedStatus || body.expectedProof || body.settle) {
     writeQueue([...readQueue(), { orderId, body, at: new Date().toISOString() }])
     return 'queued'
   }

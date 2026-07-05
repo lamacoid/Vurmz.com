@@ -11,32 +11,47 @@ export const runtime = 'edge'
  * delivered, as a RailTicket with customer, items, and engraving), status
  * counts, and money (7d collected + pipeline).
  */
+/**
+ * Settlement is DERIVED, never copied (RAIL-SYSTEM-PLAN Phase B, I1):
+ * cash mark on the order, a succeeded payment referencing it, or its
+ * linked invoice paid. Used both to compute each ticket's settled flag
+ * and to keep delivered-but-unpaid orders ON the rail (I5).
+ */
+const SETTLED_SQL = `(
+  COALESCE(json_extract(o.metadata,'$.payment.settled'), 0) = 1
+  OR EXISTS(SELECT 1 FROM invoices i WHERE i.order_id = o.id AND i.status = 'paid')
+  OR EXISTS(SELECT 1 FROM payments p WHERE p.status = 'succeeded' AND json_extract(p.metadata,'$.orderId') = o.id)
+)`
+const ON_RAIL_SQL = `(o.status IN ('new','confirmed','in_progress','ready') OR (o.status = 'delivered' AND NOT ${SETTLED_SQL}))`
+
 export async function GET(req: NextRequest) {
   return withAdminAuth(req, async () => {
     const db = getDb()
     const [actionRows, countRows, collected, pipeline, flags, itemRows, dueTodayRow, newSinceRow] = await Promise.all([
-      // The rail: everything not yet delivered, customer joined in.
+      // The rail: open work plus delivered-but-unpaid, customer joined in.
       db.prepare(
         `SELECT o.id, o.number, o.email, o.status, o.total_cents, o.fulfillment_method,
                 o.fulfillment_eta, o.metadata, o.created_at,
-                c.name AS customer_name, c.phone AS customer_phone
+                c.name AS customer_name, c.phone AS customer_phone,
+                CASE WHEN ${SETTLED_SQL} THEN 1 ELSE 0 END AS settled
          FROM orders o LEFT JOIN customers c ON c.id = o.customer_id
-         WHERE o.status IN ('new','confirmed','in_progress','ready')
+         WHERE ${ON_RAIL_SQL}
          ORDER BY o.created_at ASC LIMIT 50`
-      ).all<{ id: string; number: string; email: string; status: string; total_cents: number; fulfillment_method: string; fulfillment_eta: string | null; metadata: string; created_at: string; customer_name: string | null; customer_phone: string | null }>(),
+      ).all<{ id: string; number: string; email: string; status: string; total_cents: number; fulfillment_method: string; fulfillment_eta: string | null; metadata: string; created_at: string; customer_name: string | null; customer_phone: string | null; settled: number }>(),
       db.prepare(`SELECT status, COUNT(*) n FROM orders GROUP BY status`).all<{ status: string; n: number }>(),
       db.prepare(
         `SELECT COALESCE(SUM(amount_cents),0) c FROM payments WHERE status='succeeded' AND created_at >= datetime('now','-7 day')`
       ).first<{ c: number }>(),
+      // Owed to you = everything on the rail that has not settled yet.
       db.prepare(
-        `SELECT COALESCE(SUM(total_cents),0) c FROM orders WHERE status IN ('new','confirmed','in_progress','ready')`
+        `SELECT COALESCE(SUM(o.total_cents),0) c FROM orders o WHERE ${ON_RAIL_SQL} AND NOT ${SETTLED_SQL}`
       ).first<{ c: number }>(),
       listOrderItemFlags(),
       // Item lines for the WHAT on each ticket.
       db.prepare(
         `SELECT oi.order_id, oi.name_snapshot, oi.qty, oi.metadata
          FROM order_items oi JOIN orders o ON o.id = oi.order_id
-         WHERE o.status IN ('new','confirmed','in_progress','ready')
+         WHERE ${ON_RAIL_SQL}
          ORDER BY oi.position`
       ).all<{ order_id: string; name_snapshot: string; qty: number; metadata: string }>(),
       db.prepare(
@@ -94,6 +109,7 @@ export async function GET(req: NextRequest) {
         fulfillmentMethod: r.fulfillment_method,
         eta: r.fulfillment_eta,
         createdAt: r.created_at,
+        settled: r.settled === 1,
       }
     })
 

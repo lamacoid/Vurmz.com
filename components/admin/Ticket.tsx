@@ -140,6 +140,11 @@ export default function Ticket({ ticket, onAdvanced }: { ticket: RailTicket; onA
                   {busy ? 'Saving…' : action.label}
                 </button>
               )}
+              {action.secondaryHref && (
+                <Link href={action.secondaryHref} className="block text-[11px] text-[var(--a-accent)] hover:underline mt-1">
+                  {action.secondaryLabel}
+                </Link>
+              )}
               <p className="text-[10px] text-[var(--a-ink-faint)] mt-1">{action.why}</p>
             </div>
           )}

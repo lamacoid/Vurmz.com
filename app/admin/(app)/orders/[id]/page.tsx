@@ -20,6 +20,7 @@ interface Order {
     handDelivery?: { window?: string; windowLabel?: string; note?: string }
     attachments?: Array<{ key: string; filename: string }>
     proof?: { status?: 'needed' | 'sent' | 'approved'; at?: string }
+    invoiceId?: string
   }
 }
 
@@ -63,21 +64,62 @@ export default function OrderDetailPage() {
   const [items, setItems] = useState<OrderItem[]>([])
   const [customer, setCustomer] = useState<Customer | null>(null)
   const [loading, setLoading] = useState(true)
+  const [settled, setSettled] = useState(true)
+  const [collectBusy, setCollectBusy] = useState(false)
+  const [collectNote, setCollectNote] = useState('')
 
   useEffect(() => {
     if (!params?.id) return
     fetch(`/api/admin/orders/${params.id}`)
       .then(r => r.json())
       .then(j => {
-        const parsed = j as { data?: { order: Order; items: OrderItem[]; customer?: Customer } }
+        const parsed = j as { data?: { order: Order; items: OrderItem[]; customer?: Customer; settled?: boolean } }
         if (parsed.data) {
           setOrder(parsed.data.order)
           setItems(parsed.data.items)
           setCustomer(parsed.data.customer ?? null)
+          setSettled(parsed.data.settled ?? true)
         }
         setLoading(false)
       })
   }, [params?.id])
+
+  async function markCash() {
+    if (!order) return
+    setCollectBusy(true)
+    setCollectNote('')
+    try {
+      const r = await railBump(order.id, { settle: 'cash' })
+      if (r === 'queued') setCollectNote('No connection. The cash mark is saved and will send itself.')
+      else { setSettled(true); setCollectNote('Paid. The ticket leaves the rail.') }
+    } catch (e) {
+      setCollectNote(e instanceof Error ? e.message : 'That did not save. Try again.')
+    } finally {
+      setCollectBusy(false)
+    }
+  }
+
+  async function sendInvoiceForOrder() {
+    if (!order) return
+    setCollectBusy(true)
+    setCollectNote('')
+    try {
+      const created = await fetch(`/api/admin/orders/${order.id}/invoice`, { method: 'POST' })
+      const cj = (await created.json()) as { ok?: boolean; data?: { invoice: { id: string; number: string } }; error?: { message?: string } }
+      if (!created.ok || !cj.ok || !cj.data) throw new Error(cj.error?.message ?? 'Could not create the invoice.')
+      const sent = await fetch(`/api/admin/invoices/${cj.data.invoice.id}/send`, { method: 'POST' })
+      if (!sent.ok) {
+        setCollectNote(`Invoice ${cj.data.invoice.number} is created but did not send. Open it in Invoices and send from there.`)
+      } else {
+        setCollectNote(`Invoice ${cj.data.invoice.number} sent. This settles itself when they pay.`)
+      }
+      setOrder({ ...order, metadata: { ...order.metadata, invoiceId: cj.data.invoice.id } })
+    } catch (e) {
+      setCollectNote(e instanceof Error ? e.message : 'That did not work. Nothing was sent; try again.')
+    } finally {
+      setCollectBusy(false)
+    }
+  }
 
   async function setStatus(status: string) {
     if (!order) return
@@ -144,6 +186,40 @@ export default function OrderDetailPage() {
       {nextStep(order) && (
         <div className="mb-6 bg-white/[0.04] border-l-2 border-[var(--a-accent)] rounded-lg px-4 py-3">
           <p className="text-sm text-[var(--a-ink)]"><span className="font-semibold">Next step:</span> {nextStep(order)}</p>
+        </div>
+      )}
+
+      {/* The collect gate (Phase B): delivered but not paid. The ticket
+          stays on the rail until this card is satisfied. */}
+      {order.status === 'delivered' && !settled && (
+        <div id="collect" className="mb-6 bg-[var(--a-panel)] border border-amber-500/40 rounded-xl p-5">
+          <p className="text-[11px] uppercase tracking-wider text-amber-400/90 mb-1.5">Collect payment</p>
+          <p className="text-sm text-[var(--a-ink)] mb-3">Delivered, not yet paid. <span className="font-semibold">{money(order.totalCents)}</span> outstanding.</p>
+          <div className="flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={markCash}
+              disabled={collectBusy}
+              className="px-4 h-9 bg-[var(--a-cta)] hover:bg-[var(--a-cta-hover)] disabled:opacity-60 text-white text-sm font-semibold rounded-md"
+            >
+              Mark paid, cash
+            </button>
+            {order.metadata?.invoiceId ? (
+              <Link href={`/admin/invoices/${order.metadata.invoiceId as string}`} className="px-4 h-9 inline-flex items-center border border-[var(--a-line)] text-[var(--a-ink)] text-sm rounded-md hover:border-[var(--a-accent)]">
+                Invoice sent · settles itself when paid
+              </Link>
+            ) : (
+              <button
+                type="button"
+                onClick={sendInvoiceForOrder}
+                disabled={collectBusy}
+                className="px-4 h-9 border border-[var(--a-line)] text-[var(--a-ink)] text-sm rounded-md hover:border-[var(--a-accent)] disabled:opacity-60"
+              >
+                {collectBusy ? 'Working…' : 'Create and send the invoice'}
+              </button>
+            )}
+          </div>
+          {collectNote && <p className="text-xs text-[var(--a-accent)] mt-2">{collectNote}</p>}
         </div>
       )}
 

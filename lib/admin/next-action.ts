@@ -28,6 +28,9 @@ export interface RailTicket {
   fulfillmentMethod: string
   eta: string | null
   createdAt: string
+  /** Money truth, derived server-side: cash mark, Square payment, or paid
+   *  linked invoice. Delivered-but-unsettled tickets stay on the rail. */
+  settled: boolean
 }
 
 export interface NextAction {
@@ -35,14 +38,30 @@ export interface NextAction {
   /** 'patch' advances state inline; 'link' opens the order for steps that need more (like attaching a proof photo). */
   type: 'patch' | 'link'
   /** For 'patch': the body to PATCH to /api/admin/orders/[id]. */
-  patch?: { status?: RailTicket['status']; proof?: 'needed' | 'sent' | 'approved' }
+  patch?: { status?: RailTicket['status']; proof?: 'needed' | 'sent' | 'approved'; settle?: 'cash' }
   /** For 'link': where to go. */
   href?: string
+  /** A quiet second path when one button genuinely is not enough (collect: cash OR invoice). */
+  secondaryLabel?: string
+  secondaryHref?: string
   /** One quiet line under the button explaining why this is the step. */
   why: string
 }
 
 export function nextAction(t: RailTicket): NextAction | null {
+  // The collect gate (I5): a delivered order that is not paid stays on
+  // the rail until money settles. An empty rail MEANS made, delivered,
+  // and paid.
+  if (t.status === 'delivered' && !t.settled) {
+    return {
+      label: 'Mark paid, cash',
+      type: 'patch',
+      patch: { settle: 'cash' },
+      secondaryLabel: 'Send the invoice instead',
+      secondaryHref: `/admin/orders/${t.id}#collect`,
+      why: 'Delivered but not paid yet. It leaves the rail when the money settles.',
+    }
+  }
   // The proof gate comes first: nothing engraves before approval.
   if (t.proofStatus === 'needed') {
     return {

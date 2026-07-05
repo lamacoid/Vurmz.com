@@ -380,6 +380,46 @@ export async function updateOrderStatusCas(
   return changed
 }
 
+/**
+ * Mark an order paid in cash (RAIL-SYSTEM-PLAN Phase B). CAS on the
+ * settled flag so a double-tap can never record two cash payments: the
+ * payments row (which is what revenue reads) only inserts when the flag
+ * actually flipped. Settlement everywhere else is DERIVED, never copied:
+ * an order counts as settled if this flag is set, OR a succeeded payment
+ * references it, OR its linked invoice is paid.
+ */
+export async function settleOrderCash(orderId: string, actor: { id?: string | null }): Promise<boolean> {
+  const db = getDb()
+  const order = await getOrderById(orderId)
+  if (!order) return false
+  const now = nowIso()
+  const res = await db
+    .prepare(
+      `UPDATE orders SET metadata = json_set(COALESCE(metadata,'{}'), '$.payment', json(?)), updated_at = ?
+       WHERE id = ? AND COALESCE(json_extract(metadata,'$.payment.settled'), 0) != 1`
+    )
+    .bind(
+      JSON.stringify({ settled: true, method: 'cash', settledBy: actor.id ?? 'admin', settledAt: now }),
+      now,
+      orderId,
+    )
+    .run()
+  const changed = (res.meta?.changes ?? 0) > 0
+  if (changed) {
+    await db.batch([
+      db.prepare(
+        `INSERT INTO payments (id, invoice_id, customer_id, amount_cents, status, square_payment_id, square_receipt_url, method_brand, method_last4, metadata, created_at, updated_at)
+         VALUES (?, NULL, ?, ?, 'succeeded', NULL, NULL, 'cash', NULL, ?, ?, ?)`
+      ).bind(newId('pay'), order.customerId, order.totalCents, JSON.stringify({ orderId: order.id, orderNumber: order.number }), now, now),
+      db.prepare(
+        `INSERT INTO order_events (id, order_id, type, from_status, to_status, actor_type, actor_id, note, created_at)
+         VALUES (?, ?, 'payment', NULL, NULL, 'admin', ?, 'Paid in cash', ?)`
+      ).bind(newId('evt'), orderId, actor.id ?? null, now),
+    ])
+  }
+  return changed
+}
+
 /** CAS variant of setOrderProof: only writes if the proof state is still what the caller saw. */
 export async function setOrderProofCas(orderId: string, from: ProofStatus, to: ProofStatus, actor: { id?: string | null }): Promise<boolean> {
   const db = getDb()
