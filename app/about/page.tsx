@@ -1,110 +1,97 @@
-import Link from 'next/link'
 import Image from 'next/image'
 import type { Metadata } from 'next'
-import { ArrowRightIcon } from '@heroicons/react/24/outline'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
-import { aboutContent } from '@/lib/about'
+import { aboutContent, aboutMeta } from '@/lib/about'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import SiteHeader from '@/components/SiteHeader'
 import SiteFooter from '@/components/SiteFooter'
 
 export const metadata: Metadata = {
   title: 'About',
-  description: `Meet ${siteInfo.founder.name}, the person behind VURMZ. One-person laser engraving studio in ${siteInfo.city}, Colorado. Personal service, next-day turnaround, hand-delivered.`,
+  description: aboutMeta.description,
   alternates: { canonical: '/about' },
 }
 
+// The About page, plated on the same cream menu card as the shop.
+// Zach's story in his own words, the photo framed, the pillars as three
+// words. No value cards, no manufactured warmth, no block of color.
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-[var(--page)] text-[var(--ink-soft)]">
       <SiteHeader variant="services" />
 
-      {/* Breadcrumbs + Hero */}
-      <section className="pt-24 sm:pt-28 pb-8 sm:pb-12">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="pt-24 sm:pt-28 pb-16">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <Breadcrumbs items={[{ label: 'VURMZ', href: '/' }, { label: 'About' }]} theme="landing" />
-          <p className="text-xs font-mono text-[var(--eyebrow)] tracking-[0.25em] uppercase mb-4">Who We Are</p>
-          <h1 className="text-3xl sm:text-5xl font-bold text-[var(--ink)] tracking-tight leading-tight">About VURMZ</h1>
-        </div>
-      </section>
 
-      {/* Story */}
-      <section className="pb-12 sm:pb-16">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
-            <div className="relative aspect-[4/3] overflow-hidden rounded-sm">
-              <Image src={aboutContent.image} alt={`${siteInfo.founder.name}, owner of VURMZ`} fill className="object-cover" />
-              <div className="absolute bottom-0 left-0 right-0 h-1/3 pointer-events-none" style={{ background: 'linear-gradient(to top, rgba(18,63,71,0.7) 0%, transparent 100%)' }} />
-              <div className="absolute bottom-4 left-4">
-                <span className="text-xs font-mono text-white/80 tracking-wider uppercase drop-shadow">{siteInfo.founder.name} &middot; Owner</span>
+          {/* The card: everything lives on it, like the menu. */}
+          <div className="mt-6 bg-[var(--surface)] border border-[var(--hairline)] rounded-sm shadow-sm px-5 sm:px-10 py-8 sm:py-10">
+            <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-[var(--eyebrow)] mb-3">About</p>
+            <h1
+              className="text-3xl sm:text-4xl text-[var(--ink)] tracking-tight leading-tight max-w-2xl"
+              style={{ fontFamily: 'var(--font-display), Georgia, serif', textWrap: 'balance' }}
+            >
+              {aboutContent.headline}
+            </h1>
+
+            <div className="mt-6 border-t-2 border-[var(--ink)]/25" aria-hidden />
+            <div className="mt-[3px] border-t border-[var(--ink)]/25" aria-hidden />
+
+            <div className="grid grid-cols-1 md:grid-cols-[2fr_3fr] gap-8 md:gap-12 mt-10 items-start">
+              {/* The photo, framed like a plate. */}
+              <div className="relative aspect-[4/5] overflow-hidden rounded-sm border border-[var(--hairline)] bg-[var(--page)]">
+                <Image src={aboutContent.image} alt={`${siteInfo.founder.name}, owner of VURMZ`} fill className="object-cover" sizes="(min-width: 768px) 40vw, 100vw" />
+                <span className="absolute bottom-3 left-3 text-[10px] font-mono text-white/85 tracking-[0.2em] uppercase drop-shadow">
+                  {siteInfo.founder.name} &middot; Owner
+                </span>
+              </div>
+
+              <div className="space-y-5">
+                {aboutContent.storyParagraphs.map((p, i) => (
+                  <p key={i} className="text-[var(--ink-soft)] text-base leading-relaxed">{p}</p>
+                ))}
               </div>
             </div>
-            <div>
-              <h2 className="text-2xl sm:text-3xl font-bold text-[var(--ink)] tracking-tight leading-tight mb-6">
-                {aboutContent.headline.split('.')[0]}.<br />
-                <span className="text-[var(--ink-soft)]">{aboutContent.subhead}</span>
-              </h2>
-              {aboutContent.storyParagraphs.map((p, i) => (
-                <p key={i} className="text-[var(--ink-soft)] text-base leading-relaxed mb-4">{p}</p>
-              ))}
+
+            {/* The pillars: three words, no explaining. */}
+            <div className="mt-12 flex items-center gap-4">
+              <span className="flex-1 border-t border-[var(--ink)]/20" aria-hidden />
+              <p
+                className="text-xl sm:text-2xl font-semibold text-[var(--ink)] tracking-tight whitespace-nowrap"
+                style={{ fontFamily: 'var(--font-display), Georgia, serif' }}
+              >
+                {aboutContent.pillars}
+              </p>
+              <span className="flex-1 border-t border-[var(--ink)]/20" aria-hidden />
             </div>
-          </div>
-        </div>
-      </section>
 
-      {/* Values */}
-      <section className="py-12 sm:py-16">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-xs font-mono text-[var(--eyebrow)] tracking-[0.2em] uppercase mb-4">What We Stand For</p>
-          <h2 className="text-2xl sm:text-3xl font-bold text-[var(--ink)] tracking-tight mb-10">Built on three things.</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            {aboutContent.values.map((v) => (
-              <div key={v.title} className="bg-[var(--surface)] border border-[var(--hairline)] rounded-sm p-6">
-                <h3 className="text-lg font-bold text-[var(--ink)] mb-2">{v.title}</h3>
-                <p className="text-[var(--ink-soft)] text-sm leading-relaxed">{v.description}</p>
+            {/* How it works: the one genuinely useful section, kept. */}
+            <div className="mt-12">
+              <div className="flex items-center gap-3 mb-6">
+                <span className="flex-1 border-t border-[var(--ink)]/20" aria-hidden />
+                <h2 className="text-xs font-mono tracking-[0.3em] uppercase text-[var(--eyebrow)]">How it works</h2>
+                <span className="flex-1 border-t border-[var(--ink)]/20" aria-hidden />
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Process */}
-      <section className="py-12 sm:py-16">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-xs font-mono text-[var(--eyebrow)] tracking-[0.2em] uppercase mb-4">The Process</p>
-          <h2 className="text-2xl sm:text-3xl font-bold text-[var(--ink)] tracking-tight mb-10">How it works.</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {aboutContent.process.map((s) => (
-              <div key={s.step} className="relative">
-                <div className="w-10 h-10 rounded-full bg-[var(--surface)] border border-[var(--hairline)] flex items-center justify-center mb-4">
-                  <span className="text-[var(--ink)] font-bold">{s.step}</span>
-                </div>
-                <h3 className="font-semibold text-[var(--ink)] mb-1">{s.title}</h3>
-                <p className="text-[var(--ink-soft)] text-sm leading-relaxed">{s.description}</p>
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-6">
+                {aboutContent.process.map(s => (
+                  <div key={s.step}>
+                    <p className="font-semibold text-[var(--ink)] text-sm">
+                      <span className="text-[var(--eyebrow)] font-mono mr-1.5">{s.step}.</span>
+                      {s.title}
+                    </p>
+                    <p className="text-[var(--ink-soft)] text-sm leading-snug mt-1">{s.description}</p>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
+            </div>
 
-      {/* CTA */}
-      <section className="py-12 sm:py-16 border-t border-[var(--hairline)]">
-        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold text-[var(--ink)] tracking-tight mb-4">Ready to get started?</h2>
-          <p className="text-[var(--ink-soft)] text-base mb-8">Browse engraved products or get a custom quote for your business.</p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link href="/shop" className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#C67A6F] text-white font-semibold text-sm rounded-sm hover:bg-[#B0675D] transition-all">
-              Browse the Shop
-              <ArrowRightIcon className="w-4 h-4" />
-            </Link>
-            <Link href="/services/contact" className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-[var(--ink)]/40 text-[var(--ink)] font-semibold text-sm rounded-sm hover:bg-[var(--ink)]/5 transition-all">
-              Get a Quote
-              <ArrowRightIcon className="w-4 h-4" />
-            </Link>
+            <p className="mt-10 pt-5 border-t border-[var(--hairline)] text-xs text-[var(--ink-soft)] text-center">
+              <a href={getSmsLink()} className="text-[var(--eyebrow)] font-semibold hover:underline">
+                Text {siteInfo.phone}
+              </a>{' '}
+              and it goes straight to me.
+            </p>
           </div>
-          <a href={getSmsLink()} className="inline-block mt-4 text-[var(--ink-soft)] hover:text-[var(--ink)] transition-colors text-sm">
-            Or just text me &middot; {siteInfo.phone}
-          </a>
         </div>
       </section>
 
