@@ -40,7 +40,9 @@ function DesignNode({ el, src, ppi, isSelected, markLight, onSelect, onChange }:
     // Customer uploads also drop to grayscale: a laser marks tone, not color,
     // so the preview should never promise a color print.
     if (ref.current) {
-      ref.current.cache()
+      // Cache at the display's pixel density, or the filtered image goes
+      // soft on Retina (the cache defaults to 1x).
+      ref.current.cache({ pixelRatio: typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1 })
       const filters = isUpload ? [KonvaFilters.Grayscale] : []
       if (markLight) filters.push(KonvaFilters.Invert)
       ref.current.filters(filters)
