@@ -318,7 +318,9 @@ function SilhouettePanel({ config, onChange }: {
   const layout = config.layouts.find(l => l.key === layoutKey) ?? config.layouts[0]
   const textZones = layout.zones.filter(z => z.kind === 'text')
   const material = config.materials.find(m => m.key === materialKey) ?? config.materials[0]
-  const fontFamily = (fontOptions.find(f => f.value === fontValue)?.style.fontFamily as string) ?? 'sans-serif'
+  // Konva needs a bare family name, not the CSS stack, or it falls back to serif.
+  const fontFamily = ((fontOptions.find(f => f.value === fontValue)?.style.fontFamily as string) ?? 'sans-serif')
+    .split(',')[0].replace(/["']/g, '').trim()
 
   function emit(nextTexts: string[], nextMaterial = materialKey, nextLayout = layoutKey, nextFont = fontValue) {
     const lay = config.layouts.find(l => l.key === nextLayout) ?? config.layouts[0]

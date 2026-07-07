@@ -140,9 +140,31 @@ export default function BuilderCanvas({ config, value, onChange, selectedId, onS
   }
 
   const fontFamilyFor = useMemo(() => {
-    const map = new Map(fontOptions.map(f => [f.value, (f.style.fontFamily as string) ?? 'sans-serif']))
+    // Konva wants a BARE family name, not a CSS stack. Passing
+    // "'Burger Doodle', cursive" makes Konva fail to parse it and fall
+    // back to serif, so strip to the first family with quotes removed.
+    const clean = (stack: string) => stack.split(',')[0].replace(/["']/g, '').trim()
+    const map = new Map(fontOptions.map(f => [f.value, clean((f.style.fontFamily as string) ?? 'sans-serif')]))
     return (fv?: string) => map.get(fv ?? '') ?? 'sans-serif'
   }, [])
+
+  // Detailed fonts lazy-load, so Konva can draw a text node before its
+  // face has arrived (rendering a plain fallback that reads as "blurry"
+  // or wrong). Wait for the fonts actually in use to finish loading, then
+  // redraw so the real, detailed letterforms render sharp.
+  useEffect(() => {
+    const stage = stageRef.current
+    if (!stage || typeof document === 'undefined' || !document.fonts) return
+    let alive = true
+    const families = Array.from(new Set(
+      value.elements.filter(e => e.kind === 'text').map(e => fontFamilyFor(e.fontValue)),
+    ))
+    // Family names with spaces MUST be quoted or the load silently fails.
+    Promise.all(families.map(fam => document.fonts.load(`48px "${fam}"`).catch(() => null)))
+      .then(() => document.fonts.ready)
+      .then(() => { if (alive) stage.getLayers().forEach(l => l.draw()) })
+    return () => { alive = false }
+  }, [value.elements, fontFamilyFor])
 
   const shape = config.shape
   const r = (config.cornerRadiusIn ?? 0) * ppi
