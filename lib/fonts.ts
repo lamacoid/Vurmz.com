@@ -122,6 +122,15 @@ export const fontOptions: FontOption[] = [
   { value: 'bonita', label: 'Bonita', category: 'fun', style: { fontFamily: "'Bonita', cursive" } },
   { value: 'pop-art', label: 'Pop Art', category: 'fun', style: { fontFamily: "'Pop Art', sans-serif" } },
   { value: 'bionic-comic', label: 'Bionic Comic', category: 'fun', style: { fontFamily: "'Bionic Comic', cursive" } },
+  { value: '2-toon', label: '2 Toon', category: 'fun', style: { fontFamily: "'2 Toon', sans-serif" } },
+  { value: 'dripping-marker', label: 'Dripping Marker', category: 'fun', style: { fontFamily: "'Dripping Marker', cursive" } },
+  { value: 'burger-doodle', label: 'Burger Doodle', category: 'fun', style: { fontFamily: "'Burger Doodle', cursive" } },
+  { value: 'candy-stripe', label: 'Candy Stripe', category: 'fun', style: { fontFamily: "'Candy Stripe', sans-serif" } },
+  { value: 'casper-comics', label: 'Casper Comics', category: 'fun', style: { fontFamily: "'Casper Comics', cursive" } },
+  { value: 'comic-fx', label: 'Comic FX', category: 'fun', style: { fontFamily: "'Comic FX', sans-serif" } },
+  { value: 'comic-smash', label: 'Comic Smash', category: 'fun', style: { fontFamily: "'Comic Smash', sans-serif" } },
+  { value: 'happy-monday', label: 'Happy Monday', category: 'fun', style: { fontFamily: "'Happy Monday', cursive" } },
+  { value: 'defying-gravity', label: 'Defying Gravity', category: 'fun', style: { fontFamily: "'Defying Gravity', sans-serif" } },
 
   // ============================================
   // WESTERN / VINTAGE (3)

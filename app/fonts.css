@@ -88,6 +88,15 @@
 @font-face { font-family: 'Bonita'; src: url('/fonts/Bonita.ttf') format('truetype'); font-display: swap; }
 @font-face { font-family: 'Pop Art'; src: url('/fonts/PopArt-Regular.ttf') format('truetype'); font-display: swap; }
 @font-face { font-family: 'Bionic Comic'; src: url('/fonts/Bionic-Comic.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: '2 Toon'; src: url('/fonts/2Toon.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Dripping Marker'; src: url('/fonts/DrippingMarker.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Burger Doodle'; src: url('/fonts/BurgerDoodle.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Candy Stripe'; src: url('/fonts/CandyStripe.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Casper Comics'; src: url('/fonts/CasperComics.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Comic FX'; src: url('/fonts/ComicFX.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Comic Smash'; src: url('/fonts/ComicSmash.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Happy Monday'; src: url('/fonts/HappyMonday.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Defying Gravity'; src: url('/fonts/DefyingGravity.ttf') format('truetype'); font-display: swap; }
 
 /* Western / Vintage */
 @font-face { font-family: 'Cockney'; src: url('/fonts/Cockney-Regular.ttf') format('truetype'); font-display: swap; }
