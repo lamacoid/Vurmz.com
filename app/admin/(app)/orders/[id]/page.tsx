@@ -17,7 +17,7 @@ interface Order {
   fulfillmentAddress: { name?: string; line1?: string; line2?: string | null; city?: string; state?: string; postalCode?: string; phone?: string | null } | null
   notes: string; createdAt: string
   metadata?: {
-    handDelivery?: { window?: string; windowLabel?: string; note?: string }
+    handDelivery?: { window?: string; windowLabel?: string; note?: string; contactless?: boolean }
     attachments?: Array<{ key: string; filename: string }>
     proof?: { status?: 'needed' | 'sent' | 'approved'; at?: string }
     invoiceId?: string
@@ -377,6 +377,9 @@ export default function OrderDetailPage() {
       {order.fulfillmentMethod === 'hand_deliver' && order.metadata?.handDelivery && (
         <div className="bg-[var(--a-accent)]/10 border border-[var(--a-accent)]/30 rounded-xl p-4 mb-6">
           <p className="text-[11px] uppercase tracking-wider text-[var(--a-accent)] mb-2 font-semibold">Hand delivery</p>
+          {order.metadata.handDelivery.contactless && (
+            <p className="text-sm font-semibold text-[var(--a-ink)] mb-1">📸 Contactless — leave at the door, text a photo.</p>
+          )}
           {order.metadata.handDelivery.windowLabel && (
             <p className="text-sm text-[var(--a-ink)]"><span className="text-[var(--a-ink-soft)]">Window:</span> {order.metadata.handDelivery.windowLabel}</p>
           )}

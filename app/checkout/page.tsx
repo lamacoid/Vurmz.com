@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { trackConversion } from '@/lib/track'
 import { useCart } from '@/lib/cart/store'
 import SquarePayment from '@/components/shop/SquarePayment'
+import { siteInfo, getSmsLink } from '@/lib/site-info'
 
 interface FulfillmentOption {
   method: 'ship' | 'hand_deliver' | 'pickup' | 'uber_direct' | 'invoice_later'
@@ -59,6 +60,7 @@ export default function CheckoutPage() {
   const [chosenMethod, setChosenMethod] = useState<FulfillmentOption['method'] | null>(null)
   const [handDeliveryWindow, setHandDeliveryWindow] = useState<string>('')
   const [handDeliveryNote, setHandDeliveryNote] = useState<string>('')
+  const [contactless, setContactless] = useState(false)
   const [squareConfig, setSquareConfig] = useState<SquareConfig | null>(null)
   const [squareChecked, setSquareChecked] = useState(false)
   const [submitting, setSubmitting] = useState(false)
@@ -280,6 +282,7 @@ export default function CheckoutPage() {
           handDelivery: chosenMethod === 'hand_deliver' ? {
             window: handDeliveryWindow || undefined,
             note: handDeliveryNote || undefined,
+            contactless: contactless || undefined,
           } : undefined,
           payment: {
             method: paymentMethod,
@@ -376,27 +379,42 @@ export default function CheckoutPage() {
                     </div>
                   </label>
 
-                  {opt.method === 'hand_deliver' && chosenMethod === 'hand_deliver' && opt.windows && opt.windows.length > 0 && (
+                  {opt.method === 'hand_deliver' && chosenMethod === 'hand_deliver' && (
                     <div className="mt-2 ml-7 space-y-3">
-                      <div>
-                        <p className="text-[11px] uppercase tracking-wider text-[#7A7068] mb-1.5 font-semibold">Preferred window</p>
-                        <div className="flex flex-wrap gap-1.5">
-                          {opt.windows.map(w => (
-                            <button
-                              key={w.key}
-                              type="button"
-                              onClick={() => setHandDeliveryWindow(w.key)}
-                              className={`text-xs px-3 py-1.5 rounded-sm border transition-colors ${
-                                handDeliveryWindow === w.key
-                                  ? 'border-[#C67A6F] bg-[#C67A6F] text-white'
-                                  : 'border-[#16525C]/15 bg-white/70 text-[var(--ink)] hover:border-[#C67A6F]/50'
-                              }`}
-                            >
-                              {w.label}
-                            </button>
-                          ))}
+                      {opt.windows && opt.windows.length > 0 && (
+                        <div>
+                          <p className="text-[11px] uppercase tracking-wider text-[#7A7068] mb-1.5 font-semibold">Preferred window</p>
+                          <div className="flex flex-wrap gap-1.5">
+                            {opt.windows.map(w => (
+                              <button
+                                key={w.key}
+                                type="button"
+                                onClick={() => setHandDeliveryWindow(w.key)}
+                                className={`text-xs px-3 py-1.5 rounded-sm border transition-colors ${
+                                  handDeliveryWindow === w.key
+                                    ? 'border-[#C67A6F] bg-[#C67A6F] text-white'
+                                    : 'border-[#16525C]/15 bg-white/70 text-[var(--ink)] hover:border-[#C67A6F]/50'
+                                }`}
+                              >
+                                {w.label}
+                              </button>
+                            ))}
+                          </div>
                         </div>
-                      </div>
+                      )}
+                      {/* Contactless: the standard checkbox. Free drop-and-text, no doorstep. */}
+                      <label className="flex items-start gap-2.5 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={contactless}
+                          onChange={e => setContactless(e.target.checked)}
+                          className="mt-0.5 accent-[#C67A6F]"
+                        />
+                        <span className="text-xs text-[var(--ink)] leading-snug">
+                          Leave it at my door, contactless
+                          <span className="block text-[#9A8F86]">I&rsquo;ll text you a photo when it&rsquo;s there. No knock.</span>
+                        </span>
+                      </label>
                       <div>
                         <label className="text-[11px] uppercase tracking-wider text-[#7A7068] block mb-1 font-semibold">
                           Delivery note <span className="font-normal normal-case text-[#9A8F86]">(gate code, parking, leave-with, etc.)</span>
@@ -544,7 +562,7 @@ export default function CheckoutPage() {
           <Section title="Payment">
             {!squareChecked ? (
               <p className="text-sm text-[#6B6259]">Loading…</p>
-            ) : paymentMethodAvailable && chosenMethod !== 'invoice_later' ? (
+            ) : paymentMethodAvailable ? (
               <SquarePayment
                 config={squareConfig!}
                 amountCents={totalCents}
@@ -552,19 +570,15 @@ export default function CheckoutPage() {
                 onError={(msg) => setError(msg)}
               />
             ) : (
-              <div>
-                <p className="text-sm text-[#6B6259] mb-3">
-                  {paymentMethodAvailable
-                    ? `"${chosen?.label}" is invoice-based. I'll follow up with a Square invoice once I review the order.`
-                    : 'Online payment is not yet configured. I\'ll send you a Square invoice after confirming your order.'}
+              // Card payment temporarily unavailable. We do NOT let the
+              // public place an unpaid order; point them to Zach instead.
+              <div className="rounded-sm border border-[#16525C]/15 bg-white/70 px-4 py-3">
+                <p className="text-sm text-[var(--ink)] font-semibold">Card payment is down for a moment.</p>
+                <p className="text-sm text-[#6B6259] mt-1">
+                  Text me at{' '}
+                  <a href={getSmsLink('Hi, I want to order but checkout payment is down.')} className="text-[#C67A6F] font-semibold hover:underline">{siteInfo.phone}</a>{' '}
+                  and I&rsquo;ll get your order placed right away.
                 </p>
-                <button
-                  onClick={() => submitOrder('invoice_later')}
-                  disabled={!canCheckout}
-                  className="w-full h-11 bg-[#C67A6F] hover:bg-[#B0675D] disabled:opacity-60 text-white text-sm font-semibold rounded-sm"
-                >
-                  {submitting ? 'Placing order…' : 'Place order · pay by invoice'}
-                </button>
               </div>
             )}
             {error && <p className="text-xs text-red-700 mt-2">{error}</p>}

@@ -128,14 +128,10 @@ export function computeFulfillmentOptions(args: {
     })
   }
 
-  // Fallback — invoice later
-  opts.push({
-    method: 'invoice_later',
-    label: 'Send me an invoice',
-    priceCents: 0,
-    eta: 'We\'ll be in touch',
-    description: 'Skip payment now. We\'ll email you an invoice with shipping options.',
-  })
+  // Note: "invoice later" is deliberately NOT a public checkout option.
+  // Pay-by-invoice is an admin courtesy extended to trusted business
+  // accounts (order wizard + collect gate), never a self-serve way for
+  // an anonymous shopper to place an order without paying.
 
   return opts
 }

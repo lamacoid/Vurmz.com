@@ -93,6 +93,7 @@ const schema = z.object({
   handDelivery: z.object({
     window: z.string().max(40).optional(),
     note: z.string().max(500).optional(),
+    contactless: z.boolean().optional(),
   }).optional(),
   payment: z.object({
     method: z.enum(['square','invoice_later']),
@@ -196,7 +197,7 @@ export async function POST(req: NextRequest) {
 
   // Hand delivery: validate the chosen window (if any). Reject unknown values
   // rather than silently dropping them.
-  let handDeliveryMeta: { window?: string; windowLabel?: string; note?: string } | null = null
+  let handDeliveryMeta: { window?: string; windowLabel?: string; note?: string; contactless?: boolean } | null = null
   if (body.fulfillmentMethod === 'hand_deliver') {
     const win = body.handDelivery?.window?.trim() || null
     if (win && !isValidHandDeliveryWindow(win)) {
@@ -206,6 +207,7 @@ export async function POST(req: NextRequest) {
       window: win ?? undefined,
       windowLabel: chosen.windows?.find(w => w.key === win)?.label,
       note: body.handDelivery?.note?.trim() || undefined,
+      contactless: body.handDelivery?.contactless || undefined,
     }
   }
 
