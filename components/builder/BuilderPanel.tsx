@@ -12,6 +12,7 @@ import FontBook from '@/components/shop/FontBook'
 import type { BuilderConfig, CanvasBuilderConfig, SilhouetteBuilderConfig, BuilderSubmission, PlacedElement } from '@/lib/builder/types'
 import type BuilderCanvasComponent from './BuilderCanvas'
 import type SilhouetteBuilderComponent from './SilhouetteBuilder'
+import type Preview3DComponent from './Preview3D'
 
 // next/dynamic is off-limits in this file: its module-scope async-chunk
 // reference is exactly what next-on-pages leaves undefined in the edge
@@ -31,6 +32,10 @@ function useClientOnly<T>(load: () => Promise<{ default: T }>): T | null {
 }
 const loadBuilderCanvas = () => import('./BuilderCanvas')
 const loadSilhouetteBuilder = () => import('./SilhouetteBuilder')
+const loadPreview3D = () => import('./Preview3D')
+/** Never resolves: keeps three.js entirely out of the bundle path for
+ *  products without a 3D model. */
+const loadNothing = () => new Promise<{ default: typeof Preview3DComponent }>(() => {})
 
 let elementCounter = 0
 function newElementId() { return `el_${++elementCounter}_${Math.random().toString(36).slice(2, 7)}` }
@@ -48,6 +53,8 @@ function CanvasPanel({ config, onChange }: {
   onChange: (v: BuilderSubmission | null) => void
 }) {
   const BuilderCanvas = useClientOnly<typeof BuilderCanvasComponent>(loadBuilderCanvas)
+  const Preview3D = useClientOnly<typeof Preview3DComponent>(config.model3d ? loadPreview3D : loadNothing)
+  const [view, setView] = useState<'flat' | '3d'>('flat')
   const [value, setValue] = useState<BuilderSubmission>({
     mode: 'canvas',
     materialKey: config.materials[0]?.key ?? '',
@@ -171,6 +178,15 @@ function CanvasPanel({ config, onChange }: {
     setSelectedId(el.id)
   }
 
+  /** Drop a pre-built layout onto the canvas. Replaces whatever is there:
+   *  templates are a starting point, and picking one mid-design reads as
+   *  "start over with this layout". */
+  function applyTemplate(t: NonNullable<CanvasBuilderConfig['templates']>[number]) {
+    const els: PlacedElement[] = t.elements.map(e => ({ ...e, id: newElementId() }))
+    update({ ...value, elements: els })
+    setSelectedId(els.find(e => e.kind === 'text')?.id ?? els[0]?.id ?? null)
+  }
+
   function patchSelected(patch: Partial<PlacedElement>) {
     if (!selected) return
     update({ ...value, elements: value.elements.map(e => (e.id === selected.id ? { ...e, ...patch } : e)) })
@@ -189,6 +205,27 @@ function CanvasPanel({ config, onChange }: {
         <span className="text-[11px] font-mono tracking-[0.3em] uppercase text-[var(--eyebrow)]">Design it</span>
         <span className="flex-1 border-t border-[var(--ink)]/20" aria-hidden />
       </div>
+
+      {/* Flat edits, 3D shows it on the real thing. */}
+      {config.model3d && (
+        <div className="mb-3 flex gap-1.5">
+          {(['flat', '3d'] as const).map(v => (
+            <button
+              key={v}
+              type="button"
+              onClick={() => setView(v)}
+              aria-pressed={view === v}
+              className={`px-3.5 py-1.5 rounded-sm border text-xs transition-colors ${
+                view === v
+                  ? 'border-[var(--eyebrow)] bg-[var(--eyebrow)]/10 text-[var(--ink)] font-semibold'
+                  : 'border-[var(--hairline)] text-[var(--ink-soft)] hover:text-[var(--ink)]'
+              }`}
+            >
+              {v === 'flat' ? 'Design' : 'See it in 3D'}
+            </button>
+          ))}
+        </div>
+      )}
 
       {/* Material / finish */}
       {config.materials.length > 1 && (
@@ -215,8 +252,33 @@ function CanvasPanel({ config, onChange }: {
         </div>
       )}
 
-      {/* The canvas */}
-      {BuilderCanvas ? (
+      {/* Templates: a filled-in starting point beats a blank canvas. */}
+      {(config.templates?.length ?? 0) > 0 && (
+        <div className="mb-3">
+          <span className="block text-[11px] uppercase tracking-wider text-[var(--ink-soft)] mb-1.5">Start from a layout</span>
+          <div className="flex flex-wrap gap-1.5">
+            {config.templates!.map(t => (
+              <button
+                key={t.key}
+                type="button"
+                onClick={() => applyTemplate(t)}
+                className="px-3 py-1.5 rounded-sm border border-[var(--hairline)] text-xs text-[var(--ink-soft)] hover:text-[var(--ink)] hover:border-[var(--eyebrow)]/50 transition-colors"
+              >
+                {t.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* The canvas (or the 3D view of it) */}
+      {view === '3d' && config.model3d ? (
+        Preview3D ? (
+          <Preview3D modelUrl={config.model3d} config={config} value={value} previews={previews} />
+        ) : (
+          <div className="aspect-[4/3] bg-[var(--ink)]/[0.05] rounded-sm animate-pulse" />
+        )
+      ) : BuilderCanvas ? (
         <BuilderCanvas config={config} value={value} onChange={update} selectedId={selectedId} onSelect={setSelectedId} previews={previews} />
       ) : (
         <div className="aspect-[3.375/2.125] bg-[var(--ink)]/[0.05] rounded-sm animate-pulse" />

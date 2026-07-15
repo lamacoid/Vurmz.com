@@ -18,6 +18,15 @@ export interface BuilderMaterial {
   gloss?: boolean
 }
 
+/** A pre-built layout the customer starts from instead of a blank canvas.
+ *  Elements are PlacedElements minus ids (ids are minted on apply) with
+ *  placeholder text the customer overwrites. */
+export interface BuilderTemplate {
+  key: string
+  label: string
+  elements: Array<Omit<PlacedElement, 'id'>>
+}
+
 /** Canvas mode: a real-dimensioned shape with free placement. */
 export interface CanvasBuilderConfig {
   mode: 'canvas'
@@ -26,6 +35,9 @@ export interface CanvasBuilderConfig {
   heightIn: number
   cornerRadiusIn?: number
   materials: BuilderMaterial[]
+  templates?: BuilderTemplate[]
+  /** Path to a GLB product model; presence turns on the 3D preview. */
+  model3d?: string
 }
 
 /** Silhouette mode: a vector outline with fixed engraving zones. */

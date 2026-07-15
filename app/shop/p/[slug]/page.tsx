@@ -72,6 +72,8 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
       ? `Made to order, ready in ${product.leadTimeDays} ${product.leadTimeDays === 1 ? 'day' : 'days'}.`
       : 'Most pieces ready in 24 to 72 hours.'
 
+  const builderCfg = builderConfigFrom(product.metadata)
+
   const orderColumn = (
     <div>
       <AddToCart
@@ -84,7 +86,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
         oneOff={product.oneOff}
         engravable={product.metadata?.engravable !== false}
         variants={variants.map(v => ({ id: v.id, name: v.name, packSize: v.packSize, priceCents: v.priceCents }))}
-        builderConfig={builderConfigFrom(product.metadata)}
+        builderConfig={builderCfg}
       />
 
       {/* Fulfillment facts, right where the decision happens. */}
@@ -170,7 +172,23 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
           <div className="mt-6 border-t-2 border-[var(--ink)]/25" aria-hidden />
           <div className="mt-[3px] border-t border-[var(--ink)]/25" aria-hidden />
 
-          {gallery.length > 0 ? (
+          {builderCfg ? (
+            /* Builder products: the design tool IS the page. Full width,
+               above everything; gallery and details fall below. */
+            <div className="mt-8">
+              {orderColumn}
+              {(gallery.length > 0 || detailsSection) && (
+                gallery.length > 0 ? (
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mt-4">
+                    <ProductGallery images={gallery} name={product.name} />
+                    {detailsSection}
+                  </div>
+                ) : (
+                  <div className="max-w-xl mx-auto">{detailsSection}</div>
+                )
+              )}
+            </div>
+          ) : gallery.length > 0 ? (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mt-8">
               <div>
                 <ProductGallery images={gallery} name={product.name} />

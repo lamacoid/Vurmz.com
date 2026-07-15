@@ -135,7 +135,7 @@ export default function AddToCart(props: {
         <button
           onClick={onAdd}
           disabled={alreadyInCart}
-          className="w-full inline-flex items-center justify-center px-6 h-11 bg-[#C67A6F] hover:bg-[#B0675D] disabled:opacity-60 disabled:cursor-not-allowed text-white text-sm font-semibold rounded-sm transition-colors"
+          className="w-full inline-flex items-center justify-center px-6 h-11 bg-[#C67A6F] hover:bg-[#B0675D] disabled:opacity-60 disabled:cursor-not-allowed text-white text-sm font-semibold transition-colors puffy-btn"
         >
           {alreadyInCart ? 'Already in cart' : added ? 'Added ✓' : 'Add to cart'}
         </button>
@@ -160,7 +160,7 @@ export default function AddToCart(props: {
           </div>
           <button
             onClick={onAdd}
-            className="flex-1 inline-flex items-center justify-center px-6 h-11 bg-[#C67A6F] hover:bg-[#B0675D] text-white text-sm font-semibold rounded-sm transition-colors"
+            className="flex-1 inline-flex items-center justify-center px-6 h-11 bg-[#C67A6F] hover:bg-[#B0675D] text-white text-sm font-semibold transition-colors puffy-btn"
           >
             {added ? 'Added ✓' : 'Add to cart'}
           </button>

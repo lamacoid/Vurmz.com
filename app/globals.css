@@ -568,40 +568,84 @@ main [class*="mx-auto"][class*="px-4"] {
       radial-gradient(90% 70% at 12% 115%, rgba(127, 207, 212, 0.08) 0%, rgba(127, 207, 212, 0) 60%);
   }
 
+  /* ── Relief text: one overhead sun, two directions ──
+     Raised: the letterforms stand proud of the material. Top edges catch
+     light, a soft shadow drops below. For the names of things.
+     Etched: the letterforms are cut INTO the material. The recess wall
+     goes dark on the sun side, the lower lip catches light. For subtext
+     and detail lines. Light mode is paper (warm), dark mode is glass
+     (cool frost). */
+  .relief-raised {
+    text-shadow:
+      0 -1px 0 rgba(255, 255, 255, 0.55),
+      0 2px 2px rgba(90, 70, 50, 0.30);
+  }
+  .relief-etched {
+    text-shadow:
+      0 -1px 1px rgba(100, 75, 55, 0.35),
+      0 1px 0 rgba(255, 255, 255, 0.75);
+  }
+  .dark .relief-raised {
+    text-shadow:
+      0 -1px 0 rgba(210, 240, 243, 0.28),
+      0 2px 3px rgba(0, 0, 0, 0.55);
+  }
+  .dark .relief-etched {
+    text-shadow:
+      0 -1px 1px rgba(0, 0, 0, 0.60),
+      0 1px 0 rgba(190, 235, 240, 0.16);
+  }
+
   /* ── Puffy: a soft "half a puffy sticker" raise ──
      A top rim highlight + soft underside + gentle drop shadow make discrete
      elements (cards, tiles, buttons) read as slightly lifted off the surface,
      without going full glossy/3D. */
   .puffy {
     box-shadow:
-      inset 0 1px 0 0 rgba(255, 255, 255, 0.10),
-      inset 0 -3px 6px -3px rgba(0, 0, 0, 0.20),
-      0 3px 8px -2px rgba(0, 0, 0, 0.28),
-      0 1px 2px 0 rgba(0, 0, 0, 0.16);
+      inset 0 1.5px 0 0 rgba(255, 255, 255, 0.15),
+      inset 0 -4.5px 9px -4px rgba(0, 0, 0, 0.30),
+      0 4.5px 12px -3px rgba(0, 0, 0, 0.40),
+      0 1.5px 3px 0 rgba(0, 0, 0, 0.24);
   }
   /* On light (oatmeal) surfaces the white top-rim disappears, so lean on a
      warm top catch + soft shadow instead. */
   .puffy-light {
     box-shadow:
-      inset 0 1px 0 0 rgba(255, 255, 255, 0.55),
-      inset 0 -3px 6px -3px rgba(120, 90, 70, 0.18),
-      0 3px 8px -2px rgba(80, 60, 50, 0.18),
-      0 1px 2px 0 rgba(80, 60, 50, 0.12);
+      inset 0 1.5px 0 0 rgba(255, 255, 255, 0.80),
+      inset 0 -4.5px 9px -4px rgba(120, 90, 70, 0.27),
+      0 4.5px 12px -3px rgba(80, 60, 50, 0.27),
+      0 1.5px 3px 0 rgba(80, 60, 50, 0.18);
   }
+  /* Buttons are full puffy stickers: domed vinyl, inflated edges curving
+     away on every side, squish on press. If it's a sticker, you can press
+     it; that's the contract. */
   .puffy-btn {
+    border-radius: 8px;
     box-shadow:
-      inset 0 1px 0 0 rgba(255, 255, 255, 0.28),
-      inset 0 -2px 4px -1px rgba(0, 0, 0, 0.22),
-      0 2px 6px -1px rgba(0, 0, 0, 0.30),
-      0 1px 2px 0 rgba(0, 0, 0, 0.18);
+      inset 0 2px 0 0 rgba(255, 255, 255, 0.50),
+      inset 0 -5px 10px -3px rgba(0, 0, 0, 0.40),
+      inset 3px 0 5px -3px rgba(0, 0, 0, 0.16),
+      inset -3px 0 5px -3px rgba(0, 0, 0, 0.16),
+      0 4px 10px -2px rgba(0, 0, 0, 0.48),
+      0 1.5px 3px 0 rgba(0, 0, 0, 0.28);
     transition: box-shadow 0.15s ease, transform 0.1s ease;
   }
-  .puffy-btn:active {
-    transform: translateY(1px);
+  .puffy-btn:hover {
+    transform: translateY(-1px);
     box-shadow:
-      inset 0 1px 0 0 rgba(255, 255, 255, 0.20),
-      inset 0 -1px 2px -1px rgba(0, 0, 0, 0.18),
-      0 1px 3px -1px rgba(0, 0, 0, 0.28);
+      inset 0 2px 0 0 rgba(255, 255, 255, 0.55),
+      inset 0 -5px 10px -3px rgba(0, 0, 0, 0.40),
+      inset 3px 0 5px -3px rgba(0, 0, 0, 0.16),
+      inset -3px 0 5px -3px rgba(0, 0, 0, 0.16),
+      0 6px 14px -3px rgba(0, 0, 0, 0.50),
+      0 2px 4px 0 rgba(0, 0, 0, 0.28);
+  }
+  .puffy-btn:active {
+    transform: translateY(1px) scale(0.985);
+    box-shadow:
+      inset 0 1.5px 0 0 rgba(255, 255, 255, 0.32),
+      inset 0 -2px 4px -1.5px rgba(0, 0, 0, 0.30),
+      0 1px 3px -1px rgba(0, 0, 0, 0.40);
   }
 
   /* Lit by a fixed overhead "sun": a soft specular gloss across the top of each
@@ -618,17 +662,17 @@ main [class*="mx-auto"][class*="px-4"] {
     z-index: 3;
     background: radial-gradient(
       ellipse 80% 55% at 50% -15%,
-      rgba(255, 255, 255, 0.22) 0%,
-      rgba(255, 255, 255, 0.07) 40%,
+      rgba(255, 255, 255, 0.33) 0%,
+      rgba(255, 255, 255, 0.11) 40%,
       rgba(255, 255, 255, 0) 68%
     );
   }
   .puffy-btn::after {
     background: radial-gradient(
-      ellipse 85% 60% at 50% -18%,
-      rgba(255, 255, 255, 0.34) 0%,
-      rgba(255, 255, 255, 0.10) 42%,
-      rgba(255, 255, 255, 0) 70%
+      ellipse 95% 72% at 50% -22%,
+      rgba(255, 255, 255, 0.58) 0%,
+      rgba(255, 255, 255, 0.16) 44%,
+      rgba(255, 255, 255, 0) 72%
     );
   }
 
