@@ -187,7 +187,7 @@ export default function Preview3D({ modelUrl, config, value, previews }: {
       // the mark plane rides a hair above the flat top
       const topY = new THREE.Box3().setFromObject(model).max.y
       const mark = config.materials.find(m => m.key === value.materialKey) ?? config.materials[0]
-      const markColor = (mark?.mark ?? 'light') === 'light' ? 0xe9e5da : 0x232028
+      const markColor = mark?.markColor ?? ((mark?.mark ?? 'light') === 'light' ? '#e9e5da' : '#232028')
       const canvas = document.createElement('canvas')
       markCanvasRef.current = canvas
       const tex = new THREE.CanvasTexture(canvas)
@@ -243,7 +243,16 @@ export default function Preview3D({ modelUrl, config, value, previews }: {
     const tex = textureRef.current
     if (!canvas || !tex) return
     const m = config.materials.find(x => x.key === value.materialKey) ?? config.materials[0]
-    markMatRef.current?.color.setHex((m?.mark ?? 'light') === 'light' ? 0xe9e5da : 0x232028)
+    const mm = markMatRef.current
+    if (mm && m) {
+      mm.color.set(m.markColor ?? (m.mark === 'light' ? '#e9e5da' : '#232028'))
+      // Physical read of the mark: an explicit markColor on a light-polarity
+      // material is bare metal showing through (anodized strip), so it gets
+      // metallic sheen; dark-polarity marks are annealed oxide, matte.
+      if (m.markColor && m.mark === 'light') { mm.metalness = 0.8; mm.roughness = 0.5 }
+      else { mm.metalness = 0; mm.roughness = 0.92 }
+      mm.needsUpdate = true
+    }
     if (m) tintMatsRef.current.forEach(t => t.color.set(m.surface))
     let alive = true
     renderMarkMap(canvas, config, value, previews).then(() => { if (alive) tex.needsUpdate = true })

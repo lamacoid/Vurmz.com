@@ -122,7 +122,7 @@ export default function BuilderCanvas({ config, value, onChange, selectedId, onS
   const stageH = config.heightIn * ppi
   const material = config.materials.find(m => m.key === value.materialKey) ?? config.materials[0]
   const markLight = material.mark === 'light'
-  const markColor = markLight ? '#EDE9DF' : '#232028'
+  const markColor = material.markColor ?? (markLight ? '#EDE9DF' : '#232028')
 
   const trRef = useRef<Konva.Transformer>(null)
   const stageRef = useRef<Konva.Stage>(null)

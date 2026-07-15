@@ -14,6 +14,11 @@ export interface BuilderMaterial {
   /** 'light' = mark reads light on the surface (colored anodized: laser strips
    *  dye to bare metal). 'dark' = mark reads dark (stainless annealing). */
   mark: 'light' | 'dark'
+  /** The mark's true color, when polarity alone would lie. Anodized aluminum
+   *  always marks bare-alu SILVER regardless of the dye color; stainless
+   *  annealing options (black, gold, blue) are each their own material entry
+   *  with the anneal color here. Renderers fall back to a polarity default. */
+  markColor?: string
   /** Optional sheen hint for gloss finishes. */
   gloss?: boolean
 }
@@ -87,6 +92,7 @@ export interface BuilderSubmission {
   materialLabel?: string
   surface?: string
   mark?: 'light' | 'dark'
+  markColor?: string
   shape?: 'rect' | 'rounded-rect' | 'circle'
   cornerRadiusIn?: number
   /** Silhouette snapshot: the outline the design was placed on. */

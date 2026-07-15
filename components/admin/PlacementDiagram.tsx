@@ -13,7 +13,7 @@ export default function PlacementDiagram({ submission, maxWidth = 360 }: { submi
   const { widthIn, heightIn, elements } = submission
   const surface = submission.surface ?? '#d8d2c6'
   const markLight = submission.mark === 'light'
-  const markColor = markLight ? '#EDE9DF' : '#232028'
+  const markColor = submission.markColor ?? (markLight ? '#EDE9DF' : '#232028')
   const r = submission.cornerRadiusIn ?? 0
 
   return (

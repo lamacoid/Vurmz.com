@@ -30,7 +30,7 @@ export default function SilhouetteBuilder({ config, materialKey, layoutKey, text
   const ppi = stageW / config.widthIn
   const stageH = config.heightIn * ppi
   const material = config.materials.find(m => m.key === materialKey) ?? config.materials[0]
-  const markColor = material.mark === 'light' ? '#EDE9DF' : '#232028'
+  const markColor = material.markColor ?? (material.mark === 'light' ? '#EDE9DF' : '#232028')
   const layout = config.layouts.find(l => l.key === layoutKey) ?? config.layouts[0]
   const textZones = layout.zones.filter(z => z.kind === 'text')
 

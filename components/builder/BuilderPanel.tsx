@@ -76,6 +76,7 @@ function CanvasPanel({ config, onChange }: {
       materialLabel: m?.label,
       surface: m?.surface,
       mark: m?.mark,
+      markColor: m?.markColor,
       shape: config.shape,
       cornerRadiusIn: config.cornerRadiusIn,
     })
@@ -398,6 +399,7 @@ function SilhouettePanel({ config, onChange }: {
       materialLabel: m?.label,
       surface: m?.surface,
       mark: m?.mark,
+      markColor: m?.markColor,
       outlinePath: config.outlinePath,
       layoutKey: nextLayout,
       widthIn: config.widthIn,
