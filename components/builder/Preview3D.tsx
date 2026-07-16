@@ -154,6 +154,33 @@ function applyMarkPhysics(mat: THREE.MeshStandardMaterial, markColor?: string) {
   mat.needsUpdate = true
 }
 
+/** Turn the mark map's alpha into a normal map: the mark is a shallow
+ *  RECESS, so its edges catch and lose light as the product turns. This
+ *  is what makes an engraving read as a cut instead of a sticker. */
+function alphaToNormal(src: HTMLCanvasElement, dst: HTMLCanvasElement) {
+  const w = src.width, h = src.height
+  dst.width = w; dst.height = h
+  const sctx = src.getContext('2d')!
+  const dctx = dst.getContext('2d')!
+  const a = sctx.getImageData(0, 0, w, h).data
+  const out = dctx.createImageData(w, h)
+  const o = out.data
+  const A = (x: number, y: number) => a[((Math.max(0, Math.min(h - 1, y)) * w) + Math.max(0, Math.min(w - 1, x))) * 4 + 3]
+  for (let y = 0; y < h; y++) {
+    for (let x = 0; x < w; x++) {
+      // height = -alpha (recessed); sobel-lite gradients
+      const dx = (A(x + 1, y) - A(x - 1, y)) / 255
+      const dy = (A(x, y + 1) - A(x, y - 1)) / 255
+      const i = (y * w + x) * 4
+      o[i] = 128 + dx * 90       // +x slope: recess wall
+      o[i + 1] = 128 - dy * 90   // three.js +Y up in tangent space
+      o[i + 2] = 255
+      o[i + 3] = 255
+    }
+  }
+  dctx.putImageData(out, 0, 0)
+}
+
 export default function Preview3D({ modelUrl, config, value, previews }: {
   modelUrl: string
   config: AnyConfig
@@ -163,6 +190,8 @@ export default function Preview3D({ modelUrl, config, value, previews }: {
   const mountRef = useRef<HTMLDivElement>(null)
   const markCanvasRef = useRef<HTMLCanvasElement | null>(null)
   const textureRef = useRef<THREE.CanvasTexture | null>(null)
+  const normalCanvasRef = useRef<HTMLCanvasElement | null>(null)
+  const normalTexRef = useRef<THREE.CanvasTexture | null>(null)
   const markMatRef = useRef<THREE.MeshStandardMaterial | null>(null)
   /** Materials named 'tintable' in the GLB take the chosen finish color at
    *  runtime, so one model serves every anodized variant. */
@@ -256,8 +285,13 @@ export default function Preview3D({ modelUrl, config, value, previews }: {
       tex.colorSpace = THREE.SRGBColorSpace
       tex.anisotropy = renderer.capabilities.getMaxAnisotropy()
       textureRef.current = tex
+      const nCanvas = document.createElement('canvas')
+      normalCanvasRef.current = nCanvas
+      const nTex = new THREE.CanvasTexture(nCanvas)
+      normalTexRef.current = nTex
       const markMat = new THREE.MeshStandardMaterial({
         map: tex, transparent: true, color: markColor,
+        normalMap: nTex, normalScale: new THREE.Vector2(0.55, 0.55),
         depthWrite: false, polygonOffset: true, polygonOffsetFactor: -1,
       })
       applyMarkPhysics(markMat, mark?.markColor)
@@ -280,7 +314,11 @@ export default function Preview3D({ modelUrl, config, value, previews }: {
       }
       scene.add(markMesh)
 
-      renderMarkMap(canvas, config, value, previews).then(() => { tex.needsUpdate = true })
+      renderMarkMap(canvas, config, value, previews).then(() => {
+        tex.needsUpdate = true
+        alphaToNormal(canvas, nCanvas)
+        nTex.needsUpdate = true
+      })
     })
 
     let raf = 0
@@ -322,7 +360,16 @@ export default function Preview3D({ modelUrl, config, value, previews }: {
     }
     if (m) tintMatsRef.current.forEach(t => t.color.set(m.surface))
     let alive = true
-    renderMarkMap(canvas, config, value, previews).then(() => { if (alive) tex.needsUpdate = true })
+    renderMarkMap(canvas, config, value, previews).then(() => {
+      if (!alive) return
+      tex.needsUpdate = true
+      const nCanvas = normalCanvasRef.current
+      const nTex = normalTexRef.current
+      if (nCanvas && nTex) {
+        alphaToNormal(canvas, nCanvas)
+        nTex.needsUpdate = true
+      }
+    })
     return () => { alive = false }
   }, [value, config, previews])
 
