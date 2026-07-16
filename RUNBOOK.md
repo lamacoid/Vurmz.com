@@ -113,6 +113,34 @@ Migrations are forward-only — never edit a numbered migration after it's been 
 
 ---
 
+## Time Travel: restoring the database from a backup
+
+Backups are full SQL exports in `backups/` (one file per run, named by
+timestamp). They are made three ways: automatically every Sunday 3:15am
+(launchd job `com.vurmz.dbbackup`, log at `backups/backup-cron.log`),
+before every migration by hand (`npm run db:backup`), and any time you
+ask Claude. The script retries and verifies; trust a backup only if
+"backup OK" printed for it.
+
+To restore (this REPLACES current data with the backup's data):
+
+1. Pick the file: `ls -t backups/` (newest first). Open it and check the
+   date in the filename is the moment you want to travel back to.
+2. Take a backup of the CURRENT broken state first, so time travel is
+   itself reversible: `npm run db:backup`.
+3. Restore locally first and look at it:
+   `npx wrangler d1 execute vurmz-core --local --file=backups/<file>.sql`
+   then browse the local admin to confirm it looks right.
+4. Restore remote (the live site):
+   `npx wrangler d1 execute vurmz-core --remote --file=backups/<file>.sql`
+5. Smoke test: `/shop`, one product page, `/admin` orders list.
+
+Notes: exports contain full CREATE + INSERT statements, so they replace
+tables wholesale. Orders placed AFTER the backup moment are lost from
+the database (Square still has the payment records; recover those by
+hand from the Square dashboard). If wrangler errors midway, run the
+file again; it is safe to re-apply.
+
 ## Common issues
 
 ### "It built on my machine but failed on Pages"
