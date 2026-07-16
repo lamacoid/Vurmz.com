@@ -67,6 +67,11 @@ export default function AdminToday() {
   }, [])
 
   const rail = dash ? [...dash.tickets].sort(fireOrder) : []
+  // Phase D: tickets riding a delivery run group at the top; ready
+  // hand-deliveries with an address are pickable into the next run.
+  const onRun = rail.filter(t => t.deliveryRun && t.status === 'ready')
+  const offRun = rail.filter(t => !(t.deliveryRun && t.status === 'ready'))
+  const runnable = rail.filter(t => t.status === 'ready' && t.fulfillmentMethod === 'hand_deliver' && !t.deliveryRun && t.addressLine)
 
   return (
     <div className="p-4 sm:p-8 max-w-3xl mx-auto">
@@ -108,15 +113,51 @@ export default function AdminToday() {
             </Link>
           )}
 
+          {/* Out for delivery: the current run, route one tap away. */}
+          {onRun.length > 0 && (
+            <section className="mb-4">
+              <div className="flex items-center justify-between px-1 mb-2">
+                <p className="text-[11px] font-semibold uppercase tracking-wider text-[var(--a-accent)]">Out for delivery</p>
+                <a
+                  href={`https://www.google.com/maps/dir/${onRun.map(t => encodeURIComponent(t.addressLine ?? '')).join('/')}`}
+                  target="_blank" rel="noopener noreferrer"
+                  className="text-xs text-[var(--a-accent)] hover:underline"
+                >
+                  Open the route →
+                </a>
+              </div>
+              <div className="space-y-3">
+                {onRun.map(t => (
+                  <div key={t.id}>
+                    <div className="flex items-center gap-2 px-1 pb-1">
+                      <span className="text-[11px] text-[var(--a-ink-faint)] truncate">{t.addressLine}</span>
+                      <a
+                        href={`http://maps.apple.com/?daddr=${encodeURIComponent(t.addressLine ?? '')}&dirflg=d`}
+                        target="_blank" rel="noopener noreferrer"
+                        className="ml-auto shrink-0 text-[11px] text-[var(--a-accent)] hover:underline"
+                      >
+                        This stop →
+                      </a>
+                    </div>
+                    <Ticket ticket={t} onAdvanced={load} />
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Start a run: pick the ready hand-deliveries, hand off to maps. */}
+          {runnable.length > 0 && <RunPanel tickets={runnable} onStarted={load} />}
+
           {/* The rail. */}
-          {rail.length === 0 ? (
+          {offRun.length === 0 && onRun.length === 0 ? (
             <div className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-xl p-10 text-center">
               <p className="text-sm text-[var(--a-ink-soft)]">The rail is clear.</p>
               <p className="text-xs text-[var(--a-ink-faint)] mt-1">New orders land here as tickets, urgent first, each with its one next step.</p>
             </div>
           ) : (
             <div className="space-y-3">
-              {rail.map(t => <Ticket key={t.id} ticket={t} onAdvanced={load} />)}
+              {offRun.map(t => <Ticket key={t.id} ticket={t} onAdvanced={load} />)}
             </div>
           )}
 
@@ -132,6 +173,67 @@ export default function AdminToday() {
         </>
       )}
     </div>
+  )
+}
+
+function RunPanel({ tickets, onStarted }: { tickets: RailTicket[]; onStarted: () => void }) {
+  const [picked, setPicked] = useState<Record<string, boolean>>(() => Object.fromEntries(tickets.map(t => [t.id, true])))
+  const [busy, setBusy] = useState(false)
+  const [err, setErr] = useState<string | null>(null)
+  const chosen = tickets.filter(t => picked[t.id])
+
+  async function start() {
+    if (chosen.length === 0 || busy) return
+    setBusy(true); setErr(null)
+    try {
+      const res = await fetch('/api/admin/orders/run', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ orderIds: chosen.map(t => t.id) }),
+      })
+      const j = await res.json() as { ok?: boolean; data?: { googleUrl?: string } }
+      if (!j.ok) throw new Error('run failed')
+      if (j.data?.googleUrl) window.open(j.data.googleUrl, '_blank', 'noopener')
+      onStarted()
+    } catch {
+      setErr('That did not go through. Nothing changed; try again.')
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  return (
+    <section className="bg-[var(--a-panel)] border border-[var(--a-line)] rounded-xl px-4 py-3.5 mb-4">
+      <p className="text-sm font-medium text-[var(--a-ink)]">
+        {tickets.length === 1 ? 'One delivery is ready to go out.' : `${tickets.length} deliveries are ready to go out.`}
+      </p>
+      <div className="mt-2.5 space-y-1.5">
+        {tickets.map(t => (
+          <label key={t.id} className="flex items-start gap-2.5 text-sm text-[var(--a-ink-soft)] cursor-pointer">
+            <input
+              type="checkbox"
+              checked={!!picked[t.id]}
+              onChange={e => setPicked(prev => ({ ...prev, [t.id]: e.target.checked }))}
+              className="mt-0.5 accent-[var(--a-accent)]"
+            />
+            <span>
+              <span className="text-[var(--a-ink)]">{t.customerName}</span>
+              <span className="text-[var(--a-ink-faint)]"> · {t.addressLine}</span>
+            </span>
+          </label>
+        ))}
+      </div>
+      <button
+        type="button"
+        onClick={start}
+        disabled={chosen.length === 0 || busy}
+        className="mt-3 inline-flex items-center gap-2 bg-[var(--a-cta)] hover:bg-[var(--a-cta-hover)] disabled:opacity-50 text-white text-sm font-semibold rounded-lg px-4 py-2 transition-colors"
+      >
+        {busy ? 'Starting…' : chosen.length <= 1 ? 'Start the run' : `Start the run (${chosen.length} stops)`}
+      </button>
+      <p className="text-[11px] text-[var(--a-ink-faint)] mt-1.5">Opens the route in maps. Tap Delivered on each ticket at the door.</p>
+      {err && <p className="text-[11px] text-amber-400 mt-1">{err}</p>}
+    </section>
   )
 }
 

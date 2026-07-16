@@ -31,13 +31,13 @@ export async function GET(req: NextRequest) {
       // The rail: open work plus delivered-but-unpaid, customer joined in.
       db.prepare(
         `SELECT o.id, o.number, o.email, o.status, o.total_cents, o.fulfillment_method,
-                o.fulfillment_eta, o.metadata, o.created_at,
+                o.fulfillment_eta, o.fulfillment_address, o.metadata, o.created_at,
                 c.name AS customer_name, c.phone AS customer_phone,
                 CASE WHEN ${SETTLED_SQL} THEN 1 ELSE 0 END AS settled
          FROM orders o LEFT JOIN customers c ON c.id = o.customer_id
          WHERE ${ON_RAIL_SQL}
          ORDER BY o.created_at ASC LIMIT 50`
-      ).all<{ id: string; number: string; email: string; status: string; total_cents: number; fulfillment_method: string; fulfillment_eta: string | null; metadata: string; created_at: string; customer_name: string | null; customer_phone: string | null; settled: number }>(),
+      ).all<{ id: string; number: string; email: string; status: string; total_cents: number; fulfillment_method: string; fulfillment_eta: string | null; fulfillment_address: string | null; metadata: string; created_at: string; customer_name: string | null; customer_phone: string | null; settled: number }>(),
       db.prepare(`SELECT status, COUNT(*) n FROM orders GROUP BY status`).all<{ status: string; n: number }>(),
       db.prepare(
         `SELECT COALESCE(SUM(amount_cents),0) c FROM payments WHERE status='succeeded' AND created_at >= datetime('now','-7 day')`
@@ -87,8 +87,13 @@ export async function GET(req: NextRequest) {
 
     const counts = Object.fromEntries(countRows.results.map(r => [r.status, r.n]))
     const tickets: RailTicket[] = actionRows.results.map(r => {
-      let meta: { attachments?: unknown[]; proof?: { status?: string } } = {}
+      let meta: { attachments?: unknown[]; proof?: { status?: string }; deliveryRun?: { id?: string; startedAt?: string } } = {}
       try { meta = JSON.parse(r.metadata || '{}') } catch {}
+      let addr: { line1?: string; line2?: string | null; city?: string; state?: string; postalCode?: string } | null = null
+      try { addr = JSON.parse(r.fulfillment_address || 'null') } catch {}
+      const addressLine = addr?.line1 && addr.city
+        ? `${addr.line1}${addr.line2 ? ' ' + addr.line2 : ''}, ${addr.city}, ${addr.state ?? 'CO'} ${addr.postalCode ?? ''}`.trim()
+        : null
       const f = flags[r.id] ?? { hasText: false, hasElement: false }
       const personalized = f.hasText || f.hasElement
       const items = itemsByOrder.get(r.id) ?? { summary: [], engraving: null }
@@ -110,6 +115,8 @@ export async function GET(req: NextRequest) {
         eta: r.fulfillment_eta,
         createdAt: r.created_at,
         settled: r.settled === 1,
+        deliveryRun: meta.deliveryRun?.id ? { id: meta.deliveryRun.id, startedAt: meta.deliveryRun.startedAt ?? '' } : null,
+        addressLine,
       }
     })
 

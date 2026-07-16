@@ -31,6 +31,10 @@ export interface RailTicket {
   /** Money truth, derived server-side: cash mark, Square payment, or paid
    *  linked invoice. Delivered-but-unsettled tickets stay on the rail. */
   settled: boolean
+  /** Phase D: set while the ticket rides a delivery run. */
+  deliveryRun: { id: string; startedAt: string } | null
+  /** One-line delivery address for run picking and maps handoff. */
+  addressLine: string | null
 }
 
 export interface NextAction {
