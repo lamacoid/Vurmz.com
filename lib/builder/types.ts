@@ -59,6 +59,11 @@ export interface SilhouetteBuilderConfig {
     zones: Array<{ xIn: number; yIn: number; wIn: number; hIn: number; kind: 'text' | 'image' }>
   }>
   materials: BuilderMaterial[]
+  /** Path to a GLB product model; presence turns on the 3D preview. */
+  model3d?: string
+  /** For cylindrical products (pens): the mark wraps a barrel of this
+   *  radius along the length axis instead of lying on a flat top. */
+  markCylinder?: { radiusIn: number }
 }
 
 export type BuilderConfig = CanvasBuilderConfig | SilhouetteBuilderConfig

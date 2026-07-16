@@ -17,9 +17,22 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js'
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js'
 import { fontOptions } from '@/lib/fonts'
-import type { CanvasBuilderConfig, BuilderSubmission } from '@/lib/builder/types'
+import type { CanvasBuilderConfig, SilhouetteBuilderConfig, BuilderSubmission } from '@/lib/builder/types'
+
+type AnyConfig = CanvasBuilderConfig | SilhouetteBuilderConfig
 
 const IN = 0.0254 // meters per inch: models are exported at true scale
+
+/** Where the mark map's vertical origin sits: flat products use the full
+ *  face; cylindrical ones use the visible barrel band (the profile rows
+ *  that wrap the cylinder). */
+function markRegion(config: AnyConfig): { yOffIn: number; hIn: number } {
+  if (config.mode === 'silhouette' && config.markCylinder) {
+    const r = config.markCylinder.radiusIn
+    return { yOffIn: config.heightIn / 2 - r, hIn: 2 * r }
+  }
+  return { yOffIn: 0, hIn: config.heightIn }
+}
 
 function bareFamily(fontValue?: string): string {
   const stack = (fontOptions.find(f => f.value === fontValue)?.style.fontFamily as string) ?? 'sans-serif'
@@ -41,16 +54,18 @@ function loadImage(src: string): Promise<HTMLImageElement | null> {
  *  laser: art and photos mark by their darkness, text marks solid. */
 async function renderMarkMap(
   canvas: HTMLCanvasElement,
-  config: CanvasBuilderConfig,
+  config: AnyConfig,
   value: BuilderSubmission,
   previews?: Record<string, string>,
 ) {
   const SIZE = 1024
+  const region = markRegion(config)
   canvas.width = SIZE
-  canvas.height = Math.round(SIZE * (config.heightIn / config.widthIn))
+  canvas.height = Math.max(2, Math.round(SIZE * (region.hIn / config.widthIn)))
   const ctx = canvas.getContext('2d')!
   ctx.clearRect(0, 0, canvas.width, canvas.height)
   const px = SIZE / config.widthIn
+  const yOff = region.yOffIn
 
   const families = Array.from(new Set(
     value.elements.filter(e => e.kind === 'text').map(e => bareFamily(e.fontValue)),
@@ -59,7 +74,7 @@ async function renderMarkMap(
 
   for (const el of value.elements) {
     ctx.save()
-    const x = el.xIn * px, y = el.yIn * px, w = el.wIn * px, h = el.hIn * px
+    const x = el.xIn * px, y = (el.yIn - yOff) * px, w = el.wIn * px, h = el.hIn * px
     ctx.translate(x + w / 2, y + h / 2)
     ctx.rotate((el.rotationDeg * Math.PI) / 180)
     if (el.kind === 'text') {
@@ -94,9 +109,54 @@ async function renderMarkMap(
   }
 }
 
+/** A cylindrical band that hugs a barrel along X, UV-mapped so the mark
+ *  canvas wraps it: u along the length, v across the visible arc. */
+function barrelStrip(lengthM: number, radiusM: number, arc = 1.5): THREE.BufferGeometry {
+  const L = 96, A = 24
+  const pos: number[] = [], norm: number[] = [], uv: number[] = [], idx: number[] = []
+  for (let i = 0; i <= L; i++) {
+    const x = -lengthM / 2 + (i / L) * lengthM
+    for (let j = 0; j <= A; j++) {
+      const phi = arc / 2 - (j / A) * arc // + = up; band faces the camera (+Z)
+      pos.push(x, radiusM * Math.sin(phi), radiusM * Math.cos(phi))
+      norm.push(0, Math.sin(phi), Math.cos(phi))
+      uv.push(i / L, 1 - j / A)
+    }
+  }
+  const row = A + 1
+  for (let i = 0; i < L; i++) {
+    for (let j = 0; j < A; j++) {
+      const a = i * row + j, b = (i + 1) * row + j
+      idx.push(a, b, a + 1, b, b + 1, a + 1)
+    }
+  }
+  const g = new THREE.BufferGeometry()
+  g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3))
+  g.setAttribute('normal', new THREE.Float32BufferAttribute(norm, 3))
+  g.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2))
+  g.setIndex(idx)
+  return g
+}
+
+/** How the mark behaves physically: a light markColor is bare metal
+ *  showing through (metallic sheen); a dark one is annealed oxide or
+ *  burn (matte). No markColor = the polarity default, matte. */
+function applyMarkPhysics(mat: THREE.MeshStandardMaterial, markColor?: string) {
+  if (markColor) {
+    const c = new THREE.Color(markColor)
+    const lum = 0.299 * c.r + 0.587 * c.g + 0.114 * c.b
+    mat.metalness = lum > 0.45 ? 0.75 : 0.15
+    mat.roughness = lum > 0.45 ? 0.5 : 0.85
+  } else {
+    mat.metalness = 0
+    mat.roughness = 0.92
+  }
+  mat.needsUpdate = true
+}
+
 export default function Preview3D({ modelUrl, config, value, previews }: {
   modelUrl: string
-  config: CanvasBuilderConfig
+  config: AnyConfig
   value: BuilderSubmission
   previews?: Record<string, string>
 }) {
@@ -127,13 +187,14 @@ export default function Preview3D({ modelUrl, config, value, previews }: {
     const pmrem = new THREE.PMREMGenerator(renderer)
     scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture
 
+    const span = Math.max(config.widthIn * IN, 0.09)
     const camera = new THREE.PerspectiveCamera(32, width / height, 0.005, 2)
-    camera.position.set(0.11, 0.12, 0.14)
+    camera.position.set(span * 0.75, span * 0.85, span * 1.05)
 
     const controls = new OrbitControls(camera, renderer.domElement)
     controls.enableDamping = true
-    controls.minDistance = 0.06
-    controls.maxDistance = 0.4
+    controls.minDistance = span * 0.4
+    controls.maxDistance = span * 3
     controls.maxPolarAngle = Math.PI * 0.52
     controls.target.set(0, 0, 0)
 
@@ -147,7 +208,7 @@ export default function Preview3D({ modelUrl, config, value, previews }: {
       return new THREE.CanvasTexture(c)
     })()
     const shadow = new THREE.Mesh(
-      new THREE.PlaneGeometry(0.16, 0.16),
+      new THREE.PlaneGeometry(span * 1.6, span * 1.6),
       new THREE.MeshBasicMaterial({ map: shadowTex, transparent: true, depthWrite: false }),
     )
     shadow.rotation.x = -Math.PI / 2
@@ -184,8 +245,9 @@ export default function Preview3D({ modelUrl, config, value, previews }: {
       model.position.y -= box2.min.y
       scene.add(model)
 
-      // the mark plane rides a hair above the flat top
-      const topY = new THREE.Box3().setFromObject(model).max.y
+      // the mark surface rides a hair above the product: a plane over a
+      // flat top, or a band hugging a cylindrical barrel
+      const grounded = new THREE.Box3().setFromObject(model)
       const mark = config.materials.find(m => m.key === value.materialKey) ?? config.materials[0]
       const markColor = mark?.markColor ?? ((mark?.mark ?? 'light') === 'light' ? '#e9e5da' : '#232028')
       const canvas = document.createElement('canvas')
@@ -196,16 +258,26 @@ export default function Preview3D({ modelUrl, config, value, previews }: {
       textureRef.current = tex
       const markMat = new THREE.MeshStandardMaterial({
         map: tex, transparent: true, color: markColor,
-        roughness: 0.92, metalness: 0, depthWrite: false,
-        polygonOffset: true, polygonOffsetFactor: -1,
+        depthWrite: false, polygonOffset: true, polygonOffsetFactor: -1,
       })
+      applyMarkPhysics(markMat, mark?.markColor)
       markMatRef.current = markMat
-      markMesh = new THREE.Mesh(
-        new THREE.PlaneGeometry(config.widthIn * IN * 0.985, config.heightIn * IN * 0.985),
-        markMat,
-      )
-      markMesh.rotation.x = -Math.PI / 2
-      markMesh.position.y = topY + 0.00012
+      if (config.mode === 'silhouette' && config.markCylinder) {
+        markMesh = new THREE.Mesh(
+          barrelStrip(config.widthIn * IN, config.markCylinder.radiusIn * IN + 0.00018),
+          markMat,
+        )
+        // the barrel axis sits at the grounded model's vertical center
+        markMesh.position.y = (grounded.min.y + grounded.max.y) / 2
+        markMesh.position.x = (grounded.min.x + grounded.max.x) / 2
+      } else {
+        markMesh = new THREE.Mesh(
+          new THREE.PlaneGeometry(config.widthIn * IN * 0.985, config.heightIn * IN * 0.985),
+          markMat,
+        )
+        markMesh.rotation.x = -Math.PI / 2
+        markMesh.position.y = grounded.max.y + 0.00012
+      }
       scene.add(markMesh)
 
       renderMarkMap(canvas, config, value, previews).then(() => { tex.needsUpdate = true })
@@ -246,12 +318,7 @@ export default function Preview3D({ modelUrl, config, value, previews }: {
     const mm = markMatRef.current
     if (mm && m) {
       mm.color.set(m.markColor ?? (m.mark === 'light' ? '#e9e5da' : '#232028'))
-      // Physical read of the mark: an explicit markColor on a light-polarity
-      // material is bare metal showing through (anodized strip), so it gets
-      // metallic sheen; dark-polarity marks are annealed oxide, matte.
-      if (m.markColor && m.mark === 'light') { mm.metalness = 0.8; mm.roughness = 0.5 }
-      else { mm.metalness = 0; mm.roughness = 0.92 }
-      mm.needsUpdate = true
+      applyMarkPhysics(mm, m.markColor)
     }
     if (m) tintMatsRef.current.forEach(t => t.color.set(m.surface))
     let alive = true

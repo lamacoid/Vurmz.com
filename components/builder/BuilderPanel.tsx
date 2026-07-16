@@ -373,6 +373,8 @@ function SilhouettePanel({ config, onChange }: {
   onChange: (v: BuilderSubmission | null) => void
 }) {
   const SilhouetteBuilder = useClientOnly<typeof SilhouetteBuilderComponent>(loadSilhouetteBuilder)
+  const Preview3D = useClientOnly<typeof Preview3DComponent>(config.model3d ? loadPreview3D : loadNothing)
+  const [view, setView] = useState<'flat' | '3d'>('flat')
   const [materialKey, setMaterialKey] = useState(config.materials[0]?.key ?? '')
   const [layoutKey, setLayoutKey] = useState(config.layouts[0]?.key ?? '')
   const [fontValue, setFontValue] = useState('zen-kurenaido')
@@ -381,6 +383,32 @@ function SilhouettePanel({ config, onChange }: {
   const layout = config.layouts.find(l => l.key === layoutKey) ?? config.layouts[0]
   const textZones = layout.zones.filter(z => z.kind === 'text')
   const material = config.materials.find(m => m.key === materialKey) ?? config.materials[0]
+
+  /** The live layout as a submission, for the 3D preview (ungated: empty
+   *  zones just render nothing on the barrel). */
+  const liveSub: BuilderSubmission = {
+    mode: 'silhouette',
+    materialKey,
+    materialLabel: material?.label,
+    surface: material?.surface,
+    mark: material?.mark,
+    markColor: material?.markColor,
+    outlinePath: config.outlinePath,
+    layoutKey,
+    widthIn: config.widthIn,
+    heightIn: config.heightIn,
+    elements: textZones
+      .map((z, i) => ({ z, t: (texts[i] ?? '').trim() }))
+      .filter(x => x.t)
+      .map(({ z, t }, i) => ({
+        id: `zone_${i}`,
+        kind: 'text' as const,
+        xIn: z.xIn, yIn: z.yIn, wIn: z.wIn, hIn: z.hIn,
+        rotationDeg: 0,
+        text: t.slice(0, 120),
+        fontValue,
+      })),
+  }
   // Konva needs a bare family name, not the CSS stack, or it falls back to serif.
   const fontFamily = ((fontOptions.find(f => f.value === fontValue)?.style.fontFamily as string) ?? 'sans-serif')
     .split(',')[0].replace(/["']/g, '').trim()
@@ -470,7 +498,33 @@ function SilhouettePanel({ config, onChange }: {
         </div>
       )}
 
-      {SilhouetteBuilder ? (
+      {config.model3d && (
+        <div className="mb-3 flex gap-1.5">
+          {(['flat', '3d'] as const).map(v => (
+            <button
+              key={v}
+              type="button"
+              onClick={() => setView(v)}
+              aria-pressed={view === v}
+              className={`px-3.5 py-1.5 rounded-sm border text-xs transition-colors ${
+                view === v
+                  ? 'border-[var(--eyebrow)] bg-[var(--eyebrow)]/10 text-[var(--ink)] font-semibold'
+                  : 'border-[var(--hairline)] text-[var(--ink-soft)] hover:text-[var(--ink)]'
+              }`}
+            >
+              {v === 'flat' ? 'Design' : 'See it in 3D'}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {view === '3d' && config.model3d ? (
+        Preview3D ? (
+          <Preview3D modelUrl={config.model3d} config={config} value={liveSub} />
+        ) : (
+          <div className="aspect-[4/3] bg-[var(--ink)]/[0.05] rounded-sm animate-pulse" />
+        )
+      ) : SilhouetteBuilder ? (
         <SilhouetteBuilder config={config} materialKey={materialKey} layoutKey={layoutKey} texts={texts} fontFamily={fontFamily} />
       ) : (
         <div className="h-16 bg-[var(--ink)]/[0.05] rounded-sm animate-pulse" />
