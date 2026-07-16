@@ -24,7 +24,7 @@ function metaLine(p: Product, sale?: SaleInfo): string {
 
 // Deliberately photo-free: the menu stays typeset (Zach's call, and it
 // reads like a real menu because of it). Photos live on the product page.
-function MenuRow({ p, sale, lowCents }: { p: Product; sale?: SaleInfo; lowCents?: number }) {
+export function MenuRow({ p, sale, lowCents }: { p: Product; sale?: SaleInfo; lowCents?: number }) {
   return (
     <Link href={`/shop/p/${p.slug}`} className="group block py-2.5 -mx-2 px-2 rounded-sm transition-colors hover:bg-[var(--ink)]/[0.04]">
       <span className="flex items-baseline gap-2.5">
