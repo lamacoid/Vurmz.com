@@ -28,7 +28,7 @@ function MenuRow({ p, sale }: { p: Product; sale?: SaleInfo }) {
   return (
     <Link href={`/shop/p/${p.slug}`} className="group block py-2.5 -mx-2 px-2 rounded-sm transition-colors hover:bg-[var(--ink)]/[0.04]">
       <span className="flex items-baseline gap-2.5">
-        <span className="relative font-semibold text-[var(--ink)] leading-snug underline decoration-dotted decoration-[var(--ink)]/30 underline-offset-4 group-hover:decoration-transparent transition-colors">
+        <span className="relative font-semibold text-[var(--ink)] leading-snug underline decoration-dotted decoration-[var(--ink)]/30 underline-offset-4 group-hover:decoration-transparent transition-colors relief-raised">
           {p.name}
           {/* The laser: a thin red rule engraves under the name on hover. */}
           <span
@@ -50,7 +50,7 @@ function MenuRow({ p, sale }: { p: Product; sale?: SaleInfo }) {
         </span>
       </span>
       {metaLine(p, sale) && (
-        <span className="block text-sm text-[var(--ink-soft)] leading-snug mt-0.5">
+        <span className="block text-sm text-[var(--ink-soft)] leading-snug mt-0.5 relief-etched">
           {metaLine(p, sale)}
         </span>
       )}
@@ -133,7 +133,7 @@ export default async function MenuShop() {
               </p>
               <Link
                 href={`/shop/p/${house.slug}`}
-                className="inline-flex items-center justify-center mt-4 px-6 h-9 border border-[var(--eyebrow)]/50 text-[var(--eyebrow)] text-sm font-semibold rounded-sm hover:bg-[var(--eyebrow)]/10 transition-colors"
+                className="inline-flex items-center justify-center mt-4 px-6 h-9 border border-[var(--eyebrow)]/50 text-[var(--eyebrow)] text-sm font-semibold hover:bg-[var(--eyebrow)]/10 transition-colors puffy-btn"
               >
                 Start yours
               </Link>
@@ -189,7 +189,7 @@ export default async function MenuShop() {
             <section key={s.slug} id={`menu-${s.slug}`} className="break-inside-avoid mb-10 scroll-mt-20">
               <div className="flex items-center gap-3 mb-2">
                 <span className="flex-1 border-t border-[var(--ink)]/20" aria-hidden />
-                <h2 className="text-xs font-mono tracking-[0.3em] uppercase text-[var(--eyebrow)]">{s.name}</h2>
+                <h2 className="text-xs font-mono tracking-[0.3em] uppercase text-[var(--eyebrow)] relief-etched">{s.name}</h2>
                 <span className="flex-1 border-t border-[var(--ink)]/20" aria-hidden />
               </div>
               <div className="divide-y divide-[var(--hairline)]">

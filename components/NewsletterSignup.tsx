@@ -85,7 +85,7 @@ export default function NewsletterSignup({ variant = 'full', theme = 'services' 
                 <button
                   type="submit"
                   disabled={status === 'loading'}
-                  className="px-4 py-2 bg-[var(--feature)] text-white text-sm font-semibold rounded-sm hover:bg-[var(--feature-deep)] transition-colors disabled:opacity-50 whitespace-nowrap"
+                  className="px-4 py-2 bg-[var(--feature)] text-white text-sm font-semibold hover:bg-[var(--feature-deep)] transition-colors disabled:opacity-50 whitespace-nowrap puffy-btn"
                 >
                   {status === 'loading' ? '...' : 'Sign up'}
                 </button>

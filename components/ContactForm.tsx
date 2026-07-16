@@ -166,7 +166,7 @@ export default function ContactForm() {
       <button
         type="submit"
         disabled={status === 'sending'}
-        className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-vurmz-cta text-white px-8 py-3 font-semibold rounded-xl hover:bg-vurmz-cta-hover transition-colors shadow-lg shadow-vurmz-cta/25 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-vurmz-cta text-white px-8 py-3 font-semibold hover:bg-vurmz-cta-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed puffy-btn"
       >
         {status === 'sending' ? 'Sending...' : 'Send Message'}
         {status !== 'sending' && <ArrowRightIcon className="h-4 w-4" />}

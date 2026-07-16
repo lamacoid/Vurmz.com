@@ -112,7 +112,7 @@ export default function CartDrawer() {
             <Link
               href="/checkout"
               onClick={() => setOpen(false)}
-              className="flex items-center justify-center h-11 bg-[#C67A6F] hover:bg-[#B0675D] text-white text-sm font-semibold rounded-sm transition-colors"
+              className="flex items-center justify-center h-11 bg-[#C67A6F] hover:bg-[#B0675D] text-white text-sm font-semibold transition-colors puffy-btn"
             >
               Checkout
             </Link>

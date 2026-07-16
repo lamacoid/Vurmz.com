@@ -102,7 +102,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
     <div className="mt-10">
       <div className="flex items-center gap-3 mb-3">
         <span className="flex-1 border-t border-[var(--ink)]/20" aria-hidden />
-        <h2 className="text-xs font-mono tracking-[0.3em] uppercase text-[var(--eyebrow)]">The details</h2>
+        <h2 className="text-xs font-mono tracking-[0.3em] uppercase text-[var(--eyebrow)] relief-etched">The details</h2>
         <span className="flex-1 border-t border-[var(--ink)]/20" aria-hidden />
       </div>
       <div className="text-sm text-[var(--ink-soft)] leading-relaxed whitespace-pre-wrap">{product.description}</div>
@@ -131,7 +131,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
           {/* The menu line, writ large: name, dotted leader, price. */}
           <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
             <h1
-              className="text-3xl sm:text-4xl text-[var(--ink)] tracking-tight leading-tight"
+              className="text-3xl sm:text-4xl text-[var(--ink)] tracking-tight leading-tight relief-raised"
               style={{ fontFamily: 'var(--font-display), Georgia, serif' }}
             >
               {product.name}
@@ -164,7 +164,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
               Launch price through {saleEndsLabel(sale)}{sale.capLabel ? `, ${sale.capLabel}` : ''}.
             </p>
           )}
-          {subtext && <p className="text-sm text-[var(--ink-soft)] mt-2 max-w-2xl">{subtext}</p>}
+          {subtext && <p className="text-sm text-[var(--ink-soft)] mt-2 max-w-2xl relief-etched">{subtext}</p>}
           {product.oneOff && (
             <p className="text-xs text-[var(--ink-soft)] mt-1.5">only one exists, once it&rsquo;s gone, it&rsquo;s gone</p>
           )}
