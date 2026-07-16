@@ -3,8 +3,8 @@ import { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Icon } from '@/components/admin/icons'
 import Ticket from '@/components/admin/Ticket'
-import { type RailTicket, fireOrder } from '@/lib/admin/next-action'
-import { drainQueue, pendingBumps } from '@/lib/admin/rail-client'
+import { type RailTicket, fireOrder, nextAction } from '@/lib/admin/next-action'
+import { drainQueue, pendingBumps, railBump } from '@/lib/admin/rail-client'
 
 // Today: the kitchen rail (Admin Charter, Phase 1). Three numbers, the
 // tickets in fire order, decisions below. Answers "what do I do right
@@ -67,6 +67,42 @@ export default function AdminToday() {
   }, [])
 
   const rail = dash ? [...dash.tickets].sort(fireOrder) : []
+
+  // Rail Phase F, software half: the bump bar. USB bump bars are HID
+  // keyboards; F9 (or any key saved to localStorage vurmz-bump-key)
+  // advances the TOP ticket through its one next step, exactly like
+  // tapping its button. Works with a plain keyboard today, the physical
+  // bar the day it arrives. Ignored while typing in a field.
+  const [bumped, setBumped] = useState<string | null>(null)
+  const topTicket = rail[0] ?? null
+  useEffect(() => {
+    const key = (localStorage.getItem('vurmz-bump-key') || 'F9')
+    const onKey = async (e: KeyboardEvent) => {
+      if (e.key !== key) return
+      const el = e.target as HTMLElement | null
+      if (el && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.isContentEditable)) return
+      e.preventDefault()
+      if (!topTicket) return
+      const act = nextAction(topTicket)
+      if (!act || act.type !== 'patch' || !act.patch) return
+      const body = act.patch.status
+        ? { status: act.patch.status, expectedStatus: topTicket.status }
+        : act.patch.proof
+          ? { proof: act.patch.proof, expectedProof: topTicket.proofStatus ?? undefined }
+          : act.patch.settle
+            ? { settle: act.patch.settle as 'cash' }
+            : null
+      if (!body) return
+      try {
+        await railBump(topTicket.id, body)
+        setBumped(`${topTicket.number}: ${act.label}`)
+        setTimeout(() => setBumped(null), 2500)
+        load()
+      } catch { /* railBump surfaces its own failure modes */ }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [topTicket, load])
   // Phase D: tickets riding a delivery run group at the top; ready
   // hand-deliveries with an address are pickable into the next run.
   const onRun = rail.filter(t => t.deliveryRun && t.status === 'ready')
@@ -81,6 +117,12 @@ export default function AdminToday() {
           {rail.length === 0 ? 'Nothing on the rail.' : rail.length === 1 ? 'One ticket on the rail.' : `${rail.length} tickets on the rail.`}
         </p>
       </div>
+
+      {bumped && (
+        <div className="bg-[var(--a-accent)]/10 border border-[var(--a-accent)]/40 rounded-xl px-4 py-2.5 mb-4">
+          <p className="text-sm text-[var(--a-ink)]">Bumped · {bumped}</p>
+        </div>
+      )}
 
       {/* Calm, not alarming: parked work is safe and sends itself. */}
       {pending > 0 && (

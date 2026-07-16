@@ -91,6 +91,14 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
 
       {/* Fulfillment facts, right where the decision happens. */}
       <ul className="mt-6 pt-4 border-t border-[var(--hairline)] space-y-1.5 text-xs text-[var(--ink-soft)]">
+        {builderCfg && (
+          <li>
+            {builderCfg.mode === 'canvas'
+              ? `True size: ${builderCfg.widthIn}″ × ${builderCfg.heightIn}″`
+              : `True size: ${builderCfg.widthIn}″ long`}
+            {builderCfg.materials.length > 1 ? ` · ${builderCfg.materials.length} finishes` : ''}
+          </li>
+        )}
         <li>The engraving is included in the price.</li>
         <li>{timingLine}</li>
         <li>Hand-delivered in the South Denver metro, free over ${DELIVERY.freeThreshold}.</li>

@@ -134,7 +134,7 @@ The gap: phone, walk-in, and Bark orders cannot enter the system today.
 - Verify: bump to ready twice (CAS race), confirm single decrement;
   undo, confirm restock.
 
-### Phase F: The bump bar
+### Phase F: The bump bar - SOFTWARE SHIPPED 2026-07-16 (F9 listener on Today; hardware pending)
 
 - Today page keydown listener (configurable key, default one a cheap
   USB HID button sends). Press = advance the TOP ticket's next action,
