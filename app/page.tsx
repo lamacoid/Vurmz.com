@@ -110,7 +110,7 @@ export default function Page() {
             </Link>
             <a
               href="#services"
-              className="btn-hero-ghost inline-flex items-center justify-center gap-2 px-8 py-4 font-semibold text-base rounded-sm"
+              className="btn-aqua inline-flex items-center justify-center gap-2 px-8 py-4 font-semibold text-base rounded-sm"
             >
               <ArrowDownIcon className="w-4 h-4" />
               For businesses

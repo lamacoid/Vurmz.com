@@ -102,6 +102,17 @@ body:not(.is-admin) {
   background-color: color-mix(in srgb, var(--hero-ink) 8%, transparent);
 }
 
+/* ── The B2B button: flat aqua, the brand's glassy teal, contrasting
+   the consumer coral. No texture, no depth; just the other brand color. */
+.btn-aqua {
+  background-color: #7FCFD4;
+  color: #123F47;
+  transition: background-color 0.15s ease;
+}
+.btn-aqua:hover {
+  background-color: #6FBFC4;
+}
+
 /* ── Admin cockpit theme ──
    The admin is always a focused dark teal cockpit, regardless of the visitor's
    OS color scheme. These fixed tokens are the single source for the shell, and
