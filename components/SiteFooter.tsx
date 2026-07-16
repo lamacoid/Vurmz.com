@@ -121,6 +121,9 @@ export default function SiteFooter() {
           <div className="flex flex-col sm:flex-row justify-between items-center gap-3">
             <p className="text-gray-500 text-xs">
               &copy; {new Date().getFullYear()} {siteInfo.legalName} &middot; {siteInfo.city}, {siteInfo.state}
+              <span className="text-gray-600" title="deployed build">
+                {' '}&middot; v{process.env.NEXT_PUBLIC_VERSION} ({process.env.NEXT_PUBLIC_COMMIT})
+              </span>
             </p>
             <div className="flex gap-4 text-xs">
               <Link href="/privacy" className="text-gray-500 hover:text-gray-300 transition-colors">Privacy</Link>

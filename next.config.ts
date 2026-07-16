@@ -1,7 +1,20 @@
 import type { NextConfig } from "next";
 import { setupDevPlatform } from "@cloudflare/next-on-pages/next-dev";
+import { execSync } from "node:child_process";
+import { readFileSync } from "node:fs";
+
+// Baked in at build time so the footer can say exactly which build is
+// live (ends the "is prod actually updated or am I seeing edge cache"
+// guessing game).
+const pkgVersion = (() => {
+  try { return (JSON.parse(readFileSync("./package.json", "utf8")) as { version?: string }).version ?? "0.0.0"; } catch { return "0.0.0"; }
+})();
+const commit = (() => {
+  try { return execSync("git rev-parse --short HEAD").toString().trim(); } catch { return "dev"; }
+})();
 
 const nextConfig: NextConfig = {
+
   images: {
     // Enable Next.js image optimization for better performance
     // Images will be served in modern formats (WebP/AVIF) and properly sized
@@ -41,6 +54,8 @@ const nextConfig: NextConfig = {
 
   env: {
     NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL || 'https://www.vurmz.com',
+    NEXT_PUBLIC_VERSION: pkgVersion,
+    NEXT_PUBLIC_COMMIT: commit,
   },
 };
 
