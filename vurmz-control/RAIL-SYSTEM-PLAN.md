@@ -123,7 +123,7 @@ The gap: phone, walk-in, and Bark orders cannot enter the system today.
 - Verify: two orders into a run, maps handoff link correct, bump both
   delivered, one cash one invoice.
 
-### Phase E: Inventory as a side effect
+### Phase E: Inventory as a side effect - SHIPPED 2026-07-16
 
 - On the ready bump (the moment material is truly consumed), decrement
   linked inventory exactly once: item metadata gets inventoryApplied

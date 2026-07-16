@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import { withAdminAuth } from '@/lib/auth/admin'
 import { getOrderById, listOrderItems, updateOrderStatus, setOrderProof, updateOrderStatusCas, setOrderProofCas, settleOrderCash, type OrderStatus, type ProofStatus } from '@/lib/db/repos/orders'
+import { applyOrderInventory, reverseOrderInventory } from '@/lib/db/repos/inventory'
 import { isLegalGuardedMove, isLegalGuardedProofMove } from '@/lib/admin/transitions'
 import { getCustomerById, getCustomerByEmail } from '@/lib/db/repos/customers'
 import { audit } from '@/lib/audit'
@@ -72,6 +73,7 @@ export async function PATCH(req: NextRequest, ctx: { params: Promise<{ id: strin
     if (body.data.status) {
       const to = body.data.status as OrderStatus
       const expected = body.data.expectedStatus as OrderStatus | undefined
+      let from: OrderStatus | null = expected ?? null
       if (expected) {
         if (!isLegalGuardedMove(expected, to)) {
           return NextResponse.json({ ok: false, error: { code: 'ILLEGAL_TRANSITION', from: expected, to } }, { status: 409 })
@@ -85,6 +87,8 @@ export async function PATCH(req: NextRequest, ctx: { params: Promise<{ id: strin
           return NextResponse.json({ ok: false, error: { code: 'STALE', currentStatus: current.status }, data: { order: current } }, { status: 409 })
         }
       } else {
+        const beforeOrder = await getOrderById(id)
+        from = (beforeOrder?.status as OrderStatus) ?? null
         await updateOrderStatus(id, to, actor)
       }
       await audit({
@@ -93,6 +97,30 @@ export async function PATCH(req: NextRequest, ctx: { params: Promise<{ id: strin
         diff: { status: to, note: body.data.note, guarded: !!expected, ...(expected ? { from: expected } : { manual: true }) },
         ip: getClientIp(req), userAgent: getUserAgent(req),
       })
+
+      // Rail Phase E: stock moves when material is truly consumed (the
+      // ready bump) and moves back on an undo out of ready. Exactly-once
+      // is enforced inside the repo by the per-item flag CAS; cancel and
+      // refund deliberately do NOT restock (engraved material is spent).
+      if (to === 'ready' && from !== 'ready') {
+        const n = await applyOrderInventory(id, session.email ?? null)
+        if (n > 0) {
+          await audit({
+            actorType: 'admin', actorId: session.email ?? null,
+            action: 'inventory.consumed', targetType: 'order', targetId: id,
+            diff: { lines: n }, ip: getClientIp(req), userAgent: getUserAgent(req),
+          })
+        }
+      } else if (from === 'ready' && (to === 'in_progress' || to === 'confirmed' || to === 'new')) {
+        const n = await reverseOrderInventory(id, session.email ?? null)
+        if (n > 0) {
+          await audit({
+            actorType: 'admin', actorId: session.email ?? null,
+            action: 'inventory.restocked', targetType: 'order', targetId: id,
+            diff: { lines: n }, ip: getClientIp(req), userAgent: getUserAgent(req),
+          })
+        }
+      }
     }
 
     if (body.data.proof) {
