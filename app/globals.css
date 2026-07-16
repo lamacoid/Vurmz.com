@@ -622,30 +622,26 @@ main [class*="mx-auto"][class*="px-4"] {
   .puffy-btn {
     border-radius: 8px;
     box-shadow:
-      inset 0 2px 0 0 rgba(255, 255, 255, 0.50),
-      inset 0 -5px 10px -3px rgba(0, 0, 0, 0.40),
-      inset 3px 0 5px -3px rgba(0, 0, 0, 0.16),
-      inset -3px 0 5px -3px rgba(0, 0, 0, 0.16),
-      calc(var(--sun-x, 0) * -3px) calc(4px + var(--sun-y, 0) * 1.5px) 10px -2px rgba(0, 0, 0, 0.48),
-      calc(var(--sun-x, 0) * -1px) 1.5px 3px 0 rgba(0, 0, 0, 0.28);
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.28),
+      inset 0 -1.5px 3px -1px rgba(0, 0, 0, 0.20),
+      calc(var(--sun-x, 0) * -1.5px) calc(1.5px + var(--sun-y, 0) * 0.75px) 3px -1px rgba(0, 0, 0, 0.30),
+      calc(var(--sun-x, 0) * -0.5px) 0.5px 1px 0 rgba(0, 0, 0, 0.16);
     transition: transform 0.1s ease;
   }
   .puffy-btn:hover {
-    transform: translateY(-1px);
+    transform: translateY(-0.5px);
     box-shadow:
-      inset 0 2px 0 0 rgba(255, 255, 255, 0.55),
-      inset 0 -5px 10px -3px rgba(0, 0, 0, 0.40),
-      inset 3px 0 5px -3px rgba(0, 0, 0, 0.16),
-      inset -3px 0 5px -3px rgba(0, 0, 0, 0.16),
-      0 6px 14px -3px rgba(0, 0, 0, 0.50),
-      0 2px 4px 0 rgba(0, 0, 0, 0.28);
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.34),
+      inset 0 -1.5px 3px -1px rgba(0, 0, 0, 0.20),
+      0 2.5px 5px -1px rgba(0, 0, 0, 0.32),
+      0 0.5px 1.5px 0 rgba(0, 0, 0, 0.16);
   }
   .puffy-btn:active {
-    transform: translateY(1px) scale(0.985);
+    transform: translateY(0.5px) scale(0.995);
     box-shadow:
-      inset 0 1.5px 0 0 rgba(255, 255, 255, 0.32),
-      inset 0 -2px 4px -1.5px rgba(0, 0, 0, 0.30),
-      0 1px 3px -1px rgba(0, 0, 0, 0.40);
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.22),
+      inset 0 -1px 2px -1px rgba(0, 0, 0, 0.22),
+      0 0.5px 1.5px -0.5px rgba(0, 0, 0, 0.30);
   }
 
   /* Lit by a fixed overhead "sun": a soft specular gloss across the top of each
@@ -669,9 +665,9 @@ main [class*="mx-auto"][class*="px-4"] {
   }
   .puffy-btn::after {
     background: radial-gradient(
-      ellipse 95% 72% at 50% -22%,
-      rgba(255, 255, 255, 0.58) 0%,
-      rgba(255, 255, 255, 0.16) 44%,
+      ellipse 95% 72% at calc(50% + var(--sun-x, 0) * 20%) -22%,
+      rgba(255, 255, 255, 0.18) 0%,
+      rgba(255, 255, 255, 0.05) 44%,
       rgba(255, 255, 255, 0) 72%
     );
   }
