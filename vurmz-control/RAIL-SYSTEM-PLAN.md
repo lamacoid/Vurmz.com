@@ -110,7 +110,7 @@ The gap: phone, walk-in, and Bark orders cannot enter the system today.
   confirm single advance; attempt an illegal jump via curl and confirm
   409; undo a step and confirm the audit trail shows both moves.
 
-### Phase D: Delivery runs (out for delivery)
+### Phase D: Delivery runs (out for delivery) - SHIPPED 2026-07-16 (e05b147)
 
 - No schema change: a run is metadata (run id, startedAt) stamped onto
   ready tickets chosen for the run. The rail renders them as OUT FOR
