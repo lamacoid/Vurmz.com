@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ArrowRightIcon, ArrowDownIcon, ChatBubbleLeftIcon } from '@heroicons/react/24/outline'
+import { ArrowRightIcon, ChatBubbleLeftIcon } from '@heroicons/react/24/outline'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 import { SHOP_CATEGORIES } from '@/lib/categories'
 import { CATALOG } from '@/lib/pricing'
@@ -108,13 +108,13 @@ export default function Page() {
               Browse the shop
               <ArrowRightIcon className="w-4 h-4" />
             </Link>
-            <a
-              href="#services"
+            <Link
+              href="/services/"
               className="btn-aqua inline-flex items-center justify-center gap-2 px-8 py-4 font-semibold text-base rounded-sm"
             >
-              <ArrowDownIcon className="w-4 h-4" />
               For businesses
-            </a>
+              <ArrowRightIcon className="w-4 h-4" />
+            </Link>
           </div>
           </div>
         </section>
