@@ -4,6 +4,7 @@ import './globals.css'
 import './fonts.css'
 import LocalTicker from '@/components/LocalTicker'
 import LaserCursor from '@/components/LaserCursor'
+import SunTracker from '@/components/SunTracker'
 import { CartProvider } from '@/lib/cart/store'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -199,6 +200,7 @@ export default function RootLayout({
           <main id="main-content">{children}</main>
         </CartProvider>
         <LaserCursor />
+        <SunTracker />
       </body>
     </html>
   )

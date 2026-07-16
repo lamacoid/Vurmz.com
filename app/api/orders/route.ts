@@ -137,6 +137,7 @@ async function sendOrderEmails(env: CloudflareEnv, args: {
     headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({
       from: 'VURMZ <orders@vurmz.com>',
+      reply_to: 'zach@vurmz.com',
       to: args.email,
       subject: `Order ${args.orderNumber} · VURMZ`,
       html,
@@ -149,6 +150,7 @@ async function sendOrderEmails(env: CloudflareEnv, args: {
     headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({
       from: 'VURMZ Orders <orders@vurmz.com>',
+      reply_to: 'zach@vurmz.com',
       to: 'zach@vurmz.com',
       subject: `New order ${args.orderNumber}: ${dollars(args.totalCents)}`,
       html: `<p>New order from <strong>${args.email}</strong>. ${args.fulfillmentLabel}.</p><ul style="padding-left:18px">${lines}</ul>${args.attachmentCount ? `<p>📎 ${args.attachmentCount} customer file${args.attachmentCount > 1 ? 's' : ''} attached, view in admin.</p>` : ''}<p><a href="https://www.vurmz.com/admin/orders/${args.orderId}">Open in admin →</a></p>`,

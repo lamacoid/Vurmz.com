@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { listCategories, listProducts, soldUnitsFor } from '@/lib/db/repos/products'
+import { listCategories, listProducts, soldUnitsFor, lowestVariantPrices } from '@/lib/db/repos/products'
 import { menuPrice, menuCase } from '@/lib/menu-format'
 import { saleFrom, saleWindowOpen, liveSale, saleEndsLabel, type SaleInfo } from '@/lib/sale'
 import type { Product } from '@/lib/db/repos/products'
@@ -24,7 +24,7 @@ function metaLine(p: Product, sale?: SaleInfo): string {
 
 // Deliberately photo-free: the menu stays typeset (Zach's call, and it
 // reads like a real menu because of it). Photos live on the product page.
-function MenuRow({ p, sale }: { p: Product; sale?: SaleInfo }) {
+function MenuRow({ p, sale, lowCents }: { p: Product; sale?: SaleInfo; lowCents?: number }) {
   return (
     <Link href={`/shop/p/${p.slug}`} className="group block py-2.5 -mx-2 px-2 rounded-sm transition-colors hover:bg-[var(--ink)]/[0.04]">
       <span className="flex items-baseline gap-2.5">
@@ -46,7 +46,11 @@ function MenuRow({ p, sale }: { p: Product; sale?: SaleInfo }) {
         <span className="font-semibold text-[var(--eyebrow)] whitespace-nowrap">
           {/* Strikethrough only when the regular price is a real former price. */}
           {sale?.compareAt && <s className="font-normal text-[var(--ink-soft)]/70 mr-1.5">{menuPrice(p.priceCents)}</s>}
-          {menuPrice(sale ? sale.priceCents : p.priceCents)}
+          {sale
+            ? menuPrice(sale.priceCents)
+            : lowCents !== undefined && lowCents < p.priceCents
+              ? `from ${menuPrice(lowCents)}`
+              : menuPrice(p.priceCents)}
         </span>
       </span>
       {metaLine(p, sale) && (
@@ -59,9 +63,10 @@ function MenuRow({ p, sale }: { p: Product; sale?: SaleInfo }) {
 }
 
 export default async function MenuShop() {
-  const [categories, products] = await Promise.all([
+  const [categories, products, lows] = await Promise.all([
     listCategories(),
     listProducts({ limit: 200, includeUnpublished: false, audience: 'shop_visible' }),
+    lowestVariantPrices(),
   ])
   if (products.length === 0) return null
 
@@ -194,7 +199,7 @@ export default async function MenuShop() {
               </div>
               <div className="divide-y divide-[var(--hairline)]">
                 {s.items.map(p => (
-                  <MenuRow key={p.id} p={p} sale={sales.get(p.id)} />
+                  <MenuRow key={p.id} p={p} sale={sales.get(p.id)} lowCents={lows[p.id]} />
                 ))}
               </div>
             </section>

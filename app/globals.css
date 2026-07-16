@@ -577,23 +577,23 @@ main [class*="mx-auto"][class*="px-4"] {
      (cool frost). */
   .relief-raised {
     text-shadow:
-      0 -1px 0 rgba(255, 255, 255, 0.55),
-      0 2px 2px rgba(90, 70, 50, 0.30);
+      calc(var(--sun-x, 0) * 1px) -1px 0 rgba(255, 255, 255, 0.55),
+      calc(var(--sun-x, 0) * -1.5px) 2px 2px rgba(90, 70, 50, 0.30);
   }
   .relief-etched {
     text-shadow:
-      0 -1px 1px rgba(100, 75, 55, 0.35),
-      0 1px 0 rgba(255, 255, 255, 0.75);
+      calc(var(--sun-x, 0) * -1px) -1px 1px rgba(100, 75, 55, 0.35),
+      calc(var(--sun-x, 0) * 1px) 1px 0 rgba(255, 255, 255, 0.75);
   }
   .dark .relief-raised {
     text-shadow:
-      0 -1px 0 rgba(210, 240, 243, 0.28),
-      0 2px 3px rgba(0, 0, 0, 0.55);
+      calc(var(--sun-x, 0) * 1px) -1px 0 rgba(210, 240, 243, 0.28),
+      calc(var(--sun-x, 0) * -1.5px) 2px 3px rgba(0, 0, 0, 0.55);
   }
   .dark .relief-etched {
     text-shadow:
-      0 -1px 1px rgba(0, 0, 0, 0.60),
-      0 1px 0 rgba(190, 235, 240, 0.16);
+      calc(var(--sun-x, 0) * -1px) -1px 1px rgba(0, 0, 0, 0.60),
+      calc(var(--sun-x, 0) * 1px) 1px 0 rgba(190, 235, 240, 0.16);
   }
 
   /* ── Puffy: a soft "half a puffy sticker" raise ──
@@ -604,8 +604,8 @@ main [class*="mx-auto"][class*="px-4"] {
     box-shadow:
       inset 0 1.5px 0 0 rgba(255, 255, 255, 0.15),
       inset 0 -4.5px 9px -4px rgba(0, 0, 0, 0.30),
-      0 4.5px 12px -3px rgba(0, 0, 0, 0.40),
-      0 1.5px 3px 0 rgba(0, 0, 0, 0.24);
+      calc(var(--sun-x, 0) * -4px) calc(4.5px + var(--sun-y, 0) * 2px) 12px -3px rgba(0, 0, 0, 0.40),
+      calc(var(--sun-x, 0) * -1.5px) 1.5px 3px 0 rgba(0, 0, 0, 0.24);
   }
   /* On light (oatmeal) surfaces the white top-rim disappears, so lean on a
      warm top catch + soft shadow instead. */
@@ -613,8 +613,8 @@ main [class*="mx-auto"][class*="px-4"] {
     box-shadow:
       inset 0 1.5px 0 0 rgba(255, 255, 255, 0.80),
       inset 0 -4.5px 9px -4px rgba(120, 90, 70, 0.27),
-      0 4.5px 12px -3px rgba(80, 60, 50, 0.27),
-      0 1.5px 3px 0 rgba(80, 60, 50, 0.18);
+      calc(var(--sun-x, 0) * -4px) calc(4.5px + var(--sun-y, 0) * 2px) 12px -3px rgba(80, 60, 50, 0.27),
+      calc(var(--sun-x, 0) * -1.5px) 1.5px 3px 0 rgba(80, 60, 50, 0.18);
   }
   /* Buttons are full puffy stickers: domed vinyl, inflated edges curving
      away on every side, squish on press. If it's a sticker, you can press
@@ -626,9 +626,9 @@ main [class*="mx-auto"][class*="px-4"] {
       inset 0 -5px 10px -3px rgba(0, 0, 0, 0.40),
       inset 3px 0 5px -3px rgba(0, 0, 0, 0.16),
       inset -3px 0 5px -3px rgba(0, 0, 0, 0.16),
-      0 4px 10px -2px rgba(0, 0, 0, 0.48),
-      0 1.5px 3px 0 rgba(0, 0, 0, 0.28);
-    transition: box-shadow 0.15s ease, transform 0.1s ease;
+      calc(var(--sun-x, 0) * -3px) calc(4px + var(--sun-y, 0) * 1.5px) 10px -2px rgba(0, 0, 0, 0.48),
+      calc(var(--sun-x, 0) * -1px) 1.5px 3px 0 rgba(0, 0, 0, 0.28);
+    transition: transform 0.1s ease;
   }
   .puffy-btn:hover {
     transform: translateY(-1px);

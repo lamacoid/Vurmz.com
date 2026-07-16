@@ -485,3 +485,16 @@ export async function soldUnitsFor(productId: string): Promise<number> {
     .first<{ units: number }>()
   return row?.units ?? 0
 }
+
+/** Lowest published variant price per product, one query for the whole
+ *  menu: products whose cheapest pack undercuts the base price read
+ *  "from $X" instead of quietly overstating. */
+export async function lowestVariantPrices(): Promise<Record<string, number>> {
+  const db = getDb()
+  const { results } = await db
+    .prepare('SELECT product_id, MIN(price_cents) AS low FROM product_variants WHERE is_published = 1 GROUP BY product_id')
+    .all<{ product_id: string; low: number }>()
+  const map: Record<string, number> = {}
+  for (const r of results) map[r.product_id] = r.low
+  return map
+}

@@ -28,6 +28,7 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ id: string
         headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({
           from: 'VURMZ Quotes <quotes@vurmz.com>',
+          reply_to: 'zach@vurmz.com',
           to: quote.email,
           subject: `Quote ${quote.number} from VURMZ: ${dollars(quote.totalCents)}`,
           html: `
