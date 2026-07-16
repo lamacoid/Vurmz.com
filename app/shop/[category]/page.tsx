@@ -9,7 +9,7 @@ import { siteInfo, getSmsLink } from '@/lib/site-info'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import CategoryCard from '@/components/CategoryCard'
 import AccordionFAQ from '@/components/AccordionFAQ'
-import D1ProductGrid from '@/components/shop/D1ProductGrid'
+import CategoryMenu from '@/components/shop/CategoryMenu'
 import GlassImage from '@/components/shop/GlassImage'
 import { getCategoryBySlug as getD1CategoryBySlug } from '@/lib/db/repos/products'
 
@@ -133,12 +133,12 @@ export default async function ShopCategoryPage({ params }: { params: Promise<{ c
         </div>
       </section>
 
-      {/* Live catalog — D1-backed products in this category */}
+      {/* Live catalog: this category's slice of the menu. */}
       {d1Cat && (
-        <D1ProductGrid
+        <CategoryMenu
           categoryId={d1Cat.id}
-          heading="Shop ready to order"
-          subheading="In-stock packs with prices up front. Pick and checkout."
+          heading="Ready to order"
+          sub="Posted prices, designed on the page, hand-delivered."
         />
       )}
 
