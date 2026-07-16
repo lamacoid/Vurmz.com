@@ -616,60 +616,15 @@ main [class*="mx-auto"][class*="px-4"] {
       calc(var(--sun-x, 0) * -4px) calc(4.5px + var(--sun-y, 0) * 2px) 12px -3px rgba(80, 60, 50, 0.27),
       calc(var(--sun-x, 0) * -1.5px) 1.5px 3px 0 rgba(80, 60, 50, 0.18);
   }
-  /* Buttons are full puffy stickers: domed vinyl, inflated edges curving
-     away on every side, squish on press. If it's a sticker, you can press
-     it; that's the contract. */
+  /* Buttons stay flat. Three depth treatments (sticker, 1mm, clay) all
+     failed Zach's eye at full size: the material system lives in the
+     text relief and card lift, and the buttons stay quiet, plain coral.
+     .puffy-btn is kept as a class so markup doesn't churn. */
   .puffy-btn {
-    border-radius: 8px;
-    box-shadow:
-      inset 0 1px 0 0 rgba(255, 255, 255, 0.28),
-      inset 0 -1.5px 3px -1px rgba(0, 0, 0, 0.20),
-      calc(var(--sun-x, 0) * -1.5px) calc(1.5px + var(--sun-y, 0) * 0.75px) 3px -1px rgba(0, 0, 0, 0.30),
-      calc(var(--sun-x, 0) * -0.5px) 0.5px 1px 0 rgba(0, 0, 0, 0.16);
-    transition: transform 0.1s ease;
-  }
-  .puffy-btn:hover {
-    transform: translateY(-0.5px);
-    box-shadow:
-      inset 0 1px 0 0 rgba(255, 255, 255, 0.34),
-      inset 0 -1.5px 3px -1px rgba(0, 0, 0, 0.20),
-      0 2.5px 5px -1px rgba(0, 0, 0, 0.32),
-      0 0.5px 1.5px 0 rgba(0, 0, 0, 0.16);
-  }
-  .puffy-btn:active {
-    transform: translateY(0.5px) scale(0.995);
-    box-shadow:
-      inset 0 1px 0 0 rgba(255, 255, 255, 0.22),
-      inset 0 -1px 2px -1px rgba(0, 0, 0, 0.22),
-      0 0.5px 1.5px -0.5px rgba(0, 0, 0, 0.30);
-  }
-
-  /* Lit by a fixed overhead "sun": a soft specular gloss across the top of each
-     raised surface, like sunlight catching the dome of a bubble sticker. The
-     highlight stays put (it's the sun, not a spotlight) and fades out before
-     the lower half so card text underneath stays clean. */
-  .puffy, .puffy-light, .puffy-btn { position: relative; }
-  .puffy::after, .puffy-light::after, .puffy-btn::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    pointer-events: none;
-    z-index: 3;
-    background: radial-gradient(
-      ellipse 80% 55% at 50% -15%,
-      rgba(255, 255, 255, 0.33) 0%,
-      rgba(255, 255, 255, 0.11) 40%,
-      rgba(255, 255, 255, 0) 68%
-    );
+    border-radius: 0.125rem;
   }
   .puffy-btn::after {
-    background: radial-gradient(
-      ellipse 95% 72% at calc(50% + var(--sun-x, 0) * 20%) -22%,
-      rgba(255, 255, 255, 0.18) 0%,
-      rgba(255, 255, 255, 0.05) 44%,
-      rgba(255, 255, 255, 0) 72%
-    );
+    content: none;
   }
 
   /* ── Shop utilities ── */

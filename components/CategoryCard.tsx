@@ -115,7 +115,7 @@ export default function CategoryCard({ category: cat, compact }: CategoryCardPro
           <div className="flex items-center gap-2">
             <Link
               href={`/shop/${cat.slug}`}
-              className="inline-flex items-center gap-1 text-xs text-[var(--ink-soft)] font-semibold px-3 py-1.5 border border-[var(--hairline)] hover:border-[#C67A6F]/40 hover:text-[var(--ink)] transition-colors puffy-btn"
+              className="inline-flex items-center gap-1 text-xs text-[var(--ink-soft)] font-semibold px-3 py-1.5 border border-[var(--hairline)] rounded-sm hover:border-[#C67A6F]/40 hover:text-[var(--ink)] transition-colors"
             >
               Details
               <ArrowRightIcon className="w-3 h-3" />
@@ -123,7 +123,7 @@ export default function CategoryCard({ category: cat, compact }: CategoryCardPro
             <a
               href={getSmsLink(cat.smsMessage)}
               onClick={() => trackEvent('sms_click', cat.slug)}
-              className="inline-flex items-center gap-1 text-xs text-[#C67A6F] font-semibold px-3 py-1.5 border border-[#C67A6F]/30 hover:bg-[#C67A6F]/10 transition-colors puffy-btn"
+              className="inline-flex items-center gap-1 text-xs text-[#C67A6F] font-semibold px-3 py-1.5 border border-[#C67A6F]/30 rounded-sm hover:bg-[#C67A6F]/10 transition-colors"
             >
               <ChatBubbleLeftIcon className="w-3.5 h-3.5" />
               Text
