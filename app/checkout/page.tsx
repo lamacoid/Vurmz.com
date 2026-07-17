@@ -264,6 +264,8 @@ export default function CheckoutPage() {
               personalization: eng?.text
                 ? { text: eng.text, fontValue: eng.fontValue ?? '', fontLabel: eng.fontLabel ?? '', placement: eng.placement || undefined }
                 : undefined,
+              options: (i.metadata?.options as { finish?: string } | undefined) ?? undefined,
+              file: (i.metadata?.file as { key: string; filename: string } | undefined) ?? undefined,
             }
           }),
           fulfillmentMethod: chosenMethod,
@@ -599,9 +601,17 @@ export default function CheckoutPage() {
                   <p className="text-xs text-[#6B6259]">{item.packSize > 1 ? `${item.qty} × pack of ${item.packSize}` : `Qty ${item.qty}`}</p>
                   {(() => {
                     const eng = item.metadata?.engraving as { text?: string; fontLabel?: string } | undefined
-                    return eng?.text ? (
-                      <p className="text-[11px] text-[#C67A6F] truncate">✎ “{eng.text}”{eng.fontLabel ? ` · ${eng.fontLabel}` : ''}</p>
-                    ) : null
+                    const opts = item.metadata?.options as { finish?: string } | undefined
+                    const file = item.metadata?.file as { filename?: string } | undefined
+                    return (
+                      <>
+                        {eng?.text && (
+                          <p className="text-[11px] text-[#C67A6F] truncate">✎ “{eng.text}”{eng.fontLabel ? ` · ${eng.fontLabel}` : ''}</p>
+                        )}
+                        {opts?.finish && <p className="text-[11px] text-[#6B6259] truncate">{opts.finish}</p>}
+                        {file?.filename && <p className="text-[11px] text-[#6B6259] truncate">📎 {file.filename}</p>}
+                      </>
+                    )
                   })()}
                 </div>
                 <p className="text-sm font-semibold">{money(item.priceCents * item.qty)}</p>

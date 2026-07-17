@@ -9,7 +9,7 @@ import type { BuilderSubmission } from '@/lib/builder/types'
 import { reverseOf, type BumpStatus } from '@/lib/admin/transitions'
 import { railBump } from '@/lib/admin/rail-client'
 
-interface OrderItem { id: string; nameSnapshot: string; qty: number; unitPriceCents: number; metadata?: { engraving?: { text?: string; fontValue?: string; fontLabel?: string; placement?: string; element?: { id: string; label: string; thumb: string } }; builder?: BuilderSubmission } }
+interface OrderItem { id: string; nameSnapshot: string; qty: number; unitPriceCents: number; metadata?: { engraving?: { text?: string; fontValue?: string; fontLabel?: string; placement?: string; element?: { id: string; label: string; thumb: string } }; builder?: BuilderSubmission; options?: { finish?: string }; file?: { key: string; filename: string } } }
 interface Order {
   id: string; number: string; email: string; status: string
   subtotalCents: number; fulfillmentFeeCents: number; totalCents: number
@@ -240,6 +240,8 @@ export default function OrderDetailPage() {
                 </li>
               )
             }
+            const finish = it.metadata?.options?.finish
+            const file = it.metadata?.file
             return (
               <li key={it.id} className="flex gap-3">
                 {eng?.element?.thumb ? (
@@ -249,14 +251,24 @@ export default function OrderDetailPage() {
                   <span className="h-12 w-12 flex-shrink-0 rounded bg-white/5 grid place-items-center text-lg" aria-hidden>🛠️</span>
                 )}
                 <div className="min-w-0">
-                  <p className="text-sm font-medium text-[var(--a-ink)]">{it.qty}× {it.nameSnapshot}</p>
+                  <p className="text-sm font-medium text-[var(--a-ink)]">{it.qty}× {it.nameSnapshot}{finish ? <span className="text-[var(--a-ink-soft)] font-normal"> · {finish}</span> : null}</p>
                   {eng?.text ? (
                     <p className="text-sm text-[var(--a-ink-soft)]">Engrave <span className="text-[var(--a-ink)] font-medium">“{eng.text}”</span>{eng.fontLabel ? ` in ${eng.fontLabel}` : ''}{eng.placement ? ` · ${eng.placement}` : ''}</p>
                   ) : (
-                    <p className="text-sm text-[var(--a-ink-faint)]">No engraving text given{hasFiles ? ' — check the customer file below' : ''}</p>
+                    <p className="text-sm text-[var(--a-ink-faint)]">No engraving text given{file || hasFiles ? ' — check the customer file' : ''}</p>
                   )}
                   {eng?.element && (
                     <p className="text-sm text-[var(--a-ink-soft)]">Design: <span className="text-[var(--a-ink)]">{eng.element.label}</span></p>
+                  )}
+                  {file && (
+                    <a
+                      href={`/api/admin/r2/${file.key}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-sm text-[var(--a-accent)] hover:underline"
+                    >
+                      📎 {file.filename}
+                    </a>
                   )}
                 </div>
               </li>
@@ -361,6 +373,14 @@ export default function OrderDetailPage() {
                     <img src={it.metadata.engraving.element.thumb} alt="" className="h-9 w-9 object-contain bg-[#f0ebe0] rounded p-0.5" />
                     <span className="text-xs text-[var(--a-ink-soft)]">Design: <span className="text-cream/80">{it.metadata.engraving.element.label}</span> <span className="font-mono text-[var(--a-ink-faint)]">({it.metadata.engraving.element.id})</span></span>
                   </div>
+                )}
+                {it.metadata?.options?.finish && (
+                  <p className="text-xs mt-1 text-[var(--a-ink-soft)]">Finish: <span className="text-cream/80">{it.metadata.options.finish}</span></p>
+                )}
+                {it.metadata?.file && (
+                  <p className="text-xs mt-1">
+                    <a href={`/api/admin/r2/${it.metadata.file.key}`} target="_blank" rel="noopener noreferrer" className="text-[var(--a-accent)] hover:underline">📎 {it.metadata.file.filename}</a>
+                  </p>
                 )}
               </div>
               <p className="text-sm font-semibold text-[var(--a-ink)]">{money(it.qty * it.unitPriceCents)}</p>

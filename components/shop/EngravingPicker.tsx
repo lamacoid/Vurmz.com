@@ -2,9 +2,10 @@
 /**
  * EngravingPicker — lets a customer add personalization (text + font +
  * placement/details) to a product before adding it to the cart. Reads the
- * curated font catalog from lib/fonts.ts and live-previews the text in the
- * selected face (the @font-face declarations in app/fonts.css are loaded
- * globally, so previews are real).
+ * curated font catalog from lib/fonts.ts. The text input itself is set in
+ * the selected face (the @font-face declarations in app/fonts.css are
+ * loaded globally, so what you type is the real font): the form responds,
+ * it never simulates the engraved result.
  */
 import { fontOptions } from '@/lib/fonts'
 import DesignElementPicker, { type DesignElement } from './DesignElementPicker'
@@ -46,7 +47,8 @@ export default function EngravingPicker({
         maxLength={maxLength}
         onChange={e => onChange({ ...value, text: e.target.value })}
         placeholder="Name, date, message…"
-        className="w-full bg-[var(--page)] border border-[var(--hairline)] rounded-sm px-3 py-2.5 text-sm text-[var(--ink)] placeholder:text-[var(--ink-soft)] outline-none focus:border-[#C67A6F]"
+        style={selected.style}
+        className="w-full bg-[var(--page)] border border-[var(--hairline)] rounded-sm px-3 py-2.5 text-xl leading-snug text-[var(--ink)] placeholder:text-[var(--ink-soft)] outline-none focus:border-[#C67A6F]"
       />
       <div className="flex items-center justify-between mt-1">
         <span className="text-[11px] text-[var(--ink-soft)]">Leave blank for no engraving</span>
@@ -79,22 +81,6 @@ export default function EngravingPicker({
         selected={value.element}
         onSelect={el => onChange({ ...value, element: el })}
       />
-
-      {/* Live preview — the mark rendered in the actual selected font, light
-          on a dark plate, the way a laser engraving reads. */}
-      <div className="mt-3 rounded-sm border border-[var(--hairline)] bg-[#0c2529] px-4 py-5 text-center overflow-hidden">
-        <div className="mb-1.5 text-left">
-          <span className="text-[10px] uppercase tracking-wider text-white/50">Preview</span>
-        </div>
-        {value.element && (
-          /* The art is black; on the dark plate the laser mark reads light, so invert it. */
-          /* eslint-disable-next-line @next/next/no-img-element */
-          <img src={value.element.thumb} alt={value.element.label} className="mx-auto mb-2 h-16 w-16 object-contain invert" />
-        )}
-        <span dir="auto" className="text-2xl leading-tight break-words text-[#DED6C3]" style={selected.style}>
-          {value.text.trim() || (value.element ? '' : 'Your text here')}
-        </span>
-      </div>
 
       <p className="mt-3 text-[11px] text-[#7FCFD4]">
         ✓ I send a proof photo for your approval before anything gets engraved.

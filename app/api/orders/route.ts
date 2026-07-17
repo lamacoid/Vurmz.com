@@ -76,6 +76,17 @@ const schema = z.object({
         thumb: z.string().max(200),
       }).optional(),
     }).nullish(),
+    // Plain listed choices from the product form (finish chips today).
+    options: z.object({
+      finish: z.string().max(60),
+    }).optional(),
+    // One customer file per item: a guest checkout upload (checkout/ prefix)
+    // or one of the customer's saved account files (customer/ prefix, whose
+    // ownership is verified against the session below — never trust the key).
+    file: z.object({
+      key: z.string().max(320).regex(/^(checkout\/gup_[a-z0-9]+|customer\/[A-Za-z0-9_-]{1,60}\/[A-Za-z0-9_-]{1,60})\/[A-Za-z0-9._-]{1,180}$/),
+      filename: z.string().min(1).max(200),
+    }).optional(),
   })).min(1),
   fulfillmentMethod: z.enum(['ship','hand_deliver','pickup','uber_direct','invoice_later']),
   // Admin-mediated business/recurring order: applies volume-tier pricing
@@ -215,6 +226,33 @@ export async function POST(req: NextRequest) {
 
   // 3. Upsert customer (so admin sees them immediately)
   const session = await getCustomerSession(req)
+
+  // Account-file keys (customer/ prefix) must belong to the customer placing
+  // the order. Anything not proven owned is rejected outright — this repo has
+  // IDOR history and file keys are never accepted on faith. Guest checkout/
+  // keys pass on shape alone: they are unguessable and single-purpose.
+  const accountFileKeys = [...new Set(
+    body.items.map(i => i.file?.key).filter((k): k is string => Boolean(k && k.startsWith('customer/')))
+  )]
+  if (accountFileKeys.length > 0) {
+    let ownedAll = false
+    if (session) {
+      const db = getDb()
+      const placeholders = accountFileKeys.map(() => '?').join(',')
+      const { results } = await db.prepare(
+        `SELECT r2_key FROM customer_files WHERE customer_id = ? AND deleted_at IS NULL AND r2_key IN (${placeholders})`
+      ).bind(session.customer.id, ...accountFileKeys).all<{ r2_key: string }>()
+      const owned = new Set(results.map(r => r.r2_key))
+      ownedAll = accountFileKeys.every(k => owned.has(k))
+    }
+    if (!ownedAll) {
+      return NextResponse.json(
+        { ok: false, error: { code: 'FILE_NOT_ALLOWED', message: 'One of the attached files is not available. Re-attach it and try again.' } },
+        { status: 400 },
+      )
+    }
+  }
+
   const customer = session?.customer ?? await upsertCustomerByEmail({
     email: body.email,
     name: body.address?.name,
@@ -230,8 +268,12 @@ export async function POST(req: NextRequest) {
   type Personal = { text: string; fontValue?: string; fontLabel?: string; placement?: string; element?: { id: string; label: string; thumb: string } }
   const personalByProduct = new Map<string, Personal>()
   const builderByProduct = new Map<string, unknown>()
+  const optionsByProduct = new Map<string, { finish: string }>()
+  const fileByProduct = new Map<string, { key: string; filename: string }>()
   for (const it of body.items) {
     if (it.builder && it.builder.elements.length > 0) builderByProduct.set(it.productId, it.builder)
+    if (it.options?.finish?.trim()) optionsByProduct.set(it.productId, { finish: it.options.finish.trim() })
+    if (it.file) fileByProduct.set(it.productId, { key: it.file.key, filename: it.file.filename })
     const t = it.personalization?.text?.trim()
     const el = it.personalization?.element
     // Persist personalization when there's engraving text OR a chosen design.
@@ -246,13 +288,16 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  // Builder uploads join the order's file list, so the original art (not
-  // just the layout replay) is one click away on the ticket.
+  // Builder uploads and per-item files join the order's file list, so the
+  // original art (not just the line-item note) is one click away on the ticket.
   const builderUploads = body.items
     .flatMap(i => i.builder?.elements ?? [])
     .filter(e => e.kind === 'upload' && e.uploadUrl)
     .map(e => ({ key: e.uploadUrl as string, filename: (e.uploadUrl as string).split('/').pop() || 'upload' }))
-  const allAttachments = [...(body.attachments ?? []), ...builderUploads]
+  const itemFiles = body.items
+    .filter(i => i.file)
+    .map(i => ({ key: i.file!.key, filename: i.file!.filename }))
+  const allAttachments = [...(body.attachments ?? []), ...builderUploads, ...itemFiles]
     .filter((a, i, arr) => arr.findIndex(x => x.key === a.key) === i)
     .slice(0, 12)
 
@@ -273,6 +318,10 @@ export async function POST(req: NextRequest) {
       const meta: Record<string, unknown> = {}
       if (eng) meta.engraving = eng
       if (builder) meta.builder = builder
+      const opts = optionsByProduct.get(i.productId)
+      if (opts) meta.options = opts
+      const file = fileByProduct.get(i.productId)
+      if (file) meta.file = file
       return {
         productId: i.productId,
         variantId: i.variantId ?? undefined,
@@ -388,15 +437,20 @@ export async function POST(req: NextRequest) {
     totalCents,
     items: cart.items.map(i => {
       const eng = personalByProduct.get(i.productId)
+      const finish = optionsByProduct.get(i.productId)?.finish
+      const file = fileByProduct.get(i.productId)
+      const parts = [
+        eng?.text ? `“${esc(eng.text)}”${eng.fontLabel ? ` · ${esc(eng.fontLabel)}` : ''}` : '',
+        eng?.element ? `🎨 ${esc(eng.element.label)} design` : '',
+        eng?.placement ? esc(eng.placement) : '',
+        finish ? `Finish: ${esc(finish)}` : '',
+        file ? `📎 ${esc(file.filename)}` : '',
+      ].filter(Boolean)
       return {
         name: `${i.name} (${i.packSize}-pack)`,
         qty: i.qty,
         unitPriceCents: i.unitPriceCents,
-        engraving: eng ? [
-          eng.text ? `“${esc(eng.text)}”${eng.fontLabel ? ` · ${esc(eng.fontLabel)}` : ''}` : '',
-          eng.element ? `🎨 ${esc(eng.element.label)} design` : '',
-          eng.placement ? esc(eng.placement) : '',
-        ].filter(Boolean).join(' · ') || undefined : undefined,
+        engraving: parts.length ? parts.join(' · ') : undefined,
       }
     }),
     fulfillmentLabel,

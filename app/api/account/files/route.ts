@@ -37,6 +37,9 @@ export async function GET(req: NextRequest) {
           id: r.id, filename: r.filename, mimeType: r.mime_type, sizeBytes: r.size_bytes,
           uploadedAt: r.uploaded_at,
           url: `/api/account/files/${r.id}`,
+          // The R2 key rides order items so a saved file can be attached to an
+          // order. /api/orders verifies ownership before accepting it.
+          key: r.r2_key,
         })),
       },
     })
@@ -77,7 +80,7 @@ export async function POST(req: NextRequest) {
       ip: getClientIp(req), userAgent: getUserAgent(req),
     })
 
-    return NextResponse.json({ ok: true, data: { id } })
+    return NextResponse.json({ ok: true, data: { id, key: r2Key, filename: file.name.slice(0, 200) } })
   } catch {
     return NextResponse.json({ ok: false, error: { code: 'UNAUTHORIZED' } }, { status: 401 })
   }

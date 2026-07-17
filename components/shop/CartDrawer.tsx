@@ -73,11 +73,19 @@ export default function CartDrawer() {
                   <p className="text-xs text-[#DED6C3]/70">{(item.variantName ? `${item.variantName.toLowerCase()} · ` : item.packSize > 1 ? `pack of ${item.packSize} · ` : '') + money(item.priceCents) + (item.packSize > 1 || item.variantName ? ' ea' : ' each')}</p>
                   {(() => {
                     const eng = item.metadata?.engraving as { text?: string; fontLabel?: string } | undefined
-                    return eng?.text ? (
-                      <p className="text-[11px] text-[#C67A6F] truncate" title={`Engraving: ${eng.text}`}>
-                        ✎ “{eng.text}”{eng.fontLabel ? ` · ${eng.fontLabel}` : ''}
-                      </p>
-                    ) : null
+                    const opts = item.metadata?.options as { finish?: string } | undefined
+                    const file = item.metadata?.file as { filename?: string } | undefined
+                    return (
+                      <>
+                        {eng?.text && (
+                          <p className="text-[11px] text-[#C67A6F] truncate" title={`Engraving: ${eng.text}`}>
+                            ✎ “{eng.text}”{eng.fontLabel ? ` · ${eng.fontLabel}` : ''}
+                          </p>
+                        )}
+                        {opts?.finish && <p className="text-[11px] text-[#DED6C3]/60 truncate">{opts.finish}</p>}
+                        {file?.filename && <p className="text-[11px] text-[#DED6C3]/60 truncate">📎 {file.filename}</p>}
+                      </>
+                    )
                   })()}
                   <div className="flex items-center gap-3 mt-2">
                     <div className="inline-flex items-center bg-white/10 border border-white/10 rounded-sm text-sm text-[#DED6C3]">

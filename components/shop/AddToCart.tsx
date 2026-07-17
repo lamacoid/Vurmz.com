@@ -5,8 +5,8 @@ import { fontOptions } from '@/lib/fonts'
 import { menuPrice } from '@/lib/menu-format'
 import { trackConversion } from '@/lib/track'
 import EngravingPicker, { type EngravingValue } from './EngravingPicker'
-import BuilderPanel from '@/components/builder/BuilderPanel'
-import type { BuilderConfig, BuilderSubmission } from '@/lib/builder/types'
+import FileAttach, { type AttachedFile } from './FileAttach'
+import type { BuilderConfig } from '@/lib/builder/types'
 
 export interface PackOption {
   /** null = the product's own default pack. */
@@ -28,14 +28,15 @@ export default function AddToCart(props: {
   engravable?: boolean
   /** Additional pack-size options (product_variants). The default pack is added automatically. */
   variants?: Array<{ id: string; name: string; packSize: number; priceCents: number }>
-  /** Builder config (metadata.builder), canvas or silhouette. Replaces the engraving picker when present. */
+  /** Builder config (metadata.builder). The Builder itself is retired from the
+   *  order flow; the config survives as the finish list (materials) here. */
   builderConfig?: BuilderConfig | null
 }) {
   const { add, items } = useCart()
   const [qty, setQty] = useState(1)
   const [added, setAdded] = useState(false)
   const [engraving, setEngraving] = useState<EngravingValue>({ text: '', fontValue: 'zen-kurenaido', placement: '', element: null })
-  const [builderSub, setBuilderSub] = useState<BuilderSubmission | null>(null)
+  const [file, setFile] = useState<AttachedFile | null>(null)
 
   // The default pack plus any admin-defined options, sorted by pack size.
   const options: PackOption[] = [
@@ -52,26 +53,35 @@ export default function AddToCart(props: {
   const hasOptions = options.length > 1
 
   const engravable = props.engravable !== false
-  const hasBuilder = Boolean(props.builderConfig)
+  // Finishes come from the dormant builder config's material list. A single
+  // material is not a choice, so chips only render when there are two or more.
+  const finishes = engravable ? (props.builderConfig?.materials ?? []) : []
+  const hasFinishes = finishes.length > 1
+  const [finishKey, setFinishKey] = useState<string | null>(null)
+  const finish = finishes.find(f => f.key === finishKey) ?? finishes[0] ?? null
+
   const alreadyInCart = props.oneOff && items.some(i => i.productId === props.productId)
   const engText = engraving.text.trim()
-  // An order is personalized if it has text OR a chosen design element OR a builder layout.
-  const hasPersonalization = Boolean(engText) || Boolean(engraving.element) || Boolean(builderSub)
+  // An order is personalized if it has text OR a chosen design element OR a file.
+  const hasPersonalization = Boolean(engText) || Boolean(engraving.element) || Boolean(file)
 
   function buildMetadata(): Record<string, unknown> | undefined {
-    if (!engravable || !hasPersonalization) return undefined
-    if (builderSub) return { builder: builderSub }
-    const font = fontOptions.find(f => f.value === engraving.fontValue)
-    const placement = engraving.placement.trim()
-    return {
-      engraving: {
+    if (!engravable) return undefined
+    const meta: Record<string, unknown> = {}
+    if (engText || engraving.element) {
+      const font = fontOptions.find(f => f.value === engraving.fontValue)
+      const placement = engraving.placement.trim()
+      meta.engraving = {
         text: engText.slice(0, 120),
         fontValue: engraving.fontValue,
         fontLabel: font?.label ?? engraving.fontValue,
         ...(placement ? { placement: placement.slice(0, 200) } : {}),
         ...(engraving.element ? { element: { id: engraving.element.id, label: engraving.element.label, thumb: engraving.element.thumb } } : {}),
-      },
+      }
     }
+    if (hasFinishes && finish) meta.options = { finish: finish.label }
+    if (file) meta.file = { key: file.key, filename: file.filename }
+    return Object.keys(meta).length ? meta : undefined
   }
 
   function onAdd() {
@@ -101,8 +111,42 @@ export default function AddToCart(props: {
 
   return (
     <div>
-      {engravable && hasBuilder && props.builderConfig && <BuilderPanel config={props.builderConfig} onChange={setBuilderSub} />}
-      {engravable && !hasBuilder && <EngravingPicker value={engraving} onChange={setEngraving} />}
+      {/* Finish options: chips with the real surface color as the swatch. */}
+      {hasFinishes && (
+        <div className="mb-4">
+          <span className="block text-[11px] uppercase tracking-wider text-[var(--ink-soft)] mb-2">Finish</span>
+          <div className="flex flex-wrap gap-2">
+            {finishes.map(f => {
+              const isSel = f.key === (finish?.key ?? '')
+              return (
+                <button
+                  key={f.key}
+                  type="button"
+                  onClick={() => setFinishKey(f.key)}
+                  aria-pressed={isSel}
+                  className={`inline-flex items-center gap-2 px-4 py-2 rounded-sm border text-sm transition-colors ${
+                    isSel
+                      ? 'border-[var(--eyebrow)] bg-[var(--eyebrow)]/10 text-[var(--ink)] font-semibold'
+                      : 'border-[var(--hairline)] text-[var(--ink-soft)] hover:border-[var(--ink)]/40 hover:text-[var(--ink)]'
+                  }`}
+                >
+                  <span aria-hidden className="w-3.5 h-3.5 rounded-full border border-black/20" style={{ background: f.surface }} />
+                  {f.label}
+                </button>
+              )
+            })}
+          </div>
+        </div>
+      )}
+
+      {engravable && (
+        <>
+          <EngravingPicker value={engraving} onChange={setEngraving} />
+          <div className="-mt-2 mb-5 rounded-sm border border-[var(--hairline)] bg-[var(--ink)]/[0.03] p-4 sm:p-5">
+            <FileAttach value={file} onChange={setFile} />
+          </div>
+        </>
+      )}
 
       {/* Pack-size options: framed chips, price on each, menu-quiet. */}
       {hasOptions && !props.oneOff && (
@@ -169,8 +213,9 @@ export default function AddToCart(props: {
 
       {engravable && hasPersonalization && (
         <p className="mt-2 text-[11px] text-[var(--ink-soft)]">
-          {builderSub ? <>Your layout ({builderSub.elements.length} element{builderSub.elements.length === 1 ? '' : 's'})</> : engText ? <>Engraving “{engText}”</> : 'Your design'}
+          {engText ? <>Engraving “{engText}”</> : 'Your design'}
           {engraving.element ? <> + {engraving.element.label} design</> : null}
+          {file ? <> + {file.filename}</> : null}
           {' '}will be applied{props.oneOff ? '' : ' to each item in the pack'}.
         </p>
       )}
