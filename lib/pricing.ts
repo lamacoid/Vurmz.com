@@ -59,7 +59,9 @@ export const CATALOG = {
   cards: {
     name: "Metal Business Cards",
     pack: 10,
-    matteBlackBase: 3,
+    // $2.50/card matches the approved July 2026 sheet's $25 pack of 10
+    // (the D1 SKU). This was left at $3 in the sweep; fixed 2026-07-16.
+    matteBlackBase: 2.5,
     matteBlackLoaded: 6,
     stainlessBase: 12,
     stainlessLoaded: 15,
@@ -95,7 +97,9 @@ export const CATALOG = {
   },
   serviceTags: {
     name: "Metal Service Tags",
-    range: [30, 180] as const,
+    // Top of range = 10 stainless fully loaded at $15/tag (the approved
+    // stainlessLoaded rate). Was 180 from the pre-July stainless price.
+    range: [30, 150] as const,
     options: [
       { label: "Anodized aluminum (text)" },
       { label: "+ Logo / QR / back", price: 1, modifier: true },
@@ -290,7 +294,7 @@ export const TRADES_PRICING_CARDS = [
     items: [
       { name: 'Anodized aluminum (text)', price: usd(3), note: '' },
       { name: '+ Logo / QR / back', price: usdMod(1), note: '' },
-      { name: 'Stainless steel', price: usd(15), note: '' },
+      { name: 'Stainless steel', price: usd(CATALOG.cards.stainlessBase), note: '' },
       { name: '3M adhesive backing', price: 'Included', note: '' },
     ],
   },

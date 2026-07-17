@@ -59,12 +59,11 @@ in bulk (pens, coasters, keychains, metal cards, service tags):
 
 ## Free delivery
 
-**$50+**, South Denver metro. This used to be documented as $100 in this
-file while the actual checkout code enforced $75, so customers were always
-getting the better deal without it being written down correctly anywhere.
-$75 is now the one number, everywhere: `lib/pricing.ts` (`DELIVERY.freeThreshold`),
-the services page, the homepage, the city pages, the terms page, and the
-Google Business Profile copy.
+**$50+**, South Denver metro, since the July 2026 repricing. (History: this
+doc once said $100 while the code enforced $75; the July sheet then cut $75
+to $50.) $50 is the one number, everywhere: `lib/pricing.ts`
+(`DELIVERY.freeThreshold`), the services page, the homepage, the city pages,
+the terms page, and the Google Business Profile copy.
 
 ## Rush orders
 
