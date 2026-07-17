@@ -7,6 +7,7 @@ import Breadcrumbs from '@/components/Breadcrumbs'
 import AddToCart from '@/components/shop/AddToCart'
 import ProductGallery from '@/components/shop/ProductGallery'
 import { getProductBySlug, getCategoryById, listVariants, listProductImages, soldUnitsFor } from '@/lib/db/repos/products'
+import { listStockedFinishes } from '@/lib/db/repos/inventory'
 import { saleFrom, saleWindowOpen, liveSale, saleEndsLabel } from '@/lib/sale'
 import { getMediaById } from '@/lib/db/repos/media'
 import { menuPrice, menuCase } from '@/lib/menu-format'
@@ -74,6 +75,16 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
 
   const builderCfg = builderConfigFrom(product.metadata)
 
+  // Finish chips come from the INVENTORY, not from product metadata: the
+  // page offers exactly the colors Zach has counted in stock, nothing else.
+  // The dormant builder materials only contribute the swatch hex when a
+  // stocked finish matches one of their labels.
+  const stockedFinishes = product.metadata?.engravable !== false ? await listStockedFinishes(product.id) : []
+  const finishes = stockedFinishes.map(label => ({
+    label,
+    hex: builderCfg?.materials.find(m => m.label.trim().toLowerCase() === label.trim().toLowerCase())?.surface ?? null,
+  }))
+
   const orderColumn = (
     <div>
       <AddToCart
@@ -86,7 +97,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
         oneOff={product.oneOff}
         engravable={product.metadata?.engravable !== false}
         variants={variants.map(v => ({ id: v.id, name: v.name, packSize: v.packSize, priceCents: v.priceCents }))}
-        builderConfig={builderCfg}
+        finishes={finishes}
       />
 
       {/* Fulfillment facts, right where the decision happens. */}
@@ -96,7 +107,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
             {builderCfg.mode === 'canvas'
               ? `True size: ${builderCfg.widthIn}″ × ${builderCfg.heightIn}″`
               : `True size: ${builderCfg.widthIn}″ long`}
-            {builderCfg.materials.length > 1 ? ` · ${builderCfg.materials.length} finishes` : ''}
+            {finishes.length > 1 ? ` · ${finishes.length} finishes` : ''}
           </li>
         )}
         <li>The engraving is included in the price.</li>

@@ -6,7 +6,6 @@ import { menuPrice } from '@/lib/menu-format'
 import { trackConversion } from '@/lib/track'
 import EngravingPicker, { type EngravingValue } from './EngravingPicker'
 import FileAttach, { type AttachedFile } from './FileAttach'
-import type { BuilderConfig } from '@/lib/builder/types'
 
 export interface PackOption {
   /** null = the product's own default pack. */
@@ -28,9 +27,10 @@ export default function AddToCart(props: {
   engravable?: boolean
   /** Additional pack-size options (product_variants). The default pack is added automatically. */
   variants?: Array<{ id: string; name: string; packSize: number; priceCents: number }>
-  /** Builder config (metadata.builder). The Builder itself is retired from the
-   *  order flow; the config survives as the finish list (materials) here. */
-  builderConfig?: BuilderConfig | null
+  /** Colors/finishes actually in stock (from the inventory, resolved by the
+   *  product page). hex is the swatch color when known. The form only ever
+   *  offers what this list carries. */
+  finishes?: Array<{ label: string; hex: string | null }>
 }) {
   const { add, items } = useCart()
   const [qty, setQty] = useState(1)
@@ -53,12 +53,11 @@ export default function AddToCart(props: {
   const hasOptions = options.length > 1
 
   const engravable = props.engravable !== false
-  // Finishes come from the dormant builder config's material list. A single
-  // material is not a choice, so chips only render when there are two or more.
-  const finishes = engravable ? (props.builderConfig?.materials ?? []) : []
+  // A single stocked finish is not a choice, so chips only render at two or more.
+  const finishes = engravable ? (props.finishes ?? []) : []
   const hasFinishes = finishes.length > 1
   const [finishKey, setFinishKey] = useState<string | null>(null)
-  const finish = finishes.find(f => f.key === finishKey) ?? finishes[0] ?? null
+  const finish = finishes.find(f => f.label === finishKey) ?? finishes[0] ?? null
 
   const alreadyInCart = props.oneOff && items.some(i => i.productId === props.productId)
   const engText = engraving.text.trim()
@@ -117,12 +116,12 @@ export default function AddToCart(props: {
           <span className="block text-[11px] uppercase tracking-wider text-[var(--ink-soft)] mb-2">Finish</span>
           <div className="flex flex-wrap gap-2">
             {finishes.map(f => {
-              const isSel = f.key === (finish?.key ?? '')
+              const isSel = f.label === (finish?.label ?? '')
               return (
                 <button
-                  key={f.key}
+                  key={f.label}
                   type="button"
-                  onClick={() => setFinishKey(f.key)}
+                  onClick={() => setFinishKey(f.label)}
                   aria-pressed={isSel}
                   className={`inline-flex items-center gap-2 px-4 py-2 rounded-sm border text-sm transition-colors ${
                     isSel
@@ -130,7 +129,7 @@ export default function AddToCart(props: {
                       : 'border-[var(--hairline)] text-[var(--ink-soft)] hover:border-[var(--ink)]/40 hover:text-[var(--ink)]'
                   }`}
                 >
-                  <span aria-hidden className="w-3.5 h-3.5 rounded-full border border-black/20" style={{ background: f.surface }} />
+                  {f.hex && <span aria-hidden className="w-3.5 h-3.5 rounded-full border border-black/20" style={{ background: f.hex }} />}
                   {f.label}
                 </button>
               )

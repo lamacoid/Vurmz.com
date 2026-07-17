@@ -11,6 +11,7 @@ interface InventoryRow {
   id: string
   product_id: string | null
   variant_id: string | null
+  finish: string | null
   product_name: string | null
   qty_on_hand: number
   low_threshold: number
@@ -21,10 +22,10 @@ export async function GET(req: NextRequest) {
   return withAdminAuth(req, async () => {
     const db = getDb()
     const { results } = await db.prepare(
-      `SELECT i.id, i.product_id, i.variant_id, p.name as product_name, i.qty_on_hand, i.low_threshold, i.updated_at
+      `SELECT i.id, i.product_id, i.variant_id, i.finish, p.name as product_name, i.qty_on_hand, i.low_threshold, i.updated_at
        FROM inventory i
        LEFT JOIN products p ON p.id = i.product_id
-       ORDER BY (i.qty_on_hand <= i.low_threshold) DESC, p.name`
+       ORDER BY (i.qty_on_hand <= i.low_threshold) DESC, p.name, i.finish`
     ).all<InventoryRow>()
     return NextResponse.json({
       ok: true,
@@ -33,6 +34,7 @@ export async function GET(req: NextRequest) {
           id: r.id,
           productId: r.product_id,
           variantId: r.variant_id,
+          finish: r.finish,
           productName: r.product_name ?? '(unlinked)',
           qtyOnHand: r.qty_on_hand,
           lowThreshold: r.low_threshold,
@@ -47,6 +49,9 @@ export async function GET(req: NextRequest) {
 const adjustSchema = z.object({
   productId: z.string(),
   qtyChange: z.number().int(),
+  // Color/finish this stock is in ("Charcoal", "Black, matte"). Omitted or
+  // blank = the whole-product row, same behavior as before the finish column.
+  finish: z.string().trim().max(60).optional(),
   reason: z.string().max(200).optional(),
 })
 
@@ -56,10 +61,14 @@ export async function POST(req: NextRequest) {
     if (!body.success) return NextResponse.json({ ok: false, error: { code: 'VALIDATION' } }, { status: 422 })
     const db = getDb()
     const now = nowIso()
+    const finish = body.data.finish?.trim() || null
 
-    // Upsert inventory row
-    const existing = await db.prepare('SELECT id, qty_on_hand FROM inventory WHERE product_id = ? AND variant_id IS NULL LIMIT 1')
-      .bind(body.data.productId).first<{ id: string; qty_on_hand: number }>()
+    // Upsert the (product, finish) row; variant-level rows are not created here.
+    const existing = await db.prepare(
+      finish
+        ? 'SELECT id, qty_on_hand FROM inventory WHERE product_id = ? AND variant_id IS NULL AND finish = ? LIMIT 1'
+        : 'SELECT id, qty_on_hand FROM inventory WHERE product_id = ? AND variant_id IS NULL AND finish IS NULL LIMIT 1'
+    ).bind(...(finish ? [body.data.productId, finish] : [body.data.productId])).first<{ id: string; qty_on_hand: number }>()
 
     let invId: string
     let newQty: number
@@ -70,8 +79,8 @@ export async function POST(req: NextRequest) {
     } else {
       invId = newId('inv')
       newQty = Math.max(0, body.data.qtyChange)
-      await db.prepare('INSERT INTO inventory (id, product_id, variant_id, qty_on_hand, low_threshold, updated_at) VALUES (?, ?, NULL, ?, 0, ?)')
-        .bind(invId, body.data.productId, newQty, now).run()
+      await db.prepare('INSERT INTO inventory (id, product_id, variant_id, finish, qty_on_hand, low_threshold, updated_at) VALUES (?, ?, NULL, ?, ?, 0, ?)')
+        .bind(invId, body.data.productId, finish, newQty, now).run()
     }
 
     await db.prepare(
@@ -82,7 +91,7 @@ export async function POST(req: NextRequest) {
     await audit({
       actorType: 'admin', actorId: session.email ?? null,
       action: 'inventory.adjust', targetType: 'inventory', targetId: invId,
-      diff: { qtyChange: body.data.qtyChange, newQty }, ip: getClientIp(req), userAgent: getUserAgent(req),
+      diff: { qtyChange: body.data.qtyChange, newQty, finish }, ip: getClientIp(req), userAgent: getUserAgent(req),
     })
 
     return NextResponse.json({ ok: true, data: { qtyOnHand: newQty } })
@@ -100,6 +109,24 @@ export async function PATCH(req: NextRequest) {
     if (!body.success) return NextResponse.json({ ok: false, error: { code: 'VALIDATION' } }, { status: 422 })
     await getDb().prepare('UPDATE inventory SET low_threshold = ?, updated_at = ? WHERE id = ?')
       .bind(body.data.lowThreshold, nowIso(), body.data.id).run()
+    return NextResponse.json({ ok: true })
+  })
+}
+
+const deleteSchema = z.object({ id: z.string() })
+
+// Remove a row entered by mistake. Movements cascade with the row; this is
+// for typos, not for zeroing stock (use the count for that).
+export async function DELETE(req: NextRequest) {
+  return withAdminAuth(req, async (session) => {
+    const body = deleteSchema.safeParse(await req.json().catch(() => null))
+    if (!body.success) return NextResponse.json({ ok: false, error: { code: 'VALIDATION' } }, { status: 422 })
+    await getDb().prepare('DELETE FROM inventory WHERE id = ?').bind(body.data.id).run()
+    await audit({
+      actorType: 'admin', actorId: session.email ?? null,
+      action: 'inventory.delete', targetType: 'inventory', targetId: body.data.id,
+      diff: {}, ip: getClientIp(req), userAgent: getUserAgent(req),
+    })
     return NextResponse.json({ ok: true })
   })
 }

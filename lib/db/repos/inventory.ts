@@ -15,12 +15,28 @@ type ItemRow = {
   product_id: string | null
   variant_id: string | null
   qty: number
+  metadata: string | null
+}
+
+/**
+ * Finishes the shop may offer for a product: exactly the finish-level
+ * inventory rows with stock on hand. No row, no offer. This is the
+ * honesty contract behind the product page's finish chips (2026-07-16):
+ * the site never claims a color Zach has not entered in the inventory.
+ */
+export async function listStockedFinishes(productId: string): Promise<string[]> {
+  const db = getDb()
+  const { results } = await db
+    .prepare("SELECT finish FROM inventory WHERE product_id = ? AND finish IS NOT NULL AND finish != '' AND qty_on_hand > 0 ORDER BY finish")
+    .bind(productId)
+    .all<{ finish: string }>()
+  return results.map(r => r.finish)
 }
 
 async function moveInventory(orderId: string, actorId: string | null, direction: 'consume' | 'restock'): Promise<number> {
   const db = getDb()
   const { results: items } = await db
-    .prepare('SELECT id, product_id, variant_id, qty FROM order_items WHERE order_id = ?')
+    .prepare('SELECT id, product_id, variant_id, qty, metadata FROM order_items WHERE order_id = ?')
     .bind(orderId)
     .all<ItemRow>()
 
@@ -36,10 +52,26 @@ async function moveInventory(orderId: string, actorId: string | null, direction:
     const won = await db.prepare(guard).bind(it.id).run()
     if (!won.meta.changes) continue
 
-    const inv = await db
-      .prepare('SELECT id FROM inventory WHERE product_id = ? AND variant_id IS ?')
-      .bind(it.product_id, it.variant_id)
-      .first<{ id: string }>()
+    // A line that carries a chosen finish decrements that finish's row when
+    // one exists; otherwise it falls back to the whole-product row. Opt-in
+    // either way: no row at all, no effect.
+    let finish: string | null = null
+    try {
+      const meta = JSON.parse(it.metadata ?? '{}') as { options?: { finish?: string } }
+      finish = meta.options?.finish?.trim() || null
+    } catch {}
+    let inv = finish
+      ? await db
+          .prepare('SELECT id FROM inventory WHERE product_id = ? AND variant_id IS ? AND finish = ?')
+          .bind(it.product_id, it.variant_id, finish)
+          .first<{ id: string }>()
+      : null
+    if (!inv) {
+      inv = await db
+        .prepare('SELECT id FROM inventory WHERE product_id = ? AND variant_id IS ? AND finish IS NULL')
+        .bind(it.product_id, it.variant_id)
+        .first<{ id: string }>()
+    }
     if (!inv) continue // opt-in: flag still recorded, nothing to move
 
     const delta = direction === 'consume' ? -it.qty : it.qty
