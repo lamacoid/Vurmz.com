@@ -6,6 +6,7 @@ import { menuPrice } from '@/lib/menu-format'
 import { trackConversion } from '@/lib/track'
 import EngravingPicker, { type EngravingValue } from './EngravingPicker'
 import FileAttach, { type AttachedFile } from './FileAttach'
+import TemplatePicker, { type OrderTemplate } from './TemplatePicker'
 
 export interface PackOption {
   /** null = the product's own default pack. */
@@ -31,6 +32,8 @@ export default function AddToCart(props: {
    *  product page). hex is the swatch color when known. The form only ever
    *  offers what this list carries. */
   finishes?: Array<{ label: string; hex: string | null }>
+  /** Named layout templates (metadata.orderTemplates), metal cards today. */
+  templates?: OrderTemplate[]
 }) {
   const { add, items } = useCart()
   const [qty, setQty] = useState(1)
@@ -59,6 +62,10 @@ export default function AddToCart(props: {
   const [finishKey, setFinishKey] = useState<string | null>(null)
   const finish = finishes.find(f => f.label === finishKey) ?? finishes[0] ?? null
 
+  const templates = engravable ? (props.templates ?? []) : []
+  const [templateKey, setTemplateKey] = useState<string | null>(null)
+  const template = templates.find(t => t.key === templateKey) ?? null
+
   const alreadyInCart = props.oneOff && items.some(i => i.productId === props.productId)
   const engText = engraving.text.trim()
   // An order is personalized if it has text OR a chosen design element OR a file.
@@ -78,7 +85,10 @@ export default function AddToCart(props: {
         ...(engraving.element ? { element: { id: engraving.element.id, label: engraving.element.label, thumb: engraving.element.thumb } } : {}),
       }
     }
-    if (hasFinishes && finish) meta.options = { finish: finish.label }
+    const options: Record<string, string> = {}
+    if (hasFinishes && finish) options.finish = finish.label
+    if (template) options.template = template.label
+    if (Object.keys(options).length) meta.options = options
     if (file) meta.file = { key: file.key, filename: file.filename }
     return Object.keys(meta).length ? meta : undefined
   }
@@ -110,6 +120,10 @@ export default function AddToCart(props: {
 
   return (
     <div>
+      {templates.length > 0 && (
+        <TemplatePicker templates={templates} value={templateKey} onChange={setTemplateKey} />
+      )}
+
       {/* Finish options: chips with the real surface color as the swatch. */}
       {hasFinishes && (
         <div className="mb-4">

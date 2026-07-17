@@ -73,7 +73,7 @@ export default function CartDrawer() {
                   <p className="text-xs text-[#DED6C3]/70">{(item.variantName ? `${item.variantName.toLowerCase()} · ` : item.packSize > 1 ? `pack of ${item.packSize} · ` : '') + money(item.priceCents) + (item.packSize > 1 || item.variantName ? ' ea' : ' each')}</p>
                   {(() => {
                     const eng = item.metadata?.engraving as { text?: string; fontLabel?: string } | undefined
-                    const opts = item.metadata?.options as { finish?: string } | undefined
+                    const opts = item.metadata?.options as { finish?: string; template?: string } | undefined
                     const file = item.metadata?.file as { filename?: string } | undefined
                     return (
                       <>
@@ -82,7 +82,9 @@ export default function CartDrawer() {
                             ✎ “{eng.text}”{eng.fontLabel ? ` · ${eng.fontLabel}` : ''}
                           </p>
                         )}
-                        {opts?.finish && <p className="text-[11px] text-[#DED6C3]/60 truncate">{opts.finish}</p>}
+                        {(opts?.template || opts?.finish) && (
+                          <p className="text-[11px] text-[#DED6C3]/60 truncate">{[opts.template, opts.finish].filter(Boolean).join(' · ')}</p>
+                        )}
                         {file?.filename && <p className="text-[11px] text-[#DED6C3]/60 truncate">📎 {file.filename}</p>}
                       </>
                     )

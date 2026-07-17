@@ -601,14 +601,16 @@ export default function CheckoutPage() {
                   <p className="text-xs text-[#6B6259]">{item.packSize > 1 ? `${item.qty} × pack of ${item.packSize}` : `Qty ${item.qty}`}</p>
                   {(() => {
                     const eng = item.metadata?.engraving as { text?: string; fontLabel?: string } | undefined
-                    const opts = item.metadata?.options as { finish?: string } | undefined
+                    const opts = item.metadata?.options as { finish?: string; template?: string } | undefined
                     const file = item.metadata?.file as { filename?: string } | undefined
                     return (
                       <>
                         {eng?.text && (
                           <p className="text-[11px] text-[#C67A6F] truncate">✎ “{eng.text}”{eng.fontLabel ? ` · ${eng.fontLabel}` : ''}</p>
                         )}
-                        {opts?.finish && <p className="text-[11px] text-[#6B6259] truncate">{opts.finish}</p>}
+                        {(opts?.template || opts?.finish) && (
+                          <p className="text-[11px] text-[#6B6259] truncate">{[opts.template, opts.finish].filter(Boolean).join(' · ')}</p>
+                        )}
                         {file?.filename && <p className="text-[11px] text-[#6B6259] truncate">📎 {file.filename}</p>}
                       </>
                     )

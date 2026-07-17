@@ -76,9 +76,10 @@ const schema = z.object({
         thumb: z.string().max(200),
       }).optional(),
     }).nullish(),
-    // Plain listed choices from the product form (finish chips today).
+    // Plain listed choices from the product form (finish chips, card layout).
     options: z.object({
-      finish: z.string().max(60),
+      finish: z.string().max(60).optional(),
+      template: z.string().max(60).optional(),
     }).optional(),
     // One customer file per item: a guest checkout upload (checkout/ prefix)
     // or one of the customer's saved account files (customer/ prefix, whose
@@ -268,11 +269,18 @@ export async function POST(req: NextRequest) {
   type Personal = { text: string; fontValue?: string; fontLabel?: string; placement?: string; element?: { id: string; label: string; thumb: string } }
   const personalByProduct = new Map<string, Personal>()
   const builderByProduct = new Map<string, unknown>()
-  const optionsByProduct = new Map<string, { finish: string }>()
+  const optionsByProduct = new Map<string, { finish?: string; template?: string }>()
   const fileByProduct = new Map<string, { key: string; filename: string }>()
   for (const it of body.items) {
     if (it.builder && it.builder.elements.length > 0) builderByProduct.set(it.productId, it.builder)
-    if (it.options?.finish?.trim()) optionsByProduct.set(it.productId, { finish: it.options.finish.trim() })
+    const finish = it.options?.finish?.trim()
+    const template = it.options?.template?.trim()
+    if (finish || template) {
+      optionsByProduct.set(it.productId, {
+        ...(finish ? { finish } : {}),
+        ...(template ? { template } : {}),
+      })
+    }
     if (it.file) fileByProduct.set(it.productId, { key: it.file.key, filename: it.file.filename })
     const t = it.personalization?.text?.trim()
     const el = it.personalization?.element
@@ -437,13 +445,14 @@ export async function POST(req: NextRequest) {
     totalCents,
     items: cart.items.map(i => {
       const eng = personalByProduct.get(i.productId)
-      const finish = optionsByProduct.get(i.productId)?.finish
+      const opts = optionsByProduct.get(i.productId)
       const file = fileByProduct.get(i.productId)
       const parts = [
         eng?.text ? `“${esc(eng.text)}”${eng.fontLabel ? ` · ${esc(eng.fontLabel)}` : ''}` : '',
         eng?.element ? `🎨 ${esc(eng.element.label)} design` : '',
         eng?.placement ? esc(eng.placement) : '',
-        finish ? `Finish: ${esc(finish)}` : '',
+        opts?.template ? `Layout: ${esc(opts.template)}` : '',
+        opts?.finish ? `Finish: ${esc(opts.finish)}` : '',
         file ? `📎 ${esc(file.filename)}` : '',
       ].filter(Boolean)
       return {

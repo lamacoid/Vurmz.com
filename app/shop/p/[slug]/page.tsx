@@ -85,6 +85,15 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
     hex: builderCfg?.materials.find(m => m.label.trim().toLowerCase() === label.trim().toLowerCase())?.surface ?? null,
   }))
 
+  // Named layout templates (metal cards). Data-driven from metadata; shape
+  // is validated here so a bad row can never break the page.
+  const templates = (Array.isArray(product.metadata?.orderTemplates) ? product.metadata.orderTemplates as unknown[] : [])
+    .filter((t): t is { key: string; label: string } =>
+      !!t && typeof t === 'object'
+      && typeof (t as { key?: unknown }).key === 'string'
+      && typeof (t as { label?: unknown }).label === 'string')
+    .map(t => ({ key: t.key, label: t.label }))
+
   const orderColumn = (
     <div>
       <AddToCart
@@ -98,6 +107,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
         engravable={product.metadata?.engravable !== false}
         variants={variants.map(v => ({ id: v.id, name: v.name, packSize: v.packSize, priceCents: v.priceCents }))}
         finishes={finishes}
+        templates={templates}
       />
 
       {/* Fulfillment facts, right where the decision happens. */}

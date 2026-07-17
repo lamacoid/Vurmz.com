@@ -9,7 +9,7 @@ import type { BuilderSubmission } from '@/lib/builder/types'
 import { reverseOf, type BumpStatus } from '@/lib/admin/transitions'
 import { railBump } from '@/lib/admin/rail-client'
 
-interface OrderItem { id: string; nameSnapshot: string; qty: number; unitPriceCents: number; metadata?: { engraving?: { text?: string; fontValue?: string; fontLabel?: string; placement?: string; element?: { id: string; label: string; thumb: string } }; builder?: BuilderSubmission; options?: { finish?: string }; file?: { key: string; filename: string } } }
+interface OrderItem { id: string; nameSnapshot: string; qty: number; unitPriceCents: number; metadata?: { engraving?: { text?: string; fontValue?: string; fontLabel?: string; placement?: string; element?: { id: string; label: string; thumb: string } }; builder?: BuilderSubmission; options?: { finish?: string; template?: string }; file?: { key: string; filename: string } } }
 interface Order {
   id: string; number: string; email: string; status: string
   subtotalCents: number; fulfillmentFeeCents: number; totalCents: number
@@ -241,6 +241,7 @@ export default function OrderDetailPage() {
               )
             }
             const finish = it.metadata?.options?.finish
+            const template = it.metadata?.options?.template
             const file = it.metadata?.file
             return (
               <li key={it.id} className="flex gap-3">
@@ -252,6 +253,9 @@ export default function OrderDetailPage() {
                 )}
                 <div className="min-w-0">
                   <p className="text-sm font-medium text-[var(--a-ink)]">{it.qty}× {it.nameSnapshot}{finish ? <span className="text-[var(--a-ink-soft)] font-normal"> · {finish}</span> : null}</p>
+                  {template && (
+                    <p className="text-sm text-[var(--a-ink-soft)]">Layout: <span className="text-[var(--a-ink)] font-medium">{template}</span> <span className="text-[var(--a-ink-faint)]">(CARD-TEMPLATES.md)</span></p>
+                  )}
                   {eng?.text ? (
                     <p className="text-sm text-[var(--a-ink-soft)]">Engrave <span className="text-[var(--a-ink)] font-medium">“{eng.text}”</span>{eng.fontLabel ? ` in ${eng.fontLabel}` : ''}{eng.placement ? ` · ${eng.placement}` : ''}</p>
                   ) : (
@@ -373,6 +377,9 @@ export default function OrderDetailPage() {
                     <img src={it.metadata.engraving.element.thumb} alt="" className="h-9 w-9 object-contain bg-[#f0ebe0] rounded p-0.5" />
                     <span className="text-xs text-[var(--a-ink-soft)]">Design: <span className="text-cream/80">{it.metadata.engraving.element.label}</span> <span className="font-mono text-[var(--a-ink-faint)]">({it.metadata.engraving.element.id})</span></span>
                   </div>
+                )}
+                {it.metadata?.options?.template && (
+                  <p className="text-xs mt-1 text-[var(--a-ink-soft)]">Layout: <span className="text-cream/80">{it.metadata.options.template}</span></p>
                 )}
                 {it.metadata?.options?.finish && (
                   <p className="text-xs mt-1 text-[var(--a-ink-soft)]">Finish: <span className="text-cream/80">{it.metadata.options.finish}</span></p>
