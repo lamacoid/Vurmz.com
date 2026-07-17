@@ -45,7 +45,7 @@ const CAPABILITIES = [
   },
   {
     name: 'Laptops & Devices',
-    description: 'MacBooks, iPads, laptops, AirPods cases, phone cases. Permanent surface marking.',
+    description: 'MacBooks, iPads, laptops, AirPods cases, phone cases. Clean surface marking.',
     image: '/portfolio/macbook-engraving.jpg',
   },
   {

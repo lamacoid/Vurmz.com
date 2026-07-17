@@ -47,7 +47,7 @@ const cityData: Record<string, CityData> = {
       'Lone Tree has a mix of corporate offices at RidgeGate and shops and restaurants around Park Meadows. I deliver engraved items directly to your Lone Tree office or storefront.',
       'Metal business cards for your team, branded pens for a conference at the Lone Tree Arts Center, custom awards for an event at the Gaylord Rockies. You text me, I quote you, and I hand-deliver the finished product.',
       'Fast turnaround is standard on most stocked items. I am flexible on rush orders for local clients. If you need 50 engraved pens by Friday, just say the word.',
-      'Every item is engraved on professional-grade laser equipment. The results are permanent and clean. No fading, no peeling, just a mark that lasts as long as the item itself.',
+      'Every item is engraved on professional-grade laser equipment. Clean marks, done right the first time.',
     ],
   },
   parker: {
@@ -58,7 +58,7 @@ const cityData: Record<string, CityData> = {
       'Parker is growing fast, and I work with restaurants, offices, contractors, and retailers here. Custom engraving on everything from branded pens to industrial equipment labels.',
       'If you are in the Mainstreet Parker district, near the PACE Center, or along Parker Road, I deliver directly to your location. Quick handoff from the person who actually did your job.',
       'Many of my Parker clients order quarterly packs of branded pens, coasters, or keychains to keep their offices stocked. It makes a real impression on customers.',
-      'Laser engraving is the most durable form of branding you can get. Unlike printed labels or vinyl decals, an engraved logo is permanent. It is etched into the material itself.',
+      'An engraved logo is cut into the material itself. It feels different because it is.',
     ],
   },
   'highlands-ranch': {
@@ -78,7 +78,7 @@ const cityData: Record<string, CityData> = {
     neighborhoods: 'the CityCenter Englewood district, South Broadway, and neighborhoods near Swedish Medical Center',
     paragraphs: [
       'Englewood is right in the heart of the south Denver metro. From the shops along South Broadway to the offices near CityCenter Englewood, I do custom engraving with free local delivery.',
-      'If you run a restaurant, brewery, or retail shop in the South Broadway corridor, engraved coasters, pint glasses, and metal business cards are a solid way to stand out. Laser engraving is permanent. It does not peel off or fade like printed stuff.',
+      'If you run a restaurant, brewery, or retail shop in the South Broadway corridor, engraved coasters, pint glasses, and metal business cards are a solid way to stand out. Engraved, not printed; people notice the difference.',
       'Englewood also has a lot of medical and professional offices. Engraved pens, nameplates, and awards are a practical way to get your brand in front of patients, clients, and staff. I handle everything from design to delivery.',
       'Pricing is straightforward. Custom engraving starts at $35, and I stock pens, keychains, coasters, and metal business cards in ready-to-engrave packs. Text me what you need and I will get back to you with a quote.',
     ],
@@ -100,7 +100,7 @@ const cityData: Record<string, CityData> = {
     neighborhoods: 'Southlands, the Anschutz Medical Campus area, Tollgate Crossing, and Smoky Hill neighborhoods',
     paragraphs: [
       'Aurora is the largest city in the east Denver metro. From corporate offices near the Anschutz Medical Campus to restaurants and shops at Southlands, I do laser engraving with personal delivery across Aurora.',
-      'Aurora businesses cover everything: medical, aerospace, food service, construction, retail, tech. Laser engraving gives you a durable way to brand your tools, gifts, promo items, and signage. Unlike printed labels, engraved marks are permanent.',
+      'Aurora businesses cover everything: medical, aerospace, food service, construction, retail, tech. Engraving works across all of it: tools, gifts, promo items, signage.',
       'I serve clients throughout Aurora, including the Southlands area, Tollgate Crossing, Smoky Hill, and along E-470 and Quincy Avenue. Delivery is free on orders over $50, and I am happy to meet locally for pickups and drop-offs.',
       'Single engraved gift or a recurring bulk order of branded pens and business cards, either way it is easy. Text me a photo or description of what you want and I will get back to you with a quote.',
     ],
@@ -124,7 +124,7 @@ const cityData: Record<string, CityData> = {
       'Cherry Hills Village is one of Colorado\'s most well-known communities. I do laser engraving for businesses and individuals here, with personal delivery to your Cherry Hills address.',
       'Engraved metal business cards, personalized gifts for a private event, branded items for clients. I take my time on every job and deliver it myself.',
       'Cherry Hills is minutes from my Centennial workshop, so turnaround is fast. Next-day delivery is often possible on stocked items, and I can handle rush orders with advance notice.',
-      'Clean, permanent engraving on every piece. One person handles your job from start to finish.',
+      'Clean engraving on every piece. One person handles your job from start to finish.',
     ],
   },
   denver: {
@@ -135,7 +135,7 @@ const cityData: Record<string, CityData> = {
       'I serve restaurants in RiNo, boutiques in Cherry Creek, offices in LoDo, breweries in Baker, and shops along South Broadway. Personal delivery from Centennial.',
       'Branded pens for your coworking space, engraved coasters for your taproom, metal business cards for your real estate team, custom awards for a corporate event. I do all of it.',
       'You text me what you want, I quote you, and I deliver to your Denver location with fast turnaround. No online portals, no automated confirmations. Just a direct line to the person doing your engraving.',
-      'Laser engraving gives your brand a permanent, tactile quality that printed labels and vinyl stickers cannot match. When someone picks up your pen or holds your business card, they can feel it. That sticks with people.',
+      'Laser engraving gives your brand a tactile quality that printed labels and vinyl stickers cannot match. When someone picks up your pen or holds your business card, they can feel it. That sticks with people.',
     ],
   },
 }

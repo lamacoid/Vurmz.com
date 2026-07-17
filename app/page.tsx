@@ -48,7 +48,7 @@ const B2B_LANES = [
   { h: 'Metal service tags', p: 'Stickers fall off. A fiber-laser mark in stainless outlives the equipment. Packs of 10 from $30.', href: '/services/metal-tags' },
   { h: 'Knife crews', p: 'I pick up the whole line’s knives and return them engraved next day. $25 single, $8/knife for full kitchens.', href: '/services/knife-engraving' },
   { h: 'Branded packs', p: 'Pens, coasters, keychains, metal cards. Stocked, engraved with your logo, delivered on a schedule.', href: '/services' },
-  { h: 'Custom & one-off', p: 'Awards, signage, faceplates, jobsite tools. If your work needs a permanent mark, that’s my lane.', href: '/services/portfolio' },
+  { h: 'Custom & one-off', p: 'Awards, signage, faceplates, jobsite tools. If it needs a mark, that’s my lane.', href: '/services/portfolio' },
   { h: 'Volume & standing orders', p: 'Real quantities get real discounts. 10% off at 50+, 15% off at 150+ or any standing order. NET-30 available.', href: '/services#business' },
 ]
 

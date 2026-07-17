@@ -9,11 +9,11 @@ import Breadcrumbs from '@/components/Breadcrumbs'
 
 export const metadata: Metadata = {
   title: { absolute: 'Knife Engraving | VURMZ, Centennial, CO' },
-  description: 'Custom knife engraving in Centennial, CO. Chef knives, pocket knives, cleavers. Names, dates, and logos marked permanently in the steel. Next-day turnaround.',
+  description: 'Custom knife engraving in Centennial, CO. Chef knives, pocket knives, cleavers. Names, dates, and logos marked in the steel. Next-day turnaround.',
   alternates: { canonical: '/services/knife-engraving' },
   openGraph: {
     title: 'Knife Engraving | VURMZ',
-    description: 'Custom knife engraving in Centennial, CO. Chef knives, pocket knives, cleavers. Names, dates, and logos marked permanently in the steel. Next-day turnaround.',
+    description: 'Custom knife engraving in Centennial, CO. Chef knives, pocket knives, cleavers. Names, dates, and logos marked in the steel. Next-day turnaround.',
     url: `${siteInfo.url}/services/knife-engraving`,
     images: ['/portfolio/culinary-cleaver-engraved.jpg'],
   },
@@ -30,7 +30,7 @@ export default function KnifeEngravingPage() {
     '@type': 'Service',
     serviceType: 'Knife Engraving',
     name: 'Custom Knife Engraving',
-    description: 'Custom knife engraving in Centennial, CO. Chef knives, pocket knives, cleavers, and hunting knives. Names, dates, and logos marked permanently into the steel with a fiber laser. Next-day turnaround, hand-delivered across the south Denver metro.',
+    description: 'Custom knife engraving in Centennial, CO. Chef knives, pocket knives, cleavers, and hunting knives. Names, dates, and logos cut into the steel with a fiber laser. Next-day turnaround, hand-delivered across the south Denver metro.',
     provider: {
       '@type': 'LocalBusiness',
       name: siteInfo.legalName,
