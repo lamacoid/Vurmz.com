@@ -1,15 +1,15 @@
 import { siteInfo } from './site-info'
 
-// Zach's own story, in his words (2026-07-05). Every sentence is a fact
-// from his life; nothing manufactured. Menu-minimalist: three short
-// paragraphs, the pillars as three words, no explainer cards.
+// Zach's story, flattened 2026-07-16 on his call: facts only, no quips.
+// Every sentence is still true; the winks are gone. Menu-minimalist:
+// three short paragraphs, the pillars as three words, no explainer cards.
 export const aboutContent = {
   headline: 'I stumbled into this making things for another project.',
 
   storyParagraphs: [
-    `I wanted to make some custom cards myself instead of ordering them. I like doing things myself, to a fault: to this day I haven't watched a single YouTube video on laser engraving. I'd have learned faster. I learn more thoroughly this way. One machine led to another, and it hasn't stopped.`,
-    `VURMZ was an inside joke in high school, then my gamer tag, and now it's on the invoices and the license plate. Yes, it sounds like worms. It's also very easy to Google.`,
-    `I'm one person. I've lived in Centennial since before it was Centennial, and you might catch the plate around town. When you text me, you're texting the guy holding the laser.`,
+    `I wanted custom cards for another project and decided to make them myself. I taught myself the machine. One led to another, and it hasn't stopped.`,
+    `VURMZ started as a nickname in high school. Now it's the name on the invoices.`,
+    `I'm one person. I've lived in Centennial most of my life, and I handle every job myself, from the first text to the delivery.`,
   ],
 
   pillars: 'Local. Thoughtful. Fast.',
