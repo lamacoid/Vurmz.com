@@ -29,7 +29,7 @@ below is written to paste directly.
 > fees, no surprises.
 
 ## Services to list (name — description)
-- **Knife engraving** — Names, dates, logos marked permanently in the steel. $25/knife, crew pickup available.
+- **Knife engraving** — Names, dates, logos marked in the steel. $25/knife, crew pickup available.
 - **Metal service tags & nameplates** — Engraved stainless or anodized tags for trades. Packs of 10 from $30.
 - **Custom engraving (your item)** — Tumblers, flasks, devices, heirlooms. From $35.
 - **Engraved gifts** — Cutting boards, coasters, keepsakes. From $26/set.
@@ -45,7 +45,7 @@ below is written to paste directly.
 
 ## First 3 posts (one per week)
 1. **(Photo: culinary-cleaver-engraved.jpg)** "Chef's cleaver, name in the steel. Fiber laser marking goes into the blade, not onto it — survives the sharpener and the dishwasher you shouldn't be using. $25 a knife, crew pickups across south Denver. Text (719) 257-3834."
-2. **(Photo: clga-faceplate-closeup.jpg)** "Brushed metal faceplates for a Denver amp builder. Small production runs, sharp logo marking, no fading. If your product needs a permanent mark, that's what I do. vurmz.com/services"
+2. **(Photo: clga-faceplate-closeup.jpg)** "Brushed metal faceplates for a Denver amp builder. Small production runs, sharp logo marking. If your product needs a mark, that's what I do. vurmz.com/services"
 3. **(Photo: denver-map-mirror-closeup.jpg)** "Denver street map, engraved into beveled mirror glass. One-off custom pieces from $35 — bring me an idea and I'll tell you if it'll work. Hand-delivered locally."
 
 ## Photos to upload day one (from /public/portfolio/)

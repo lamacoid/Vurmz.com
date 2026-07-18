@@ -12,7 +12,7 @@ site's voice: short, declarative, no exclamation points.
 | 3 | water-bottle-full-wrap.jpg | Full 360° wrap on a stainless bottle. A rotary spins the bottle in sync with the laser; the detail is unforgiving and that's the fun of it. Bring me yours. | IG |
 | 4 | tumbler-cherry-creek-37.jpg | Branded tumblers for a Cherry Creek business. The laser burns the powder coat away clean — the mark never washes off, peels, or fades. Packs for client gifts and employee swag. | GBP / Nextdoor |
 | 5 | denver-map-mirror-closeup.jpg | A vintage Denver street map, engraved into beveled mirror. Too hot and the silvering lifts, too cold and the lines vanish. Two test passes to dial it in. Custom pieces from $35. | IG / GBP |
-| 6 | clga-faceplate-closeup.jpg | Faceplates for County Line Guitar Amps, built here in Denver. Small production runs with marking that ages like the amps do. If your product needs a permanent mark, that's my lane. | GBP |
+| 6 | clga-faceplate-closeup.jpg | Faceplates for County Line Guitar Amps, built here in Denver. Small production runs with marking that ages like the amps do. If your product needs a mark, that's my lane. | GBP |
 | 7 | macbook-engraving.jpg | Your name on your laptop means it comes back when it walks off. Anodized aluminum etches to a clean white-on-grey that doesn't fade. Same-day if you drop it off. | Nextdoor / GBP |
 | 8 | engraved-hand-saw.jpg | An heirloom hand saw, marked for the next generation. Bring me the thing your grandfather left you and I'll make sure your grandkids know whose it was. | IG / Nextdoor |
 | 9 | laser-engraved-artwork.jpg | Pushing the fiber laser to its detail limit on anodized aluminum. This one was for me — the file's saved for anyone who wants something like it. | IG |
