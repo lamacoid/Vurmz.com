@@ -520,7 +520,7 @@ export default function CheckoutPage() {
             {/* Photo / logo attachments — works for guests, no account needed */}
             <div className="mt-3">
               <p className="text-xs text-[#6B6259] mb-2">
-                Have a logo or design? Attach it here (up to 3 files, 10 MB each). <span className="font-medium text-[var(--ink)]">SVG or PDF engraves best</span> (crisp lines, high contrast). Photos and PNG/JPG work too, I&apos;ll clean them up if needed. No file? Just describe it above and we&apos;ll nail it down on the proof.
+                Have a logo or design? Attach it here (up to 3 files, 10 MB each). <span className="font-medium text-[var(--ink)]">A PDF or a sharp photo works best</span>; designer files (SVG) are perfect too. I&apos;ll clean it up if needed. No file? Just describe it above and we&apos;ll nail it down on the proof.
               </p>
               {attachments.length > 0 && (
                 <ul className="space-y-1 mb-2">

@@ -207,7 +207,7 @@ export default function FileAttach({
 
       {error && <p className="mt-1 text-[11px] text-red-700">{error}</p>}
       <p className="mt-1 text-[11px] text-[var(--ink-soft)]">
-        Logo, design, or photo. SVG or PDF engraves best.
+        Logo, design, or photo. A PDF or a sharp photo works best.
         {loggedIn ? ' Uploads save to your files.' : ''}
       </p>
     </div>

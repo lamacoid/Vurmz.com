@@ -25,12 +25,18 @@ type ItemRow = {
  * the site never claims a color Zach has not entered in the inventory.
  */
 export async function listStockedFinishes(productId: string): Promise<string[]> {
-  const db = getDb()
-  const { results } = await db
-    .prepare("SELECT finish FROM inventory WHERE product_id = ? AND finish IS NOT NULL AND finish != '' AND qty_on_hand > 0 ORDER BY finish")
-    .bind(productId)
-    .all<{ finish: string }>()
-  return results.map(r => r.finish)
+  // Fail-soft: a broken or behind inventory table must never take down a
+  // product page. Worst case is no finish chips, which is honest anyway.
+  try {
+    const db = getDb()
+    const { results } = await db
+      .prepare("SELECT finish FROM inventory WHERE product_id = ? AND finish IS NOT NULL AND finish != '' AND qty_on_hand > 0 ORDER BY finish")
+      .bind(productId)
+      .all<{ finish: string }>()
+    return results.map(r => r.finish)
+  } catch {
+    return []
+  }
 }
 
 async function moveInventory(orderId: string, actorId: string | null, direction: 'consume' | 'restock'): Promise<number> {

@@ -35,7 +35,7 @@ const TIERS = [
   {
     sw: 'bg-[var(--page)] border border-[var(--hairline)]',
     h: 'Everywhere else · it ships',
-    p: 'Anywhere in the US: flat $6 on cards, tags, keychains, and pens. Heavier pieces get a real shipping quote.',
+    p: 'Anywhere in the US via USPS, tracked: $6 for the light stuff (cards, tags, keychains, pens), more by weight from there. The exact price shows at checkout before you pay. In a hurry locally? Uber same-day courier is a checkout option too.',
   },
 ]
 
@@ -84,7 +84,7 @@ export default function DeliveryPage() {
             <div className="mt-8 rounded-sm border border-[var(--hairline)] bg-[var(--ink)]/[0.03] px-5 py-4">
               <p className="text-sm text-[var(--ink)] font-semibold">Want it contactless? Just say so.</p>
               <p className="text-[13px] text-[var(--ink-soft)] leading-snug mt-1">
-                I&rsquo;ll leave it at your door and text you a photo. No knock, no small talk, same free delivery. Or if you&rsquo;d rather it come by mail, that&rsquo;s an option too, flat $6 on cards, tags, keychains, and pens.
+                I&rsquo;ll leave it at your door and text you a photo. No knock, no small talk, same free delivery. Or if you&rsquo;d rather it come by mail, that&rsquo;s an option too, from $6 by weight, priced at checkout.
               </p>
             </div>
 
