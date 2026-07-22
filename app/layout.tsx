@@ -200,7 +200,7 @@ export default function RootLayout({
             the offsets in LocalTicker.tsx and SiteHeader.tsx move with it. */}
         <div className="fixed top-0 left-0 right-0 z-[70] h-11 sm:h-8 flex items-center justify-center bg-[#C67A6F] px-4">
           <p className="text-center text-[11px] sm:text-[12px] leading-tight tracking-wide text-[#0A2429]">
-            Phone is text-only. I work early mornings and am available to text anytime.
+            Text-only. Calls are not available.
           </p>
         </div>
         <LocalTicker />
