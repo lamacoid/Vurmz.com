@@ -46,7 +46,7 @@ export default function SiteHeader({ variant = 'services' }: { variant?: 'shop' 
 
   return (
     <>
-      <header className={`fixed top-7 left-0 right-0 z-50 transition-all duration-300 ${headerBg}`}>
+      <header className={`fixed top-[72px] sm:top-[60px] left-0 right-0 z-50 transition-all duration-300 ${headerBg}`}>
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16 sm:h-[72px]">
             <Link href="/" className="flex-shrink-0">
@@ -110,7 +110,7 @@ export default function SiteHeader({ variant = 'services' }: { variant?: 'shop' 
       {mobileMenuOpen && (
         <>
           <div className="fixed inset-0 z-40 bg-black/30 backdrop-blur-sm" onClick={() => setMobileMenuOpen(false)} />
-          <div className={`fixed top-[92px] left-3 right-3 z-50 ${mobileBg} border rounded-2xl shadow-2xl p-5 max-h-[calc(100vh-108px)] overflow-y-auto`}>
+          <div className={`fixed top-[136px] sm:top-[132px] left-3 right-3 z-50 ${mobileBg} border rounded-2xl shadow-2xl p-5 max-h-[calc(100vh-152px)] overflow-y-auto`}>
             <div className="flex flex-col gap-1 mb-3 pb-3 border-b border-white/10">
               <Link
                 href="/account"

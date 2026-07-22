@@ -108,7 +108,7 @@ export default function LocalTicker() {
   if (pathname && HIDDEN_PREFIXES.some((p) => pathname.startsWith(p))) return null
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-[60] h-7 bg-[#15363b]/95 backdrop-blur-sm border-b border-[var(--hairline)]">
+    <div className="fixed top-11 sm:top-8 left-0 right-0 z-[60] h-7 bg-[#15363b]/95 backdrop-blur-sm border-b border-[var(--hairline)]">
       <div className="max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex items-center justify-between text-[11px] font-mono tracking-wide text-[var(--ink-soft)]">
         {/* Left — live local anchor */}
         <div className="hidden sm:flex items-center gap-2">

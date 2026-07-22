@@ -195,6 +195,14 @@ export default function RootLayout({
         >
           Skip to main content
         </a>
+        {/* Announcement strip. Top of the fixed stack: this (h-11 / sm:h-8),
+            then LocalTicker (h-7), then SiteHeader. Change the height here and
+            the offsets in LocalTicker.tsx and SiteHeader.tsx move with it. */}
+        <div className="fixed top-0 left-0 right-0 z-[70] h-11 sm:h-8 flex items-center justify-center bg-[#C67A6F] px-4">
+          <p className="text-center text-[11px] sm:text-[12px] leading-tight tracking-wide text-[#0A2429]">
+            Phone is text-only. I work early mornings and am available to text anytime.
+          </p>
+        </div>
         <LocalTicker />
         <CartProvider>
           <main id="main-content">{children}</main>
