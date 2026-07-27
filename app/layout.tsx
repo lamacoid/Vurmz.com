@@ -3,6 +3,7 @@ import { Inter, Fraunces } from 'next/font/google'
 import './globals.css'
 import './fonts.css'
 import LocalTicker from '@/components/LocalTicker'
+import ShopNotice from '@/components/ShopNotice'
 import LaserCursor from '@/components/LaserCursor'
 import SunTracker from '@/components/SunTracker'
 import { CartProvider } from '@/lib/cart/store'
@@ -207,6 +208,7 @@ export default function RootLayout({
         <CartProvider>
           <main id="main-content">{children}</main>
         </CartProvider>
+        <ShopNotice />
         <LaserCursor />
         <SunTracker />
       </body>
