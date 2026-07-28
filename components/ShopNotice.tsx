@@ -45,7 +45,7 @@ export default function ShopNotice() {
   return (
     <aside
       aria-label="Temporarily closed"
-      className="fixed bottom-16 right-3 sm:bottom-4 sm:right-4 z-30 w-[calc(100vw-1.5rem)] max-w-[300px] rounded-xl border border-[var(--hairline)] bg-[var(--surface)] p-4 shadow-lg shadow-black/10"
+      className="fixed bottom-14 right-3 sm:bottom-4 sm:right-4 z-30 w-[calc(100vw-1.5rem)] max-w-[300px] max-h-[calc(100vh-9.5rem)] overflow-y-auto rounded-xl border border-[var(--hairline)] bg-[var(--surface)] p-4 shadow-lg shadow-black/10"
     >
       <div className="flex items-center gap-2">
         <span className="inline-block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[#C67A6F]" aria-hidden />
@@ -113,11 +113,25 @@ export default function ShopNotice() {
           <ChatBubbleOvalLeftEllipsisIcon className="h-4 w-4" />
           Message me directly
         </a>
+        {/* The pill is the envelope: paper tones in both modes, the flap seam
+            and a whisper-darker flap panel. Fixed hex on purpose; an envelope
+            stays paper-colored in dark mode. A glass version was tried and
+            rejected 2026-07-28 (buttons stay flat). Only the top flap; bottom
+            seams too would draw an X that reads as a disabled button. */}
         <a
-          href="mailto:zach@vurmz.com"
-          className="mt-2 block text-center text-[12px] font-medium text-[var(--ink)] underline underline-offset-4 decoration-[var(--hairline)] transition-colors hover:decoration-[#C67A6F]"
+          href="mailto:zach@vurmz.com?subject=Project%20question&body=Hi%20Zach%2C%20I%20have%20a%20project%20in%20mind%3A%20"
+          className="relative mt-2 inline-flex w-full items-center justify-center overflow-hidden rounded-full border border-[#16525C]/25 bg-[#DED6C3] px-3 py-2 text-[12.5px] font-semibold text-[#16525C] transition-colors hover:bg-[#D5CBB4]"
         >
-          zach@vurmz.com
+          <svg
+            aria-hidden
+            className="pointer-events-none absolute inset-0 h-full w-full"
+            viewBox="0 0 272 36"
+            preserveAspectRatio="none"
+          >
+            <path d="M-2 -2 L-2 2 L136 30 L274 2 L274 -2 Z" fill="#16525C" fillOpacity="0.06" />
+            <path d="M-2 2 L136 30 L274 2" fill="none" stroke="#16525C" strokeOpacity="0.18" strokeWidth="1" />
+          </svg>
+          <span className="relative">Email me</span>
         </a>
       </div>
     </aside>
