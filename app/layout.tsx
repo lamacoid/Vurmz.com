@@ -40,10 +40,13 @@ export const metadata: Metadata = {
     description: 'VURMZ laser engraving in Centennial, CO. Shop engraved products or get custom services for your business.',
     images: [
       {
-        url: 'https://www.vurmz.com/images/og-image.jpg',
+        // og-card.jpg is drawn by scripts/make-og-image.mjs. The old
+        // og-image.jpg was a corrupted photo; new filename so scrapers
+        // refetch instead of serving their cached copy.
+        url: 'https://www.vurmz.com/images/og-card.jpg',
         width: 1200,
         height: 630,
-        alt: 'VURMZ Laser Engraving. Metal business card engraved with logo',
+        alt: 'VURMZ Laser Engraving. Centennial, Colorado. Hand-delivered.',
       },
     ],
   },
@@ -51,7 +54,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'VURMZ | Laser Engraving · Shop & Services',
     description: 'VURMZ laser engraving in Centennial, CO. Shop or get custom services.',
-    images: ['https://www.vurmz.com/images/og-image.jpg'],
+    images: ['https://www.vurmz.com/images/og-card.jpg'],
   },
   robots: {
     index: true,

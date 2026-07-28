@@ -34,7 +34,7 @@ const SITE_PHOTOS: Array<{ url: string; filename: string; folder: string; alt?: 
   { url: '/images/vurmz-logo-full.svg',              filename: 'VURMZ logo (full)',             folder: 'brand' },
   { url: '/images/vurmz-logo-text.png',              filename: 'VURMZ logo (text)',             folder: 'brand' },
   { url: '/images/apple-touch-icon.png',             filename: 'Apple touch icon',              folder: 'brand' },
-  { url: '/images/og-image.jpg',                     filename: 'OG image',                      folder: 'brand' },
+  { url: '/images/og-card.jpg',                      filename: 'OG image',                      folder: 'brand' },
   { url: '/images/wood-grain-bg.jpg',                filename: 'Wood grain background',         folder: 'brand' },
   { url: '/images/wood-grain-horizontal.jpg',        filename: 'Wood grain (horizontal)',       folder: 'brand' },
   { url: '/images/zach.jpeg',                        filename: 'Zach — founder portrait',       folder: 'brand', alt: 'Zach DeMillo, founder of VURMZ' },
