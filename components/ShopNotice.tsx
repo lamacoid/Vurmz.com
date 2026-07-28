@@ -1,6 +1,8 @@
 'use client'
 
 import { useState, FormEvent } from 'react'
+import { ChatBubbleOvalLeftEllipsisIcon } from '@heroicons/react/24/solid'
+import { getSmsLink } from '@/lib/site-info'
 
 // Closed notice with a newsletter signup. Floats bottom-right; lifts above the
 // LaserCursor toggle (fixed bottom-4 left-4) on mobile, where they collide.
@@ -54,14 +56,14 @@ export default function ShopNotice() {
 
       {status === 'success' ? (
         <p className="mt-2 text-[12.5px] leading-relaxed text-[var(--ink-soft)]">
-          You are on the list. You will be first in the queue when the shop has a
-          new home.
+          You are on the list. You will be first in the queue when we open in the
+          new space.
         </p>
       ) : (
         <>
           <p className="mt-2 text-[12.5px] leading-relaxed text-[var(--ink-soft)]">
-            I am not taking new orders while the shop finds a new home. Still glad
-            to talk through projects or answer questions.
+            Orders are paused while we transition to a new space. Still glad to
+            talk through projects or answer questions.
           </p>
 
           <form onSubmit={handleSubmit} className="mt-3 space-y-2">
@@ -102,23 +104,21 @@ export default function ShopNotice() {
         <p className="text-[10.5px] leading-snug text-[var(--ink-soft)]/70">
           Text or email only. I do not take calls.
         </p>
-        <div className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-[12px] font-medium">
-          <a
-            href="sms:7192573834"
-            className="text-[var(--ink)] underline underline-offset-4 decoration-[var(--hairline)] transition-colors hover:decoration-[#C67A6F]"
-          >
-            Text (719) 257-3834
-          </a>
-          <span className="text-[var(--ink-soft)]/50" aria-hidden>
-            ·
-          </span>
-          <a
-            href="mailto:zach@vurmz.com"
-            className="text-[var(--ink)] underline underline-offset-4 decoration-[var(--hairline)] transition-colors hover:decoration-[#C67A6F]"
-          >
-            zach@vurmz.com
-          </a>
-        </div>
+        {/* The number is not printed. The bubble opens Messages with a starter
+            line already typed, so they only have to finish the sentence. */}
+        <a
+          href={getSmsLink('Hi Zach, I have a project in mind: ')}
+          className="mt-2 inline-flex w-full items-center justify-center gap-1.5 rounded-full bg-[#0B93F6] px-3 py-2 text-[12.5px] font-semibold text-white transition-colors hover:bg-[#0A84FF]"
+        >
+          <ChatBubbleOvalLeftEllipsisIcon className="h-4 w-4" />
+          Message me directly
+        </a>
+        <a
+          href="mailto:zach@vurmz.com"
+          className="mt-2 block text-center text-[12px] font-medium text-[var(--ink)] underline underline-offset-4 decoration-[var(--hairline)] transition-colors hover:decoration-[#C67A6F]"
+        >
+          zach@vurmz.com
+        </a>
       </div>
     </aside>
   )
