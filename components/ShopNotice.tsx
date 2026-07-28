@@ -94,15 +94,32 @@ export default function ShopNotice() {
               First in the queue when the doors open. Unsubscribe anytime.
             </p>
           </form>
+        </>
+      )}
 
+      {/* Text or email only, in both states. The phone does not take calls. */}
+      <div className="mt-3 border-t border-[var(--hairline)] pt-3">
+        <p className="text-[10.5px] leading-snug text-[var(--ink-soft)]/70">
+          Text or email only. I do not take calls.
+        </p>
+        <div className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-[12px] font-medium">
           <a
             href="sms:7192573834"
-            className="mt-3 inline-block text-[12px] font-medium text-[var(--ink)] underline underline-offset-4 decoration-[var(--hairline)] transition-colors hover:decoration-[#C67A6F]"
+            className="text-[var(--ink)] underline underline-offset-4 decoration-[var(--hairline)] transition-colors hover:decoration-[#C67A6F]"
           >
             Text (719) 257-3834
           </a>
-        </>
-      )}
+          <span className="text-[var(--ink-soft)]/50" aria-hidden>
+            ·
+          </span>
+          <a
+            href="mailto:zach@vurmz.com"
+            className="text-[var(--ink)] underline underline-offset-4 decoration-[var(--hairline)] transition-colors hover:decoration-[#C67A6F]"
+          >
+            zach@vurmz.com
+          </a>
+        </div>
+      </div>
     </aside>
   )
 }
