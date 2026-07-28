@@ -99,16 +99,13 @@ export default function ShopNotice() {
         </>
       )}
 
-      {/* Text or email only, in both states. The phone does not take calls. */}
+      {/* The two buttons say text-or-email without saying it. */}
       <div className="mt-3 border-t border-[var(--hairline)] pt-3">
-        <p className="text-[10.5px] leading-snug text-[var(--ink-soft)]/70">
-          Text or email only. I do not take calls.
-        </p>
         {/* The number is not printed. The bubble opens Messages with a starter
             line already typed, so they only have to finish the sentence. */}
         <a
           href={getSmsLink('Hi Zach, I have a project in mind: ')}
-          className="mt-2 inline-flex w-full items-center justify-center gap-1.5 rounded-full bg-[#0B93F6] px-3 py-2 text-[12.5px] font-semibold text-white transition-colors hover:bg-[#0A84FF]"
+          className="inline-flex w-full items-center justify-center gap-1.5 rounded-full bg-[#0B93F6] px-3 py-2 text-[12.5px] font-semibold text-white transition-colors hover:bg-[#0A84FF]"
         >
           <ChatBubbleOvalLeftEllipsisIcon className="h-4 w-4" />
           Message me directly
