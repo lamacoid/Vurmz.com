@@ -1,5 +1,4 @@
 import { Metadata } from 'next'
-import { Suspense } from 'react'
 import Image from 'next/image'
 import { MapPinIcon, ChatBubbleLeftIcon, EnvelopeIcon, ClockIcon } from '@heroicons/react/24/outline'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
@@ -88,11 +87,7 @@ export default function ContactPage() {
             {/* Contact Form */}
             <div>
               <h2 className="text-2xl font-bold text-[var(--ink)] mb-6">Send a Message</h2>
-              {/* The form reads search params (the services configurator links
-                  in with a prefilled job), so it needs its own boundary. */}
-              <Suspense fallback={<div className="h-96" />}>
-                <ContactForm />
-              </Suspense>
+              <ContactForm />
             </div>
 
             {/* Contact Details */}

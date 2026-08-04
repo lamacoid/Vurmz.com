@@ -1,26 +1,38 @@
 'use client'
 
-import { useState } from 'react'
-import { useSearchParams } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import { ArrowRightIcon, CheckCircleIcon } from '@heroicons/react/24/outline'
 import { siteInfo } from '@/lib/site-info'
 import { CONTACT_PRODUCT_OPTIONS } from '@/lib/pricing'
 
 export default function ContactForm() {
-  // The services configurator links here with the job it priced. Product
-  // must match a real option or the select would show a value the API
-  // rejects; the message is free text the visitor can edit before sending.
-  const params = useSearchParams()
-  const linkedProduct = params.get('product') ?? ''
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
-    productInterest: (CONTACT_PRODUCT_OPTIONS as readonly string[]).includes(linkedProduct) ? linkedProduct : '',
-    message: params.get('message') ?? '',
+    productInterest: '',
+    message: '',
     // Honeypot — real users leave it empty; bots fill every field
     website: '',
   })
+
+  // The services configurator links here with the job it just priced.
+  // Read after mount from window rather than useSearchParams: this form
+  // also sits on the statically prerendered homepage, and that hook would
+  // opt the whole page out of prerendering (it fails the build outright).
+  // Product must match a real option or the select would carry a value the
+  // API discards; the message is free text they can edit before sending.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const product = params.get('product') ?? ''
+    const message = params.get('message') ?? ''
+    if (!product && !message) return
+    setFormData(prev => ({
+      ...prev,
+      productInterest: (CONTACT_PRODUCT_OPTIONS as readonly string[]).includes(product) ? product : prev.productInterest,
+      message: message || prev.message,
+    }))
+  }, [])
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
   const [errorMessage, setErrorMessage] = useState('')
 
