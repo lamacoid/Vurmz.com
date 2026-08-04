@@ -1,17 +1,23 @@
 'use client'
 
 import { useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { ArrowRightIcon, CheckCircleIcon } from '@heroicons/react/24/outline'
 import { siteInfo } from '@/lib/site-info'
 import { CONTACT_PRODUCT_OPTIONS } from '@/lib/pricing'
 
 export default function ContactForm() {
+  // The services configurator links here with the job it priced. Product
+  // must match a real option or the select would show a value the API
+  // rejects; the message is free text the visitor can edit before sending.
+  const params = useSearchParams()
+  const linkedProduct = params.get('product') ?? ''
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
-    productInterest: '',
-    message: '',
+    productInterest: (CONTACT_PRODUCT_OPTIONS as readonly string[]).includes(linkedProduct) ? linkedProduct : '',
+    message: params.get('message') ?? '',
     // Honeypot — real users leave it empty; bots fill every field
     website: '',
   })

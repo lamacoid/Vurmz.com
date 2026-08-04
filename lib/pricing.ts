@@ -100,6 +100,12 @@ export const CATALOG = {
     // Top of range = 10 stainless fully loaded at $15/tag (the approved
     // stainlessLoaded rate). Was 180 from the pre-July stainless price.
     range: [30, 150] as const,
+    pack: 10,
+    // Per-tag bases, named so the services configurator and the pricing
+    // cards read the same numbers (they were display-only strings before).
+    aluminumBase: 3,
+    stainlessBase: 12,
+    addOn: 1, // logo, QR, or back side: $1 each, per tag
     options: [
       { label: "Anodized aluminum (text)" },
       { label: "+ Logo / QR / back", price: 1, modifier: true },
@@ -110,6 +116,7 @@ export const CATALOG = {
   signatureTiles: {
     name: "Signature Tiles",
     unit: "per tile",
+    perTile: 15,
     note: "Custom design, quote",
   },
 } as const
@@ -292,9 +299,9 @@ export const TRADES_PRICING_CARDS = [
     packNote: 'Pack of 10 · credit card sized',
     packTotal: `${usd(CATALOG.serviceTags.range[0])} – ${usd(CATALOG.serviceTags.range[1])}`,
     items: [
-      { name: 'Anodized aluminum (text)', price: usd(3), note: '' },
-      { name: '+ Logo / QR / back', price: usdMod(1), note: '' },
-      { name: 'Stainless steel', price: usd(CATALOG.cards.stainlessBase), note: '' },
+      { name: 'Anodized aluminum (text)', price: usd(CATALOG.serviceTags.aluminumBase), note: '' },
+      { name: '+ Logo / QR / back', price: usdMod(CATALOG.serviceTags.addOn), note: '' },
+      { name: 'Stainless steel', price: usd(CATALOG.serviceTags.stainlessBase), note: '' },
       { name: '3M adhesive backing', price: 'Included', note: '' },
     ],
   },
@@ -303,7 +310,7 @@ export const TRADES_PRICING_CARDS = [
     packNote: 'Per tile',
     packTotal: '',
     items: [
-      { name: 'Logo on tile', price: usd(15), note: 'Your logo, set into your work' },
+      { name: 'Logo on tile', price: usd(CATALOG.signatureTiles.perTile), note: 'Your logo, set into your work' },
       { name: 'Custom design', price: 'Quote', note: '' },
     ],
   },

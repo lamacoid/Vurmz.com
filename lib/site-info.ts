@@ -47,6 +47,11 @@ export const siteInfo = {
     fullName: 'Zach DeMillo',
   },
 
+  // Standing delivery-run day, shown on /services ("Next delivery run").
+  // Zach's number to change when the routine changes; it is display copy,
+  // not a scheduler.
+  deliveryRunDay: 'Wednesday',
+
   // Service Areas
   serviceAreas: [
     'Centennial',
