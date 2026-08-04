@@ -20,6 +20,21 @@ const display = { fontFamily: 'var(--font-display), Georgia, serif' }
 // $3 stays $3, $7.5 becomes $7.50. Prices are written as people say them.
 const price = (n: number) => (n % 1 === 0 ? `$${n}` : `$${n.toFixed(2)}`)
 
+// What people actually do with a metal card. Suggestions, not products:
+// nothing here is priced differently, it is the same card with different
+// words on it. Adhesive-backed equipment labels are a separate product at
+// a separate price and are deliberately not in this list.
+const USES = [
+  'A contact card that survives a toolbox',
+  'QR to your reviews page',
+  'QR to your scheduling link',
+  'Membership or VIP card',
+  'Gift card that is worth keeping',
+  'Referral card for a shop you trade work with',
+  'Warranty card left with the install',
+  'Spec or cut sheet, in their hand',
+]
+
 // Four real jobs, trades side only. Captions state material and process,
 // nothing more; the gift work stays on /shop and /services/portfolio.
 const WORK = [
@@ -62,8 +77,13 @@ const POSTED: { name: string; value: string; href?: string }[] = [
     href: '/services/knife-engraving',
   },
   {
-    name: 'Metal business cards',
-    value: `${price(CATALOG.cards.matteBlackBase * CATALOG.cards.pack)} per ${CATALOG.cards.pack}, stainless ${price(CATALOG.cards.stainlessBase)} each`,
+    name: 'Equipment labels, 3M backed',
+    value: `${price(CATALOG.serviceTags.aluminumBase * CATALOG.serviceTags.pack)} per ${CATALOG.serviceTags.pack}, stainless ${price(CATALOG.serviceTags.stainlessBase)} each`,
+    href: '/services/metal-tags',
+  },
+  {
+    name: 'Cards in stainless',
+    value: `${price(CATALOG.cards.stainlessBase)} each, ${price(CATALOG.cards.stainlessLoaded)} fully loaded`,
   },
   {
     name: 'Branded pens',
@@ -120,7 +140,7 @@ export default function ServicesClient({ businessMenu }: { businessMenu: React.R
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-10 lg:gap-14 items-start">
           <div>
             <p className="text-xs font-mono tracking-[0.28em] uppercase text-[var(--eyebrow)] mb-3.5">
-              Labels, plates and marking for the trades
+              Metal cards, plates and marking for the trades
             </p>
             <h1 className="text-[34px] sm:text-[44px] leading-[1.1] font-semibold tracking-[-0.02em] text-[var(--ink)]" style={display}>
               Engraved to spec, most jobs<br className="hidden sm:block" /> in your hands inside three days.
@@ -155,6 +175,32 @@ export default function ServicesClient({ businessMenu }: { businessMenu: React.R
       {/* ═══════════ THE DECISION PANEL ═══════════ */}
       <section id="price" className="max-w-6xl mx-auto px-5 sm:px-11 pb-11 scroll-mt-24">
         <TradesConfigurator />
+      </section>
+
+      {/* ═══════════ WHAT THEY GET USED FOR ═══════════
+          Same card, different words on it. No prices here on purpose. */}
+      <section className="max-w-6xl mx-auto px-5 sm:px-11 pb-11">
+        <div className="bg-[rgba(127,207,212,.18)] border border-[var(--hairline)] rounded-sm p-6 sm:p-7">
+          <p className="text-[11px] font-mono tracking-[0.24em] uppercase text-[var(--ink)] mb-4">
+            What people put on them
+          </p>
+          <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-2.5 list-none p-0 m-0">
+            {USES.map(use => (
+              <li key={use} className="text-[15px] leading-snug text-[var(--ink-soft)] flex gap-2.5">
+                <span className="text-[#C67A6F] flex-shrink-0" aria-hidden>&middot;</span>
+                {use}
+              </li>
+            ))}
+          </ul>
+          <p className="mt-5 text-[14px] leading-relaxed text-[var(--ink-soft)]">
+            Need it stuck to a panel or a valve instead? Those are equipment labels, a different
+            blank with 3M backing, {price(CATALOG.serviceTags.aluminumBase)} each in packs
+            of {CATALOG.serviceTags.pack}. Same laser, same proof.{' '}
+            <Link href="/services/metal-tags" className="text-[var(--ink)] underline decoration-[#C67A6F] decoration-[1.5px] underline-offset-2">
+              The labels lane
+            </Link>
+          </p>
+        </div>
       </section>
 
       {/* ═══════════ THE WORK ═══════════

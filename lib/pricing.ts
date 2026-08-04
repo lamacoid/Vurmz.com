@@ -213,6 +213,9 @@ export const RUSH = {
 // the real product names, and used by both the form and the API route
 // that validates submissions against it.
 export const CONTACT_PRODUCT_OPTIONS = [
+  // The services configurator hands its job off with this exact string, and
+  // the contact API validates against this same list, so the two cannot drift.
+  `${CATALOG.cards.name} (pack)`,
   `${CATALOG.pens.name} (pack)`,
   `${CATALOG.serviceTags.name} (pack)`,
   `${CATALOG.coasters.name} (pack)`,
