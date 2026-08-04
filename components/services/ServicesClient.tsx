@@ -123,7 +123,7 @@ export default function ServicesClient({ businessMenu }: { businessMenu: React.R
               Labels, plates and marking for the trades
             </p>
             <h1 className="text-[34px] sm:text-[44px] leading-[1.1] font-semibold tracking-[-0.02em] text-[var(--ink)]" style={display}>
-              Engraved to spec, in your hands<br className="hidden sm:block" /> inside three days.
+              Engraved to spec, most jobs<br className="hidden sm:block" /> in your hands inside three days.
             </h1>
             <p className="mt-5 max-w-[56ch] text-[17px] leading-relaxed text-[var(--ink-soft)]">
               I&apos;m {siteInfo.founder.name}. I run one laser out of {siteInfo.city} and I mark panels, plates,
@@ -140,7 +140,7 @@ export default function ServicesClient({ businessMenu }: { businessMenu: React.R
                 <span className="text-[var(--ink)] font-semibold">{siteInfo.deliveryRunDay.slice(0, 3)}</span>
               </span>
               <span className="flex justify-between py-[7px] border-b border-[var(--hairline)]">
-                <span>Standard turnaround</span>
+                <span>Typical turnaround</span>
                 <span className="text-[var(--ink)] font-semibold">72 hrs</span>
               </span>
               <span className="flex justify-between py-[7px]">

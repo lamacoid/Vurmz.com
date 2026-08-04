@@ -8,7 +8,7 @@ export const runtime = 'edge'
 
 export const metadata: Metadata = {
   title: 'Business Engraving | VURMZ',
-  description: 'Branded coasters, metal business cards, equipment labels, and custom engraving for South Denver businesses. Posted prices, volume tiers at 50 units, hand-delivered in 24 to 72 hours.',
+  description: 'Branded coasters, metal business cards, equipment labels, and custom engraving for South Denver businesses. Posted prices, volume tiers at 50 units, hand-delivered, most jobs in 24 to 72 hours.',
   alternates: { canonical: '/services' },
 }
 
