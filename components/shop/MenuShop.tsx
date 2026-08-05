@@ -65,7 +65,11 @@ export function MenuRow({ p, sale, lowCents }: { p: Product; sale?: SaleInfo; lo
 export default async function MenuShop() {
   const [categories, products, lows] = await Promise.all([
     listCategories(),
-    listProducts({ limit: 200, includeUnpublished: false, audience: 'shop_visible' }),
+    // No audience filter: this is the page of everything. The gift side and
+    // the business packs share one menu, grouped by category, so there is a
+    // single place a product has to be listed and a single place to keep
+    // current. /services points here instead of holding its own copy.
+    listProducts({ limit: 200, includeUnpublished: false }),
     lowestVariantPrices(),
   ])
   if (products.length === 0) return null

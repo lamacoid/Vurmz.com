@@ -104,7 +104,7 @@ const POSTED: { name: string; value: string; href?: string }[] = [
   },
 ]
 
-export default function ServicesClient({ businessMenu }: { businessMenu: React.ReactNode }) {
+export default function ServicesClient() {
   const serviceSchema = {
     '@context': 'https://schema.org',
     '@type': 'Service',
@@ -345,9 +345,37 @@ export default function ServicesClient({ businessMenu }: { businessMenu: React.R
         </div>
       </section>
 
-      {/* ═══════════ ORDER NOW: the services side is still a shop ═══════════ */}
+      {/* ═══════════ ORDER NOW ═══════════
+          The services side is still a shop, but it does not keep its own copy
+          of the catalog. Everything lives on one menu; these are the doors
+          into the parts a business walks in for. */}
       <section id="order" className="max-w-6xl mx-auto px-5 sm:px-11 pb-11 scroll-mt-24">
-        {businessMenu}
+        <div className="bg-[rgba(127,207,212,.18)] border border-[var(--hairline)] rounded-sm p-6 sm:p-7">
+          <p className="text-[11px] font-mono tracking-[0.24em] uppercase text-[var(--ink)] mb-3">
+            Order now
+          </p>
+          <p className="mb-5 max-w-[60ch] text-[15px] leading-relaxed text-[var(--ink-soft)]">
+            Everything I make is on one menu, posted prices and all. Buy it there, or send me the
+            job above and I will quote it.
+          </p>
+          <div className="flex flex-wrap gap-2.5">
+            {[
+              { label: 'Metal cards', href: '/shop#menu-metal-cards' },
+              { label: 'Labels and tags', href: '/shop#menu-labels-tags' },
+              { label: 'Branded pens', href: '/shop#menu-pens' },
+              { label: 'Coasters', href: '/shop#menu-coasters' },
+              { label: 'The whole menu', href: '/shop' },
+            ].map(link => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="px-4 py-[11px] rounded-sm border border-[var(--ink)]/20 bg-[var(--surface)] text-[15px] font-medium text-[var(--ink)] hover:border-[#C67A6F] transition-colors"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* ═══════════ TRUSTED BY ═══════════ */}

@@ -1,10 +1,8 @@
 import type { Metadata } from 'next'
 import ServicesClient from '@/components/services/ServicesClient'
-import BusinessMenu from '@/components/services/BusinessMenu'
 
-// The business menu reads live D1 at request time; the rest of the page
-// is the existing client experience, receiving the menu as a slot.
-export const runtime = 'edge'
+// No D1 read on this page anymore (the catalog lives on /shop), so it
+// prerenders as static instead of running on the edge per request.
 
 export const metadata: Metadata = {
   title: 'Business Engraving | VURMZ',
@@ -13,5 +11,5 @@ export const metadata: Metadata = {
 }
 
 export default function ServicesPage() {
-  return <ServicesClient businessMenu={<BusinessMenu />} />
+  return <ServicesClient />
 }
