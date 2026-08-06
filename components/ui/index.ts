@@ -1,47 +1,21 @@
-/*
- * UI Component Library
+/**
+ * The VURMZ kit. One import for every control on the site.
  *
- * Base primitives for the VURMZ design system.
- * All components follow Scandinavian + Frutiger Aero + Clay aesthetic.
+ * The previous library here (gradient buttons, cosmic click reveals, clay
+ * shadows) had zero importers anywhere in the app and belonged to an
+ * aesthetic the brand left behind. It was deleted 2026-08-06 along with the
+ * second theme. Nothing on a page should be hand-styled: if you need a
+ * control and it is not here, add it here.
  */
-
-// Button
-export { Button } from './Button'
-export type { default as ButtonType } from './Button'
-
-// Card
 export {
+  Button,
+  Pill,
+  Badge,
   Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-  CardFooter,
-} from './Card'
-
-// Input & Forms
-export { Input, Textarea, Select } from './Input'
-
-// Badge
-export { Badge, PulseBadge } from './Badge'
-
-// Layout
-export { Container, Section, Grid, Stack } from './Container'
-
-// Motion
-export {
-  FadeIn,
-  StaggerContainer,
-  StaggerItem,
-  ScaleIn,
-  Parallax,
-  Float,
-  HoverCard,
-  Magnetic,
-  PageTransition,
-  Presence,
-  RevealText,
-  easings,
-  durations,
-  springPresets,
-} from './Motion'
+  Input,
+  Stepper,
+  Eyebrow,
+  Section,
+  Rows,
+  Row,
+} from './kit'

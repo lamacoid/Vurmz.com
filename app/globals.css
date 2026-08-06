@@ -5,9 +5,6 @@
   outline: 2px solid var(--vurmz-teal, #7FCFD4);
   outline-offset: 2px;
 }
-[data-theme="shop"] *:focus-visible {
-  outline-color: #C67A6F;
-}
 
 /* Hide site chrome on admin pages */
 body.is-admin > *:not(main):not(script):not(next-route-announcer) {
@@ -17,14 +14,53 @@ body.is-admin > main {
   min-height: 100vh;
 }
 
-/* ── Brand color modes ──
-   Light is the default: paper (oatmeal) with teal ink. Dark flips back to the
-   old look: deep teal with oatmeal ink. Same palette, the background and ink
-   roles swap. Pages use these tokens (var(--page), var(--ink), ...) so they
-   respond to the system color-scheme preference. */
+/* ══════════════════════════════════════════════════════════════════
+   FOUNDATIONS. One ground, one scale, one curve.
+
+   There is exactly ONE page ground: oatmeal paper with teal ink. Deep
+   teal is a SURFACE you place on that ground (a band, a feature panel),
+   never a second mode the whole page flips into. The site used to carry
+   two splits at once, light against dark and shop against services, so
+   the same component could look like it came from a different site
+   depending on where it landed. Both are gone (2026-08-06).
+
+   Mix, and it is a mix, not a set: 55 oatmeal, 30 teal, 12 coral, the
+   rest laser red. Coral is one real action per view. Laser red only
+   ever stands for a mark the laser makes.
+   ══════════════════════════════════════════════════════════════════ */
 :root {
   color-scheme: light;
-  --page: #DED6C3;
+
+  /* ── Type scale. Display is Fraunces, the rest is Inter, labels mono. ── */
+  --step-display: 2.875rem;  /* 46px, tracking -0.02em */
+  --step-section: 1.875rem;  /* 30px */
+  --step-panel:   1.1875rem; /* 19px */
+  --step-lead:    1.0625rem; /* 17px on 1.7, held near 56 characters */
+  --step-body:    0.9375rem; /* 15px on 1.65 */
+  --step-row:     0.90625rem;/* 14.5px */
+  --step-fine:    0.84375rem;/* 13.5px, the floor. Nothing smaller. */
+  --step-eyebrow: 0.6875rem; /* 11px, tracked 0.26em, uppercase */
+
+  /* ── Radius ladder. It steps up with the size of the thing. ── */
+  --r-control: 4px;
+  --r-tile:    8px;
+  --r-panel:   12px;
+  --r-band:    18px;
+
+  /* ── Space scale. Sections breathe at 56 to 72, never under 44. ── */
+  --sp-1: 4px;  --sp-2: 8px;  --sp-3: 12px; --sp-4: 16px;
+  --sp-5: 24px; --sp-6: 32px; --sp-7: 44px;
+  --gutter: 24px;
+  --measure: 56ch;
+
+  /* ── Motion. One settle curve for everything that moves. ── */
+  --ease: cubic-bezier(0.23, 1, 0.32, 1);
+  --t-hover:   140ms;
+  --t-settle:  220ms;
+  --t-section: 420ms;
+
+  /* ── The palette. Eight values, and the mix is part of the spec. ── */
+  --page: #DED6C3;           /* oatmeal paper, the ground under everything */
   --ink: #16525C;
   --ink-soft: #4F5D5B;
   --surface: #FFFDF8;
@@ -34,6 +70,16 @@ body.is-admin > main {
   --feature-ink: #DED6C3;
   --feature-soft: rgba(222, 214, 195, 0.72);
   --feature-accent: #7FCFD4;
+  /* Glassy teal as a SURFACE tint, 14 to 22 percent. This is how a panel
+     lifts off the paper. Not a border, not a shadow. Zach, 2026-08-03:
+     "the laminated glass finally is what i want." */
+  --glass: rgba(127, 207, 212, 0.18);
+  --glass-soft: rgba(127, 207, 212, 0.14);
+  --glass-edge: rgba(127, 207, 212, 0.28);
+  /* The one action colour, and the one mark colour. */
+  --coral: #C67A6F;
+  --coral-hover: #B0675D;
+  --laser: #FF2A2A;
   /* Coral for small text/labels. Deepened from the display coral (#C67A6F) to a
      dusty clay so it clears WCAG AA (≈4.6:1) on paper; the bright coral lives on
      in large hero display type (SiteHero) and the laser-red accent. */
@@ -41,9 +87,8 @@ body.is-admin > main {
   --header-bg: rgba(222, 214, 195, 0.85);
   --header-border: rgba(22, 82, 92, 0.12);
   --logo-filter: brightness(0);
-  /* Hero: light & airy in light mode. A warm paper wash lifts the photos so they
-     read bright, with deep-teal ink on top and a solid (non-glowing) logo. Dark
-     mode stays the glassy teal banner with light text and a glowing logo. */
+  /* Hero: a warm paper wash lifts the photos so they read bright, with
+     deep-teal ink on top and a solid, non-glowing logo. */
   --hero-film: rgba(222, 214, 195, 0.60);
   --hero-top: #DED6C3;
   --hero-bottom: #DED6C3;
@@ -51,48 +96,18 @@ body.is-admin > main {
   --logo-fill: #16525C;
   --logo-glow: none;
 }
-/* Dark mode is class-driven (a pre-paint script sets :root.dark from the saved
-   choice, falling back to the system preference) so the header toggle can
-   override the OS setting. */
-:root.dark {
-  color-scheme: dark;
-  --page: #16525C;
-  --ink: #DED6C3;
-  --ink-soft: rgba(222, 214, 195, 0.72);
-  --surface: #123F47;
-  --hairline: rgba(255, 255, 255, 0.08);
-  --feature: #123F47;
-  --feature-deep: #0E333A;
-  --feature-ink: #DED6C3;
-  --feature-soft: rgba(222, 214, 195, 0.72);
-  --feature-accent: #7FCFD4;
-  --eyebrow: #7FCFD4;
-  --header-bg: rgba(22, 82, 92, 0.9);
-  --header-border: rgba(255, 255, 255, 0.1);
-  --logo-filter: brightness(0) invert(1);
-  --hero-film: rgba(22, 82, 92, 0.45);
-  --hero-top: #16525C;
-  --hero-bottom: #123F47;
-  --hero-ink: #DED6C3;
-  --logo-fill: #7FCFD4;
-  --logo-glow: drop-shadow(0 0 4px rgba(127,207,212,0.95)) drop-shadow(0 0 11px rgba(127,207,212,0.6)) drop-shadow(0 0 22px rgba(127,207,212,0.35));
-}
-/* Faint paper grain on the page, light mode only. */
+/* Faint paper grain. One ground, so it is unconditional. */
 body:not(.is-admin) {
   background-color: var(--page);
   background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='200'%20height='200'%3E%3Cfilter%20id='g'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.8'%20numOctaves='2'%20stitchTiles='stitch'/%3E%3C/filter%3E%3Crect%20width='100%25'%20height='100%25'%20filter='url(%23g)'%20opacity='0.05'/%3E%3C/svg%3E");
 }
-:root.dark body:not(.is-admin) { background-image: none; }
 
-/* Hero logo: solid deep-teal wordmark on light (paper), the animated glassy
-   "dynamic lighting" logo on dark. Toggled by color-scheme so it is certain
-   regardless of Tailwind's dark-variant config. */
+/* Hero logo: the solid deep-teal wordmark, always. The animated glassy
+   variant belonged to the deleted dark mode. */
 .hero-logo-light { display: flex; }
 .hero-logo-anim { display: none; }
-:root.dark .hero-logo-light { display: none; }
-:root.dark .hero-logo-anim { display: block; }
 
-/* Hero secondary (ghost) button: mode-aware via --hero-ink. */
+/* Hero secondary (ghost) button, drawn from --hero-ink. */
 .btn-hero-ghost {
   border: 1px solid color-mix(in srgb, var(--hero-ink) 38%, transparent);
   color: var(--hero-ink);
@@ -274,24 +289,9 @@ main [class*="mx-auto"][class*="px-4"] {
   }
 }
 
-/* Ambient glow — only on services (dark) pages */
-[data-theme="services"]::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  pointer-events: none;
-  z-index: 0;
-  background:
-    radial-gradient(ellipse 70% 50% at 20% 15%, rgba(60, 185, 178, 0.06) 0%, transparent 55%),
-    radial-gradient(ellipse 60% 45% at 85% 80%, rgba(196, 107, 77, 0.04) 0%, transparent 50%),
-    radial-gradient(ellipse 50% 40% at 75% 70%, rgba(123, 200, 212, 0.04) 0%, transparent 50%);
-}
 
-/* Global coral hover for interactive elements — services only */
-[data-theme="services"] a:not([class*="bg-vurmz-cta"]):not([class*="bg-vurmz-cream"]):hover {
+/* Coral link hover, everywhere. One behaviour, not one per section. */
+a:not([class*="bg-vurmz-cta"]):not([class*="bg-vurmz-cream"]):not(.puffy-btn):hover {
   color: var(--vurmz-cta);
 }
 

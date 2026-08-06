@@ -79,20 +79,6 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* Theme: apply the saved choice (or system preference) before paint so
-            there is no light/dark flash. The header toggle writes vurmz-theme. */}
-        <script dangerouslySetInnerHTML={{ __html: `
-          (function(){
-            try {
-              var saved = localStorage.getItem('vurmz-theme');
-              var dark = saved ? saved === 'dark'
-                : window.matchMedia('(prefers-color-scheme: dark)').matches;
-              var root = document.documentElement;
-              root.classList.toggle('dark', dark);
-              root.style.colorScheme = dark ? 'dark' : 'light';
-            } catch (e) {}
-          })();
-        `}} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

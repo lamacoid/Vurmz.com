@@ -7,7 +7,6 @@ import { ChatBubbleOvalLeftEllipsisIcon } from '@heroicons/react/24/solid'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 import CartButton from '@/components/shop/CartButton'
 import VurmzLogo from '@/components/VurmzLogo'
-import ThemeToggle from '@/components/ThemeToggle'
 
 const NAV_LINKS = [
   // Pricing lives ON the services page now — no separate nav item.
@@ -69,7 +68,6 @@ export default function SiteHeader({ variant = 'services' }: { variant?: 'shop' 
             {/* Right side */}
             <div className="hidden lg:flex items-center gap-3">
               {isShop && <CartButton />}
-              <ThemeToggle className="-mr-1" />
               <Link
                 href="/account"
                 className={`inline-flex items-center gap-1.5 text-[13px] ${textColor} ${hoverColor} transition-colors font-medium`}
@@ -146,7 +144,6 @@ export default function SiteHeader({ variant = 'services' }: { variant?: 'shop' 
                 <ChatBubbleLeftIcon className="w-4 h-4" />
                 Text {siteInfo.phone}
               </a>
-              <ThemeToggle />
             </div>
           </div>
         </>
