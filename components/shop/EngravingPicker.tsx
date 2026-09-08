@@ -1,6 +1,6 @@
 'use client'
 /**
- * EngravingPicker — lets a customer add personalization (text + font +
+ * EngravingPicker: lets a customer add personalization (text + font +
  * placement/details) to a product before adding it to the cart. Reads the
  * curated font catalog from lib/fonts.ts. The text input itself is set in
  * the selected face (the @font-face declarations in app/fonts.css are
@@ -83,7 +83,7 @@ export default function EngravingPicker({
       />
 
       <p className="mt-3 text-[11px] text-[#7FCFD4]">
-        ✓ I send a proof photo for your approval before anything gets engraved.
+        I send a proof photo for your approval before anything gets engraved.
       </p>
     </div>
   )

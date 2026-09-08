@@ -151,7 +151,7 @@ export default function ShopHome() {
       {/* ═══════════ HOW IT WORKS ═══════════ */}
       <section className="pb-10 sm:pb-14">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold text-[var(--ink)] text-center mb-8">How it works</h2>
+          <h2 className="text-[length:var(--step-section)] font-semibold text-[var(--ink)] text-center mb-8">How it works</h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
             {[
               { n: 1, h: 'Text me', p: "Send a photo of what you want engraved. I'll get back to you with a quote." },
@@ -160,7 +160,7 @@ export default function ShopHome() {
             ].map(step => (
               <div key={step.n}>
                 <div className="w-10 h-10 rounded-full bg-[#7FCFD4]/15 border border-[#7FCFD4]/20 flex items-center justify-center mb-3 mx-auto">
-                  <span className="text-[#7FCFD4] font-bold">{step.n}</span>
+                  <span className="text-[#7FCFD4] font-semibold">{step.n}</span>
                 </div>
                 <h3 className="font-semibold text-[var(--ink)] mb-1">{step.h}</h3>
                 <p className="text-[var(--ink-soft)] text-sm leading-relaxed">{step.p}</p>
@@ -173,13 +173,13 @@ export default function ShopHome() {
       {/* ═══════════ FINAL CTA ═══════════ */}
       <section className="pb-10 sm:pb-14">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold text-[var(--ink)] mb-4">Ready?</h2>
+          <h2 className="text-[length:var(--step-section)] font-semibold text-[var(--ink)] mb-4">Ready?</h2>
           <p className="text-[var(--ink-soft)] text-base leading-relaxed mb-8">
             Text me a photo of what you want engraved. I&apos;ll tell you if I can do it, what it&apos;ll cost, and when it&apos;ll be done.
           </p>
           <a
             href={getSmsLink("Hi, I'd like to get something engraved")}
-            className="puffy-btn inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#C67A6F] text-white font-semibold text-base rounded-sm hover:bg-[#B0675D] transition-colors"
+            className="puffy-btn inline-flex items-center justify-center gap-2 h-[52px] px-7 rounded-[var(--r-control)] bg-[var(--coral)] text-white text-[length:var(--step-lead)] font-semibold hover:bg-[var(--coral-hover)] transition-colors duration-[var(--t-hover)]"
           >
             <ChatBubbleLeftIcon className="w-5 h-5" />
             Text {siteInfo.founder.name} at {siteInfo.phone}

@@ -1,7 +1,7 @@
 'use client'
 /* eslint-disable @next/next/no-img-element */
 /**
- * FileAttach — "Add your file" for the product order form. One file per item.
+ * FileAttach: "Add your file" for the product order form. One file per item.
  *
  * Guests upload through /api/checkout/upload (the private checkout/ prefix;
  * nothing is saved to an account). Logged-in customers upload through
@@ -205,7 +205,7 @@ export default function FileAttach({
         </div>
       )}
 
-      {error && <p className="mt-1 text-[11px] text-red-700">{error}</p>}
+      {error && <p className="mt-1 text-[11px] text-[var(--error)]">{error}</p>}
       <p className="mt-1 text-[11px] text-[var(--ink-soft)]">
         Logo, design, or photo. A PDF or a sharp photo works best.
         {loggedIn ? ' Uploads save to your files.' : ''}

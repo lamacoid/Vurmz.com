@@ -47,7 +47,7 @@ export default function DeliveryPage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <Breadcrumbs items={[{ label: 'VURMZ', href: '/' }, { label: 'Delivery' }]} theme="landing" />
 
-          <div className="mt-6 bg-[var(--surface)] border border-[var(--hairline)] rounded-sm shadow-sm px-5 sm:px-10 py-8 sm:py-10">
+          <div className="mt-6 bg-[var(--surface)] border border-[var(--hairline)] rounded-sm px-5 sm:px-10 py-8 sm:py-10">
             <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-[var(--eyebrow)] mb-3">Delivery &amp; shipping</p>
             <h1
               className="text-3xl sm:text-4xl text-[var(--ink)] tracking-tight leading-tight"
@@ -78,7 +78,7 @@ export default function DeliveryPage() {
               ))}
             </div>
 
-            {/* Contactless is a real preference, not an edge case — and it
+            {/* Contactless is a real preference, not an edge case, and it
                 doesn't mean paying to ship. A free drop-and-text is the
                 default no-contact path; mailing stays for those who want it. */}
             <div className="mt-8 rounded-sm border border-[var(--hairline)] bg-[var(--ink)]/[0.03] px-5 py-4">

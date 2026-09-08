@@ -16,14 +16,14 @@ export default function Error({ error, reset }: { error: Error & { digest?: stri
     <div className="min-h-screen bg-[var(--page)] text-[var(--ink)] flex items-center justify-center px-6">
       <div className="text-center max-w-md">
         <p className="text-xs font-mono text-[var(--eyebrow)] tracking-[0.3em] uppercase mb-4">Something broke</p>
-        <h1 className="text-2xl font-bold mb-3">That page hit a snag</h1>
+        <h1 className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] font-semibold mb-3">That page hit a snag</h1>
         <p className="text-[var(--ink-soft)] mb-8">
           Sorry about that. Try again, or head back home. If it keeps happening, text me and I&apos;ll sort it out.
         </p>
         <div className="flex items-center justify-center gap-3">
           <button
             onClick={reset}
-            className="px-6 py-3 bg-vurmz-cta text-white font-semibold text-sm rounded-lg hover:bg-vurmz-cta-hover transition-colors"
+            className="px-6 py-3 bg-[var(--coral)] text-white font-semibold text-sm rounded-[var(--r-control)] hover:bg-[var(--coral)]-hover transition-colors"
           >
             Try again
           </button>

@@ -65,7 +65,7 @@ export default function KnifeEngravingPage() {
           <p className="text-xs font-mono text-[var(--eyebrow)] tracking-[0.2em] uppercase mb-4">
             In the Steel
           </p>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--ink)] tracking-tight leading-tight mb-6">
+          <h1 className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] font-semibold text-[var(--ink)] tracking-tight leading-tight mb-6">
             Knife Engraving
           </h1>
           <p className="text-[var(--ink-soft)] text-base sm:text-lg leading-relaxed max-w-2xl">
@@ -75,24 +75,24 @@ export default function KnifeEngravingPage() {
       </section>
 
       {/* ═══════════ CREW PRICING ═══════════ */}
-      <section className="py-12 sm:py-16 border-t border-[var(--hairline)]">
+      <section className="py-14 sm:py-[72px] border-t border-[var(--hairline)]">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="text-xs font-mono text-[var(--ink-soft)] tracking-[0.2em] uppercase mb-8">
             What it costs
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="bg-[var(--surface)] border border-[var(--hairline)] rounded-sm p-6">
-              <p className="text-4xl font-bold text-[var(--ink)] mb-1">${CATALOG.knife.base}</p>
+              <p className="text-4xl font-semibold text-[var(--ink)] mb-1">${CATALOG.knife.base}</p>
               <p className="text-sm font-semibold text-[var(--ink)] mb-2">One knife</p>
               <p className="text-[var(--ink-soft)] text-sm leading-relaxed">Bring your blade. Name, date, or logo marked near the handle.</p>
             </div>
             <div className="bg-[var(--surface)] border border-[var(--hairline)] rounded-sm p-6">
-              <p className="text-4xl font-bold text-[var(--ink)] mb-1">${CATALOG.knife.crew.perKnife}<span className="text-lg text-[var(--ink-soft)] font-normal">/knife</span></p>
+              <p className="text-4xl font-semibold text-[var(--ink)] mb-1">${CATALOG.knife.crew.perKnife}<span className="text-lg text-[var(--ink-soft)] font-normal">/knife</span></p>
               <p className="text-sm font-semibold text-[var(--ink)] mb-2">Crew rate · {CATALOG.knife.crew.minQty}+ knives</p>
               <p className="text-[var(--ink-soft)] text-sm leading-relaxed">The line gets matching blades. I pick up and return next day.</p>
             </div>
             <div className="bg-[var(--feature)]/10 border border-vurmz-teal/30 rounded-sm p-6">
-              <p className="text-4xl font-bold text-[var(--ink)] mb-1">${CATALOG.knife.fullKitchen.perKnife}<span className="text-lg text-[var(--ink-soft)] font-normal">/knife</span></p>
+              <p className="text-4xl font-semibold text-[var(--ink)] mb-1">${CATALOG.knife.fullKitchen.perKnife}<span className="text-lg text-[var(--ink-soft)] font-normal">/knife</span></p>
               <p className="text-sm font-semibold text-[var(--eyebrow)] mb-2">Full kitchen · {CATALOG.knife.fullKitchen.minQty}+ knives</p>
               <p className="text-[var(--ink-soft)] text-sm leading-relaxed">The whole brigade, every station. Free pickup across the south Denver metro.</p>
             </div>
@@ -103,7 +103,7 @@ export default function KnifeEngravingPage() {
 
       {/* ═══════════ SHOWCASE ═══════════ */}
       {SHOWCASE.length > 0 && (
-        <section className="py-12 sm:py-16 border-t border-[var(--hairline)]">
+        <section className="py-14 sm:py-[72px] border-t border-[var(--hairline)]">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <p className="text-xs font-mono text-[var(--ink-soft)] tracking-[0.2em] uppercase mb-8">
               Recent knife work
@@ -135,9 +135,9 @@ export default function KnifeEngravingPage() {
       )}
 
       {/* ═══════════ CTA ═══════════ */}
-      <section className="py-12 sm:py-16 border-t border-[var(--hairline)]">
+      <section className="py-14 sm:py-[72px] border-t border-[var(--hairline)]">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold text-[var(--ink)] tracking-tight mb-4">
+          <h2 className="text-[length:var(--step-section)] font-semibold text-[var(--ink)] tracking-tight mb-4">
             Bring me your knife.
           </h2>
           <p className="text-[var(--ink-soft)] text-base leading-relaxed mb-6">
@@ -146,7 +146,7 @@ export default function KnifeEngravingPage() {
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
               href="/services/contact"
-              className="group inline-flex items-center justify-center gap-2 px-6 py-3 bg-vurmz-cta text-white font-semibold text-sm rounded-sm hover:bg-vurmz-cta-hover transition-all shadow-lg shadow-vurmz-cta/20"
+              className="group inline-flex items-center justify-center gap-2 px-6 py-3 bg-[var(--coral)] text-white font-semibold text-sm rounded-[var(--r-control)] hover:bg-[var(--coral)]-hover transition-all"
             >
               Get a Quote
               <ArrowRightIcon className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

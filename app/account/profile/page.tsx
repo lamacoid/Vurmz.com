@@ -61,23 +61,23 @@ export default function ProfilePage() {
   return (
     <div className="max-w-2xl mx-auto p-6 sm:p-10">
       <Link href="/account" className="text-xs text-[var(--ink-soft)] hover:text-[var(--ink)] mb-4 inline-block">← Back</Link>
-      <h1 className="text-2xl font-bold text-[var(--ink)] mb-6">Profile</h1>
+      <h1 className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] font-semibold text-[var(--ink)] mb-6">Profile</h1>
 
       <div className="bg-[var(--page)] border border-white/5 rounded-xl p-5 space-y-4 mb-5">
         <div>
           <label className="text-[11px] uppercase tracking-wider text-[var(--ink-soft)] block mb-1">Email</label>
           <p className="text-sm text-[var(--ink)]">{customer.email}</p>
-          <p className="text-[10px] text-gray-600">Email can&rsquo;t be changed. Contact Zach if you need to update.</p>
+          <p className="text-[10px] text-[var(--ink-soft)]">Email can&rsquo;t be changed. Contact Zach if you need to update.</p>
         </div>
         <Field label="Name" value={customer.name} onChange={v => setCustomer({ ...customer, name: v })} />
         <Field label="Phone" value={customer.phone ?? ''} onChange={v => setCustomer({ ...customer, phone: v })} />
         <Field label="Company" value={customer.company ?? ''} onChange={v => setCustomer({ ...customer, company: v })} />
         <div className="flex items-center gap-3 pt-2">
-          <button onClick={save} disabled={saving} className="px-4 h-9 bg-[#C67A6F] hover:bg-[#B0675D] text-white text-sm font-semibold rounded-md">
+          <button onClick={save} disabled={saving} className="px-4 h-9 bg-[var(--coral)] hover:bg-[var(--coral-hover)] text-white text-sm font-semibold rounded-[var(--r-control)]">
             {saving ? 'Saving…' : 'Save'}
           </button>
-          {saved && <span className="text-xs text-[#7FCFD4]">Saved ✓</span>}
-          {saveError && <span className="text-xs text-red-400">{saveError}</span>}
+          {saved && <span className="text-xs text-[#7FCFD4]">Saved</span>}
+          {saveError && <span className="text-xs text-[var(--error)]">{saveError}</span>}
         </div>
       </div>
 
@@ -278,7 +278,7 @@ function Addresses() {
                         <button onClick={() => setDefault(a.id)} className="text-[#7FCFD4] hover:underline">Set default</button>
                       )}
                       <button onClick={() => startEdit(a)} className="text-[var(--ink-soft)] hover:text-[var(--ink)]">Edit</button>
-                      <button onClick={() => remove(a.id)} className="text-[var(--ink-soft)] hover:text-red-400">Delete</button>
+                      <button onClick={() => remove(a.id)} className="text-[var(--ink-soft)] hover:text-[var(--error)]">Delete</button>
                     </div>
                   </div>
                 </div>
@@ -331,9 +331,9 @@ function AddressForm({
         <FormField label="Country" value={draft.country} onChange={v => upd({ country: v.toUpperCase().slice(0, 2) })} />
       </div>
       <FormField label="Phone (optional)" value={draft.phone ?? ''} onChange={v => upd({ phone: v })} />
-      {error && <p className="text-[11px] text-red-400">{error}</p>}
+      {error && <p className="text-[11px] text-[var(--error)]">{error}</p>}
       <div className="flex items-center gap-2 pt-1">
-        <button onClick={onSave} disabled={busy} className="px-3 h-8 bg-[#C67A6F] hover:bg-[#B0675D] disabled:opacity-60 text-white text-xs font-semibold rounded-md">
+        <button onClick={onSave} disabled={busy} className="px-3 h-8 bg-[var(--coral)] hover:bg-[var(--coral-hover)] disabled:opacity-60 text-white text-xs font-semibold rounded-[var(--r-control)]">
           {busy ? 'Saving…' : saveLabel}
         </button>
         <button onClick={onCancel} disabled={busy} className="px-3 h-8 text-[var(--ink-soft)] hover:text-[var(--ink)] text-xs">
@@ -426,7 +426,7 @@ function ReferenceImages() {
                   <img src={img.url} alt={img.filename} className="w-full h-full object-cover" />
                   <button
                     onClick={() => remove(img.id)}
-                    className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-[11px] text-red-300 font-semibold"
+                    className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-[11px] text-[var(--error)] font-semibold"
                   >
                     Remove
                   </button>
@@ -458,7 +458,7 @@ function ReferenceImages() {
             accept="image/jpeg,image/png,image/webp,image/gif,image/svg+xml"
             onChange={e => upload(e.target.files)}
           />
-          {error && <p className="text-[11px] text-red-400 mt-2">{error}</p>}
+          {error && <p className="text-[11px] text-[var(--error)] mt-2">{error}</p>}
         </>
       )}
     </div>

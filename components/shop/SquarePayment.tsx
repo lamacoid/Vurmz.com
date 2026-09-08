@@ -94,16 +94,16 @@ export default function SquarePayment({
     <div>
       <div className="rounded-sm border border-[#16525C]/12 bg-white/60 p-3 min-h-[56px]">
         <div ref={mountRef} />
-        {loading && <p className="text-xs text-[#6B6259]">Loading secure card form…</p>}
+        {loading && <p className="text-xs text-[var(--ink-soft)]">Loading secure card form…</p>}
       </div>
       <button
         onClick={pay}
         disabled={!card || submitting}
-        className="mt-3 w-full h-11 bg-[#C67A6F] hover:bg-[#B0675D] disabled:opacity-60 text-white text-sm font-semibold transition-colors puffy-btn"
+        className="mt-3 w-full h-11 bg-[var(--coral)] hover:bg-[var(--coral-hover)] disabled:opacity-60 text-white text-sm font-semibold transition-colors puffy-btn"
       >
         {submitting ? 'Processing…' : `Pay $${(amountCents / 100).toFixed(2)}`}
       </button>
-      <p className="mt-2 text-[11px] text-[#6B6259]">
+      <p className="mt-2 text-[11px] text-[var(--ink-soft)]">
         Secured by Square. Your card details never touch our servers.
       </p>
     </div>

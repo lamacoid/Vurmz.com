@@ -107,7 +107,7 @@ export default function TradesConfigurator() {
           {job.progress < 100 && (
             <>
               <div className="flex h-1.5 rounded-full overflow-hidden bg-[var(--ink)]/10 mb-2" aria-hidden>
-                <span className="bg-[#C67A6F] rounded-full transition-[width] duration-200" style={{ width: `${job.progress}%` }} />
+                <span className="bg-[var(--coral)] rounded-full transition-[width] duration-200" style={{ width: `${job.progress}%` }} />
               </div>
               {job.nextStep && (
                 <p className="text-[14px] text-[var(--ink-soft)]">
@@ -198,7 +198,7 @@ export default function TradesConfigurator() {
 
           <Link
             href={contactHref}
-            className="puffy-btn block w-full text-center py-[15px] rounded-sm bg-vurmz-cta text-white text-[16px] font-semibold hover:bg-vurmz-cta-hover transition-colors"
+            className="puffy-btn block w-full text-center py-[15px] rounded-[var(--r-control)] bg-[var(--coral)] text-white text-[16px] font-semibold hover:bg-[var(--coral)]-hover transition-colors"
           >
             Send me the artwork
           </Link>

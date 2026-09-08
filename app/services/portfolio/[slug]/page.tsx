@@ -84,7 +84,7 @@ export default async function PortfolioDetailPage({ params }: Props) {
       </div>
 
       {/* Hero */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-[72px]">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
           <div className="relative aspect-[4/3] rounded-sm overflow-hidden bg-black/40">
             <Image
@@ -106,7 +106,7 @@ export default async function PortfolioDetailPage({ params }: Props) {
               Back to portfolio
             </Link>
 
-            <h1 className="text-3xl sm:text-4xl font-bold text-[var(--ink)] tracking-tight leading-tight mb-3">
+            <h1 className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] font-semibold text-[var(--ink)] tracking-tight leading-tight mb-3">
               {item.label}
             </h1>
             <p className="text-base sm:text-lg text-[var(--ink-soft)] leading-relaxed mb-6">{item.context}</p>
@@ -133,7 +133,7 @@ export default async function PortfolioDetailPage({ params }: Props) {
             <div className="flex flex-col sm:flex-row gap-3">
               <a
                 href={getSmsLink(`Hi! I saw "${item.label}" on your portfolio and want something similar.`)}
-                className="group inline-flex items-center justify-center gap-2 px-6 py-3 bg-vurmz-cta text-white font-semibold text-sm rounded-sm hover:bg-vurmz-cta-hover transition-all shadow-lg shadow-vurmz-cta/20"
+                className="group inline-flex items-center justify-center gap-2 px-6 py-3 bg-[var(--coral)] text-white font-semibold text-sm rounded-[var(--r-control)] hover:bg-[var(--coral)]-hover transition-all"
               >
                 <ChatBubbleLeftIcon className="w-4 h-4" />
                 Want something like this?
@@ -151,15 +151,15 @@ export default async function PortfolioDetailPage({ params }: Props) {
       </section>
 
       {/* Story */}
-      <section className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 border-t border-[var(--hairline)]">
+      <section className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-[72px] border-t border-[var(--hairline)]">
         <h2 className="text-xs font-mono text-[var(--eyebrow)] tracking-[0.25em] uppercase mb-4">The story</h2>
         <p className="text-base sm:text-lg text-[var(--ink)] leading-relaxed whitespace-pre-line">{item.story}</p>
       </section>
 
       {/* Related */}
       {related.length > 0 && (
-        <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 border-t border-[var(--hairline)]">
-          <h2 className="text-2xl sm:text-3xl font-bold text-[var(--ink)] mb-6">More like this</h2>
+        <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-[72px] border-t border-[var(--hairline)]">
+          <h2 className="text-[length:var(--step-section)] font-semibold text-[var(--ink)] mb-6">More like this</h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {related.map((r) => (
               <Link

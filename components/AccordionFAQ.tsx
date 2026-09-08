@@ -13,7 +13,7 @@ const themeStyles = {
   shop: {
     card: 'bg-white/60 border border-[#16525C]/8',
     question: 'text-[var(--ink)]',
-    answer: 'text-[#6B6259]',
+    answer: 'text-[var(--ink-soft)]',
     icon: 'text-[#C67A6F]',
   },
   services: {

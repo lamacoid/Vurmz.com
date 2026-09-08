@@ -152,7 +152,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
         />
 
         {/* The plate: everything below lives on the menu card. */}
-        <div className="mt-6 bg-[var(--surface)] border border-[var(--hairline)] rounded-sm shadow-sm px-5 sm:px-10 py-8 sm:py-10">
+        <div className="mt-6 bg-[var(--surface)] border border-[var(--hairline)] rounded-sm px-5 sm:px-10 py-8 sm:py-10">
           <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-[var(--eyebrow)] mb-3">
             {category ? category.name : 'From the shop'}
           </p>

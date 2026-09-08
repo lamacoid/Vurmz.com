@@ -27,11 +27,11 @@ const STATUS_LABELS: Record<string, string> = {
 const STATUS_STYLES: Record<string, string> = {
   new: 'bg-[#7FCFD4]/20 text-[#7FCFD4]',
   confirmed: 'bg-[#7FCFD4]/20 text-[#7FCFD4]',
-  in_progress: 'bg-amber-400/15 text-amber-300',
-  ready: 'bg-indigo-400/15 text-indigo-300',
-  delivered: 'bg-emerald-400/15 text-emerald-300',
-  cancelled: 'bg-gray-400/15 text-[var(--ink-soft)]',
-  refunded: 'bg-red-400/15 text-red-300',
+  in_progress: 'bg-[var(--warning)]/15 text-[var(--warning)]',
+  ready: 'bg-[var(--glass)] text-[var(--signal)]',
+  delivered: 'bg-[var(--success)]/15 text-[var(--success)]',
+  cancelled: 'bg-[var(--ink)]/10 text-[var(--ink-soft)]',
+  refunded: 'bg-[var(--error)]/15 text-[var(--error)]',
 }
 
 function statusLabel(s: string | null | undefined) {
@@ -76,7 +76,7 @@ export default function AccountOrderDetail() {
     <div className="max-w-3xl mx-auto p-6 sm:p-10">
       <Link href="/account/orders" className="text-xs text-[var(--ink-soft)] hover:text-[var(--ink)] mb-4 inline-block">← All orders</Link>
       <div className="flex items-baseline justify-between mb-5">
-        <h1 className="text-2xl font-bold text-[var(--ink)] font-mono">{order.number}</h1>
+        <h1 className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] font-semibold text-[var(--ink)] font-mono">{order.number}</h1>
         <span className={`text-xs px-2.5 py-1 rounded-full uppercase tracking-wider font-semibold ${STATUS_STYLES[order.status] ?? 'bg-[#7FCFD4]/20 text-[#7FCFD4]'}`}>
           {statusLabel(order.status)}
         </span>
@@ -97,7 +97,7 @@ export default function AccountOrderDetail() {
         <div className="border-t border-white/5 mt-4 pt-3 space-y-1 text-sm">
           <div className="flex justify-between"><span className="text-[var(--ink-soft)]">Subtotal</span><span className="text-[var(--ink)]">{money(order.subtotalCents)}</span></div>
           <div className="flex justify-between"><span className="text-[var(--ink-soft)]">Delivery</span><span className="text-[var(--ink)]">{money(order.fulfillmentFeeCents)}</span></div>
-          <div className="flex justify-between font-bold text-base pt-1 text-[var(--ink)]"><span>Total</span><span>{money(order.totalCents)}</span></div>
+          <div className="flex justify-between font-semibold text-base pt-1 text-[var(--ink)]"><span>Total</span><span>{money(order.totalCents)}</span></div>
         </div>
       </div>
 
@@ -125,7 +125,7 @@ export default function AccountOrderDetail() {
             {events.map((e, i) => (
               <li key={e.id} className="flex gap-3">
                 <div className="flex flex-col items-center">
-                  <span className={`mt-1 w-2.5 h-2.5 rounded-full shrink-0 ${i === events.length - 1 ? 'bg-[#7FCFD4]' : 'bg-gray-500'}`} />
+                  <span className={`mt-1 w-2.5 h-2.5 rounded-full shrink-0 ${i === events.length - 1 ? 'bg-[#7FCFD4]' : 'bg-[var(--ink)]/10'}`} />
                   {i < events.length - 1 && <span className="w-px flex-1 bg-white/10 my-0.5" />}
                 </div>
                 <div className="pb-4 min-w-0">

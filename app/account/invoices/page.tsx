@@ -11,9 +11,9 @@ function money(c: number) { return `$${(c / 100).toFixed(2)}` }
 const statusColors: Record<string, string> = {
   sent:           'bg-[#7FCFD4]/20 text-[#7FCFD4]',
   viewed:         'bg-[#7FCFD4]/20 text-[#7FCFD4]',
-  paid:           'bg-green-900/30 text-green-300',
-  partially_paid: 'bg-yellow-900/30 text-yellow-300',
-  overdue:        'bg-red-900/30 text-red-300',
+  paid:           'bg-[var(--success)]/15 text-[var(--success)]',
+  partially_paid: 'bg-[var(--warning)]/15 text-[var(--warning)]',
+  overdue:        'bg-[var(--error)]/15 text-[var(--error)]',
   void:           'bg-white/5 text-[var(--ink-soft)]',
   refunded:       'bg-white/5 text-[var(--ink-soft)]',
 }
@@ -35,7 +35,7 @@ export default function AccountInvoicesPage() {
   return (
     <div className="max-w-3xl mx-auto p-6 sm:p-10">
       <Link href="/account" className="text-xs text-[var(--ink-soft)] hover:text-[var(--ink)] mb-4 inline-block">← Back</Link>
-      <h1 className="text-2xl font-bold text-[var(--ink)] mb-6">Invoices</h1>
+      <h1 className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] font-semibold text-[var(--ink)] mb-6">Invoices</h1>
 
       {loading ? (
         <p className="text-[var(--ink-soft)] text-sm">Loading…</p>

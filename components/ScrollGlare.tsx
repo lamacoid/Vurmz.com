@@ -26,7 +26,7 @@ export default function ScrollGlare() {
     : 3000
   const progress = Math.min(scrollY / (maxScroll || 1), 1)
 
-  // Glare shifts diagonally as you scroll — thin highlight band
+  // Glare shifts diagonally as you scroll, thin highlight band
   const yOffset = -20 + progress * 140 // moves from -20% to 120%
   const angle = 135 + progress * 15 // slight angle shift 135° to 150°
 

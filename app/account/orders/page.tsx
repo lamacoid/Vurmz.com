@@ -9,9 +9,9 @@ function money(c: number) { return `$${(c / 100).toFixed(2)}` }
 const statusColors: Record<string, string> = {
   new:         'bg-[#7FCFD4]/20 text-[#7FCFD4]',
   confirmed:   'bg-[#7FCFD4]/20 text-[#7FCFD4]',
-  in_progress: 'bg-yellow-900/30 text-yellow-300',
-  ready:       'bg-yellow-900/30 text-yellow-300',
-  delivered:   'bg-green-900/30 text-green-300',
+  in_progress: 'bg-[var(--warning)]/15 text-[var(--warning)]',
+  ready:       'bg-[var(--warning)]/15 text-[var(--warning)]',
+  delivered:   'bg-[var(--success)]/15 text-[var(--success)]',
   cancelled:   'bg-white/5 text-[var(--ink-soft)]',
   refunded:    'bg-white/5 text-[var(--ink-soft)]',
 }
@@ -30,7 +30,7 @@ export default function AccountOrdersPage() {
   return (
     <div className="max-w-3xl mx-auto p-6 sm:p-10">
       <Link href="/account" className="text-xs text-[var(--ink-soft)] hover:text-[var(--ink)] mb-4 inline-block">← Back</Link>
-      <h1 className="text-2xl font-bold text-[var(--ink)] mb-6">Orders</h1>
+      <h1 className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] font-semibold text-[var(--ink)] mb-6">Orders</h1>
 
       {loading ? (
         <p className="text-[var(--ink-soft)] text-sm">Loading…</p>

@@ -16,10 +16,10 @@ const themeStyles = {
     card: 'bg-white/60 border border-[#16525C]/8',
     quote: 'text-[#C67A6F]',
     name: 'text-[var(--ink)]',
-    role: 'text-[#6B6259]',
-    dot: 'bg-[#C67A6F]',
+    role: 'text-[var(--ink-soft)]',
+    dot: 'bg-[var(--coral)]',
     dotInactive: 'bg-[var(--page)]/15',
-    arrow: 'text-[#6B6259] hover:text-[#C67A6F]',
+    arrow: 'text-[var(--ink-soft)] hover:text-[#C67A6F]',
     heading: 'text-[var(--ink)]',
     eyebrow: 'text-[#C67A6F]',
   },
@@ -55,7 +55,7 @@ export default function TestimonialCarousel({ testimonials, theme, title = 'What
   return (
     <div>
       <p className={`text-xs font-mono tracking-[0.2em] uppercase mb-4 ${styles.eyebrow}`}>Testimonials</p>
-      <h2 className={`text-2xl sm:text-3xl font-bold tracking-tight mb-8 ${styles.heading}`}>{title}</h2>
+      <h2 className={`text-[length:var(--step-section)] font-semibold tracking-tight mb-8 ${styles.heading}`}>{title}</h2>
 
       <div className="relative max-w-2xl mx-auto">
         <AnimatePresence mode="wait">

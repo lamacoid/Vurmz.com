@@ -24,7 +24,7 @@ export default async function D1ProductGrid({ categoryId, limit = 24, heading, s
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {(heading || subheading) && (
           <div className="mb-6">
-            {heading && <h2 className="text-2xl sm:text-3xl font-bold text-[var(--ink)] tracking-tight">{heading}</h2>}
+            {heading && <h2 className="text-[length:var(--step-section)] font-semibold text-[var(--ink)] tracking-tight">{heading}</h2>}
             {subheading && <p className="text-sm text-[var(--ink-soft)] mt-1">{subheading}</p>}
           </div>
         )}
@@ -48,7 +48,7 @@ export default async function D1ProductGrid({ categoryId, limit = 24, heading, s
                   <p className="text-sm font-semibold text-[var(--ink)] truncate">{p.name}</p>
                   <p className="text-[11px] text-[var(--ink-soft)] mt-0.5 line-clamp-2">{p.shortDescription || `Pack of ${p.packSize}`}</p>
                   <div className="flex items-center justify-between mt-2">
-                    <span className="text-sm font-bold text-[#C67A6F]">{money(p.priceCents)}</span>
+                    <span className="text-sm font-semibold text-[#C67A6F]">{money(p.priceCents)}</span>
                     {p.madeToOrder ? (
                       <span className="text-[9px] uppercase tracking-wider text-[var(--ink-soft)] bg-[var(--surface)] px-1.5 py-0.5 rounded-sm">
                         {p.leadTimeDays > 0 ? `${p.leadTimeDays}d` : 'MTO'}

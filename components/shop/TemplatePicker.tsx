@@ -1,6 +1,6 @@
 'use client'
 /**
- * TemplatePicker — layout chips for the metal card products. Each chip is a
+ * TemplatePicker: layout chips for the metal card products. Each chip is a
  * small abstract thumbnail of the layout (silver structure on the dark card),
  * drawn in code so there is no asset pipeline and nothing to keep in sync.
  * The choice rides the order as options.template (the label); Zach lays the

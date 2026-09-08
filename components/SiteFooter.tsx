@@ -37,20 +37,20 @@ export default function SiteFooter() {
           {/* Brand */}
           <div className="col-span-2 sm:col-span-1">
             <VurmzLogo className="h-7 mb-4" color="var(--feature-ink)" />
-            <p className="text-gray-400 text-sm leading-relaxed mb-5 max-w-xs">
+            <p className="text-[var(--feature-soft)] text-sm leading-relaxed mb-5 max-w-xs">
               Precision laser engraving in {siteInfo.city}, {siteInfo.state}. Hand-delivered across the South Denver metro.
             </p>
             <div className="space-y-2">
-              <div className="flex items-center gap-2 text-sm text-gray-400">
+              <div className="flex items-center gap-2 text-sm text-[var(--feature-soft)]">
                 <MapPinIcon className="w-4 h-4 text-vurmz-teal/60 flex-shrink-0" />
                 {siteInfo.city}, {siteInfo.state}
               </div>
-              <a href={getSmsLink()} className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors">
+              <a href={getSmsLink()} className="flex items-center gap-2 text-sm text-[var(--feature-soft)] hover:text-[var(--feature-ink)] transition-colors">
                 <ChatBubbleLeftIcon className="w-4 h-4 text-vurmz-teal/60 flex-shrink-0" />
                 {siteInfo.phone}
-                <span className="text-gray-600">· text</span>
+                <span className="text-[var(--feature-ink)]/30">· text</span>
               </a>
-              <a href={`mailto:${siteInfo.email}`} className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors">
+              <a href={`mailto:${siteInfo.email}`} className="flex items-center gap-2 text-sm text-[var(--feature-soft)] hover:text-[var(--feature-ink)] transition-colors">
                 <EnvelopeIcon className="w-4 h-4 text-vurmz-teal/60 flex-shrink-0" />
                 {siteInfo.email}
               </a>
@@ -59,11 +59,11 @@ export default function SiteFooter() {
 
           {/* Products */}
           <div>
-            <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4">Products</h3>
+            <h3 className="text-xs font-semibold text-[var(--feature-soft)] uppercase tracking-wider mb-4">Products</h3>
             <ul className="space-y-2">
               {PRODUCTS.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="text-sm text-gray-400 hover:text-white transition-colors">{link.label}</Link>
+                  <Link href={link.href} className="text-sm text-[var(--feature-soft)] hover:text-[var(--feature-ink)] transition-colors">{link.label}</Link>
                 </li>
               ))}
             </ul>
@@ -71,11 +71,11 @@ export default function SiteFooter() {
 
           {/* Business */}
           <div>
-            <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4">Business</h3>
+            <h3 className="text-xs font-semibold text-[var(--feature-soft)] uppercase tracking-wider mb-4">Business</h3>
             <ul className="space-y-2">
               {BUSINESS.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="text-sm text-gray-400 hover:text-white transition-colors">{link.label}</Link>
+                  <Link href={link.href} className="text-sm text-[var(--feature-soft)] hover:text-[var(--feature-ink)] transition-colors">{link.label}</Link>
                 </li>
               ))}
             </ul>
@@ -83,18 +83,18 @@ export default function SiteFooter() {
 
           {/* About & Service Area */}
           <div>
-            <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4">About</h3>
+            <h3 className="text-xs font-semibold text-[var(--feature-soft)] uppercase tracking-wider mb-4">About</h3>
             <ul className="space-y-2 mb-6">
               {ABOUT.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="text-sm text-gray-400 hover:text-white transition-colors">{link.label}</Link>
+                  <Link href={link.href} className="text-sm text-[var(--feature-soft)] hover:text-[var(--feature-ink)] transition-colors">{link.label}</Link>
                 </li>
               ))}
             </ul>
-            <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">Service Area</h3>
+            <h3 className="text-xs font-semibold text-[var(--feature-soft)] uppercase tracking-wider mb-3">Service Area</h3>
             <div className="flex flex-wrap gap-1">
               {siteInfo.serviceAreas.map((area) => (
-                <span key={area} className="text-[10px] text-gray-500 px-2 py-0.5 rounded-full border border-white/[0.06]">
+                <span key={area} className="text-[10px] text-[var(--feature-ink)]/45 px-2 py-0.5 rounded-full border border-white/[0.06]">
                   {area}
                 </span>
               ))}
@@ -109,7 +109,7 @@ export default function SiteFooter() {
           <p className="text-vurmz-teal text-sm sm:text-base font-semibold tracking-wide italic">
             Need a guy with some lasers? That&apos;s me.
           </p>
-          <p className="mt-3 text-xs text-gray-500">
+          <p className="mt-3 text-xs text-[var(--feature-ink)]/45">
             Built from scratch. Powered by <span className="text-vurmz-teal font-medium">VURMZ | webWorks</span>
           </p>
         </div>
@@ -119,15 +119,15 @@ export default function SiteFooter() {
       <div className="border-t border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-3">
-            <p className="text-gray-500 text-xs">
+            <p className="text-[var(--feature-ink)]/45 text-xs">
               &copy; {new Date().getFullYear()} {siteInfo.legalName} &middot; {siteInfo.city}, {siteInfo.state}
-              <span className="text-gray-600" title="deployed build">
+              <span className="text-[var(--feature-ink)]/30" title="deployed build">
                 {' '}&middot; v{process.env.NEXT_PUBLIC_VERSION} ({process.env.NEXT_PUBLIC_COMMIT})
               </span>
             </p>
             <div className="flex gap-4 text-xs">
-              <Link href="/privacy" className="text-gray-500 hover:text-gray-300 transition-colors">Privacy</Link>
-              <Link href="/terms" className="text-gray-500 hover:text-gray-300 transition-colors">Terms</Link>
+              <Link href="/privacy" className="text-[var(--feature-ink)]/45 hover:text-[var(--feature-ink)]/85 transition-colors">Privacy</Link>
+              <Link href="/terms" className="text-[var(--feature-ink)]/45 hover:text-[var(--feature-ink)]/85 transition-colors">Terms</Link>
             </div>
           </div>
         </div>

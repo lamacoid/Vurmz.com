@@ -18,7 +18,7 @@ export default async function UnsubscribePage({ searchParams }: PageProps) {
   return (
     <div className="flex items-center justify-center px-4 py-24">
       <div className="max-w-md w-full">
-        <h1 className="text-2xl font-bold text-[var(--ink)] mb-3">Unsubscribe</h1>
+        <h1 className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] font-semibold text-[var(--ink)] mb-3">Unsubscribe</h1>
         <p className="text-[var(--ink-soft)] mb-6 text-sm leading-relaxed">
           Sorry to see you go. Enter your email below and I&apos;ll take you off the list.
         </p>

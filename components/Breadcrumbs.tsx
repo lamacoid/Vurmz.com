@@ -11,9 +11,9 @@ interface BreadcrumbsProps {
 }
 
 const themeStyles = {
-  shop: { text: 'text-[#7A7068]', active: 'text-[#C67A6F]', separator: 'text-[#7A7068]/40' },
-  services: { text: 'text-[var(--ink-soft)]', active: 'text-[var(--eyebrow)]', separator: 'text-gray-600' },
-  landing: { text: 'text-[var(--ink-soft)]', active: 'text-[var(--ink-soft)]', separator: 'text-gray-600' },
+  shop: { text: 'text-[var(--ink-soft)]', active: 'text-[#C67A6F]', separator: 'text-[var(--ink-soft)]/40' },
+  services: { text: 'text-[var(--ink-soft)]', active: 'text-[var(--eyebrow)]', separator: 'text-[var(--ink-soft)]' },
+  landing: { text: 'text-[var(--ink-soft)]', active: 'text-[var(--ink-soft)]', separator: 'text-[var(--ink-soft)]' },
 }
 
 export default function Breadcrumbs({ items, theme }: BreadcrumbsProps) {

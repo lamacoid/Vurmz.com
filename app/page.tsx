@@ -18,7 +18,7 @@ import GlassImage from '@/components/shop/GlassImage'
 import RotatingTagline from '@/components/RotatingTagline'
 import VurmzLogo from '@/components/VurmzLogo'
 
-// Single-page homepage: one brand, one scroll — shop first, then the anchored
+// Single-page homepage: one brand, one scroll, shop first, then the anchored
 // "For businesses" half, then contact. Replaced the old split chooser.
 export const metadata: Metadata = {
   alternates: { canonical: '/' },
@@ -61,39 +61,14 @@ export default function Page() {
 
       <SiteHeader variant="shop" />
       <div id="home-sections">
-        {/* ═══════════ HERO — animated teal VURMZ logo over rotating work photos ═══════════ */}
+        {/* ═══════════ HERO, animated teal VURMZ logo over rotating work photos ═══════════ */}
         <section className="relative px-4 pt-32 sm:pt-36 pb-12 sm:pb-14 text-center overflow-hidden">
           <RotatingHeroBg />
           <div className="relative z-10">
           <h1 className="sr-only">VURMZ Laser Engraving in {siteInfo.address}</h1>
-          {/* Light mode: solid deep-teal wordmark on the airy paper hero. */}
+          {/* The solid deep-teal wordmark on the paper hero. */}
           <div className="hero-logo-light mx-auto mb-6 justify-center">
             <VurmzLogo className="h-14 sm:h-[72px]" color="var(--ink)" />
-          </div>
-          {/* Dark mode: the signature animated teal gradient through the logo shape. */}
-          <div className="hero-logo-anim relative h-14 sm:h-[72px] mx-auto mb-6 w-[280px]">
-            <div className="relative" style={{ WebkitMaskImage: 'url(/images/vurmz-logo-text.png)', WebkitMaskSize: 'contain', WebkitMaskRepeat: 'no-repeat', WebkitMaskPosition: 'center', maskImage: 'url(/images/vurmz-logo-text.png)', maskSize: 'contain', maskRepeat: 'no-repeat', maskPosition: 'center' }}>
-              <div className="h-14 sm:h-[72px] w-full relative overflow-hidden">
-                <div className="absolute w-24 h-24 rounded-full bg-[#2FA6C0] blur-[30px] opacity-80" style={{ animation: 'blob1 7s ease-in-out infinite', top: '-20%', left: '0%' }} />
-                <div className="absolute w-20 h-20 rounded-full bg-[#9BDDE8] blur-[25px] opacity-80" style={{ animation: 'blob2 9s ease-in-out infinite', top: '-10%', left: '30%' }} />
-                <div className="absolute w-28 h-28 rounded-full bg-[#4FBCD2] blur-[35px] opacity-70" style={{ animation: 'blob3 6s ease-in-out infinite', top: '-30%', left: '55%' }} />
-                <div className="absolute w-20 h-20 rounded-full bg-[#AEE2EE] blur-[28px] opacity-80" style={{ animation: 'blob4 8s ease-in-out infinite', top: '0%', left: '75%' }} />
-                <div className="absolute w-16 h-16 rounded-full bg-[#3892A6] blur-[22px] opacity-90" style={{ animation: 'blob5 10s ease-in-out infinite', top: '-15%', left: '15%' }} />
-                <div className="absolute w-24 h-24 rounded-full bg-[#62C8D8] blur-[30px] opacity-70" style={{ animation: 'blob6 7.5s ease-in-out infinite', top: '-25%', left: '45%' }} />
-                <div className="absolute w-16 h-16 rounded-full bg-[#1F8294] blur-[26px] opacity-80" style={{ animation: 'blob1 8.5s ease-in-out infinite reverse', top: '-5%', left: '60%' }} />
-                <div className="absolute w-24 h-24 rounded-full bg-[#BCEAF2] blur-[32px] opacity-60" style={{ animation: 'blob3 9.5s ease-in-out infinite reverse', top: '-15%', left: '10%' }} />
-                <div className="absolute w-16 h-16 rounded-full bg-[#7FCFD4] blur-[24px] opacity-90" style={{ animation: 'blob5 6.5s ease-in-out infinite reverse', top: '-25%', left: '40%' }} />
-                <div className="absolute w-20 h-20 rounded-full bg-[#34879A] blur-[28px] opacity-75" style={{ animation: 'blob2 11s ease-in-out infinite reverse', top: '0%', left: '80%' }} />
-              </div>
-            </div>
-            <style>{`
-              @keyframes blob1 { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(40px,10px) scale(1.2)} 66%{transform:translate(-20px,-5px) scale(.9)} }
-              @keyframes blob2 { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(-30px,8px) scale(1.1)} 66%{transform:translate(25px,-10px) scale(.85)} }
-              @keyframes blob3 { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(20px,-12px) scale(.9)} 66%{transform:translate(-35px,6px) scale(1.15)} }
-              @keyframes blob4 { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(-25px,-8px) scale(1.1)} 66%{transform:translate(15px,12px) scale(.95)} }
-              @keyframes blob5 { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(35px,-6px) scale(1.15)} 66%{transform:translate(-15px,8px) scale(.9)} }
-              @keyframes blob6 { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(-20px,10px) scale(.85)} 66%{transform:translate(30px,-8px) scale(1.2)} }
-            `}</style>
           </div>
 
           <RotatingTagline
@@ -103,7 +78,7 @@ export default function Page() {
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
               href="/shop"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#C67A6F] text-white font-semibold text-base rounded-sm hover:bg-[#B0675D] transition-colors puffy-btn"
+              className="inline-flex items-center justify-center gap-2 h-[52px] px-7 rounded-[var(--r-control)] bg-[var(--coral)] text-white text-[length:var(--step-lead)] font-semibold hover:bg-[var(--coral-hover)] transition-colors duration-[var(--t-hover)] puffy-btn"
             >
               Browse the shop
               <ArrowRightIcon className="w-4 h-4" />
@@ -119,8 +94,8 @@ export default function Page() {
           </div>
         </section>
 
-        {/* ═══════════ RECENT WORK — photos over the scrolling "ideas" backdrop ═══════════ */}
-        <section className="relative band-teal-deep py-12 sm:py-14 overflow-hidden">
+        {/* ═══════════ RECENT WORK, photos over the scrolling "ideas" backdrop ═══════════ */}
+        <section className="relative band-teal-deep py-14 sm:py-[72px] overflow-hidden">
           {/* The "endless ideas" marquee, a faint background texture behind the
               photos. Edges fade via a mask so it dissolves cleanly on any band
               color (paper in light, teal in dark) with no dark smudges. */}
@@ -150,9 +125,9 @@ export default function Page() {
         </section>
 
         {/* ═══════════ SHOP CATEGORIES (base teal band) ═══════════ */}
-        <section className="band-teal border-t border-[var(--hairline)] py-12 sm:py-14">
+        <section className="band-teal border-t border-[var(--hairline)] py-14 sm:py-[72px]">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl font-bold text-[var(--ink)] text-center mb-8">Shop by category</h2>
+            <h2 className="text-[length:var(--step-section)] font-semibold text-[var(--ink)] text-center mb-8">Shop by category</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {CONSUMER_CATEGORIES.map((cat) => (
                 <CategoryCard key={cat.slug} category={cat} />
@@ -162,9 +137,9 @@ export default function Page() {
         </section>
 
         {/* ═══════════ HOW IT WORKS (dusty coral band) ═══════════ */}
-        <section className="bg-[#B0675D] border-t border-[var(--hairline)] py-14 sm:py-16">
+        <section className="bg-[#B0675D] border-t border-[var(--hairline)] py-14 sm:py-[72px]">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl font-bold text-white text-center mb-8">How it works</h2>
+            <h2 className="text-[length:var(--step-section)] font-semibold text-white text-center mb-8">How it works</h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
               {[
                 { n: 1, h: 'Pick or text', p: 'Buy a ready product from the shop, or text me to engrave something you bring, from $35.' },
@@ -173,7 +148,7 @@ export default function Page() {
               ].map((step) => (
                 <div key={step.n}>
                   <div className="w-10 h-10 rounded-full bg-white/15 border border-white/30 flex items-center justify-center mb-3 mx-auto puffy">
-                    <span className="text-white font-bold">{step.n}</span>
+                    <span className="text-white font-semibold">{step.n}</span>
                   </div>
                   <h3 className="font-semibold text-white mb-1">{step.h}</h3>
                   <p className="text-white/85 text-sm leading-relaxed">{step.p}</p>
@@ -183,11 +158,11 @@ export default function Page() {
           </div>
         </section>
 
-        {/* ═══════════ SERVICES — the anchored business half ═══════════ */}
+        {/* ═══════════ SERVICES, the anchored business half ═══════════ */}
         <section id="services" className="relative band-teal-deep border-t border-[var(--hairline)] scroll-mt-16">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
             <p className="text-xs font-mono text-[var(--eyebrow)] tracking-[0.25em] uppercase mb-3">For your work</p>
-            <h2 className="text-3xl sm:text-4xl font-bold text-[var(--ink)] tracking-tight leading-tight mb-4">
+            <h2 className="text-[length:var(--step-section)] font-semibold text-[var(--ink)] tracking-tight leading-tight mb-4">
               Precision laser engraving<br />
               <span className="text-[var(--ink-soft)]">for businesses in the Denver metro.</span>
             </h2>
@@ -214,7 +189,7 @@ export default function Page() {
             <div className="flex flex-col sm:flex-row gap-3">
               <Link
                 href="/services"
-                className="group inline-flex items-center justify-center gap-2 px-6 py-3 bg-vurmz-cta text-white font-semibold text-sm rounded-sm hover:bg-vurmz-cta-hover transition-all puffy-btn"
+                className="group inline-flex items-center justify-center gap-2 px-6 py-3 bg-[var(--coral)] text-white font-semibold text-sm rounded-[var(--r-control)] hover:bg-[var(--coral)]-hover transition-all puffy-btn"
               >
                 Everything for business
                 <ArrowRightIcon className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -246,7 +221,7 @@ export default function Page() {
               </div>
               <div>
                 <p className="text-xs font-mono text-[var(--ink)] tracking-[0.2em] uppercase mb-4">Who I Am</p>
-                <h2 className="text-2xl sm:text-3xl font-bold text-[var(--ink)] tracking-tight leading-tight mb-4">
+                <h2 className="text-[length:var(--step-section)] font-semibold text-[var(--ink)] tracking-tight leading-tight mb-4">
                   No department.<br /><span className="text-[var(--ink)]/50">Just me.</span>
                 </h2>
                 <p className="text-[#4f5d5b] text-base leading-relaxed mb-4">
@@ -272,7 +247,7 @@ export default function Page() {
         <section id="contact" className="band-teal-deep border-t border-[var(--hairline)] scroll-mt-16">
           <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16">
             <p className="text-xs font-mono text-[var(--eyebrow)] tracking-[0.2em] uppercase mb-3 text-center">Contact</p>
-            <h2 className="text-2xl sm:text-3xl font-bold text-[var(--ink)] tracking-tight mb-2 text-center">
+            <h2 className="text-[length:var(--step-section)] font-semibold text-[var(--ink)] tracking-tight mb-2 text-center">
               Questions? Send it.
             </h2>
             <p className="text-[var(--ink-soft)] text-sm text-center mb-8">

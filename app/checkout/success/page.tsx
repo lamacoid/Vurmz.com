@@ -26,16 +26,16 @@ function Inner() {
           <path d="M20 6 9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </div>
-      <h1 className="text-3xl font-bold text-[var(--ink)] mb-2">Order placed</h1>
-      {number && <p className="text-sm text-[#6B6259] mb-2">Order <span className="font-mono text-[var(--ink)]">{number}</span></p>}
-      <p className="text-[#6B6259] mb-8 max-w-md mx-auto">
+      <h1 className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] font-semibold text-[var(--ink)] mb-2">Order placed</h1>
+      {number && <p className="text-sm text-[var(--ink-soft)] mb-2">Order <span className="font-mono text-[var(--ink)]">{number}</span></p>}
+      <p className="text-[var(--ink-soft)] mb-8 max-w-md mx-auto">
         You&rsquo;ll get a confirmation email in a minute. I&rsquo;ll reach out personally with next steps.
       </p>
       <div className="flex gap-3 justify-center">
         <Link href="/shop" className="px-5 h-11 inline-flex items-center bg-white/60 border border-[#16525C]/12 text-[var(--ink)] text-sm font-semibold rounded-sm">
           Keep shopping
         </Link>
-        <Link href="/account" className="px-5 h-11 inline-flex items-center bg-[#C67A6F] hover:bg-[#B0675D] text-white text-sm font-semibold rounded-sm">
+        <Link href="/account" className="px-5 h-11 inline-flex items-center bg-[var(--coral)] hover:bg-[var(--coral-hover)] text-white text-sm font-semibold rounded-[var(--r-control)]">
           View account
         </Link>
       </div>

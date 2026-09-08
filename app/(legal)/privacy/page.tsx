@@ -12,9 +12,9 @@ export default function PrivacyPage() {
   return (
     <div>
       {/* Hero */}
-      <section className="bg-[var(--page)] text-[var(--ink)] py-10 sm:py-12">
+      <section className="bg-[var(--page)] text-[var(--ink)] py-14 sm:py-[72px]">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
+          <h1 className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] font-semibold tracking-tight mb-4">
             Privacy Policy
           </h1>
           <p className="text-[var(--ink-soft)]">
@@ -24,12 +24,12 @@ export default function PrivacyPage() {
       </section>
 
       {/* Content */}
-      <section className="py-10 sm:py-14 bg-[#0d1b1a]">
+      <section className="py-14 sm:py-[72px] bg-[#0d1b1a]">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="prose prose-invert prose-sm max-w-none space-y-8">
 
             <div>
-              <h2 className="text-xl font-semibold text-[var(--ink)] mb-3">Who We Are</h2>
+              <h2 className="text-[length:var(--step-panel)] font-semibold text-[var(--ink)] mb-3">Who We Are</h2>
               <p className="text-[var(--ink-soft)] leading-relaxed">
                 {siteInfo.legalName} (&quot;VURMZ,&quot; &quot;we,&quot; &quot;us&quot;) is a laser engraving business based in {siteInfo.city}, {siteInfo.state}.
                 This policy describes how we collect, use, and protect your personal information when you use our website at vurmz.com or purchase our services.
@@ -37,7 +37,7 @@ export default function PrivacyPage() {
             </div>
 
             <div>
-              <h2 className="text-xl font-semibold text-[var(--ink)] mb-3">Information We Collect</h2>
+              <h2 className="text-[length:var(--step-panel)] font-semibold text-[var(--ink)] mb-3">Information We Collect</h2>
               <p className="text-[var(--ink-soft)] leading-relaxed mb-3">
                 We collect information you voluntarily provide when placing an order or contacting us:
               </p>
@@ -51,7 +51,7 @@ export default function PrivacyPage() {
             </div>
 
             <div>
-              <h2 className="text-xl font-semibold text-[var(--ink)] mb-3">How We Use Your Information</h2>
+              <h2 className="text-[length:var(--step-panel)] font-semibold text-[var(--ink)] mb-3">How We Use Your Information</h2>
               <ul className="text-[var(--ink-soft)] space-y-2 list-disc list-inside">
                 <li>Process and fulfill your engraving orders</li>
                 <li>Communicate about your order status</li>
@@ -65,7 +65,7 @@ export default function PrivacyPage() {
             </div>
 
             <div>
-              <h2 className="text-xl font-semibold text-[var(--ink)] mb-3">Payment Processing</h2>
+              <h2 className="text-[length:var(--step-panel)] font-semibold text-[var(--ink)] mb-3">Payment Processing</h2>
               <p className="text-[var(--ink-soft)] leading-relaxed">
                 Payments are processed through Square, Inc. We never store your credit card information directly.
                 Square&apos;s privacy policy governs how they handle payment data. You can review it at{' '}
@@ -76,7 +76,7 @@ export default function PrivacyPage() {
             </div>
 
             <div>
-              <h2 className="text-xl font-semibold text-[var(--ink)] mb-3">Email Communications</h2>
+              <h2 className="text-[length:var(--step-panel)] font-semibold text-[var(--ink)] mb-3">Email Communications</h2>
               <p className="text-[var(--ink-soft)] leading-relaxed">
                 We send transactional emails related to your orders (confirmations, invoices, shipping updates).
                 We use Resend as our email service provider. You can unsubscribe from any non-transactional communications at any time.
@@ -84,7 +84,7 @@ export default function PrivacyPage() {
             </div>
 
             <div>
-              <h2 className="text-xl font-semibold text-[var(--ink)] mb-3">Data Security</h2>
+              <h2 className="text-[length:var(--step-panel)] font-semibold text-[var(--ink)] mb-3">Data Security</h2>
               <p className="text-[var(--ink-soft)] leading-relaxed">
                 We use industry-standard security measures to protect your data, including encrypted connections (HTTPS),
                 secure payment processing, and access controls on our systems. Your data is stored on Cloudflare&apos;s infrastructure.
@@ -92,7 +92,7 @@ export default function PrivacyPage() {
             </div>
 
             <div>
-              <h2 className="text-xl font-semibold text-[var(--ink)] mb-3">Cookies & Analytics</h2>
+              <h2 className="text-[length:var(--step-panel)] font-semibold text-[var(--ink)] mb-3">Cookies & Analytics</h2>
               <p className="text-[var(--ink-soft)] leading-relaxed">
                 Our website uses minimal cookies necessary for site functionality (such as remembering your theme preference).
                 We do not use third-party advertising trackers.
@@ -100,7 +100,7 @@ export default function PrivacyPage() {
             </div>
 
             <div>
-              <h2 className="text-xl font-semibold text-[var(--ink)] mb-3">Your Rights</h2>
+              <h2 className="text-[length:var(--step-panel)] font-semibold text-[var(--ink)] mb-3">Your Rights</h2>
               <p className="text-[var(--ink-soft)] leading-relaxed">
                 You can request access to, correction of, or deletion of your personal information at any time.
                 Colorado residents have additional rights under the Colorado Privacy Act.
@@ -109,7 +109,7 @@ export default function PrivacyPage() {
             </div>
 
             <div>
-              <h2 className="text-xl font-semibold text-[var(--ink)] mb-3">Contact</h2>
+              <h2 className="text-[length:var(--step-panel)] font-semibold text-[var(--ink)] mb-3">Contact</h2>
               <p className="text-[var(--ink-soft)] leading-relaxed">
                 Questions about this policy? Reach out directly:
               </p>
@@ -135,7 +135,7 @@ export default function PrivacyPage() {
       </section>
 
       {/* Back link */}
-      <section className="bg-[var(--page)] py-8 border-t border-[var(--hairline)]">
+      <section className="bg-[var(--page)] py-14 sm:py-[72px] border-t border-[var(--hairline)]">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <Link
             href="/"

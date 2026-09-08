@@ -13,7 +13,7 @@ const items = [
 
 const themeStyles = {
   landing: { text: 'text-[var(--ink-soft)]', icon: 'text-[var(--ink-soft)]', bg: '' },
-  shop: { text: 'text-[#6B6259]', icon: 'text-[#C67A6F]', bg: '' },
+  shop: { text: 'text-[var(--ink-soft)]', icon: 'text-[#C67A6F]', bg: '' },
   services: { text: 'text-[var(--ink-soft)]', icon: 'text-[var(--eyebrow)]', bg: '' },
 }
 

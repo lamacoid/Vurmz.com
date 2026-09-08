@@ -23,14 +23,14 @@ export default function CartDrawer() {
         />
       )}
       <aside
-        className={`fixed top-0 right-0 bottom-0 z-[80] w-full sm:w-[28rem] bg-[#102f33] border-l border-white/10 shadow-2xl shadow-black/40 flex flex-col transition-transform duration-300 ${
+        className={`fixed top-0 right-0 bottom-0 z-[80] w-full sm:w-[28rem] bg-[var(--feature-deep)] border-l border-white/10 shadow-2xl shadow-black/40 flex flex-col transition-transform duration-300 ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
         aria-label="Cart"
       >
         <header className="flex items-center justify-between px-5 py-4 border-b border-white/10">
           <div>
-            <p className="text-sm font-bold text-[#DED6C3]">Your cart</p>
+            <p className="text-sm font-semibold text-[#DED6C3]">Your cart</p>
             <p className="text-xs text-[#DED6C3]/70">{itemCount} {itemCount === 1 ? 'item' : 'items'}</p>
           </div>
           <button onClick={() => setOpen(false)} className="p-1 text-[#DED6C3]/70 hover:text-[#DED6C3]" aria-label="Close cart">
@@ -79,13 +79,13 @@ export default function CartDrawer() {
                       <>
                         {eng?.text && (
                           <p className="text-[11px] text-[#C67A6F] truncate" title={`Engraving: ${eng.text}`}>
-                            ✎ “{eng.text}”{eng.fontLabel ? ` · ${eng.fontLabel}` : ''}
+                            “{eng.text}”{eng.fontLabel ? ` · ${eng.fontLabel}` : ''}
                           </p>
                         )}
                         {(opts?.template || opts?.finish) && (
                           <p className="text-[11px] text-[#DED6C3]/60 truncate">{[opts.template, opts.finish].filter(Boolean).join(' · ')}</p>
                         )}
-                        {file?.filename && <p className="text-[11px] text-[#DED6C3]/60 truncate">📎 {file.filename}</p>}
+                        {file?.filename && <p className="text-[11px] text-[#DED6C3]/60 truncate">{file.filename}</p>}
                       </>
                     )
                   })()}
@@ -112,7 +112,7 @@ export default function CartDrawer() {
             </div>
             {/* The free-delivery line: the honest nudge that builds baskets. */}
             {subtotalCents >= FREE_DELIVERY_CENTS ? (
-              <p className="text-[11px] text-[#7FCFD4]">✓ Free hand delivery in the South Denver metro.</p>
+              <p className="text-[11px] text-[#7FCFD4]">Free hand delivery in the South Denver metro.</p>
             ) : (
               <p className="text-[11px] text-[#DED6C3]/80">
                 {money(FREE_DELIVERY_CENTS - subtotalCents)} more and hand delivery is free in the South Denver metro.
@@ -122,7 +122,7 @@ export default function CartDrawer() {
             <Link
               href="/checkout"
               onClick={() => setOpen(false)}
-              className="flex items-center justify-center h-11 bg-[#C67A6F] hover:bg-[#B0675D] text-white text-sm font-semibold transition-colors puffy-btn"
+              className="flex items-center justify-center h-11 bg-[var(--coral)] hover:bg-[var(--coral-hover)] text-white text-sm font-semibold transition-colors puffy-btn"
             >
               Checkout
             </Link>

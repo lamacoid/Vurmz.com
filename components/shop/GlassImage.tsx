@@ -40,7 +40,7 @@ const STYLES: Record<GlassDepth, { film: string; img: string }> = {
 }
 
 /**
- * A photo seen through layers of frosted teal glass — the VURMZ signature.
+ * A photo seen through layers of frosted teal glass, the VURMZ signature.
  * Place inside a `group` ancestor to get the hover "clear the glass" effect.
  */
 export default function GlassImage({
@@ -56,7 +56,7 @@ export default function GlassImage({
 
   return (
     // Always fill the (positioned, sized) parent. `absolute inset-0` here is the
-    // single source of positioning — do NOT also set `relative`, or the box
+    // single source of positioning, do NOT also set `relative`, or the box
     // collapses to 0 height and the fill image renders invisible.
     <div className={`absolute inset-0 overflow-hidden bg-[var(--page)] ${className}`}>
       {/* The photo */}
@@ -77,13 +77,13 @@ export default function GlassImage({
         />
       )}
 
-      {/* Frosted teal film — the tint of the glass */}
+      {/* Frosted teal film, the tint of the glass */}
       <div
         className={`absolute inset-0 bg-[var(--page)] transition-opacity duration-500 ${s.film}`}
         aria-hidden
       />
 
-      {/* Surface sheen — the light catching the top of the glass */}
+      {/* Surface sheen, the light catching the top of the glass */}
       <div
         className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/[0.12] via-transparent to-[#16525C]/20"
         aria-hidden

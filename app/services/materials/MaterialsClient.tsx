@@ -123,7 +123,7 @@ export default function MaterialsClient() {
             <motion.h1
               variants={fadeUp}
               transition={{ duration: 0.6 }}
-              className="text-4xl sm:text-5xl font-bold text-[var(--ink)] tracking-tight leading-[0.95] mb-6"
+              className="text-4xl sm:text-5xl font-semibold text-[var(--ink)] tracking-tight leading-[0.95] mb-6"
             >
               Three ways to<br />
               <span className="text-[var(--eyebrow)]">get it engraved.</span>
@@ -158,7 +158,7 @@ export default function MaterialsClient() {
                 className="bg-[var(--surface)] border border-[var(--hairline)] rounded-sm p-6 flex flex-col"
               >
                 <opt.icon className="w-8 h-8 text-[var(--eyebrow)] mb-4" />
-                <h3 className="text-lg font-bold text-[var(--ink)] mb-2">{opt.title}</h3>
+                <h3 className="text-lg font-semibold text-[var(--ink)] mb-2">{opt.title}</h3>
                 <p className="text-sm text-[var(--ink-soft)] leading-relaxed flex-1 mb-5">{opt.description}</p>
                 {(() => {
                   const o = opt as { type: string; href?: string; sms?: string; cta: string }
@@ -186,10 +186,10 @@ export default function MaterialsClient() {
         </div>
       </section>
 
-      {/* Capabilities Grid — oatmeal band to break up the teal */}
-      <section className="bg-[var(--surface)] py-16 sm:py-20 border-y border-black/5">
+      {/* Capabilities Grid, oatmeal band to break up the teal */}
+      <section className="bg-[var(--surface)] py-14 sm:py-[72px] border-y border-black/5">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl sm:text-3xl font-bold text-[var(--ink)] tracking-tight mb-2">What I can engrave</h2>
+          <h2 className="text-[length:var(--step-section)] font-semibold text-[var(--ink)] tracking-tight mb-2">What I can engrave</h2>
           <p className="text-[#4f5d5b] text-sm mb-8 max-w-lg">
             Metal, wood, glass, acrylic, leather, plastic, stone. If it&apos;s solid, I can mark it.
           </p>
@@ -220,7 +220,7 @@ export default function MaterialsClient() {
       <section className="pb-16 sm:pb-20">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-[var(--surface)] border border-[var(--hairline)] rounded-sm p-8 sm:p-10 text-center">
-            <h3 className="text-xl sm:text-2xl font-bold text-[var(--ink)] mb-3">
+            <h3 className="text-[length:var(--step-panel)] font-semibold text-[var(--ink)] mb-3">
               Not sure if I can engrave it?
             </h3>
             <p className="text-[var(--ink-soft)] text-sm leading-relaxed max-w-md mx-auto mb-6">

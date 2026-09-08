@@ -14,7 +14,7 @@ export default function CartButton({ className }: { className?: string }) {
       </svg>
       <span className="hidden sm:inline">Cart</span>
       {itemCount > 0 && (
-        <span className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-1 bg-[#C67A6F] text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+        <span className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-1 bg-[var(--coral)] text-white text-[10px] font-semibold rounded-full flex items-center justify-center">
           {itemCount}
         </span>
       )}

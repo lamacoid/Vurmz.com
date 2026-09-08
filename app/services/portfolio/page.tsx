@@ -39,7 +39,7 @@ export default function PortfolioPage() {
       </div>
 
       {/* Portfolio Grid */}
-      <section className="py-10 sm:py-12 bg-[var(--page)]">
+      <section className="py-14 sm:py-[72px] bg-[var(--page)]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
             {portfolioItems.map((item) => (
@@ -76,9 +76,9 @@ export default function PortfolioPage() {
       </section>
 
       {/* Cross-links */}
-      <section className="py-10 sm:py-12 border-t border-[var(--hairline)]">
+      <section className="py-14 sm:py-[72px] border-t border-[var(--hairline)]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold text-[var(--ink)] mb-4">
+          <h2 className="text-[length:var(--step-section)] font-semibold text-[var(--ink)] mb-4">
             Like what you see?
           </h2>
           <p className="text-[var(--ink-soft)] text-base leading-relaxed mb-6">
@@ -94,7 +94,7 @@ export default function PortfolioPage() {
             </Link>
             <a
               href={getSmsLink("I saw your portfolio and I'm interested")}
-              className="group inline-flex items-center justify-center gap-2 px-6 py-3 bg-vurmz-cta text-white font-semibold text-sm rounded-sm hover:bg-vurmz-cta-hover transition-all shadow-lg shadow-vurmz-cta/20"
+              className="group inline-flex items-center justify-center gap-2 px-6 py-3 bg-[var(--coral)] text-white font-semibold text-sm rounded-[var(--r-control)] hover:bg-[var(--coral)]-hover transition-all"
             >
               <ChatBubbleLeftIcon className="w-4 h-4" />
               Text me

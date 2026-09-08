@@ -150,10 +150,10 @@ export default function LaserCursor() {
         onClick={toggle}
         aria-pressed={on}
         title={on ? 'Turn off the laser cursor' : 'Turn on the laser cursor'}
-        className="fixed bottom-4 left-4 z-[60] flex items-center gap-2 rounded-full border border-white/15 bg-[#16525C]/80 px-3 py-1.5 text-[11px] font-medium text-gray-200 shadow-lg shadow-black/20 backdrop-blur-md transition-colors hover:border-[#FF2A2A]/50 hover:text-white"
+        className="fixed bottom-4 left-4 z-[60] flex items-center gap-2 rounded-full border border-white/15 bg-[#16525C]/80 px-3 py-1.5 text-[11px] font-medium text-[var(--feature-soft)] shadow-lg shadow-black/20 backdrop-blur-md transition-colors hover:border-[#FF2A2A]/50 hover:text-white"
       >
         <span
-          className={`h-2.5 w-2.5 rounded-full ${on ? 'bg-[#FF2A2A]' : 'border border-gray-400'}`}
+          className={`h-2.5 w-2.5 rounded-full ${on ? 'bg-[#FF2A2A]' : 'border border-[var(--hairline)]'}`}
           style={on ? { boxShadow: '0 0 6px 1px rgba(255,42,42,0.85)' } : undefined}
         />
         Laser cursor

@@ -10,7 +10,7 @@ import CartButton from '@/components/shop/CartButton'
 import VurmzLogo from '@/components/VurmzLogo'
 
 const NAV_LINKS = [
-  // Pricing lives ON the services page now — no separate nav item.
+  // Pricing lives ON the services page now, no separate nav item.
   { label: 'Shop', href: '/shop' },
   { label: 'Services', href: '/services' },
   { label: 'Portfolio', href: '/services/portfolio' },
@@ -34,7 +34,7 @@ export default function SiteHeader({ variant = 'services' }: { variant?: 'shop' 
   // Mode-aware via tokens: light = paper header with teal ink, dark = old teal
   // header with light ink. Coral hover accent in both.
   const headerBg = scrolled
-    ? 'bg-[var(--header-bg)] backdrop-blur-2xl border-b border-[var(--header-border)] shadow-lg shadow-black/10'
+    ? 'bg-[var(--header-bg)] backdrop-blur-2xl border-b border-[var(--header-border)]'
     : 'bg-transparent'
 
   const textColor = 'text-[var(--ink-soft)]'
@@ -125,7 +125,7 @@ export default function SiteHeader({ variant = 'services' }: { variant?: 'shop' 
       {mobileMenuOpen && (
         <>
           <div className="fixed inset-0 z-40 bg-black/30 backdrop-blur-sm" onClick={() => setMobileMenuOpen(false)} />
-          <div className={`fixed top-[92px] sm:top-[100px] left-3 right-3 z-50 ${mobileBg} border rounded-2xl shadow-2xl p-5 max-h-[calc(100vh-108px)] overflow-y-auto`}>
+          <div className={`fixed top-[92px] sm:top-[100px] left-3 right-3 z-50 ${mobileBg} border rounded-[var(--r-band)] shadow-2xl p-5 max-h-[calc(100vh-108px)] overflow-y-auto`}>
             <div className="flex flex-col gap-1 mb-3 pb-3 border-b border-white/10">
               <Link
                 href="/account"

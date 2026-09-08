@@ -1,6 +1,6 @@
 'use client'
 /**
- * DesignElementPicker — a curated library of engravable design elements
+ * DesignElementPicker: a curated library of engravable design elements
  * (Benchmade's icon-library pattern). Customers browse PNG thumbnails by
  * category and pick one to add to their engraving. The source vectors stay
  * server-side; only the selected element's id/label/thumb travel with the

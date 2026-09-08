@@ -67,10 +67,10 @@ export default function ContactPage() {
       </div>
 
       {/* Hero */}
-      <section className="bg-[var(--page)] text-[var(--ink)] py-10">
+      <section className="bg-[var(--page)] text-[var(--ink)] py-14 sm:py-[72px]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">
+            <h1 className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] font-semibold mb-4">
               Let&apos;s Talk
             </h1>
             <p className="text-xl text-[var(--ink-soft)]">
@@ -81,18 +81,18 @@ export default function ContactPage() {
       </section>
 
       {/* Contact Form + Info */}
-      <section className="py-10 bg-[var(--page)]">
+      <section className="py-14 sm:py-[72px] bg-[var(--page)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Contact Form */}
             <div>
-              <h2 className="text-2xl font-bold text-[var(--ink)] mb-6">Send a Message</h2>
+              <h2 className="text-[length:var(--step-section)] font-semibold text-[var(--ink)] mb-6">Send a Message</h2>
               <ContactForm />
             </div>
 
             {/* Contact Details */}
             <div>
-              <h2 className="text-2xl font-bold text-[var(--ink)] mb-6">Get in Touch</h2>
+              <h2 className="text-[length:var(--step-section)] font-semibold text-[var(--ink)] mb-6">Get in Touch</h2>
 
               <div className="space-y-6">
                 <div className="flex items-start gap-4">
@@ -172,9 +172,9 @@ export default function ContactPage() {
       </section>
 
       {/* FAQ */}
-      <section className="bg-[var(--page)] py-10">
+      <section className="bg-[var(--page)] py-14 sm:py-[72px]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold text-[var(--ink)] mb-6 text-center">Common Questions</h2>
+          <h2 className="text-[length:var(--step-section)] font-semibold text-[var(--ink)] mb-6 text-center">Common Questions</h2>
           <div className="max-w-3xl mx-auto space-y-4">
             {faqItems.map((item) => (
               <div key={item.question} className="bg-[var(--surface)] p-6 border border-[var(--hairline)] rounded-lg">
@@ -187,7 +187,7 @@ export default function ContactPage() {
       </section>
 
       {/* Trusted By */}
-      <section className="py-8 sm:py-10 border-t border-[var(--hairline)] overflow-hidden">
+      <section className="py-14 sm:py-[72px] border-t border-[var(--hairline)] overflow-hidden">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="text-xs font-mono text-[var(--ink-soft)] tracking-[0.2em] uppercase mb-5 text-center">
             Trusted by

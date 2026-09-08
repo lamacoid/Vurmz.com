@@ -59,11 +59,11 @@ export default function AccountFilesPage() {
     <div className="max-w-3xl mx-auto p-6 sm:p-10">
       <Link href="/account" className="text-xs text-[var(--ink-soft)] hover:text-[var(--ink)] mb-4 inline-block">← Back</Link>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-[var(--ink)]">Files</h1>
+        <h1 className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] font-semibold text-[var(--ink)]">Files</h1>
         <button
           onClick={() => inputRef.current?.click()}
           disabled={uploading}
-          className="px-4 h-9 bg-[#C67A6F] hover:bg-[#B0675D] disabled:opacity-60 text-white text-sm font-semibold rounded-md"
+          className="px-4 h-9 bg-[var(--coral)] hover:bg-[var(--coral-hover)] disabled:opacity-60 text-white text-sm font-semibold rounded-[var(--r-control)]"
         >
           {uploading ? 'Uploading…' : 'Upload'}
         </button>
@@ -99,7 +99,7 @@ export default function AccountFilesPage() {
                   {isImage(f.mimeType) ? (
                     <img src={f.url} alt={f.filename} className="w-full h-full object-cover group-hover:opacity-80 transition-opacity" />
                   ) : isPdf(f.mimeType) ? (
-                    <span className="text-[10px] font-mono font-bold text-[#7FCFD4] tracking-wider">PDF</span>
+                    <span className="text-[10px] font-mono font-semibold text-[#7FCFD4] tracking-wider">PDF</span>
                   ) : (
                     <svg className="w-6 h-6 text-[var(--ink-soft)]" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
@@ -111,7 +111,7 @@ export default function AccountFilesPage() {
                   <p className="text-[11px] text-[var(--ink-soft)]">{formatSize(f.sizeBytes)} · {new Date(f.uploadedAt).toLocaleDateString()}</p>
                 </button>
                 <a href={f.url} target="_blank" rel="noreferrer" download={f.filename} className="text-xs text-[var(--ink-soft)] hover:text-[var(--ink)] px-2">Open</a>
-                <button onClick={() => remove(f.id)} className="text-xs text-[var(--ink-soft)] hover:text-red-400 px-2">Remove</button>
+                <button onClick={() => remove(f.id)} className="text-xs text-[var(--ink-soft)] hover:text-[var(--error)] px-2">Remove</button>
               </div>
             )
           })}

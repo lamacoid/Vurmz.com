@@ -12,7 +12,7 @@ export default function ContactForm() {
     phone: '',
     productInterest: '',
     message: '',
-    // Honeypot — real users leave it empty; bots fill every field
+    // Honeypot, real users leave it empty; bots fill every field
     website: '',
   })
 
@@ -66,7 +66,7 @@ export default function ContactForm() {
     return (
       <div className="bg-[var(--feature)]/10 border border-vurmz-teal/30 rounded-xl p-8 text-center">
         <CheckCircleIcon className="w-12 h-12 text-[var(--eyebrow)] mx-auto mb-4" />
-        <h3 className="text-xl font-semibold text-[var(--ink)] mb-2">Message Sent</h3>
+        <h3 className="text-[length:var(--step-panel)] font-semibold text-[var(--ink)] mb-2">Message Sent</h3>
         <p className="text-[var(--ink-soft)] mb-4">
           Thanks for reaching out. {siteInfo.founder.name} will get back to you shortly.
         </p>
@@ -163,7 +163,7 @@ export default function ContactForm() {
         />
       </div>
 
-      {/* Honeypot — hidden from users, catches bots that fill every field */}
+      {/* Honeypot, hidden from users, catches bots that fill every field */}
       <div aria-hidden="true" style={{ position: 'absolute', left: '-9999px', width: '1px', height: '1px', overflow: 'hidden' }}>
         <label htmlFor="website">Website (leave blank)</label>
         <input
@@ -178,13 +178,13 @@ export default function ContactForm() {
       </div>
 
       {status === 'error' && (
-        <p className="text-red-400 text-sm">{errorMessage}</p>
+        <p className="text-[var(--error)] text-sm">{errorMessage}</p>
       )}
 
       <button
         type="submit"
         disabled={status === 'sending'}
-        className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-vurmz-cta text-white px-8 py-3 font-semibold hover:bg-vurmz-cta-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed puffy-btn"
+        className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[var(--coral)] text-white px-8 py-3 font-semibold hover:bg-[var(--coral)]-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed puffy-btn"
       >
         {status === 'sending' ? 'Sending...' : 'Send Message'}
         {status !== 'sending' && <ArrowRightIcon className="h-4 w-4" />}

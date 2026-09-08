@@ -1,4 +1,5 @@
 'use client'
+import { UserIcon } from '@heroicons/react/24/outline'
 import { Suspense, useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 
@@ -33,10 +34,10 @@ function VerifyInner() {
         <div className="min-h-[40vh] flex flex-col items-center justify-center">
           <div className="w-14 h-14 rounded-full bg-[#7FCFD4]/15 border border-[#7FCFD4]/30 flex items-center justify-center mb-5">
             <span className="text-[#7FCFD4] text-2xl font-semibold">
-              {firstName ? firstName.charAt(0).toUpperCase() : '✓'}
+              {firstName ? firstName.charAt(0).toUpperCase() : <UserIcon className="h-5 w-5" />}
             </span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-semibold text-[var(--ink)]">
+          <h1 className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] font-semibold text-[var(--ink)]">
             {firstName ? `Hi, ${firstName}` : 'Signed in'}
           </h1>
           <p className="text-xs text-[var(--ink-soft)] mt-3 tracking-wide">
@@ -46,7 +47,7 @@ function VerifyInner() {
       )}
       {status === 'error' && (
         <div>
-          <h1 className="text-xl font-bold text-[var(--ink)] mb-2">Link invalid or expired</h1>
+          <h1 className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] font-semibold text-[var(--ink)] mb-2">Link invalid or expired</h1>
           <p className="text-sm text-[var(--ink-soft)] mb-6">Sign-in links expire after 15 minutes and can only be used once.</p>
           <a href="/account/login" className="text-sm text-[#7FCFD4] hover:underline">Request a new link →</a>
         </div>

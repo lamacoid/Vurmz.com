@@ -105,6 +105,22 @@ body.is-admin > main {
   --logo-fill: #16525C;
   --logo-glow: none;
 }
+/* ── Headings belong to the display face, by default and by element. ──
+   A page does not choose whether its h1 is Fraunces; the base layer decides,
+   and a utility (font-mono for an eyebrow, font-sans for a form label) can
+   still override it because utilities sit in a higher layer. Weight is 600.
+   Bold is not in the kit. Scoped to main so the footer's small labels and
+   the admin cockpit keep their own rules. */
+@layer base {
+  main :is(h1, h2, h3) {
+    font-family: var(--font-display), Georgia, serif;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+  main h1 { letter-spacing: -0.02em; }
+}
+
 /* Faint paper grain. One ground, so it is unconditional. */
 body:not(.is-admin) {
   background-color: var(--page);

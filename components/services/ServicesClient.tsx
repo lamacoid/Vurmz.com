@@ -391,7 +391,7 @@ export default function ServicesClient() {
           </p>
           <a
             href={getSmsLink('Hi Zach, here is what I need marked: ')}
-            className="puffy-btn sm:ml-auto inline-flex items-center justify-center whitespace-nowrap px-6 py-3.5 rounded-sm bg-vurmz-cta text-white text-[15px] font-semibold hover:bg-vurmz-cta-hover transition-colors"
+            className="puffy-btn sm:ml-auto inline-flex items-center justify-center whitespace-nowrap px-6 py-3.5 rounded-[var(--r-control)] bg-[var(--coral)] text-white text-[15px] font-semibold hover:bg-[var(--coral)]-hover transition-colors"
           >
             Text {siteInfo.phone}
           </a>

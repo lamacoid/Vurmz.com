@@ -9,7 +9,7 @@ import { CartProvider } from '@/lib/cart/store'
 
 const inter = Inter({ subsets: ['latin'] })
 
-// Display serif for hero headlines — clean, sophisticated, with a real italic.
+// Display serif for hero headlines, clean, sophisticated, with a real italic.
 const fraunces = Fraunces({
   subsets: ['latin'],
   variable: '--font-display',
@@ -165,7 +165,7 @@ export default function RootLayout({
             })
           }}
         />
-        {/* Lightweight pageview tracker — skips if owner cookie is set, skips local dev */}
+        {/* Lightweight pageview tracker, skips if owner cookie is set, skips local dev */}
         <script dangerouslySetInnerHTML={{ __html: `
           (function(){
             if (document.cookie.indexOf('vurmz_owner=1') !== -1) return;
@@ -180,7 +180,7 @@ export default function RootLayout({
       <body className={`${inter.className} ${fraunces.variable} relative`}>
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-vurmz-cta focus:text-white focus:rounded-sm focus:shadow-lg"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-[var(--coral)] focus:text-white focus:rounded-[var(--r-control)] focus:shadow-lg"
         >
           Skip to main content
         </a>

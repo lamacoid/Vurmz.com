@@ -51,11 +51,11 @@ export default function UnsubscribeForm({ initialEmail }: { initialEmail: string
           className="w-full px-4 py-3 bg-[var(--surface)] border border-[var(--hairline)] rounded-md text-[var(--ink)] placeholder-[var(--ink-soft)] focus:border-vurmz-teal focus:ring-1 focus:ring-vurmz-teal outline-none"
         />
       </div>
-      {status === 'error' && <p className="text-red-400 text-sm">{message}</p>}
+      {status === 'error' && <p className="text-[var(--error)] text-sm">{message}</p>}
       <button
         type="submit"
         disabled={status === 'sending'}
-        className="w-full px-6 py-3 bg-vurmz-cta text-white font-semibold rounded-md hover:bg-vurmz-cta-hover transition-colors disabled:opacity-50"
+        className="w-full px-6 py-3 bg-[var(--coral)] text-white font-semibold rounded-[var(--r-control)] hover:bg-[var(--coral)]-hover transition-colors disabled:opacity-50"
       >
         {status === 'sending' ? 'Working…' : 'Unsubscribe'}
       </button>

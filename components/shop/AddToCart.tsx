@@ -192,9 +192,9 @@ export default function AddToCart(props: {
         <button
           onClick={onAdd}
           disabled={alreadyInCart}
-          className="w-full inline-flex items-center justify-center px-6 h-11 bg-[#C67A6F] hover:bg-[#B0675D] disabled:opacity-60 disabled:cursor-not-allowed text-white text-sm font-semibold transition-colors puffy-btn"
+          className="w-full inline-flex items-center justify-center px-6 h-11 bg-[var(--coral)] hover:bg-[var(--coral-hover)] disabled:opacity-60 disabled:cursor-not-allowed text-white text-sm font-semibold transition-colors puffy-btn"
         >
-          {alreadyInCart ? 'Already in cart' : added ? 'Added ✓' : 'Add to cart'}
+          {alreadyInCart ? 'Already in cart' : added ? 'Added' : 'Add to cart'}
         </button>
       ) : (
         <div className="flex flex-col sm:flex-row gap-3">
@@ -217,9 +217,9 @@ export default function AddToCart(props: {
           </div>
           <button
             onClick={onAdd}
-            className="flex-1 inline-flex items-center justify-center px-6 h-11 bg-[#C67A6F] hover:bg-[#B0675D] text-white text-sm font-semibold transition-colors puffy-btn"
+            className="flex-1 inline-flex items-center justify-center px-6 h-11 bg-[var(--coral)] hover:bg-[var(--coral-hover)] text-white text-sm font-semibold transition-colors puffy-btn"
           >
-            {added ? 'Added ✓' : 'Add to cart'}
+            {added ? 'Added' : 'Add to cart'}
           </button>
         </div>
       )}
@@ -238,7 +238,7 @@ export default function AddToCart(props: {
           line only renders where it isn't already said. */}
       {!engravable && (
         <p className="mt-2 text-[11px] text-[var(--ink-soft)]">
-          ✓ You approve a proof photo before anything runs.
+          You approve a proof photo before anything runs.
         </p>
       )}
     </div>

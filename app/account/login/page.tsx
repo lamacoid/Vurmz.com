@@ -31,7 +31,7 @@ export default function AccountLogin() {
 
   return (
     <div className="max-w-md mx-auto p-6 sm:p-10">
-      <h1 className="text-2xl font-bold text-[var(--ink)] mb-2">Sign in to your account</h1>
+      <h1 className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] font-semibold text-[var(--ink)] mb-2">Sign in to your account</h1>
       <p className="text-sm text-[var(--ink-soft)] mb-8">We&rsquo;ll email you a one-time link, no password.</p>
 
       {status === 'sent' ? (
@@ -56,11 +56,11 @@ export default function AccountLogin() {
               className="w-full bg-[var(--page)] border border-white/5 rounded-md px-3 py-2.5 text-sm text-[var(--ink)] outline-none focus:border-[#7FCFD4]"
             />
           </div>
-          {error && <p className="text-xs text-red-400">{error}</p>}
+          {error && <p className="text-xs text-[var(--error)]">{error}</p>}
           <button
             type="submit"
             disabled={status === 'sending'}
-            className="w-full h-10 bg-[#C67A6F] hover:bg-[#B0675D] disabled:opacity-60 text-white text-sm font-semibold rounded-md transition-colors"
+            className="w-full h-10 bg-[var(--coral)] hover:bg-[var(--coral-hover)] disabled:opacity-60 text-white text-sm font-semibold rounded-[var(--r-control)] transition-colors"
           >
             {status === 'sending' ? 'Sending link…' : 'Send sign-in link'}
           </button>

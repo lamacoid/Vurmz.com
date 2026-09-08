@@ -27,7 +27,7 @@ export default function NotFound() {
           overflow: hidden;
         }
 
-        /* Ghost — faint outline of what will be engraved */
+        /* Ghost: faint outline of what will be engraved */
         .char-ghost {
           font-size: clamp(100px, 26vw, 280px);
           font-weight: 900;
@@ -39,7 +39,7 @@ export default function NotFound() {
 
         /* ═══ Filled text ═══
            Uses background-clip:text so the fill gradient only shows INSIDE the letter shape.
-           This is the key — the gradient acts as a "progress bar" moving down through the letter. */
+           This is the key, the gradient acts as a "progress bar" moving down through the letter. */
         .char-fill {
           position: absolute;
           top: 0; left: 0;
@@ -79,7 +79,7 @@ export default function NotFound() {
           }
         `).join('')}
 
-        /* Hatch line overlay — gives it the engraved line texture */
+        /* Hatch line overlay, gives it the engraved line texture */
         .char-hatch {
           position: absolute;
           top: 0; left: 0; right: 0; bottom: 0;
@@ -112,7 +112,7 @@ export default function NotFound() {
           z-index: 5;
         }
 
-        /* X-axis jitter — simulates the galvo mirror snapping back and forth */
+        /* X-axis jitter, simulates the galvo mirror snapping back and forth */
         @keyframes galvoX {
           0% { transform: translateX(-45px); }
           10% { transform: translateX(38px); }
@@ -214,7 +214,7 @@ export default function NotFound() {
           </p>
           <Link
             href="/"
-            className="px-6 py-3 bg-vurmz-cta text-white font-semibold text-sm rounded-sm hover:bg-vurmz-cta-hover transition-all shadow-lg shadow-vurmz-cta/20"
+            className="px-6 py-3 bg-[var(--coral)] text-white font-semibold text-sm rounded-[var(--r-control)] hover:bg-[var(--coral)]-hover transition-all"
           >
             Back to VURMZ
           </Link>

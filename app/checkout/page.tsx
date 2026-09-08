@@ -51,7 +51,7 @@ export default function CheckoutPage() {
   const [email, setEmail] = useState('')
   const [address, setAddress] = useState({ name: '', line1: '', line2: '', city: '', state: 'CO', postalCode: '', phone: '' })
   const [notes, setNotes] = useState('')
-  // Guest-friendly file attachments (photo/logo) — uploaded immediately to
+  // Guest-friendly file attachments (photo/logo), uploaded immediately to
   // /api/checkout/upload, keys submitted with the order. `warning` is local
   // UX only (low-contrast advice) and is stripped from the order payload.
   const [attachments, setAttachments] = useState<Array<{ key: string; filename: string; warning?: string }>>([])
@@ -179,7 +179,7 @@ export default function CheckoutPage() {
   // Lasers mark in one tone: a logo needs to read as near black-and-white.
   // Vector files (SVG/PDF) are inherently fine; for raster images we sample a
   // downscaled luminance histogram and warn (never block) when the 10th-90th
-  // percentile spread is narrow — i.e. the image is mostly midtones.
+  // percentile spread is narrow, i.e. the image is mostly midtones.
   async function checkRasterContrast(file: File): Promise<string | undefined> {
     if (!file.type.startsWith('image/') || file.type === 'image/svg+xml') return undefined
     try {
@@ -195,7 +195,7 @@ export default function CheckoutPage() {
       const lums: number[] = []
       for (let i = 0; i < data.length; i += 4) {
         const a = data[i + 3] / 255
-        // Composite on white — transparent pixels won't be marked.
+        // Composite on white, transparent pixels won't be marked.
         const r = data[i] * a + 255 * (1 - a)
         const g = data[i + 1] * a + 255 * (1 - a)
         const b = data[i + 2] * a + 255 * (1 - a)
@@ -300,7 +300,7 @@ export default function CheckoutPage() {
         return
       }
       // Save the entered address to the account if the customer opted in.
-      // Fire-and-forget — we're navigating away and it must not block success.
+      // Fire-and-forget, we're navigating away and it must not block success.
       if (loggedIn && saveAddress && selectedAddressId === null && needsAddress && address.line1) {
         fetch('/api/account/addresses', {
           method: 'POST',
@@ -331,7 +331,7 @@ export default function CheckoutPage() {
   if (items.length === 0) {
     return (
       <div className="max-w-2xl mx-auto px-6 py-24 text-center">
-        <h1 className="text-2xl font-bold mb-3">Your cart is empty</h1>
+        <h1 className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] font-semibold mb-3">Your cart is empty</h1>
         <Link href="/shop" className="inline-flex text-[#C67A6F] hover:underline">← Back to shop</Link>
       </div>
     )
@@ -340,8 +340,8 @@ export default function CheckoutPage() {
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       <div className="mb-8">
-        <Link href="/shop" className="text-sm text-[#6B6259] hover:text-[var(--ink)]">← Continue shopping</Link>
-        <h1 className="text-3xl font-bold mt-2">Checkout</h1>
+        <Link href="/shop" className="text-sm text-[var(--ink-soft)] hover:text-[var(--ink)]">← Continue shopping</Link>
+        <h1 className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] font-semibold mt-2">Checkout</h1>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-10">
@@ -353,7 +353,7 @@ export default function CheckoutPage() {
 
           <Section title="2 · Fulfillment">
             {address.postalCode.length === 5 && (
-              <p className="text-xs text-[#6B6259] mb-2">ZIP recognized, options updated.</p>
+              <p className="text-xs text-[var(--ink-soft)] mb-2">ZIP recognized, options updated.</p>
             )}
             <div className="grid grid-cols-1 gap-2">
               {options.map(opt => (
@@ -377,7 +377,7 @@ export default function CheckoutPage() {
                         <span className="font-semibold text-sm">{opt.label}</span>
                         <span className="text-sm font-semibold">{opt.priceCents === 0 ? 'Free' : money(opt.priceCents)}</span>
                       </div>
-                      <p className="text-xs text-[#6B6259] mt-0.5">{opt.description} · {opt.eta}</p>
+                      <p className="text-xs text-[var(--ink-soft)] mt-0.5">{opt.description} · {opt.eta}</p>
                     </div>
                   </label>
 
@@ -385,7 +385,7 @@ export default function CheckoutPage() {
                     <div className="mt-2 ml-7 space-y-3">
                       {opt.windows && opt.windows.length > 0 && (
                         <div>
-                          <p className="text-[11px] uppercase tracking-wider text-[#7A7068] mb-1.5 font-semibold">Preferred window</p>
+                          <p className="text-[11px] uppercase tracking-wider text-[var(--ink-soft)] mb-1.5 font-semibold">Preferred window</p>
                           <div className="flex flex-wrap gap-1.5">
                             {opt.windows.map(w => (
                               <button
@@ -394,7 +394,7 @@ export default function CheckoutPage() {
                                 onClick={() => setHandDeliveryWindow(w.key)}
                                 className={`text-xs px-3 py-1.5 rounded-sm border transition-colors ${
                                   handDeliveryWindow === w.key
-                                    ? 'border-[#C67A6F] bg-[#C67A6F] text-white'
+                                    ? 'border-[#C67A6F] bg-[var(--coral)] text-white'
                                     : 'border-[#16525C]/15 bg-white/70 text-[var(--ink)] hover:border-[#C67A6F]/50'
                                 }`}
                               >
@@ -414,12 +414,12 @@ export default function CheckoutPage() {
                         />
                         <span className="text-xs text-[var(--ink)] leading-snug">
                           Leave it at my door, contactless
-                          <span className="block text-[#9A8F86]">I&rsquo;ll text you a photo when it&rsquo;s there. No knock.</span>
+                          <span className="block text-[var(--ink-soft)]/70">I&rsquo;ll text you a photo when it&rsquo;s there. No knock.</span>
                         </span>
                       </label>
                       <div>
-                        <label className="text-[11px] uppercase tracking-wider text-[#7A7068] block mb-1 font-semibold">
-                          Delivery note <span className="font-normal normal-case text-[#9A8F86]">(gate code, parking, leave-with, etc.)</span>
+                        <label className="text-[11px] uppercase tracking-wider text-[var(--ink-soft)] block mb-1 font-semibold">
+                          Delivery note <span className="font-normal normal-case text-[var(--ink-soft)]/70">(gate code, parking, leave-with, etc.)</span>
                         </label>
                         <textarea
                           value={handDeliveryNote}
@@ -440,7 +440,7 @@ export default function CheckoutPage() {
             <Section title="3 · Address">
               {loggedIn && savedAddresses.length > 0 && (
                 <div className="mb-4 space-y-2">
-                  <p className="text-[11px] uppercase tracking-wider text-[#7A7068] font-semibold">Use a saved address</p>
+                  <p className="text-[11px] uppercase tracking-wider text-[var(--ink-soft)] font-semibold">Use a saved address</p>
                   {savedAddresses.map(a => (
                     <label
                       key={a.id}
@@ -462,7 +462,7 @@ export default function CheckoutPage() {
                           {a.label}
                           {a.isDefault && <span className="ml-2 text-[10px] uppercase tracking-wider text-[#C67A6F]">default</span>}
                         </span>
-                        <p className="text-xs text-[#6B6259] mt-0.5 truncate">
+                        <p className="text-xs text-[var(--ink-soft)] mt-0.5 truncate">
                           {a.line1}{a.line2 ? `, ${a.line2}` : ''}, {a.city}, {a.state} {a.postalCode}
                         </p>
                       </div>
@@ -497,7 +497,7 @@ export default function CheckoutPage() {
                 <Input label="Phone" value={address.phone} onChange={v => setAddress(a => ({ ...a, phone: v }))} colSpan={2} />
               </div>
               {loggedIn && selectedAddressId === null && (
-                <label className="flex items-center gap-2 mt-3 text-sm text-[#6B6259] cursor-pointer">
+                <label className="flex items-center gap-2 mt-3 text-sm text-[var(--ink-soft)] cursor-pointer">
                   <input type="checkbox" checked={saveAddress} onChange={e => setSaveAddress(e.target.checked)} />
                   Save this address to my account
                 </label>
@@ -514,12 +514,12 @@ export default function CheckoutPage() {
               className="w-full bg-white/70 border border-[#16525C]/12 rounded-sm px-3 py-2 text-sm outline-none focus:border-[#C67A6F]"
             />
             <p className="mt-2 text-xs text-[var(--ink)] font-medium">
-              ✓ I always send a proof photo before I engrave. Nothing runs until you approve it.
+              I always send a proof photo before I engrave. Nothing runs until you approve it.
             </p>
 
-            {/* Photo / logo attachments — works for guests, no account needed */}
+            {/* Photo / logo attachments, works for guests, no account needed */}
             <div className="mt-3">
-              <p className="text-xs text-[#6B6259] mb-2">
+              <p className="text-xs text-[var(--ink-soft)] mb-2">
                 Have a logo or design? Attach it here (up to 3 files, 10 MB each). <span className="font-medium text-[var(--ink)]">A PDF or a sharp photo works best</span>; designer files (SVG) are perfect too. I&apos;ll clean it up if needed. No file? Just describe it above and we&apos;ll nail it down on the proof.
               </p>
               {attachments.length > 0 && (
@@ -527,7 +527,7 @@ export default function CheckoutPage() {
                   {attachments.map(a => (
                     <li key={a.key} className="text-sm bg-white/70 border border-[#16525C]/12 rounded-sm px-3 py-1.5">
                       <div className="flex items-center justify-between">
-                        <span className="truncate">📎 {a.filename}</span>
+                        <span className="truncate">{a.filename}</span>
                         <button
                           type="button"
                           onClick={() => setAttachments(prev => prev.filter(x => x.key !== a.key))}
@@ -537,7 +537,7 @@ export default function CheckoutPage() {
                         </button>
                       </div>
                       {a.warning && (
-                        <p className="text-xs text-[#8a6d1a] mt-1">⚠ {a.warning}</p>
+                        <p className="text-xs text-[var(--warning)] mt-1">{a.warning}</p>
                       )}
                     </li>
                   ))}
@@ -563,7 +563,7 @@ export default function CheckoutPage() {
 
           <Section title="Payment">
             {!squareChecked ? (
-              <p className="text-sm text-[#6B6259]">Loading…</p>
+              <p className="text-sm text-[var(--ink-soft)]">Loading…</p>
             ) : paymentMethodAvailable ? (
               <SquarePayment
                 config={squareConfig!}
@@ -576,20 +576,20 @@ export default function CheckoutPage() {
               // public place an unpaid order; point them to Zach instead.
               <div className="rounded-sm border border-[#16525C]/15 bg-white/70 px-4 py-3">
                 <p className="text-sm text-[var(--ink)] font-semibold">Card payment is down for a moment.</p>
-                <p className="text-sm text-[#6B6259] mt-1">
+                <p className="text-sm text-[var(--ink-soft)] mt-1">
                   Text me at{' '}
                   <a href={getSmsLink('Hi, I want to order but checkout payment is down.')} className="text-[#C67A6F] font-semibold hover:underline">{siteInfo.phone}</a>{' '}
                   and I&rsquo;ll get your order placed right away.
                 </p>
               </div>
             )}
-            {error && <p className="text-xs text-red-700 mt-2">{error}</p>}
+            {error && <p className="text-xs text-[var(--error)] mt-2">{error}</p>}
           </Section>
         </div>
 
         {/* Summary */}
         <aside className="lg:sticky lg:top-6 lg:self-start bg-white/70 border border-[#16525C]/12 rounded-sm p-5">
-          <p className="text-[11px] uppercase tracking-wider text-[#7A7068] mb-3 font-semibold">Summary</p>
+          <p className="text-[11px] uppercase tracking-wider text-[var(--ink-soft)] mb-3 font-semibold">Summary</p>
           <div className="space-y-3">
             {items.map(item => (
               <div key={`${item.productId}:${item.variantId ?? ""}`} className="flex gap-3 items-start">
@@ -598,7 +598,7 @@ export default function CheckoutPage() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium truncate">{item.name}</p>
-                  <p className="text-xs text-[#6B6259]">{item.packSize > 1 ? `${item.qty} × pack of ${item.packSize}` : `Qty ${item.qty}`}</p>
+                  <p className="text-xs text-[var(--ink-soft)]">{item.packSize > 1 ? `${item.qty} × pack of ${item.packSize}` : `Qty ${item.qty}`}</p>
                   {(() => {
                     const eng = item.metadata?.engraving as { text?: string; fontLabel?: string } | undefined
                     const opts = item.metadata?.options as { finish?: string; template?: string } | undefined
@@ -606,12 +606,12 @@ export default function CheckoutPage() {
                     return (
                       <>
                         {eng?.text && (
-                          <p className="text-[11px] text-[#C67A6F] truncate">✎ “{eng.text}”{eng.fontLabel ? ` · ${eng.fontLabel}` : ''}</p>
+                          <p className="text-[11px] text-[#C67A6F] truncate">“{eng.text}”{eng.fontLabel ? ` · ${eng.fontLabel}` : ''}</p>
                         )}
                         {(opts?.template || opts?.finish) && (
-                          <p className="text-[11px] text-[#6B6259] truncate">{[opts.template, opts.finish].filter(Boolean).join(' · ')}</p>
+                          <p className="text-[11px] text-[var(--ink-soft)] truncate">{[opts.template, opts.finish].filter(Boolean).join(' · ')}</p>
                         )}
-                        {file?.filename && <p className="text-[11px] text-[#6B6259] truncate">📎 {file.filename}</p>}
+                        {file?.filename && <p className="text-[11px] text-[var(--ink-soft)] truncate">{file.filename}</p>}
                       </>
                     )
                   })()}
@@ -621,9 +621,9 @@ export default function CheckoutPage() {
             ))}
           </div>
           <div className="border-t border-[#16525C]/10 mt-4 pt-3 space-y-1 text-sm">
-            <div className="flex justify-between"><span className="text-[#6B6259]">Subtotal</span><span>{money(subtotalCents)}</span></div>
-            <div className="flex justify-between"><span className="text-[#6B6259]">{chosen?.label ?? 'Delivery'}</span><span>{chosen ? money(chosen.priceCents) : 'TBD'}</span></div>
-            <div className="flex justify-between text-base font-bold pt-2"><span>Total</span><span>{money(totalCents)}</span></div>
+            <div className="flex justify-between"><span className="text-[var(--ink-soft)]">Subtotal</span><span>{money(subtotalCents)}</span></div>
+            <div className="flex justify-between"><span className="text-[var(--ink-soft)]">{chosen?.label ?? 'Delivery'}</span><span>{chosen ? money(chosen.priceCents) : 'TBD'}</span></div>
+            <div className="flex justify-between text-base font-semibold pt-2"><span>Total</span><span>{money(totalCents)}</span></div>
           </div>
         </aside>
       </div>
@@ -634,7 +634,7 @@ export default function CheckoutPage() {
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section>
-      <h2 className="text-xs font-mono uppercase tracking-[0.2em] text-[#7A7068] mb-3">{title}</h2>
+      <h2 className="text-xs font-mono uppercase tracking-[0.2em] text-[var(--ink-soft)] mb-3">{title}</h2>
       <div>{children}</div>
     </section>
   )
@@ -659,7 +659,7 @@ function Input({
 }) {
   return (
     <label className={`block ${colSpan === 2 ? 'col-span-2' : ''}`}>
-      <span className="text-[11px] uppercase tracking-wider text-[#7A7068] block mb-1">{label}{required && ' *'}</span>
+      <span className="text-[11px] uppercase tracking-wider text-[var(--ink-soft)] block mb-1">{label}{required && ' *'}</span>
       <input
         type={type}
         value={value}

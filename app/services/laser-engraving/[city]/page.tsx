@@ -33,7 +33,7 @@ const cityData: Record<string, CityData> = {
     name: 'Littleton',
     neighborhoods: 'downtown Littleton along Main Street, the Riverwalk, and Columbine Valley',
     paragraphs: [
-      'Littleton has one of the best downtowns in the Denver metro. I work with shops, restaurants, and offices throughout Littleton, from Main Street boutiques to offices along Santa Fe Drive.',
+      'Littleton has a real downtown, one of the few in the south metro. I work with shops, restaurants, and offices throughout Littleton, from Main Street boutiques to offices along Santa Fe Drive.',
       'If you are near the Littleton Riverwalk or in the Columbine Valley area, I can meet you locally to pick up items or hand-deliver finished orders. Direct handoff from the person who engraved your order.',
       'Laser engraving works on metal, wood, acrylic, leather, glass, and more. Branded pens for your register, engraved coasters for your tasting room, custom metal business cards. Whatever you need for your Littleton business, I can make it happen.',
       'Custom engraving starts at $35. I also stock pens, keychains, coasters, and metal cards at lower per-piece Basic pricing. No setup fees, no minimums, and free delivery throughout the south Denver metro.',
@@ -160,7 +160,7 @@ function getCityFromSlug(slug: string): CityData | undefined {
 }
 
 // ---------------------------------------------------------------------------
-// Static params — generates a page for every city in the data map
+// Static params, generates a page for every city in the data map
 // ---------------------------------------------------------------------------
 
 export function generateStaticParams() {
@@ -168,7 +168,7 @@ export function generateStaticParams() {
 }
 
 // ---------------------------------------------------------------------------
-// Metadata — unique title + description per city
+// Metadata, unique title + description per city
 // ---------------------------------------------------------------------------
 
 type Props = {
@@ -253,7 +253,7 @@ export default async function CityPage({ params }: Props) {
           <p className="text-xs font-mono text-[var(--eyebrow)] tracking-[0.2em] uppercase mb-4">
             Service Area &middot; {city.name}, {siteInfo.stateAbbr}
           </p>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--ink)] tracking-tight leading-tight mb-6">
+          <h1 className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] font-semibold text-[var(--ink)] tracking-tight leading-tight mb-6">
             Laser Engraving in {city.name}, Colorado
           </h1>
           <p className="text-[var(--ink-soft)] text-base sm:text-lg leading-relaxed max-w-2xl">
@@ -263,7 +263,7 @@ export default async function CityPage({ params }: Props) {
       </section>
 
       {/* ═══════════ ABOUT THE AREA ═══════════ */}
-      <section className="py-12 sm:py-16 border-t border-[var(--hairline)]">
+      <section className="py-14 sm:py-[72px] border-t border-[var(--hairline)]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="space-y-6">
             {city.paragraphs.map((paragraph, i) => (
@@ -276,12 +276,12 @@ export default async function CityPage({ params }: Props) {
       </section>
 
       {/* ═══════════ SERVICES ═══════════ */}
-      <section className="py-12 sm:py-16 border-t border-[var(--hairline)]">
+      <section className="py-14 sm:py-[72px] border-t border-[var(--hairline)]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="text-xs font-mono text-[var(--ink-soft)] tracking-[0.2em] uppercase mb-4">
             What I Offer
           </p>
-          <h2 className="text-2xl sm:text-3xl font-bold text-[var(--ink)] tracking-tight leading-tight mb-8">
+          <h2 className="text-[length:var(--step-section)] font-semibold text-[var(--ink)] tracking-tight leading-tight mb-8">
             Services available in {city.name}
           </h2>
 
@@ -300,9 +300,9 @@ export default async function CityPage({ params }: Props) {
       </section>
 
       {/* ═══════════ CTA ═══════════ */}
-      <section className="py-12 sm:py-16 border-t border-[var(--hairline)]">
+      <section className="py-14 sm:py-[72px] border-t border-[var(--hairline)]">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold text-[var(--ink)] tracking-tight mb-4">
+          <h2 className="text-[length:var(--step-section)] font-semibold text-[var(--ink)] tracking-tight mb-4">
             Ready to get started in {city.name}?
           </h2>
           <p className="text-[var(--ink-soft)] text-base leading-relaxed mb-6">
@@ -311,7 +311,7 @@ export default async function CityPage({ params }: Props) {
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
               href="/services/contact"
-              className="group inline-flex items-center justify-center gap-2 px-6 py-3 bg-vurmz-cta text-white font-semibold text-sm rounded-sm hover:bg-vurmz-cta-hover transition-all shadow-lg shadow-vurmz-cta/20"
+              className="group inline-flex items-center justify-center gap-2 px-6 py-3 bg-[var(--coral)] text-white font-semibold text-sm rounded-[var(--r-control)] hover:bg-[var(--coral)]-hover transition-all"
             >
               Get a Quote
               <ArrowRightIcon className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -328,7 +328,7 @@ export default async function CityPage({ params }: Props) {
       </section>
 
       {/* ═══════════ LINKS ═══════════ */}
-      <section className="py-12 sm:py-16 border-t border-[var(--hairline)]">
+      <section className="py-14 sm:py-[72px] border-t border-[var(--hairline)]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 sm:gap-10">
             <Link
@@ -357,7 +357,7 @@ export default async function CityPage({ params }: Props) {
       </section>
 
       {/* ═══════════ OTHER SERVICE AREAS ═══════════ */}
-      <section className="py-12 sm:py-16 border-t border-[var(--hairline)]">
+      <section className="py-14 sm:py-[72px] border-t border-[var(--hairline)]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="text-xs font-mono text-[var(--ink-soft)] tracking-[0.2em] uppercase mb-4">
             Other Areas We Serve

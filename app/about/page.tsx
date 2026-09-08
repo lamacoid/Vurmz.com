@@ -25,7 +25,7 @@ export default function AboutPage() {
           <Breadcrumbs items={[{ label: 'VURMZ', href: '/' }, { label: 'About' }]} theme="landing" />
 
           {/* The card: everything lives on it, like the menu. */}
-          <div className="mt-6 bg-[var(--surface)] border border-[var(--hairline)] rounded-sm shadow-sm px-5 sm:px-10 py-8 sm:py-10">
+          <div className="mt-6 bg-[var(--surface)] border border-[var(--hairline)] rounded-sm px-5 sm:px-10 py-8 sm:py-10">
             <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-[var(--eyebrow)] mb-3">About</p>
             <h1
               className="text-3xl sm:text-4xl text-[var(--ink)] tracking-tight leading-tight max-w-2xl"

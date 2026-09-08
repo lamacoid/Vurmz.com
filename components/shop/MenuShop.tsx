@@ -173,7 +173,7 @@ export default async function MenuShop() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* The menu card: a cream panel on the paper page, like the physical
             object on the table. Everything below lives on it. */}
-        <div className="mt-6 mb-4 bg-[var(--surface)] border border-[var(--hairline)] rounded-sm px-5 sm:px-10 pb-2 shadow-sm">
+        <div className="mt-6 mb-4 bg-[var(--surface)] border border-[var(--hairline)] rounded-sm px-5 sm:px-10 pb-2">
         {/* The house offer, boxed like a menu's standing special. */}
         {house && (
           <div className="mt-8 border border-[var(--ink)]/30 rounded-sm p-1">

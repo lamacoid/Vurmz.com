@@ -114,7 +114,7 @@ const LINES = [
     size: 'text-3xl sm:text-4xl',
   },
   {
-    // Love, memories, milestones — the personal stuff
+    // Love, memories, milestones, the personal stuff
     items: [
       'Your Vows', 'Your First Dance Lyrics', 'The Coordinates Where You Met',
       'Your First Love Letter', 'An Inside Joke', 'A Song That Means Something',
@@ -150,7 +150,7 @@ const LINES = [
     size: 'text-2xl sm:text-3xl',
   },
   {
-    // Pure whimsy — the things that make people smile
+    // Pure whimsy, the things that make people smile
     items: [
       'The Cat You\'re Not Supposed to Have Named',
       'Your Neighbor\'s Middle Name',
@@ -188,7 +188,7 @@ function shuffle(arr: string[], seed: number): string[] {
   return copy
 }
 
-/** opacityScale multiplies every line's opacity — pass < 1 to make the
+/** opacityScale multiplies every line's opacity, pass < 1 to make the
  *  marquee more transparent (e.g. 0.45 on the landing page). */
 export default function ItemScroller({ opacityScale = 1 }: { opacityScale?: number }) {
   const lines = useMemo(() =>

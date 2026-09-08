@@ -91,9 +91,9 @@ export default function NewsletterSignup({ variant = 'full', theme = 'services' 
                 </button>
               </div>
               {status === 'error' && (
-                <p className="text-xs text-red-400">{errorMsg}</p>
+                <p className="text-xs text-[var(--error)]">{errorMsg}</p>
               )}
-              <p className="text-xs text-gray-600">
+              <p className="text-xs text-[var(--ink-soft)]">
                 Very infrequent updates. No spam.
               </p>
             </motion.form>
@@ -125,7 +125,7 @@ export default function NewsletterSignup({ variant = 'full', theme = 'services' 
           <p className="text-xs font-mono text-[var(--ink-soft)] tracking-[0.2em] uppercase mb-4">
             Newsletter
           </p>
-          <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight mb-3">
+          <h2 className="text-[length:var(--step-section)] font-semibold text-white tracking-tight mb-3">
             See what I&apos;m making
           </h2>
           <p className="text-[var(--ink-soft)] text-sm sm:text-base leading-relaxed mb-8">
@@ -178,8 +178,8 @@ export default function NewsletterSignup({ variant = 'full', theme = 'services' 
                     disabled={status === 'loading'}
                     className={`group inline-flex items-center justify-center gap-2 px-6 py-3 font-semibold text-sm rounded-sm transition-all disabled:opacity-50 ${
                       isShopTheme
-                        ? 'bg-[#C67A6F] text-white hover:bg-[#B0675D] shadow-lg shadow-[#C67A6F]/20'
-                        : 'bg-vurmz-cta text-white hover:bg-vurmz-cta-hover shadow-lg shadow-vurmz-cta/20'
+                        ? 'bg-[var(--coral)] text-white hover:bg-[var(--coral-hover)]'
+                        : 'bg-[var(--coral)] text-white hover:bg-[var(--coral)]-hover'
                     }`}
                   >
                     <EnvelopeIcon className="w-4 h-4" />
@@ -191,13 +191,13 @@ export default function NewsletterSignup({ variant = 'full', theme = 'services' 
                   <motion.p
                     initial={{ opacity: 0, y: -4 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="text-sm text-red-400"
+                    className="text-sm text-[var(--error)]"
                   >
                     {errorMsg}
                   </motion.p>
                 )}
 
-                <p className="text-xs text-gray-600">
+                <p className="text-xs text-[var(--ink-soft)]">
                   Unsubscribe anytime. I keep your info private.
                 </p>
               </motion.form>

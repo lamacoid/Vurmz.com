@@ -78,10 +78,10 @@ export default function TermsPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero */}
-      <section className="bg-[var(--page)] text-[var(--ink)] py-16 sm:py-20">
+      <section className="bg-[var(--page)] text-[var(--ink)] py-14 sm:py-[72px]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <p className="text-[var(--eyebrow)] font-medium mb-2 uppercase tracking-wider text-sm">Legal</p>
-          <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4">
+          <h1 className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] font-semibold tracking-tight mb-4">
             Terms & Conditions
           </h1>
           <p className="text-xl text-[var(--ink-soft)]">
@@ -91,26 +91,26 @@ export default function TermsPage() {
       </section>
 
       {/* Content */}
-      <section className="py-16 sm:py-20">
+      <section className="py-14 sm:py-[72px]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="max-w-3xl space-y-8">
             {sections.map((section) => (
-              <div key={section.title} className="p-6 rounded-xl bg-gray-50 border border-gray-200">
-                <h2 className="text-xl font-bold text-vurmz-dark mb-4">{section.title}</h2>
+              <div key={section.title} className="p-6 rounded-xl bg-[var(--glass-soft)] border border-[var(--hairline)]">
+                <h2 className="text-[length:var(--step-panel)] font-semibold text-vurmz-dark mb-4">{section.title}</h2>
 
                 {'content' in section && section.content && (
                   <div className="space-y-2">
                     {section.content.map((item) => (
                       <div key={item.label} className="flex flex-col sm:flex-row sm:justify-between gap-1">
                         <span className="text-[var(--ink-soft)] text-sm">{item.label}</span>
-                        <span className="text-gray-700 font-medium">{item.value}</span>
+                        <span className="text-[var(--ink-soft)] font-medium">{item.value}</span>
                       </div>
                     ))}
                   </div>
                 )}
 
                 {'text' in section && section.text && (
-                  <p className="text-gray-600 leading-relaxed">{section.text}</p>
+                  <p className="text-[var(--ink-soft)] leading-relaxed">{section.text}</p>
                 )}
 
                 {'items' in section && section.items && (
@@ -118,7 +118,7 @@ export default function TermsPage() {
                     {section.items.map((item) => (
                       <div key={item.term}>
                         <span className="text-[var(--eyebrow)] font-medium">{item.term}: </span>
-                        <span className="text-gray-600">{item.desc}</span>
+                        <span className="text-[var(--ink-soft)]">{item.desc}</span>
                       </div>
                     ))}
                   </div>
@@ -128,8 +128,8 @@ export default function TermsPage() {
 
             {/* Contact */}
             <div className="p-6 rounded-xl bg-[var(--feature)]/10 border border-vurmz-teal/20">
-              <h2 className="text-xl font-bold text-vurmz-dark mb-3">Questions?</h2>
-              <p className="text-gray-600 mb-4">
+              <h2 className="text-[length:var(--step-panel)] font-semibold text-vurmz-dark mb-3">Questions?</h2>
+              <p className="text-[var(--ink-soft)] mb-4">
                 If you have questions about these terms, please contact me:
               </p>
               <div className="flex flex-wrap gap-3">
@@ -141,7 +141,7 @@ export default function TermsPage() {
                 </a>
                 <Link
                   href="/services/contact"
-                  className="inline-flex items-center px-5 py-2.5 rounded-lg font-medium text-vurmz-dark border border-gray-300 hover:bg-gray-50 transition-all"
+                  className="inline-flex items-center px-5 py-2.5 rounded-lg font-medium text-vurmz-dark border border-[var(--hairline)] hover:bg-[var(--glass-soft)] transition-all"
                 >
                   Contact Page
                 </Link>

@@ -73,8 +73,8 @@ export default function InvoiceDetailPage() {
       <Link href="/account/invoices" className="text-xs text-[var(--ink-soft)] hover:text-[var(--ink)] mb-4 inline-block">← All invoices</Link>
 
       <div className="flex items-baseline justify-between mb-5">
-        <h1 className="text-2xl font-bold text-[var(--ink)] font-mono">{invoice.number}</h1>
-        <span className={`text-xs px-2.5 py-1 rounded-full uppercase tracking-wider font-semibold ${invoice.status === 'paid' ? 'bg-green-900/30 text-green-300' : 'bg-[#7FCFD4]/20 text-[#7FCFD4]'}`}>
+        <h1 className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] font-semibold text-[var(--ink)] font-mono">{invoice.number}</h1>
+        <span className={`text-xs px-2.5 py-1 rounded-full uppercase tracking-wider font-semibold ${invoice.status === 'paid' ? 'bg-[var(--success)]/15 text-[var(--success)]' : 'bg-[#7FCFD4]/20 text-[#7FCFD4]'}`}>
           {invoice.status.replace('_', ' ')}
         </span>
       </div>
@@ -94,12 +94,12 @@ export default function InvoiceDetailPage() {
         <div className="border-t border-white/5 mt-4 pt-3 space-y-1 text-sm">
           <div className="flex justify-between"><span className="text-[var(--ink-soft)]">Subtotal</span><span className="text-[var(--ink)]">{money(invoice.subtotalCents)}</span></div>
           {invoice.taxCents > 0 && <div className="flex justify-between"><span className="text-[var(--ink-soft)]">Tax</span><span className="text-[var(--ink)]">{money(invoice.taxCents)}</span></div>}
-          <div className="flex justify-between font-bold text-base pt-1 text-[var(--ink)]"><span>Total</span><span>{money(invoice.totalCents)}</span></div>
+          <div className="flex justify-between font-semibold text-base pt-1 text-[var(--ink)]"><span>Total</span><span>{money(invoice.totalCents)}</span></div>
           {invoice.amountPaidCents > 0 && invoice.amountPaidCents < invoice.totalCents && (
             <div className="flex justify-between text-[#7FCFD4]"><span>Paid</span><span>−{money(invoice.amountPaidCents)}</span></div>
           )}
           {owed > 0 && (
-            <div className="flex justify-between font-bold text-base pt-1 text-[#C67A6F]"><span>Amount due</span><span>{money(owed)}</span></div>
+            <div className="flex justify-between font-semibold text-base pt-1 text-[#C67A6F]"><span>Amount due</span><span>{money(owed)}</span></div>
           )}
         </div>
       </div>
@@ -124,7 +124,7 @@ export default function InvoiceDetailPage() {
           ) : (
             <p className="text-sm text-[var(--ink-soft)]">Online payment not configured yet. Zach will send you a Square payment link.</p>
           )}
-          {error && <p className="text-xs text-red-400 mt-2">{error}</p>}
+          {error && <p className="text-xs text-[var(--error)] mt-2">{error}</p>}
         </div>
       )}
     </div>

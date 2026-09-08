@@ -2,7 +2,7 @@
 /**
  * The delivery-zone map: a real street map (Leaflet + CartoDB Positron
  * tiles) with VURMZ's distance-based delivery zones drawn over it. Client
- * only — Leaflet touches window, so it lazy-imports itself in an effect
+ * only, Leaflet touches window, so it lazy-imports itself in an effect
  * (same reason the Builder canvas does). Centered on Centennial generally,
  * NOT the shop's address; zones are approximate and distance-based.
  */

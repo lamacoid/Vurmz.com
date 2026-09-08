@@ -7,10 +7,10 @@ export default function ShopCategoryNotFound() {
     <div className="py-16 sm:py-24">
       <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <p className="text-xs font-mono text-[#C67A6F] tracking-[0.25em] uppercase mb-4">Not Found</p>
-        <h1 className="text-3xl sm:text-4xl font-bold text-[var(--ink)] tracking-tight mb-4">
+        <h1 className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] font-semibold text-[var(--ink)] tracking-tight mb-4">
           That category doesn&apos;t exist.
         </h1>
-        <p className="text-[#6B6259] text-base leading-relaxed mb-8">
+        <p className="text-[var(--ink-soft)] text-base leading-relaxed mb-8">
           Here&apos;s what we do have:
         </p>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-8">

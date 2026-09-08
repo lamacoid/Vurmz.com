@@ -28,9 +28,9 @@ export default async function CategoryMenu({ categoryId, heading, sub }: {
   }
 
   return (
-    <section className="py-12 sm:py-16">
+    <section className="py-14 sm:py-[72px]">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-[var(--surface)] border border-[var(--hairline)] rounded-sm shadow-sm px-5 sm:px-8 py-6 sm:py-8">
+        <div className="bg-[var(--surface)] border border-[var(--hairline)] rounded-sm px-5 sm:px-8 py-6 sm:py-8">
           <div className="flex items-center gap-3 mb-1">
             <span className="flex-1 border-t border-[var(--ink)]/20" aria-hidden />
             <h2 className="text-xs font-mono tracking-[0.3em] uppercase text-[var(--eyebrow)]">{heading}</h2>

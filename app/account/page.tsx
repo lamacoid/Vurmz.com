@@ -26,7 +26,7 @@ export default function AccountDashboard() {
 
   return (
     <div className="max-w-3xl mx-auto p-6 sm:p-10">
-      <h1 className="text-3xl font-bold text-[var(--ink)] mb-2">My Account</h1>
+      <h1 className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] font-semibold text-[var(--ink)] mb-2">My Account</h1>
       <p className="text-sm text-[var(--ink-soft)] mb-8">Invoices, messages, files, orders, and profile, all in one place.</p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

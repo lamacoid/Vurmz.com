@@ -49,7 +49,7 @@ export default function MessagesPage() {
   return (
     <div className="max-w-3xl mx-auto p-6 sm:p-10 flex flex-col h-[calc(100vh-70px)]">
       <Link href="/account" className="text-xs text-[var(--ink-soft)] hover:text-[var(--ink)] mb-4 inline-block">← Back</Link>
-      <h1 className="text-2xl font-bold text-[var(--ink)] mb-4">Messages with Zach</h1>
+      <h1 className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] font-semibold text-[var(--ink)] mb-4">Messages with Zach</h1>
 
       <div
         ref={scrollRef}
@@ -62,9 +62,9 @@ export default function MessagesPage() {
         ) : (
           messages.map(m => (
             <div key={m.id} className={`flex ${m.direction === 'inbound' ? 'justify-end' : 'justify-start'}`}>
-              <div className={`max-w-[80%] rounded-2xl px-4 py-2.5 ${
+              <div className={`max-w-[80%] rounded-[var(--r-band)] px-4 py-2.5 ${
                 m.direction === 'inbound'
-                  ? 'bg-[#C67A6F] text-white rounded-br-sm'
+                  ? 'bg-[var(--coral)] text-white rounded-br-sm'
                   : 'bg-[var(--page)] text-[var(--ink)] border border-white/5 rounded-bl-sm'
               }`}>
                 <p className="text-sm whitespace-pre-wrap">{m.body}</p>
@@ -91,7 +91,7 @@ export default function MessagesPage() {
         <button
           onClick={send}
           disabled={!draft.trim() || sending}
-          className="px-5 bg-[#C67A6F] hover:bg-[#B0675D] disabled:opacity-60 text-white text-sm font-semibold rounded-xl"
+          className="px-5 bg-[var(--coral)] hover:bg-[var(--coral-hover)] disabled:opacity-60 text-white text-sm font-semibold rounded-[var(--r-control)]"
         >
           Send
         </button>

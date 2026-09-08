@@ -62,8 +62,8 @@ export default function CategoryCard({ category: cat, compact }: CategoryCardPro
           )}
         </div>
         <div className="p-4">
-          <h3 className="text-sm font-bold text-[var(--ink)]">{cat.name}</h3>
-          <span className="text-[#C67A6F] font-bold text-xs">{price}</span>
+          <h3 className="text-sm font-semibold text-[var(--ink)]">{cat.name}</h3>
+          <span className="text-[#C67A6F] font-semibold text-xs">{price}</span>
         </div>
       </Link>
     )
@@ -91,7 +91,7 @@ export default function CategoryCard({ category: cat, compact }: CategoryCardPro
 
       <div className="p-5">
         <Link href={`/shop/${cat.slug}`}>
-          <h3 className="text-lg font-bold text-[var(--ink)] mb-1.5 group-hover:text-[#C67A6F] transition-colors">{cat.name}</h3>
+          <h3 className="text-lg font-semibold text-[var(--ink)] mb-1.5 group-hover:text-[#C67A6F] transition-colors">{cat.name}</h3>
         </Link>
         <p className="text-[var(--ink-soft)] text-sm leading-relaxed mb-2">{cat.tagline}</p>
         {cat.cardDescription && (
@@ -109,7 +109,7 @@ export default function CategoryCard({ category: cat, compact }: CategoryCardPro
 
         <div className="flex items-center justify-between">
           <div>
-            <span className="text-[#C67A6F] font-bold text-sm">{price}</span>
+            <span className="text-[#C67A6F] font-semibold text-sm">{price}</span>
             {note && <span className="text-[var(--ink-soft)] text-xs block mt-0.5">{note}</span>}
           </div>
           <div className="flex items-center gap-2">
