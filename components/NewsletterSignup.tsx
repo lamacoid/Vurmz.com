@@ -114,7 +114,7 @@ export default function NewsletterSignup({ variant = 'full', theme = 'services' 
         <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, transparent 0%, rgba(60,185,178,0.03) 50%, transparent 100%)' }} />
       )}
 
-      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           className="max-w-xl mx-auto text-center"
           initial={{ opacity: 0, y: 20 }}

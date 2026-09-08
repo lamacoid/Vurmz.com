@@ -34,13 +34,13 @@ export default function PortfolioPage() {
         </p>
       </SiteHero>
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 pt-6">
         <Breadcrumbs items={[{ label: 'VURMZ', href: '/' }, { label: 'Services', href: '/services' }, { label: 'Portfolio' }]} theme="services" />
       </div>
 
       {/* Portfolio Grid */}
       <section className="py-14 sm:py-[72px] bg-[var(--page)]">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
             {portfolioItems.map((item) => (
               <Link

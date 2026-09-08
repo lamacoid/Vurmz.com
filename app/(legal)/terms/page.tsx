@@ -79,7 +79,7 @@ export default function TermsPage() {
     <div className="min-h-screen bg-white">
       {/* Hero */}
       <section className="bg-[var(--page)] text-[var(--ink)] py-14 sm:py-[72px]">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="max-w-[1280px] mx-auto px-6 lg:px-8">
           <p className="text-[var(--eyebrow)] font-medium mb-2 uppercase tracking-wider text-sm">Legal</p>
           <h1 className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] font-semibold tracking-tight mb-4">
             Terms & Conditions
@@ -92,7 +92,7 @@ export default function TermsPage() {
 
       {/* Content */}
       <section className="py-14 sm:py-[72px]">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="max-w-[1280px] mx-auto px-6 lg:px-8">
           <div className="max-w-3xl space-y-8">
             {sections.map((section) => (
               <div key={section.title} className="p-6 rounded-xl bg-[var(--glass-soft)] border border-[var(--hairline)]">

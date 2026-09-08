@@ -115,12 +115,12 @@ export default function LaserCursor() {
           aria-hidden
           style={{ position: 'fixed', top: 0, left: 0, pointerEvents: 'none', zIndex: 9999, opacity: 0, willChange: 'transform' }}
         >
-          <svg width="28" height="28" viewBox="0 0 28 28" style={{ display: 'block', filter: 'drop-shadow(0 0 2px rgba(255,42,42,0.9))' }}>
+          <svg width="28" height="28" viewBox="0 0 28 28" style={{ display: 'block', filter: 'drop-shadow(0 0 2px rgba(127,207,212,0.9))' }}>
             {/* Faint full outline so the arrow shape always reads */}
             <path
               d={ARROW_PATH}
-              fill={armed ? 'rgba(255,42,42,0.30)' : 'none'}
-              stroke="#FF2A2A"
+              fill={armed ? 'rgba(127,207,212,0.30)' : 'none'}
+              stroke="var(--signal)"
               strokeOpacity={0.35}
               strokeWidth={1.3}
               strokeLinejoin="round"
@@ -130,7 +130,7 @@ export default function LaserCursor() {
             <path
               d={ARROW_PATH}
               fill="none"
-              stroke="#FF2A2A"
+              stroke="var(--signal)"
               strokeWidth={2}
               strokeLinejoin="round"
               strokeLinecap="round"
@@ -150,14 +150,14 @@ export default function LaserCursor() {
         onClick={toggle}
         aria-pressed={on}
         title={on ? 'Turn off the laser cursor' : 'Turn on the laser cursor'}
-        className="fixed bottom-4 left-4 z-[60] flex items-center gap-2 rounded-full border border-white/15 bg-[#16525C]/80 px-3 py-1.5 text-[11px] font-medium text-[var(--feature-soft)] shadow-lg shadow-black/20 backdrop-blur-md transition-colors hover:border-[#FF2A2A]/50 hover:text-white"
+        className="fixed bottom-4 left-4 z-[60] flex items-center gap-2 rounded-full border border-white/15 bg-[var(--feature-deep)]/85 px-3 py-1.5 text-[11px] font-medium text-[var(--feature-soft)] shadow-lg shadow-black/20 backdrop-blur-md transition-colors hover:border-[#FF2A2A]/50 hover:text-white"
       >
         <span
-          className={`h-2.5 w-2.5 rounded-full ${on ? 'bg-[#FF2A2A]' : 'border border-[var(--hairline)]'}`}
-          style={on ? { boxShadow: '0 0 6px 1px rgba(255,42,42,0.85)' } : undefined}
+          className={`h-2.5 w-2.5 rounded-full ${on ? 'bg-[var(--signal)]' : 'border border-[var(--hairline)]'}`}
+          style={on ? { boxShadow: '0 0 6px 1px rgba(127,207,212,0.85)' } : undefined}
         />
         Laser cursor
-        <span className={`ml-0.5 inline-flex h-3.5 w-6 items-center rounded-full px-0.5 transition-colors ${on ? 'bg-[#FF2A2A]/70' : 'bg-white/15'}`}>
+        <span className={`ml-0.5 inline-flex h-3.5 w-6 items-center rounded-full px-0.5 transition-colors ${on ? 'bg-[var(--signal)]/70' : 'bg-white/15'}`}>
           <span className={`h-2.5 w-2.5 rounded-full bg-white transition-transform ${on ? 'translate-x-2.5' : ''}`} />
         </span>
       </button>

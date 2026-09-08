@@ -109,7 +109,7 @@ export default function Page() {
           >
             <ItemScroller opacityScale={0.22} />
           </div>
-          <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="relative z-10 max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
             <p className="text-center text-xs font-mono text-[var(--eyebrow)] tracking-[0.2em] uppercase mb-6">Recent work</p>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {WORK.map((item) => (
@@ -126,7 +126,7 @@ export default function Page() {
 
         {/* ═══════════ SHOP CATEGORIES (base teal band) ═══════════ */}
         <section className="band-teal border-t border-[var(--hairline)] py-14 sm:py-[72px]">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-[length:var(--step-section)] font-semibold text-[var(--ink)] text-center mb-8">Shop by category</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {CONSUMER_CATEGORIES.map((cat) => (
@@ -160,7 +160,7 @@ export default function Page() {
 
         {/* ═══════════ SERVICES, the anchored business half ═══════════ */}
         <section id="services" className="relative band-teal-deep border-t border-[var(--hairline)] scroll-mt-16">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
+          <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
             <p className="text-xs font-mono text-[var(--eyebrow)] tracking-[0.25em] uppercase mb-3">For your work</p>
             <h2 className="text-[length:var(--step-section)] font-semibold text-[var(--ink)] tracking-tight leading-tight mb-4">
               Precision laser engraving<br />
@@ -211,7 +211,7 @@ export default function Page() {
 
         {/* ═══════════ ABOUT (oatmeal band, dark text) ═══════════ */}
         <section className="bg-[var(--surface)] border-t border-black/5">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16">
+          <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
               <div className="relative aspect-[4/3] overflow-hidden rounded-sm puffy-light">
                 <Image src="/images/zach.jpeg" alt={`${siteInfo.founder.name}, owner of VURMZ`} fill className="object-cover" />
@@ -238,7 +238,7 @@ export default function Page() {
 
         {/* ═══════════ TESTIMONIALS (base teal band) ═══════════ */}
         <section className="band-teal border-t border-[var(--hairline)]">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16">
+          <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16">
             <TestimonialCarousel testimonials={shopTestimonials} theme="services" />
           </div>
         </section>

@@ -21,7 +21,7 @@ export default async function D1ProductGrid({ categoryId, limit = 24, heading, s
 
   return (
     <section className="pb-10 sm:pb-12">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
         {(heading || subheading) && (
           <div className="mb-6">
             {heading && <h2 className="text-[length:var(--step-section)] font-semibold text-[var(--ink)] tracking-tight">{heading}</h2>}

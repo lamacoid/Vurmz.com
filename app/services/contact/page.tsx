@@ -61,14 +61,14 @@ export default function ContactPage() {
 
       {/* Breadcrumbs */}
       <div className="bg-[var(--page)] pt-6">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
           <Breadcrumbs items={[{ label: 'VURMZ', href: '/' }, { label: 'Services', href: '/services' }, { label: 'Contact' }]} theme="services" />
         </div>
       </div>
 
       {/* Hero */}
       <section className="bg-[var(--page)] text-[var(--ink)] py-14 sm:py-[72px]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
             <h1 className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] font-semibold mb-4">
               Let&apos;s Talk
@@ -82,7 +82,7 @@ export default function ContactPage() {
 
       {/* Contact Form + Info */}
       <section className="py-14 sm:py-[72px] bg-[var(--page)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Contact Form */}
             <div>
@@ -173,7 +173,7 @@ export default function ContactPage() {
 
       {/* FAQ */}
       <section className="bg-[var(--page)] py-14 sm:py-[72px]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-[length:var(--step-section)] font-semibold text-[var(--ink)] mb-6 text-center">Common Questions</h2>
           <div className="max-w-3xl mx-auto space-y-4">
             {faqItems.map((item) => (
@@ -188,7 +188,7 @@ export default function ContactPage() {
 
       {/* Trusted By */}
       <section className="py-14 sm:py-[72px] border-t border-[var(--hairline)] overflow-hidden">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
           <p className="text-xs font-mono text-[var(--ink-soft)] tracking-[0.2em] uppercase mb-5 text-center">
             Trusted by
           </p>

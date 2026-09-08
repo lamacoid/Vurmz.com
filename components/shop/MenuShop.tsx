@@ -181,7 +181,7 @@ export default async function MenuShop() {
               <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-[var(--eyebrow)] mb-2">The house offer</p>
               <Link href={`/shop/p/${house.slug}`} className="group inline-block">
                 <span
-                  className="relative text-xl sm:text-2xl font-semibold text-[var(--ink)] tracking-tight"
+                  className="relative text-[length:var(--step-section)] font-semibold text-[var(--ink)]"
                   style={{ fontFamily: 'var(--font-display), Georgia, serif' }}
                 >
                   Bring your thing. {menuPrice(house.priceCents)} flat.
@@ -208,7 +208,7 @@ export default async function MenuShop() {
             <div className="border border-[var(--eyebrow)]/25 rounded-sm px-5 py-5 bg-[var(--eyebrow)]/[0.04]">
               <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-[var(--eyebrow)] text-center mb-1.5">Launch specials</p>
               <p
-                className="text-center text-xl sm:text-2xl font-semibold text-[var(--ink)] tracking-tight"
+                className="text-center text-[length:var(--step-section)] font-semibold text-[var(--ink)]"
                 style={{ fontFamily: 'var(--font-display), Georgia, serif' }}
               >
                 Early bird gets the VURMZ.

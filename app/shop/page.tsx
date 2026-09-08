@@ -74,7 +74,7 @@ export default function ShopHome() {
           <RotatingTagline
             inline
             accentColor="#C67A6F"
-            className="text-2xl sm:text-3xl font-semibold tracking-tight text-[var(--ink)]"
+            className="text-[length:var(--step-section)] font-semibold text-[var(--ink)]"
           />
           <p className="text-sm text-[var(--ink-soft)] mt-3">
             Engraved goods, hand-delivered across the South Denver metro ·{' '}

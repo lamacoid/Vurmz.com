@@ -32,7 +32,7 @@ const ABOUT = [
 export default function SiteFooter() {
   return (
     <footer className="bg-[var(--feature-deep)] border-t border-[var(--hairline)]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 sm:gap-10">
           {/* Brand */}
           <div className="col-span-2 sm:col-span-1">
@@ -105,7 +105,7 @@ export default function SiteFooter() {
 
       {/* Slogan */}
       <div className="border-t border-white/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center">
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center">
           <p className="text-vurmz-teal text-sm sm:text-base font-semibold tracking-wide italic">
             Need a guy with some lasers? That&apos;s me.
           </p>
@@ -117,7 +117,7 @@ export default function SiteFooter() {
 
       {/* Bottom bar */}
       <div className="border-t border-white/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-5">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-3">
             <p className="text-[var(--feature-ink)]/45 text-xs">
               &copy; {new Date().getFullYear()} {siteInfo.legalName} &middot; {siteInfo.city}, {siteInfo.state}

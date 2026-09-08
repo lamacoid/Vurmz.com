@@ -136,7 +136,7 @@ export default function ServicesClient() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
 
       {/* ═══════════ INTRO ROW ═══════════ */}
-      <section className="max-w-6xl mx-auto px-5 sm:px-11 pt-12 pb-10">
+      <section className="max-w-[1280px] mx-auto px-5 sm:px-11 pt-12 pb-10">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-10 lg:gap-14 items-start">
           <div>
             <p className="text-xs font-mono tracking-[0.28em] uppercase text-[var(--eyebrow)] mb-3.5">
@@ -173,13 +173,13 @@ export default function ServicesClient() {
       </section>
 
       {/* ═══════════ THE DECISION PANEL ═══════════ */}
-      <section id="price" className="max-w-6xl mx-auto px-5 sm:px-11 pb-11 scroll-mt-24">
+      <section id="price" className="max-w-[1280px] mx-auto px-5 sm:px-11 pb-11 scroll-mt-24">
         <TradesConfigurator />
       </section>
 
       {/* ═══════════ WHAT THEY GET USED FOR ═══════════
           Same card, different words on it. No prices here on purpose. */}
-      <section className="max-w-6xl mx-auto px-5 sm:px-11 pb-11">
+      <section className="max-w-[1280px] mx-auto px-5 sm:px-11 pb-11">
         <div className="bg-[rgba(127,207,212,.18)] border border-[var(--hairline)] rounded-sm p-6 sm:p-7">
           <p className="text-[11px] font-mono tracking-[0.24em] uppercase text-[var(--ink)] mb-4">
             What people put on them
@@ -206,7 +206,7 @@ export default function ServicesClient() {
       {/* ═══════════ THE WORK ═══════════
           A trades buyer wants to see a plate before believing a price. Four
           real jobs, stated by material and process. */}
-      <section className="max-w-6xl mx-auto px-5 sm:px-11 pb-11">
+      <section className="max-w-[1280px] mx-auto px-5 sm:px-11 pb-11">
         <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1 mb-4">
           <p className="text-[11px] font-mono tracking-[0.24em] uppercase text-[var(--eyebrow)]">
             Off the machine
@@ -240,7 +240,7 @@ export default function ServicesClient() {
       </section>
 
       {/* ═══════════ POSTED PRICES + LOCAL PROOF ═══════════ */}
-      <section className="max-w-6xl mx-auto px-5 sm:px-11 pb-11">
+      <section className="max-w-[1280px] mx-auto px-5 sm:px-11 pb-11">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
           <div className="bg-[var(--surface)] border border-[var(--hairline)] rounded-sm p-6 sm:p-7">
             <p className="text-[11px] font-mono tracking-[0.24em] uppercase text-[var(--eyebrow)] mb-4">
@@ -319,7 +319,7 @@ export default function ServicesClient() {
       {/* ═══════════ VOLUME LADDER ═══════════
           The configurator shows the tier you land on; this states the whole
           ladder flat. The homepage B2B card links straight here. */}
-      <section id="business" className="max-w-6xl mx-auto px-5 sm:px-11 pb-11 scroll-mt-24">
+      <section id="business" className="max-w-[1280px] mx-auto px-5 sm:px-11 pb-11 scroll-mt-24">
         <div className="bg-[var(--surface)] border border-[var(--hairline)] rounded-sm p-6 sm:p-7">
           <p className="text-[11px] font-mono tracking-[0.24em] uppercase text-[var(--eyebrow)] mb-4">
             Volume, posted
@@ -349,7 +349,7 @@ export default function ServicesClient() {
           The services side is still a shop, but it does not keep its own copy
           of the catalog. Everything lives on one menu; these are the doors
           into the parts a business walks in for. */}
-      <section id="order" className="max-w-6xl mx-auto px-5 sm:px-11 pb-11 scroll-mt-24">
+      <section id="order" className="max-w-[1280px] mx-auto px-5 sm:px-11 pb-11 scroll-mt-24">
         <div className="bg-[rgba(127,207,212,.18)] border border-[var(--hairline)] rounded-sm p-6 sm:p-7">
           <p className="text-[11px] font-mono tracking-[0.24em] uppercase text-[var(--ink)] mb-3">
             Order now
@@ -379,13 +379,13 @@ export default function ServicesClient() {
       </section>
 
       {/* ═══════════ TRUSTED BY ═══════════ */}
-      <section className="max-w-6xl mx-auto px-5 sm:px-11 pb-12">
+      <section className="max-w-[1280px] mx-auto px-5 sm:px-11 pb-12">
         <TrustedBy theme="services" />
       </section>
 
       {/* ═══════════ CLOSING BAND ═══════════ */}
       <section className="bg-[var(--feature)] text-[var(--feature-ink)]">
-        <div className="max-w-6xl mx-auto px-5 sm:px-11 py-8 flex flex-col sm:flex-row sm:items-center gap-5">
+        <div className="max-w-[1280px] mx-auto px-5 sm:px-11 py-8 flex flex-col sm:flex-row sm:items-center gap-5">
           <p className="text-[22px] leading-tight font-semibold" style={display}>
             Send a photo and a count. You will have a real number today.
           </p>

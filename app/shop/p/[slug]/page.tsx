@@ -160,7 +160,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
           {/* The menu line, writ large: name, dotted leader, price. */}
           <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
             <h1
-              className="text-3xl sm:text-4xl text-[var(--ink)] tracking-tight leading-tight"
+              className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] text-[var(--ink)] leading-[1.08]"
               style={{ fontFamily: 'var(--font-display), Georgia, serif' }}
             >
               {product.name}

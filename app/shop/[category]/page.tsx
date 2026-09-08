@@ -95,7 +95,7 @@ export default async function ShopCategoryPage({ params }: { params: Promise<{ c
             <div className="absolute inset-0 bg-[var(--page)]/70" />
           </div>
         )}
-        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
           <Breadcrumbs items={[{ label: 'VURMZ', href: '/' }, { label: 'Shop', href: '/shop' }, { label: cat.name }]} theme="services" />
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
@@ -196,7 +196,7 @@ export default async function ShopCategoryPage({ params }: { params: Promise<{ c
       {/* Gallery */}
       {cat.galleryImages.length > 0 && (
         <section className="py-14 sm:py-[72px]">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
             <p className="text-xs font-mono text-[#C67A6F] tracking-[0.2em] uppercase mb-4">Examples</p>
             <h2 className="text-[length:var(--step-section)] font-semibold text-[var(--ink)] tracking-tight mb-8">See the work.</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -262,7 +262,7 @@ export default async function ShopCategoryPage({ params }: { params: Promise<{ c
       {/* Related categories */}
       {related.length > 0 && (
         <section className="py-14 sm:py-[72px] bg-[var(--surface)]">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-[length:var(--step-panel)] font-semibold text-[var(--ink)] tracking-tight mb-6">You might also like</h2>
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
               {related.map(r => (
@@ -290,7 +290,7 @@ export default async function ShopCategoryPage({ params }: { params: Promise<{ c
 
       {/* Bottom CTA */}
       <section className="py-14 sm:py-[72px]">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-[var(--page)] rounded-sm p-8 sm:p-10 text-center">
             <h2 className="text-[length:var(--step-section)] font-semibold text-[var(--ink)] mb-4">Ready to order?</h2>
             <p className="text-[var(--ink-soft)] text-sm mb-6 max-w-md mx-auto">Text me what you want and I&apos;ll get back to you with a quote.</p>

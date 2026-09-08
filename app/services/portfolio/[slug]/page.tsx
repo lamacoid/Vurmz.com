@@ -71,7 +71,7 @@ export default async function PortfolioDetailPage({ params }: Props) {
     <div className="bg-[var(--page)] text-[var(--ink)]">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ld) }} />
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 pt-6">
         <Breadcrumbs
           items={[
             { label: 'VURMZ', href: '/' },
@@ -84,7 +84,7 @@ export default async function PortfolioDetailPage({ params }: Props) {
       </div>
 
       {/* Hero */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-[72px]">
+      <section className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-[72px]">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
           <div className="relative aspect-[4/3] rounded-sm overflow-hidden bg-black/40">
             <Image
@@ -158,7 +158,7 @@ export default async function PortfolioDetailPage({ params }: Props) {
 
       {/* Related */}
       {related.length > 0 && (
-        <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-[72px] border-t border-[var(--hairline)]">
+        <section className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-[72px] border-t border-[var(--hairline)]">
           <h2 className="text-[length:var(--step-section)] font-semibold text-[var(--ink)] mb-6">More like this</h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {related.map((r) => (

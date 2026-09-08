@@ -130,8 +130,6 @@ body:not(.is-admin) {
 /* Hero logo: the solid deep-teal wordmark, always. The animated glassy
    variant belonged to the deleted dark mode. */
 .hero-logo-light { display: flex; }
-.hero-logo-anim { display: none; }
-
 /* Hero secondary (ghost) button, drawn from --hero-ink. */
 .btn-hero-ghost {
   border: 1px solid color-mix(in srgb, var(--hero-ink) 38%, transparent);
@@ -179,18 +177,15 @@ body:has(.admin-root) {
 }
 
 :root {
-  /* VURMZ Brand Colors - Tempered Glass Aesthetic */
+
   --vurmz-teal: #7FCFD4;           /* Electric acid-teal (neon swamp accent) */
   --vurmz-teal-dark: #4A9D97;      /* Deeper muted teal */
   --vurmz-teal-light: #8DCDC8;     /* Soft light teal */
-  --vurmz-teal-glow: #7FCFD4;      /* Neon glow */
   --vurmz-powder: #B5D8E0;         /* Frosted glass blue */
-  --vurmz-powder-light: #D0E8ED;   /* Light frost */
   --vurmz-sky: #7BC8D4;            /* Clear sky through glass */
   --vurmz-sky-light: #A3D9E3;
   --vurmz-sky-dark: #5BB8C4;
   --vurmz-sage: #7DAA8C;           /* Soft green tint */
-  --vurmz-sage-light: #9DBDA8;
   --vurmz-dark: #16525C;           /* Neon-swamp deep teal base */
   --vurmz-light: #F5FAFA;          /* Clean glass surface */
 
@@ -198,15 +193,10 @@ body:has(.admin-root) {
   --background: #16525C;
   --foreground: #DED6C3;
   --primary: #7FCFD4;
-  --primary-dark: #4A9D97;
-  --primary-light: #8DCDC8;
-  --secondary: #8CC5CC;
-  --accent: #7AC5BE;
 
   /* Conversion CTA - reddish-pink-orange coral */
   --vurmz-cta: #C67A6F;
   --vurmz-cta-hover: #B0675D;
-  --vurmz-cta-active: #99584F;
   --vurmz-cta-cream: #DED6C3;
   --vurmz-cta-cream-hover: #E5D9C4;
 
@@ -215,7 +205,6 @@ body:has(.admin-root) {
   --warning: #D4A654;
   --error: #C75B55;
 
-  /* ── Shop Palette (B2C) ── */
   --shop-bg: #DED6C3;
   --shop-bg-subtle: #EBE0CC;
   --shop-text: #16525C;
@@ -224,41 +213,21 @@ body:has(.admin-root) {
   --shop-text-strong: #5C534A;
   --shop-accent: #C67A6F;
   --shop-accent-hover: #B0675D;
-  --shop-accent-active: #7D4139;
   --shop-border: rgba(36, 59, 57, 0.12);
   --shop-border-strong: rgba(36, 59, 57, 0.2);
 
-  /* Glass effects */
-  --glass-shine: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 50%);
-  --glass-reflection: linear-gradient(180deg, rgba(60,185,178,0.1) 0%, transparent 30%);
-  --glass-border: rgba(60,185,178,0.2);
-
   /* Configurator Design Tokens (maps to VURMZ brand) */
   --color-primary: #3CB9B2;
-  --color-primary-dark: #2A9D97;
-  --color-primary-light: #5CD4CD;
-  --color-primary-wash: rgba(60, 185, 178, 0.08);
-  --color-dark: #1C474E;
-  --color-muted: #6A8C8C;
-  --color-light: #F5FAFA;
   --color-sky: #7BC8D4;
-  --color-sky-dark: #5BB8C4;
   --color-cta: #FF8C42;
-  --color-cta-hover: #E67E22;
 
-  /* ── Frutiger Aero Design Tokens ── */
   --aero-teal: #2AA5A0;
   --aero-teal-light: #3DBDB7;
-  --aero-teal-glow: rgba(42, 165, 160, 0.35);
   --aero-cta: #FF8C42;
-  --aero-cta-hover: #E67E22;
 
   /* Text */
   --aero-text-primary: #1E293B;
-  --aero-text-secondary: #64748B;
   --aero-text-muted: #94A3B8;
-  --aero-text-on-glass: #374151;
-  --aero-text-label: #475569;
 
   /* Glass */
   --aero-glass-bg: rgba(255, 255, 255, 0.65);
@@ -280,7 +249,6 @@ body {
   color: var(--foreground);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
-
 
 /* Consistent spacing across all pages */
 main section + section {
@@ -314,7 +282,6 @@ main [class*="mx-auto"][class*="px-4"] {
   }
 }
 
-
 /* Coral link hover, everywhere. One behaviour, not one per section. */
 a:not([class*="bg-vurmz-cta"]):not([class*="bg-vurmz-cream"]):not(.puffy-btn):hover {
   color: var(--vurmz-cta);
@@ -339,153 +306,26 @@ a:not([class*="bg-vurmz-cta"]):not([class*="bg-vurmz-cream"]):not(.puffy-btn):ho
     border: 1px solid rgba(60, 185, 178, 0.15);
   }
 
-  .glass-dark {
-    background: rgba(26, 47, 46, 0.8);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(60, 185, 178, 0.2);
-  }
-
-  .glass-teal {
-    background: rgba(60, 185, 178, 0.1);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(60, 185, 178, 0.2);
-  }
-
-  /* Glass shine overlay */
-  .glass-shine {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .glass-shine::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 50%;
-    background: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 100%);
-    pointer-events: none;
-    border-radius: inherit;
-  }
-
-  /* Animated glare effect */
-  .glass-glare {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .glass-glare::after {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(
-      135deg,
-      transparent 40%,
-      rgba(255, 255, 255, 0.1) 45%,
-      rgba(255, 255, 255, 0.2) 50%,
-      rgba(255, 255, 255, 0.1) 55%,
-      transparent 60%
-    );
-    transform: translateX(-100%);
-    animation: glare 8s ease-in-out infinite;
-    pointer-events: none;
-  }
-
-  @keyframes glare {
+/* Glass shine overlay */
+/* Animated glare effect */
+@keyframes glare {
     0%, 100% { transform: translateX(-100%); }
     50% { transform: translateX(100%); }
   }
 
   /* Glass button */
-  .glass-button {
-    background: linear-gradient(135deg, rgba(60, 185, 178, 0.9) 0%, rgba(42, 157, 151, 0.95) 100%);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow:
-      0 4px 24px rgba(60, 185, 178, 0.3),
-      inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  }
-
-  .glass-button:hover {
-    background: linear-gradient(135deg, rgba(78, 205, 196, 0.95) 0%, rgba(60, 185, 178, 1) 100%);
-    box-shadow:
-      0 6px 32px rgba(60, 185, 178, 0.4),
-      inset 0 1px 0 rgba(255, 255, 255, 0.3);
-  }
-
-  /* Glass card with reflection */
-  .glass-card {
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(60, 185, 178, 0.12);
-    box-shadow:
-      0 8px 32px rgba(60, 185, 178, 0.08),
-      inset 0 1px 0 rgba(255, 255, 255, 0.6);
-  }
-
-  /* Shimmer animation */
-  .shimmer {
-    background: linear-gradient(
-      90deg,
-      rgba(60, 185, 178, 0.05) 0%,
-      rgba(60, 185, 178, 0.15) 50%,
-      rgba(60, 185, 178, 0.05) 100%
-    );
-    background-size: 200% 100%;
-    animation: shimmer 3s ease-in-out infinite;
-  }
-
-  @keyframes shimmer {
+/* Glass card with reflection */
+/* Shimmer animation */
+@keyframes shimmer {
     0% { background-position: 200% 0; }
     100% { background-position: -200% 0; }
   }
 
   /* Brand color utilities */
-  .bg-vurmz-teal {
-    background-color: var(--vurmz-teal);
-  }
-  .bg-vurmz-teal-dark {
-    background-color: var(--vurmz-teal-dark);
-  }
-  .bg-vurmz-teal-light {
-    background-color: var(--vurmz-teal-light);
-  }
-  .bg-vurmz-powder {
-    background-color: var(--vurmz-powder);
-  }
-  .bg-vurmz-sage {
-    background-color: var(--vurmz-sage);
-  }
-  .bg-vurmz-dark {
-    background-color: var(--vurmz-dark);
-  }
-  .bg-vurmz-light {
-    background-color: var(--vurmz-light);
-  }
-  .text-vurmz-teal {
+.text-vurmz-teal {
     color: var(--vurmz-teal);
   }
-  .text-vurmz-teal-dark {
-    color: var(--vurmz-teal-dark);
-  }
-  .text-vurmz-teal-light {
-    color: var(--vurmz-teal-light);
-  }
-  .text-vurmz-powder {
-    color: var(--vurmz-powder);
-  }
-  .text-vurmz-sage {
-    color: var(--vurmz-sage);
-  }
-  .text-vurmz-dark {
+.text-vurmz-dark {
     color: var(--vurmz-dark);
   }
   .text-cream {
@@ -515,13 +355,7 @@ a:not([class*="bg-vurmz-cta"]):not([class*="bg-vurmz-cream"]):not(.puffy-btn):ho
   .border-vurmz-teal {
     border-color: var(--vurmz-teal);
   }
-  .border-vurmz-powder {
-    border-color: var(--vurmz-powder);
-  }
-  .border-vurmz-sage {
-    border-color: var(--vurmz-sage);
-  }
-  .hover\:bg-vurmz-teal-dark:hover {
+.hover\:bg-vurmz-teal-dark:hover {
     background-color: var(--vurmz-teal-dark);
   }
   .hover\:text-vurmz-teal:hover {
@@ -541,13 +375,7 @@ a:not([class*="bg-vurmz-cta"]):not([class*="bg-vurmz-cream"]):not(.puffy-btn):ho
   .hover\:text-vurmz-cta:hover {
     color: var(--vurmz-cta);
   }
-  .border-vurmz-cta {
-    border-color: var(--vurmz-cta);
-  }
-  .shadow-vurmz-cta {
-    box-shadow: 0 4px 20px rgba(224, 96, 80, 0.3);
-  }
-  .bg-vurmz-cream {
+.bg-vurmz-cream {
     background-color: var(--vurmz-cta-cream);
   }
   .hover\:bg-vurmz-cream-hover:hover {
@@ -556,31 +384,7 @@ a:not([class*="bg-vurmz-cta"]):not([class*="bg-vurmz-cream"]):not(.puffy-btn):ho
   .text-vurmz-dark {
     color: var(--background);
   }
-  .border-t-vurmz-teal {
-    border-top-color: var(--vurmz-teal);
-  }
-  .border-t-vurmz-powder {
-    border-top-color: var(--vurmz-powder);
-  }
-  .border-t-vurmz-sage {
-    border-top-color: var(--vurmz-sage);
-  }
-  .bg-vurmz-sky {
-    background-color: var(--vurmz-sky);
-  }
-  .bg-vurmz-sky-light {
-    background-color: var(--vurmz-sky-light);
-  }
-  .text-vurmz-sky {
-    color: var(--vurmz-sky);
-  }
-  .border-vurmz-sky {
-    border-color: var(--vurmz-sky);
-  }
-  .border-t-vurmz-sky {
-    border-top-color: var(--vurmz-sky);
-  }
-  .hover\:bg-vurmz-sky-dark:hover {
+.hover\:bg-vurmz-sky-dark:hover {
     background-color: var(--vurmz-sky-dark);
   }
 
@@ -632,193 +436,23 @@ a:not([class*="bg-vurmz-cta"]):not([class*="bg-vurmz-cream"]):not(.puffy-btn):ho
   }
 
   /* ── Shop utilities ── */
-  .bg-shop { background-color: var(--shop-bg); }
-  .bg-shop-subtle { background-color: var(--shop-bg-subtle); }
-  .text-shop { color: var(--shop-text); }
-  .text-shop-sub { color: var(--shop-text-sub); }
-  .text-shop-light { color: var(--shop-text-light); }
-  .text-shop-strong { color: var(--shop-text-strong); }
-  .bg-shop-accent { background-color: var(--shop-accent); }
-  .hover\:bg-shop-accent-hover:hover { background-color: var(--shop-accent-hover); }
-  .text-shop-accent { color: var(--shop-accent); }
-  .hover\:text-shop-accent:hover { color: var(--shop-accent); }
-  .border-shop { border-color: var(--shop-border); }
-  .border-shop-strong { border-color: var(--shop-border-strong); }
-  .shadow-shop-accent { box-shadow: 0 4px 20px rgba(177, 101, 88, 0.25); }
-
-  /* Glass gradient text */
-  .text-glass-gradient {
-    background: linear-gradient(135deg, var(--vurmz-teal) 0%, var(--vurmz-teal-light) 50%, var(--vurmz-sky) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  /* Glow effects */
-  .glow-teal {
-    box-shadow: 0 0 20px rgba(60, 185, 178, 0.3), 0 0 40px rgba(60, 185, 178, 0.15);
-  }
-
-  .glow-teal-intense {
-    box-shadow: 0 0 30px rgba(60, 185, 178, 0.5), 0 0 60px rgba(60, 185, 178, 0.25);
-  }
-
-  /* ================================================
+.hover\:bg-shop-accent-hover:hover { background-color: var(--shop-accent-hover); }
+.hover\:text-shop-accent:hover { color: var(--shop-accent); }
+/* Glass gradient text */
+/* Glow effects */
+/* ================================================
      FRUTIGER AERO UTILITY CLASSES
   ================================================ */
 
   /* Studio full-page background */
-  .studio-bg {
-    background:
-      linear-gradient(160deg,
-        #E8F4FD 0%,
-        #F5FAF8 28%,
-        #FAFBF8 50%,
-        #E0F2F1 75%,
-        #E8F4FD 100%
-      );
-    background-size: 200% 200%;
-    animation: aero-bg-drift 30s ease-in-out infinite;
-  }
+/* Frosted glass panel */
+/* Top-edge highlight for glass panels */
+/* Solid glass — higher opacity for sidebars / controls */
 
-  /* Frosted glass panel */
-  .aero-glass {
-    background: var(--aero-glass-bg);
-    backdrop-filter: blur(var(--aero-glass-blur)) saturate(1.2);
-    -webkit-backdrop-filter: blur(var(--aero-glass-blur)) saturate(1.2);
-    border: 1px solid var(--aero-glass-border);
-    box-shadow: var(--aero-glass-shadow);
-    position: relative;
-  }
-
-  /* Top-edge highlight for glass panels */
-  .aero-glass::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background: var(--aero-glass-highlight);
-    pointer-events: none;
-  }
-
-  /* Solid glass — higher opacity for sidebars / controls */
-  .aero-glass-solid {
-    background: var(--aero-glass-bg-solid);
-    backdrop-filter: blur(32px) saturate(1.3);
-    -webkit-backdrop-filter: blur(32px) saturate(1.3);
-    border: 1px solid var(--aero-glass-border);
-    box-shadow:
-      var(--aero-glass-shadow),
-      inset 0 1px 0 rgba(255, 255, 255, 0.6);
-  }
-
-  /* Aero input field */
-  .aero-input {
-    background: var(--aero-input-bg);
-    border: 1px solid var(--aero-input-border);
-    box-shadow: var(--aero-input-shadow);
-    border-radius: 0.75rem;
-    padding: 0.75rem 1rem;
-    color: var(--aero-text-primary);
-    font-size: 0.875rem;
-    transition: border-color 0.2s, box-shadow 0.2s;
-    outline: none;
-    width: 100%;
-  }
-
-  .aero-input::placeholder {
-    color: var(--aero-text-muted);
-  }
-
-  .aero-input:focus {
-    border-color: var(--aero-teal);
-    box-shadow: var(--aero-input-shadow), var(--aero-focus-ring);
-  }
-
-  /* Primary teal button — glossy gradient */
-  .aero-btn-primary {
-    background: linear-gradient(180deg, var(--aero-teal-light) 0%, var(--aero-teal) 100%);
-    color: #ffffff;
-    border: none;
-    border-radius: 0.75rem;
-    padding: 0.75rem 1.5rem;
-    font-weight: 600;
-    font-size: 0.875rem;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    box-shadow:
-      0 1px 0 rgba(255,255,255,0.30) inset,
-      0 4px 16px rgba(42, 165, 160, 0.25);
-    transition: transform 0.15s, box-shadow 0.15s;
-  }
-
-  .aero-btn-primary:hover {
-    transform: translateY(-1px);
-    box-shadow:
-      0 1px 0 rgba(255,255,255,0.35) inset,
-      0 6px 20px rgba(42, 165, 160, 0.35);
-  }
-
-  .aero-btn-primary:active {
-    transform: scale(0.98);
-  }
-
-  /* CTA orange button — glossy gradient */
-  .aero-btn-cta {
-    background: linear-gradient(180deg, #FFA056 0%, #FF8C42 50%, #E67E22 100%);
-    color: #ffffff;
-    border: none;
-    border-radius: 0.75rem;
-    padding: 0.75rem 1.5rem;
-    font-weight: 600;
-    font-size: 0.875rem;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    box-shadow:
-      0 1px 0 rgba(255,255,255,0.30) inset,
-      0 4px 16px rgba(255, 140, 66, 0.30);
-    transition: transform 0.15s, box-shadow 0.15s;
-  }
-
-  .aero-btn-cta:hover {
-    transform: translateY(-1px);
-    box-shadow:
-      0 1px 0 rgba(255,255,255,0.35) inset,
-      0 6px 20px rgba(255, 140, 66, 0.40);
-  }
-
-  .aero-btn-cta:active {
-    transform: scale(0.98);
-  }
-
-  /* Secondary / outline button */
-  .aero-btn-secondary {
-    background: rgba(255, 255, 255, 0.50);
-    color: var(--aero-text-primary);
-    border: 1px solid rgba(209, 213, 219, 0.50);
-    border-radius: 0.75rem;
-    padding: 0.75rem 1.5rem;
-    font-weight: 500;
-    font-size: 0.875rem;
-    cursor: pointer;
-    box-shadow: 0 1px 0 rgba(255,255,255,0.40) inset;
-    transition: transform 0.15s, background 0.15s, border-color 0.15s;
-  }
-
-  .aero-btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.70);
-    border-color: rgba(209, 213, 219, 0.70);
-    transform: translateY(-1px);
-  }
-
-  .aero-btn-secondary:active {
-    transform: scale(0.98);
-  }
-
-  /* Aero scrollbar */
-  /* Hide scrollbar but keep scroll functionality */
+/* Primary teal button — glossy gradient */
+/* CTA orange button — glossy gradient */
+/* Secondary / outline button */
+/* Hide scrollbar but keep scroll functionality */
   .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -827,21 +461,10 @@ a:not([class*="bg-vurmz-cta"]):not([class*="bg-vurmz-cream"]):not(.puffy-btn):ho
     display: none;
   }
 
-  .aero-scrollbar::-webkit-scrollbar {
-    width: 6px;
-  }
-  .aero-scrollbar::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  .aero-scrollbar::-webkit-scrollbar-thumb {
-    background: rgba(148, 163, 184, 0.30);
-    border-radius: 3px;
-  }
-  .aero-scrollbar::-webkit-scrollbar-thumb:hover {
+.aero-scrollbar::-webkit-scrollbar-thumb:hover {
     background: rgba(148, 163, 184, 0.50);
   }
 }
-
 
 @keyframes aero-bg-drift {
   0%, 100% { background-position: 0% 50%; }
@@ -878,7 +501,6 @@ a:not([class*="bg-vurmz-cta"]):not([class*="bg-vurmz-cream"]):not(.puffy-btn):ho
   100% { transform: translateX(-50%); }
 }
 
-
 /* ========================================
    STUDIO TAKEOVER
    Hides site header/footer when studio is active
@@ -892,7 +514,6 @@ body:has(.studio-takeover) > footer {
 body:has(.studio-takeover) > main {
   padding-top: 0 !important;
 }
-
 
 /* ──────────────────────────────────────────────────────────────
    Accessibility: respect prefers-reduced-motion

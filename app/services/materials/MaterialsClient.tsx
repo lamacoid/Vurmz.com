@@ -103,7 +103,7 @@ export default function MaterialsClient() {
     <div>
       {/* Hero */}
       <section className="pt-8 sm:pt-12 pb-10 sm:pb-14">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
           <Breadcrumbs
             items={[
               { label: 'VURMZ', href: '/' },
@@ -123,7 +123,7 @@ export default function MaterialsClient() {
             <motion.h1
               variants={fadeUp}
               transition={{ duration: 0.6 }}
-              className="text-4xl sm:text-5xl font-semibold text-[var(--ink)] tracking-tight leading-[0.95] mb-6"
+              className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] font-semibold text-[var(--ink)] leading-[1.05] mb-6"
             >
               Three ways to<br />
               <span className="text-[var(--eyebrow)]">get it engraved.</span>
@@ -142,7 +142,7 @@ export default function MaterialsClient() {
 
       {/* Three options */}
       <section className="pb-16 sm:pb-20">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             variants={stagger}
             initial="initial"
@@ -188,7 +188,7 @@ export default function MaterialsClient() {
 
       {/* Capabilities Grid, oatmeal band to break up the teal */}
       <section className="bg-[var(--surface)] py-14 sm:py-[72px] border-y border-black/5">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-[length:var(--step-section)] font-semibold text-[var(--ink)] tracking-tight mb-2">What I can engrave</h2>
           <p className="text-[#4f5d5b] text-sm mb-8 max-w-lg">
             Metal, wood, glass, acrylic, leather, plastic, stone. If it&apos;s solid, I can mark it.
@@ -218,7 +218,7 @@ export default function MaterialsClient() {
 
       {/* Bottom CTA */}
       <section className="pb-16 sm:pb-20">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-[var(--surface)] border border-[var(--hairline)] rounded-sm p-8 sm:p-10 text-center">
             <h3 className="text-[length:var(--step-panel)] font-semibold text-[var(--ink)] mb-3">
               Not sure if I can engrave it?
