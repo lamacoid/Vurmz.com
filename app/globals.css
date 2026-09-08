@@ -588,34 +588,6 @@ a:not([class*="bg-vurmz-cta"]):not([class*="bg-vurmz-cream"]):not(.puffy-btn):ho
       radial-gradient(90% 70% at 12% 115%, rgba(127, 207, 212, 0.08) 0%, rgba(127, 207, 212, 0) 60%);
   }
 
-  /* ── Relief text: one overhead sun, two directions ──
-     Raised: the letterforms stand proud of the material. Top edges catch
-     light, a soft shadow drops below. For the names of things.
-     Etched: the letterforms are cut INTO the material. The recess wall
-     goes dark on the sun side, the lower lip catches light. For subtext
-     and detail lines. Light mode is paper (warm), dark mode is glass
-     (cool frost). */
-  .relief-raised {
-    text-shadow:
-      calc(var(--sun-x, 0) * 1px) -1px 0 rgba(255, 255, 255, 0.55),
-      calc(var(--sun-x, 0) * -1.5px) 2px 2px rgba(90, 70, 50, 0.30);
-  }
-  .relief-etched {
-    text-shadow:
-      calc(var(--sun-x, 0) * -1px) -1px 1px rgba(100, 75, 55, 0.35),
-      calc(var(--sun-x, 0) * 1px) 1px 0 rgba(255, 255, 255, 0.75);
-  }
-  .dark .relief-raised {
-    text-shadow:
-      calc(var(--sun-x, 0) * 1px) -1px 0 rgba(210, 240, 243, 0.28),
-      calc(var(--sun-x, 0) * -1.5px) 2px 3px rgba(0, 0, 0, 0.55);
-  }
-  .dark .relief-etched {
-    text-shadow:
-      calc(var(--sun-x, 0) * -1px) -1px 1px rgba(0, 0, 0, 0.60),
-      calc(var(--sun-x, 0) * 1px) 1px 0 rgba(190, 235, 240, 0.16);
-  }
-
   /* ── Puffy: a soft "half a puffy sticker" raise ──
      A top rim highlight + soft underside + gentle drop shadow make discrete
      elements (cards, tiles, buttons) read as slightly lifted off the surface,
@@ -636,10 +608,6 @@ a:not([class*="bg-vurmz-cta"]):not([class*="bg-vurmz-cream"]):not(.puffy-btn):ho
       calc(var(--sun-x, 0) * -4px) calc(4.5px + var(--sun-y, 0) * 2px) 12px -3px rgba(80, 60, 50, 0.27),
       calc(var(--sun-x, 0) * -1.5px) 1.5px 3px 0 rgba(80, 60, 50, 0.18);
   }
-  /* Buttons stay flat. Three depth treatments (sticker, 1mm, clay) all
-     failed Zach's eye at full size: the material system lives in the
-     text relief and card lift, and the buttons stay quiet, plain coral.
-     .puffy-btn is kept as a class so markup doesn't churn. */
   .puffy-btn {
     border-radius: 0.125rem;
   }

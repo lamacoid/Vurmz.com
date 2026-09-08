@@ -57,7 +57,7 @@ export function MenuRow({
       )}
       <span className="min-w-0 flex-1">
       <span className="flex items-baseline gap-2.5">
-        <span className="relative font-semibold text-[var(--ink)] leading-snug underline decoration-dotted decoration-[var(--ink)]/30 underline-offset-4 group-hover:decoration-transparent transition-colors relief-raised">
+        <span className="relative font-semibold text-[var(--ink)] leading-snug underline decoration-dotted decoration-[var(--ink)]/30 underline-offset-4 group-hover:decoration-transparent transition-colors">
           {p.name}
           {/* The laser: a thin teal beam engraves under the name on hover. */}
           <span
@@ -83,7 +83,7 @@ export function MenuRow({
         </span>
       </span>
       {metaLine(p, sale) && (
-        <span className="block text-sm text-[var(--ink-soft)] leading-snug mt-0.5 relief-etched">
+        <span className="block text-sm text-[var(--ink-soft)] leading-snug mt-0.5">
           {metaLine(p, sale)}
         </span>
       )}
@@ -249,7 +249,7 @@ export default async function MenuShop() {
             <section key={s.slug} id={`menu-${s.slug}`} className="break-inside-avoid mb-10 scroll-mt-20">
               <div className="flex items-center gap-3 mb-2">
                 <span className="flex-1 border-t border-[var(--ink)]/20" aria-hidden />
-                <h2 className="text-xs font-mono tracking-[0.3em] uppercase text-[var(--eyebrow)] relief-etched">{s.name}</h2>
+                <h2 className="text-xs font-mono tracking-[0.3em] uppercase text-[var(--eyebrow)]">{s.name}</h2>
                 <span className="flex-1 border-t border-[var(--ink)]/20" aria-hidden />
               </div>
               <div className="divide-y divide-[var(--hairline)]">

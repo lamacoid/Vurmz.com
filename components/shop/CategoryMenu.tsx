@@ -33,7 +33,7 @@ export default async function CategoryMenu({ categoryId, heading, sub }: {
         <div className="bg-[var(--surface)] border border-[var(--hairline)] rounded-sm shadow-sm px-5 sm:px-8 py-6 sm:py-8">
           <div className="flex items-center gap-3 mb-1">
             <span className="flex-1 border-t border-[var(--ink)]/20" aria-hidden />
-            <h2 className="text-xs font-mono tracking-[0.3em] uppercase text-[var(--eyebrow)] relief-etched">{heading}</h2>
+            <h2 className="text-xs font-mono tracking-[0.3em] uppercase text-[var(--eyebrow)]">{heading}</h2>
             <span className="flex-1 border-t border-[var(--ink)]/20" aria-hidden />
           </div>
           {sub && <p className="text-sm text-[var(--ink-soft)] text-center mb-4">{sub}</p>}
