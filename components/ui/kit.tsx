@@ -158,7 +158,7 @@ export function Pill({
     'inline-flex items-center rounded-full px-3.5 py-1.5 font-medium',
     'text-[length:var(--step-fine)] transition-colors duration-[var(--t-hover)] ease-[var(--ease)]',
     active
-      ? 'border-[1.5px] border-[var(--ink)] bg-[var(--glass)] font-semibold text-[var(--ink)]'
+      ? 'border-[1.5px] border-[var(--signal)] bg-[var(--glass)] font-semibold text-[var(--ink)]'
       : tones[tone],
     className,
   )
@@ -181,7 +181,7 @@ export function Badge({
 }) {
   const tones = {
     soft: 'border-[var(--ink)]/25 text-[var(--ink-soft)]',
-    teal: 'border-[var(--feature-accent)] text-[var(--ink)] bg-[var(--glass)]',
+    teal: 'border-[var(--signal)] text-[var(--ink)] bg-[var(--glass)]',
     coral: 'border-[var(--eyebrow)]/40 text-[var(--eyebrow)]',
   }
   return (

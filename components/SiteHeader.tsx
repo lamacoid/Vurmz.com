@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import { Bars3Icon, XMarkIcon, ChatBubbleLeftIcon, UserIcon } from '@heroicons/react/24/outline'
 import { ChatBubbleOvalLeftEllipsisIcon } from '@heroicons/react/24/solid'
@@ -18,6 +19,7 @@ const NAV_LINKS = [
 ]
 
 export default function SiteHeader({ variant = 'services' }: { variant?: 'shop' | 'services' }) {
+  const pathname = usePathname()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
@@ -45,7 +47,7 @@ export default function SiteHeader({ variant = 'services' }: { variant?: 'shop' 
 
   return (
     <>
-      <header className={`fixed top-[72px] sm:top-[60px] left-0 right-0 z-50 transition-all duration-300 ${headerBg}`}>
+      <header className={`fixed top-7 left-0 right-0 z-50 transition-all duration-300 ${headerBg}`}>
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16 sm:h-[72px]">
             <Link href="/" className="flex-shrink-0">
@@ -54,15 +56,30 @@ export default function SiteHeader({ variant = 'services' }: { variant?: 'shop' 
 
             {/* Desktop nav */}
             <div className="hidden lg:flex items-center gap-0.5">
-              {NAV_LINKS.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`px-3.5 py-1.5 text-[13px] font-medium ${textColor} ${hoverColor} rounded-full transition-colors duration-200`}
-                >
-                  {link.label}
-                </Link>
-              ))}
+              {NAV_LINKS.map((link) => {
+                // Longest match wins, so /services/portfolio lights Portfolio
+                // rather than Services.
+                const best = NAV_LINKS
+                  .filter(l => pathname === l.href || pathname?.startsWith(l.href + '/'))
+                  .sort((a, b) => b.href.length - a.href.length)[0]
+                const active = best?.href === link.href
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    aria-current={active ? 'page' : undefined}
+                    className={`relative px-3.5 py-1.5 text-[13px] font-medium ${active ? 'text-[var(--ink)]' : textColor} ${hoverColor} rounded-full transition-colors duration-[var(--t-hover)]`}
+                  >
+                    {link.label}
+                    {active && (
+                      <span
+                        aria-hidden
+                        className="absolute left-3.5 right-3.5 -bottom-0.5 h-[2px] rounded-full bg-[var(--signal)]"
+                      />
+                    )}
+                  </Link>
+                )
+              })}
             </div>
 
             {/* Right side */}
@@ -108,7 +125,7 @@ export default function SiteHeader({ variant = 'services' }: { variant?: 'shop' 
       {mobileMenuOpen && (
         <>
           <div className="fixed inset-0 z-40 bg-black/30 backdrop-blur-sm" onClick={() => setMobileMenuOpen(false)} />
-          <div className={`fixed top-[136px] sm:top-[132px] left-3 right-3 z-50 ${mobileBg} border rounded-2xl shadow-2xl p-5 max-h-[calc(100vh-152px)] overflow-y-auto`}>
+          <div className={`fixed top-[92px] sm:top-[100px] left-3 right-3 z-50 ${mobileBg} border rounded-2xl shadow-2xl p-5 max-h-[calc(100vh-108px)] overflow-y-auto`}>
             <div className="flex flex-col gap-1 mb-3 pb-3 border-b border-white/10">
               <Link
                 href="/account"

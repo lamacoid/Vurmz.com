@@ -139,7 +139,7 @@ export default function TradesConfigurator() {
                   }
                   className={`p-4 rounded-sm text-left transition-colors ${
                     on
-                      ? 'border-[1.5px] border-[var(--ink)] bg-[rgba(127,207,212,.2)]'
+                      ? 'border-[1.5px] border-[var(--signal)] bg-[rgba(127,207,212,.2)]'
                       : 'border border-[var(--ink)]/20 hover:border-[#C67A6F]'
                   }`}
                 >

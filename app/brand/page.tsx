@@ -24,8 +24,9 @@ const PALETTE = [
   { name: 'Deepest', value: '#123F47', note: 'bands and image grounds' },
   { name: 'Soft ink', value: '#4F5D5B', note: 'body copy and row values' },
   { name: 'Glass tint', value: 'rgba(127,207,212,.18)', note: 'how a panel lifts' },
+  { name: 'Laser red', value: '#FF2A2A', note: 'workshop surfaces only' },
   { name: 'Coral', value: '#C67A6F', note: 'one action per view, 12%' },
-  { name: 'Laser red', value: '#FF2A2A', note: 'marks only, never a button' },
+  { name: 'Signal teal', value: '#7FCFD4', note: 'live, selected, the beam' },
 ]
 
 const TYPE = [
@@ -80,9 +81,12 @@ export default function KitPage() {
           ))}
         </div>
         <p className="mt-6 max-w-[var(--measure)] text-[length:var(--step-body)] leading-[1.65] text-[var(--ink-soft)]">
-          It is a mix, not a set. Roughly 55 oatmeal, 30 teal, 12 coral, and the
-          rest laser red. Deep teal is a surface you place on the paper, never a
-          second mode the page flips into.
+          It is a mix, not a set. Roughly 55 oatmeal, 30 teal, 12 coral, and a
+          few pixels of signal. Deep teal is a surface you place on the paper,
+          never a second mode the page flips into. The signal teal is the
+          brightest thing in the palette and it earns that by appearing on
+          almost nothing: a live dot, a selected edge, the beam under a menu
+          line. Laser red stays in the workshop.
         </p>
       </Block>
 

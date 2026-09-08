@@ -10,8 +10,10 @@ import type { Product } from '@/lib/db/repos/products'
 // hairline rules, each item is one line (name, dotted leader, price) with
 // a quiet one-liner under it. Reads fine with zero photography; when a
 // product has a photo it joins the line as a small thumbnail. The one
-// loud accent: hovering a line engraves a thin laser-red rule under the
-// name.
+// loud accent: hovering a line engraves a thin rule under the name, in the
+// signature teal. Zach, 2026-08-06: "i want a teal laser." A fiber laser's
+// aiming beam is not red anyway, and this is the one place on the site the
+// neon swamp teal gets to be the brightest thing on screen.
 
 function metaLine(p: Product, sale?: SaleInfo): string {
   const parts: string[] = []
@@ -30,10 +32,10 @@ export function MenuRow({ p, sale, lowCents }: { p: Product; sale?: SaleInfo; lo
       <span className="flex items-baseline gap-2.5">
         <span className="relative font-semibold text-[var(--ink)] leading-snug underline decoration-dotted decoration-[var(--ink)]/30 underline-offset-4 group-hover:decoration-transparent transition-colors relief-raised">
           {p.name}
-          {/* The laser: a thin red rule engraves under the name on hover. */}
+          {/* The laser: a thin teal beam engraves under the name on hover. */}
           <span
             aria-hidden
-            className="absolute -bottom-0.5 left-0 h-px w-full bg-[#FF2A2A] shadow-[0_0_5px_rgba(255,42,42,0.8)] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out motion-reduce:transition-none"
+            className="absolute -bottom-0.5 left-0 h-px w-full bg-[var(--signal)] shadow-[0_0_6px_rgba(127,207,212,0.9)] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out motion-reduce:transition-none"
           />
         </span>
         {/* Honest scarcity, visible: only one exists. */}
@@ -134,7 +136,7 @@ export default async function MenuShop() {
                   style={{ fontFamily: 'var(--font-display), Georgia, serif' }}
                 >
                   Bring your thing. {menuPrice(house.priceCents)} flat.
-                  <span aria-hidden className="absolute -bottom-0.5 left-0 h-px w-full bg-[#FF2A2A] shadow-[0_0_5px_rgba(255,42,42,0.8)] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out motion-reduce:transition-none" />
+                  <span aria-hidden className="absolute -bottom-0.5 left-0 h-px w-full bg-[var(--signal)] shadow-[0_0_6px_rgba(127,207,212,0.9)] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out motion-reduce:transition-none" />
                 </span>
               </Link>
               <p className="text-sm text-[var(--ink-soft)] mt-2 max-w-md mx-auto">
@@ -172,7 +174,7 @@ export default async function MenuShop() {
                           {p.name}
                           <span
                             aria-hidden
-                            className="absolute -bottom-0.5 left-0 h-px w-full bg-[#FF2A2A] shadow-[0_0_5px_rgba(255,42,42,0.8)] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out motion-reduce:transition-none"
+                            className="absolute -bottom-0.5 left-0 h-px w-full bg-[var(--signal)] shadow-[0_0_6px_rgba(127,207,212,0.9)] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out motion-reduce:transition-none"
                           />
                         </span>
                         <span className="flex-1 -translate-y-[3px] border-b border-dotted border-[var(--ink)]/25 min-w-[1.5rem]" aria-hidden />

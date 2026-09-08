@@ -76,9 +76,18 @@ body.is-admin > main {
   --glass: rgba(127, 207, 212, 0.18);
   --glass-soft: rgba(127, 207, 212, 0.14);
   --glass-edge: rgba(127, 207, 212, 0.28);
-  /* The one action colour, and the one mark colour. */
+  /* ── Three colours with three jobs. Never borrow one for another. ──
+     Coral is what you CLICK. One real action per view.
+     Signal is what is TRUE right now: live, selected, in focus, on. It is
+       the neon swamp teal, the brightest thing in the palette, and it earns
+       that by appearing on almost nothing. A dot, an edge, a rule.
+     Laser red is confined to the WORKSHOP surfaces: cut lines, registration
+       marks, the placement diagram, the cursor. It left the storefront on
+       2026-08-06 when the engraving beam under a menu row turned teal. */
   --coral: #C67A6F;
   --coral-hover: #B0675D;
+  --signal: #7FCFD4;
+  --signal-dim: rgba(127, 207, 212, 0.45);
   --laser: #FF2A2A;
   /* Coral for small text/labels. Deepened from the display coral (#C67A6F) to a
      dusty clay so it clears WCAG AA (≈4.6:1) on paper; the bright coral lives on
