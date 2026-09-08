@@ -1,5 +1,7 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { listCategories, listProducts, soldUnitsFor, lowestVariantPrices } from '@/lib/db/repos/products'
+import { getMediaByIds } from '@/lib/db/repos/media'
 import { menuPrice, menuCase } from '@/lib/menu-format'
 import { saleFrom, saleWindowOpen, liveSale, saleEndsLabel, type SaleInfo } from '@/lib/sale'
 import type { Product } from '@/lib/db/repos/products'
@@ -24,11 +26,36 @@ function metaLine(p: Product, sale?: SaleInfo): string {
   return parts.join(', ')
 }
 
-// Deliberately photo-free: the menu stays typeset (Zach's call, and it
-// reads like a real menu because of it). Photos live on the product page.
-export function MenuRow({ p, sale, lowCents }: { p: Product; sale?: SaleInfo; lowCents?: number }) {
+/**
+ * A menu line. It reads as typeset text first and gains a photo second.
+ *
+ * `thumb` is only passed when the whole SECTION is photographed (see
+ * MenuShop): a column where most squares are empty looks broken, and a
+ * half-shot catalog is worse to look at than an honestly typeset one. So a
+ * section turns its photos on together, and until then it stays as it was.
+ */
+export function MenuRow({
+  p, sale, lowCents, thumb,
+}: {
+  p: Product
+  sale?: SaleInfo
+  lowCents?: number
+  thumb?: { url: string; alt: string } | null
+}) {
   return (
-    <Link href={`/shop/p/${p.slug}`} className="group block py-2.5 -mx-2 px-2 rounded-sm transition-colors hover:bg-[var(--ink)]/[0.04]">
+    <Link href={`/shop/p/${p.slug}`} className="group flex items-start gap-3.5 py-2.5 -mx-2 px-2 rounded-sm transition-colors hover:bg-[var(--ink)]/[0.04]">
+      {thumb !== undefined && (
+        <span className="relative mt-0.5 h-12 w-12 flex-shrink-0 overflow-hidden rounded-[var(--r-control)] border border-[var(--hairline)] bg-[var(--page)]">
+          {thumb ? (
+            <Image src={thumb.url} alt={thumb.alt} fill sizes="48px" className="object-cover" />
+          ) : (
+            // Photographed section, one straggler. A quiet tile keeps the
+            // column aligned instead of punching a hole in it.
+            <span className="absolute inset-0 bg-[var(--glass-soft)]" aria-hidden />
+          )}
+        </span>
+      )}
+      <span className="min-w-0 flex-1">
       <span className="flex items-baseline gap-2.5">
         <span className="relative font-semibold text-[var(--ink)] leading-snug underline decoration-dotted decoration-[var(--ink)]/30 underline-offset-4 group-hover:decoration-transparent transition-colors relief-raised">
           {p.name}
@@ -60,6 +87,7 @@ export function MenuRow({ p, sale, lowCents }: { p: Product; sale?: SaleInfo; lo
           {metaLine(p, sale)}
         </span>
       )}
+      </span>
     </Link>
   )
 }
@@ -75,6 +103,15 @@ export default async function MenuShop() {
     lowestVariantPrices(),
   ])
   if (products.length === 0) return null
+
+  // Hero photos, resolved once for every line on the menu.
+  const media = await getMediaByIds(
+    products.map(p => p.heroMediaId).filter((id): id is string => Boolean(id))
+  )
+  const thumbFor = (p: Product) => {
+    const m = p.heroMediaId ? media.get(p.heroMediaId) : null
+    return m?.url ? { url: m.url, alt: m.altText || p.name } : null
+  }
 
   // The house offer gets its own box above the sections.
   const house = products.find(p => p.slug === 'engrave-your-item') ?? null
@@ -99,9 +136,21 @@ export default async function MenuShop() {
     list.push(p)
     byCat.set(key, list)
   }
+  // A section earns its photo column when most of it has been shot. Until
+  // then it stays typeset, which is the honest look for a catalog that has
+  // not been photographed yet, and it turns on category by category as Zach
+  // works through them rather than all at once.
+  const shot = (items: Product[]) =>
+    items.filter(p => thumbFor(p)).length >= Math.ceil(items.length / 2)
+
   const sections = [
-    ...categories.filter(c => byCat.has(c.id)).map(c => ({ slug: c.slug, name: c.name, items: byCat.get(c.id)! })),
-    ...(byCat.has('_other') ? [{ slug: 'everything-else', name: 'Everything Else', items: byCat.get('_other')! }] : []),
+    ...categories.filter(c => byCat.has(c.id)).map(c => {
+      const items = byCat.get(c.id)!
+      return { slug: c.slug, name: c.name, items, photos: shot(items) }
+    }),
+    ...(byCat.has('_other')
+      ? [{ slug: 'everything-else', name: 'Everything Else', items: byCat.get('_other')!, photos: shot(byCat.get('_other')!) }]
+      : []),
   ]
 
   return (
@@ -205,7 +254,7 @@ export default async function MenuShop() {
               </div>
               <div className="divide-y divide-[var(--hairline)]">
                 {s.items.map(p => (
-                  <MenuRow key={p.id} p={p} sale={sales.get(p.id)} lowCents={lows[p.id]} />
+                  <MenuRow key={p.id} p={p} sale={sales.get(p.id)} lowCents={lows[p.id]} thumb={s.photos ? thumbFor(p) : undefined} />
                 ))}
               </div>
             </section>
