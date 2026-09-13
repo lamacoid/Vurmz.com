@@ -68,15 +68,18 @@ export default function RotatingTagline({
       style={{ fontFamily: 'var(--font-display), Georgia, serif' }}
     >
       <span className="block">Let&apos;s put your</span>
-      <span className="relative block h-[1.3em] my-1">
+      {/* The slot: a fixed-height grid cell so the lines above and below never
+          shift. Entering and exiting words share the one cell and sit centred
+          in it. The word runs one size step up from the sentence around it. */}
+      <span className="grid h-[1.5em] place-items-center my-1">
         <AnimatePresence initial={false}>
           <motion.span
             key={HERO_WORDS[w]}
-            initial={{ opacity: 0, y: '0.5em' }}
+            initial={{ opacity: 0, y: '0.4em' }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: '-0.5em' }}
+            exit={{ opacity: 0, y: '-0.4em' }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute inset-x-0 italic whitespace-nowrap"
+            className="col-start-1 row-start-1 text-[1.2em] leading-none italic whitespace-nowrap"
             style={{ color: accentColor }}
           >
             {HERO_WORDS[w]}
