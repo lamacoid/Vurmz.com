@@ -56,7 +56,7 @@ export function renderBrandedEmail({ heading, body, ctaLabel, ctaHref }: Branded
           <div style="margin:24px 0 0 0;border-top:1px solid rgba(22,82,92,0.2);"></div>
           <p style="margin:16px 0 0 0;font-family:Georgia,serif;font-size:14px;color:#16525C;">
             Zach<br>
-            <span style="font-family:'Courier New',Courier,monospace;font-size:10px;letter-spacing:2px;color:#5c6b6a;text-transform:uppercase;">VURMZ | Laser Engraving &middot; Centennial &middot; (719) 257-3834 &middot; <a href="https://www.vurmz.com" style="color:#8A4943;text-decoration:none;">vurmz.com</a></span>
+            <span style="font-family:'Courier New',Courier,monospace;font-size:10px;letter-spacing:2px;color:#5c6b6a;text-transform:uppercase;">VURMZ | Laser Engraving &middot; Centennial &middot; (720) 468-0138 &middot; <a href="https://www.vurmz.com" style="color:#8A4943;text-decoration:none;">vurmz.com</a></span>
           </p>
         </td></tr>
       </table>
@@ -67,6 +67,6 @@ export function renderBrandedEmail({ heading, body, ctaLabel, ctaHref }: Branded
 
 /** Plain-text alternative for clients that strip HTML. */
 export function renderBrandedEmailText({ heading, body, ctaLabel, ctaHref }: BrandedEmailInput): string {
-  const parts = [heading, body, ctaLabel && ctaHref ? `${ctaLabel}: ${ctaHref}` : '', 'Zach\nVURMZ | Laser Engraving, Centennial\n(719) 257-3834 (call or text)\nvurmz.com']
+  const parts = [heading, body, ctaLabel && ctaHref ? `${ctaLabel}: ${ctaHref}` : '', 'Zach\nVURMZ | Laser Engraving, Centennial\n(720) 468-0138 (call or text)\nvurmz.com']
   return parts.filter(Boolean).join('\n\n')
 }

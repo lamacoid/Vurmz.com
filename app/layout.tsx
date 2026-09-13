@@ -88,7 +88,7 @@ export default function RootLayout({
               "alternateName": "VURMZ Laser Engraving",
               "description": "Precision laser engraving services for businesses and individuals in the South Denver metro area. Branded pen packs, metal service tags, coasters, keychains, custom engraving, concierge sourcing. Next-day turnaround, hand-delivered.",
               "url": "https://www.vurmz.com",
-              "telephone": "(719) 257-3834",
+              "telephone": "(720) 468-0138",
               "email": "zach@vurmz.com",
               "address": {
                 "@type": "PostalAddress",

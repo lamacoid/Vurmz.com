@@ -67,7 +67,7 @@ Subject: Your sticker falls off. This doesn't.
 > engrave a free sample with your actual info and walk it over this week.
 > Worth a look?
 >
-> Zach · (719) 257-3834 (text) · vurmz.com
+> Zach · (720) 468-0138 (text) · vurmz.com
 >
 > P.S. Launch pricing through July 31 while I get VURMZ off the ground: ten engraved pens for $20 (first ten packs), slate coaster sets for $24. Posted at vurmz.com/shop.
 
@@ -81,7 +81,7 @@ Attach: metal-label-black.jpg if the form takes files; otherwise mention the lin
 > installs, panel labels, and asset tags for the trucks. Stainless,
 > engraved, 3M adhesive backing, so it's still readable when the sticker
 > next to it isn't. Packs of 10 are $30 ($2 a tag at volume). I'd like to drop a free sample
-> engraved with your info at the shop this week. Text me at (719) 257-3834
+> engraved with your info at the shop this week. Text me at (720) 468-0138
 > if that's worth ten minutes.
 
 ### 3. Promise Electric LLC (Centennial) · TEXT, then drop by
@@ -126,7 +126,7 @@ Subject: Asset tags for the portfolio, engraved, adhesive backed
 > few free samples to your spec so your maintenance lead can judge them in
 > hand. Interested?
 >
-> Zach · (719) 257-3834 (text) · vurmz.com
+> Zach · (720) 468-0138 (text) · vurmz.com
 >
 > P.S. Launch pricing through July 31 while I get VURMZ off the ground: ten engraved pens for $20 (first ten packs), slate coaster sets for $24. Posted at vurmz.com/shop.
 
@@ -174,7 +174,7 @@ Subject: 54 taps, local engraver for the markers and paddles
 > I turn work around in days and hand-deliver to Parker. Could I bring a
 > few samples by some afternoon and leave them with you?
 >
-> Zach · (719) 257-3834 (text) · vurmz.com
+> Zach · (720) 468-0138 (text) · vurmz.com
 >
 > P.S. Launch pricing through July 31 while I get VURMZ off the ground: ten engraved pens for $20 (first ten packs), slate coaster sets for $24. Posted at vurmz.com/shop.
 
@@ -219,7 +219,7 @@ Subject: A closing gift they keep on the counter
 > I'll show you exactly what your clients would get. If it works, I'll set
 > up a standing arrangement so it's automatic.
 >
-> Zach · (719) 257-3834 (text) · vurmz.com
+> Zach · (720) 468-0138 (text) · vurmz.com
 >
 > P.S. Launch pricing through July 31 while I get VURMZ off the ground: ten engraved pens for $20 (first ten packs), slate coaster sets for $24. Posted at vurmz.com/shop.
 
@@ -239,7 +239,7 @@ Subject: Local maker for your closing gifts
 > Send me a name and a date from an upcoming closing and I'll make one so
 > you can judge it in hand. No commitment past that first board.
 >
-> Zach · (719) 257-3834 (text) · vurmz.com
+> Zach · (720) 468-0138 (text) · vurmz.com
 >
 > P.S. Launch pricing through July 31 while I get VURMZ off the ground: ten engraved pens for $20 (first ten packs), slate coaster sets for $24. Posted at vurmz.com/shop.
 
@@ -257,7 +257,7 @@ Subject: Closing gifts made in Centennial
 > Send me a name and date for your next closing and I'll make the first
 > one as a test run. If the team likes it, I'll make it automatic.
 >
-> Zach · (719) 257-3834 (text) · vurmz.com
+> Zach · (720) 468-0138 (text) · vurmz.com
 >
 > P.S. Launch pricing through July 31 while I get VURMZ off the ground: ten engraved pens for $20 (first ten packs), slate coaster sets for $24. Posted at vurmz.com/shop.
 
@@ -278,7 +278,7 @@ Subject: Engraved pet tags and a nameplate for Dr. Mamula-Crippen
 > I hand-deliver to Parker and turnaround is a couple of days. Want a
 > sample tag with your clinic's info to see the quality?
 >
-> Zach · (719) 257-3834 (text) · vurmz.com
+> Zach · (720) 468-0138 (text) · vurmz.com
 >
 > P.S. Launch pricing through July 31 while I get VURMZ off the ground: ten engraved pens for $20 (first ten packs), slate coaster sets for $24. Posted at vurmz.com/shop.
 
@@ -296,7 +296,7 @@ Subject: A pen with your practice name that patients actually keep
 >
 > Want a free sample pen with your logo on it? Takes me a day.
 >
-> Zach · (719) 257-3834 (text) · vurmz.com
+> Zach · (720) 468-0138 (text) · vurmz.com
 >
 > P.S. Launch pricing through July 31 while I get VURMZ off the ground: ten engraved pens for $20 (first ten packs), slate coaster sets for $24. Posted at vurmz.com/shop.
 
@@ -367,7 +367,7 @@ Attach: metal-label-black.jpg
 > After 15 years your name IS the business, so put it on metal: engraved
 > business cards clients keep, and engraved marking on your tools so they
 > come back from jobsites. I'll make you a free sample card with your info
-> to see the quality. Text me at (719) 257-3834 if that's worth a look.
+> to see the quality. Text me at (720) 468-0138 if that's worth a look.
 
 Timing for 16 to 19: fold into the same week. Silver Stem walk-ins pair
 well with the Tuesday restaurant run (Littleton Blvd is on the way).

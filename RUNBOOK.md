@@ -199,7 +199,7 @@ Cloudflare CDN caches images. After replacing:
 
 Single operator: Zach DeMillo. If unreachable:
 
-1. **Customer-facing message:** site footer phone `(719) 257-3834` is SMS-capable; respond when able
+1. **Customer-facing message:** site footer phone `(720) 468-0138` is SMS-capable; respond when able
 2. **Production access:** Cloudflare account `zdem91@gmail.com`; GitHub `lamacoid`
 3. **Critical secrets:** stored in macOS keychain; new device requires re-`wrangler login` + secret rotation
 

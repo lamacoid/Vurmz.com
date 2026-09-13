@@ -14,7 +14,7 @@ Everything is where it was: the menu at vurmz.com/shop with posted
 prices, the $35 flat rate for anything you bring me, hand delivery
 across the south metro. Most jobs are in your hands inside three days.
 
-If you were waiting on something specific, text me at (719) 257-3834
+If you were waiting on something specific, text me at (720) 468-0138
 and I will get it on the schedule first. Thanks for waiting.
 
 Zach

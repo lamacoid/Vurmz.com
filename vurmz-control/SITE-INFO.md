@@ -21,8 +21,8 @@ tagline: 'Laser engraving for small business.',
 
 ### Contact Info
 ```typescript
-phone: '(719) 257-3834',      // Display format
-phoneClean: '7192573834',     // For sms: and tel: links
+phone: '(720) 468-0138',      // Display format
+phoneClean: '7204680138',     // For sms: and tel: links
 email: 'zach@vurmz.com',
 ```
 
@@ -88,8 +88,8 @@ To add a new page to the nav, add a new entry. To remove, delete the line.
 1. Open `lib/site-info.ts`
 2. Find these lines:
 ```typescript
-phone: '(719) 257-3834',
-phoneClean: '7192573834',
+phone: '(720) 468-0138',
+phoneClean: '7204680138',
 ```
 3. Update BOTH:
    - `phone` = how it displays (with formatting)
@@ -127,9 +127,9 @@ social: {
 The file exports these useful functions:
 
 ```typescript
-getSmsLink()        // Returns: sms:7192573834
-getSmsLink('Hi!')   // Returns: sms:7192573834?body=Hi!
-getPhoneLink()      // Returns: tel:7192573834
+getSmsLink()        // Returns: sms:7204680138
+getSmsLink('Hi!')   // Returns: sms:7204680138?body=Hi!
+getPhoneLink()      // Returns: tel:7204680138
 getEmailLink()      // Returns: mailto:zach@vurmz.com
 ```
 

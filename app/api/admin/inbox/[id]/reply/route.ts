@@ -44,7 +44,7 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ id: string
       <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;max-width:560px;margin:0 auto;padding:24px 0;color:#111">
         <p style="font-size:15px;line-height:1.6;color:#333;white-space:pre-wrap">${esc(text)}</p>
         <hr style="border:none;border-top:1px solid #eee;margin:24px 0" />
-        <p style="font-size:13px;color:#666">Zach DeMillo &middot; VURMZ &middot; Centennial, CO &middot; (719) 257-3834</p>
+        <p style="font-size:13px;color:#666">Zach DeMillo &middot; VURMZ &middot; Centennial, CO &middot; (720) 468-0138</p>
         ${msg.message ? `<p style="font-size:12px;color:#999;margin-top:16px">Re: &ldquo;${esc((msg.message || '').slice(0, 300))}&rdquo;</p>` : ''}
       </div>`
 

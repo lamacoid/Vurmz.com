@@ -29,7 +29,7 @@
 - Brand name: **VURMZ**, all caps (it matches the wordmark logo). The business lockup is "VURMZ | Laser Engraving": VURMZ all caps, "Laser Engraving" in title case, a pipe between.
 - Prices written like "$35"; ranges like "$30 to $44" (the word "to", never a dash).
 - Turnaround stated as "24 to 72 hours".
-- Phone: (719) 257-3834. The blue text bubble is the primary contact.
+- Phone: (720) 468-0138. The blue text bubble is the primary contact.
 - No em-dashes anywhere. Use periods, commas, parentheses, or rewrite the sentence.
 
 ---

@@ -268,7 +268,7 @@ export async function POST(request: NextRequest) {
                 Hey ${escapeHtml(name.split(' ')[0])},
               </p>
               <p style="font-size: 15px; color: #333; line-height: 1.6; margin-bottom: 16px;">
-                I received your message and I&rsquo;ll be reaching out soon. If you need a faster response, feel free to text me directly at <strong>(719) 257-3834</strong>.
+                I received your message and I&rsquo;ll be reaching out soon. If you need a faster response, feel free to text me directly at <strong>(720) 468-0138</strong>.
               </p>
               <p style="font-size: 15px; color: #333; line-height: 1.6; margin-bottom: 24px;">
                 Talk soon,<br/>
@@ -277,7 +277,7 @@ export async function POST(request: NextRequest) {
               </p>
               <hr style="border: none; border-top: 1px solid #eee; margin: 24px 0;" />
               <p style="font-size: 12px; color: #999;">
-                <a href="https://vurmz.com" style="color: #6BB8B2;">vurmz.com</a> &middot; (719) 257-3834 &middot; zach@vurmz.com
+                <a href="https://vurmz.com" style="color: #6BB8B2;">vurmz.com</a> &middot; (720) 468-0138 &middot; zach@vurmz.com
               </p>
             </div>
           `,

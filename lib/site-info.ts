@@ -13,8 +13,8 @@ export const siteInfo = {
   description: 'Premium laser engraving services in Centennial, Colorado. Branded pens, metal business cards, industrial labels, knife engraving, and more.',
 
   // Contact
-  phone: '(719) 257-3834',
-  phoneClean: '7192573834',
+  phone: '(720) 468-0138',
+  phoneClean: '7204680138',
   email: 'zach@vurmz.com',
 
   // Location

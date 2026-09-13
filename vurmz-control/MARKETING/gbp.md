@@ -11,7 +11,7 @@ below is written to paste directly.
 - **Service area business** (hide address): Centennial, Littleton, Lone Tree,
   Parker, Highlands Ranch, Englewood, Castle Rock, Greenwood Village,
   Cherry Hills Village, Aurora, Denver
-- **Phone:** (719) 257-3834 · **Website:** https://www.vurmz.com
+- **Phone:** (720) 468-0138 · **Website:** https://www.vurmz.com
 - **Hours:** Mo–Sa 08:00–18:00 (match the site's schema)
 - **Attributes:** Identifies as veteran/family-owned if applicable — skip
   anything not true. Online estimates: yes.
@@ -44,7 +44,7 @@ below is written to paste directly.
 5. **Q: Do you do bulk orders for businesses?** A: Yes. Pens, coasters, keychains, and metal cards in packs, service tags by the run. Recurring orders welcome.
 
 ## First 3 posts (one per week)
-1. **(Photo: culinary-cleaver-engraved.jpg)** "Chef's cleaver, name in the steel. Fiber laser marking goes into the blade, not onto it — survives the sharpener and the dishwasher you shouldn't be using. $25 a knife, crew pickups across south Denver. Text (719) 257-3834."
+1. **(Photo: culinary-cleaver-engraved.jpg)** "Chef's cleaver, name in the steel. Fiber laser marking goes into the blade, not onto it — survives the sharpener and the dishwasher you shouldn't be using. $25 a knife, crew pickups across south Denver. Text (720) 468-0138."
 2. **(Photo: clga-faceplate-closeup.jpg)** "Brushed metal faceplates for a Denver amp builder. Small production runs, sharp logo marking. If your product needs a mark, that's what I do. vurmz.com/services"
 3. **(Photo: denver-map-mirror-closeup.jpg)** "Denver street map, engraved into beveled mirror glass. One-off custom pieces from $35 — bring me an idea and I'll tell you if it'll work. Hand-delivered locally."
 

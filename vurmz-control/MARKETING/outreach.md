@@ -31,7 +31,7 @@ question.** Never open with your equipment specs. Nobody cares about wattage.
 > Packs of 10 from $30. I'll engrave one free sample with your actual info and
 > drop it at your shop this week. Worth a look?
 >
-> Zach · (719) 257-3834 (text) · vurmz.com
+> Zach · (720) 468-0138 (text) · vurmz.com
 
 **Walk-in:** bring 3 sample tags (one with THEIR company name pre-engraved if
 you committed to one), hand to whoever runs the office: "No pitch — stick this
@@ -84,7 +84,7 @@ visit, when they remember you.
 > you what it looks like. If your team closes a few a month, I'll set up a
 > standing arrangement so it's automatic.
 >
-> Zach · (719) 257-3834 (text) · vurmz.com
+> Zach · (720) 468-0138 (text) · vurmz.com
 
 **Why this works:** realtors buy repeatedly (every closing), they expense it,
 and "engraved with the closing date" is the personalization no Amazon gift has.
@@ -125,7 +125,7 @@ list / preferred-partner sheet.
 > venue so nothing arrives broken two days before the wedding. Could I send a
 > small sample kit for your vendor table, or get added to your preferred list?
 >
-> Zach · (719) 257-3834 · vurmz.com
+> Zach · (720) 468-0138 · vurmz.com
 
 **Follow-up:** offer to engrave something for the VENUE free (a host stand
 sign, table numbers) — the venue using your work daily IS the referral engine.
