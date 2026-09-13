@@ -50,20 +50,20 @@ export default function CategoryCard({ category: cat, compact }: CategoryCardPro
     return (
       <Link
         href={`/shop/${cat.slug}`}
-        className="group block bg-[var(--surface)] backdrop-blur-xl border border-[var(--hairline)] rounded-sm overflow-hidden hover:border-[#C67A6F]/40 transition-all duration-300 puffy"
+        className="group block bg-[var(--surface)] backdrop-blur-xl border border-[var(--hairline)] rounded-sm overflow-hidden hover:border-[var(--coral)]/40 transition-all duration-300 puffy"
       >
         <div className="aspect-[16/9] relative overflow-hidden">
           {cat.heroImage ? (
             <GlassImage src={cat.heroImage} alt={cat.name} depth="card" sizes="(max-width: 640px) 100vw, 33vw" className="absolute inset-0" />
           ) : (
-            <div className="absolute inset-0 flex items-center justify-center bg-[var(--surface)]">
-              <span className="text-[var(--ink-soft)] text-xs font-mono">Photo coming soon</span>
+            <div className="absolute inset-0 flex items-center justify-center bg-[var(--glass)]">
+              <span className="text-[var(--ink)] text-[length:var(--step-panel)] tracking-tight" style={{ fontFamily: 'var(--font-display), Georgia, serif' }}>{cat.name}</span>
             </div>
           )}
         </div>
         <div className="p-4">
           <h3 className="text-sm font-semibold text-[var(--ink)]">{cat.name}</h3>
-          <span className="text-[#C67A6F] font-semibold text-xs">{price}</span>
+          <span className="text-[var(--coral)] font-semibold text-xs">{price}</span>
         </div>
       </Link>
     )
@@ -75,15 +75,15 @@ export default function CategoryCard({ category: cat, compact }: CategoryCardPro
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.4 }}
-      className="group relative bg-[var(--surface)] backdrop-blur-xl border border-[var(--hairline)] rounded-sm overflow-hidden hover:border-[#C67A6F]/40 hover:bg-[var(--surface)] transition-all duration-300 puffy"
+      className="group relative bg-[var(--surface)] backdrop-blur-xl border border-[var(--hairline)] rounded-sm overflow-hidden hover:border-[var(--coral)]/40 hover:bg-[var(--surface)] transition-all duration-300 puffy"
     >
       <Link href={`/shop/${cat.slug}`}>
         <div className="aspect-[4/3] relative overflow-hidden">
           {cat.heroImage ? (
             <GlassImage src={cat.heroImage} alt={cat.name} depth="card" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" className="absolute inset-0" />
           ) : (
-            <div className="absolute inset-0 flex items-center justify-center bg-[var(--surface)]">
-              <span className="text-[var(--ink-soft)] text-sm font-mono">Photo coming soon</span>
+            <div className="absolute inset-0 flex items-center justify-center bg-[var(--glass)]">
+              <span className="text-[var(--ink)] text-[length:var(--step-panel)] tracking-tight" style={{ fontFamily: 'var(--font-display), Georgia, serif' }}>{cat.name}</span>
             </div>
           )}
         </div>
@@ -91,7 +91,7 @@ export default function CategoryCard({ category: cat, compact }: CategoryCardPro
 
       <div className="p-5">
         <Link href={`/shop/${cat.slug}`}>
-          <h3 className="text-lg font-semibold text-[var(--ink)] mb-1.5 group-hover:text-[#C67A6F] transition-colors">{cat.name}</h3>
+          <h3 className="text-lg font-semibold text-[var(--ink)] mb-1.5 group-hover:text-[var(--coral)] transition-colors">{cat.name}</h3>
         </Link>
         <p className="text-[var(--ink-soft)] text-sm leading-relaxed mb-2">{cat.tagline}</p>
         {cat.cardDescription && (
@@ -100,7 +100,7 @@ export default function CategoryCard({ category: cat, compact }: CategoryCardPro
         {cat.serviceLink && (
           <Link
             href={cat.serviceLink.href}
-            className="inline-flex items-center gap-1 text-xs text-[#7FCFD4] font-mono tracking-wide hover:text-[var(--ink)] transition-colors mb-4"
+            className="inline-flex items-center gap-1 text-xs text-[var(--signal)] font-mono tracking-wide hover:text-[var(--ink)] transition-colors mb-4"
           >
             {cat.serviceLink.label}
             <ArrowRightIcon className="w-3 h-3" />
@@ -109,13 +109,13 @@ export default function CategoryCard({ category: cat, compact }: CategoryCardPro
 
         <div className="flex items-center justify-between">
           <div>
-            <span className="text-[#C67A6F] font-semibold text-sm">{price}</span>
+            <span className="text-[var(--coral)] font-semibold text-sm">{price}</span>
             {note && <span className="text-[var(--ink-soft)] text-xs block mt-0.5">{note}</span>}
           </div>
           <div className="flex items-center gap-2">
             <Link
               href={`/shop/${cat.slug}`}
-              className="inline-flex items-center gap-1 text-xs text-[var(--ink-soft)] font-semibold px-3 py-1.5 border border-[var(--hairline)] rounded-sm hover:border-[#C67A6F]/40 hover:text-[var(--ink)] transition-colors"
+              className="inline-flex items-center gap-1 text-xs text-[var(--ink-soft)] font-semibold px-3 py-1.5 border border-[var(--hairline)] rounded-sm hover:border-[var(--coral)]/40 hover:text-[var(--ink)] transition-colors"
             >
               Details
               <ArrowRightIcon className="w-3 h-3" />
@@ -123,7 +123,7 @@ export default function CategoryCard({ category: cat, compact }: CategoryCardPro
             <a
               href={getSmsLink(cat.smsMessage)}
               onClick={() => trackEvent('sms_click', cat.slug)}
-              className="inline-flex items-center gap-1 text-xs text-[#C67A6F] font-semibold px-3 py-1.5 border border-[#C67A6F]/30 rounded-sm hover:bg-[#C67A6F]/10 transition-colors"
+              className="inline-flex items-center gap-1 text-xs text-[var(--coral)] font-semibold px-3 py-1.5 border border-[var(--coral)]/30 rounded-sm hover:bg-[var(--coral)]/10 transition-colors"
             >
               <ChatBubbleLeftIcon className="w-3.5 h-3.5" />
               Text

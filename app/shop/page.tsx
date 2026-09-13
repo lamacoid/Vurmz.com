@@ -3,9 +3,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ChatBubbleLeftIcon } from '@heroicons/react/24/outline'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
-import { SIGNATURE, SOURCING, DELIVERY } from '@/lib/pricing'
+import { SIGNATURE, SOURCING } from '@/lib/pricing'
 import RotatingTagline from '@/components/RotatingTagline'
 import MenuShop from '@/components/shop/MenuShop'
+import HowItWorks from '@/components/HowItWorks'
 
 // MenuShop reads the live catalog at request time → must run on the edge.
 export const runtime = 'edge'
@@ -148,27 +149,7 @@ export default function ShopHome() {
         </div>
       </section>
 
-      {/* ═══════════ HOW IT WORKS ═══════════ */}
-      <section className="pb-10 sm:pb-14">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-[length:var(--step-section)] font-semibold text-[var(--ink)] text-center mb-8">How it works</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
-            {[
-              { n: 1, h: 'Text me', p: "Send a photo of what you want engraved. I'll get back to you with a quote." },
-              { n: 2, h: 'I engrave it', p: 'One person handles your order start to finish. No outsourcing.' },
-              { n: 3, h: 'Hand-delivered', p: `I bring it to your door across the South Denver metro. Free over $${DELIVERY.freeThreshold}.` },
-            ].map(step => (
-              <div key={step.n}>
-                <div className="w-10 h-10 rounded-full bg-[#7FCFD4]/15 border border-[#7FCFD4]/20 flex items-center justify-center mb-3 mx-auto">
-                  <span className="text-[#7FCFD4] font-semibold">{step.n}</span>
-                </div>
-                <h3 className="font-semibold text-[var(--ink)] mb-1">{step.h}</h3>
-                <p className="text-[var(--ink-soft)] text-sm leading-relaxed">{step.p}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <HowItWorks />
 
       {/* ═══════════ FINAL CTA ═══════════ */}
       <section className="pb-10 sm:pb-14">

@@ -136,12 +136,11 @@ export default async function MenuShop() {
     list.push(p)
     byCat.set(key, list)
   }
-  // A section earns its photo column when most of it has been shot. Until
-  // then it stays typeset, which is the honest look for a catalog that has
-  // not been photographed yet, and it turns on category by category as Zach
-  // works through them rather than all at once.
-  const shot = (items: Product[]) =>
-    items.filter(p => thumbFor(p)).length >= Math.ceil(items.length / 2)
+  // The menu earns its photo column when most of it has been shot. One gate
+  // for the whole menu: two thumbnails in one section and none anywhere else
+  // read as a glitch, not a choice. Until then every line stays typeset.
+  const menuShot = rest.filter(p => thumbFor(p)).length >= Math.ceil(rest.length / 2)
+  const shot = (_items: Product[]) => menuShot
 
   const sections = [
     ...categories.filter(c => byCat.has(c.id)).map(c => {

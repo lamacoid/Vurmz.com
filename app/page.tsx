@@ -17,6 +17,7 @@ import ItemScroller from '@/components/ItemScroller'
 import GlassImage from '@/components/shop/GlassImage'
 import RotatingTagline from '@/components/RotatingTagline'
 import VurmzLogo from '@/components/VurmzLogo'
+import HowItWorks from '@/components/HowItWorks'
 
 // Single-page homepage: one brand, one scroll, shop first, then the anchored
 // "For businesses" half, then contact. Replaced the old split chooser.
@@ -136,27 +137,8 @@ export default function Page() {
           </div>
         </section>
 
-        {/* ═══════════ HOW IT WORKS (dusty coral band) ═══════════ */}
-        <section className="bg-[#B0675D] border-t border-[var(--hairline)] py-14 sm:py-[72px]">
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-[length:var(--step-section)] font-semibold text-white text-center mb-8">How it works</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
-              {[
-                { n: 1, h: 'Pick or text', p: 'Buy a ready product from the shop, or text me to engrave something you bring, from $35.' },
-                { n: 2, h: 'Approve your proof', p: 'Before anything is cut, I send a photo. Nothing runs until you say go.' },
-                { n: 3, h: 'Delivered to you', p: 'Hand-delivered free across the south Denver metro ($50+), or shipped if you’re farther out.' },
-              ].map((step) => (
-                <div key={step.n}>
-                  <div className="w-10 h-10 rounded-full bg-white/15 border border-white/30 flex items-center justify-center mb-3 mx-auto puffy">
-                    <span className="text-white font-semibold">{step.n}</span>
-                  </div>
-                  <h3 className="font-semibold text-white mb-1">{step.h}</h3>
-                  <p className="text-white/85 text-sm leading-relaxed">{step.p}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+        {/* ═══════════ HOW IT WORKS, the one shared version ═══════════ */}
+        <HowItWorks />
 
         {/* ═══════════ SERVICES, the anchored business half ═══════════ */}
         <section id="services" className="relative band-teal-deep border-t border-[var(--hairline)] scroll-mt-16">

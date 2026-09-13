@@ -5,6 +5,7 @@ import { aboutContent, aboutMeta } from '@/lib/about'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import SiteHeader from '@/components/SiteHeader'
 import SiteFooter from '@/components/SiteFooter'
+import HowItWorks from '@/components/HowItWorks'
 
 export const metadata: Metadata = {
   title: 'About',
@@ -65,24 +66,8 @@ export default function AboutPage() {
               <span className="flex-1 border-t border-[var(--ink)]/20" aria-hidden />
             </div>
 
-            {/* How it works: the one genuinely useful section, kept. */}
             <div className="mt-12">
-              <div className="flex items-center gap-3 mb-6">
-                <span className="flex-1 border-t border-[var(--ink)]/20" aria-hidden />
-                <h2 className="text-xs font-mono tracking-[0.3em] uppercase text-[var(--eyebrow)]">How it works</h2>
-                <span className="flex-1 border-t border-[var(--ink)]/20" aria-hidden />
-              </div>
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-6">
-                {aboutContent.process.map(s => (
-                  <div key={s.step}>
-                    <p className="font-semibold text-[var(--ink)] text-sm">
-                      <span className="text-[var(--eyebrow)] font-mono mr-1.5">{s.step}.</span>
-                      {s.title}
-                    </p>
-                    <p className="text-[var(--ink-soft)] text-sm leading-snug mt-1">{s.description}</p>
-                  </div>
-                ))}
-              </div>
+              <HowItWorks variant="inline" />
             </div>
 
             <p className="mt-10 pt-5 border-t border-[var(--hairline)] text-xs text-[var(--ink-soft)] text-center">

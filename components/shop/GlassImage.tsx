@@ -30,11 +30,11 @@ const STYLES: Record<GlassDepth, { film: string; img: string }> = {
     img: 'blur-[2px] scale-[1.05]',
   },
   card: {
-    film: 'opacity-[0.42] group-hover:opacity-[0.14]',
+    film: 'opacity-[0.14] group-hover:opacity-[0.04]',
     img: 'group-hover:scale-[1.04]',
   },
   product: {
-    film: 'opacity-[0.24] group-hover:opacity-[0.08]',
+    film: 'opacity-[0.10] group-hover:opacity-[0.03]',
     img: 'group-hover:scale-[1.03]',
   },
 }

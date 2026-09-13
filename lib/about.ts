@@ -14,13 +14,6 @@ export const aboutContent = {
 
   pillars: 'Local. Thoughtful. Fast.',
 
-  process: [
-    { step: 1, title: 'Text me', description: 'Send a text with what you want. Photos help.' },
-    { step: 2, title: 'I quote you', description: 'Fast, transparent pricing. No setup fees, no surprises.' },
-    { step: 3, title: 'I engrave it', description: 'One person handles your job from setup to finish.' },
-    { step: 4, title: 'Hand-delivered', description: `Across the South Denver metro, by me.` },
-  ],
-
   image: '/images/zach.jpeg',
 } as const
 

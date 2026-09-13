@@ -1,29 +1,24 @@
 import Image from 'next/image'
 
 interface TrustedByProps {
-  theme: 'landing' | 'shop' | 'services'
+  /** Kept for callers; every page sits on the one paper ground now. */
+  theme?: 'landing' | 'shop' | 'services'
 }
 
-const themeStyles = {
-  landing: { label: 'text-[var(--ink-soft)]', linkText: 'text-[var(--ink)]/40 hover:text-[var(--ink)]/60', logoClass: 'opacity-40 brightness-0 invert', bg: '' },
-  services: { label: 'text-[var(--ink-soft)]', linkText: 'text-[var(--ink)]/40 hover:text-[var(--ink)]/60', logoClass: 'opacity-40 brightness-0 invert', bg: '' },
-  shop: { label: 'text-[var(--ink-soft)]', linkText: 'text-[var(--ink)]/40 hover:text-[var(--ink)]/60', logoClass: 'opacity-30', bg: '' },
-}
-
-export default function TrustedBy({ theme }: TrustedByProps) {
-  const styles = themeStyles[theme]
-
+// Two names, set quietly in ink. The SVG logo uses currentColor so it takes
+// the same ink as the text link beside it.
+export default function TrustedBy(_: TrustedByProps) {
   return (
     <div className="text-center">
-      <p className={`text-xs font-mono tracking-[0.2em] uppercase mb-5 ${styles.label}`}>
+      <p className="text-[length:var(--step-eyebrow)] font-mono tracking-[0.2em] uppercase mb-5 text-[var(--eyebrow)]">
         Trusted by
       </p>
-      <div className="flex items-center justify-center gap-12 sm:gap-16">
+      <div className="flex items-center justify-center gap-12 sm:gap-16 text-[var(--ink)]">
         <a
           href="https://www.nordstrom.com/store-details/nordstrom-cherry-creek-shopping-center"
           target="_blank"
           rel="noopener noreferrer"
-          className={`flex-shrink-0 text-sm font-medium transition-colors ${styles.linkText}`}
+          className="flex-shrink-0 text-[length:var(--step-row)] font-medium opacity-70 hover:opacity-100 transition-opacity duration-[var(--t-hover)]"
         >
           Nordstrom Beauty
         </a>
@@ -31,14 +26,13 @@ export default function TrustedBy({ theme }: TrustedByProps) {
           href="http://countylineguitaramps.com"
           target="_blank"
           rel="noopener noreferrer"
-          className="flex-shrink-0 hover:opacity-70 transition-opacity"
+          className="flex-shrink-0 opacity-70 hover:opacity-100 transition-opacity duration-[var(--t-hover)]"
         >
           <Image
             src="/images/clients/county-line-guitar-amps.svg"
             alt="County Line Guitar Amps"
             width={120}
             height={36}
-            className={styles.logoClass}
           />
         </a>
       </div>
