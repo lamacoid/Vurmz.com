@@ -28,7 +28,7 @@ const WORK: { src: string; alt: string; title: string; spec: string; lane: strin
     src: '/portfolio/clga-faceplate-closeup.jpg',
     alt: 'Engraved amp faceplate for County Line Guitar Amps',
     title: 'Amp faceplates, County Line Guitar Amps',
-    spec: 'Brushed metal, fiber laser, recurring',
+    spec: 'Brushed metal, engraved, recurring',
     lane: 'Plates and panels',
     href: '#lanes',
   },
@@ -36,7 +36,7 @@ const WORK: { src: string; alt: string; title: string; spec: string; lane: strin
     src: '/portfolio/tumbler-cherry-creek-37.jpg',
     alt: 'Powder-coated tumbler engraved with a Cherry Creek business logo',
     title: 'Branded tumblers, Cherry Creek',
-    spec: 'Powder-coated stainless, fiber laser',
+    spec: 'Powder-coated stainless, coating removed',
     lane: 'Branded packs',
     href: '/shop',
   },
@@ -44,7 +44,7 @@ const WORK: { src: string; alt: string; title: string; spec: string; lane: strin
     src: '/portfolio/culinary-cleaver-engraved.jpg',
     alt: 'Chef cleaver engraved with a name',
     title: 'Cleaver, named for the chef',
-    spec: 'Knife steel, fiber laser',
+    spec: 'Knife steel, annealed',
     lane: 'Knife crews',
     href: '/services/knife-engraving',
   },
@@ -52,7 +52,7 @@ const WORK: { src: string; alt: string; title: string; spec: string; lane: strin
     src: '/portfolio/engraved-hand-saw.jpg',
     alt: 'Hand saw with a name engraved on the blade',
     title: 'Name on the blade',
-    spec: 'Saw steel, fiber laser',
+    spec: 'Saw steel, annealed',
     lane: 'Tool and gear marking',
     href: '#lanes',
   },
@@ -60,7 +60,7 @@ const WORK: { src: string; alt: string; title: string; spec: string; lane: strin
     src: '/portfolio/water-bottle-custom-engraved.jpg',
     alt: 'Powder-coated water bottle with a custom engraving',
     title: 'Bottles for the crew',
-    spec: 'Powder-coated steel, fiber laser',
+    spec: 'Powder-coated steel, coating removed',
     lane: 'Branded packs',
     href: '/shop',
   },
@@ -68,7 +68,7 @@ const WORK: { src: string; alt: string; title: string; spec: string; lane: strin
     src: '/portfolio/laser-engraved-artwork.jpg',
     alt: 'Anodized aluminum panel engraved with fine line work',
     title: 'Fine detail in anodized aluminum',
-    spec: 'Anodized aluminum, fiber laser',
+    spec: 'Anodized aluminum, engraved',
     lane: 'Plates and panels',
     href: '#lanes',
   },
@@ -133,11 +133,11 @@ const LANES: { name: string; value: string; note?: string; href?: string }[] = [
 
 // What I need to quote a job. Five things, in the order I ask for them.
 const BRIEF = [
-  { h: 'A photo of the thing', p: 'The part, the blank, or the product page. If it is one of mine, the name is enough.' },
-  { h: 'How many', p: 'Real units. Ten knives, 150 pens, one faceplate. Volume pricing counts every unit across the account.' },
-  { h: 'The artwork, or the words', p: 'A vector file is best: SVG, PDF, or AI. A sharp PNG works. No file? Send the text and pick a font, I set it.' },
-  { h: 'Where it goes and how big', p: 'Inches or millimetres, a marked-up photo, or a drawing. "Centered, about two inches" is fine to start.' },
-  { h: 'When you need it', p: `Most jobs are ready in 24 to 72 hours. The delivery run is ${siteInfo.deliveryRunDay}. Say the date and I will tell you straight if it works.` },
+  { h: 'A photo of the thing', p: 'The part, the blank, or a link to the product. If it is one of mine, the name is enough.' },
+  { h: 'How many', p: 'Ten knives, 150 pens, one faceplate. A range is fine if you are still deciding. Every piece across your account counts toward the volume price.' },
+  { h: 'The artwork, or the words', p: 'A vector file is best: SVG, PDF, or AI. A sharp PNG works. No file? Send the words and pick a font. I will set it.' },
+  { h: 'Where it goes and how big', p: 'A marked-up photo, a drawing, or a size in inches. "Centered, about two inches wide" is fine to start.' },
+  { h: 'When you need it', p: `Most jobs are ready in 24 to 72 hours. The delivery run is ${siteInfo.deliveryRunDay}. Name the date and I will tell you straight whether it works.` },
 ]
 const BRIEF_SMS = 'Hi Zach. What: \nHow many: \nArtwork or words: \nWhere and how big: \nNeeded by: '
 
@@ -153,25 +153,25 @@ const RETURNS = [
 // What precision means in this shop. Claims kept to what the machines
 // and the proof process actually deliver.
 const PRECISION = [
-  { h: 'The mark is in the material, not on it', p: 'A fiber laser changes the surface itself. Nothing is printed, glued, or coated, so there is nothing to peel, fade, or rub off.' },
+  { h: 'The mark is in the material, not on it', p: 'The laser changes the surface itself. Nothing is printed, glued, or coated, so there is nothing to peel, fade, or rub off.' },
   { h: 'From your file, line for line', p: 'Vector art reproduces as drawn: logos, serials, QR codes, part numbers. Text stays legible down to six point.' },
-  { h: 'Placed to your drawing', p: 'You give a position and a size, in inches or millimetres, and that is where it lands. Same fixture, same spot, across the batch.' },
+  { h: 'Placed to your drawing', p: 'You give a position and a size, in inches or millimeters, and that is where it lands. Same fixture, same spot, across the batch.' },
   { h: 'Repeatable', p: 'One file, saved with the settings that ran it. The reorder six months from now matches the first run.' },
   { h: 'Proven before it runs', p: 'The first piece is photographed and approved by you before the rest are touched. A wrong mark on metal is permanent, so it is never a surprise.' },
 ]
 
 // Materials and their true marks, from the shop's own material truths.
-// Machine: F = fiber, D = diode. Anything not settled stays off this list.
+// Anything not settled stays off this list.
 const MATERIALS = [
-  { name: 'Anodized aluminum', machine: 'fiber', mark: 'Dye removed to bare silver metal, whatever the color. Cards, tags, plant markers, laptop lids.' },
-  { name: 'Stainless steel', machine: 'fiber', mark: 'Annealed: a matte dark mark in the surface, nothing removed. Knives, labels, coasters, flatware.' },
-  { name: 'Powder-coated metal', machine: 'fiber', mark: 'Coating stripped to bare steel. Tumblers, bottles, painted panels.' },
-  { name: 'Brushed and raw metals', machine: 'fiber', mark: 'Engraved or annealed to a dark mark. Faceplates, brass, titanium, tool steel.' },
-  { name: 'Plastics', machine: 'fiber', mark: 'A light, permanent mark in ABS, polycarbonate, and most hard plastics. Chargers, housings, sign stock.' },
-  { name: 'Wood and bamboo', machine: 'diode', mark: 'A clean burn, darker with more power. Boards, panels, signs, coasters.' },
-  { name: 'Leather', machine: 'diode', mark: 'A dark, slightly recessed mark. Patches, wallets, tags.' },
-  { name: 'Slate', machine: 'diode', mark: 'A pale frost where the surface is removed. Coasters and small signs.' },
-  { name: 'Mirror', machine: 'fiber', mark: 'Silvering removed from the back. Reads as frosted glass from the front.' },
+  { name: 'Anodized aluminum', mark: 'Dye removed to bare silver metal, whatever the color. Cards, tags, plant markers, laptop lids.' },
+  { name: 'Stainless steel', mark: 'Annealed: a matte dark mark in the surface, nothing removed. Knives, labels, coasters, flatware.' },
+  { name: 'Powder-coated metal', mark: 'Coating stripped to bare steel. Tumblers, bottles, painted panels.' },
+  { name: 'Brushed and raw metals', mark: 'Engraved or annealed to a dark mark. Faceplates, brass, titanium, tool steel.' },
+  { name: 'Plastics', mark: 'A light, permanent mark in ABS, polycarbonate, and most hard plastics. Chargers, housings, sign stock.' },
+  { name: 'Wood and bamboo', mark: 'A clean burn, darker with more power. Boards, panels, signs, coasters.' },
+  { name: 'Leather', mark: 'A dark, slightly recessed mark. Patches, wallets, tags.' },
+  { name: 'Slate', mark: 'A pale frost where the surface is removed. Coasters and small signs.' },
+  { name: 'Mirror', mark: 'Silvering removed from the back. Reads as frosted glass from the front.' },
 ]
 
 // What a standing account is. Every line is a real term from lib/pricing.
@@ -231,7 +231,7 @@ export default function ServicesClient() {
             <p className="mt-5 max-w-[56ch] text-[length:var(--step-lead)] leading-relaxed text-[var(--ink-soft)]">
               Tell me what you need marked. Send a photo and a count: a number the same day, a proof photo
               before anything runs, delivery on {siteInfo.deliveryRunDay}. I&apos;m {siteInfo.founder.name},
-              one shop in {siteInfo.city}, fiber and diode, run by me.
+              one shop in {siteInfo.city}, run by me.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <a
@@ -281,7 +281,7 @@ export default function ServicesClient() {
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-6 items-stretch">
           <div className="bg-[var(--surface)] border border-[var(--hairline)] rounded-[var(--r-panel)] p-6 sm:p-8">
             <h2 className="text-[length:var(--step-panel)] text-[var(--ink)]" style={display}>What I need from you</h2>
-            <p className="mt-1.5 text-[length:var(--step-fine)] text-[var(--ink-soft)]">Five things. A text message covers all of them.</p>
+            <p className="mt-1.5 text-[length:var(--step-fine)] text-[var(--ink-soft)]">Five things. One text message covers all of them.</p>
             <ol className="mt-5 space-y-4 list-none p-0 m-0">
               {BRIEF.map((b, i) => (
                 <li key={b.h} className="grid grid-cols-[28px_1fr] gap-3">
@@ -297,7 +297,7 @@ export default function ServicesClient() {
               href={getSmsLink(BRIEF_SMS)}
               className="puffy-btn mt-6 inline-flex items-center justify-center h-[48px] px-6 rounded-[var(--r-control)] bg-[var(--coral)] text-white text-[length:var(--step-body)] font-semibold hover:bg-[var(--coral-hover)] transition-colors duration-[var(--t-hover)]"
             >
-              Start the text, the five lines are filled in
+              Start the text. The five lines are already in it
             </a>
           </div>
 
@@ -320,7 +320,7 @@ export default function ServicesClient() {
       </section>
 
       {/* ═══════════ PRECISION ═══════════
-          The machines and what they do to each material. Only facts that
+          What the laser does to each material. Only facts that
           are settled: how a material marks comes from the shop's own
           material truths, never a guess. */}
       <section id="precision" className="max-w-[1280px] mx-auto px-5 sm:px-11 pb-14 scroll-mt-24">
@@ -346,7 +346,7 @@ export default function ServicesClient() {
             <div className="text-[length:var(--step-row)]">
               {MATERIALS.map((m, i) => (
                 <div key={m.name} className={`grid grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)] gap-x-4 py-2.5 ${i < MATERIALS.length - 1 ? 'border-b border-[var(--hairline)]' : ''}`}>
-                  <span className="font-semibold text-[var(--ink)] leading-snug">{m.name}<span className="block font-mono font-normal text-[length:var(--step-fine)] text-[var(--ink-soft)]">{m.machine}</span></span>
+                  <span className="font-semibold text-[var(--ink)] leading-snug">{m.name}</span>
                   <span className="leading-snug text-[var(--ink-soft)]">{m.mark}</span>
                 </div>
               ))}

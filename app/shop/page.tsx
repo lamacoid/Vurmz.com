@@ -43,25 +43,25 @@ const WORK = [
     src: '/portfolio/tumbler-cherry-creek-37.jpg',
     alt: 'Engraved 20 oz tumbler for a Cherry Creek business',
     title: 'Branded tumbler',
-    spec: 'Powder-coated stainless, fiber laser',
+    spec: 'Powder-coated stainless, coating removed',
   },
   {
     src: '/portfolio/denver-map-mirror-closeup.jpg',
     alt: 'Denver metro street map engraved on a beveled mirror',
     title: 'Denver map on mirror',
-    spec: 'Beveled mirror glass, fiber ablation',
+    spec: 'Beveled mirror glass, silvering removed',
   },
   {
     src: '/portfolio/pocket-knife-engraved.jpg',
     alt: 'Pocket knife with an engraved pattern on the bolster',
     title: 'Pocket knife',
-    spec: 'Stainless folding blade, fiber laser',
+    spec: 'Stainless folding blade, annealed',
   },
   {
     src: '/portfolio/water-bottle-custom-engraved.jpg',
     alt: 'Custom engraved water bottle',
     title: 'Water bottle',
-    spec: 'Powder-coated steel, fiber laser',
+    spec: 'Powder-coated steel, coating removed',
   },
 ]
 

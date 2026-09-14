@@ -30,7 +30,7 @@ export default function KnifeEngravingPage() {
     '@type': 'Service',
     serviceType: 'Knife Engraving',
     name: 'Custom Knife Engraving',
-    description: 'Custom knife engraving in Centennial, CO. Chef knives, pocket knives, cleavers, and hunting knives. Names, dates, and logos cut into the steel with a fiber laser. Next-day turnaround, hand-delivered across the south Denver metro.',
+    description: 'Custom knife engraving in Centennial, CO. Chef knives, pocket knives, cleavers, and hunting knives. Names, dates, and logos cut into the steel with a laser. Next-day turnaround, hand-delivered across the south Denver metro.',
     provider: {
       '@type': 'LocalBusiness',
       name: siteInfo.legalName,
@@ -69,7 +69,7 @@ export default function KnifeEngravingPage() {
             Knife Engraving
           </h1>
           <p className="text-[var(--ink-soft)] text-base sm:text-lg leading-relaxed max-w-2xl">
-            I spent fifteen years in professional kitchens before I picked up a laser, so I know what a knife means to the person who carries it. Chef knives, pocket knives, cleavers, hunting knives. A name on the blade, a date on the bolster, a logo on the handle plate. Fiber laser marking goes into the steel, not onto it, so it survives the sharpener and the dishwasher you shouldn&apos;t be using anyway. Bring me your knife or I&apos;ll source one. Next-day on most jobs.
+            I spent fifteen years in professional kitchens before I picked up a laser, so I know what a knife means to the person who carries it. Chef knives, pocket knives, cleavers, hunting knives. A name on the blade, a date on the bolster, a logo on the handle plate. The mark goes into the steel, not onto it, so it survives the sharpener and the dishwasher you shouldn&apos;t be using anyway. Bring me your knife or I&apos;ll source one. Next-day on most jobs.
           </p>
         </div>
       </section>

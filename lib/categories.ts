@@ -63,7 +63,7 @@ export const SHOP_CATEGORIES: ShopCategory[] = [
     shortName: 'Your Piece',
     tagline: 'The thing you already love, marked.',
     cardDescription: 'A knife, a watch back, a laptop, a flask, the tool your father carried. Bring it or ship it and it comes back engraved, with a proof photo before I touch it.',
-    description: 'Engrave your own piece in Centennial, Colorado. Knives, laptops, watches, flasks, tools, heirlooms: what you bring, marked by one person with a fiber and diode laser. Proof before it runs. Hand-delivered across the south Denver metro.',
+    description: 'Engrave your own piece in Centennial, Colorado. Knives, laptops, watches, flasks, tools, heirlooms: what you bring, marked by one person with a laser. Proof before it runs. Hand-delivered across the south Denver metro.',
     heroImage: '/portfolio/macbook-engraving.jpg',
     galleryImages: [
       '/portfolio/pocket-knife-engraved.jpg',

@@ -14,7 +14,7 @@ export default function OnSite({ standalone = false }: { standalone?: boolean })
     ['Half day', usd(ONSITE.halfDay), 'Up to four hours on site, one station, me at it'],
     ['Full day', usd(ONSITE.fullDay), 'Up to eight hours'],
     ['Extra hour', usd(ONSITE.extraHour)],
-    ['Second station', `+${usd(ONSITE.secondStationHalf)} half, +${usd(ONSITE.secondStationFull)} full`, 'Fiber and diode running together, for a big guest list'],
+    ['Second station', `+${usd(ONSITE.secondStationHalf)} half, +${usd(ONSITE.secondStationFull)} full`, 'Two machines running together, for a big guest list'],
     ['Per piece, for a store', `${usd(ONSITE.perPieceRetail)} a piece`, `${ONSITE.perPieceMinimum} piece minimum. You set the guest price.`],
     ['Travel', `Free within ${ONSITE.travelFreeMiles} miles`, `${usd(ONSITE.travelPerMile)} a mile round trip beyond that`],
     ['Deposit', `${Math.round(ONSITE.depositPct * 100)}% at booking`, 'Balance on the day. Date changes free outside two weeks.'],

@@ -8,11 +8,11 @@ import Breadcrumbs from '@/components/Breadcrumbs'
 
 export const metadata: Metadata = {
   title: { absolute: 'Metal Service Tags & Equipment Nameplates | VURMZ, Centennial, CO' },
-  description: 'Engraved metal service tags, serial plates, and equipment nameplates for trades in the Denver metro. Durable fiber laser marking, next-day turnaround, hand-delivered.',
+  description: 'Engraved metal service tags, serial plates, and equipment nameplates for trades in the Denver metro. Durable laser marking, next-day turnaround, hand-delivered.',
   alternates: { canonical: '/services/metal-tags' },
   openGraph: {
     title: 'Metal Service Tags & Equipment Nameplates | VURMZ',
-    description: 'Engraved metal service tags, serial plates, and equipment nameplates for trades in the Denver metro. Durable fiber laser marking, next-day turnaround, hand-delivered.',
+    description: 'Engraved metal service tags, serial plates, and equipment nameplates for trades in the Denver metro. Durable laser marking, next-day turnaround, hand-delivered.',
     url: `${siteInfo.url}/services/metal-tags`,
     images: ['/portfolio/clga-faceplate-closeup.jpg'],
   },
@@ -29,7 +29,7 @@ export default function MetalTagsPage() {
     '@type': 'Service',
     serviceType: 'Metal Service Tags & Equipment Nameplates',
     name: 'Engraved Metal Service Tags & Equipment Nameplates',
-    description: 'Fiber-laser engraved service tags, serial plates, QC tags, and equipment nameplates for HVAC, electrical, plumbing, and trade shops across the south Denver metro. Durable, next-day turnaround, hand-delivered.',
+    description: 'Laser engraved service tags, serial plates, QC tags, and equipment nameplates for HVAC, electrical, plumbing, and trade shops across the south Denver metro. Durable, next-day turnaround, hand-delivered.',
     provider: {
       '@type': 'LocalBusiness',
       name: siteInfo.legalName,
@@ -68,7 +68,7 @@ export default function MetalTagsPage() {
             Metal Service Tags &amp; Equipment Nameplates
           </h1>
           <p className="text-[var(--ink-soft)] text-base sm:text-lg leading-relaxed max-w-2xl">
-            Stickers fall off. Sharpie wipes away. A fiber-laser mark in stainless or anodized aluminum outlives the equipment it&apos;s on. I make service tags, serial plates, QC tags, and nameplates for HVAC techs, electricians, plumbers, and shops across the south Denver metro. Phone number, license number, QR code, logo, whatever your tag needs to carry. Standard sizes or cut to spec. Order ten or order five hundred. Next-day turnaround on most runs, hand-delivered.
+            Stickers fall off. Sharpie wipes away. A laser mark in stainless or anodized aluminum outlives the equipment it&apos;s on. I make service tags, serial plates, QC tags, and nameplates for HVAC techs, electricians, plumbers, and shops across the south Denver metro. Phone number, license number, QR code, logo, whatever your tag needs to carry. Standard sizes or cut to spec. Order ten or order five hundred. Next-day turnaround on most runs, hand-delivered.
           </p>
           <p className="mt-5 text-[13px] font-mono tracking-wide text-[var(--eyebrow)]">
             No setup fee. No minimums. Hand-delivered. Volume pricing from 50 tags.
