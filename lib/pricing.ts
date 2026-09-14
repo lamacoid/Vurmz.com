@@ -33,15 +33,17 @@ export const CATALOG = {
     ],
   },
   coasters: {
+    // Repriced 2026-09-13, Zach: "price higher." Business packs start at
+    // 20; pine $5 a coaster, slate $6.50. The $60 pack of 15 is retired.
     name: "Coasters",
-    pack: 15,
-    packPrice: [60, 90] as const,
-    perItem: [4, 6] as const,
+    pack: 20,
+    packPrice: [100, 130] as const,
+    perItem: [5, 6.5] as const,
     materials: [
-      { label: "Pine / Bamboo", price: 4 },
-      { label: "Oak / Acacia", price: 5 },
-      { label: "Natural Slate", price: 5 },
-      { label: "Stainless Steel", price: 6 },
+      { label: "Pine / Bamboo", price: 5 },
+      { label: "Oak / Acacia", price: 6 },
+      { label: "Natural Slate", price: 6.5 },
+      { label: "Stainless Steel", price: 7.5 },
     ],
   },
   keychains: {

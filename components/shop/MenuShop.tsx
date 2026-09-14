@@ -190,12 +190,12 @@ export default async function MenuShop() {
                   className="relative text-[length:var(--step-section)] font-semibold text-[var(--ink)]"
                   style={{ fontFamily: 'var(--font-display), Georgia, serif' }}
                 >
-                  Bring your thing. {menuPrice(house.priceCents)} flat.
+                  Your own piece, engraved. {menuPrice(house.priceCents)}.
                   <span aria-hidden className="absolute -bottom-0.5 left-0 h-px w-full bg-[var(--signal)] shadow-[0_0_6px_rgba(127,207,212,0.9)] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out motion-reduce:transition-none" />
                 </span>
               </Link>
               <p className="text-sm text-[var(--ink-soft)] mt-2 max-w-md mx-auto">
-                {menuCase(house.shortDescription || 'your thing, engraved, flat within size, a little more for big or complicated')}
+                {menuCase(house.shortDescription || 'one piece, one placement, a proof before it runs')}
               </p>
               <Link
                 href={`/shop/p/${house.slug}`}

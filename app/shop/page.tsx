@@ -3,7 +3,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ChatBubbleLeftIcon } from '@heroicons/react/24/outline'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
-import { SIGNATURE, SOURCING } from '@/lib/pricing'
 import RotatingTagline from '@/components/RotatingTagline'
 import MenuShop from '@/components/shop/MenuShop'
 import HowItWorks from '@/components/HowItWorks'
@@ -30,7 +29,7 @@ const BRING = [
   'Mirrors and glass',
   'Lighters and pocket carry',
   'Awards and plaques',
-  'The odd thing you are holding',
+  'The one thing that is not on this list',
 ]
 
 // Real pieces, captioned by the material and process recorded in
@@ -78,7 +77,7 @@ export default function ShopHome() {
             className="text-[length:var(--step-section)] font-semibold text-[var(--ink)]"
           />
           <p className="text-sm text-[var(--ink-soft)] mt-3">
-            Engraved goods, hand-delivered across the South Denver metro ·{' '}
+            Made to order, one at a time, and brought to your door across the south Denver metro ·{' '}
             <a href={getSmsLink("Hi, I'd like to get something engraved")} className="text-[var(--eyebrow)] font-semibold hover:underline">
               Text {siteInfo.phone}
             </a>
@@ -113,10 +112,10 @@ export default function ShopHome() {
               ))}
             </ul>
             <p className="mt-5 text-[14px] leading-relaxed text-[var(--ink-soft)]">
-              Anything solid takes a mark: metal, wood, glass, leather, acrylic, plastic, stone.
-              Your thing engraved is ${SIGNATURE.startingAt} flat within size, a little more for big
-              or complicated. Do not have it yet? I will source it, engrave it and deliver it for a
-              ${SOURCING.fee} finder&apos;s fee plus the item.
+              Anything solid takes a mark: metal, wood, glass, leather, slate, acrylic, plastic. Your own
+              piece is one price within a palm-sized mark, a little more for the large or the intricate,
+              and you see a proof before it runs. Do not have the piece yet? Happy to source, for a fee:
+              named, found, engraved, and brought to you, the item at cost.
             </p>
           </div>
         </div>
