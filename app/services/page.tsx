@@ -5,7 +5,7 @@ import ServicesClient from '@/components/services/ServicesClient'
 // prerenders as static instead of running on the edge per request.
 
 export const metadata: Metadata = {
-  title: 'Precision Laser Engraving for Business | VURMZ',
+  title: 'Precision Laser Engraving and Marking for Business | VURMZ',
   description: 'Equipment labels, knife crews, metal cards, branded packs, plates and panels for South Denver businesses. Posted prices, a proof before every run, standing accounts with weekly delivery and NET-30.',
   alternates: { canonical: '/services' },
 }
