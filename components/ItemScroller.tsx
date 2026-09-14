@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react'
 
-const LINES = [
+export const LINES = [
   {
     // Business & Branding
     items: [

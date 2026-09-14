@@ -64,8 +64,8 @@ const CAPABILITIES = [
     image: 'https://res.cloudinary.com/business-products/image/upload/q_auto,c_pad,b_transparent,w_300,h_300/v1667557617/products/images/large/ULT202--4483a6b9.png',
   },
   {
-    name: 'Promotional Products',
-    description: 'Keychains, pens, bottle openers, coasters, badges, pet bowls, luggage tags. Bulk-ready.',
+    name: 'Stocked Pieces',
+    description: 'Pens, cards, coasters, keychains, tags. Kept on hand, engraved to match.',
     image: 'https://res.cloudinary.com/business-products/image/upload/q_auto,c_pad,b_transparent,w_300,h_300/v1744731376/products/images/large/GFT100--1951abe9.png',
   },
 ]

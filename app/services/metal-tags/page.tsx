@@ -71,7 +71,7 @@ export default function MetalTagsPage() {
             Stickers fall off. Sharpie wipes away. A fiber-laser mark in stainless or anodized aluminum outlives the equipment it&apos;s on. I make service tags, serial plates, QC tags, and nameplates for HVAC techs, electricians, plumbers, and shops across the south Denver metro. Phone number, license number, QR code, logo, whatever your tag needs to carry. Standard sizes or cut to spec. Order ten or order five hundred. Next-day turnaround on most runs, hand-delivered.
           </p>
           <p className="mt-5 text-[13px] font-mono tracking-wide text-[var(--eyebrow)]">
-            No setup fee. No minimums. No shipping. Down to $2 a tag at volume.
+            No setup fee. No minimums. Hand-delivered. Volume pricing from 50 tags.
           </p>
         </div>
       </section>
@@ -147,14 +147,14 @@ export default function MetalTagsPage() {
             Tell me what your tag needs to carry.
           </h2>
           <p className="text-[var(--ink-soft)] text-base leading-relaxed mb-6">
-            Text me the details and a rough count. I&apos;ll quote you fast.
+            Text me the details and a rough count. You have a number today.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
               href="/services/contact"
               className="group inline-flex items-center justify-center gap-2 px-6 py-3 bg-[var(--coral)] text-white font-semibold text-sm rounded-[var(--r-control)] hover:bg-[var(--coral)]-hover transition-all"
             >
-              Get a Quote
+              Send the job
               <ArrowRightIcon className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
             <a

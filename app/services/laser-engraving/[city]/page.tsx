@@ -36,7 +36,7 @@ const cityData: Record<string, CityData> = {
       'Littleton has a real downtown, one of the few in the south metro. I work with shops, restaurants, and offices throughout Littleton, from Main Street boutiques to offices along Santa Fe Drive.',
       'If you are near the Littleton Riverwalk or in the Columbine Valley area, I can meet you locally to pick up items or hand-deliver finished orders. Direct handoff from the person who engraved your order.',
       'Laser engraving works on metal, wood, acrylic, leather, glass, and more. Branded pens for your register, engraved coasters for your tasting room, custom metal business cards. Whatever you need for your Littleton business, I can make it happen.',
-      'Custom engraving starts at $35. I also stock pens, keychains, coasters, and metal cards at lower per-piece Basic pricing. No setup fees, no minimums, and free delivery throughout the south Denver metro.',
+      'One piece or a standing order. No setup fees, a proof before it runs, hand-delivered across the south Denver metro.',
     ],
   },
   'lone-tree': {
@@ -46,7 +46,7 @@ const cityData: Record<string, CityData> = {
     paragraphs: [
       'Lone Tree has a mix of corporate offices at RidgeGate and shops and restaurants around Park Meadows. I deliver engraved items directly to your Lone Tree office or storefront.',
       'Metal business cards for your team, branded pens for a conference at the Lone Tree Arts Center, custom awards for an event at the Gaylord Rockies. You text me, I quote you, and I hand-deliver the finished product.',
-      'Fast turnaround is standard on most stocked items. I am flexible on rush orders for local clients. If you need 50 engraved pens by Friday, just say the word.',
+      'Most pieces are ready within three days, and a proof photo comes first. If you need fifty pens by Friday, say so and I will tell you plainly whether it works.',
       'Every item is engraved on professional-grade laser equipment. Clean marks, done right the first time.',
     ],
   },
@@ -56,7 +56,7 @@ const cityData: Record<string, CityData> = {
     neighborhoods: 'Mainstreet Parker, the PACE Center, Stroh Ranch, and Stonegate neighborhoods',
     paragraphs: [
       'Parker is growing fast, and I work with restaurants, offices, contractors, and retailers here. Custom engraving on everything from branded pens to industrial equipment labels.',
-      'If you are in the Mainstreet Parker district, near the PACE Center, or along Parker Road, I deliver directly to your location. Quick handoff from the person who actually did your job.',
+      'If you are in the Mainstreet Parker district, near the PACE Center, or along Parker Road, I deliver directly to your location. Handed to you by the person who made it.',
       'Many of my Parker clients order quarterly packs of branded pens, coasters, or keychains to keep their offices stocked. It makes a real impression on customers.',
       'An engraved logo is cut into the material itself. It feels different because it is.',
     ],
@@ -67,8 +67,8 @@ const cityData: Record<string, CityData> = {
     neighborhoods: 'Town Center, Highlands Ranch Backcountry Wilderness, and the business parks along Broadway and Lucent',
     paragraphs: [
       'Highlands Ranch is packed with local businesses, and I do laser engraving for a lot of them. From the shops at Town Center to the offices along Broadway and Lucent Boulevard.',
-      'I work with restaurants, real estate agents, contractors, dental offices, fitness studios, and corporate teams across Highlands Ranch. Branded giveaway items for community events, engraved equipment labels for construction crews, you name it. I deliver to your door.',
-      'You text me, I quote you, and I get it done. No phone trees, no ticket systems. Just a direct line to the person doing your engraving.',
+      'I work with restaurants, real estate agents, contractors, dental offices, fitness studios, and corporate teams across Highlands Ranch. Engraved pieces for community events, equipment labels for construction crews, closing gifts for the agents. I deliver to your door.',
+      'You text me, I quote it, I make it, and I bring it. One person from the first text to the delivery.',
       'If you have never tried laser engraving for your business, text me what you need. I will quote you and handle everything from there. No obligation.',
     ],
   },
@@ -89,7 +89,7 @@ const cityData: Record<string, CityData> = {
     neighborhoods: 'historic downtown Castle Rock, the Outlets at Castle Rock, Meadows, and Miller Activity Complex',
     paragraphs: [
       'Castle Rock sits between Denver and Colorado Springs, and I deliver hand-engraved orders directly to businesses here. No shipping required.',
-      'If you run a shop in historic downtown Castle Rock, a restaurant near the Outlets, or a business along I-25 and Meadows Parkway, I bring finished orders directly to you. Fast turnaround, and you deal with one person from start to finish.',
+      'If you run a shop in historic downtown Castle Rock, a restaurant near the Outlets, or a business along I-25 and Meadows Parkway, I bring finished orders directly to you. One person from the first text to the delivery, and a proof before anything runs.',
       'Castle Rock has breweries, outdoor outfitters, real estate offices, and construction companies. Engraved pens on a closing table, branded coasters at a taproom, custom knives as corporate gifts. That stuff gets noticed.',
       'I am flexible on order sizes. Text me and we will figure it out together.',
     ],
@@ -102,7 +102,7 @@ const cityData: Record<string, CityData> = {
       'Aurora is the largest city in the east Denver metro. From corporate offices near the Anschutz Medical Campus to restaurants and shops at Southlands, I do laser engraving with personal delivery across Aurora.',
       'Aurora businesses cover everything: medical, aerospace, food service, construction, retail, tech. Engraving works across all of it: tools, gifts, promo items, signage.',
       'I serve clients throughout Aurora, including the Southlands area, Tollgate Crossing, Smoky Hill, and along E-470 and Quincy Avenue. Delivery is free on orders over $50, and I am happy to meet locally for pickups and drop-offs.',
-      'Single engraved gift or a recurring bulk order of branded pens and business cards, either way it is easy. Text me a photo or description of what you want and I will get back to you with a quote.',
+      'A single engraved gift or a standing order of pens and cards for the office, either way it is one text. Send a photo or a description and you have a number today.',
     ],
   },
   'greenwood-village': {
@@ -112,7 +112,7 @@ const cityData: Record<string, CityData> = {
     paragraphs: [
       'Greenwood Village is the heart of the Denver Tech Center. Corporate headquarters, law firms, financial advisors, tech companies. I do laser engraving for businesses here, from engraved metal business cards to branded executive gifts.',
       'If your office is near Fiddler\'s Green, Greenwood Plaza, or along Orchard Road, I deliver finished orders directly to your building. No shipping to coordinate. I hand it to you personally.',
-      'Corporate gifting is one of the most common things I do in Greenwood Village. Engraved pens, knives, tumblers, and leather goods work great as client gifts, employee recognition awards, and conference giveaways.',
+      'Corporate gifting is one of the most common things I do in Greenwood Village. Engraved pens, knives, tumblers, and leather goods are the closing gifts, recognition pieces, and board gifts I make most.',
       'VURMZ is a one-person operation. Your project gets my full attention, your timeline is respected, and you talk directly to the person doing the work.',
     ],
   },
@@ -123,7 +123,7 @@ const cityData: Record<string, CityData> = {
     paragraphs: [
       'Cherry Hills Village is one of Colorado\'s most well-known communities. I do laser engraving for businesses and individuals here, with personal delivery to your Cherry Hills address.',
       'Engraved metal business cards, personalized gifts for a private event, branded items for clients. I take my time on every job and deliver it myself.',
-      'Cherry Hills is minutes from my Centennial workshop, so turnaround is fast. Next-day delivery is often possible on stocked items, and I can handle rush orders with advance notice.',
+      'Cherry Hills is minutes from the shop in Centennial. Next-day delivery is often possible on pieces I keep in stock, and a date can usually be met with notice.',
       'Clean engraving on every piece. One person handles your job from start to finish.',
     ],
   },
@@ -134,7 +134,7 @@ const cityData: Record<string, CityData> = {
     paragraphs: [
       'I serve restaurants in RiNo, boutiques in Cherry Creek, offices in LoDo, breweries in Baker, and shops along South Broadway. Personal delivery from Centennial.',
       'Branded pens for your coworking space, engraved coasters for your taproom, metal business cards for your real estate team, custom awards for a corporate event. I do all of it.',
-      'You text me what you want, I quote you, and I deliver to your Denver location with fast turnaround. No online portals, no automated confirmations. Just a direct line to the person doing your engraving.',
+      'You text me what you want, I quote it, and I deliver to your Denver address within the week. No portals, no automated replies. One person from the first text to the delivery.',
       'Laser engraving gives your brand a tactile quality that printed labels and vinyl stickers cannot match. When someone picks up your pen or holds your business card, they can feel it. That sticks with people.',
     ],
   },
@@ -145,10 +145,10 @@ const services = [
   { name: 'Branded Pens', description: 'Metal stylus pens engraved with your logo and contact info.' },
   { name: 'Metal Business Cards', description: 'Matte black or stainless steel cards with your info engraved.' },
   { name: 'Coasters & Barware', description: 'Wood, slate, or steel coasters engraved for restaurants and breweries.' },
-  { name: 'Keychains & Promotional Items', description: 'Acrylic or metal keychains perfect for giveaways and events.' },
+  { name: 'Keychains & Small Pieces', description: 'Aluminum keychains and tags, engraved to match for teams, events, and closings.' },
   { name: 'Knife & Tool Engraving', description: 'Custom text or logos on kitchen knives, multitools, and blades.' },
   { name: 'Industrial Labels & Nameplates', description: 'ABS panel labels, equipment tags, and compliance nameplates.' },
-  { name: 'Custom Gifts & Awards', description: 'Trophies, cutting boards, tumblers, and personalized keepsakes.' },
+  { name: 'Gifts & Awards', description: 'Cutting boards, tumblers, knives, and the piece a client keeps on the desk.' },
 ]
 
 // ---------------------------------------------------------------------------
@@ -306,14 +306,14 @@ export default async function CityPage({ params }: Props) {
             Ready to get started in {city.name}?
           </h2>
           <p className="text-[var(--ink-soft)] text-base leading-relaxed mb-6">
-            Text {siteInfo.founder.name} for a free quote. Fast turnaround on finished orders.
+            Text {siteInfo.founder.name} a photo and a count. A number today, a proof before it runs, delivered on {siteInfo.deliveryRunDay}.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
               href="/services/contact"
               className="group inline-flex items-center justify-center gap-2 px-6 py-3 bg-[var(--coral)] text-white font-semibold text-sm rounded-[var(--r-control)] hover:bg-[var(--coral)]-hover transition-all"
             >
-              Get a Quote
+              Send the job
               <ArrowRightIcon className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
             <a

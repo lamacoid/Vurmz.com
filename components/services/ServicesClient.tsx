@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 import { SIGNATURE, CATALOG, DELIVERY, BUSINESS, BUSINESS_TIER_CARDS, SOURCING } from '@/lib/pricing'
 import TrustedBy from '@/components/TrustedBy'
+import EndlessStrip from '@/components/services/EndlessStrip'
 
 /**
  * /services, rebuilt 2026-09-13: the work first, the terms as the close.
@@ -226,9 +227,9 @@ export default function ServicesClient() {
               Precision laser engraving and marking<br className="hidden sm:block" /> for the businesses of the south Denver metro.
             </h1>
             <p className="mt-5 max-w-[56ch] text-[length:var(--step-lead)] leading-relaxed text-[var(--ink-soft)]">
-              Tell me what you need marked. Labels, tags, plates, knives, cards, packs, the part you are holding.
-              Send a photo and a count: a number the same day, a proof photo before anything runs, delivery
-              on {siteInfo.deliveryRunDay}. I&apos;m {siteInfo.founder.name}, one shop in {siteInfo.city}, fiber and diode, run by me.
+              Tell me what you need marked. Send a photo and a count: a number the same day, a proof photo
+              before anything runs, delivery on {siteInfo.deliveryRunDay}. I&apos;m {siteInfo.founder.name},
+              one shop in {siteInfo.city}, fiber and diode, run by me.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <a
@@ -269,6 +270,10 @@ export default function ServicesClient() {
           </div>
         </div>
       </section>
+
+      {/* The crawl. Not a list to read, a texture to notice: everything the
+          shop marks, rolling past under the masthead at full width. */}
+      <EndlessStrip className="mb-10 sm:mb-12" />
 
       {/* ═══════════ THE BRIEF ═══════════
           The heart of the page. Not what they should want: what I need to

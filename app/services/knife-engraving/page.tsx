@@ -141,14 +141,14 @@ export default function KnifeEngravingPage() {
             Bring me your knife.
           </h2>
           <p className="text-[var(--ink-soft)] text-base leading-relaxed mb-6">
-            Text me a photo and what you want marked. I&apos;ll quote you fast.
+            Text me a photo and what you want marked. You have a number today.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
               href="/services/contact"
               className="group inline-flex items-center justify-center gap-2 px-6 py-3 bg-[var(--coral)] text-white font-semibold text-sm rounded-[var(--r-control)] hover:bg-[var(--coral)]-hover transition-all"
             >
-              Get a Quote
+              Send the job
               <ArrowRightIcon className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
             <a
