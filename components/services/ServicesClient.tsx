@@ -171,7 +171,7 @@ const MATERIALS = [
   { name: 'Wood and bamboo', mark: 'A clean burn, darker with more power. Boards, panels, signs, coasters.' },
   { name: 'Leather', mark: 'A dark, slightly recessed mark. Patches, wallets, tags.' },
   { name: 'Slate', mark: 'A pale frost where the surface is removed. Coasters and small signs.' },
-  { name: 'Mirror', mark: 'Silvering removed from the back. Reads as frosted glass from the front.' },
+  { name: 'Mirror', mark: 'Silvering removed from the back, leaving clear glass where the design goes. Backed in any color or material you like, or left clear.' },
 ]
 
 // What a standing account is. Every line is a real term from lib/pricing.

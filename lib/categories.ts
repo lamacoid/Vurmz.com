@@ -187,7 +187,7 @@ export const SHOP_CATEGORIES: ShopCategory[] = [
     smsMessage: 'Hi Zach, I am interested in a custom piece for the wall. Here is the idea: ',
     faqs: [
       { question: 'What surfaces?', answer: 'Mirror, wood, metal, slate, glass, leather, acrylic. Flat and solid is all it needs to be.' },
-      { question: 'How does a mirror mark?', answer: 'From the back. The silvering is removed where the design goes, so from the front it reads as frosted glass in the mirror. The Denver map is made this way.' },
+      { question: 'How does a mirror mark?', answer: 'From the back. The silvering is removed where the design goes, leaving clear glass in the mirror. It can be backed with any color or material, or left clear. The Denver map is made this way.' },
       { question: 'How large can a piece be?', answer: 'Most wall pieces are no trouble. For something very large, send the size and I will tell you the best way to do it.' },
       { question: 'Can you work from my own art or a photo?', answer: 'Yes. A drawing, a photograph, a sketch on a napkin. I prepare the file and you approve a proof before it runs.' },
     ],
