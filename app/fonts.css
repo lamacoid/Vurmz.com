@@ -120,3 +120,10 @@
 @font-face { font-family: 'Shippori Mincho'; src: url('/fonts/Shippori-Mincho.ttf') format('truetype'); font-display: swap; }
 @font-face { font-family: 'Noto Sans KR'; src: url('/fonts/Noto-Sans-KR.ttf') format('truetype'); font-display: swap; }
 @font-face { font-family: 'Noto Sans SC'; src: url('/fonts/Noto-Sans-SC.ttf') format('truetype'); font-display: swap; }
+
+/* The card designer's template faces (OFL, self-hosted). Inter and Fraunces
+   are the site's own type via next/font under variable names; the SVG
+   previews reference them by family name, so they get plain faces here. */
+@font-face { font-family: 'Inter'; src: url('/fonts/designer/Inter-Regular.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Fraunces'; src: url('/fonts/designer/Fraunces-Regular.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Allura'; src: url('/fonts/designer/Allura-Regular.ttf') format('truetype'); font-display: swap; }

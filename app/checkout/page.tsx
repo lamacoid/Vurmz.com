@@ -266,6 +266,7 @@ export default function CheckoutPage() {
                 : undefined,
               options: (i.metadata?.options as { finish?: string } | undefined) ?? undefined,
               file: (i.metadata?.file as { key: string; filename: string } | undefined) ?? undefined,
+              design: (i.metadata?.design as undefined) ?? undefined,
             }
           }),
           fulfillmentMethod: chosenMethod,

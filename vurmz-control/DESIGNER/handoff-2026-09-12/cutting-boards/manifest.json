@@ -1,0 +1,218 @@
+[
+  {
+    "key": "family-kitchen",
+    "label": "Family kitchen",
+    "family": "cutting-boards",
+    "product": "Rectangular cutting board",
+    "slots": [
+      "line-1",
+      "name",
+      "tagline"
+    ],
+    "file": "cutting-boards/family-kitchen.svg",
+    "preview": "cutting-boards/family-kitchen.png",
+    "referenceSizeMm": [
+      304.8,
+      203.2
+    ],
+    "safeInsetMm": 20,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": "#232028",
+      "surface": "#b98c52",
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "Representative 12 x 8 inch engraving face. No board outline, juice groove, handle or cutting path is included. Wood tone is a reference, not a calibrated plate."
+  },
+  {
+    "key": "chop-it",
+    "label": "Chop it",
+    "family": "cutting-boards",
+    "product": "Rectangular cutting board",
+    "slots": [
+      "line-1",
+      "line-2",
+      "tagline"
+    ],
+    "file": "cutting-boards/chop-it.svg",
+    "preview": "cutting-boards/chop-it.png",
+    "referenceSizeMm": [
+      304.8,
+      203.2
+    ],
+    "safeInsetMm": 20,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": "#232028",
+      "surface": "#b98c52",
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "Representative 12 x 8 inch engraving face. No board outline, juice groove, handle or cutting path is included. Wood tone is a reference, not a calibrated plate."
+  },
+  {
+    "key": "leftovers",
+    "label": "Live, laugh, leftovers",
+    "family": "cutting-boards",
+    "product": "Rectangular cutting board",
+    "slots": [
+      "line-1",
+      "line-2",
+      "tagline"
+    ],
+    "file": "cutting-boards/leftovers.svg",
+    "preview": "cutting-boards/leftovers.png",
+    "referenceSizeMm": [
+      304.8,
+      203.2
+    ],
+    "safeInsetMm": 20,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": "#232028",
+      "surface": "#b98c52",
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "Representative 12 x 8 inch engraving face. No board outline, juice groove, handle or cutting path is included. Wood tone is a reference, not a calibrated plate."
+  },
+  {
+    "key": "snack-board",
+    "label": "Snack board",
+    "family": "cutting-boards",
+    "product": "Rectangular cutting board",
+    "slots": [
+      "line-1",
+      "line-2",
+      "tagline"
+    ],
+    "file": "cutting-boards/snack-board.svg",
+    "preview": "cutting-boards/snack-board.png",
+    "referenceSizeMm": [
+      304.8,
+      203.2
+    ],
+    "safeInsetMm": 20,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": "#232028",
+      "surface": "#b98c52",
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "Representative 12 x 8 inch engraving face. No board outline, juice groove, handle or cutting path is included. Wood tone is a reference, not a calibrated plate."
+  },
+  {
+    "key": "butter",
+    "label": "Made with butter",
+    "family": "cutting-boards",
+    "product": "Rectangular cutting board",
+    "slots": [
+      "line-1",
+      "line-2",
+      "tagline"
+    ],
+    "file": "cutting-boards/butter.svg",
+    "preview": "cutting-boards/butter.png",
+    "referenceSizeMm": [
+      304.8,
+      203.2
+    ],
+    "safeInsetMm": 20,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": "#232028",
+      "surface": "#b98c52",
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "Representative 12 x 8 inch engraving face. No board outline, juice groove, handle or cutting path is included. Wood tone is a reference, not a calibrated plate."
+  },
+  {
+    "key": "seasoned-love",
+    "label": "Seasoned with love",
+    "family": "cutting-boards",
+    "product": "Rectangular cutting board",
+    "slots": [
+      "line-1",
+      "line-2",
+      "tagline"
+    ],
+    "file": "cutting-boards/seasoned-love.svg",
+    "preview": "cutting-boards/seasoned-love.png",
+    "referenceSizeMm": [
+      304.8,
+      203.2
+    ],
+    "safeInsetMm": 20,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": "#232028",
+      "surface": "#b98c52",
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "Representative 12 x 8 inch engraving face. No board outline, juice groove, handle or cutting path is included. Wood tone is a reference, not a calibrated plate."
+  },
+  {
+    "key": "gather",
+    "label": "Gather here",
+    "family": "cutting-boards",
+    "product": "Rectangular cutting board",
+    "slots": [
+      "line-1",
+      "line-2",
+      "tagline"
+    ],
+    "file": "cutting-boards/gather.svg",
+    "preview": "cutting-boards/gather.png",
+    "referenceSizeMm": [
+      304.8,
+      203.2
+    ],
+    "safeInsetMm": 20,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": "#232028",
+      "surface": "#b98c52",
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "Representative 12 x 8 inch engraving face. No board outline, juice groove, handle or cutting path is included. Wood tone is a reference, not a calibrated plate."
+  },
+  {
+    "key": "recipe-memory",
+    "label": "Recipe keepsake",
+    "family": "cutting-boards",
+    "product": "Rectangular cutting board",
+    "slots": [
+      "line-1",
+      "line-2",
+      "tagline"
+    ],
+    "file": "cutting-boards/recipe-memory.svg",
+    "preview": "cutting-boards/recipe-memory.png",
+    "referenceSizeMm": [
+      304.8,
+      203.2
+    ],
+    "safeInsetMm": 20,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": "#232028",
+      "surface": "#b98c52",
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "Representative 12 x 8 inch engraving face. No board outline, juice groove, handle or cutting path is included. Wood tone is a reference, not a calibrated plate."
+  }
+]

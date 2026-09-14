@@ -9,7 +9,8 @@ export const runtime = 'edge'
 // this is the authenticated counterpart so order/customer attachments are
 // viewable from the admin. Images render inline, everything else downloads.
 // checkout/<gup_id>/<name> (3 segments) or customer/<cus_id>/<cfi_id>/<name> (4).
-const PRIVATE_KEY_RE = /^(checkout|customer)\/[A-Za-z0-9_-]+(\/[A-Za-z0-9_-]+)?\/[^/]{1,200}$/
+// orders/<ord_id>/<name>: laser files the designer writes at order time.
+const PRIVATE_KEY_RE = /^(checkout|customer|orders)\/[A-Za-z0-9_-]+(\/[A-Za-z0-9_-]+)?\/[^/]{1,200}$/
 const INLINE_TYPES = new Set(['image/jpeg', 'image/png', 'image/gif', 'image/webp'])
 
 export async function GET(req: NextRequest, ctx: { params: Promise<{ key: string[] }> }) {

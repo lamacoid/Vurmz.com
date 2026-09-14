@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="85.725mm" height="53.975mm" viewBox="0 0 85.725 53.975">
+<title>Gift card</title>
+<desc>A clear gift value with a recipient and redemption contact. One-tone engraving. Content inside 5.08 mm safe margin.</desc>
+<rect id="safe" x="5.08" y="5.08" width="75.565" height="43.815" fill="none" stroke="none"/>
+<g data-zone="company"><text data-slot="company" x="5.08" y="10" font-family="Inter" font-size="2.5" font-weight="400" text-anchor="start" letter-spacing="0" fill="#000">Rivera Plumbing</text></g><g data-zone="value"><text data-slot="value" x="5.08" y="29" font-family="Inter" font-size="12" font-weight="400" text-anchor="start" letter-spacing="0" fill="#000">$100</text></g><g data-zone="recipient"><text data-slot="name" x="5.08" y="38" font-family="Inter" font-size="3.88" font-weight="400" text-anchor="start" letter-spacing="0" fill="#000">Alex Rivera</text></g><g data-zone="contact"><line x1="5.08" y1="42" x2="80.645" y2="42" stroke="#000" stroke-width="0.15"/><text data-slot="contact-1" x="5.08" y="47" font-family="Inter" font-size="2.12" font-weight="400" text-anchor="start" letter-spacing="0" fill="#000">Redeem at (720) 555-0139</text></g>
+</svg>

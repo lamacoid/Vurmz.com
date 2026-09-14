@@ -42,7 +42,8 @@
     "/tmp/vurmz-next-build/types/**/*.ts"
   ],
   "exclude": [
+    "functions",
     "node_modules",
-    "functions"
+    "vurmz-control"
   ]
 }

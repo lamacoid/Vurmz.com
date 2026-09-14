@@ -12,6 +12,8 @@ import { createPayment, isSquareEnabled } from '@/lib/payments/square'
 import { getDb, getEnv, newId, nowIso } from '@/lib/db/client'
 import { reportError } from '@/lib/error'
 import { businessTierFor } from '@/lib/pricing'
+import { CARD_MATERIALS, CARD_TEMPLATES } from '@/lib/designer/card'
+import { writeOrderDesignFiles } from '@/lib/designer/order-files'
 
 export const runtime = 'edge'
 
@@ -87,6 +89,21 @@ const schema = z.object({
     file: z.object({
       key: z.string().max(320).regex(/^(checkout\/gup_[a-z0-9]+|customer\/[A-Za-z0-9_-]{1,60}\/[A-Za-z0-9_-]{1,60})\/[A-Za-z0-9._-]{1,180}$/),
       filename: z.string().min(1).max(200),
+    }).optional(),
+    // A card designed in the designer. Template and material must be ones
+    // we ship; values are plain text per named slot; the logo is a guest
+    // checkout upload. The laser file is written from this after creation.
+    design: z.object({
+      kind: z.literal('card'),
+      templateKey: z.string().refine(k => CARD_TEMPLATES.some(t => t.key === k), 'unknown template'),
+      materialKey: z.string().refine(k => CARD_MATERIALS.some(m => m.key === k), 'unknown material'),
+      nameFont: z.string().max(60),
+      values: z.record(z.string().max(40), z.string().max(120)).refine(v => Object.keys(v).length <= 16, 'too many fields'),
+      logo: z.object({
+        key: z.string().regex(/^checkout\/gup_[a-z0-9]+\/[A-Za-z0-9._-]{1,180}$/),
+        filename: z.string().min(1).max(200),
+        mime: z.enum(['image/svg+xml', 'image/png', 'image/jpeg', 'image/webp']),
+      }).optional(),
     }).optional(),
   })).min(1),
   fulfillmentMethod: z.enum(['ship','hand_deliver','pickup','uber_direct','invoice_later']),
@@ -271,7 +288,9 @@ export async function POST(req: NextRequest) {
   const builderByProduct = new Map<string, unknown>()
   const optionsByProduct = new Map<string, { finish?: string; template?: string }>()
   const fileByProduct = new Map<string, { key: string; filename: string }>()
+  const designByProduct = new Map<string, NonNullable<typeof body.items[number]['design']>>()
   for (const it of body.items) {
+    if (it.design) designByProduct.set(it.productId, it.design)
     if (it.builder && it.builder.elements.length > 0) builderByProduct.set(it.productId, it.builder)
     const finish = it.options?.finish?.trim()
     const template = it.options?.template?.trim()
@@ -330,6 +349,8 @@ export async function POST(req: NextRequest) {
       if (opts) meta.options = opts
       const file = fileByProduct.get(i.productId)
       if (file) meta.file = file
+      const design = designByProduct.get(i.productId)
+      if (design) meta.design = design
       return {
         productId: i.productId,
         variantId: i.variantId ?? undefined,
@@ -347,6 +368,15 @@ export async function POST(req: NextRequest) {
       ...(body.isBusinessOrder ? { businessOrder: true, businessStanding: isBusinessStanding } : {}),
     },
   })
+
+  // 4b. Laser files for designed lines. Guarded inside: never fails the order.
+  if (designByProduct.size > 0) {
+    try {
+      await writeOrderDesignFiles(order, new URL(req.url).origin)
+    } catch (err) {
+      reportError(err, { route: 'orders', extra: { alert: 'DESIGN_FILES_FAILED', orderId: order.id } })
+    }
+  }
 
   // 5. Payment — Square if requested and enabled, else defer to invoice
   let paymentStatus: 'paid' | 'pending' = 'pending'

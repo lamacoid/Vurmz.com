@@ -1,0 +1,218 @@
+[
+  {
+    "key": "warning-access",
+    "label": "Warning / authorized access",
+    "family": "signage",
+    "product": "ABS engraving sheet",
+    "slots": [
+      "heading",
+      "message",
+      "detail"
+    ],
+    "file": "signage/warning-access.svg",
+    "preview": "signage/warning-access.png",
+    "referenceSizeMm": [
+      300,
+      200
+    ],
+    "safeInsetMm": 15,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": null,
+      "surface": null,
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "Proposed 300 x 200 mm master. No regulatory compliance is claimed. Face/core colors, substrate composition and laser suitability are unverified."
+  },
+  {
+    "key": "caution-floor",
+    "label": "Caution / wet floor",
+    "family": "signage",
+    "product": "ABS engraving sheet",
+    "slots": [
+      "heading",
+      "message",
+      "detail"
+    ],
+    "file": "signage/caution-floor.svg",
+    "preview": "signage/caution-floor.png",
+    "referenceSizeMm": [
+      300,
+      200
+    ],
+    "safeInsetMm": 15,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": null,
+      "surface": null,
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "Proposed 300 x 200 mm master. No regulatory compliance is claimed. Face/core colors, substrate composition and laser suitability are unverified."
+  },
+  {
+    "key": "notice-staff",
+    "label": "Notice / staff only",
+    "family": "signage",
+    "product": "ABS engraving sheet",
+    "slots": [
+      "heading",
+      "message",
+      "detail"
+    ],
+    "file": "signage/notice-staff.svg",
+    "preview": "signage/notice-staff.png",
+    "referenceSizeMm": [
+      300,
+      200
+    ],
+    "safeInsetMm": 15,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": null,
+      "surface": null,
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "Proposed 300 x 200 mm master. No regulatory compliance is claimed. Face/core colors, substrate composition and laser suitability are unverified."
+  },
+  {
+    "key": "keep-clear",
+    "label": "Keep clear",
+    "family": "signage",
+    "product": "ABS engraving sheet",
+    "slots": [
+      "heading",
+      "message",
+      "detail"
+    ],
+    "file": "signage/keep-clear.svg",
+    "preview": "signage/keep-clear.png",
+    "referenceSizeMm": [
+      300,
+      200
+    ],
+    "safeInsetMm": 15,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": null,
+      "surface": null,
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "Proposed 300 x 200 mm master. No regulatory compliance is claimed. Face/core colors, substrate composition and laser suitability are unverified."
+  },
+  {
+    "key": "door-office",
+    "label": "Office door plaque",
+    "family": "signage",
+    "product": "ABS engraving sheet",
+    "slots": [
+      "heading",
+      "message",
+      "detail"
+    ],
+    "file": "signage/door-office.svg",
+    "preview": "signage/door-office.png",
+    "referenceSizeMm": [
+      300,
+      200
+    ],
+    "safeInsetMm": 15,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": null,
+      "surface": null,
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "Proposed 300 x 200 mm master. No regulatory compliance is claimed. Face/core colors, substrate composition and laser suitability are unverified."
+  },
+  {
+    "key": "business-hours",
+    "label": "Business hours",
+    "family": "signage",
+    "product": "ABS engraving sheet",
+    "slots": [
+      "heading",
+      "message",
+      "detail"
+    ],
+    "file": "signage/business-hours.svg",
+    "preview": "signage/business-hours.png",
+    "referenceSizeMm": [
+      300,
+      200
+    ],
+    "safeInsetMm": 15,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": null,
+      "surface": null,
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "Proposed 300 x 200 mm master. No regulatory compliance is claimed. Face/core colors, substrate composition and laser suitability are unverified."
+  },
+  {
+    "key": "equipment-id",
+    "label": "Equipment identification",
+    "family": "signage",
+    "product": "ABS engraving sheet",
+    "slots": [
+      "heading",
+      "message",
+      "detail"
+    ],
+    "file": "signage/equipment-id.svg",
+    "preview": "signage/equipment-id.png",
+    "referenceSizeMm": [
+      300,
+      200
+    ],
+    "safeInsetMm": 15,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": null,
+      "surface": null,
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "Proposed 300 x 200 mm master. No regulatory compliance is claimed. Face/core colors, substrate composition and laser suitability are unverified."
+  },
+  {
+    "key": "custom-message",
+    "label": "Custom sign",
+    "family": "signage",
+    "product": "ABS engraving sheet",
+    "slots": [
+      "heading",
+      "message",
+      "detail"
+    ],
+    "file": "signage/custom-message.svg",
+    "preview": "signage/custom-message.png",
+    "referenceSizeMm": [
+      300,
+      200
+    ],
+    "safeInsetMm": 15,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": null,
+      "surface": null,
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "Proposed 300 x 200 mm master. No regulatory compliance is claimed. Face/core colors, substrate composition and laser suitability are unverified."
+  }
+]

@@ -1,0 +1,263 @@
+[
+  {
+    "key": "chef-name",
+    "label": "Chef name",
+    "family": "knives-flatware",
+    "product": "Chef knife",
+    "slots": [
+      "name",
+      "tagline"
+    ],
+    "file": "knives-flatware/chef-name.svg",
+    "preview": "knives-flatware/chef-name.png",
+    "coordinateSystem": "normalized",
+    "viewBox": [
+      0,
+      0,
+      1000,
+      240
+    ],
+    "referenceSizeMm": null,
+    "safeInsetNormalized": [
+      40,
+      24
+    ],
+    "shape": "artwork-zone",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": null,
+      "surface": null,
+      "verified": false
+    },
+    "productionStatus": "needs_measured_mark_zone",
+    "notes": "No blade, cutting edge, bevel, handle, clip, rivet or hardware position is inferred. The shop sets the actual usable region."
+  },
+  {
+    "key": "chef-team",
+    "label": "Kitchen crew",
+    "family": "knives-flatware",
+    "product": "Chef knife",
+    "slots": [
+      "name",
+      "company"
+    ],
+    "file": "knives-flatware/chef-team.svg",
+    "preview": "knives-flatware/chef-team.png",
+    "coordinateSystem": "normalized",
+    "viewBox": [
+      0,
+      0,
+      1000,
+      240
+    ],
+    "referenceSizeMm": null,
+    "safeInsetNormalized": [
+      40,
+      24
+    ],
+    "shape": "artwork-zone",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": null,
+      "surface": null,
+      "verified": false
+    },
+    "productionStatus": "needs_measured_mark_zone",
+    "notes": "No blade, cutting edge, bevel, handle, clip, rivet or hardware position is inferred. The shop sets the actual usable region."
+  },
+  {
+    "key": "pocket-initials",
+    "label": "Pocket knife initials",
+    "family": "knives-flatware",
+    "product": "Pocket knife",
+    "slots": [
+      "monogram"
+    ],
+    "file": "knives-flatware/pocket-initials.svg",
+    "preview": "knives-flatware/pocket-initials.png",
+    "coordinateSystem": "normalized",
+    "viewBox": [
+      0,
+      0,
+      1000,
+      240
+    ],
+    "referenceSizeMm": null,
+    "safeInsetNormalized": [
+      40,
+      24
+    ],
+    "shape": "artwork-zone",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": null,
+      "surface": null,
+      "verified": false
+    },
+    "productionStatus": "needs_measured_mark_zone",
+    "notes": "No blade, cutting edge, bevel, handle, clip, rivet or hardware position is inferred. The shop sets the actual usable region."
+  },
+  {
+    "key": "knife-gift",
+    "label": "Knife gift message",
+    "family": "knives-flatware",
+    "product": "Knife",
+    "slots": [
+      "message",
+      "date"
+    ],
+    "file": "knives-flatware/knife-gift.svg",
+    "preview": "knives-flatware/knife-gift.png",
+    "coordinateSystem": "normalized",
+    "viewBox": [
+      0,
+      0,
+      1000,
+      240
+    ],
+    "referenceSizeMm": null,
+    "safeInsetNormalized": [
+      40,
+      24
+    ],
+    "shape": "artwork-zone",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": null,
+      "surface": null,
+      "verified": false
+    },
+    "productionStatus": "needs_measured_mark_zone",
+    "notes": "No blade, cutting edge, bevel, handle, clip, rivet or hardware position is inferred. The shop sets the actual usable region."
+  },
+  {
+    "key": "knife-owner",
+    "label": "Knife owner label",
+    "family": "knives-flatware",
+    "product": "Knife",
+    "slots": [
+      "name",
+      "contact-1"
+    ],
+    "file": "knives-flatware/knife-owner.svg",
+    "preview": "knives-flatware/knife-owner.png",
+    "coordinateSystem": "normalized",
+    "viewBox": [
+      0,
+      0,
+      1000,
+      240
+    ],
+    "referenceSizeMm": null,
+    "safeInsetNormalized": [
+      40,
+      24
+    ],
+    "shape": "artwork-zone",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": null,
+      "surface": null,
+      "verified": false
+    },
+    "productionStatus": "needs_measured_mark_zone",
+    "notes": "No blade, cutting edge, bevel, handle, clip, rivet or hardware position is inferred. The shop sets the actual usable region."
+  },
+  {
+    "key": "flatware-name",
+    "label": "Flatware name",
+    "family": "knives-flatware",
+    "product": "Flatware",
+    "slots": [
+      "name"
+    ],
+    "file": "knives-flatware/flatware-name.svg",
+    "preview": "knives-flatware/flatware-name.png",
+    "coordinateSystem": "normalized",
+    "viewBox": [
+      0,
+      0,
+      1000,
+      240
+    ],
+    "referenceSizeMm": null,
+    "safeInsetNormalized": [
+      40,
+      24
+    ],
+    "shape": "artwork-zone",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": null,
+      "surface": null,
+      "verified": false
+    },
+    "productionStatus": "needs_measured_mark_zone",
+    "notes": "No blade, cutting edge, bevel, handle, clip, rivet or hardware position is inferred. The shop sets the actual usable region."
+  },
+  {
+    "key": "flatware-initials",
+    "label": "Flatware initials",
+    "family": "knives-flatware",
+    "product": "Flatware",
+    "slots": [
+      "monogram"
+    ],
+    "file": "knives-flatware/flatware-initials.svg",
+    "preview": "knives-flatware/flatware-initials.png",
+    "coordinateSystem": "normalized",
+    "viewBox": [
+      0,
+      0,
+      1000,
+      240
+    ],
+    "referenceSizeMm": null,
+    "safeInsetNormalized": [
+      40,
+      24
+    ],
+    "shape": "artwork-zone",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": null,
+      "surface": null,
+      "verified": false
+    },
+    "productionStatus": "needs_measured_mark_zone",
+    "notes": "No blade, cutting edge, bevel, handle, clip, rivet or hardware position is inferred. The shop sets the actual usable region."
+  },
+  {
+    "key": "flatware-set",
+    "label": "Flatware gift set",
+    "family": "knives-flatware",
+    "product": "Flatware",
+    "slots": [
+      "name",
+      "date"
+    ],
+    "file": "knives-flatware/flatware-set.svg",
+    "preview": "knives-flatware/flatware-set.png",
+    "coordinateSystem": "normalized",
+    "viewBox": [
+      0,
+      0,
+      1000,
+      240
+    ],
+    "referenceSizeMm": null,
+    "safeInsetNormalized": [
+      40,
+      24
+    ],
+    "shape": "artwork-zone",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": null,
+      "surface": null,
+      "verified": false
+    },
+    "productionStatus": "needs_measured_mark_zone",
+    "notes": "No blade, cutting edge, bevel, handle, clip, rivet or hardware position is inferred. The shop sets the actual usable region."
+  }
+]

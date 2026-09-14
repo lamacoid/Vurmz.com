@@ -1,0 +1,208 @@
+[
+  {
+    "key": "service-label",
+    "label": "Service label",
+    "family": "metal",
+    "product": "Stainless equipment label",
+    "slots": [
+      "heading",
+      "detail"
+    ],
+    "file": "metal/service-label.svg",
+    "preview": "metal/service-label.png",
+    "referenceSizeMm": [
+      76.2,
+      25.4
+    ],
+    "safeInsetMm": 3,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": null,
+      "surface": null,
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "3 x 1 inch reference label. Stainless annealing color and mounting exclusions require confirmation."
+  },
+  {
+    "key": "serial-label",
+    "label": "Serial plate",
+    "family": "metal",
+    "product": "Stainless equipment label",
+    "slots": [
+      "heading",
+      "detail"
+    ],
+    "file": "metal/serial-label.svg",
+    "preview": "metal/serial-label.png",
+    "referenceSizeMm": [
+      76.2,
+      25.4
+    ],
+    "safeInsetMm": 3,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": null,
+      "surface": null,
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "3 x 1 inch reference label. Stainless annealing color and mounting exclusions require confirmation."
+  },
+  {
+    "key": "asset-label",
+    "label": "Asset tag",
+    "family": "metal",
+    "product": "Stainless equipment label",
+    "slots": [
+      "heading",
+      "detail"
+    ],
+    "file": "metal/asset-label.svg",
+    "preview": "metal/asset-label.png",
+    "referenceSizeMm": [
+      76.2,
+      25.4
+    ],
+    "safeInsetMm": 3,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": null,
+      "surface": null,
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "3 x 1 inch reference label. Stainless annealing color and mounting exclusions require confirmation."
+  },
+  {
+    "key": "pet-name",
+    "label": "Pet name tag",
+    "family": "metal",
+    "product": "Anodized round pet tag",
+    "slots": [
+      "name",
+      "contact-1"
+    ],
+    "file": "metal/pet-name.svg",
+    "preview": "metal/pet-name.png",
+    "referenceSizeMm": [
+      31.75,
+      31.75
+    ],
+    "safeInsetMm": 5,
+    "shape": "circle",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": "#C9CACC",
+      "surface": "#1c1c1e",
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "1.25 inch round reference. No attachment hole is drawn. Confirm a hole-free mark zone before use."
+  },
+  {
+    "key": "pet-return",
+    "label": "Pet return tag",
+    "family": "metal",
+    "product": "Anodized round pet tag",
+    "slots": [
+      "name",
+      "contact-1"
+    ],
+    "file": "metal/pet-return.svg",
+    "preview": "metal/pet-return.png",
+    "referenceSizeMm": [
+      31.75,
+      31.75
+    ],
+    "safeInsetMm": 5,
+    "shape": "circle",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": "#C9CACC",
+      "surface": "#1c1c1e",
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "1.25 inch round reference. No attachment hole is drawn. Confirm a hole-free mark zone before use."
+  },
+  {
+    "key": "keychain-name",
+    "label": "Name keychain",
+    "family": "metal",
+    "product": "Aluminum bar keychain",
+    "slots": [
+      "name"
+    ],
+    "file": "metal/keychain-name.svg",
+    "preview": "metal/keychain-name.png",
+    "referenceSizeMm": [
+      50.8,
+      12.7
+    ],
+    "safeInsetMm": 3,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": null,
+      "surface": null,
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "2 x 0.5 inch reference. Alloy, finish, engraving process and keyring hole are not confirmed."
+  },
+  {
+    "key": "keychain-message",
+    "label": "Message keychain",
+    "family": "metal",
+    "product": "Aluminum bar keychain",
+    "slots": [
+      "message"
+    ],
+    "file": "metal/keychain-message.svg",
+    "preview": "metal/keychain-message.png",
+    "referenceSizeMm": [
+      50.8,
+      12.7
+    ],
+    "safeInsetMm": 3,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": null,
+      "surface": null,
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "2 x 0.5 inch reference. Alloy, finish, engraving process and keyring hole are not confirmed."
+  },
+  {
+    "key": "plant-marker",
+    "label": "Plant marker",
+    "family": "metal",
+    "product": "Anodized aluminum plant marker",
+    "slots": [
+      "name",
+      "detail"
+    ],
+    "file": "metal/plant-marker.svg",
+    "preview": "metal/plant-marker.png",
+    "referenceSizeMm": [
+      152.4,
+      25.4
+    ],
+    "safeInsetMm": 5,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": "#B4B6B9",
+      "surface": "#c8c9cb",
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "6 x 1 inch face reference. Silver anodized material is assumed only for this layout proof; confirm the stock finish and stake geometry."
+  }
+]

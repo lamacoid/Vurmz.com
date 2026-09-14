@@ -1,0 +1,1005 @@
+[
+  {
+    "key": "warning-access",
+    "label": "Warning / authorized access",
+    "family": "signage",
+    "product": "ABS engraving sheet",
+    "slots": [
+      "heading",
+      "message",
+      "detail"
+    ],
+    "file": "signage/warning-access.svg",
+    "preview": "signage/warning-access.png",
+    "referenceSizeMm": [
+      300,
+      200
+    ],
+    "safeInsetMm": 15,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": null,
+      "surface": null,
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "Proposed 300 x 200 mm master. No regulatory compliance is claimed. Face/core colors, substrate composition and laser suitability are unverified."
+  },
+  {
+    "key": "caution-floor",
+    "label": "Caution / wet floor",
+    "family": "signage",
+    "product": "ABS engraving sheet",
+    "slots": [
+      "heading",
+      "message",
+      "detail"
+    ],
+    "file": "signage/caution-floor.svg",
+    "preview": "signage/caution-floor.png",
+    "referenceSizeMm": [
+      300,
+      200
+    ],
+    "safeInsetMm": 15,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": null,
+      "surface": null,
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "Proposed 300 x 200 mm master. No regulatory compliance is claimed. Face/core colors, substrate composition and laser suitability are unverified."
+  },
+  {
+    "key": "notice-staff",
+    "label": "Notice / staff only",
+    "family": "signage",
+    "product": "ABS engraving sheet",
+    "slots": [
+      "heading",
+      "message",
+      "detail"
+    ],
+    "file": "signage/notice-staff.svg",
+    "preview": "signage/notice-staff.png",
+    "referenceSizeMm": [
+      300,
+      200
+    ],
+    "safeInsetMm": 15,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": null,
+      "surface": null,
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "Proposed 300 x 200 mm master. No regulatory compliance is claimed. Face/core colors, substrate composition and laser suitability are unverified."
+  },
+  {
+    "key": "keep-clear",
+    "label": "Keep clear",
+    "family": "signage",
+    "product": "ABS engraving sheet",
+    "slots": [
+      "heading",
+      "message",
+      "detail"
+    ],
+    "file": "signage/keep-clear.svg",
+    "preview": "signage/keep-clear.png",
+    "referenceSizeMm": [
+      300,
+      200
+    ],
+    "safeInsetMm": 15,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": null,
+      "surface": null,
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "Proposed 300 x 200 mm master. No regulatory compliance is claimed. Face/core colors, substrate composition and laser suitability are unverified."
+  },
+  {
+    "key": "door-office",
+    "label": "Office door plaque",
+    "family": "signage",
+    "product": "ABS engraving sheet",
+    "slots": [
+      "heading",
+      "message",
+      "detail"
+    ],
+    "file": "signage/door-office.svg",
+    "preview": "signage/door-office.png",
+    "referenceSizeMm": [
+      300,
+      200
+    ],
+    "safeInsetMm": 15,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": null,
+      "surface": null,
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "Proposed 300 x 200 mm master. No regulatory compliance is claimed. Face/core colors, substrate composition and laser suitability are unverified."
+  },
+  {
+    "key": "business-hours",
+    "label": "Business hours",
+    "family": "signage",
+    "product": "ABS engraving sheet",
+    "slots": [
+      "heading",
+      "message",
+      "detail"
+    ],
+    "file": "signage/business-hours.svg",
+    "preview": "signage/business-hours.png",
+    "referenceSizeMm": [
+      300,
+      200
+    ],
+    "safeInsetMm": 15,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": null,
+      "surface": null,
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "Proposed 300 x 200 mm master. No regulatory compliance is claimed. Face/core colors, substrate composition and laser suitability are unverified."
+  },
+  {
+    "key": "equipment-id",
+    "label": "Equipment identification",
+    "family": "signage",
+    "product": "ABS engraving sheet",
+    "slots": [
+      "heading",
+      "message",
+      "detail"
+    ],
+    "file": "signage/equipment-id.svg",
+    "preview": "signage/equipment-id.png",
+    "referenceSizeMm": [
+      300,
+      200
+    ],
+    "safeInsetMm": 15,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": null,
+      "surface": null,
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "Proposed 300 x 200 mm master. No regulatory compliance is claimed. Face/core colors, substrate composition and laser suitability are unverified."
+  },
+  {
+    "key": "custom-message",
+    "label": "Custom sign",
+    "family": "signage",
+    "product": "ABS engraving sheet",
+    "slots": [
+      "heading",
+      "message",
+      "detail"
+    ],
+    "file": "signage/custom-message.svg",
+    "preview": "signage/custom-message.png",
+    "referenceSizeMm": [
+      300,
+      200
+    ],
+    "safeInsetMm": 15,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": null,
+      "surface": null,
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "Proposed 300 x 200 mm master. No regulatory compliance is claimed. Face/core colors, substrate composition and laser suitability are unverified."
+  },
+  {
+    "key": "family-kitchen",
+    "label": "Family kitchen",
+    "family": "cutting-boards",
+    "product": "Rectangular cutting board",
+    "slots": [
+      "line-1",
+      "name",
+      "tagline"
+    ],
+    "file": "cutting-boards/family-kitchen.svg",
+    "preview": "cutting-boards/family-kitchen.png",
+    "referenceSizeMm": [
+      304.8,
+      203.2
+    ],
+    "safeInsetMm": 20,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": "#232028",
+      "surface": "#b98c52",
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "Representative 12 x 8 inch engraving face. No board outline, juice groove, handle or cutting path is included. Wood tone is a reference, not a calibrated plate."
+  },
+  {
+    "key": "chop-it",
+    "label": "Chop it",
+    "family": "cutting-boards",
+    "product": "Rectangular cutting board",
+    "slots": [
+      "line-1",
+      "line-2",
+      "tagline"
+    ],
+    "file": "cutting-boards/chop-it.svg",
+    "preview": "cutting-boards/chop-it.png",
+    "referenceSizeMm": [
+      304.8,
+      203.2
+    ],
+    "safeInsetMm": 20,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": "#232028",
+      "surface": "#b98c52",
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "Representative 12 x 8 inch engraving face. No board outline, juice groove, handle or cutting path is included. Wood tone is a reference, not a calibrated plate."
+  },
+  {
+    "key": "leftovers",
+    "label": "Live, laugh, leftovers",
+    "family": "cutting-boards",
+    "product": "Rectangular cutting board",
+    "slots": [
+      "line-1",
+      "line-2",
+      "tagline"
+    ],
+    "file": "cutting-boards/leftovers.svg",
+    "preview": "cutting-boards/leftovers.png",
+    "referenceSizeMm": [
+      304.8,
+      203.2
+    ],
+    "safeInsetMm": 20,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": "#232028",
+      "surface": "#b98c52",
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "Representative 12 x 8 inch engraving face. No board outline, juice groove, handle or cutting path is included. Wood tone is a reference, not a calibrated plate."
+  },
+  {
+    "key": "snack-board",
+    "label": "Snack board",
+    "family": "cutting-boards",
+    "product": "Rectangular cutting board",
+    "slots": [
+      "line-1",
+      "line-2",
+      "tagline"
+    ],
+    "file": "cutting-boards/snack-board.svg",
+    "preview": "cutting-boards/snack-board.png",
+    "referenceSizeMm": [
+      304.8,
+      203.2
+    ],
+    "safeInsetMm": 20,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": "#232028",
+      "surface": "#b98c52",
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "Representative 12 x 8 inch engraving face. No board outline, juice groove, handle or cutting path is included. Wood tone is a reference, not a calibrated plate."
+  },
+  {
+    "key": "butter",
+    "label": "Made with butter",
+    "family": "cutting-boards",
+    "product": "Rectangular cutting board",
+    "slots": [
+      "line-1",
+      "line-2",
+      "tagline"
+    ],
+    "file": "cutting-boards/butter.svg",
+    "preview": "cutting-boards/butter.png",
+    "referenceSizeMm": [
+      304.8,
+      203.2
+    ],
+    "safeInsetMm": 20,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": "#232028",
+      "surface": "#b98c52",
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "Representative 12 x 8 inch engraving face. No board outline, juice groove, handle or cutting path is included. Wood tone is a reference, not a calibrated plate."
+  },
+  {
+    "key": "seasoned-love",
+    "label": "Seasoned with love",
+    "family": "cutting-boards",
+    "product": "Rectangular cutting board",
+    "slots": [
+      "line-1",
+      "line-2",
+      "tagline"
+    ],
+    "file": "cutting-boards/seasoned-love.svg",
+    "preview": "cutting-boards/seasoned-love.png",
+    "referenceSizeMm": [
+      304.8,
+      203.2
+    ],
+    "safeInsetMm": 20,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": "#232028",
+      "surface": "#b98c52",
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "Representative 12 x 8 inch engraving face. No board outline, juice groove, handle or cutting path is included. Wood tone is a reference, not a calibrated plate."
+  },
+  {
+    "key": "gather",
+    "label": "Gather here",
+    "family": "cutting-boards",
+    "product": "Rectangular cutting board",
+    "slots": [
+      "line-1",
+      "line-2",
+      "tagline"
+    ],
+    "file": "cutting-boards/gather.svg",
+    "preview": "cutting-boards/gather.png",
+    "referenceSizeMm": [
+      304.8,
+      203.2
+    ],
+    "safeInsetMm": 20,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": "#232028",
+      "surface": "#b98c52",
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "Representative 12 x 8 inch engraving face. No board outline, juice groove, handle or cutting path is included. Wood tone is a reference, not a calibrated plate."
+  },
+  {
+    "key": "recipe-memory",
+    "label": "Recipe keepsake",
+    "family": "cutting-boards",
+    "product": "Rectangular cutting board",
+    "slots": [
+      "line-1",
+      "line-2",
+      "tagline"
+    ],
+    "file": "cutting-boards/recipe-memory.svg",
+    "preview": "cutting-boards/recipe-memory.png",
+    "referenceSizeMm": [
+      304.8,
+      203.2
+    ],
+    "safeInsetMm": 20,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": "#232028",
+      "surface": "#b98c52",
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "Representative 12 x 8 inch engraving face. No board outline, juice groove, handle or cutting path is included. Wood tone is a reference, not a calibrated plate."
+  },
+  {
+    "key": "service-label",
+    "label": "Service label",
+    "family": "metal",
+    "product": "Stainless equipment label",
+    "slots": [
+      "heading",
+      "detail"
+    ],
+    "file": "metal/service-label.svg",
+    "preview": "metal/service-label.png",
+    "referenceSizeMm": [
+      76.2,
+      25.4
+    ],
+    "safeInsetMm": 3,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": null,
+      "surface": null,
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "3 x 1 inch reference label. Stainless annealing color and mounting exclusions require confirmation."
+  },
+  {
+    "key": "serial-label",
+    "label": "Serial plate",
+    "family": "metal",
+    "product": "Stainless equipment label",
+    "slots": [
+      "heading",
+      "detail"
+    ],
+    "file": "metal/serial-label.svg",
+    "preview": "metal/serial-label.png",
+    "referenceSizeMm": [
+      76.2,
+      25.4
+    ],
+    "safeInsetMm": 3,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": null,
+      "surface": null,
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "3 x 1 inch reference label. Stainless annealing color and mounting exclusions require confirmation."
+  },
+  {
+    "key": "asset-label",
+    "label": "Asset tag",
+    "family": "metal",
+    "product": "Stainless equipment label",
+    "slots": [
+      "heading",
+      "detail"
+    ],
+    "file": "metal/asset-label.svg",
+    "preview": "metal/asset-label.png",
+    "referenceSizeMm": [
+      76.2,
+      25.4
+    ],
+    "safeInsetMm": 3,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": null,
+      "surface": null,
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "3 x 1 inch reference label. Stainless annealing color and mounting exclusions require confirmation."
+  },
+  {
+    "key": "pet-name",
+    "label": "Pet name tag",
+    "family": "metal",
+    "product": "Anodized round pet tag",
+    "slots": [
+      "name",
+      "contact-1"
+    ],
+    "file": "metal/pet-name.svg",
+    "preview": "metal/pet-name.png",
+    "referenceSizeMm": [
+      31.75,
+      31.75
+    ],
+    "safeInsetMm": 5,
+    "shape": "circle",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": "#C9CACC",
+      "surface": "#1c1c1e",
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "1.25 inch round reference. No attachment hole is drawn. Confirm a hole-free mark zone before use."
+  },
+  {
+    "key": "pet-return",
+    "label": "Pet return tag",
+    "family": "metal",
+    "product": "Anodized round pet tag",
+    "slots": [
+      "name",
+      "contact-1"
+    ],
+    "file": "metal/pet-return.svg",
+    "preview": "metal/pet-return.png",
+    "referenceSizeMm": [
+      31.75,
+      31.75
+    ],
+    "safeInsetMm": 5,
+    "shape": "circle",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": "#C9CACC",
+      "surface": "#1c1c1e",
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "1.25 inch round reference. No attachment hole is drawn. Confirm a hole-free mark zone before use."
+  },
+  {
+    "key": "keychain-name",
+    "label": "Name keychain",
+    "family": "metal",
+    "product": "Aluminum bar keychain",
+    "slots": [
+      "name"
+    ],
+    "file": "metal/keychain-name.svg",
+    "preview": "metal/keychain-name.png",
+    "referenceSizeMm": [
+      50.8,
+      12.7
+    ],
+    "safeInsetMm": 3,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": null,
+      "surface": null,
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "2 x 0.5 inch reference. Alloy, finish, engraving process and keyring hole are not confirmed."
+  },
+  {
+    "key": "keychain-message",
+    "label": "Message keychain",
+    "family": "metal",
+    "product": "Aluminum bar keychain",
+    "slots": [
+      "message"
+    ],
+    "file": "metal/keychain-message.svg",
+    "preview": "metal/keychain-message.png",
+    "referenceSizeMm": [
+      50.8,
+      12.7
+    ],
+    "safeInsetMm": 3,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": null,
+      "surface": null,
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "2 x 0.5 inch reference. Alloy, finish, engraving process and keyring hole are not confirmed."
+  },
+  {
+    "key": "plant-marker",
+    "label": "Plant marker",
+    "family": "metal",
+    "product": "Anodized aluminum plant marker",
+    "slots": [
+      "name",
+      "detail"
+    ],
+    "file": "metal/plant-marker.svg",
+    "preview": "metal/plant-marker.png",
+    "referenceSizeMm": [
+      152.4,
+      25.4
+    ],
+    "safeInsetMm": 5,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": "#B4B6B9",
+      "surface": "#c8c9cb",
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "6 x 1 inch face reference. Silver anodized material is assumed only for this layout proof; confirm the stock finish and stake geometry."
+  },
+  {
+    "key": "wood-family",
+    "label": "Family name sign",
+    "family": "wood-signs",
+    "product": "Wood sign",
+    "slots": [
+      "name",
+      "tagline"
+    ],
+    "file": "wood-signs/wood-family.svg",
+    "preview": "wood-signs/wood-family.png",
+    "referenceSizeMm": [
+      304.8,
+      152.4
+    ],
+    "safeInsetMm": 15,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": "#232028",
+      "surface": "#b98c52",
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "12 x 6 inch reference from the brief. Verify grain, edge treatment, mounting and blank dimensions."
+  },
+  {
+    "key": "wood-workshop",
+    "label": "Workshop sign",
+    "family": "wood-signs",
+    "product": "Wood sign",
+    "slots": [
+      "name",
+      "tagline"
+    ],
+    "file": "wood-signs/wood-workshop.svg",
+    "preview": "wood-signs/wood-workshop.png",
+    "referenceSizeMm": [
+      304.8,
+      152.4
+    ],
+    "safeInsetMm": 15,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": "#232028",
+      "surface": "#b98c52",
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "12 x 6 inch reference from the brief. Verify grain, edge treatment, mounting and blank dimensions."
+  },
+  {
+    "key": "wood-welcome",
+    "label": "Welcome sign",
+    "family": "wood-signs",
+    "product": "Wood sign",
+    "slots": [
+      "name",
+      "tagline"
+    ],
+    "file": "wood-signs/wood-welcome.svg",
+    "preview": "wood-signs/wood-welcome.png",
+    "referenceSizeMm": [
+      304.8,
+      152.4
+    ],
+    "safeInsetMm": 15,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": "#232028",
+      "surface": "#b98c52",
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "12 x 6 inch reference from the brief. Verify grain, edge treatment, mounting and blank dimensions."
+  },
+  {
+    "key": "wood-custom",
+    "label": "Custom wood sign",
+    "family": "wood-signs",
+    "product": "Wood sign",
+    "slots": [
+      "name",
+      "tagline"
+    ],
+    "file": "wood-signs/wood-custom.svg",
+    "preview": "wood-signs/wood-custom.png",
+    "referenceSizeMm": [
+      304.8,
+      152.4
+    ],
+    "safeInsetMm": 15,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": "#232028",
+      "surface": "#b98c52",
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "12 x 6 inch reference from the brief. Verify grain, edge treatment, mounting and blank dimensions."
+  },
+  {
+    "key": "chef-name",
+    "label": "Chef name",
+    "family": "knives-flatware",
+    "product": "Chef knife",
+    "slots": [
+      "name",
+      "tagline"
+    ],
+    "file": "knives-flatware/chef-name.svg",
+    "preview": "knives-flatware/chef-name.png",
+    "coordinateSystem": "normalized",
+    "viewBox": [
+      0,
+      0,
+      1000,
+      240
+    ],
+    "referenceSizeMm": null,
+    "safeInsetNormalized": [
+      40,
+      24
+    ],
+    "shape": "artwork-zone",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": null,
+      "surface": null,
+      "verified": false
+    },
+    "productionStatus": "needs_measured_mark_zone",
+    "notes": "No blade, cutting edge, bevel, handle, clip, rivet or hardware position is inferred. The shop sets the actual usable region."
+  },
+  {
+    "key": "chef-team",
+    "label": "Kitchen crew",
+    "family": "knives-flatware",
+    "product": "Chef knife",
+    "slots": [
+      "name",
+      "company"
+    ],
+    "file": "knives-flatware/chef-team.svg",
+    "preview": "knives-flatware/chef-team.png",
+    "coordinateSystem": "normalized",
+    "viewBox": [
+      0,
+      0,
+      1000,
+      240
+    ],
+    "referenceSizeMm": null,
+    "safeInsetNormalized": [
+      40,
+      24
+    ],
+    "shape": "artwork-zone",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": null,
+      "surface": null,
+      "verified": false
+    },
+    "productionStatus": "needs_measured_mark_zone",
+    "notes": "No blade, cutting edge, bevel, handle, clip, rivet or hardware position is inferred. The shop sets the actual usable region."
+  },
+  {
+    "key": "pocket-initials",
+    "label": "Pocket knife initials",
+    "family": "knives-flatware",
+    "product": "Pocket knife",
+    "slots": [
+      "monogram"
+    ],
+    "file": "knives-flatware/pocket-initials.svg",
+    "preview": "knives-flatware/pocket-initials.png",
+    "coordinateSystem": "normalized",
+    "viewBox": [
+      0,
+      0,
+      1000,
+      240
+    ],
+    "referenceSizeMm": null,
+    "safeInsetNormalized": [
+      40,
+      24
+    ],
+    "shape": "artwork-zone",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": null,
+      "surface": null,
+      "verified": false
+    },
+    "productionStatus": "needs_measured_mark_zone",
+    "notes": "No blade, cutting edge, bevel, handle, clip, rivet or hardware position is inferred. The shop sets the actual usable region."
+  },
+  {
+    "key": "knife-gift",
+    "label": "Knife gift message",
+    "family": "knives-flatware",
+    "product": "Knife",
+    "slots": [
+      "message",
+      "date"
+    ],
+    "file": "knives-flatware/knife-gift.svg",
+    "preview": "knives-flatware/knife-gift.png",
+    "coordinateSystem": "normalized",
+    "viewBox": [
+      0,
+      0,
+      1000,
+      240
+    ],
+    "referenceSizeMm": null,
+    "safeInsetNormalized": [
+      40,
+      24
+    ],
+    "shape": "artwork-zone",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": null,
+      "surface": null,
+      "verified": false
+    },
+    "productionStatus": "needs_measured_mark_zone",
+    "notes": "No blade, cutting edge, bevel, handle, clip, rivet or hardware position is inferred. The shop sets the actual usable region."
+  },
+  {
+    "key": "knife-owner",
+    "label": "Knife owner label",
+    "family": "knives-flatware",
+    "product": "Knife",
+    "slots": [
+      "name",
+      "contact-1"
+    ],
+    "file": "knives-flatware/knife-owner.svg",
+    "preview": "knives-flatware/knife-owner.png",
+    "coordinateSystem": "normalized",
+    "viewBox": [
+      0,
+      0,
+      1000,
+      240
+    ],
+    "referenceSizeMm": null,
+    "safeInsetNormalized": [
+      40,
+      24
+    ],
+    "shape": "artwork-zone",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": null,
+      "surface": null,
+      "verified": false
+    },
+    "productionStatus": "needs_measured_mark_zone",
+    "notes": "No blade, cutting edge, bevel, handle, clip, rivet or hardware position is inferred. The shop sets the actual usable region."
+  },
+  {
+    "key": "flatware-name",
+    "label": "Flatware name",
+    "family": "knives-flatware",
+    "product": "Flatware",
+    "slots": [
+      "name"
+    ],
+    "file": "knives-flatware/flatware-name.svg",
+    "preview": "knives-flatware/flatware-name.png",
+    "coordinateSystem": "normalized",
+    "viewBox": [
+      0,
+      0,
+      1000,
+      240
+    ],
+    "referenceSizeMm": null,
+    "safeInsetNormalized": [
+      40,
+      24
+    ],
+    "shape": "artwork-zone",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": null,
+      "surface": null,
+      "verified": false
+    },
+    "productionStatus": "needs_measured_mark_zone",
+    "notes": "No blade, cutting edge, bevel, handle, clip, rivet or hardware position is inferred. The shop sets the actual usable region."
+  },
+  {
+    "key": "flatware-initials",
+    "label": "Flatware initials",
+    "family": "knives-flatware",
+    "product": "Flatware",
+    "slots": [
+      "monogram"
+    ],
+    "file": "knives-flatware/flatware-initials.svg",
+    "preview": "knives-flatware/flatware-initials.png",
+    "coordinateSystem": "normalized",
+    "viewBox": [
+      0,
+      0,
+      1000,
+      240
+    ],
+    "referenceSizeMm": null,
+    "safeInsetNormalized": [
+      40,
+      24
+    ],
+    "shape": "artwork-zone",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": null,
+      "surface": null,
+      "verified": false
+    },
+    "productionStatus": "needs_measured_mark_zone",
+    "notes": "No blade, cutting edge, bevel, handle, clip, rivet or hardware position is inferred. The shop sets the actual usable region."
+  },
+  {
+    "key": "flatware-set",
+    "label": "Flatware gift set",
+    "family": "knives-flatware",
+    "product": "Flatware",
+    "slots": [
+      "name",
+      "date"
+    ],
+    "file": "knives-flatware/flatware-set.svg",
+    "preview": "knives-flatware/flatware-set.png",
+    "coordinateSystem": "normalized",
+    "viewBox": [
+      0,
+      0,
+      1000,
+      240
+    ],
+    "referenceSizeMm": null,
+    "safeInsetNormalized": [
+      40,
+      24
+    ],
+    "shape": "artwork-zone",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": null,
+      "surface": null,
+      "verified": false
+    },
+    "productionStatus": "needs_measured_mark_zone",
+    "notes": "No blade, cutting edge, bevel, handle, clip, rivet or hardware position is inferred. The shop sets the actual usable region."
+  }
+]

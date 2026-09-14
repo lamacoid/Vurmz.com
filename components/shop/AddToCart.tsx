@@ -7,6 +7,8 @@ import { trackConversion } from '@/lib/track'
 import EngravingPicker, { type EngravingValue } from './EngravingPicker'
 import FileAttach, { type AttachedFile } from './FileAttach'
 import TemplatePicker, { type OrderTemplate } from './TemplatePicker'
+import CardDesigner from '@/components/designer/CardDesigner'
+import { CARD_TEMPLATES, type CardDesign, type CardMaterial } from '@/lib/designer/card'
 
 export interface PackOption {
   /** null = the product's own default pack. */
@@ -34,12 +36,17 @@ export default function AddToCart(props: {
   finishes?: Array<{ label: string; hex: string | null }>
   /** Named layout templates (metadata.orderTemplates), metal cards today. */
   templates?: OrderTemplate[]
+  /** When set, the card designer replaces the template, engraving, and file
+   *  pickers: the customer designs the card and the laser file rides the order. */
+  cardMaterials?: CardMaterial[]
 }) {
   const { add, items } = useCart()
   const [qty, setQty] = useState(1)
   const [added, setAdded] = useState(false)
   const [engraving, setEngraving] = useState<EngravingValue>({ text: '', fontValue: 'zen-kurenaido', placement: '', element: null })
   const [file, setFile] = useState<AttachedFile | null>(null)
+  const [design, setDesign] = useState<CardDesign | null>(null)
+  const designer = props.engravable !== false && (props.cardMaterials?.length ?? 0) > 0
 
   // The default pack plus any admin-defined options, sorted by pack size.
   const options: PackOption[] = [
@@ -69,7 +76,7 @@ export default function AddToCart(props: {
   const alreadyInCart = props.oneOff && items.some(i => i.productId === props.productId)
   const engText = engraving.text.trim()
   // An order is personalized if it has text OR a chosen design element OR a file.
-  const hasPersonalization = Boolean(engText) || Boolean(engraving.element) || Boolean(file)
+  const hasPersonalization = Boolean(engText) || Boolean(engraving.element) || Boolean(file) || Boolean(design)
 
   function buildMetadata(): Record<string, unknown> | undefined {
     if (!engravable) return undefined
@@ -88,8 +95,16 @@ export default function AddToCart(props: {
     const options: Record<string, string> = {}
     if (hasFinishes && finish) options.finish = finish.label
     if (template) options.template = template.label
+    if (design) {
+      meta.design = design
+      const mat = props.cardMaterials?.find(m => m.key === design.materialKey)
+      const tpl = CARD_TEMPLATES.find(t => t.key === design.templateKey)
+      if (mat) options.finish = mat.label
+      if (tpl) options.template = tpl.label
+      if (design.logo) meta.file = { key: design.logo.key, filename: design.logo.filename }
+    }
     if (Object.keys(options).length) meta.options = options
-    if (file) meta.file = { key: file.key, filename: file.filename }
+    if (file && !design) meta.file = { key: file.key, filename: file.filename }
     return Object.keys(meta).length ? meta : undefined
   }
 
@@ -120,12 +135,16 @@ export default function AddToCart(props: {
 
   return (
     <div>
-      {templates.length > 0 && (
+      {designer && (
+        <CardDesigner productId={props.productId} materials={props.cardMaterials!} onChange={setDesign} />
+      )}
+
+      {!designer && templates.length > 0 && (
         <TemplatePicker templates={templates} value={templateKey} onChange={setTemplateKey} />
       )}
 
       {/* Finish options: chips with the real surface color as the swatch. */}
-      {hasFinishes && (
+      {!designer && hasFinishes && (
         <div className="mb-4">
           <span className="block text-[11px] uppercase tracking-wider text-[var(--ink-soft)] mb-2">Finish</span>
           <div className="flex flex-wrap gap-2">
@@ -152,7 +171,7 @@ export default function AddToCart(props: {
         </div>
       )}
 
-      {engravable && (
+      {engravable && !designer && (
         <>
           <EngravingPicker value={engraving} onChange={setEngraving} />
           <div className="-mt-2 mb-5 rounded-sm border border-[var(--hairline)] bg-[var(--ink)]/[0.03] p-4 sm:p-5">
@@ -226,7 +245,7 @@ export default function AddToCart(props: {
 
       {engravable && hasPersonalization && (
         <p className="mt-2 text-[11px] text-[var(--ink-soft)]">
-          {engText ? <>Engraving “{engText}”</> : 'Your design'}
+          {design ? <>Your card design</> : engText ? <>Engraving “{engText}”</> : 'Your design'}
           {engraving.element ? <> + {engraving.element.label} design</> : null}
           {file ? <> + {file.filename}</> : null}
           {' '}will be applied{props.oneOff ? '' : ' to each item in the pack'}.

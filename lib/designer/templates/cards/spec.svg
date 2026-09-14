@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="85.725mm" height="53.975mm" viewBox="0 0 85.725 53.975">
+<title>Specification</title>
+<desc>Three plain specification rows under a clear equipment heading. One-tone engraving. Content inside 5.08 mm safe margin.</desc>
+<rect id="safe" x="5.08" y="5.08" width="75.565" height="43.815" fill="none" stroke="none"/>
+<g data-zone="company"><text data-slot="company" x="5.08" y="10" font-family="Inter" font-size="2.5" font-weight="400" text-anchor="start" letter-spacing="0" fill="#000">Rivera Plumbing</text></g><g data-zone="heading"><text data-slot="tagline" x="5.08" y="23" font-family="Inter" font-size="6.4" font-weight="400" text-anchor="start" letter-spacing="0" fill="#000">Service details</text></g><g data-zone="specs"><text data-slot="value" x="5.08" y="32" font-family="Inter" font-size="2.12" font-weight="400" text-anchor="start" letter-spacing="0" fill="#000">Model: RP-042</text><text data-slot="contact-1" x="5.08" y="38" font-family="Inter" font-size="2.12" font-weight="400" text-anchor="start" letter-spacing="0" fill="#000">Supply: 120 V / 60 Hz</text><text data-slot="contact-2" x="5.08" y="44" font-family="Inter" font-size="2.12" font-weight="400" text-anchor="start" letter-spacing="0" fill="#000">Capacity: 40 gal</text></g>
+</svg>

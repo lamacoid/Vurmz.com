@@ -1,0 +1,106 @@
+[
+  {
+    "key": "wood-family",
+    "label": "Family name sign",
+    "family": "wood-signs",
+    "product": "Wood sign",
+    "slots": [
+      "name",
+      "tagline"
+    ],
+    "file": "wood-signs/wood-family.svg",
+    "preview": "wood-signs/wood-family.png",
+    "referenceSizeMm": [
+      304.8,
+      152.4
+    ],
+    "safeInsetMm": 15,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": "#232028",
+      "surface": "#b98c52",
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "12 x 6 inch reference from the brief. Verify grain, edge treatment, mounting and blank dimensions."
+  },
+  {
+    "key": "wood-workshop",
+    "label": "Workshop sign",
+    "family": "wood-signs",
+    "product": "Wood sign",
+    "slots": [
+      "name",
+      "tagline"
+    ],
+    "file": "wood-signs/wood-workshop.svg",
+    "preview": "wood-signs/wood-workshop.png",
+    "referenceSizeMm": [
+      304.8,
+      152.4
+    ],
+    "safeInsetMm": 15,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": "#232028",
+      "surface": "#b98c52",
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "12 x 6 inch reference from the brief. Verify grain, edge treatment, mounting and blank dimensions."
+  },
+  {
+    "key": "wood-welcome",
+    "label": "Welcome sign",
+    "family": "wood-signs",
+    "product": "Wood sign",
+    "slots": [
+      "name",
+      "tagline"
+    ],
+    "file": "wood-signs/wood-welcome.svg",
+    "preview": "wood-signs/wood-welcome.png",
+    "referenceSizeMm": [
+      304.8,
+      152.4
+    ],
+    "safeInsetMm": 15,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": "#232028",
+      "surface": "#b98c52",
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "12 x 6 inch reference from the brief. Verify grain, edge treatment, mounting and blank dimensions."
+  },
+  {
+    "key": "wood-custom",
+    "label": "Custom wood sign",
+    "family": "wood-signs",
+    "product": "Wood sign",
+    "slots": [
+      "name",
+      "tagline"
+    ],
+    "file": "wood-signs/wood-custom.svg",
+    "preview": "wood-signs/wood-custom.png",
+    "referenceSizeMm": [
+      304.8,
+      152.4
+    ],
+    "safeInsetMm": 15,
+    "shape": "rect",
+    "dimensionsVerified": false,
+    "materialPreview": {
+      "mark": "#232028",
+      "surface": "#b98c52",
+      "verified": false
+    },
+    "productionStatus": "needs_shop_review",
+    "notes": "12 x 6 inch reference from the brief. Verify grain, edge treatment, mounting and blank dimensions."
+  }
+]

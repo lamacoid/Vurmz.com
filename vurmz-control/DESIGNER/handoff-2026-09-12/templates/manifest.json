@@ -1,0 +1,203 @@
+[
+  {
+    "key": "crest",
+    "label": "Crest",
+    "kind": "business",
+    "slots": [
+      "emblem",
+      "monogram",
+      "company",
+      "name",
+      "title",
+      "contact-1"
+    ],
+    "description": "A centered identity, with a logo slot or initials above the company."
+  },
+  {
+    "key": "divider",
+    "label": "Divider",
+    "kind": "business",
+    "slots": [
+      "monogram",
+      "company",
+      "name",
+      "title",
+      "contact-1",
+      "contact-2",
+      "contact-3"
+    ],
+    "description": "Two groups split by a fine vertical rule at forty percent."
+  },
+  {
+    "key": "letterhead",
+    "label": "Letterhead",
+    "kind": "business",
+    "slots": [
+      "company",
+      "name",
+      "title",
+      "contact-1",
+      "contact-2"
+    ],
+    "description": "A left-aligned company heading, personal details and a quiet contact footer."
+  },
+  {
+    "key": "monogram",
+    "label": "Monogram",
+    "kind": "business",
+    "slots": [
+      "monogram",
+      "name",
+      "title",
+      "contact-1",
+      "contact-2"
+    ],
+    "description": "An oversized initial with a compact right-aligned information block."
+  },
+  {
+    "key": "frame",
+    "label": "Frame",
+    "kind": "business",
+    "slots": [
+      "company",
+      "name",
+      "title",
+      "contact-1"
+    ],
+    "description": "A double hairline frame around a centered, type-only identity."
+  },
+  {
+    "key": "band",
+    "label": "Band",
+    "kind": "business",
+    "slots": [
+      "company",
+      "name",
+      "title",
+      "contact-1"
+    ],
+    "description": "A 0.4 inch edge band made from spaced one-tone rules. Remaining text is flush left."
+  },
+  {
+    "key": "scan",
+    "label": "Scan",
+    "kind": "business",
+    "slots": [
+      "company",
+      "name",
+      "title",
+      "contact-1",
+      "qr",
+      "url"
+    ],
+    "description": "Left-aligned details beside a QR slot with a reserved four-module quiet zone."
+  },
+  {
+    "key": "signature",
+    "label": "Signature",
+    "kind": "business",
+    "slots": [
+      "name",
+      "title",
+      "contact-1"
+    ],
+    "description": "A large script name, with a spaced title and one centered contact line."
+  },
+  {
+    "key": "membership",
+    "label": "Membership",
+    "kind": "other",
+    "slots": [
+      "company",
+      "tagline",
+      "name",
+      "value",
+      "date"
+    ],
+    "description": "A member name, membership number and renewal date."
+  },
+  {
+    "key": "gift",
+    "label": "Gift card",
+    "kind": "other",
+    "slots": [
+      "company",
+      "value",
+      "name",
+      "contact-1"
+    ],
+    "description": "A clear gift value with a recipient and redemption contact."
+  },
+  {
+    "key": "referral",
+    "label": "Referral",
+    "kind": "other",
+    "slots": [
+      "company",
+      "tagline",
+      "name",
+      "contact-1"
+    ],
+    "description": "A referral name and a single next step."
+  },
+  {
+    "key": "warranty",
+    "label": "Warranty",
+    "kind": "other",
+    "slots": [
+      "company",
+      "tagline",
+      "value",
+      "date",
+      "contact-1"
+    ],
+    "description": "An installation record and a service contact, with no implied coverage terms."
+  },
+  {
+    "key": "spec",
+    "label": "Specification",
+    "kind": "other",
+    "slots": [
+      "company",
+      "tagline",
+      "value",
+      "contact-1",
+      "contact-2"
+    ],
+    "description": "Three plain specification rows under a clear equipment heading."
+  },
+  {
+    "key": "loyalty",
+    "label": "Loyalty",
+    "kind": "other",
+    "slots": [
+      "company",
+      "tagline",
+      "contact-1"
+    ],
+    "description": "Six outlined visit circles, ready for later marking."
+  },
+  {
+    "key": "if-found",
+    "label": "If found",
+    "kind": "other",
+    "slots": [
+      "tagline",
+      "name",
+      "contact-1",
+      "contact-2"
+    ],
+    "description": "A clear return contact for a bag or set of keys."
+  },
+  {
+    "key": "coordinates",
+    "label": "Coordinates",
+    "kind": "other",
+    "slots": [
+      "place",
+      "value",
+      "date"
+    ],
+    "description": "A place, coordinates and a date, all on one centered axis."
+  }
+]

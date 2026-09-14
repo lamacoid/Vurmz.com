@@ -1,0 +1,266 @@
+{
+  "status": "proposed_customer_menu_not_stock_inventory",
+  "machinesOwned": [
+    "fiber",
+    "CO2",
+    "diode"
+  ],
+  "machineSettings": null,
+  "automaticMachineAssignment": false,
+  "groups": [
+    {
+      "label": "Knives and flatware",
+      "products": [
+        {
+          "label": "Chef knives",
+          "templateKey": "chef-name",
+          "stockStatus": "unconfirmed",
+          "requiresProductReview": true
+        },
+        {
+          "label": "Pocket knives",
+          "templateKey": "pocket-initials",
+          "stockStatus": "unconfirmed",
+          "requiresProductReview": true
+        },
+        {
+          "label": "Cleavers",
+          "templateKey": "chef-team",
+          "stockStatus": "unconfirmed",
+          "requiresProductReview": true
+        },
+        {
+          "label": "Utility knives",
+          "templateKey": "knife-owner",
+          "stockStatus": "unconfirmed",
+          "requiresProductReview": true
+        },
+        {
+          "label": "Other knives",
+          "templateKey": "knife-gift",
+          "stockStatus": "unconfirmed",
+          "requiresProductReview": true
+        },
+        {
+          "label": "Knife sets",
+          "templateKey": "chef-team",
+          "stockStatus": "unconfirmed",
+          "requiresProductReview": true
+        },
+        {
+          "label": "Flatware",
+          "templateKey": "flatware-name",
+          "stockStatus": "unconfirmed",
+          "requiresProductReview": true
+        },
+        {
+          "label": "Flatware gift sets",
+          "templateKey": "flatware-set",
+          "stockStatus": "unconfirmed",
+          "requiresProductReview": true
+        }
+      ]
+    },
+    {
+      "label": "Wood and kitchen",
+      "products": [
+        {
+          "label": "Cutting boards",
+          "templateKey": "family-kitchen",
+          "stockStatus": "unconfirmed",
+          "requiresProductReview": true
+        },
+        {
+          "label": "Paddle boards",
+          "templateKey": "snack-board",
+          "stockStatus": "unconfirmed",
+          "requiresProductReview": true
+        },
+        {
+          "label": "Recipe keepsake boards",
+          "templateKey": "recipe-memory",
+          "stockStatus": "unconfirmed",
+          "requiresProductReview": true
+        },
+        {
+          "label": "Wood coasters",
+          "templateKey": null,
+          "stockStatus": "unconfirmed",
+          "requiresProductReview": true
+        },
+        {
+          "label": "Wood panels",
+          "templateKey": null,
+          "stockStatus": "unconfirmed",
+          "requiresProductReview": true
+        },
+        {
+          "label": "Wood signs",
+          "templateKey": "wood-family",
+          "stockStatus": "unconfirmed",
+          "requiresProductReview": true
+        },
+        {
+          "label": "Workshop signs",
+          "templateKey": "wood-workshop",
+          "stockStatus": "unconfirmed",
+          "requiresProductReview": true
+        },
+        {
+          "label": "Wood plant markers",
+          "templateKey": null,
+          "stockStatus": "unconfirmed",
+          "requiresProductReview": true
+        }
+      ]
+    },
+    {
+      "label": "Signs and labels",
+      "products": [
+        {
+          "label": "ABS warning signs",
+          "templateKey": "warning-access",
+          "stockStatus": "unconfirmed",
+          "requiresProductReview": true
+        },
+        {
+          "label": "ABS notice signs",
+          "templateKey": "notice-staff",
+          "stockStatus": "unconfirmed",
+          "requiresProductReview": true
+        },
+        {
+          "label": "Door plaques",
+          "templateKey": "door-office",
+          "stockStatus": "unconfirmed",
+          "requiresProductReview": true
+        },
+        {
+          "label": "Business-hours signs",
+          "templateKey": "business-hours",
+          "stockStatus": "unconfirmed",
+          "requiresProductReview": true
+        },
+        {
+          "label": "Custom ABS signage",
+          "templateKey": "custom-message",
+          "stockStatus": "unconfirmed",
+          "requiresProductReview": true
+        },
+        {
+          "label": "Metal equipment labels",
+          "templateKey": "service-label",
+          "stockStatus": "unconfirmed",
+          "requiresProductReview": true
+        },
+        {
+          "label": "Serial plates",
+          "templateKey": "serial-label",
+          "stockStatus": "unconfirmed",
+          "requiresProductReview": true
+        },
+        {
+          "label": "Asset tags",
+          "templateKey": "asset-label",
+          "stockStatus": "unconfirmed",
+          "requiresProductReview": true
+        }
+      ]
+    },
+    {
+      "label": "Metal gifts and everyday items",
+      "products": [
+        {
+          "label": "Anodized wallet cards",
+          "templateKey": "crest",
+          "stockStatus": "unconfirmed",
+          "requiresProductReview": true
+        },
+        {
+          "label": "Stainless wallet cards",
+          "templateKey": "letterhead",
+          "stockStatus": "unconfirmed",
+          "requiresProductReview": true
+        },
+        {
+          "label": "Metal business cards",
+          "templateKey": "divider",
+          "stockStatus": "unconfirmed",
+          "requiresProductReview": true
+        },
+        {
+          "label": "Pet tags",
+          "templateKey": "pet-name",
+          "stockStatus": "unconfirmed",
+          "requiresProductReview": true
+        },
+        {
+          "label": "Metal keychains",
+          "templateKey": "keychain-name",
+          "stockStatus": "unconfirmed",
+          "requiresProductReview": true
+        },
+        {
+          "label": "Aluminum plant markers",
+          "templateKey": "plant-marker",
+          "stockStatus": "unconfirmed",
+          "requiresProductReview": true
+        },
+        {
+          "label": "Brushed stainless coasters",
+          "templateKey": null,
+          "stockStatus": "unconfirmed",
+          "requiresProductReview": true
+        },
+        {
+          "label": "Mini mailbox",
+          "templateKey": null,
+          "stockStatus": "unconfirmed",
+          "requiresProductReview": true
+        }
+      ]
+    },
+    {
+      "label": "Drinkware and other surfaces",
+      "products": [
+        {
+          "label": "Coated tumblers",
+          "templateKey": null,
+          "stockStatus": "unconfirmed",
+          "requiresProductReview": true
+        },
+        {
+          "label": "Water bottles",
+          "templateKey": null,
+          "stockStatus": "unconfirmed",
+          "requiresProductReview": true
+        },
+        {
+          "label": "Soft-touch stylus pens",
+          "templateKey": null,
+          "stockStatus": "unconfirmed",
+          "requiresProductReview": true
+        },
+        {
+          "label": "Slate coasters",
+          "templateKey": null,
+          "stockStatus": "unconfirmed",
+          "requiresProductReview": true
+        },
+        {
+          "label": "Mirrors",
+          "templateKey": null,
+          "stockStatus": "unconfirmed",
+          "requiresProductReview": true
+        },
+        {
+          "label": "Bring your own item",
+          "templateKey": null,
+          "stockStatus": "unconfirmed",
+          "requiresProductReview": true
+        }
+      ]
+    }
+  ],
+  "appearanceRule": "Resolve the material and finish first. Never infer the engraving appearance from the machine or the generic product name."
+}

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="85.725mm" height="53.975mm" viewBox="0 0 85.725 53.975">
+<title>Coordinates</title>
+<desc>A place, coordinates and a date, all on one centered axis. One-tone engraving. Content inside 5.08 mm safe margin.</desc>
+<rect id="safe" x="5.08" y="5.08" width="75.565" height="43.815" fill="none" stroke="none"/>
+<g data-zone="place"><text data-slot="place" x="42.8625" y="19" font-family="Inter" font-size="8" font-weight="400" text-anchor="middle" letter-spacing="0" fill="#000">Centennial</text></g><g data-zone="coordinates"><text data-slot="value" x="42.8625" y="31" font-family="Inter" font-size="2.5" font-weight="400" text-anchor="middle" letter-spacing="0" fill="#000">39.5807° N  104.8772° W</text></g><g data-zone="date"><line x1="32" y1="37" x2="53.725" y2="37" stroke="#000" stroke-width="0.15"/><text data-slot="date" x="42.8625" y="45" font-family="Inter" font-size="2.12" font-weight="400" text-anchor="middle" letter-spacing="0" fill="#000">09 / 12 / 2026</text></g>
+</svg>

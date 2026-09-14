@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="85.725mm" height="53.975mm" viewBox="0 0 85.725 53.975">
+<title>If found</title>
+<desc>A clear return contact for a bag or set of keys. One-tone engraving. Content inside 5.08 mm safe margin.</desc>
+<rect id="safe" x="5.08" y="5.08" width="75.565" height="43.815" fill="none" stroke="none"/>
+<g data-zone="heading"><text data-slot="tagline" x="42.8625" y="18" font-family="Inter" font-size="9" font-weight="400" text-anchor="middle" letter-spacing="0" fill="#000">If found</text></g><g data-zone="person"><text data-slot="name" x="42.8625" y="30" font-family="Inter" font-size="3.88" font-weight="400" text-anchor="middle" letter-spacing="0" fill="#000">Alex Rivera</text></g><g data-zone="contacts"><text data-slot="contact-1" x="42.8625" y="39" font-family="Inter" font-size="2.12" font-weight="400" text-anchor="middle" letter-spacing="0" fill="#000">(720) 555-0139</text><text data-slot="contact-2" x="42.8625" y="46" font-family="Inter" font-size="2.12" font-weight="400" text-anchor="middle" letter-spacing="0" fill="#000">alex@riveraplumbing.com</text></g>
+</svg>

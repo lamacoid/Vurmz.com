@@ -12,6 +12,7 @@ import { saleFrom, saleWindowOpen, liveSale, saleEndsLabel } from '@/lib/sale'
 import { getMediaById } from '@/lib/db/repos/media'
 import { menuPrice, menuCase } from '@/lib/menu-format'
 import { builderConfigFrom } from '@/lib/builder/types'
+import { materialsFor } from '@/lib/designer/card'
 import { DELIVERY } from '@/lib/pricing'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 
@@ -74,6 +75,9 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
       : 'Most pieces ready in 24 to 72 hours.'
 
   const builderCfg = builderConfigFrom(product.metadata)
+  // The wallet card gets the designer: identified by its real dimensions,
+  // not by a flag, so every card listing picks it up.
+  const isCard = builderCfg?.mode === 'canvas' && builderCfg.shape === 'rounded-rect' && Math.abs(builderCfg.widthIn - 3.375) < 0.01
 
   // Finish chips come from the INVENTORY, not from product metadata: the
   // page offers exactly the colors Zach has counted in stock, nothing else.
@@ -108,6 +112,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
         variants={variants.map(v => ({ id: v.id, name: v.name, packSize: v.packSize, priceCents: v.priceCents }))}
         finishes={finishes}
         templates={templates}
+        cardMaterials={isCard ? materialsFor(stockedFinishes) : undefined}
       />
 
       {/* Fulfillment facts, right where the decision happens. */}

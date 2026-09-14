@@ -5,11 +5,12 @@ import Link from 'next/link'
 import { useParams } from 'next/navigation'
 
 import PlacementDiagram from '@/components/admin/PlacementDiagram'
+import CardDesignTicket, { type DesignOnTicket } from '@/components/admin/CardDesignTicket'
 import type { BuilderSubmission } from '@/lib/builder/types'
 import { reverseOf, type BumpStatus } from '@/lib/admin/transitions'
 import { railBump } from '@/lib/admin/rail-client'
 
-interface OrderItem { id: string; nameSnapshot: string; qty: number; unitPriceCents: number; metadata?: { engraving?: { text?: string; fontValue?: string; fontLabel?: string; placement?: string; element?: { id: string; label: string; thumb: string } }; builder?: BuilderSubmission; options?: { finish?: string; template?: string }; file?: { key: string; filename: string } } }
+interface OrderItem { id: string; nameSnapshot: string; qty: number; unitPriceCents: number; metadata?: { engraving?: { text?: string; fontValue?: string; fontLabel?: string; placement?: string; element?: { id: string; label: string; thumb: string } }; builder?: BuilderSubmission; options?: { finish?: string; template?: string }; file?: { key: string; filename: string }; design?: DesignOnTicket } }
 interface Order {
   id: string; number: string; email: string; status: string
   subtotalCents: number; fulfillmentFeeCents: number; totalCents: number
@@ -230,7 +231,16 @@ export default function OrderDetailPage() {
           {items.map(it => {
             const eng = it.metadata?.engraving
             const builder = it.metadata?.builder
+            const design = it.metadata?.design
             const hasFiles = (order.metadata?.attachments?.length ?? 0) > 0
+            if (design?.kind === 'card') {
+              return (
+                <li key={it.id} className="flex flex-col gap-2">
+                  <p className="text-sm font-medium text-[var(--a-ink)]">{it.qty}× {it.nameSnapshot} · designed by the customer</p>
+                  <CardDesignTicket design={design} />
+                </li>
+              )
+            }
             if (builder) {
               return (
                 <li key={it.id} className="flex flex-col gap-2">
