@@ -1,0 +1,74 @@
+{
+ "artboards": [
+  {
+   "file": "Main.dc.html",
+   "title": "Instagram: Happy to source",
+   "x": 0,
+   "y": 0,
+   "w": 1080,
+   "h": 1080
+  },
+  {
+   "file": "Designer.dc.html",
+   "title": "Instagram: the card designer",
+   "x": 1180,
+   "y": 0,
+   "w": 1080,
+   "h": 1080
+  },
+  {
+   "file": "YourPiece.dc.html",
+   "title": "Instagram: your own piece",
+   "x": 2360,
+   "y": 0,
+   "w": 1080,
+   "h": 1080
+  },
+  {
+   "file": "Story.dc.html",
+   "title": "Story",
+   "x": 3540,
+   "y": 0,
+   "w": 1080,
+   "h": 1920
+  },
+  {
+   "file": "Nextdoor.dc.html",
+   "title": "Nextdoor and Facebook, landscape",
+   "x": 0,
+   "y": 1240,
+   "w": 1200,
+   "h": 628
+  },
+  {
+   "file": "PostcardFront.dc.html",
+   "title": "Postcard, front (6 x 4.25 in)",
+   "x": 1300,
+   "y": 1240,
+   "w": 576,
+   "h": 408,
+   "print": "fixed"
+  },
+  {
+   "file": "PostcardBack.dc.html",
+   "title": "Postcard, back",
+   "x": 1980,
+   "y": 1240,
+   "w": 576,
+   "h": 408,
+   "print": "fixed"
+  }
+ ],
+ "annotations": [
+  {
+   "id": "note-brief",
+   "x": 0,
+   "y": -190,
+   "w": 520,
+   "text": "Fall 2026 campaign. Same palette and type as the site. Every photo is a VURMZ piece. Prices are the live ones from the reprice; delivered prices are item at cost + $45 engraving + the errand fee. Postcard carries bracketed placeholders for the indicia and address block."
+  }
+ ],
+ "launch": {
+  "view": "canvas"
+ }
+}
