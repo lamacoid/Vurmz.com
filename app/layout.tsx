@@ -20,7 +20,7 @@ const fraunces = Fraunces({
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.vurmz.com'),
   title: {
-    default: 'VURMZ | Laser Engraving · Shop & Services',
+    default: 'VURMZ | Precision Laser Engraving, Centennial CO',
     template: '%s | VURMZ Laser Engraving',
   },
   description: 'VURMZ precision laser engraving in Centennial, CO. Shop engraved products or get custom engraving services for your business. Next-day turnaround, hand-delivered in South Denver metro.',
@@ -35,8 +35,8 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: 'https://www.vurmz.com',
     siteName: 'VURMZ',
-    title: 'VURMZ | Laser Engraving · Shop & Services',
-    description: 'VURMZ laser engraving in Centennial, CO. Shop engraved products or get custom services for your business.',
+    title: 'VURMZ | Precision Laser Engraving, Centennial CO',
+    description: 'Precision laser engraving and marking in Centennial, Colorado. Engraved gifts, your own pieces, and business work for Greenwood Village, Cherry Hills Village, Lone Tree, Castle Pines, and Parker.',
     images: [
       {
         // og-card.jpg is drawn by scripts/make-og-image.mjs. The old

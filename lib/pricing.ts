@@ -170,6 +170,22 @@ export const SHOP_POLICY = {
   designPerHour: 95,
 } as const
 
+/** VURMZ on site: live engraving at an event or a store. From the 2026-09 research. */
+export const ONSITE = {
+  halfDay: 1200,
+  fullDay: 2000,
+  extraHour: 250,
+  secondStationHalf: 600,
+  secondStationFull: 1000,
+  travelFreeMiles: 25,
+  travelPerMile: 1.5,
+  depositPct: 0.5,
+  perPieceRetail: 18,
+  perPieceMinimum: 60,
+  piecesPerHourMetal: [40, 60] as const,
+  piecesPerHourWood: [15, 25] as const,
+} as const
+
 /** Quoted plate, panel, and one-off work on the services side. */
 export const SHOP_RATE = {
   hourly: 85,

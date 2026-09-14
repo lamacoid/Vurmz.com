@@ -6,6 +6,7 @@ import { siteInfo, getSmsLink } from '@/lib/site-info'
 import { SIGNATURE, CATALOG, DELIVERY, BUSINESS, BUSINESS_TIER_CARDS, SOURCING, SHOP_RATE } from '@/lib/pricing'
 import TrustedBy from '@/components/TrustedBy'
 import EndlessStrip from '@/components/services/EndlessStrip'
+import OnSite from '@/components/services/OnSite'
 
 /**
  * /services, rebuilt 2026-09-13: the work first, the terms as the close.
@@ -414,6 +415,11 @@ export default function ServicesClient() {
             })}
           </div>
         </div>
+      </section>
+
+      {/* ═══════════ ON SITE ═══════════ */}
+      <section id="onsite" className="max-w-[1280px] mx-auto px-5 sm:px-11 pb-14 scroll-mt-24">
+        <OnSite />
       </section>
 
       {/* ═══════════ THE ACCOUNT ═══════════
