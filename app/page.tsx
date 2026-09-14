@@ -46,11 +46,11 @@ const WORK = [
 ]
 
 const B2B_LANES = [
-  { h: 'Metal service tags', p: 'Stickers fall off. A fiber-laser mark in stainless outlives the equipment. Packs of 10 from $30.', href: '/services/metal-tags' },
-  { h: 'Knife crews', p: 'I pick up the whole line’s knives and return them engraved next day. $25 single, $8/knife for full kitchens.', href: '/services/knife-engraving' },
-  { h: 'Branded packs', p: 'Pens, coasters, keychains, metal cards. Stocked, engraved with your logo, delivered on a schedule.', href: '/services' },
-  { h: 'Custom & one-off', p: 'Awards, signage, faceplates, jobsite tools. If it needs a mark, that’s my lane.', href: '/services/portfolio' },
-  { h: 'Volume & standing orders', p: 'Real quantities get real discounts. 10% off at 50+, 15% off at 150+ or any standing order. NET-30 available.', href: '/services#business' },
+  { h: 'Equipment labels', p: `Anodized aluminum, 3M backed, a fiber mark that outlives the equipment. $${CATALOG.serviceTags.aluminumBase * CATALOG.serviceTags.pack} per ${CATALOG.serviceTags.pack}.`, href: '/services/metal-tags' },
+  { h: 'Knife crews', p: `I pick up the whole line’s knives and return them engraved next day. $${CATALOG.knife.base} single, $${CATALOG.knife.fullKitchen.perKnife} a knife for full kitchens.`, href: '/services/knife-engraving' },
+  { h: 'Metal cards', p: 'Sixteen layouts, fourteen colours. Design it on the page and the laser file writes itself.', href: '/shop/p/anodized-aluminum-wallet-card' },
+  { h: 'Plates, panels, one-offs', p: 'Faceplates, valve tags, signage, jobsite tools. Send a photo and a count, you get a number today.', href: '/services#lanes' },
+  { h: 'Standing accounts', p: `Logo on file, free delivery every ${siteInfo.deliveryRunDay}, NET-30, 15% off standing orders.`, href: '/services#account' },
 ]
 
 export default function Page() {
@@ -145,11 +145,11 @@ export default function Page() {
           <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
             <p className="text-xs font-mono text-[var(--eyebrow)] tracking-[0.25em] uppercase mb-3">For your work</p>
             <h2 className="text-[length:var(--step-section)] font-semibold text-[var(--ink)] tracking-tight leading-tight mb-4">
-              Precision laser engraving<br />
-              <span className="text-[var(--ink-soft)]">for businesses in the Denver metro.</span>
+              Things I make<br />
+              <span className="text-[var(--ink-soft)]">for the businesses around here.</span>
             </h2>
             <p className="text-[var(--ink-soft)] text-base sm:text-lg leading-relaxed max-w-2xl mb-10">
-              Posted prices. Most jobs in 24 to 72 hours. Hand-delivered across the metro.
+              Posted prices. A proof before every run. Delivered across the south metro.
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">

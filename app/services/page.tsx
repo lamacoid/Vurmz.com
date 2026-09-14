@@ -6,7 +6,7 @@ import ServicesClient from '@/components/services/ServicesClient'
 
 export const metadata: Metadata = {
   title: 'Business Engraving | VURMZ',
-  description: 'Branded coasters, metal business cards, equipment labels, and custom engraving for South Denver businesses. Posted prices, volume tiers at 50 units, hand-delivered, most jobs in 24 to 72 hours.',
+  description: 'Equipment labels, knife crews, metal cards, branded packs, plates and panels for South Denver businesses. Posted prices, a proof before every run, standing accounts with weekly delivery and NET-30.',
   alternates: { canonical: '/services' },
 }
 

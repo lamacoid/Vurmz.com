@@ -4,15 +4,14 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 import { SIGNATURE, CATALOG, DELIVERY, BUSINESS, BUSINESS_TIER_CARDS, SOURCING } from '@/lib/pricing'
-import TradesConfigurator from '@/components/services/TradesConfigurator'
 import TrustedBy from '@/components/TrustedBy'
 
 /**
- * /services, the trades side: "three decisions, one number."
- * One question at a time, posted prices, one coral action per screen.
- * Everything not configured is stated flat: the posted list, the delivery
- * card, the owner card, one closing CTA. Numbers come from lib/pricing.ts.
- * The trades voice is matter-of-fact; the shop's gift voice stays on /shop.
+ * /services, rebuilt 2026-09-13: the work first, the terms as the close.
+ * A trades buyer believes a photo of a finished plate before a price, and
+ * a recurring account is the relationship this page is selling. The card
+ * configurator that used to lead here is gone: the card has its own
+ * designer on the shop side now. Every number reads from lib/pricing.ts.
  */
 
 const display = { fontFamily: 'var(--font-display), Georgia, serif' }
@@ -20,97 +19,135 @@ const display = { fontFamily: 'var(--font-display), Georgia, serif' }
 // $3 stays $3, $7.5 becomes $7.50. Prices are written as people say them.
 const price = (n: number) => (n % 1 === 0 ? `$${n}` : `$${n.toFixed(2)}`)
 
-// What people actually do with a metal card. Suggestions, not products:
-// nothing here is priced differently, it is the same card with different
-// words on it. Adhesive-backed equipment labels are a separate product at
-// a separate price and are deliberately not in this list.
-const USES = [
-  'A contact card that survives a toolbox',
-  'QR to your reviews page',
-  'QR to your scheduling link',
-  'Membership or VIP card',
-  'Gift card that is worth keeping',
-  'Referral card for a shop you trade work with',
-  'Warranty card left with the install',
-  'Spec or cut sheet, in their hand',
-]
-
-// Four real jobs, trades side only. Captions state material and process,
-// nothing more; the gift work stays on /shop and /services/portfolio.
-const WORK = [
+// Real business jobs, stated by material and process. Each points at the
+// lane it belongs to so the photo and the posted price sit one tap apart.
+const WORK: { src: string; alt: string; title: string; spec: string; lane: string; href: string }[] = [
   {
     src: '/portfolio/clga-faceplate-closeup.jpg',
     alt: 'Engraved amp faceplate for County Line Guitar Amps',
-    title: 'Amp faceplate, County Line Guitar Amps',
-    spec: 'Brushed metal, fiber laser',
+    title: 'Amp faceplates, County Line Guitar Amps',
+    spec: 'Brushed metal, fiber laser, recurring',
+    lane: 'Plates and panels',
+    href: '#lanes',
   },
   {
-    src: '/portfolio/engraved-hand-saw.jpg',
-    alt: 'Hand saw with a name engraved on the blade',
-    title: 'Name on the blade',
-    spec: 'Saw steel, fiber laser',
-  },
-  {
-    src: '/portfolio/laser-engraved-artwork.jpg',
-    alt: 'Anodized aluminum panel engraved with fine line work',
-    title: 'Fine-detail panel',
-    spec: 'Anodized aluminum, fiber laser',
+    src: '/portfolio/tumbler-cherry-creek-37.jpg',
+    alt: 'Powder-coated tumbler engraved with a Cherry Creek business logo',
+    title: 'Branded tumblers, Cherry Creek',
+    spec: 'Powder-coated stainless, fiber laser',
+    lane: 'Branded packs',
+    href: '/shop',
   },
   {
     src: '/portfolio/culinary-cleaver-engraved.jpg',
     alt: 'Chef cleaver engraved with a name',
     title: 'Cleaver, named for the chef',
     spec: 'Knife steel, fiber laser',
-  },
-]
-
-// Everything else, posted. Values read from the catalog so the rows can
-// never drift from the real prices.
-const POSTED: { name: string; value: string; href?: string }[] = [
-  {
-    name: 'Tool and gear marking',
-    value: `${price(CATALOG.tool.base)}, or ${price(CATALOG.tool.jobsite.perPiece)} each at ${CATALOG.tool.jobsite.minQty}+`,
-  },
-  {
-    name: 'Knife marking, crews',
-    value: `${price(CATALOG.knife.base)}, ${price(CATALOG.knife.crew.perKnife)} at ${CATALOG.knife.crew.minQty}+, ${price(CATALOG.knife.fullKitchen.perKnife)} at ${CATALOG.knife.fullKitchen.minQty}+`,
+    lane: 'Knife crews',
     href: '/services/knife-engraving',
   },
   {
-    name: 'Equipment labels, 3M backed',
-    value: `${price(CATALOG.serviceTags.aluminumBase * CATALOG.serviceTags.pack)} per ${CATALOG.serviceTags.pack}, stainless ${price(CATALOG.serviceTags.stainlessBase)} each`,
+    src: '/portfolio/engraved-hand-saw.jpg',
+    alt: 'Hand saw with a name engraved on the blade',
+    title: 'Name on the blade',
+    spec: 'Saw steel, fiber laser',
+    lane: 'Tool and gear marking',
+    href: '#lanes',
+  },
+  {
+    src: '/portfolio/water-bottle-custom-engraved.jpg',
+    alt: 'Powder-coated water bottle with a custom engraving',
+    title: 'Bottles for the crew',
+    spec: 'Powder-coated steel, fiber laser',
+    lane: 'Branded packs',
+    href: '/shop',
+  },
+  {
+    src: '/portfolio/laser-engraved-artwork.jpg',
+    alt: 'Anodized aluminum panel engraved with fine line work',
+    title: 'Fine detail in anodized aluminum',
+    spec: 'Anodized aluminum, fiber laser',
+    lane: 'Plates and panels',
+    href: '#lanes',
+  },
+]
+
+// The lanes, posted. Values read from the catalog so a row can never
+// drift from the real price. Quoted lanes say so instead of inventing one.
+const LANES: { name: string; value: string; note?: string; href?: string }[] = [
+  {
+    name: 'Equipment labels',
+    value: `${price(CATALOG.serviceTags.aluminumBase * CATALOG.serviceTags.pack)} per ${CATALOG.serviceTags.pack}`,
+    note: `Anodized aluminum, 3M backed. Stainless ${price(CATALOG.serviceTags.stainlessBase)} each.`,
     href: '/services/metal-tags',
   },
   {
-    name: 'Cards in stainless',
-    value: `${price(CATALOG.cards.stainlessBase)} each, ${price(CATALOG.cards.stainlessLoaded)} fully loaded`,
+    name: 'Knife crews',
+    value: `${price(CATALOG.knife.base)} a knife`,
+    note: `${price(CATALOG.knife.crew.perKnife)} at ${CATALOG.knife.crew.minQty} or more, ${price(CATALOG.knife.fullKitchen.perKnife)} for a full kitchen. I pick up and return.`,
+    href: '/services/knife-engraving',
+  },
+  {
+    name: 'Metal cards',
+    value: `${price(CATALOG.cards.matteBlackBase * CATALOG.cards.pack)} per ${CATALOG.cards.pack}`,
+    note: 'Sixteen layouts, fourteen colours. Design it on the page and the laser file writes itself.',
+    href: '/shop/p/anodized-aluminum-wallet-card',
   },
   {
     name: 'Branded pens',
-    value: `${price(CATALOG.pens.perItem[0])} to ${price(CATALOG.pens.perItem[1])} each, packs of ${CATALOG.pens.pack}`,
+    value: `${price(CATALOG.pens.perItem[0])} to ${price(CATALOG.pens.perItem[1])} a pen`,
+    note: `Soft-touch stylus pens, packs of ${CATALOG.pens.pack}.`,
+    href: '/shop#menu-pens',
+  },
+  {
+    name: 'Tool and gear marking',
+    value: `${price(CATALOG.tool.base)} a piece`,
+    note: `${price(CATALOG.tool.jobsite.perPiece)} each at ${CATALOG.tool.jobsite.minQty} or more. Your name on what walks off jobsites.`,
   },
   {
     name: 'Installer signature tiles',
-    value: `${price(CATALOG.signatureTiles.perTile)} per tile`,
+    value: `${price(CATALOG.signatureTiles.perTile)} a tile`,
+    note: 'Your mark on the install, left with the customer.',
     href: '/services/metal-tags',
   },
   {
+    name: 'Plates and panels',
+    value: 'Quoted from a photo',
+    note: 'Faceplates, valve tags, control panels, signage. Send the drawing or the part.',
+  },
+  {
     name: 'Concierge sourcing',
-    value: `${price(SOURCING.fee)} flat, plus the item`,
+    value: `${price(SOURCING.fee)} plus the item`,
+    note: 'You describe it, I find the blank, engrave it, and deliver it.',
   },
   {
     name: 'Anything one-off',
     value: `from ${price(SIGNATURE.startingAt)}`,
+    note: 'Bring the thing. If it is solid and fits the bed, it marks.',
+    href: '/shop/p/engrave-your-item',
   },
 ]
 
+// What a standing account is. Every line is a real term from lib/pricing.
+const ACCOUNT_TERMS = (standingDiscount: string) => [
+  { h: 'Your logo on file', p: 'Upload it once. Every reorder is a text message and a count.' },
+  { h: `Free delivery, every ${siteInfo.deliveryRunDay}`, p: `Any size, anywhere in the ${DELIVERY.area}. The run is the same day each week.` },
+  { h: `NET-${BUSINESS.netTermsDays} terms`, p: 'Invoice after delivery. Pay on your schedule, not at checkout.' },
+  { h: `${standingDiscount} on standing orders`, p: 'Counted in real units across the account, and the tier holds between reorders.' },
+  { h: 'A proof before every run', p: 'A photo of the first piece, approved by you, before the rest are cut.' },
+  { h: 'One person, start to finish', p: 'You text me. I quote it, make it, and hand it to you.' },
+]
+
 export default function ServicesClient() {
+  const standing = BUSINESS.tiers.find(t => t.name === 'Standing')
+  const standingDiscount = standing ? `${Math.round(standing.discount * 100)}% off` : '15% off'
+
   const serviceSchema = {
     '@context': 'https://schema.org',
     '@type': 'Service',
     serviceType: 'Laser Engraving',
-    name: 'VURMZ Laser Engraving Services',
-    description: 'Precision laser engraving for businesses, trades, restaurants, and individuals. Branded products, service tags, knife marking, custom gifts. Posted pricing, next-day turnaround, hand-delivered across the South Denver metro.',
+    name: 'VURMZ Laser Engraving for Business',
+    description: 'Equipment labels, knife crews, metal cards, branded packs, plates and panels, and one-off marking for businesses in the South Denver metro. Posted prices, proof before every run, delivered weekly.',
     provider: {
       '@type': 'LocalBusiness',
       name: 'VURMZ LLC',
@@ -135,26 +172,40 @@ export default function ServicesClient() {
     <div className="bg-[var(--page)]">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
 
-      {/* ═══════════ INTRO ROW ═══════════ */}
+      {/* ═══════════ MASTHEAD ═══════════ */}
       <section className="max-w-[1280px] mx-auto px-5 sm:px-11 pt-12 pb-10">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-10 lg:gap-14 items-start">
           <div>
-            <p className="text-xs font-mono tracking-[0.28em] uppercase text-[var(--eyebrow)] mb-3.5">
-              Metal cards, plates and marking for the trades
+            <p className="text-[length:var(--step-eyebrow)] font-mono tracking-[0.28em] uppercase text-[var(--eyebrow)] mb-3.5">
+              For your business
             </p>
-            <h1 className="text-[34px] sm:text-[44px] leading-[1.1] font-semibold tracking-[-0.02em] text-[var(--ink)]" style={display}>
-              Engraved to spec, most jobs<br className="hidden sm:block" /> in your hands inside three days.
+            <h1 className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] leading-[1.1] text-[var(--ink)]" style={display}>
+              Things I make for the businesses around here.
             </h1>
-            <p className="mt-5 max-w-[56ch] text-[17px] leading-relaxed text-[var(--ink-soft)]">
-              I&apos;m {siteInfo.founder.name}. I run one laser out of {siteInfo.city} and I mark panels, plates,
-              valves, asset tags and gear for shops across the south metro. Prices are posted below.
-              Nothing runs until you approve a proof.
+            <p className="mt-5 max-w-[56ch] text-[length:var(--step-lead)] leading-relaxed text-[var(--ink-soft)]">
+              I&apos;m {siteInfo.founder.name}. One laser in {siteInfo.city}. You text me a photo and a count,
+              I send a number the same day and a proof photo before anything runs, and I drive it to you
+              on {siteInfo.deliveryRunDay}. Prices are posted below.
             </p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <a
+                href={getSmsLink('Hi Zach, here is what I need marked: ')}
+                className="puffy-btn inline-flex items-center justify-center h-[48px] px-6 rounded-[var(--r-control)] bg-[var(--coral)] text-white text-[length:var(--step-body)] font-semibold hover:bg-[var(--coral-hover)] transition-colors duration-[var(--t-hover)]"
+              >
+                Text {siteInfo.phone}
+              </a>
+              <a
+                href="#account"
+                className="inline-flex items-center justify-center h-[48px] px-6 rounded-[var(--r-control)] border border-[var(--ink)]/25 text-[var(--ink)] text-[length:var(--step-body)] font-semibold hover:border-[var(--ink)] transition-colors duration-[var(--t-hover)]"
+              >
+                What an account gets you
+              </a>
+            </div>
           </div>
 
-          <div className="bg-[rgba(127,207,212,.18)] border border-[var(--hairline)] rounded-sm p-5">
-            <p className="text-[11px] font-mono tracking-[0.24em] uppercase text-[var(--ink)] mb-3">This week</p>
-            <div className="text-[14.5px] text-[var(--ink-soft)]">
+          <div className="bg-[var(--glass)] border border-[var(--hairline)] rounded-[var(--r-panel)] p-5">
+            <p className="text-[length:var(--step-eyebrow)] font-mono tracking-[0.24em] uppercase text-[var(--ink)] mb-3">This week</p>
+            <div className="text-[length:var(--step-row)] text-[var(--ink-soft)]">
               <span className="flex justify-between py-[7px] border-b border-[var(--hairline)]">
                 <span>Next delivery run</span>
                 <span className="text-[var(--ink)] font-semibold">{siteInfo.deliveryRunDay.slice(0, 3)}</span>
@@ -163,235 +214,177 @@ export default function ServicesClient() {
                 <span>Typical turnaround</span>
                 <span className="text-[var(--ink)] font-semibold">72 hrs</span>
               </span>
-              <span className="flex justify-between py-[7px]">
+              <span className="flex justify-between py-[7px] border-b border-[var(--hairline)]">
                 <span>Setup fees</span>
                 <span className="text-[var(--ink)] font-semibold">None</span>
+              </span>
+              <span className="flex justify-between py-[7px]">
+                <span>Proof before it runs</span>
+                <span className="text-[var(--ink)] font-semibold">Always</span>
               </span>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ═══════════ THE DECISION PANEL ═══════════ */}
-      <section id="price" className="max-w-[1280px] mx-auto px-5 sm:px-11 pb-11 scroll-mt-24">
-        <TradesConfigurator />
-      </section>
-
-      {/* ═══════════ WHAT THEY GET USED FOR ═══════════
-          Same card, different words on it. No prices here on purpose. */}
-      <section className="max-w-[1280px] mx-auto px-5 sm:px-11 pb-11">
-        <div className="bg-[rgba(127,207,212,.18)] border border-[var(--hairline)] rounded-sm p-6 sm:p-7">
-          <p className="text-[11px] font-mono tracking-[0.24em] uppercase text-[var(--ink)] mb-4">
-            What people put on them
-          </p>
-          <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-2.5 list-none p-0 m-0">
-            {USES.map(use => (
-              <li key={use} className="text-[15px] leading-snug text-[var(--ink-soft)] flex gap-2.5">
-                <span className="text-[#C67A6F] flex-shrink-0" aria-hidden>&middot;</span>
-                {use}
-              </li>
-            ))}
-          </ul>
-          <p className="mt-5 text-[14px] leading-relaxed text-[var(--ink-soft)]">
-            Need it stuck to a panel or a valve instead? Those are equipment labels, a different
-            blank with 3M backing, {price(CATALOG.serviceTags.aluminumBase)} each in packs
-            of {CATALOG.serviceTags.pack}. Same laser, same proof.{' '}
-            <Link href="/services/metal-tags" className="text-[var(--ink)] underline decoration-[#C67A6F] decoration-[1.5px] underline-offset-2">
-              The labels lane
-            </Link>
-          </p>
-        </div>
-      </section>
-
-      {/* ═══════════ THE WORK ═══════════
-          A trades buyer wants to see a plate before believing a price. Four
-          real jobs, stated by material and process. */}
-      <section className="max-w-[1280px] mx-auto px-5 sm:px-11 pb-11">
-        <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1 mb-4">
-          <p className="text-[11px] font-mono tracking-[0.24em] uppercase text-[var(--eyebrow)]">
-            Off the machine
-          </p>
-          <Link
-            href="/services/portfolio"
-            className="text-[14px] text-[var(--ink-soft)] hover:text-[var(--ink)] transition-colors"
-          >
-            See the rest of the work
+      {/* ═══════════ THE WORK ═══════════ */}
+      <section id="work" className="max-w-[1280px] mx-auto px-5 sm:px-11 pb-14 scroll-mt-24">
+        <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 mb-5">
+          <h2 className="text-[length:var(--step-panel)] text-[var(--ink)]" style={display}>The work</h2>
+          <Link href="/services/portfolio" className="text-[length:var(--step-row)] text-[var(--ink-soft)] hover:text-[var(--ink)] transition-colors duration-[var(--t-hover)]">
+            See the rest of it
           </Link>
         </div>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
           {WORK.map(w => (
             <figure key={w.src} className="m-0">
-              <div className="relative aspect-[4/3] rounded-sm overflow-hidden bg-[var(--feature-deep)]">
-                <Image
-                  src={w.src}
-                  alt={w.alt}
-                  fill
-                  sizes="(max-width: 1024px) 50vw, 25vw"
-                  className="object-cover"
-                />
+              <div className="relative aspect-[4/3] rounded-[var(--r-tile)] overflow-hidden bg-[var(--feature-deep)]">
+                <Image src={w.src} alt={w.alt} fill sizes="(max-width: 1024px) 50vw, 33vw" className="object-cover" />
               </div>
               <figcaption className="mt-2.5">
-                <p className="text-[14.5px] font-semibold leading-snug text-[var(--ink)]">{w.title}</p>
-                <p className="text-[12.5px] font-mono tracking-[0.06em] text-[var(--ink-soft)]">{w.spec}</p>
+                <p className="text-[length:var(--step-row)] font-semibold leading-snug text-[var(--ink)]">{w.title}</p>
+                <p className="text-[length:var(--step-fine)] font-mono tracking-[0.04em] text-[var(--ink-soft)]">{w.spec}</p>
+                <Link href={w.href} className="inline-block mt-1 text-[length:var(--step-fine)] text-[var(--ink)] border-b border-[var(--signal)] hover:border-[var(--ink)] transition-colors duration-[var(--t-hover)]">
+                  {w.lane}
+                </Link>
               </figcaption>
             </figure>
           ))}
         </div>
       </section>
 
-      {/* ═══════════ POSTED PRICES + LOCAL PROOF ═══════════ */}
-      <section className="max-w-[1280px] mx-auto px-5 sm:px-11 pb-11">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
-          <div className="bg-[var(--surface)] border border-[var(--hairline)] rounded-sm p-6 sm:p-7">
-            <p className="text-[11px] font-mono tracking-[0.24em] uppercase text-[var(--eyebrow)] mb-4">
-              Everything else, posted
-            </p>
-            <div className="text-[15px] text-[var(--ink-soft)]">
-              {POSTED.map((row, i) => {
-                const inner = (
-                  <span className={`flex flex-wrap justify-between items-baseline gap-x-4 py-2.5 ${i < POSTED.length - 1 ? 'border-b border-[var(--hairline)]' : ''}`}>
-                    <span className="text-[var(--ink)] font-semibold">{row.name}</span>
-                    <span>{row.value}</span>
-                  </span>
-                )
-                return row.href ? (
-                  <Link key={row.name} href={row.href} className="block hover:text-[var(--ink)] transition-colors">
-                    {inner}
-                  </Link>
-                ) : (
-                  <div key={row.name}>{inner}</div>
-                )
-              })}
-            </div>
+      {/* ═══════════ THE LANES, POSTED ═══════════ */}
+      <section id="lanes" className="max-w-[1280px] mx-auto px-5 sm:px-11 pb-14 scroll-mt-24">
+        <div className="bg-[var(--surface)] border border-[var(--hairline)] rounded-[var(--r-panel)] p-6 sm:p-8">
+          <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 mb-2">
+            <h2 className="text-[length:var(--step-panel)] text-[var(--ink)]" style={display}>Posted prices</h2>
+            <p className="text-[length:var(--step-fine)] text-[var(--ink-soft)]">Volume pricing below. No setup fees on anything.</p>
           </div>
-
-          <div className="flex flex-col gap-6">
-            <div className="bg-[rgba(127,207,212,.18)] border border-[var(--hairline)] rounded-sm p-6 sm:p-7">
-              <p className="text-[11px] font-mono tracking-[0.24em] uppercase text-[var(--ink)] mb-3.5">
-                I drive it to you
-              </p>
-              <p className="mb-4 text-[15px] leading-relaxed text-[var(--ink-soft)]">
-                Free hand-delivery over ${DELIVERY.freeThreshold} anywhere in the {DELIVERY.area}.
-                Standing accounts get it free at any size, with NET-{BUSINESS.netTermsDays} terms.
-              </p>
-              <div className="flex flex-wrap gap-[7px]">
-                {siteInfo.serviceAreas.map(area => (
-                  <span
-                    key={area}
-                    className="px-[11px] py-[5px] bg-[var(--surface)] border border-[var(--hairline)] rounded-full text-[13.5px] font-medium text-[var(--ink)]"
-                  >
-                    {area}
+          <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-x-10">
+            {LANES.map((row, i) => {
+              const inner = (
+                <span className={`flex flex-col gap-0.5 py-3 border-b border-[var(--hairline)] ${i >= LANES.length - 1 ? 'md:border-b-0' : ''}`}>
+                  <span className="flex flex-wrap items-baseline justify-between gap-x-4">
+                    <span className="text-[length:var(--step-body)] font-semibold text-[var(--ink)]">{row.name}</span>
+                    <span className="text-[length:var(--step-body)] text-[var(--eyebrow)] font-semibold whitespace-nowrap">{row.value}</span>
                   </span>
-                ))}
-              </div>
-            </div>
-
-            <div className="grid grid-cols-[110px_1fr] sm:grid-cols-[132px_1fr] gap-5 items-center bg-[var(--surface)] border border-[var(--hairline)] rounded-sm p-5 sm:p-6">
-              <div className="relative aspect-square rounded-sm overflow-hidden">
-                <Image
-                  src="/images/zach.jpeg"
-                  alt={`${siteInfo.founder.name}, owner of VURMZ`}
-                  fill
-                  sizes="132px"
-                  className="object-cover"
-                />
-              </div>
-              <div>
-                <p className="mb-1.5 text-[19px] leading-tight font-semibold text-[var(--ink)]" style={display}>
-                  No department. Just me.
-                </p>
-                <p className="mb-3 text-[14.5px] leading-relaxed text-[var(--ink-soft)]">
-                  You text me, I quote you, I engrave it, and I hand it to you. Recurring work for
-                  County Line Guitar Amps and Nordstrom Beauty at Cherry Creek.
-                </p>
-                <Link
-                  href="/services/portfolio"
-                  className="text-[14.5px] font-semibold text-[var(--ink)] border-b-[1.5px] border-[#C67A6F] pb-0.5"
-                >
-                  See the work
+                  {row.note && <span className="text-[length:var(--step-fine)] leading-snug text-[var(--ink-soft)]">{row.note}</span>}
+                </span>
+              )
+              return row.href ? (
+                <Link key={row.name} href={row.href} className="block group">
+                  {inner}
                 </Link>
-              </div>
+              ) : (
+                <div key={row.name}>{inner}</div>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════ THE ACCOUNT ═══════════
+          The relationship this page sells. Deep teal is a surface on the
+          paper, the one dark block on the page. */}
+      <section id="account" className="scroll-mt-24">
+        <div id="business" className="bg-[var(--feature-deep)] text-[var(--feature-ink)]">
+          <div className="max-w-[1280px] mx-auto px-5 sm:px-11 py-14 sm:py-[72px]">
+            <p className="text-[length:var(--step-eyebrow)] font-mono tracking-[0.28em] uppercase text-[var(--feature-soft)] mb-3.5">The account</p>
+            <h2 className="text-[length:var(--step-section)] leading-[1.1] max-w-[24ch]" style={display}>
+              A standing account with a laser.
+            </h2>
+            <p className="mt-4 max-w-[58ch] text-[length:var(--step-lead)] leading-relaxed text-[var(--feature-soft)]">
+              For the shops that need the same thing every month: labels, crews, cards, packs. Set it up once
+              and it runs on a text.
+            </p>
+
+            <div className="mt-9 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-6">
+              {ACCOUNT_TERMS(standingDiscount).map(t => (
+                <div key={t.h} className="border-t border-[var(--feature-ink)]/20 pt-4">
+                  <p className="text-[length:var(--step-lead)] font-semibold">{t.h}</p>
+                  <p className="mt-1 text-[length:var(--step-row)] leading-relaxed text-[var(--feature-soft)]">{t.p}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* The ladder, flat. */}
+            <div className="mt-10 grid grid-cols-2 lg:grid-cols-4 gap-3">
+              {BUSINESS_TIER_CARDS.map(tier => (
+                <div key={tier.name} className={`rounded-[var(--r-tile)] p-4 border ${tier.freeDelivery ? 'border-[var(--signal)] bg-[var(--feature)]' : 'border-[var(--feature-ink)]/15 bg-[var(--feature)]'}`}>
+                  <p className="text-[length:var(--step-body)] font-semibold">{tier.name}</p>
+                  <p className="text-[length:var(--step-fine)] font-mono text-[var(--feature-soft)] mb-2">{tier.range}</p>
+                  <p className="text-[length:var(--step-panel)] font-semibold">{tier.discount}</p>
+                  {tier.freeDelivery && (
+                    <p className="mt-1.5 text-[length:var(--step-fine)] leading-snug text-[var(--feature-soft)]">Free delivery any size, NET-{BUSINESS.netTermsDays}</p>
+                  )}
+                </div>
+              ))}
+            </div>
+            <p className="mt-3 text-[length:var(--step-fine)] text-[var(--feature-soft)]">
+              Counted in real units, not packs: ten packs of {CATALOG.pens.pack} pens is {CATALOG.pens.pack * 10} units.
+            </p>
+
+            <div className="mt-9 flex flex-wrap items-center gap-3">
+              <Link
+                href="/account"
+                className="puffy-btn inline-flex items-center justify-center h-[48px] px-6 rounded-[var(--r-control)] bg-[var(--coral)] text-white text-[length:var(--step-body)] font-semibold hover:bg-[var(--coral-hover)] transition-colors duration-[var(--t-hover)]"
+              >
+                Open an account
+              </Link>
+              <a
+                href={getSmsLink('Hi Zach, I would like to set up a standing account for: ')}
+                className="inline-flex items-center justify-center h-[48px] px-6 rounded-[var(--r-control)] border border-[var(--feature-ink)]/30 text-[var(--feature-ink)] text-[length:var(--step-body)] font-semibold hover:border-[var(--signal)] transition-colors duration-[var(--t-hover)]"
+              >
+                Or text me and I set it up
+              </a>
+            </div>
+
+            <div className="mt-9 flex flex-wrap gap-[7px]">
+              {siteInfo.serviceAreas.map(area => (
+                <span key={area} className="px-[11px] py-[5px] border border-[var(--feature-ink)]/20 rounded-full text-[length:var(--step-fine)] font-medium text-[var(--feature-soft)]">
+                  {area}
+                </span>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* ═══════════ VOLUME LADDER ═══════════
-          The configurator shows the tier you land on; this states the whole
-          ladder flat. The homepage B2B card links straight here. */}
-      <section id="business" className="max-w-[1280px] mx-auto px-5 sm:px-11 pb-11 scroll-mt-24">
-        <div className="bg-[var(--surface)] border border-[var(--hairline)] rounded-sm p-6 sm:p-7">
-          <p className="text-[11px] font-mono tracking-[0.24em] uppercase text-[var(--eyebrow)] mb-4">
-            Volume, posted
-          </p>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            {BUSINESS_TIER_CARDS.map(tier => (
-              <div key={tier.name} className={`rounded-sm p-4 ${tier.freeDelivery ? 'bg-[rgba(127,207,212,.18)]' : 'bg-[var(--page)]'}`}>
-                <p className="text-[15px] font-semibold text-[var(--ink)]">{tier.name}</p>
-                <p className="text-[13px] font-mono text-[var(--ink-soft)] mb-2.5">{tier.range}</p>
-                <p className="text-[20px] font-semibold text-[var(--ink)]">{tier.discount}</p>
-                {tier.freeDelivery && (
-                  <p className="mt-2 text-[13px] leading-snug text-[var(--ink-soft)]">
-                    Free delivery any size, NET-{BUSINESS.netTermsDays} available
-                  </p>
-                )}
-              </div>
-            ))}
+      {/* ═══════════ WHO ═══════════ */}
+      <section className="max-w-[1280px] mx-auto px-5 sm:px-11 py-14">
+        <div className="grid grid-cols-[110px_1fr] sm:grid-cols-[150px_1fr] gap-6 items-center max-w-[720px]">
+          <div className="relative aspect-square rounded-[var(--r-tile)] overflow-hidden">
+            <Image src="/images/zach.jpeg" alt={`${siteInfo.founder.name}, owner of VURMZ`} fill sizes="150px" className="object-cover" />
           </div>
-          <p className="mt-4 text-[14px] leading-relaxed text-[var(--ink-soft)]">
-            Counted in real units, not packs: 10 packs of 15 pens is 150 units. A standing account
-            holds its tier between reorders.
-          </p>
-        </div>
-      </section>
-
-      {/* ═══════════ ORDER NOW ═══════════
-          The services side is still a shop, but it does not keep its own copy
-          of the catalog. Everything lives on one menu; these are the doors
-          into the parts a business walks in for. */}
-      <section id="order" className="max-w-[1280px] mx-auto px-5 sm:px-11 pb-11 scroll-mt-24">
-        <div className="bg-[rgba(127,207,212,.18)] border border-[var(--hairline)] rounded-sm p-6 sm:p-7">
-          <p className="text-[11px] font-mono tracking-[0.24em] uppercase text-[var(--ink)] mb-3">
-            Order now
-          </p>
-          <p className="mb-5 max-w-[60ch] text-[15px] leading-relaxed text-[var(--ink-soft)]">
-            Everything I make is on one menu, posted prices and all. Buy it there, or send me the
-            job above and I will quote it.
-          </p>
-          <div className="flex flex-wrap gap-2.5">
-            {[
-              { label: 'Metal cards', href: '/shop#menu-metal-cards' },
-              { label: 'Labels and tags', href: '/shop#menu-labels-tags' },
-              { label: 'Branded pens', href: '/shop#menu-pens' },
-              { label: 'Coasters', href: '/shop#menu-coasters' },
-              { label: 'The whole menu', href: '/shop' },
-            ].map(link => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="px-4 py-[11px] rounded-sm border border-[var(--ink)]/20 bg-[var(--surface)] text-[15px] font-medium text-[var(--ink)] hover:border-[#C67A6F] transition-colors"
-              >
-                {link.label}
-              </Link>
-            ))}
+          <div>
+            <p className="mb-1.5 text-[length:var(--step-panel)] leading-tight text-[var(--ink)]" style={display}>
+              No department. Just me.
+            </p>
+            <p className="mb-3 text-[length:var(--step-row)] leading-relaxed text-[var(--ink-soft)]">
+              Recurring work for County Line Guitar Amps and Nordstrom Beauty at Cherry Creek. One person handles
+              your job from the first text to the delivery.
+            </p>
+            <Link href="/about" className="text-[length:var(--step-row)] font-semibold text-[var(--ink)] border-b-[1.5px] border-[var(--coral)] pb-0.5">
+              About VURMZ
+            </Link>
           </div>
         </div>
       </section>
 
       {/* ═══════════ TRUSTED BY ═══════════ */}
-      <section className="max-w-[1280px] mx-auto px-5 sm:px-11 pb-12">
+      <section className="max-w-[1280px] mx-auto px-5 sm:px-11 pb-14">
         <TrustedBy theme="services" />
       </section>
 
       {/* ═══════════ CLOSING BAND ═══════════ */}
       <section className="bg-[var(--feature)] text-[var(--feature-ink)]">
         <div className="max-w-[1280px] mx-auto px-5 sm:px-11 py-8 flex flex-col sm:flex-row sm:items-center gap-5">
-          <p className="text-[22px] leading-tight font-semibold" style={display}>
+          <p className="text-[length:var(--step-panel)] leading-tight" style={display}>
             Send a photo and a count. You will have a real number today.
           </p>
           <a
             href={getSmsLink('Hi Zach, here is what I need marked: ')}
-            className="puffy-btn sm:ml-auto inline-flex items-center justify-center whitespace-nowrap px-6 py-3.5 rounded-[var(--r-control)] bg-[var(--coral)] text-white text-[15px] font-semibold hover:bg-[var(--coral)]-hover transition-colors"
+            className="puffy-btn sm:ml-auto inline-flex items-center justify-center whitespace-nowrap px-6 py-3.5 rounded-[var(--r-control)] bg-[var(--coral)] text-white text-[length:var(--step-body)] font-semibold hover:bg-[var(--coral-hover)] transition-colors duration-[var(--t-hover)]"
           >
             Text {siteInfo.phone}
           </a>
