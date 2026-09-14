@@ -25,12 +25,24 @@ export interface CardMaterial {
   gloss?: boolean
 }
 export const CARD_MATERIALS: CardMaterial[] = [
+  // The range anodized card blanks come in. Stocked rows narrow this list
+  // on the page; the full range is the fallback until inventory is filled.
+  // Pale surfaces (silver, gold, champagne, rose) take the darker grey: the
+  // bare-alu mark barely separates from them, which is the truth of those.
   { key: 'black-matte', label: 'Black, matte', surface: '#1c1c1e', markColor: '#C9CACC' },
   { key: 'black-gloss', label: 'Black, gloss', surface: '#111114', markColor: '#C9CACC', gloss: true },
+  { key: 'gunmetal', label: 'Gunmetal', surface: '#4a4d52', markColor: '#C9CACC' },
   { key: 'silver', label: 'Silver', surface: '#c8c9cb', markColor: '#B4B6B9' },
-  { key: 'blue', label: 'Blue', surface: '#2a5d8f', markColor: '#C9CACC' },
+  { key: 'gold', label: 'Gold', surface: '#c9a552', markColor: '#B4B6B9' },
+  { key: 'champagne', label: 'Champagne', surface: '#d6c3a1', markColor: '#B4B6B9' },
+  { key: 'bronze', label: 'Bronze', surface: '#8a5a2b', markColor: '#C9CACC' },
   { key: 'red', label: 'Red', surface: '#a03030', markColor: '#C9CACC' },
+  { key: 'orange', label: 'Orange', surface: '#c8662a', markColor: '#C9CACC' },
+  { key: 'rose', label: 'Rose', surface: '#c98b98', markColor: '#B4B6B9' },
   { key: 'purple', label: 'Purple', surface: '#5a3a7e', markColor: '#C9CACC' },
+  { key: 'blue', label: 'Blue', surface: '#2a5d8f', markColor: '#C9CACC' },
+  { key: 'teal', label: 'Teal', surface: '#2a7f8a', markColor: '#C9CACC' },
+  { key: 'green', label: 'Green', surface: '#2f6b4f', markColor: '#C9CACC' },
 ]
 
 export interface CardLogo {
@@ -69,8 +81,8 @@ export function familyForFontValue(value: string): string {
 }
 
 // ---- sample people --------------------------------------------------------
-// Zach's rule (2026-09-13): every sample card is a long-dead famous name
-// with a modernized title. Nobody living, nobody's real number.
+// Zach's rule (2026-09-13): every sample card is an ANCIENT name with a
+// modern title. "A bit older still. Ancient." Nobody living, no real number.
 export interface SamplePerson {
   name: string
   title: string
@@ -80,22 +92,34 @@ export interface SamplePerson {
   url: string
 }
 export const SAMPLE_PEOPLE: SamplePerson[] = [
-  { name: 'Ada Lovelace', title: 'Systems Architect', company: 'Analytical Engines', phone: '(720) 555-0143', email: 'ada@analyticalengines.com', url: 'analyticalengines.com' },
-  { name: 'Nikola Tesla', title: 'Master Electrician', company: 'Wardenclyffe Electric', phone: '(720) 555-0188', email: 'nikola@wardenclyffe.com', url: 'wardenclyffe.com' },
-  { name: 'Johannes Gutenberg', title: 'Print Broker', company: 'Mainz Press', phone: '(720) 555-0145', email: 'johannes@mainzpress.com', url: 'mainzpress.com' },
-  { name: 'Leonardo da Vinci', title: 'Design Lead', company: 'Studio Vinci', phone: '(720) 555-0152', email: 'leo@studiovinci.com', url: 'studiovinci.com' },
-  { name: 'Marie Curie', title: 'Lab Manager', company: 'Radium Works', phone: '(720) 555-0198', email: 'marie@radiumworks.com', url: 'radiumworks.com' },
-  { name: 'Isambard Brunel', title: 'Site Superintendent', company: 'Great Western Contracting', phone: '(720) 555-0159', email: 'ik@greatwestern.build', url: 'greatwestern.build' },
-  { name: 'Hedy Lamarr', title: 'Wireless Engineer', company: 'Frequency Hopping', phone: '(720) 555-0141', email: 'hedy@frequencyhopping.com', url: 'frequencyhopping.com' },
-  { name: 'George W. Carver', title: 'Agronomist', company: 'Tuskegee Soil and Seed', phone: '(720) 555-0164', email: 'george@tuskegeeseed.com', url: 'tuskegeeseed.com' },
-  { name: 'Benjamin Franklin', title: 'Print Shop Owner', company: 'Franklin and Sons', phone: '(720) 555-0176', email: 'ben@franklinandsons.com', url: 'franklinandsons.com' },
-  { name: 'Florence Nightingale', title: 'Operations Director', company: 'Scutari Care', phone: '(720) 555-0120', email: 'florence@scutaricare.com', url: 'scutaricare.com' },
+  { name: 'Imhotep', title: 'Design-Build Lead', company: 'Saqqara Contracting', phone: '(720) 555-0127', email: 'imhotep@saqqara.build', url: 'saqqara.build' },
+  { name: 'Hypatia', title: 'Data Scientist', company: 'Alexandria Analytics', phone: '(720) 555-0143', email: 'hypatia@alexandria.co', url: 'alexandria.co' },
+  { name: 'Vitruvius', title: 'Structural Engineer', company: 'Vitruvius and Associates', phone: '(720) 555-0188', email: 'marcus@vitruvius.com', url: 'vitruvius.com' },
+  { name: 'Hammurabi', title: 'Compliance Officer', company: 'Babylon Codes', phone: '(720) 555-0145', email: 'hammurabi@babyloncodes.com', url: 'babyloncodes.com' },
   { name: 'Archimedes', title: 'Mechanical Engineer', company: 'Syracuse Machine Works', phone: '(720) 555-0112', email: 'arch@syracusemachine.com', url: 'syracusemachine.com' },
-  { name: 'Harriet Tubman', title: 'Logistics Coordinator', company: 'North Star Freight', phone: '(720) 555-0183', email: 'harriet@northstarfreight.com', url: 'northstarfreight.com' },
-  { name: 'Galileo Galilei', title: 'Optics Technician', company: 'Padua Instruments', phone: '(720) 555-0161', email: 'galileo@paduainstruments.com', url: 'paduainstruments.com' },
-  { name: 'Jane Austen', title: 'Managing Editor', company: 'Chawton House Press', phone: '(720) 555-0117', email: 'jane@chawtonpress.com', url: 'chawtonpress.com' },
-  { name: 'Frederick Douglass', title: 'Publisher', company: 'North Star Media', phone: '(720) 555-0138', email: 'frederick@northstarmedia.com', url: 'northstarmedia.com' },
+  { name: 'Hatshepsut', title: 'Director of Trade', company: 'Punt Imports', phone: '(720) 555-0159', email: 'hatshepsut@puntimports.com', url: 'puntimports.com' },
+  { name: 'Hippocrates', title: 'Clinic Director', company: 'Kos Family Medicine', phone: '(720) 555-0141', email: 'hippocrates@kosfamily.com', url: 'kosfamily.com' },
   { name: 'Cleopatra', title: 'Chief Executive', company: 'Ptolemaic Holdings', phone: '(720) 555-0130', email: 'cleo@ptolemaic.co', url: 'ptolemaic.co' },
+  { name: 'Euclid', title: 'Land Surveyor', company: 'Elements Surveying', phone: '(720) 555-0176', email: 'euclid@elementssurveying.com', url: 'elementssurveying.com' },
+  { name: 'Sappho', title: 'Creative Director', company: 'Lesbos Studio', phone: '(720) 555-0120', email: 'sappho@lesbosstudio.com', url: 'lesbosstudio.com' },
+  { name: 'Cicero', title: 'Trial Attorney', company: 'Cicero Law', phone: '(720) 555-0164', email: 'marcus@cicerolaw.com', url: 'cicerolaw.com' },
+  { name: 'Hannibal', title: 'Freight Operations', company: 'Carthage Logistics', phone: '(720) 555-0183', email: 'hannibal@carthagelogistics.com', url: 'carthagelogistics.com' },
+  { name: 'Ptolemy', title: 'GIS Analyst', company: 'Almagest Mapping', phone: '(720) 555-0161', email: 'claudius@almagest.com', url: 'almagest.com' },
+  { name: 'Enheduanna', title: 'Editor in Chief', company: 'Ur Press', phone: '(720) 555-0117', email: 'enheduanna@urpress.com', url: 'urpress.com' },
+  { name: 'Sun Tzu', title: 'Strategy Consultant', company: 'Wu Advisory', phone: '(720) 555-0138', email: 'suntzu@wuadvisory.com', url: 'wuadvisory.com' },
+  { name: 'Boudica', title: 'Fleet Manager', company: 'Iceni Motors', phone: '(720) 555-0198', email: 'boudica@icenimotors.com', url: 'icenimotors.com' },
+  { name: 'Leonidas', title: 'Security Director', company: 'Thermopylae Protective', phone: '(720) 555-0152', email: 'leo@thermopylae.co', url: 'thermopylae.co' },
+  { name: 'Aesop', title: 'Content Writer', company: 'Fable Media', phone: '(720) 555-0171', email: 'aesop@fablemedia.com', url: 'fablemedia.com' },
+  { name: 'Seneca', title: 'Life Coach', company: 'Stoic Advisory', phone: '(720) 555-0106', email: 'seneca@stoicadvisory.com', url: 'stoicadvisory.com' },
+  { name: 'Ashoka', title: 'Public Works Director', company: 'Maurya Civil', phone: '(720) 555-0193', email: 'ashoka@mauryacivil.com', url: 'mauryacivil.com' },
+  { name: 'Hero of Alexandria', title: 'Vending Machine Tech', company: 'Pneumatica Services', phone: '(720) 555-0109', email: 'hero@pneumatica.com', url: 'pneumatica.com' },
+  { name: 'Nebuchadnezzar', title: 'Landscape Architect', company: 'Hanging Gardens Co.', phone: '(720) 555-0124', email: 'neb@hanginggardens.co', url: 'hanginggardens.co' },
+  { name: 'Ctesibius', title: 'Master Plumber', company: 'Alexandria Water Works', phone: '(720) 555-0135', email: 'ctesibius@alexandriawater.com', url: 'alexandriawater.com' },
+  { name: 'Galen', title: 'Sports Medicine', company: 'Pergamon Athletic Clinic', phone: '(720) 555-0148', email: 'galen@pergamonclinic.com', url: 'pergamonclinic.com' },
+  { name: 'Herodotus', title: 'Travel Writer', company: 'Halicarnassus Tours', phone: '(720) 555-0157', email: 'herodotus@halicarnassus.travel', url: 'halicarnassus.travel' },
+  { name: 'Nefertiti', title: 'Brand Ambassador', company: 'Amarna Cosmetics', phone: '(720) 555-0166', email: 'nefertiti@amarna.beauty', url: 'amarna.beauty' },
+  { name: 'Diogenes', title: 'Minimalism Consultant', company: 'One Barrel Living', phone: '(720) 555-0179', email: 'diogenes@onebarrel.com', url: 'onebarrel.com' },
+  { name: 'Pythagoras', title: 'Acoustics Engineer', company: 'Samos Sound', phone: '(720) 555-0186', email: 'pythagoras@samossound.com', url: 'samossound.com' },
 ]
 
 export function initialsOf(name: string, max = 3): string {
