@@ -9,13 +9,21 @@
 export const SIGNATURE = {
   name: "Signature",
   tagline: "Custom work, made to order",
-  startingAt: 35, // locked 2026-06-11: $35 bring-your-own floor (was 50)
+  // 2026-09-13 reprice (vurmz-control/RESEARCH/PRICING-MARKET-2026-09.md):
+  // the shop side is priced as a high-end niche engraver. $55 covers one
+  // piece, one placement, a proof photo, delivery. Items over $150 add
+  // 10% of value; jewelry and watches from $95.
+  startingAt: 55,
+  valueSurchargeOver: 150,
+  valueSurchargePct: 0.10,
+  valueSurchargeCap: 150,
+  jewelryFrom: 95,
   unit: "per item",
   bullets: [
     "No setup fees",
     "Single items welcome",
-    "Next-day turnaround",
-    "Free hand-delivery in South Denver metro",
+    "A proof photo before it runs",
+    "Hand-delivered across the south Denver metro",
   ],
 } as const
 
@@ -63,8 +71,10 @@ export const CATALOG = {
     pack: 10,
     // $2.50/card matches the approved July 2026 sheet's $25 pack of 10
     // (the D1 SKU). This was left at $3 in the sweep; fixed 2026-07-16.
-    matteBlackBase: 2.5,
-    matteBlackLoaded: 6,
+    // 2026-09-13: $2.50 was under the cost of a domestic blank ($2.07 to
+    // $2.95). $4.50 is still under every engraved comparable at 10.
+    matteBlackBase: 4.5,
+    matteBlackLoaded: 7.5,
     stainlessBase: 12,
     stainlessLoaded: 15,
     addOns: { logo: 1, qrCode: 1, backSide: 1 },
@@ -123,11 +133,47 @@ export const CATALOG = {
   },
 } as const
 
+// "Happy to source, for a fee." Zach names it, buys it (in person when the
+// metro stocks it, online when not), engraves it, and brings it. The item
+// at cost, the engraving, and a fee that scales with the item. Deposit
+// before the item is bought. Terms from the 2026-09 research.
 export const SOURCING = {
-  label: "Concierge sourcing",
-  fee: 25,
-  description:
-    "I'll find it, buy it, engrave it, and deliver it. $25 flat finder's fee plus the cost of the item.",
+  label: "Happy to source",
+  engraving: 45,
+  secondLocation: 30,
+  giftBox: 15,
+  feeUnder100: 45,
+  feeUnder300: 65,
+  feePctOver300: 0.20,
+  depositItemPct: 1,
+  depositServicePct: 0.5,
+  /** Concierge fee for an item at this retail price. */
+  fee(itemPrice: number): number {
+    if (itemPrice < 100) return 45
+    if (itemPrice < 300) return 65
+    return Math.round(itemPrice * 0.20)
+  },
+  /** Delivered price: item at cost, engraving, fee. Rounded to $5. */
+  delivered(itemPrice: number): number {
+    return Math.round((itemPrice + 45 + SOURCING.fee(itemPrice)) / 5) * 5
+  },
+}
+
+/** Shop-side policies, posted. From the 2026-09 research. */
+export const SHOP_POLICY = {
+  minimum: 45,
+  rushNextDayPct: 0.25,
+  rushNextDayMin: 25,
+  rushSameDayPct: 0.5,
+  rushSameDayMin: 45,
+  artworkPrep: 45,
+  designPerHour: 95,
+} as const
+
+/** Quoted plate, panel, and one-off work on the services side. */
+export const SHOP_RATE = {
+  hourly: 85,
+  minimumMinutes: 30,
 } as const
 
 // Lowered $75 -> $50 in the July 2026 repricing (approved sheet): the

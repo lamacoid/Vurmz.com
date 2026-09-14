@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
-import { SIGNATURE, CATALOG, DELIVERY, BUSINESS, BUSINESS_TIER_CARDS, SOURCING } from '@/lib/pricing'
+import { SIGNATURE, CATALOG, DELIVERY, BUSINESS, BUSINESS_TIER_CARDS, SOURCING, SHOP_RATE } from '@/lib/pricing'
 import TrustedBy from '@/components/TrustedBy'
 import EndlessStrip from '@/components/services/EndlessStrip'
 
@@ -113,13 +113,14 @@ const LANES: { name: string; value: string; note?: string; href?: string }[] = [
   },
   {
     name: 'Plates and panels',
-    value: 'Quoted from a photo',
-    note: 'Faceplates, valve tags, control panels, signage. Send the drawing or the part.',
+    value: `${price(SHOP_RATE.hourly)} an hour`,
+    note: `${SHOP_RATE.minimumMinutes} minute minimum, material quoted. Faceplates, valve tags, control panels, signage. Send the drawing or the part.`,
   },
   {
-    name: 'Concierge sourcing',
-    value: `${price(SOURCING.fee)} plus the item`,
-    note: 'You describe it, I find the blank, engrave it, and deliver it.',
+    name: 'Happy to source',
+    value: `from ${price(SOURCING.feeUnder100)} plus the item`,
+    note: 'Name the piece. I find it, engrave it, and bring it. The item at cost.',
+    href: '/shop#source',
   },
   {
     name: 'Anything one-off',

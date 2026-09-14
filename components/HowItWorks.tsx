@@ -5,7 +5,7 @@ import { DELIVERY, SIGNATURE } from '@/lib/pricing'
 const STEPS = [
   {
     h: 'Text me',
-    p: `Send a photo of what you want engraved, or buy it ready from the shop. Your own thing is $${SIGNATURE.startingAt} flat.`,
+    p: `Send a photo of what you want engraved, or buy it ready from the shop. Your own piece is $${SIGNATURE.startingAt}, proof included.`,
   },
   {
     h: 'Approve the proof',

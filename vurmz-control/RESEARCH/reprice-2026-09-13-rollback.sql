@@ -1,0 +1,22 @@
+-- Rollback of the 2026-09-13 reprice. Run: npx wrangler d1 execute vurmz-core --remote --file=<this>
+UPDATE products SET price_cents=3500 WHERE slug='engrave-your-item';
+UPDATE products SET price_cents=3500 WHERE slug='custom-jewelry-marking';
+UPDATE products SET price_cents=2800 WHERE slug='pine-wood-coaster-set';
+UPDATE products SET price_cents=3400 WHERE slug='engraved-slate-coaster-set';
+UPDATE products SET price_cents=4400 WHERE slug='gold-stainless-coaster-set';
+UPDATE products SET price_cents=5800 WHERE slug='brushed-stainless-coaster-set';
+UPDATE products SET price_cents=1000 WHERE slug='custom-iron-on-transfer';
+UPDATE products SET price_cents=1200 WHERE slug='custom-vinyl-decal';
+UPDATE products SET price_cents=2200 WHERE slug='wood-plant-markers';
+UPDATE products SET price_cents=3000 WHERE slug='aluminum-plant-markers';
+UPDATE products SET price_cents=3200 WHERE slug='custom-wood-sign';
+UPDATE products SET price_cents=4500 WHERE slug='wood-panel-art';
+UPDATE products SET price_cents=7500 WHERE slug='photo-engraved-on-wood';
+UPDATE products SET price_cents=3800 WHERE slug='personalized-mini-mailbox';
+UPDATE products SET price_cents=3900 WHERE slug='bamboo-cutting-board';
+UPDATE products SET price_cents=4500 WHERE slug='survival-knife-personalized';
+UPDATE products SET price_cents=1000 WHERE slug='engraved-keychain';
+UPDATE products SET price_cents=1200 WHERE slug='engraved-pet-tag';
+UPDATE products SET price_cents=1800 WHERE slug='anodized-aluminum-wallet-card';
+UPDATE products SET price_cents=600 WHERE slug='soft-touch-stylus-pen';
+UPDATE products SET price_cents=2500 WHERE slug='metal-cards-business-pack-10';
