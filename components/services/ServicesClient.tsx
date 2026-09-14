@@ -223,13 +223,12 @@ export default function ServicesClient() {
               For your business
             </p>
             <h1 className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] leading-[1.1] text-[var(--ink)]" style={display}>
-              Tell me what you need marked.
+              Precision laser engraving<br className="hidden sm:block" /> for the businesses of the south Denver metro.
             </h1>
             <p className="mt-5 max-w-[56ch] text-[length:var(--step-lead)] leading-relaxed text-[var(--ink-soft)]">
-              I&apos;m {siteInfo.founder.name}. One laser shop in {siteInfo.city}, fiber and diode, run by me.
-              Labels, tags, plates, knives, cards, packs, the part you are holding. Send a photo and a count,
-              you get a number the same day, a proof photo before anything runs, and delivery
-              on {siteInfo.deliveryRunDay}.
+              Tell me what you need marked. Labels, tags, plates, knives, cards, packs, the part you are holding.
+              Send a photo and a count: a number the same day, a proof photo before anything runs, delivery
+              on {siteInfo.deliveryRunDay}. I&apos;m {siteInfo.founder.name}, one shop in {siteInfo.city}, fiber and diode, run by me.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <a
