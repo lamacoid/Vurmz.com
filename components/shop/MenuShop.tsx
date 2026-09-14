@@ -22,7 +22,6 @@ function metaLine(p: Product, sale?: SaleInfo): string {
   const parts: string[] = []
   if (p.shortDescription) parts.push(menuCase(p.shortDescription))
   if (p.packSize > 1) parts.push(`pack of ${p.packSize}`)
-  if (!p.oneOff && p.madeToOrder && p.leadTimeDays > 0) parts.push(`made to order, ${p.leadTimeDays} day${p.leadTimeDays === 1 ? '' : 's'}`)
   if (sale) parts.push(`launch price through ${saleEndsLabel(sale)}`)
   return parts.join(', ')
 }
@@ -79,7 +78,7 @@ export function MenuRow({
           </span>
         )}
         <span className="flex-1 -translate-y-[3px] border-b border-dotted border-[var(--ink)]/25 min-w-[1.5rem]" aria-hidden />
-        <span className="font-semibold text-[var(--eyebrow)] whitespace-nowrap">
+        <span className="font-medium text-[var(--ink)] tabular-nums whitespace-nowrap">
           {/* Strikethrough only when the regular price is a real former price. */}
           {sale?.compareAt && <s className="font-normal text-[var(--ink-soft)]/70 mr-1.5">{menuPrice(p.priceCents)}</s>}
           {sale
@@ -233,7 +232,7 @@ export default async function MenuShop() {
                           />
                         </span>
                         <span className="flex-1 -translate-y-[3px] border-b border-dotted border-[var(--ink)]/25 min-w-[1.5rem]" aria-hidden />
-                        <span className="font-semibold text-[var(--eyebrow)] whitespace-nowrap">
+                        <span className="font-medium text-[var(--ink)] tabular-nums whitespace-nowrap">
                           {sale.compareAt && <s className="font-normal text-[var(--ink-soft)]/70 mr-1.5">{menuPrice(p.priceCents)}</s>}
                           {menuPrice(sale.priceCents)}
                         </span>

@@ -118,8 +118,8 @@ export default function ShopHome() {
             <p className="mt-5 text-[14px] leading-relaxed text-[var(--ink-soft)]">
               Anything solid takes a mark: metal, wood, glass, leather, slate, acrylic, plastic. Your own
               piece is one price within a palm-sized mark, a little more for the large or the intricate,
-              and you see a proof before it runs. Do not have the piece yet? Happy to source, for a fee:
-              named, found, engraved, and brought to you, the item at cost.
+              and you see a proof before it runs. Do not have the piece yet? Happy to source:
+              named, found, engraved, and brought to you, the item at cost plus ${SOURCING.feeUnder100}.
             </p>
           </div>
         </div>
@@ -131,13 +131,15 @@ export default function ShopHome() {
       <section id="source" className="pb-10 sm:pb-14 scroll-mt-24">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-[var(--surface)] border border-[var(--hairline)] rounded-[var(--r-panel)] p-6 sm:p-8">
-            <p className="text-[length:var(--step-eyebrow)] font-mono tracking-[0.24em] uppercase text-[var(--eyebrow)] mb-2">Happy to source, for a fee</p>
+            <p className="text-[length:var(--step-eyebrow)] font-mono tracking-[0.24em] uppercase text-[var(--eyebrow)] mb-2">Happy to source</p>
             <h2 className="text-[length:var(--step-panel)] text-[var(--ink)]" style={{ fontFamily: 'var(--font-display), Georgia, serif' }}>
               Name the piece. It arrives engraved.
             </h2>
-            <p className="mt-2 max-w-[62ch] text-[length:var(--step-row)] leading-relaxed text-[var(--ink-soft)]">
-              I go and get it, engrave it, and bring it to your door. The item at cost with the receipt, the engraving,
-              and a fee for the errand: ${SOURCING.feeUnder100} under $100, ${SOURCING.feeUnder300} to $300, twenty percent above that.
+            <p className="mt-1 font-mono text-[length:var(--step-fine)] tracking-[0.04em] text-[var(--ink-soft)]">
+              The item at cost + ${SOURCING.feeUnder100}
+            </p>
+            <p className="mt-3 max-w-[62ch] text-[length:var(--step-row)] leading-relaxed text-[var(--ink-soft)]">
+              I go and get it, engrave it, and bring it to your door, receipt in the box.
               A few I make often, with what they come to delivered:
             </p>
             <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-x-8">
@@ -145,16 +147,16 @@ export default function ShopHome() {
                 <div key={it.name} className={`flex flex-col py-2.5 border-b border-[var(--hairline)] ${i >= SOURCED.length - 2 ? 'sm:border-b-0' : ''}`}>
                   <span className="flex items-baseline justify-between gap-3">
                     <span className="text-[length:var(--step-body)] font-semibold text-[var(--ink)]">{it.name}</span>
-                    <span className="text-[length:var(--step-body)] text-[var(--eyebrow)] font-semibold whitespace-nowrap">${deliveredPrice(it)}</span>
+                    <span className="text-[length:var(--step-body)] text-[var(--ink)] font-medium tabular-nums whitespace-nowrap">${deliveredPrice(it)}</span>
                   </span>
-                  <span className="text-[length:var(--step-fine)] text-[var(--ink-soft)]">{it.material}. {it.where}.</span>
+                  <span className="text-[length:var(--step-fine)] text-[var(--ink-soft)]">{it.material}{/^ordered/i.test(it.where) ? `. ${it.where}` : ''}.</span>
                 </div>
               ))}
             </div>
             <p className="mt-5 text-[length:var(--step-fine)] leading-relaxed text-[var(--ink-soft)]">
-              Anything else, name it. A deposit for the item and half the service holds it before I buy; the balance when you
-              approve the proof photo. Cancel before I buy and it is all returned. After engraving, it is yours.
-              Glass and crystal are the one thing I do not mark.
+              Anything else, name it. The ${SOURCING.feeUnder100} covers a piece under $100, ${SOURCING.feeUnder300} to $300, twenty percent above.
+              Engraving is priced as your own piece. A deposit holds it before I buy, fully returned if you change your mind
+              before then. Glass and crystal are the one thing I do not mark.
             </p>
             <a
               href={getSmsLink('Hi Zach. Happy to source: I would like a ')}
