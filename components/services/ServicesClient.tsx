@@ -92,7 +92,7 @@ const LANES: { name: string; value: string; note?: string; href?: string }[] = [
   {
     name: 'Metal cards',
     value: `${price(CATALOG.cards.matteBlackBase * CATALOG.cards.pack)} per ${CATALOG.cards.pack}`,
-    note: 'Sixteen layouts, fourteen colours. Design it on the page and the laser file writes itself.',
+    note: 'Sixteen layouts, fourteen colors. Design it on the page and the laser file writes itself.',
     href: '/shop/p/anodized-aluminum-wallet-card',
   },
   {
@@ -163,7 +163,7 @@ const PRECISION = [
 // Materials and their true marks, from the shop's own material truths.
 // Machine: F = fiber, D = diode. Anything not settled stays off this list.
 const MATERIALS = [
-  { name: 'Anodized aluminum', machine: 'fiber', mark: 'Dye removed to bare silver metal, whatever the colour. Cards, tags, plant markers, laptop lids.' },
+  { name: 'Anodized aluminum', machine: 'fiber', mark: 'Dye removed to bare silver metal, whatever the color. Cards, tags, plant markers, laptop lids.' },
   { name: 'Stainless steel', machine: 'fiber', mark: 'Annealed: a matte dark mark in the surface, nothing removed. Knives, labels, coasters, flatware.' },
   { name: 'Powder-coated metal', machine: 'fiber', mark: 'Coating stripped to bare steel. Tumblers, bottles, painted panels.' },
   { name: 'Brushed and raw metals', machine: 'fiber', mark: 'Engraved or annealed to a dark mark. Faceplates, brass, titanium, tool steel.' },

@@ -15,7 +15,7 @@ export type { DesignerTemplate, DesignerSlot }
 export const CARD_MM = { w: 85.725, h: 53.975, r: 3.175, safe: 5.08 }
 
 /** Material truths: anodized aluminum always marks bare-alu silver. The dye
- *  comes off, whatever colour the card is. The silver card marks a shade
+ *  comes off, whatever color the card is. The silver card marks a shade
  *  darker and reads low contrast, which is the truth of that blank. */
 export interface CardMaterial {
   key: string
@@ -133,7 +133,7 @@ export function monogramFor(name: string, slot: DesignerSlot): string {
   return initialsOf(name, (slot.sizeMm ?? 0) >= 20 ? 1 : 3)
 }
 
-/** Luminance of a CSS colour, 0..1, or null when it cannot be read. */
+/** Luminance of a CSS color, 0..1, or null when it cannot be read. */
 function luminance(color: string): number | null {
   const c = color.trim().toLowerCase()
   if (c === 'white') return 1
@@ -155,8 +155,8 @@ function luminance(color: string): number | null {
  * white) become knockouts, everything else becomes the mark. Isomorphic,
  * so the preview shows the same one-tone logo the laser gets.
  *
- * `knockout` is what a light fill paints: the card colour on screen, and
- * the mark colour in the laser file, where LightBurn's nested-fill rule
+ * `knockout` is what a light fill paints: the card color on screen, and
+ * the mark color in the laser file, where LightBurn's nested-fill rule
  * turns a filled shape inside a filled shape into a hole.
  */
 export function sanitizeLogoSvg(src: string, mark = '#000', knockout = 'none'): { inner: string; viewBox: string } | null {
@@ -287,13 +287,13 @@ export function qrPath(value: string, slot: DesignerSlot): string {
 }
 
 export interface FillOptions {
-  /** Mark colour for screen previews. Laser output leaves #000. */
+  /** Mark color for screen previews. Laser output leaves #000. */
   markColor?: string
   /** For the emblem slot: a raster image href (data URL). Rendered one-tone. */
   logoHref?: string
   /** For the emblem slot: SVG source text. Sanitised and rendered one-tone. */
   logoSvg?: string
-  /** Card surface colour, what a logo's light fills paint on screen. */
+  /** Card surface color, what a logo's light fills paint on screen. */
   surface?: string
   /** Placeholders: render sample text at reduced opacity for empty slots. */
   placeholders?: Record<string, string>
@@ -329,7 +329,7 @@ export function fillBody(template: DesignerTemplate, design: Pick<CardDesign, 'v
         const clean = sanitizeLogoSvg(opts.logoSvg, mark, opts.surface ?? 'none')
         if (clean) el = `<svg data-slot="emblem" x="${slot.x}" y="${slot.y}" width="${slot.w}" height="${slot.h}" viewBox="${escapeXml(clean.viewBox)}" preserveAspectRatio="xMidYMid meet">${clean.inner}</svg>`
       } else if (opts.logoHref) {
-        // A raster shows as its luminance in the mark colour: light pixels
+        // A raster shows as its luminance in the mark color: light pixels
         // are the mark, dark pixels are bare card. That is what engraving
         // an image does.
         const [r, g, b] = [1, 3, 5].map(i => parseInt(mark.slice(i, i + 2), 16) / 255)
@@ -347,8 +347,8 @@ export function fillBody(template: DesignerTemplate, design: Pick<CardDesign, 'v
   return body
 }
 
-/** The on-screen card: surface colour, faint sheen, the marks in the true
- *  mark colour. Text stays live text so the browser's fonts render it. */
+/** The on-screen card: surface color, faint sheen, the marks in the true
+ *  mark color. Text stays live text so the browser's fonts render it. */
 export function previewSvg(design: CardDesign, opts: { logoHref?: string; logoSvg?: string; placeholders?: Record<string, string>; id?: string } = {}): string {
   const template = templateByKey(design.templateKey) ?? CARD_TEMPLATES[0]
   const material = materialByKey(design.materialKey) ?? CARD_MATERIALS[0]
@@ -372,7 +372,7 @@ export function isCardProduct(metadata: Record<string, unknown> | null | undefin
   return !!b && b.mode === 'canvas' && b.shape === 'rounded-rect' && typeof b.widthIn === 'number' && Math.abs(b.widthIn - 3.375) < 0.01
 }
 
-/** Card colour chips: stocked finishes when the inventory has rows, else the full range. */
+/** Card color chips: stocked finishes when the inventory has rows, else the full range. */
 export function materialsFor(stockedLabels: string[]): CardMaterial[] {
   const norm = (s: string) => s.trim().toLowerCase()
   const stocked = CARD_MATERIALS.filter(m => stockedLabels.some(l => norm(l) === norm(m.label)))

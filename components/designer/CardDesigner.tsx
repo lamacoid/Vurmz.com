@@ -1,9 +1,9 @@
 'use client'
 /**
  * The card designer. Not a drawing tool: the customer picks a layout and a
- * colour, types into named fields, drops a logo, and watches the card. The
+ * color, types into named fields, drops a logo, and watches the card. The
  * preview is the same record the laser file is written from, in the true
- * mark colour for the material. Nothing to drag, nothing to learn.
+ * mark color for the material. Nothing to drag, nothing to learn.
  *
  * Hands up a CardDesign (or null while blank). Autosaves to this browser.
  */
@@ -65,7 +65,7 @@ export default function CardDesigner({
   onChange,
 }: {
   productId: string
-  /** The colours on offer, stocked ones first. */
+  /** The colors on offer, stocked ones first. */
   materials: CardMaterial[]
   onChange: (design: CardDesign | null) => void
 }) {
@@ -228,7 +228,7 @@ export default function CardDesigner({
       <div className="rounded-[var(--r-panel)] bg-[var(--page)] border border-[var(--hairline)] p-5 sm:p-8">
         <Preview id="main" design={design} logo={logo} placeholders={placeholders} className="mx-auto max-w-[520px] [&_svg]:block [&_svg]:drop-shadow-[0_10px_18px_rgba(18,63,71,0.18)]" />
         <p className="mt-4 text-center text-[length:var(--step-fine)] text-[var(--ink-soft)]">
-          {template.label} on {material?.label.toLowerCase()}. The mark is the colour the laser leaves on this card.
+          {template.label} on {material?.label.toLowerCase()}. The mark is the color the laser leaves on this card.
           {restored && <> <button type="button" onClick={startOver} className="text-[var(--eyebrow)] font-semibold hover:underline">Start over</button></>}
         </p>
       </div>

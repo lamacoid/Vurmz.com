@@ -48,7 +48,7 @@ const WORK = [
 const B2B_LANES = [
   { h: 'Equipment labels', p: `Anodized aluminum, 3M backed, a fiber mark that outlives the equipment. $${CATALOG.serviceTags.aluminumBase * CATALOG.serviceTags.pack} per ${CATALOG.serviceTags.pack}.`, href: '/services/metal-tags' },
   { h: 'Knife crews', p: `I pick up the whole line’s knives and return them engraved next day. $${CATALOG.knife.base} single, $${CATALOG.knife.fullKitchen.perKnife} a knife for full kitchens.`, href: '/services/knife-engraving' },
-  { h: 'Metal cards', p: 'Sixteen layouts, fourteen colours. Design it on the page and the laser file writes itself.', href: '/shop/p/anodized-aluminum-wallet-card' },
+  { h: 'Metal cards', p: 'Sixteen layouts, fourteen colors. Design it on the page and the laser file writes itself.', href: '/shop/p/anodized-aluminum-wallet-card' },
   { h: 'Plates, panels, one-offs', p: 'Faceplates, valve tags, signage, jobsite tools. Send a photo and a count, you get a number today.', href: '/services#lanes' },
   { h: 'Standing accounts', p: `Logo on file, free delivery every ${siteInfo.deliveryRunDay}, NET-30, 15% off standing orders.`, href: '/services#account' },
 ]

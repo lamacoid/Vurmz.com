@@ -106,7 +106,7 @@ export const SHOP_CATEGORIES: ShopCategory[] = [
     smsMessage: 'Hi Zach, I would like a tumbler or bottle engraved. Here is the idea: ',
     faqs: [
       { question: 'Can you engrave the one I already have?', answer: 'Yes. That is your own piece, engraved. Send a photo and I will tell you how the coating will mark.' },
-      { question: 'How does a powder-coated tumbler mark?', answer: 'The laser lifts the coating to the bare steel underneath, so the mark is bright metal against the colour. It does not peel, fade, or wash off. It is the most asked-for look.' },
+      { question: 'How does a powder-coated tumbler mark?', answer: 'The laser lifts the coating to the bare steel underneath, so the mark is bright metal against the color. It does not peel, fade, or wash off. It is the most asked-for look.' },
       { question: 'Do you do full wraps?', answer: 'Yes. A design around the whole cup is possible. Send the art and I will quote it.' },
       { question: 'I want a particular brand.', answer: 'Happy to source, for a fee. Name it and I find it, engrave it, and bring it. The item is billed at cost.' },
     ],
@@ -135,7 +135,7 @@ export const SHOP_CATEGORIES: ShopCategory[] = [
     smsMessage: 'Hi Zach, I am interested in a set of engraved coasters. Here is the idea: ',
     faqs: [
       { question: 'Which materials?', answer: 'Natural slate, cork-backed, with a sheared stone edge. Solid pine, softened edges. Brushed stainless, or stainless in a mirror gold. Each set is one material.' },
-      { question: 'What goes on them?', answer: 'A monogram, a family name and a year, a logo, a map of the neighbourhood, the coordinates of the house. Anything you can send as an image, or a design from the library.' },
+      { question: 'What goes on them?', answer: 'A monogram, a family name and a year, a logo, a map of the neighborhood, the coordinates of the house. Anything you can send as an image, or a design from the library.' },
       { question: 'For a wedding or a party?', answer: 'Yes. Coasters are the favour people take home and use. Names and a date on slate is the one I make most.' },
       { question: 'For a restaurant, a bar, or an office?', answer: `Business sets start at ${CATALOG.coasters.pack} and are priced on the services side, with a proof of the first one before the run.` },
     ],
@@ -214,7 +214,7 @@ export const SHOP_CATEGORIES: ShopCategory[] = [
     faqs: [
       { question: 'Can I order one?', answer: 'Yes. One pen, engraved, is on the menu. Matched sets are on the menu too, and larger runs are priced on the services side.' },
       { question: 'What goes on the pen?', answer: 'A name, a company, a short line, or a logo. One clean line reads best on a barrel.' },
-      { question: 'Which colours?', answer: 'Charcoal, grey, sage, powder blue, blush, cream, as stock allows. Say your preference in the notes.' },
+      { question: 'Which colors?', answer: 'Charcoal, grey, sage, powder blue, blush, cream, as stock allows. Say your preference in the notes.' },
       { question: 'For a company, on a schedule?', answer: 'Yes. A standing account keeps a team in pens without anyone reordering. That lives on the services side.' },
     ],
     relatedCategories: ['metal-cards', 'gifts'],
@@ -229,8 +229,8 @@ export const SHOP_CATEGORIES: ShopCategory[] = [
     name: 'Metal Cards',
     shortName: 'Metal Cards',
     tagline: 'The card that is still on the desk a year later.',
-    cardDescription: 'Anodized aluminum in fourteen colours, engraved to bright metal. Design it on the page, sixteen layouts, a logo, a QR code, and the laser file writes itself.',
-    description: 'Engraved metal business cards in Centennial, Colorado. Anodized aluminum, fourteen colours, designed on the page with sixteen layouts, a logo, and a QR code. Hand-delivered across the south Denver metro.',
+    cardDescription: 'Anodized aluminum in fourteen colors, engraved to bright metal. Design it on the page, sixteen layouts, a logo, a QR code, and the laser file writes itself.',
+    description: 'Engraved metal business cards in Centennial, Colorado. Anodized aluminum, fourteen colors, designed on the page with sixteen layouts, a logo, and a QR code. Hand-delivered across the south Denver metro.',
     heroImage: null,
     galleryImages: [],
     pricingType: 'basic',
