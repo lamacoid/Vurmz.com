@@ -13,7 +13,7 @@ import { getDb, getEnv, newId, nowIso } from '@/lib/db/client'
 import { reportError } from '@/lib/error'
 import { businessTierFor } from '@/lib/pricing'
 import { CARD_MATERIALS, CARD_TEMPLATES } from '@/lib/designer/card'
-import { writeOrderDesignFiles } from '@/lib/designer/order-files'
+import { writeOrderDesignFiles, type WrittenDesignFile } from '@/lib/designer/order-files'
 
 export const runtime = 'edge'
 
@@ -142,8 +142,18 @@ async function sendOrderEmails(env: CloudflareEnv, args: {
   items: Array<{ name: string; qty: number; unitPriceCents: number; engraving?: string }>
   fulfillmentLabel: string
   attachmentCount?: number
+  /** Laser files the designer wrote for this order: attached to the owner email. */
+  designFiles?: WrittenDesignFile[]
 }) {
   if (!env.RESEND_API_KEY) return
+  // Resend takes base64 attachments. SVGs with an embedded raster logo can
+  // run large; anything past 8 MB stays in the admin only.
+  const attachments = (args.designFiles ?? [])
+    .filter(f => f.svg.length <= 8 * 1024 * 1024)
+    .map(f => ({ filename: f.filename, content: btoa(unescape(encodeURIComponent(f.svg))), content_type: 'image/svg+xml' }))
+  const designLines = (args.designFiles ?? []).map(f =>
+    `<li><strong>${esc(f.label)}</strong>: laser file <code>${esc(f.filename)}</code> attached${f.notes.length ? `<br><span style="color:#a66">${f.notes.map(esc).join('<br>')}</span>` : ''}</li>`
+  ).join('')
   const dollars = (c: number) => `$${(c / 100).toFixed(2)}`
   const lines = args.items.map(i => `<li>${i.qty} × ${i.name}: ${dollars(i.unitPriceCents * i.qty)}${i.engraving ? `<br><span style="color:#888">✎ Engraving: ${i.engraving}</span>` : ''}</li>`).join('')
   const html = `
@@ -181,8 +191,9 @@ async function sendOrderEmails(env: CloudflareEnv, args: {
       from: 'VURMZ Orders <orders@vurmz.com>',
       reply_to: 'zach@vurmz.com',
       to: 'zach@vurmz.com',
-      subject: `New order ${args.orderNumber}: ${dollars(args.totalCents)}`,
-      html: `<p>New order from <strong>${args.email}</strong>. ${args.fulfillmentLabel}.</p><ul style="padding-left:18px">${lines}</ul>${args.attachmentCount ? `<p>📎 ${args.attachmentCount} customer file${args.attachmentCount > 1 ? 's' : ''} attached, view in admin.</p>` : ''}<p><a href="https://www.vurmz.com/admin/orders/${args.orderId}">Open in admin →</a></p>`,
+      subject: `New order ${args.orderNumber}: ${dollars(args.totalCents)}${attachments.length ? ' (laser file attached)' : ''}`,
+      html: `<p>New order from <strong>${args.email}</strong>. ${args.fulfillmentLabel}.</p><ul style="padding-left:18px">${lines}</ul>${designLines ? `<p>Designed by the customer:</p><ul style="padding-left:18px">${designLines}</ul><p>Layers: engrave (fill), line (stroke), reference (red card outline, no output). Send the proof before it runs.</p>` : ''}${args.attachmentCount ? `<p>📎 ${args.attachmentCount} customer file${args.attachmentCount > 1 ? 's' : ''} attached, view in admin.</p>` : ''}<p><a href="https://www.vurmz.com/admin/orders/${args.orderId}">Open in admin →</a></p>`,
+      ...(attachments.length ? { attachments } : {}),
     }),
   }).catch(() => {})
 }
@@ -370,9 +381,10 @@ export async function POST(req: NextRequest) {
   })
 
   // 4b. Laser files for designed lines. Guarded inside: never fails the order.
+  let designFiles: WrittenDesignFile[] = []
   if (designByProduct.size > 0) {
     try {
-      await writeOrderDesignFiles(order, new URL(req.url).origin)
+      designFiles = await writeOrderDesignFiles(order, new URL(req.url).origin)
     } catch (err) {
       reportError(err, { route: 'orders', extra: { alert: 'DESIGN_FILES_FAILED', orderId: order.id } })
     }
@@ -494,6 +506,7 @@ export async function POST(req: NextRequest) {
     }),
     fulfillmentLabel,
     attachmentCount: allAttachments.length,
+    designFiles,
   })
 
   await audit({

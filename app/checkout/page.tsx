@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { trackConversion } from '@/lib/track'
 import { useCart } from '@/lib/cart/store'
+import CardThumb, { designFrom, designLabel } from '@/components/designer/CardThumb'
 import SquarePayment from '@/components/shop/SquarePayment'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 
@@ -594,11 +595,16 @@ export default function CheckoutPage() {
           <div className="space-y-3">
             {items.map(item => (
               <div key={`${item.productId}:${item.variantId ?? ""}`} className="flex gap-3 items-start">
+                {designFrom(item.metadata) ? (
+                  <div className="w-24 flex-shrink-0 self-start"><CardThumb design={designFrom(item.metadata)!} id={`co-${item.productId}`} /></div>
+                ) : (
                 <div className="w-14 h-14 bg-white border border-[#16525C]/10 rounded-sm overflow-hidden flex-shrink-0">
                   {item.heroUrl ? <img src={item.heroUrl} alt="" className="w-full h-full object-cover" /> : null}
                 </div>
+                )}
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium truncate">{item.name}</p>
+                  {designFrom(item.metadata) && <p className="text-[11px] text-[var(--eyebrow)] truncate">Your design · {designLabel(designFrom(item.metadata)!)}</p>}
                   <p className="text-xs text-[var(--ink-soft)]">{item.packSize > 1 ? `${item.qty} × pack of ${item.packSize}` : `Qty ${item.qty}`}</p>
                   {(() => {
                     const eng = item.metadata?.engraving as { text?: string; fontLabel?: string } | undefined

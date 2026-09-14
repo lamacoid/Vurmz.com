@@ -1,10 +1,11 @@
 'use client'
+import CardThumb, { designFrom, designLabel } from '@/components/designer/CardThumb'
 export const runtime = 'edge'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
 
-interface Item { id: string; nameSnapshot: string; qty: number; unitPriceCents: number }
+interface Item { id: string; nameSnapshot: string; qty: number; unitPriceCents: number; metadata?: Record<string, unknown> }
 interface Address { name?: string; line1?: string; line2?: string | null; city?: string; state?: string; postalCode?: string }
 interface OrderEvent {
   id: string; type: string; fromStatus: string | null; toStatus: string | null; note: string | null; createdAt: string
@@ -85,10 +86,14 @@ export default function AccountOrderDetail() {
       <div className="bg-[var(--page)] border border-white/5 rounded-xl p-5 mb-5">
         <div className="divide-y divide-white/5">
           {items.map(it => (
-            <div key={it.id} className="py-2.5 flex justify-between">
-              <div>
-                <p className="text-sm text-[var(--ink)]">{it.nameSnapshot}</p>
-                <p className="text-[11px] text-[var(--ink-soft)]">{it.qty} × {money(it.unitPriceCents)}</p>
+            <div key={it.id} className="py-2.5 flex justify-between gap-3">
+              <div className="flex gap-3 min-w-0">
+                {designFrom(it.metadata) && <div className="w-24 flex-shrink-0"><CardThumb design={designFrom(it.metadata)!} id={`acct-${it.id}`} /></div>}
+                <div className="min-w-0">
+                  <p className="text-sm text-[var(--ink)]">{it.nameSnapshot}</p>
+                  <p className="text-[11px] text-[var(--ink-soft)]">{it.qty} × {money(it.unitPriceCents)}</p>
+                  {designFrom(it.metadata) && <p className="text-[11px] text-[var(--eyebrow)]">Your design · {designLabel(designFrom(it.metadata)!)}</p>}
+                </div>
               </div>
               <p className="text-sm font-semibold text-[var(--ink)]">{money(it.qty * it.unitPriceCents)}</p>
             </div>

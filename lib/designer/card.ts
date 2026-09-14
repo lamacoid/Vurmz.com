@@ -363,7 +363,14 @@ export function previewSvg(design: CardDesign, opts: { logoHref?: string; logoSv
 </svg>`
 }
 
-/** Card colour chips: stocked finishes when the inventory has rows, else all six. */
+/** Is this product the wallet card the designer knows? Judged by its real
+ *  dimensions in the builder config, not by a flag. */
+export function isCardProduct(metadata: Record<string, unknown> | null | undefined): boolean {
+  const b = metadata && (metadata as { builder?: { mode?: string; shape?: string; widthIn?: number } }).builder
+  return !!b && b.mode === 'canvas' && b.shape === 'rounded-rect' && typeof b.widthIn === 'number' && Math.abs(b.widthIn - 3.375) < 0.01
+}
+
+/** Card colour chips: stocked finishes when the inventory has rows, else the full range. */
 export function materialsFor(stockedLabels: string[]): CardMaterial[] {
   const norm = (s: string) => s.trim().toLowerCase()
   const stocked = CARD_MATERIALS.filter(m => stockedLabels.some(l => norm(l) === norm(m.label)))

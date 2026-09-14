@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useCart, cartLineKey } from '@/lib/cart/store'
 import { DELIVERY } from '@/lib/pricing'
+import CardThumb, { designFrom, designLabel } from '@/components/designer/CardThumb'
 
 function money(cents: number) {
   return `$${(cents / 100).toFixed(2)}`
@@ -55,6 +56,11 @@ export default function CartDrawer() {
           ) : (
             items.map(item => (
               <div key={cartLineKey(item)} className="flex gap-3">
+                {designFrom(item.metadata) ? (
+                  <div className="w-24 flex-shrink-0 self-start pt-1">
+                    <CardThumb design={designFrom(item.metadata)!} id={`cart-${cartLineKey(item)}`} />
+                  </div>
+                ) : (
                 <div className="w-16 h-16 flex-shrink-0 bg-white/10 border border-white/10 rounded-sm overflow-hidden">
                   {item.heroUrl ? (
                     <img src={item.heroUrl} alt="" className="w-full h-full object-cover" />
@@ -62,6 +68,7 @@ export default function CartDrawer() {
                     <div className="w-full h-full" />
                   )}
                 </div>
+                )}
                 <div className="flex-1 min-w-0">
                   <Link
                     href={`/shop/p/${item.slug}`}
@@ -82,7 +89,9 @@ export default function CartDrawer() {
                             “{eng.text}”{eng.fontLabel ? ` · ${eng.fontLabel}` : ''}
                           </p>
                         )}
-                        {(opts?.template || opts?.finish) && (
+                        {designFrom(item.metadata) ? (
+                          <p className="text-[11px] text-[#7FCFD4] truncate">Your design · {designLabel(designFrom(item.metadata)!)}</p>
+                        ) : (opts?.template || opts?.finish) && (
                           <p className="text-[11px] text-[#DED6C3]/60 truncate">{[opts.template, opts.finish].filter(Boolean).join(' · ')}</p>
                         )}
                         {file?.filename && <p className="text-[11px] text-[#DED6C3]/60 truncate">{file.filename}</p>}

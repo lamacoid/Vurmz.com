@@ -1,3 +1,4 @@
+import { isCardProduct } from '@/lib/designer/card'
 import Link from 'next/link'
 import Image from 'next/image'
 import { listCategories, listProducts, soldUnitsFor, lowestVariantPrices } from '@/lib/db/repos/products'
@@ -65,6 +66,12 @@ export function MenuRow({
             className="absolute -bottom-0.5 left-0 h-px w-full bg-[var(--signal)] shadow-[0_0_6px_rgba(127,207,212,0.9)] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out motion-reduce:transition-none"
           />
         </span>
+        {/* The designer lives on this page: say so where the menu is read. */}
+        {isCardProduct(p.metadata) && (
+          <span className="self-center flex-shrink-0 text-[9px] font-mono uppercase tracking-[0.15em] text-[var(--ink)] border-[1.5px] border-[var(--signal)] bg-[var(--glass)] rounded-sm px-1.5 py-px whitespace-nowrap">
+            design yours
+          </span>
+        )}
         {/* Honest scarcity, visible: only one exists. */}
         {p.oneOff && (
           <span className="self-center flex-shrink-0 text-[9px] font-mono uppercase tracking-[0.15em] text-[var(--eyebrow)] border border-[var(--eyebrow)]/40 rounded-sm px-1.5 py-px whitespace-nowrap">

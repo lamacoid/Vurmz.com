@@ -16,11 +16,20 @@ export interface DesignOnOrder extends CardDesign {
   notes?: string[]
 }
 
-export async function writeOrderDesignFiles(order: Order, origin: string): Promise<void> {
+export interface WrittenDesignFile {
+  key: string
+  filename: string
+  svg: string
+  notes: string[]
+  label: string
+}
+
+export async function writeOrderDesignFiles(order: Order, origin: string): Promise<WrittenDesignFile[]> {
   const db = getDb()
   const items = await listOrderItems(order.id)
   const loadFont = fontLoaderFor(origin)
   const added: Array<{ key: string; filename: string }> = []
+  const written: WrittenDesignFile[] = []
   for (const it of items) {
     const design = (it.metadata as { design?: DesignOnOrder }).design
     if (!design || design.kind !== 'card') continue
@@ -35,7 +44,9 @@ export async function writeOrderDesignFiles(order: Order, origin: string): Promi
       notes = result.notes
       laserKey = `orders/${order.id}/${it.id}-card.svg`
       await putObject(laserKey, new TextEncoder().encode(result.svg).buffer as ArrayBuffer, 'image/svg+xml')
-      added.push({ key: laserKey, filename: `${order.number}-${it.id.slice(-4)}-card.svg` })
+      const filename = `${order.number}-${it.id.slice(-4)}-card.svg`
+      added.push({ key: laserKey, filename })
+      written.push({ key: laserKey, filename, svg: result.svg, notes: result.notes, label: `${it.qty} × ${it.nameSnapshot}` })
     } catch (err) {
       reportError(err, { route: 'orders', extra: { alert: 'DESIGN_LASER_FILE_FAILED', orderId: order.id, itemId: it.id } })
       notes = [...notes, 'the laser file could not be written; lay this one out by hand from the design below']
@@ -49,4 +60,5 @@ export async function writeOrderDesignFiles(order: Order, origin: string): Promi
     await db.prepare('UPDATE orders SET metadata = ?, updated_at = ? WHERE id = ?')
       .bind(JSON.stringify({ ...order.metadata, attachments }), nowIso(), order.id).run()
   }
+  return written
 }
