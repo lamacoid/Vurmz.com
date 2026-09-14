@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 import { SIGNATURE, CATALOG, DELIVERY, BUSINESS, BUSINESS_TIER_CARDS, SOURCING, SHOP_RATE } from '@/lib/pricing'
 import TrustedBy from '@/components/TrustedBy'
-import EndlessStrip from '@/components/services/EndlessStrip'
+import ItemScroller from '@/components/ItemScroller'
 import OnSite from '@/components/services/OnSite'
 
 /**
@@ -273,9 +273,6 @@ export default function ServicesClient() {
         </div>
       </section>
 
-      {/* The crawl. Not a list to read, a texture to notice: everything the
-          shop marks, rolling past under the masthead at full width. */}
-      <EndlessStrip className="mb-10 sm:mb-12" />
 
       {/* ═══════════ THE BRIEF ═══════════
           The heart of the page. Not what they should want: what I need to
@@ -361,8 +358,21 @@ export default function ServicesClient() {
         </div>
       </section>
 
-      {/* ═══════════ THE WORK ═══════════ */}
-      <section id="work" className="max-w-[1280px] mx-auto px-5 sm:px-11 pb-14 scroll-mt-24">
+      {/* ═══════════ THE WORK ═══════════
+          The photos sit over the same faint "endless ideas" marquee the
+          homepage runs behind its recent work. */}
+      <section id="work" className="relative overflow-hidden py-4 mb-10 scroll-mt-24">
+        <div
+          className="absolute inset-0 pointer-events-none select-none flex flex-col justify-center"
+          aria-hidden
+          style={{
+            WebkitMaskImage: 'linear-gradient(to right, transparent, #000 14%, #000 86%, transparent)',
+            maskImage: 'linear-gradient(to right, transparent, #000 14%, #000 86%, transparent)',
+          }}
+        >
+          <ItemScroller opacityScale={0.22} />
+        </div>
+        <div className="relative z-10 max-w-[1280px] mx-auto px-5 sm:px-11">
         <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 mb-5">
           <h2 className="text-[length:var(--step-panel)] text-[var(--ink)]" style={display}>The work</h2>
           <Link href="/services/portfolio" className="text-[length:var(--step-row)] text-[var(--ink-soft)] hover:text-[var(--ink)] transition-colors duration-[var(--t-hover)]">
@@ -384,6 +394,7 @@ export default function ServicesClient() {
               </figcaption>
             </figure>
           ))}
+        </div>
         </div>
       </section>
 
