@@ -128,6 +128,49 @@ const LANES: { name: string; value: string; note?: string; href?: string }[] = [
   },
 ]
 
+// What I need to quote a job. Five things, in the order I ask for them.
+const BRIEF = [
+  { h: 'A photo of the thing', p: 'The part, the blank, or the product page. If it is one of mine, the name is enough.' },
+  { h: 'How many', p: 'Real units. Ten knives, 150 pens, one faceplate. Volume pricing counts every unit across the account.' },
+  { h: 'The artwork, or the words', p: 'A vector file is best: SVG, PDF, or AI. A sharp PNG works. No file? Send the text and pick a font, I set it.' },
+  { h: 'Where it goes and how big', p: 'Inches or millimetres, a marked-up photo, or a drawing. "Centered, about two inches" is fine to start.' },
+  { h: 'When you need it', p: `Most jobs are ready in 24 to 72 hours. The delivery run is ${siteInfo.deliveryRunDay}. Say the date and I will tell you straight if it works.` },
+]
+const BRIEF_SMS = 'Hi Zach. What: \nHow many: \nArtwork or words: \nWhere and how big: \nNeeded by: '
+
+// What comes back, in order. Real steps, real timing.
+const RETURNS = [
+  { when: 'Same day', h: 'A number', p: 'The price for that count, delivery included where it applies. No setup fee, ever.' },
+  { when: 'Before it runs', h: 'A proof photo', p: 'The first piece, marked, photographed. Nothing else is cut until you say go.' },
+  { when: '24 to 72 hrs', h: 'The run', p: 'Same file, same settings, every piece. A batch of 200 matches piece one.' },
+  { when: 'The run day', h: 'Hand delivery', p: `Free over $${DELIVERY.freeThreshold}, free at any size on an account. Or pickup, or shipped if you are far.` },
+  { when: 'After', h: 'Your files on record', p: 'Logo, layout, settings. The reorder is a text with a count.' },
+]
+
+// What precision means in this shop. Claims kept to what the machines
+// and the proof process actually deliver.
+const PRECISION = [
+  { h: 'The mark is in the material, not on it', p: 'A fiber laser changes the surface itself. Nothing is printed, glued, or coated, so there is nothing to peel, fade, or rub off.' },
+  { h: 'From your file, line for line', p: 'Vector art reproduces as drawn: logos, serials, QR codes, part numbers. Text stays legible down to six point.' },
+  { h: 'Placed to your drawing', p: 'You give a position and a size, in inches or millimetres, and that is where it lands. Same fixture, same spot, across the batch.' },
+  { h: 'Repeatable', p: 'One file, saved with the settings that ran it. The reorder six months from now matches the first run.' },
+  { h: 'Proven before it runs', p: 'The first piece is photographed and approved by you before the rest are touched. A wrong mark on metal is permanent, so it is never a surprise.' },
+]
+
+// Materials and their true marks, from the shop's own material truths.
+// Machine: F = fiber, D = diode. Anything not settled stays off this list.
+const MATERIALS = [
+  { name: 'Anodized aluminum', machine: 'fiber', mark: 'Dye removed to bare silver metal, whatever the colour. Cards, tags, plant markers, laptop lids.' },
+  { name: 'Stainless steel', machine: 'fiber', mark: 'Annealed: a matte dark mark in the surface, nothing removed. Knives, labels, coasters, flatware.' },
+  { name: 'Powder-coated metal', machine: 'fiber', mark: 'Coating stripped to bare steel. Tumblers, bottles, painted panels.' },
+  { name: 'Brushed and raw metals', machine: 'fiber', mark: 'Engraved or annealed to a dark mark. Faceplates, brass, titanium, tool steel.' },
+  { name: 'Plastics', machine: 'fiber', mark: 'A light, permanent mark in ABS, polycarbonate, and most hard plastics. Chargers, housings, sign stock.' },
+  { name: 'Wood and bamboo', machine: 'diode', mark: 'A clean burn, darker with more power. Boards, panels, signs, coasters.' },
+  { name: 'Leather', machine: 'diode', mark: 'A dark, slightly recessed mark. Patches, wallets, tags.' },
+  { name: 'Slate', machine: 'diode', mark: 'A pale frost where the surface is removed. Coasters and small signs.' },
+  { name: 'Mirror', machine: 'fiber', mark: 'Silvering removed from the back. Reads as frosted glass from the front.' },
+]
+
 // What a standing account is. Every line is a real term from lib/pricing.
 const ACCOUNT_TERMS = (standingDiscount: string) => [
   { h: 'Your logo on file', p: 'Upload it once. Every reorder is a text message and a count.' },
@@ -180,12 +223,13 @@ export default function ServicesClient() {
               For your business
             </p>
             <h1 className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] leading-[1.1] text-[var(--ink)]" style={display}>
-              Things I make for the businesses around here.
+              Tell me what you need marked.
             </h1>
             <p className="mt-5 max-w-[56ch] text-[length:var(--step-lead)] leading-relaxed text-[var(--ink-soft)]">
-              I&apos;m {siteInfo.founder.name}. One laser in {siteInfo.city}. You text me a photo and a count,
-              I send a number the same day and a proof photo before anything runs, and I drive it to you
-              on {siteInfo.deliveryRunDay}. Prices are posted below.
+              I&apos;m {siteInfo.founder.name}. One laser shop in {siteInfo.city}, fiber and diode, run by me.
+              Labels, tags, plates, knives, cards, packs, the part you are holding. Send a photo and a count,
+              you get a number the same day, a proof photo before anything runs, and delivery
+              on {siteInfo.deliveryRunDay}.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <a
@@ -195,10 +239,10 @@ export default function ServicesClient() {
                 Text {siteInfo.phone}
               </a>
               <a
-                href="#account"
+                href="#brief"
                 className="inline-flex items-center justify-center h-[48px] px-6 rounded-[var(--r-control)] border border-[var(--ink)]/25 text-[var(--ink)] text-[length:var(--step-body)] font-semibold hover:border-[var(--ink)] transition-colors duration-[var(--t-hover)]"
               >
-                What an account gets you
+                What I need from you
               </a>
             </div>
           </div>
@@ -223,6 +267,90 @@ export default function ServicesClient() {
                 <span className="text-[var(--ink)] font-semibold">Always</span>
               </span>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════ THE BRIEF ═══════════
+          The heart of the page. Not what they should want: what I need to
+          quote it, and what they get back. Real information, in order. */}
+      <section id="brief" className="max-w-[1280px] mx-auto px-5 sm:px-11 pb-14 scroll-mt-24">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-6 items-stretch">
+          <div className="bg-[var(--surface)] border border-[var(--hairline)] rounded-[var(--r-panel)] p-6 sm:p-8">
+            <h2 className="text-[length:var(--step-panel)] text-[var(--ink)]" style={display}>What I need from you</h2>
+            <p className="mt-1.5 text-[length:var(--step-fine)] text-[var(--ink-soft)]">Five things. A text message covers all of them.</p>
+            <ol className="mt-5 space-y-4 list-none p-0 m-0">
+              {BRIEF.map((b, i) => (
+                <li key={b.h} className="grid grid-cols-[28px_1fr] gap-3">
+                  <span className="w-7 h-7 rounded-full border-[1.5px] border-[var(--signal)] bg-[var(--glass)] grid place-items-center font-mono text-[length:var(--step-fine)] text-[var(--ink)]">{i + 1}</span>
+                  <span>
+                    <span className="block text-[length:var(--step-body)] font-semibold text-[var(--ink)]">{b.h}</span>
+                    <span className="block text-[length:var(--step-row)] leading-relaxed text-[var(--ink-soft)]">{b.p}</span>
+                  </span>
+                </li>
+              ))}
+            </ol>
+            <a
+              href={getSmsLink(BRIEF_SMS)}
+              className="puffy-btn mt-6 inline-flex items-center justify-center h-[48px] px-6 rounded-[var(--r-control)] bg-[var(--coral)] text-white text-[length:var(--step-body)] font-semibold hover:bg-[var(--coral-hover)] transition-colors duration-[var(--t-hover)]"
+            >
+              Start the text, the five lines are filled in
+            </a>
+          </div>
+
+          <div className="bg-[var(--glass)] border border-[var(--hairline)] rounded-[var(--r-panel)] p-6 sm:p-8">
+            <h2 className="text-[length:var(--step-panel)] text-[var(--ink)]" style={display}>What you get back</h2>
+            <p className="mt-1.5 text-[length:var(--step-fine)] text-[var(--ink-soft)]">In this order, every time.</p>
+            <div className="mt-5 text-[length:var(--step-row)] text-[var(--ink-soft)]">
+              {RETURNS.map((r, i) => (
+                <div key={r.h} className={`grid grid-cols-[92px_1fr] gap-4 py-3 ${i < RETURNS.length - 1 ? 'border-b border-[var(--hairline)]' : ''}`}>
+                  <span className="font-mono text-[length:var(--step-fine)] text-[var(--ink)] pt-0.5">{r.when}</span>
+                  <span>
+                    <span className="block text-[length:var(--step-body)] font-semibold text-[var(--ink)]">{r.h}</span>
+                    <span className="block leading-relaxed">{r.p}</span>
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════ PRECISION ═══════════
+          The machines and what they do to each material. Only facts that
+          are settled: how a material marks comes from the shop's own
+          material truths, never a guess. */}
+      <section id="precision" className="max-w-[1280px] mx-auto px-5 sm:px-11 pb-14 scroll-mt-24">
+        <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 mb-5">
+          <h2 className="text-[length:var(--step-panel)] text-[var(--ink)]" style={display}>Precision, and what it means here</h2>
+          <Link href="/services/materials" className="text-[length:var(--step-row)] text-[var(--ink-soft)] hover:text-[var(--ink)] transition-colors duration-[var(--t-hover)]">
+            The full materials list
+          </Link>
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-6 items-start">
+          <div className="bg-[var(--surface)] border border-[var(--hairline)] rounded-[var(--r-panel)] p-6 sm:p-8">
+            <div className="space-y-5">
+              {PRECISION.map(pt => (
+                <div key={pt.h} className="border-t border-[var(--hairline)] pt-4 first:border-t-0 first:pt-0">
+                  <p className="text-[length:var(--step-body)] font-semibold text-[var(--ink)]">{pt.h}</p>
+                  <p className="mt-1 text-[length:var(--step-row)] leading-relaxed text-[var(--ink-soft)]">{pt.p}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="bg-[var(--surface)] border border-[var(--hairline)] rounded-[var(--r-panel)] p-6 sm:p-8">
+            <p className="text-[length:var(--step-eyebrow)] font-mono tracking-[0.24em] uppercase text-[var(--eyebrow)] mb-3">What marks, and how it looks</p>
+            <div className="text-[length:var(--step-row)]">
+              {MATERIALS.map((m, i) => (
+                <div key={m.name} className={`grid grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)] gap-x-4 py-2.5 ${i < MATERIALS.length - 1 ? 'border-b border-[var(--hairline)]' : ''}`}>
+                  <span className="font-semibold text-[var(--ink)] leading-snug">{m.name}<span className="block font-mono font-normal text-[length:var(--step-fine)] text-[var(--ink-soft)]">{m.machine}</span></span>
+                  <span className="leading-snug text-[var(--ink-soft)]">{m.mark}</span>
+                </div>
+              ))}
+            </div>
+            <p className="mt-4 text-[length:var(--step-fine)] leading-relaxed text-[var(--ink-soft)]">
+              Glass, acrylic, and anything not on this list: text me a photo first. If it is solid and fits the bed, it probably marks, and I will tell you how before you commit.
+            </p>
           </div>
         </div>
       </section>
