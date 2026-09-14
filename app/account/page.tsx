@@ -33,7 +33,8 @@ export default function AccountDashboard() {
         <Card href="/account/invoices" title="Invoices" sub="Pay open invoices, view receipts" />
         <Card href="/account/orders" title="Orders" sub="Track your orders and service jobs" />
         <Card href="/account/messages" title="Messages" sub="Your conversation with Zach" />
-        <Card href="/account/files" title="Files" sub="Designs, artwork, and references" />
+        <Card href="/account/designs" title="Designs" sub="Cards you designed, ordered or not" />
+        <Card href="/account/files" title="Files" sub="Artwork, logos, and references" />
         <Card href="/account/profile" title="Profile" sub="Contact info, saved payment methods" />
       </div>
 

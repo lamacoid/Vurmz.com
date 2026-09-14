@@ -55,6 +55,8 @@ export interface CardLogo {
 /** What rides the cart, the order, and the saved-designs table. */
 export interface CardDesign {
   kind: 'card'
+  /** The saved row, once autosave has one. Lets the order link back to it. */
+  id?: string
   templateKey: string
   materialKey: string
   /** fontOptions value for the name slot. Other slots stay in the template's face. */

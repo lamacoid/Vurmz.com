@@ -9,6 +9,7 @@ import { getObject, putObject } from '@/lib/media/r2'
 import { listOrderItems, type Order } from '@/lib/db/repos/orders'
 import { reportError } from '@/lib/error'
 import { cardLaserSvg, fontLoaderFor } from './card-laser'
+import { linkDesignsToOrder } from './designs-repo'
 import type { CardDesign } from './card'
 
 export interface DesignOnOrder extends CardDesign {
@@ -30,9 +31,11 @@ export async function writeOrderDesignFiles(order: Order, origin: string): Promi
   const loadFont = fontLoaderFor(origin)
   const added: Array<{ key: string; filename: string }> = []
   const written: WrittenDesignFile[] = []
+  const savedIds: string[] = []
   for (const it of items) {
     const design = (it.metadata as { design?: DesignOnOrder }).design
     if (!design || design.kind !== 'card') continue
+    if (design.id) savedIds.push(design.id)
     let laserKey: string | undefined
     let notes: string[] = []
     try {
@@ -54,6 +57,7 @@ export async function writeOrderDesignFiles(order: Order, origin: string): Promi
     const meta = { ...it.metadata, design: { ...design, ...(laserKey ? { laserKey } : {}), ...(notes.length ? { notes } : {}) } }
     await db.prepare('UPDATE order_items SET metadata = ? WHERE id = ?').bind(JSON.stringify(meta), it.id).run()
   }
+  try { await linkDesignsToOrder(savedIds, order.id) } catch (err) { reportError(err, { route: 'orders', extra: { alert: 'DESIGN_LINK_FAILED', orderId: order.id } }) }
   if (added.length) {
     const existing = (order.metadata?.attachments as Array<{ key: string; filename: string }> | undefined) ?? []
     const attachments = [...existing, ...added].filter((a, i, arr) => arr.findIndex(x => x.key === a.key) === i)

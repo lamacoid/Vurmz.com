@@ -95,6 +95,7 @@ const schema = z.object({
     // checkout upload. The laser file is written from this after creation.
     design: z.object({
       kind: z.literal('card'),
+      id: z.string().regex(/^dsg_[a-z0-9]{24}$/).optional(),
       templateKey: z.string().refine(k => CARD_TEMPLATES.some(t => t.key === k), 'unknown template'),
       materialKey: z.string().refine(k => CARD_MATERIALS.some(m => m.key === k), 'unknown material'),
       nameFont: z.string().max(60),

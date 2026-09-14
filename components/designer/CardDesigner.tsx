@@ -18,6 +18,8 @@ const MIN_TEXT_MM = 2.12
 const LOGO_MAX = 10 * 1024 * 1024
 const LOGO_TYPES = new Set(['image/svg+xml', 'image/png', 'image/jpeg', 'image/webp'])
 const LOCAL_LOGO_MAX = 300 * 1024
+const TOKEN_KEY = 'vurmz:design-token'
+const SAVE_DEBOUNCE_MS = 1800
 
 interface LocalLogo { svg?: string; href?: string }
 
@@ -72,10 +74,35 @@ export default function CardDesigner({
   const [logoError, setLogoError] = useState<string | null>(null)
   const [uploading, setUploading] = useState(false)
   const [restored, setRestored] = useState(false)
+  const [saveState, setSaveState] = useState<'idle' | 'saving' | 'saved' | 'offline'>('idle')
+  const [email, setEmail] = useState('')
+  const [emailState, setEmailState] = useState<'idle' | 'sent' | 'kept'>('idle')
   const fileRef = useRef<HTMLInputElement>(null)
+  const saveTimer = useRef<number | null>(null)
+
+  // A saved design named in the URL (from the account's Designs list, any
+  // device) wins over this browser's copy.
+  useEffect(() => {
+    const m = window.location.hash.match(/design=(dsg_[a-z0-9]{24})/)
+    if (!m) return
+    let token: string | null = null
+    try { token = localStorage.getItem(TOKEN_KEY) } catch { /* no storage */ }
+    fetch(`/api/designs/${m[1]}${token ? `?token=${token}` : ''}`)
+      .then(r => (r.ok ? r.json() : null) as Promise<{ data?: { design: { design: CardDesign } } } | null>)
+      .then(j => {
+        const d = j?.data?.design.design
+        if (d && d.kind === 'card' && templateByKey(d.templateKey)) {
+          if (!materials.some(mm => mm.key === d.materialKey)) d.materialKey = materials[0]?.key ?? 'black-matte'
+          setDesign({ ...d, id: m[1] })
+          setRestored(true)
+        }
+      })
+      .catch(() => {})
+  }, [materials])
 
   // Restore this browser's last design for the product.
   useEffect(() => {
+    if (window.location.hash.includes('design=')) return
     try {
       const raw = localStorage.getItem(storageKey(productId))
       if (raw) {
@@ -90,14 +117,50 @@ export default function CardDesigner({
     } catch { /* no storage, no restore */ }
   }, [productId, materials])
 
-  // Save and hand up on every change.
+  // Save and hand up on every change: this browser at once, the server a
+  // moment later. The server row is what lands in Zach's Designs room.
   useEffect(() => {
     onChange(isBlank(design) ? null : design)
     try {
       const small = logo && (logo.svg?.length ?? logo.href?.length ?? 0) <= LOCAL_LOGO_MAX ? logo : undefined
       localStorage.setItem(storageKey(productId), JSON.stringify({ design, logo: small }))
     } catch { /* fine */ }
+    if (isBlank(design)) return
+    if (saveTimer.current) window.clearTimeout(saveTimer.current)
+    saveTimer.current = window.setTimeout(async () => {
+      setSaveState('saving')
+      let token: string | null = null
+      try { token = localStorage.getItem(TOKEN_KEY) } catch { /* fine */ }
+      try {
+        const res = await fetch('/api/designs', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ token: token ?? undefined, productId, design: { ...design, id: design.id } }),
+        })
+        const j = (await res.json()) as { ok?: boolean; data?: { id: string; token: string | null } }
+        if (!res.ok || !j.ok || !j.data) { setSaveState('offline'); return }
+        if (j.data.token) { try { localStorage.setItem(TOKEN_KEY, j.data.token) } catch { /* fine */ } }
+        if (j.data.id !== design.id) setDesign(d => ({ ...d, id: j.data!.id }))
+        setSaveState('saved')
+      } catch {
+        setSaveState('offline')
+      }
+    }, SAVE_DEBOUNCE_MS)
+    return () => { if (saveTimer.current) window.clearTimeout(saveTimer.current) }
   }, [design, logo, productId, onChange])
+
+  async function keepByEmail() {
+    const e = email.trim()
+    if (!e || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e)) return
+    let token: string | null = null
+    try { token = localStorage.getItem(TOKEN_KEY) } catch { /* fine */ }
+    if (!token) return
+    setEmailState('sent')
+    try {
+      const res = await fetch('/api/designs', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ token, email: e }) })
+      setEmailState(res.ok ? 'kept' : 'idle')
+    } catch { setEmailState('idle') }
+  }
 
   const template = templateByKey(design.templateKey) ?? CARD_TEMPLATES[0]
   const material = materials.find(m => m.key === design.materialKey) ?? materials[0]
@@ -261,8 +324,22 @@ export default function CardDesigner({
       )}
 
       <p className="mt-5 text-[length:var(--step-fine)] text-[var(--ink-soft)]">
-        Saved on this device as you go. When you order, the file for the laser is made from exactly this. You still approve a proof photo before anything runs.
+        {saveState === 'saved' ? 'Saved.' : saveState === 'saving' ? 'Saving.' : saveState === 'offline' ? 'Saved on this device.' : 'Saves as you go.'}{' '}
+        When you order, the file for the laser is made from exactly this. You approve a proof photo before anything runs.
       </p>
+      {saveState === 'saved' && !isBlank(design) && emailState !== 'kept' && (
+        <form onSubmit={e => { e.preventDefault(); keepByEmail() }} className="mt-3 flex flex-col sm:flex-row gap-2">
+          <input
+            type="email"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            placeholder="Leave an email and I keep this for you"
+            className="flex-1 min-w-0 h-10 px-3.5 rounded-[var(--r-control)] border border-[var(--hairline)] bg-[var(--surface)] text-[var(--ink)] text-[length:var(--step-row)] placeholder:text-[var(--ink-soft)]/60 focus:outline-none focus:border-[var(--signal)] focus:ring-2 focus:ring-[var(--signal-dim)]"
+          />
+          <button type="submit" disabled={emailState === 'sent'} className="h-10 px-4 rounded-[var(--r-control)] border border-[var(--ink)]/25 text-[var(--ink)] text-[length:var(--step-row)] font-semibold hover:border-[var(--ink)] disabled:opacity-60">Keep it</button>
+        </form>
+      )}
+      {emailState === 'kept' && <p className="mt-2 text-[length:var(--step-fine)] text-[var(--ink)]">Kept. Come back to it any time.</p>}
     </div>
   )
 }

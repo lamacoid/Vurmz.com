@@ -33,6 +33,7 @@ export const adminNav: NavGroup[] = [
     items: [
       { href: '/admin/products', label: 'Products', icon: 'tag' },
       { href: '/admin/orders', label: 'Orders', icon: 'cart' },
+      { href: '/admin/designs', label: 'Designs', icon: 'image' },
       { href: '/admin/inventory', label: 'Inventory', icon: 'box' },
     ],
   },
