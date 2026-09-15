@@ -4,12 +4,12 @@ import Link from 'next/link'
 import { ChatBubbleLeftIcon } from '@heroicons/react/24/outline'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 import RotatingTagline from '@/components/RotatingTagline'
-import MenuShop from '@/components/shop/MenuShop'
-import { SOURCED, deliveredPrice } from '@/lib/sourcing'
+import GiftTiles from '@/components/shop/GiftTiles'
+import ReserveDoor from '@/components/shop/ReserveDoor'
 import { SOURCING } from '@/lib/pricing'
 import HowItWorks from '@/components/HowItWorks'
 
-// MenuShop reads the live catalog at request time → must run on the edge.
+// GiftTiles reads the live catalog at request time, so this runs on the edge.
 export const runtime = 'edge'
 
 export const metadata: Metadata = {
@@ -94,9 +94,13 @@ export default function ShopHome() {
         </div>
       </section>
 
-      {/* Everything I make, on one typeset card. Gift side and business packs
-          both: this is the only catalog, so there is one place to keep current. */}
-      <MenuShop />
+      {/* The gifts, as tiles. Accessible to anyone: the lowest posted price
+          in each room, read live, and a photo where the room has one. */}
+      <GiftTiles />
+
+      {/* The door to the reserve: one big pane of the old frosted glass.
+          Click, the frost clears, and the page moves into the teal room. */}
+      <ReserveDoor />
 
       {/* ═══════════ BRING YOUR OWN ═══════════
           The glass panel, same treatment as the trades page: a plain list of
@@ -121,49 +125,6 @@ export default function ShopHome() {
               and you see a proof before it runs. Do not have the piece yet? Happy to source:
               named, found, engraved, and brought to you, the item at cost plus ${SOURCING.feeUnder100}.
             </p>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════ HAPPY TO SOURCE ═══════════
-          The offer in Zach's words. Name the piece, it arrives engraved.
-          The list is real retail on a real day; the number is delivered. */}
-      <section id="source" className="pb-10 sm:pb-14 scroll-mt-24">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-[var(--surface)] border border-[var(--hairline)] rounded-[var(--r-panel)] p-6 sm:p-8">
-            <p className="text-[length:var(--step-eyebrow)] font-mono tracking-[0.24em] uppercase text-[var(--eyebrow)] mb-2">Happy to source</p>
-            <h2 className="text-[length:var(--step-panel)] text-[var(--ink)]" style={{ fontFamily: 'var(--font-display), Georgia, serif' }}>
-              Name the piece. It arrives engraved.
-            </h2>
-            <p className="mt-1 font-mono text-[length:var(--step-fine)] tracking-[0.04em] text-[var(--ink-soft)]">
-              The item at cost + ${SOURCING.feeUnder100}
-            </p>
-            <p className="mt-3 max-w-[62ch] text-[length:var(--step-row)] leading-relaxed text-[var(--ink-soft)]">
-              I go and get it, engrave it, and bring it to your door, receipt in the box.
-              A few I make often, with what they come to delivered:
-            </p>
-            <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-x-8">
-              {SOURCED.map((it, i) => (
-                <div key={it.name} className={`flex flex-col py-2.5 border-b border-[var(--hairline)] ${i >= SOURCED.length - 2 ? 'sm:border-b-0' : ''}`}>
-                  <span className="flex items-baseline justify-between gap-3">
-                    <span className="text-[length:var(--step-body)] font-semibold text-[var(--ink)]">{it.name}</span>
-                    <span className="text-[length:var(--step-body)] text-[var(--ink)] font-medium tabular-nums whitespace-nowrap">${deliveredPrice(it)}</span>
-                  </span>
-                  <span className="text-[length:var(--step-fine)] text-[var(--ink-soft)]">{it.material}{/^ordered/i.test(it.where) ? `. ${it.where}` : ''}.</span>
-                </div>
-              ))}
-            </div>
-            <p className="mt-5 text-[length:var(--step-fine)] leading-relaxed text-[var(--ink-soft)]">
-              Anything else, name it. The ${SOURCING.feeUnder100} covers a piece under $100, ${SOURCING.feeUnder300} to $300, twenty percent above.
-              Engraving is priced as your own piece. A deposit holds it before I buy, fully returned if you change your mind
-              before then. Glass and crystal are the one thing I do not mark.
-            </p>
-            <a
-              href={getSmsLink('Hi Zach. Happy to source: I would like a ')}
-              className="puffy-btn mt-5 inline-flex items-center justify-center h-11 px-6 rounded-[var(--r-control)] bg-[var(--coral)] text-white text-[length:var(--step-body)] font-semibold hover:bg-[var(--coral-hover)] transition-colors duration-[var(--t-hover)]"
-            >
-              Name the piece
-            </a>
           </div>
         </div>
       </section>

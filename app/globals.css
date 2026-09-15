@@ -532,3 +532,13 @@ body:has(.studio-takeover) > main {
     scroll-behavior: auto !important;
   }
 }
+
+/* The reserve room (app/shop/reserve): the fixed header sits over deep
+   teal, so it takes the old light ink while the room is open. */
+html[data-room="reserve"] header {
+  --ink: #F3EEE2;
+  --ink-soft: #DED6C3;
+  --header-bg: rgba(18, 63, 71, 0.82);
+  --header-border: rgba(127, 207, 212, 0.18);
+  --logo-fill: #DED6C3;
+}
