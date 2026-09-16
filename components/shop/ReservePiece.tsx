@@ -18,6 +18,7 @@ import { siteInfo, getSmsLink } from '@/lib/site-info'
 import { deliveredPrice, type SourcedItem } from '@/lib/sourcing'
 
 const usd = (n: number) => `$${n.toLocaleString('en-US')}`
+const fieldCls = 'w-full h-11 px-3.5 rounded-[var(--r-control)] bg-[#0D2F35]/70 border border-white/12 text-[#F3EEE2] placeholder:text-[#DED6C3]/40 focus:outline-none focus:border-[#7FCFD4]/70 transition-colors'
 const display = { fontFamily: 'var(--font-display), Georgia, serif' }
 
 /** What the plate looks like, and what a mark looks like on it. Honest to the material. */
@@ -42,6 +43,13 @@ export default function ReservePiece({ item, also }: { item: SourcedItem; also: 
   const [giftBox, setGiftBox] = useState(false)
   const [second, setSecond] = useState(false)
   const [notes, setNotes] = useState('')
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
+  const [hp, setHp] = useState('')
+  const [busy, setBusy] = useState(false)
+  const [err, setErr] = useState('')
+  const [done, setDone] = useState<{ number: string; deposit: number } | null>(null)
 
   // The door lifts once this page is on screen.
   useEffect(() => { window.dispatchEvent(new Event('vurmz:door-ready')) }, [])
@@ -64,6 +72,32 @@ export default function ReservePiece({ item, also }: { item: SourcedItem; also: 
 
   const smsHref = getSmsLink(`Hi Zach. ${summary}`)
   const mailHref = `mailto:${siteInfo.email}?subject=${encodeURIComponent(`Reserve: ${item.name}`)}&body=${encodeURIComponent(`Hi Zach.\n\n${summary}\n\nMy name: \nBest number: `)}`
+
+  // The real order path: the reservation is written to the shop's books
+  // as a quote, Zach is emailed, the customer is emailed. The text link
+  // stays as the fallback for people who would rather talk.
+  async function reserve(e: React.FormEvent) {
+    e.preventDefault()
+    if (busy) return
+    setErr('')
+    if (!text.trim()) { setErr('Tell me the words to engrave.'); return }
+    if (!name.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.trim())) { setErr('Your name and a real email, so I can send the proof.'); return }
+    setBusy(true)
+    try {
+      const res = await fetch('/api/reserve', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ slug: item.slug, text: text.trim(), font, placement, giftBox, second, notes, name: name.trim(), email: email.trim(), phone: phone.trim(), website: hp }),
+      })
+      const j = (await res.json().catch(() => null)) as { ok?: boolean; data?: { number: string; deposit: number }; error?: { message?: string } } | null
+      if (!res.ok || !j?.ok || !j.data) throw new Error(j?.error?.message || 'That did not go through.')
+      setDone(j.data)
+    } catch (ex) {
+      setErr(ex instanceof Error ? ex.message : 'That did not go through. Nothing was saved; text me instead.')
+    } finally {
+      setBusy(false)
+    }
+  }
 
   return (
     <div className="relative -mt-[92px] sm:-mt-[100px] pt-[118px] sm:pt-[132px] pb-20 bg-[#123F47] text-[#DED6C3] overflow-hidden">
@@ -204,16 +238,48 @@ export default function ReservePiece({ item, also }: { item: SourcedItem; also: 
               <p className="mt-3 text-[11px] leading-relaxed text-[#DED6C3]/55">
                 The piece at cost with the receipt, the engraving, and the errand. A deposit for the piece and half the engraving holds it before I buy, returned in full if you change your mind before then.
               </p>
-              <a
-                href={smsHref}
-                className="puffy-btn mt-5 flex items-center justify-center h-12 px-6 rounded-[var(--r-control)] bg-[var(--coral)] text-white text-[length:var(--step-body)] font-semibold hover:bg-[var(--coral-hover)] transition-colors duration-[var(--t-hover)]"
-              >
-                Reserve this piece
-              </a>
-              <p className="mt-2 text-center text-[11px] text-[#DED6C3]/55">
-                Opens a text with all of this written in. Or{' '}
-                <a href={mailHref} className="text-[#7FCFD4] hover:text-white transition-colors">email it</a>.
-              </p>
+              {done ? (
+                <div className="mt-5 rounded-[var(--r-tile)] border border-[#7FCFD4]/50 bg-[#7FCFD4]/10 p-4">
+                  <p className="text-[length:var(--step-body)] font-semibold text-white">Reserved. {done.number}.</p>
+                  <p className="mt-1.5 text-[length:var(--step-row)] leading-relaxed text-[#DED6C3]/85">
+                    A confirmation is on its way to {email.trim()}. I will reach out today for the {usd(done.deposit)} deposit, then go get the piece. You see a proof photo before it runs.
+                  </p>
+                </div>
+              ) : (
+                <form onSubmit={reserve} className="mt-5 space-y-3" noValidate>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <label className="block">
+                      <span className="block text-[11px] font-medium text-[#DED6C3]/70 mb-1">Your name</span>
+                      <input value={name} onChange={e => setName(e.target.value)} autoComplete="name" className={fieldCls} />
+                    </label>
+                    <label className="block">
+                      <span className="block text-[11px] font-medium text-[#DED6C3]/70 mb-1">Phone <span className="text-[#DED6C3]/45">(for the proof)</span></span>
+                      <input value={phone} onChange={e => setPhone(e.target.value)} inputMode="tel" autoComplete="tel" className={fieldCls} />
+                    </label>
+                    <label className="block sm:col-span-2">
+                      <span className="block text-[11px] font-medium text-[#DED6C3]/70 mb-1">Email</span>
+                      <input value={email} onChange={e => setEmail(e.target.value)} type="email" inputMode="email" autoComplete="email" className={fieldCls} />
+                    </label>
+                    <label className="hidden" aria-hidden>
+                      <span>Website</span>
+                      <input value={hp} onChange={e => setHp(e.target.value)} tabIndex={-1} autoComplete="off" />
+                    </label>
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={busy}
+                    className="puffy-btn w-full flex items-center justify-center h-12 px-6 rounded-[var(--r-control)] bg-[var(--coral)] text-white text-[length:var(--step-body)] font-semibold hover:bg-[var(--coral-hover)] transition-colors duration-[var(--t-hover)] disabled:opacity-60"
+                  >
+                    {busy ? 'Reserving' : 'Reserve this piece'}
+                  </button>
+                  {err && <p className="text-[12px] text-amber-200">{err}</p>}
+                  <p className="text-center text-[11px] text-[#DED6C3]/55">
+                    Nothing is charged here. Rather talk?{' '}
+                    <a href={smsHref} className="text-[#7FCFD4] hover:text-white transition-colors">Text it</a> or{' '}
+                    <a href={mailHref} className="text-[#7FCFD4] hover:text-white transition-colors">email it</a>.
+                  </p>
+                </form>
+              )}
             </section>
 
             <section className="rounded-[var(--r-panel)] border border-white/12 bg-white/[0.04] backdrop-blur-md p-5 sm:p-6">
