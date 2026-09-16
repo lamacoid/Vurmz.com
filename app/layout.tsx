@@ -5,6 +5,7 @@ import './fonts.css'
 import LocalTicker from '@/components/LocalTicker'
 import LaserCursor from '@/components/LaserCursor'
 import SunTracker from '@/components/SunTracker'
+import BackRoomDoor from '@/components/BackRoomDoor'
 import { CartProvider } from '@/lib/cart/store'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -190,6 +191,7 @@ export default function RootLayout({
         </CartProvider>
         <LaserCursor />
         <SunTracker />
+        <BackRoomDoor />
       </body>
     </html>
   )

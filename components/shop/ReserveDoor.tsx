@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { openDoor } from '@/components/BackRoomDoor'
 
 /**
  * The door to the reserve. A big frosted glass box on the oatmeal shop page,
@@ -12,7 +12,6 @@ import { useRouter } from 'next/navigation'
  * A real link underneath, so keyboards, crawlers, and middle clicks still work.
  */
 export default function ReserveDoor() {
-  const router = useRouter()
   const [opening, setOpening] = useState(false)
   // The writing on the glass is driven here, not by :hover, so it runs the
   // same in every browser and clears the moment the pointer leaves.
@@ -24,8 +23,8 @@ export default function ReserveDoor() {
     e.preventDefault()
     if (opening) return
     setOpening(true)
-    router.prefetch('/shop/reserve')
-    window.setTimeout(() => router.push('/shop/reserve'), 720)
+    // The frost clears while the teal sweeps out from the click point.
+    openDoor('/shop/reserve', { x: e.clientX, y: e.clientY })
   }
 
   return (

@@ -542,3 +542,26 @@ html[data-room="reserve"] header {
   --header-border: rgba(127, 207, 212, 0.18);
   --logo-fill: #DED6C3;
 }
+
+/* The back room door (components/BackRoomDoor.tsx): the rim that leads
+   the teal sweep. --door-x/--door-y are set inline from the click point. */
+@keyframes vurmz-door-rim {
+  from { clip-path: circle(0px at var(--door-x, 50%) var(--door-y, 50%)); }
+  to { clip-path: circle(150vmax at var(--door-x, 50%) var(--door-y, 50%)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-backroom-door] * { transition-duration: 200ms !important; animation: none !important; }
+}
+
+/* The font book inside the reserve room: the same picker, re-inked for
+   the teal so it reads as glass on glass. Tokens only, scoped. */
+.reserve-fontbook {
+  --surface: rgba(13, 47, 53, 0.72);
+  --page: #0D2F35;
+  --ink: #F3EEE2;
+  --ink-soft: rgba(222, 214, 195, 0.78);
+  --hairline: rgba(255, 255, 255, 0.14);
+  --eyebrow: #7FCFD4;
+  --glass: rgba(127, 207, 212, 0.14);
+  --glass-edge: rgba(127, 207, 212, 0.35);
+}

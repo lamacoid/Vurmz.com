@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next'
 import { portfolioItems } from '@/lib/portfolio'
+import { SOURCED } from '@/lib/sourcing'
 
 const serviceAreaSlugs = [
   'centennial',
@@ -31,6 +32,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly',
       priority: 0.9,
     },
+    {
+      url: `${baseUrl}/shop/reserve`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    ...SOURCED.map(i => ({
+      url: `${baseUrl}/shop/reserve/${i.slug}`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.6,
+    })),
     {
       url: `${baseUrl}/services`,
       lastModified: new Date(),
