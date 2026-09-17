@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const item = sourcedBySlug(slug)
   if (!item) return { title: 'Not found' }
   const title = `${item.name}, engraved | The Reserve`
-  const description = `${item.maker} ${item.material.toLowerCase()}, found, engraved with your words, and hand-delivered across the south Denver metro. $${deliveredPrice(item)} delivered. Proof photo before it runs.`
+  const description = `${item.maker} ${item.material.toLowerCase()}, found, engraved with your words, and hand-delivered across the south Denver metro. $${deliveredPrice(item)} delivered.`
   return {
     title: { absolute: `${title} | VURMZ` },
     description,
