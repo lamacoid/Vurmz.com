@@ -8,7 +8,7 @@ import { siteInfo, getSmsLink } from '@/lib/site-info'
 
 export const metadata: Metadata = {
   title: { absolute: 'The Reserve | VURMZ' },
-  description: 'Pieces found, engraved, and hand-delivered to order across the south Denver metro. Shun, Smithey, Benchmade, Boos and more, the laser brought to your event, jewelry and watch marking. One person, a proof before anything runs.',
+  description: 'Pieces found, engraved, and hand-delivered to order across the south Denver metro. Shun, Smithey, Benchmade, Boos and more, the laser brought to your event, jewelry and watch marking. One person, hand delivered.',
   alternates: { canonical: '/shop/reserve' },
 }
 
@@ -25,7 +25,7 @@ const OFFERS = [
   },
   {
     h: 'Jewelry and watches',
-    p: `Rings, pendants, case backs, bracelets. Names, dates, coordinates, a line of handwriting. From ${usd(SIGNATURE.jewelryFrom)}, proof photo first.`,
+    p: `Rings, pendants, case backs, bracelets. Names, dates, coordinates, a line of handwriting. From ${usd(SIGNATURE.jewelryFrom)}.`,
     cta: 'Send a photo',
     href: getSmsLink('Hi Zach. I have a piece of jewelry to mark: '),
   },
@@ -118,7 +118,7 @@ export default function ReservePage() {
         </div>
 
         <p className="mt-12 max-w-[56ch] text-[length:var(--step-row)] leading-relaxed text-[#DED6C3]/75">
-          Same hands, same proof, same delivery run as everything else I make. The coasters and the Shun get
+          Same hands, same care, same delivery run as everything else I make. The coasters and the Shun get
           the same care. I am {siteInfo.founder.name}, one shop in {siteInfo.city}.
         </p>
         <p className="mt-6 max-w-[64ch] text-[11px] leading-relaxed text-[#DED6C3]/45">

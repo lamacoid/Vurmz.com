@@ -184,7 +184,7 @@ export async function POST(req: NextRequest) {
                 <tr><td style="padding:10px 0;font-weight:700">Total</td><td style="text-align:right;padding:10px 0;font-weight:700">${usd(total)}</td></tr>
               </table>
               <p><a href="${adminHref}" style="display:inline-block;background:#C67A6F;color:#fff;text-decoration:none;padding:10px 16px;border-radius:6px;font-weight:600">Open ${esc(quote.number)} in the admin</a></p>
-              <p style="color:#777;font-size:12px">Next: text ${esc(name)} for the ${usd(deposit)} deposit, buy the piece, proof, engrave, deliver.</p>
+              <p style="color:#777;font-size:12px">Next: text ${esc(name)} for the ${usd(deposit)} deposit, buy the piece, engrave, deliver.</p>
             </div>`,
         }),
       })
@@ -192,7 +192,7 @@ export async function POST(req: NextRequest) {
         `Your ${item.name} is reserved, ${quote.number}.`,
         `The words: "${text}" in ${font.label}, on the ${placement.toLowerCase()}.${body.giftBox ? ' Gift box, yes.' : ''}${body.second ? ' A second placement, yes.' : ''}`,
         `${usd(total)} delivered: the ${item.noun} at ${usd(item.retail)}, receipt in the box, plus ${usd(SOURCING.reserveFee)} to find it, mark it, and bring it. I will text or email you today for a ${usd(deposit)} deposit, which holds the piece before I buy it and comes back in full if you change your mind before then.`,
-        `You approve a proof photo before anything runs. ${item.leadTime}`,
+        item.leadTime,
         `Zach`,
       ].join('\n\n')
       const toCustomer = fetch('https://api.resend.com/emails', {

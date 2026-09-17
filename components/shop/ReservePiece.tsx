@@ -81,7 +81,7 @@ export default function ReservePiece({ item, also }: { item: SourcedItem; also: 
     if (busy) return
     setErr('')
     if (!text.trim()) { setErr('Tell me the words to engrave.'); return }
-    if (!name.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.trim())) { setErr('Your name and a real email, so I can send the proof.'); return }
+    if (!name.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.trim())) { setErr('Your name and a real email, so I can confirm it.'); return }
     setBusy(true)
     try {
       const res = await fetch('/api/reserve', {
@@ -162,7 +162,7 @@ export default function ReservePiece({ item, also }: { item: SourcedItem; also: 
                 {placement}
               </span>
             </div>
-            <p className="mt-2.5 text-[length:var(--step-fine)] text-[#DED6C3]/60">{item.mark} A preview of the words and the face; the proof photo is the real thing.</p>
+            <p className="mt-2.5 text-[length:var(--step-fine)] text-[#DED6C3]/60">{item.mark} A preview of the words and the face on the plate; the piece is the real thing.</p>
 
             <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
               <label className="block sm:col-span-2">
@@ -245,13 +245,13 @@ export default function ReservePiece({ item, also }: { item: SourcedItem; also: 
                 </div>
               </dl>
               <p className="mt-3 text-[11px] leading-relaxed text-[#DED6C3]/55">
-                The {item.noun} at its price, receipt in the box. A deposit of {usd(SOURCING.deposit(item.retail))} holds it before I buy, returned in full if you change your mind before then. The rest when you approve the proof.
+                The {item.noun} at its price, receipt in the box. A deposit of {usd(SOURCING.deposit(item.retail))} holds it before I buy, returned in full if you change your mind before then. The rest when it is in your hands.
               </p>
               {done ? (
                 <div className="mt-5 rounded-[var(--r-tile)] border border-[#7FCFD4]/50 bg-[#7FCFD4]/10 p-4">
                   <p className="text-[length:var(--step-body)] font-semibold text-white">Reserved. {done.number}.</p>
                   <p className="mt-1.5 text-[length:var(--step-row)] leading-relaxed text-[#DED6C3]/85">
-                    A confirmation is on its way to {email.trim()}. I will reach out today for the {usd(done.deposit)} deposit, then go get the piece. You see a proof photo before it runs.
+                    A confirmation is on its way to {email.trim()}. I will reach out today for the {usd(done.deposit)} deposit, then go get the piece.
                   </p>
                 </div>
               ) : (
@@ -262,7 +262,7 @@ export default function ReservePiece({ item, also }: { item: SourcedItem; also: 
                       <input value={name} onChange={e => setName(e.target.value)} autoComplete="name" className={fieldCls} />
                     </label>
                     <label className="block">
-                      <span className="block text-[11px] font-medium text-[#DED6C3]/70 mb-1">Phone <span className="text-[#DED6C3]/45">(for the proof)</span></span>
+                      <span className="block text-[11px] font-medium text-[#DED6C3]/70 mb-1">Phone <span className="text-[#DED6C3]/45">(so I can text you)</span></span>
                       <input value={phone} onChange={e => setPhone(e.target.value)} inputMode="tel" autoComplete="tel" className={fieldCls} />
                     </label>
                     <label className="block sm:col-span-2">
@@ -295,7 +295,7 @@ export default function ReservePiece({ item, also }: { item: SourcedItem; also: 
               <p className="text-[length:var(--step-eyebrow)] font-mono tracking-[0.28em] uppercase text-[#7FCFD4] mb-3">What arrives</p>
               <ul className="space-y-2 text-[length:var(--step-row)] text-[#DED6C3]/85">
                 <li className="flex gap-2.5"><span className="text-[#7FCFD4]" aria-hidden>&middot;</span>The piece, bought new, receipt in the box.</li>
-                <li className="flex gap-2.5"><span className="text-[#7FCFD4]" aria-hidden>&middot;</span>Your words, marked in the material. A proof photo before it runs.</li>
+                <li className="flex gap-2.5"><span className="text-[#7FCFD4]" aria-hidden>&middot;</span>Your words, marked in the material.</li>
                 <li className="flex gap-2.5"><span className="text-[#7FCFD4]" aria-hidden>&middot;</span>Hand delivered across the south Denver metro, by me.</li>
                 <li className="flex gap-2.5"><span className="text-[#7FCFD4]" aria-hidden>&middot;</span>{item.leadTime}</li>
               </ul>
@@ -323,7 +323,7 @@ export default function ReservePiece({ item, also }: { item: SourcedItem; also: 
         )}
 
         <p className="mt-12 max-w-[56ch] text-[length:var(--step-row)] leading-relaxed text-[#DED6C3]/70">
-          Same hands, same proof, same delivery run as everything else I make. I am {siteInfo.founder.name}, one shop in {siteInfo.city}.
+          Same hands, same care, same delivery run as everything else I make. I am {siteInfo.founder.name}, one shop in {siteInfo.city}.
         </p>
         <p className="mt-6 max-w-[64ch] text-[11px] leading-relaxed text-[#DED6C3]/45">
           VURMZ is an independent engraver, not affiliated with or endorsed by {item.maker} or any maker named here. Engraving a piece may void its maker&apos;s warranty.
