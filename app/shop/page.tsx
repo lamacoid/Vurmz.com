@@ -123,7 +123,7 @@ export default function ShopHome() {
               Anything solid takes a mark: metal, wood, glass, leather, slate, acrylic, plastic. Your own
               piece is one price within a palm-sized mark, a little more for the large or the intricate,
               and you see a proof before it runs. Do not have the piece yet? Happy to source:
-              named, found, engraved, and brought to you, the item at cost plus ${SOURCING.feeUnder100}.
+              named, found, engraved, and brought to you, the piece at its price plus ${SOURCING.reserveFee}.
             </p>
           </div>
         </div>

@@ -101,12 +101,13 @@ export async function POST(req: NextRequest) {
     // Money, from the source of truth.
     const base = deliveredPrice(item)
     const items = [
-      { description: `${item.name} (${item.maker}), found at cost, engraved, hand delivered`, qty: 1, unitPriceCents: base * 100 },
+      { description: `${item.name} (${item.maker}) at its price`, qty: 1, unitPriceCents: item.retail * 100 },
+      { description: 'Found, engraved, hand delivered', qty: 1, unitPriceCents: (base - item.retail) * 100 },
       ...(body.giftBox ? [{ description: 'Gift box', qty: 1, unitPriceCents: SOURCING.giftBox * 100 }] : []),
       ...(body.second ? [{ description: 'Second placement', qty: 1, unitPriceCents: SOURCING.secondLocation * 100 }] : []),
     ]
     const total = items.reduce((s, it) => s + it.unitPriceCents * it.qty, 0) / 100
-    const deposit = Math.round(item.retail + SOURCING.engraving / 2)
+    const deposit = SOURCING.deposit(item.retail)
 
     const engravingLines = [
       `RESERVE PIECE: ${item.name}`,
@@ -115,7 +116,7 @@ export async function POST(req: NextRequest) {
       `Placement: ${placement}`,
       `Gift box: ${body.giftBox ? 'yes' : 'no'}. Second placement: ${body.second ? 'yes' : 'no'}.`,
       `Buy at: ${item.where}. Retail ${usd(item.retail)}.`,
-      `Deposit to take: ${usd(deposit)} (the piece plus half the engraving).`,
+      `Deposit to take: ${usd(deposit)} (the piece plus half the fee).`,
       phone ? `Phone: ${phone}` : '',
       notes ? `Customer notes: ${notes}` : '',
     ].filter(Boolean)
@@ -190,7 +191,7 @@ export async function POST(req: NextRequest) {
       const bodyText = [
         `Your ${item.name} is reserved, ${quote.number}.`,
         `The words: "${text}" in ${font.label}, on the ${placement.toLowerCase()}.${body.giftBox ? ' Gift box, yes.' : ''}${body.second ? ' A second placement, yes.' : ''}`,
-        `${usd(total)} delivered, the piece at cost with the receipt, the engraving, and the errand. I will text or email you today for a ${usd(deposit)} deposit, which holds the piece before I buy it and comes back in full if you change your mind before then.`,
+        `${usd(total)} delivered: the ${item.noun} at ${usd(item.retail)}, receipt in the box, plus ${usd(SOURCING.reserveFee)} to find it, mark it, and bring it. I will text or email you today for a ${usd(deposit)} deposit, which holds the piece before I buy it and comes back in full if you change your mind before then.`,
         `You approve a proof photo before anything runs. ${item.leadTime}`,
         `Zach`,
       ].join('\n\n')

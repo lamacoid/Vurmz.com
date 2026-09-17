@@ -11,7 +11,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import FontBook from '@/components/shop/FontBook'
 import RoomTheme from '@/components/shop/RoomTheme'
-import { DoorLink } from '@/components/BackRoomDoor'
+import { PieceCard, PiecePlate } from '@/components/shop/ReserveList'
 import { fontOptions } from '@/lib/fonts'
 import { SOURCING } from '@/lib/pricing'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
@@ -113,12 +113,13 @@ export default function ReservePiece({ item, also }: { item: SourcedItem; also: 
           Back to the reserve
         </Link>
 
-        {/* The piece, named. */}
-        <header className="mt-8 max-w-[60ch]">
+        {/* The piece, named, and pictured when I have the maker's photo. */}
+        <header className={`mt-8 grid grid-cols-1 gap-6 items-start ${item.photo ? 'lg:grid-cols-[minmax(0,1fr)_minmax(300px,440px)]' : ''}`}>
+        <div className="max-w-[60ch]">
           <p className="text-[length:var(--step-eyebrow)] font-mono tracking-[0.3em] uppercase text-[#7FCFD4] mb-3">
             The reserve &middot; {item.maker}
           </p>
-          <h1 className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] leading-[1.05] text-white/95" style={display}>
+          <h1 className={`text-[length:var(--step-section)] leading-[1.05] text-white/95 ${item.photo ? 'lg:text-[length:var(--step-panel)] lg:leading-[1.08]' : 'sm:text-[length:var(--step-display)]'}`} style={display}>
             {item.name}
           </h1>
           <p className="mt-3 text-[length:var(--step-lead)] text-[#DED6C3]/85">{item.material}.</p>
@@ -126,11 +127,18 @@ export default function ReservePiece({ item, also }: { item: SourcedItem; also: 
             <p className="text-[length:var(--step-panel)] text-white/95 tabular-nums" style={display}>
               {usd(base)} <span className="text-[length:var(--step-body)] text-[#DED6C3]/70" style={{ fontFamily: 'inherit' }}>delivered, engraved</span>
             </p>
-            <p className="font-mono text-[length:var(--step-fine)] tracking-[0.04em] text-[#DED6C3]/60">
-              The item at cost + {usd(SOURCING.feeUnder100)}
-            </p>
           </div>
+          <p className="mt-2 text-[length:var(--step-row)] text-[#DED6C3]/70">
+            The {item.noun} at {usd(item.retail)}, plus {usd(SOURCING.reserveFee)} to find it, mark it, and bring it to your door.
+          </p>
           <p className="mt-2 text-[length:var(--step-row)] text-[#DED6C3]/70">{item.leadTime}</p>
+        </div>
+        {item.photo && (
+          <figure className="m-0 rounded-[var(--r-panel)] overflow-hidden border border-white/12">
+            <PiecePlate item={item} sizes="(max-width: 1024px) 100vw, 440px" priority className="aspect-[4/3]" />
+            <figcaption className="px-3 py-1.5 text-[10px] font-mono tracking-[0.15em] uppercase text-[#DED6C3]/45 bg-[#0D2F35]/60">Photo: {item.maker}</figcaption>
+          </figure>
+        )}
         </header>
 
         <div className="mt-10 grid grid-cols-1 lg:grid-cols-[minmax(0,3fr)_minmax(280px,2fr)] gap-6 lg:gap-8 items-start">
@@ -227,7 +235,8 @@ export default function ReservePiece({ item, also }: { item: SourcedItem; also: 
           <aside className="lg:sticky lg:top-28 space-y-4">
             <section className="rounded-[var(--r-panel)] border border-white/12 bg-white/[0.04] backdrop-blur-md p-5 sm:p-6">
               <dl className="space-y-2 text-[length:var(--step-row)]">
-                <div className="flex justify-between gap-4"><dt className="text-[#DED6C3]/75">{item.name}, engraved and delivered</dt><dd className="tabular-nums text-[#F3EEE2]">{usd(base)}</dd></div>
+                <div className="flex justify-between gap-4"><dt className="text-[#DED6C3]/75">{item.name}</dt><dd className="tabular-nums text-[#F3EEE2]">{usd(item.retail)}</dd></div>
+                <div className="flex justify-between gap-4"><dt className="text-[#DED6C3]/75">Found, engraved, delivered</dt><dd className="tabular-nums text-[#F3EEE2]">{usd(base - item.retail)}</dd></div>
                 {giftBox && <div className="flex justify-between gap-4"><dt className="text-[#DED6C3]/75">Gift box</dt><dd className="tabular-nums text-[#F3EEE2]">{usd(SOURCING.giftBox)}</dd></div>}
                 {second && <div className="flex justify-between gap-4"><dt className="text-[#DED6C3]/75">Second placement</dt><dd className="tabular-nums text-[#F3EEE2]">{usd(SOURCING.secondLocation)}</dd></div>}
                 <div className="flex justify-between gap-4 pt-2 border-t border-white/12">
@@ -236,7 +245,7 @@ export default function ReservePiece({ item, also }: { item: SourcedItem; also: 
                 </div>
               </dl>
               <p className="mt-3 text-[11px] leading-relaxed text-[#DED6C3]/55">
-                The piece at cost with the receipt, the engraving, and the errand. A deposit for the piece and half the engraving holds it before I buy, returned in full if you change your mind before then.
+                The {item.noun} at its price, receipt in the box. A deposit of {usd(SOURCING.deposit(item.retail))} holds it before I buy, returned in full if you change your mind before then. The rest when you approve the proof.
               </p>
               {done ? (
                 <div className="mt-5 rounded-[var(--r-tile)] border border-[#7FCFD4]/50 bg-[#7FCFD4]/10 p-4">
@@ -307,24 +316,17 @@ export default function ReservePiece({ item, also }: { item: SourcedItem; also: 
               <p className="text-[length:var(--step-eyebrow)] font-mono tracking-[0.28em] uppercase text-[#7FCFD4]">Also in the reserve</p>
               <Link href="/shop/reserve" className="text-[length:var(--step-fine)] text-[#DED6C3]/60 hover:text-white transition-colors">The whole list</Link>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              {also.map(a => (
-                <DoorLink
-                  key={a.slug}
-                  href={`/shop/reserve/${a.slug}`}
-                  className="group block rounded-[var(--r-panel)] border border-white/12 bg-white/[0.04] hover:bg-white/[0.08] backdrop-blur-md p-4 transition-colors duration-[var(--t-hover)]"
-                >
-                  <span className="block text-[11px] font-mono tracking-[0.2em] uppercase text-[#7FCFD4]/80">{a.maker}</span>
-                  <span className="block mt-1 text-[length:var(--step-body)] font-semibold text-[#F3EEE2] group-hover:text-white leading-snug">{a.name}</span>
-                  <span className="block mt-1 text-[length:var(--step-fine)] text-[#DED6C3]/60">{a.material}. {usd(deliveredPrice(a))} delivered.</span>
-                </DoorLink>
-              ))}
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              {also.map(a => <PieceCard key={a.slug} item={a} compact />)}
             </div>
           </section>
         )}
 
         <p className="mt-12 max-w-[56ch] text-[length:var(--step-row)] leading-relaxed text-[#DED6C3]/70">
           Same hands, same proof, same delivery run as everything else I make. I am {siteInfo.founder.name}, one shop in {siteInfo.city}.
+        </p>
+        <p className="mt-6 max-w-[64ch] text-[11px] leading-relaxed text-[#DED6C3]/45">
+          VURMZ is an independent engraver, not affiliated with or endorsed by {item.maker} or any maker named here. Engraving a piece may void its maker&apos;s warranty.
         </p>
       </div>
     </div>

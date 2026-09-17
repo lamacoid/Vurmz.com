@@ -1,0 +1,140 @@
+{
+  "note": "Official maker product photos collected 2026-09-16 for the reserve pages. Files converted to jpg and capped at 1600px on the long side (never upscaled). Image rights belong to each maker.",
+  "items": [
+    {
+      "slug": "ridge-wallet-aluminum",
+      "file": "ridge-wallet-aluminum.jpg",
+      "sourcePage": "https://ridge.com/products/aluminum-gunmetal",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0613/6213/files/Gunmetal-Wallet-THUMBNAIL.jpg?v=1750191671",
+      "maker": "Ridge"
+    },
+    {
+      "slug": "ridge-wallet-titanium",
+      "file": "ridge-wallet-titanium.jpg",
+      "sourcePage": "https://ridge.com/products/titanium-stonewashed",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0613/6213/files/StonewashedTI-Wallet-THUMBNAIL_4a74ebb3-4545-4217-9124-8c7e63628a07.jpg?v=1782485843",
+      "maker": "Ridge"
+    },
+    {
+      "slug": "yeti-rambler-20",
+      "file": "yeti-rambler-20.jpg",
+      "sourcePage": "https://www.yeti.com/drinkware/tumblers/rambler-20oz.html",
+      "imageUrl": "https://yeti-webmedia.imgix.net/asset/431eb75a-fc5a-4542-bf7a-a1fd7d83c959/W/Drinkware_Tumbler_20oz_SS_Studio_PrimaryB.png?w=1600&h=1600&fit=max&bg=fff&fm=png",
+      "maker": "Yeti"
+    },
+    {
+      "slug": "stanley-quencher-40",
+      "file": "stanley-quencher-40.jpg",
+      "sourcePage": "https://www.stanley1913.com/products/adventure-quencher-travel-tumbler-40-oz",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0375/3269/6635/files/B2B_Web_PNG-TheQuencherH2.OFlowStateTumbler40OZ-Black2.0-Front.png?v=1770327737",
+      "maker": "Stanley"
+    },
+    {
+      "slug": "snow-peak-titanium-cup",
+      "file": "snow-peak-titanium-cup.jpg",
+      "sourcePage": "https://www.snowpeak.com/products/titanium-single-450-cup-mg-043",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0330/3299/4860/products/mg-143_alt_04.jpg?v=1642437764",
+      "maker": "Snow Peak"
+    },
+    {
+      "slug": "leatherman-wave-plus",
+      "file": "leatherman-wave-plus.jpg",
+      "sourcePage": "https://www.leatherman.com/wave-832524.html",
+      "imageUrl": "https://www.leatherman.com/cdn/shop/files/wave_20260402201902_5dib.jpg?width=1600&v=1777562829",
+      "maker": "Leatherman"
+    },
+    {
+      "slug": "victorinox-huntsman",
+      "file": "victorinox-huntsman.jpg",
+      "sourcePage": "https://www.victorinox.com/us/en/Products/Swiss-Army-Knives/Medium-Pocket-Knives/Huntsman/p/1.3713",
+      "imageUrl": "https://imageengine.victorinox.com/transform/be27477a-5deb-4412-87dd-ba03f429520c/SAK_1-3713_S1",
+      "maker": "Victorinox"
+    },
+    {
+      "slug": "zippo-brushed-chrome",
+      "file": "zippo-brushed-chrome.jpg",
+      "sourcePage": "https://zippo.com/products/classic-brushed-chrome",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/1295/7985/files/rf8eg88qv2oub5ksrmie.jpg?v=1744725582",
+      "maker": "Zippo"
+    },
+    {
+      "slug": "fisher-bullet-space-pen",
+      "file": "fisher-bullet-space-pen.jpg",
+      "sourcePage": "https://www.spacepen.com/400-chrome-bullet-space-pen",
+      "imageUrl": "https://platform.spacepen.com/pub/media/catalog/product/4/0/400_angled_front_side_72dpi_1000x1000.png",
+      "maker": "Fisher Space Pen"
+    },
+    {
+      "slug": "tactile-turn-bolt-action",
+      "file": "tactile-turn-bolt-action.jpg",
+      "sourcePage": "https://tactileturn.com/products/bolt-action-pen",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0082/2840/5353/files/10-BA1-TTM-TTM_734100ac-9bd8-4154-9a37-66a34d8ce4fd.jpg?v=1746633403",
+      "maker": "Tactile Turn"
+    },
+    {
+      "slug": "buck-110-folding-hunter",
+      "file": "buck-110-folding-hunter.jpg",
+      "sourcePage": "https://www.buckknives.com/product/110-folding-hunter-knife/0110BRS-B/",
+      "imageUrl": "https://cdn11.bigcommerce.com/s-725cx91vwz/images/stencil/original/products/414/19771/0110BRS-B__73039.1780093499.386.513.png",
+      "maker": "Buck Knives"
+    },
+    {
+      "slug": "opinel-no-08",
+      "file": "opinel-no-08.jpg",
+      "sourcePage": "https://www.opinel-usa.com/products/opinel-no-8-carbon-steel-folding-knife",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0287/6884/files/No_08-Carbon-Steel-Folding-Knife-Carbon-Steel.jpg?v=1785270357",
+      "maker": "Opinel"
+    },
+    {
+      "slug": "spyderco-delica-4",
+      "file": "spyderco-delica-4.jpg",
+      "sourcePage": "https://spyderco.com/products/c11lt-delica%C2%AE-4-lightweight",
+      "imageUrl": "https://spyderco.com/cdn/shop/files/C11PBK_Open.jpg",
+      "maker": "Spyderco"
+    },
+    {
+      "slug": "benchmade-bugout",
+      "file": "benchmade-bugout.jpg",
+      "sourcePage": "https://www.benchmade.com/products/535",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0574/8041/3232/files/rpykt0cquscpbqynqblh.jpg?v=1775863360",
+      "maker": "Benchmade"
+    },
+    {
+      "slug": "shun-classic-8-chef",
+      "file": "shun-classic-8-chef.jpg",
+      "sourcePage": "https://shun.kaiusa.com/classic-chef-s-8.html",
+      "imageUrl": "https://shun.kaiusa.com/media/catalog/product/d/m/dm0706_1_1.png",
+      "maker": "Shun",
+      "note": "Shun's product render is a 1920x299 transparent strip. It was flattened onto white and centered on a 1600x1600 canvas with a margin."
+    },
+    {
+      "slug": "smithey-no-10-skillet",
+      "file": "smithey-no-10-skillet.jpg",
+      "sourcePage": "https://smithey.com/products/no-10-cast-iron-skillet",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0269/8225/2637/files/hero-10trad-1.png?v=1695306934",
+      "maker": "Smithey Ironware"
+    },
+    {
+      "slug": "john-boos-maple-board",
+      "file": "john-boos-maple-board.jpg",
+      "sourcePage": "https://www.johnboos.com/products/maple-cutting-boards-2-1-4-thick-ra-board-series",
+      "imageUrl": "https://cdn.shopify.com/s/files/1/0880/5521/8461/files/RA01_TD_PDP.jpg?v=1730316336",
+      "maker": "John Boos"
+    },
+    {
+      "slug": "bellroy-slim-sleeve",
+      "file": "bellroy-slim-sleeve.jpg",
+      "sourcePage": "https://bellroy.com/products/slim-sleeve-wallet",
+      "imageUrl": "https://bellroy-product-images.imgix.net//bellroy_dot_com_gallery_image/USD/WSSB-CJA-101/0?w=1600&fm=jpg",
+      "maker": "Bellroy"
+    },
+    {
+      "slug": "moleskine-classic",
+      "file": "moleskine-classic.jpg",
+      "sourcePage": "https://www.moleskine.com/en-us/shop/notebooks/the-original/classic-notebook-black-9788883701122.html",
+      "imageUrl": "https://www.moleskine.com/on/demandware.static/-/Sites-masterCatalog_Moleskine/default/dwf733f95b/images/large/gtin_9788883701122_01.jpg",
+      "maker": "Moleskine"
+    }
+  ],
+  "missing": []
+}

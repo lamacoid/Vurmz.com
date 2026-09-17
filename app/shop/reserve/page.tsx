@@ -63,7 +63,7 @@ export default function ReservePage() {
         <div className="absolute inset-0 bg-gradient-to-b from-[#7FCFD4]/[0.08] via-transparent to-[#0D2F35]" />
       </div>
 
-      <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <Link href="/shop" className="inline-block text-[length:var(--step-fine)] font-mono tracking-[0.2em] uppercase text-[#7FCFD4]/80 hover:text-[#7FCFD4] transition-colors">
           Back to the shop
         </Link>
@@ -72,23 +72,25 @@ export default function ReservePage() {
           The reserve
         </p>
         <h1 className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] leading-[1.05] text-white/95" style={display}>
-          Name the piece. It arrives engraved.
+          The knife they will hand down.<br className="hidden sm:block" /> Their name already on it.
         </h1>
-        <p className="mt-3 font-mono text-[length:var(--step-fine)] tracking-[0.04em] text-[#DED6C3]/70">
-          The item at cost + {usd(SOURCING.feeUnder100)}
-        </p>
         <p className="mt-5 max-w-[58ch] text-[length:var(--step-lead)] leading-relaxed text-[#DED6C3]/85">
-          A few pieces worth the engraving. I find them, mark them, and bring them to your door,
-          receipt in the box. What they come to, delivered:
+          Chef knives from Seki and Solingen. Folders in S30V and titanium. Cast iron, hard maple, a cooler
+          that outlives the truck. I find the piece, mark it with your words, and bring it to your door,
+          receipt in the box.
+        </p>
+        <p className="mt-3 font-mono text-[length:var(--step-fine)] tracking-[0.04em] text-[#DED6C3]/70">
+          The piece at its price + {usd(SOURCING.reserveFee)} to find it, mark it, and bring it
         </p>
 
-        {/* The list, on its own pane of glass */}
-        <div className="mt-8 rounded-[var(--r-panel)] border border-white/12 bg-white/[0.04] backdrop-blur-md p-5 sm:p-8">
+        {/* The shelves */}
+        <div className="mt-10">
           <ReserveList />
-          <p className="mt-6 max-w-[64ch] text-[length:var(--step-fine)] leading-relaxed text-[#DED6C3]/65">
-            Anything else, name it, the everyday brands too. The {usd(SOURCING.feeUnder100)} covers a piece under $100,
-            {' '}{usd(SOURCING.feeUnder300)} to $300, twenty percent above. Engraving is priced as your own piece.
-            A deposit holds it before I buy, fully returned if you change your mind before then.
+        </div>
+        <div className="mt-10 rounded-[var(--r-panel)] border border-white/12 bg-white/[0.04] backdrop-blur-md p-5 sm:p-8">
+          <p className="max-w-[64ch] text-[length:var(--step-fine)] leading-relaxed text-[#DED6C3]/65">
+            Anything else, name it: a different steel, a bigger board, the everyday brands too. The {usd(SOURCING.reserveFee)} covers finding it, the engraving, and the delivery.
+            A deposit holds the piece before I buy, fully returned if you change your mind before then.
           </p>
           <a
             href={getSmsLink('Hi Zach. From the reserve list, I would like a ')}
@@ -118,6 +120,9 @@ export default function ReservePage() {
         <p className="mt-12 max-w-[56ch] text-[length:var(--step-row)] leading-relaxed text-[#DED6C3]/75">
           Same hands, same proof, same delivery run as everything else I make. The coasters and the Shun get
           the same care. I am {siteInfo.founder.name}, one shop in {siteInfo.city}.
+        </p>
+        <p className="mt-6 max-w-[64ch] text-[11px] leading-relaxed text-[#DED6C3]/45">
+          VURMZ is an independent engraver, not affiliated with or endorsed by any maker named here. Engraving a piece may void its maker&apos;s warranty.
         </p>
         <a
           href={getSmsLink('Hi Zach, from the reserve: ')}

@@ -133,29 +133,38 @@ export const CATALOG = {
   },
 } as const
 
-// "Happy to source, for a fee." Zach names it, buys it (in person when the
-// metro stocks it, online when not), engraves it, and brings it. The item
-// at cost, the engraving, and a fee that scales with the item. Deposit
-// before the item is bought. Terms from the 2026-09 research.
+// "Happy to source." Zach names it, buys it (in person when the metro
+// stocks it, online when not), engraves it, and brings it. The piece at its
+// real price, plus ONE flat fee that covers finding it, the engraving, and
+// the delivery. One number, so a $30 cup does not turn into $120. Deposit
+// before the piece is bought. Terms from the 2026-09 research, simplified
+// 2026-09-16 after the stacked fees read as weird.
 export const SOURCING = {
   label: "Happy to source",
+  /** Finding it, marking it, bringing it. One fee. */
+  reserveFee: 65,
   engraving: 45,
   secondLocation: 30,
   giftBox: 15,
+  /** Kept for the services lane: the errand alone on a piece the customer hands over. */
   feeUnder100: 45,
   feeUnder300: 65,
   feePctOver300: 0.20,
   depositItemPct: 1,
   depositServicePct: 0.5,
-  /** Concierge fee for an item at this retail price. */
+  /** Concierge errand fee for an item at this retail price (services side). */
   fee(itemPrice: number): number {
     if (itemPrice < 100) return 45
     if (itemPrice < 300) return 65
     return Math.round(itemPrice * 0.20)
   },
-  /** Delivered price: item at cost, engraving, fee. Rounded to $5. */
+  /** Delivered price of a reserve piece: its price plus the one fee, up to the next $5. */
   delivered(itemPrice: number): number {
-    return Math.round((itemPrice + 45 + SOURCING.fee(itemPrice)) / 5) * 5
+    return Math.ceil((itemPrice + SOURCING.reserveFee) / 5) * 5
+  },
+  /** What holds a piece before it is bought: its price and half the fee. */
+  deposit(itemPrice: number): number {
+    return Math.round(itemPrice + SOURCING.reserveFee / 2)
   },
 }
 
