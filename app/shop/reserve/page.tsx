@@ -8,7 +8,7 @@ import { siteInfo, getSmsLink } from '@/lib/site-info'
 
 export const metadata: Metadata = {
   title: { absolute: 'The Reserve | VURMZ' },
-  description: 'Pieces found, engraved, and hand-delivered to order across the south Denver metro. Shun, Smithey, Benchmade, Boos and more, the laser brought to your event, jewelry and watch marking. One person, hand delivered.',
+  description: 'The chef knife, the pocket knife, the skillet, the board, the wallet, the cooler: found, engraved with your words, and hand-delivered across the south Denver metro. One person, hand delivered.',
   alternates: { canonical: '/shop/reserve' },
 }
 
@@ -75,8 +75,8 @@ export default function ReservePage() {
           The knife they will hand down.<br className="hidden sm:block" /> Their name already on it.
         </h1>
         <p className="mt-5 max-w-[58ch] text-[length:var(--step-lead)] leading-relaxed text-[#DED6C3]/85">
-          Chef knives from Seki and Solingen. Folders in S30V and titanium. Cast iron, hard maple, a cooler
-          that outlives the truck. I find the piece, mark it with your words, and bring it to your door,
+          The chef knife, the pocket knife, the skillet, the board, the wallet, the cooler. Pick the kind
+          of thing, then the one I buy. I find it, mark it with your words, and bring it to your door,
           receipt in the box.
         </p>
         <p className="mt-3 font-mono text-[length:var(--step-fine)] tracking-[0.04em] text-[#DED6C3]/70">

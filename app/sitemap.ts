@@ -1,6 +1,6 @@
 import { MetadataRoute } from 'next'
 import { portfolioItems } from '@/lib/portfolio'
-import { SOURCED } from '@/lib/sourcing'
+import { RESERVE_CATEGORIES } from '@/lib/sourcing'
 
 const serviceAreaSlugs = [
   'centennial',
@@ -38,8 +38,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly',
       priority: 0.8,
     },
-    ...SOURCED.map(i => ({
-      url: `${baseUrl}/shop/reserve/${i.slug}`,
+    ...RESERVE_CATEGORIES.map(c => ({
+      url: `${baseUrl}/shop/reserve/${c.key}`,
       lastModified: new Date(),
       changeFrequency: 'monthly' as const,
       priority: 0.6,
