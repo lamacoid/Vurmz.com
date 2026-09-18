@@ -11,6 +11,19 @@ VURMZ is the parent name, and "VURMZ | Laser Engraving" is the business. There a
 ### The name
 VURMZ has no literal meaning. It started as a personal handle. That is a strength, not a gap. It is a unique, ownable word, and the descriptor after the pipe ("VURMZ | Laser Engraving") does the explaining. We own the word, we do not explain it.
 
+### The position (added 2026-09-17)
+**A local custom-marking shop for objects people actually care about or actually use.**
+
+Not "laser engraving" (the tool) and not "personalized gifts" (the aisle). A chef's knife, an amp faceplate, an equipment label, a MacBook, a mirror, a family piece, a business's whole run of tumblers. One sentence that fits all of them, and VURMZ is a better name for that shop than any "Centennial Laser Engraving" could be.
+
+The four things the shop is known for, in this order. Every door on the site should be one of these:
+1. **Your stuff.** The thing you already own, marked.
+2. **Knives and gear.** Blades, tools, the pocket and the kitchen.
+3. **Business marking.** Tags, plates, pens, cards, the run that repeats.
+4. **The odd project.** The faceplate, the mirror, the thing nobody else will take.
+
+The reserve (pieces found and marked to order) is the shop's point of view made visible: it is where "objects people care about" gets specific. The name carries the strangeness so the copy does not have to; the site stays matter-of-fact and lets VURMZ be the odd word.
+
 ### Brand idea
 **Machine precision, human hands.** The work is exact and machine-made, but it is personal, one-off, and you deal with the actual person who makes it. This holds for a laser today and a flatbed cutter or printer later.
 
