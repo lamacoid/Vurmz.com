@@ -104,7 +104,7 @@ export default function ReservePiece({ cat, makers, also }: { cat: ReserveCatego
     <div className="relative -mt-[92px] sm:-mt-[100px] pt-[118px] sm:pt-[132px] pb-20 bg-[#123F47] text-[#DED6C3] overflow-hidden">
       <RoomTheme />
       <div className="absolute inset-0 pointer-events-none select-none" aria-hidden>
-        <Image src={cat.backdrop} alt="" fill priority sizes="100vw" quality={50} className="object-cover opacity-[0.22]" />
+        <Image src={cat.photo?.src ?? cat.backdrop} alt="" fill priority sizes="100vw" quality={55} className={`object-cover ${cat.photo ? 'opacity-[0.34]' : 'opacity-[0.22]'}`} />
         <div className="absolute inset-0 bg-[#123F47]/60" />
         <div className="absolute inset-0 bg-gradient-to-b from-[#7FCFD4]/[0.08] via-transparent to-[#0D2F35]" />
       </div>
@@ -152,7 +152,7 @@ export default function ReservePiece({ cat, makers, also }: { cat: ReserveCatego
             {/* The maker, picked from the ones I usually buy. Plain text only. */}
             <div>
               <p className="text-[length:var(--step-eyebrow)] font-mono tracking-[0.28em] uppercase text-[#7FCFD4] mb-1">The one I buy for you</p>
-              <p className="text-[length:var(--step-fine)] text-[#DED6C3]/60 mb-3">The ones I usually buy. Want a different one? Name it in the notes.</p>
+              <p className="text-[length:var(--step-fine)] text-[#DED6C3]/60 mb-3">Starting points, the ones I would buy myself. Want a different one? Name it in the notes and I will source it.</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {makers.map((m, i) => {
                   const on = i === pick
@@ -334,6 +334,7 @@ export default function ReservePiece({ cat, makers, also }: { cat: ReserveCatego
         </p>
         <p className="mt-6 max-w-[64ch] text-[11px] leading-relaxed text-[#DED6C3]/45">
           VURMZ is an independent engraver, not affiliated with or endorsed by any maker named here. Engraving a piece may void its maker&apos;s warranty.
+          {cat.photo && <>{' '}Photograph by <a href={cat.photo.href} target="_blank" rel="noopener noreferrer" className="underline decoration-[#DED6C3]/30 hover:text-[#DED6C3]/80">{cat.photo.credit}</a>.</>}
         </p>
       </div>
     </div>

@@ -63,6 +63,8 @@ export interface ReserveCategory {
   mark: string
   /** Portfolio photo behind the glass. */
   backdrop: string
+  /** Licensed lifestyle photo on the door (Unsplash or Pexels), with its credit. */
+  photo?: { src: string; credit: string; href: string }
   /** A sample line so the preview never starts empty. */
   sample: string
   /** Which doors get a card on the room page, and in what order. */
@@ -71,56 +73,64 @@ export interface ReserveCategory {
 
 export const RESERVE_CATEGORIES: ReserveCategory[] = [
   {
-    key: 'chef-knife', label: "The chef's knife", noun: "chef's knife", featured: true,
+    key: 'chef-knife',
+    photo: { src: '/reserve/chef-knife.jpg', credit: "wu yi", href: "https://unsplash.com/photos/gray-knife-on-brown-wooden-surface-f1xj_KeZ5RM" }, label: "The chef's knife", noun: "chef's knife", featured: true,
     line: 'Steel from Seki and Solingen. A name near the heel, small, where the hand sees it every day.',
     about: 'I cooked for fifteen years before I picked up a laser, so I have opinions. An eight inch chef knife is the one gift a cook uses every single day, and the good ones last a career. Japanese steel is harder and thinner and takes a keener edge; German steel is heavier and forgives. I buy the one you name, or I pick for the cook you describe. The mark goes near the heel, small, where their hand sees it every shift.',
     placements: ['Blade, near the heel', 'Blade, spine side'], mark: 'A dark mark annealed into the steel, not cut.',
     backdrop: '/portfolio/culinary-cleaver-engraved.jpg', sample: 'Chef Reyes',
   },
   {
-    key: 'pocket-knife', label: 'The pocket knife', noun: 'pocket knife', featured: true,
+    key: 'pocket-knife',
+    photo: { src: '/reserve/pocket-knife.jpg', credit: "HHAA", href: "https://www.pexels.com/photo/compact-folding-knife-on-green-leather-case-33508931/" }, label: 'The pocket knife', noun: 'pocket knife', featured: true,
     line: 'S30V, MagnaCut, titanium. Initials at the base of the blade, a date on the scale.',
     about: 'The knife someone carries for twenty years. Two of the best are made within an hour of here, in Golden and up in Oregon, and I can have most of them in hand the same week. Initials go at the base of the blade beside the maker\'s own mark; a date or a line goes on the handle scale. I keep it small. A good folder does not need help.',
     placements: ['Blade', 'Handle scale'], mark: 'Dark on the blade, bright on anodized aluminum, light on G-10.',
     backdrop: '/portfolio/pocket-knife-engraved.jpg', sample: 'W. Hale',
   },
   {
-    key: 'skillet', label: 'The skillet', noun: 'skillet', featured: true,
+    key: 'skillet',
+    photo: { src: '/reserve/skillet.jpg', credit: "Madie Hamilton", href: "https://unsplash.com/photos/fried-food-on-black-pan-dZ-HI4EuWcA" }, label: 'The skillet', noun: 'skillet', featured: true,
     line: 'Polished cast iron that gets willed to someone. The family name on the underside.',
     about: 'A polished cast iron skillet is the pan a family cooks Sunday in for fifty years, and then someone inherits it. The underside takes a bright mark in the iron: the family name, a wedding date, the year the house was bought. Ten inch for two people, twelve for a family. I buy from the small foundries that still polish by hand.',
     placements: ['Underside', 'Handle'], mark: 'A bright mark in the polished iron.',
     backdrop: '/portfolio/denver-map-mirror-closeup.jpg', sample: 'The Delgados, est. 2026',
   },
   {
-    key: 'board', label: 'The cutting board', noun: 'cutting board', featured: true,
+    key: 'board',
+    photo: { src: '/reserve/board.jpg', credit: "Kemal Can", href: "https://www.pexels.com/photo/fresh-tagliatelle-pasta-on-wooden-cutting-board-37322866/" }, label: 'The cutting board', noun: 'cutting board', featured: true,
     line: 'Hard maple, edge grain, the board that lives on the counter. A name across a corner.',
     about: 'The board every restaurant kitchen runs on, made of hard maple that takes a deep, even burn. A name across a corner is the classic. A whole recipe in your grandmother\'s handwriting, if you send me the card, is the one people cry at. Eighteen by twelve fits a counter; twenty-four by eighteen is the one that never gets put away.',
     placements: ['Corner', 'Center', 'Edge'], mark: 'A clean burn in the maple, darker with more power.',
     backdrop: '/portfolio/denver-map-glass-coaster.jpg', sample: "Nonna's Table",
   },
   {
-    key: 'wallet', label: 'The wallet', noun: 'wallet', featured: true,
+    key: 'wallet',
+    photo: { src: '/reserve/wallet.jpg', credit: "Atelier Kommpass", href: "https://www.pexels.com/photo/minimalist-brown-leather-wallet-on-textured-background-33277784/" }, label: 'The wallet', noun: 'wallet', featured: true,
     line: 'Titanium, carbon fiber, leather. Initials, small, in a corner.',
     about: 'The minimalist metal wallet is the thing that gets found in a jacket pocket forty years on. Titanium takes a dark mark that looks machined in; carbon fiber takes a fine light one in the weave; leather takes a dark, slightly recessed mark. Initials, small, in a corner, and it is theirs.',
     placements: ['Outer plate', 'Inner plate'], mark: 'Dark on titanium, light on carbon fiber, recessed on leather.',
     backdrop: '/portfolio/laser-engraved-artwork.jpg', sample: 'J.R.M.',
   },
   {
-    key: 'cooler', label: 'The cooler', noun: 'cooler', featured: true,
+    key: 'cooler',
+    photo: { src: '/reserve/cooler.jpg', credit: "Sandrene Zhang", href: "https://unsplash.com/photos/drink-bottles-inside-cooler-chest-8S7ZoRyYOTY" }, label: 'The cooler', noun: 'cooler', featured: true,
     line: 'The cooler that outlives the truck it rides in. The name of the cabin, the boat, the crew.',
     about: 'A rotomolded cooler is the one thing on this list everyone at the tailgate sees. The lid takes a large, clean mark in the shell: the name of the cabin, the boat, the crew, the company. Forty-five quarts for a weekend, sixty-five for the crew.',
     placements: ['Lid', 'Front', 'Side'], mark: 'A clean matte mark in the lid, the color of the shell underneath.',
     backdrop: '/portfolio/water-bottle-full-wrap.jpg', sample: 'Camp Bluebird',
   },
   {
-    key: 'pen', label: 'The pen', noun: 'pen', featured: false,
+    key: 'pen',
+    photo: { src: '/reserve/pen.jpg', credit: "Sunrise King", href: "https://unsplash.com/photos/a-pen-sitting-on-top-of-a-table-next-to-a-light-dyFnG8xZi3s" }, label: 'The pen', noun: 'pen', featured: false,
     line: 'One piece of titanium or brass, for someone who signs things.',
     about: 'A machined pen for someone who signs things. Titanium takes a dark mark along the barrel; brass and chrome take a crisp one. A name and a date is the classic.',
     placements: ['Barrel', 'Clip'], mark: 'A dark mark along the barrel.',
     backdrop: '/portfolio/plastic-marking-charger.jpg', sample: 'E. Okafor',
   },
   {
-    key: 'multitool', label: 'The multitool', noun: 'multitool', featured: false,
+    key: 'multitool',
+    photo: { src: '/reserve/multitool.jpg', credit: "Parthiv Sailesh", href: "https://unsplash.com/photos/silver-multi-tool-on-brown-rock-614ji_rRvnM" }, label: 'The multitool', noun: 'multitool', featured: false,
     line: 'The one they carry for twenty years. A name, a company, a date it was earned.',
     about: 'The multitool people carry for twenty years. The handle takes a small, dark, permanent mark: a name, a company, a date it was earned.',
     placements: ['Handle, outside', 'Handle, inside'], mark: 'A dark mark annealed into the stainless.',

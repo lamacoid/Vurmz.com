@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import ReserveList from '@/components/shop/ReserveList'
 import RoomTheme from '@/components/shop/RoomTheme'
+import { RESERVE_CATEGORIES } from '@/lib/sourcing'
 import { SOURCING, SIGNATURE, ONSITE } from '@/lib/pricing'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 
@@ -75,9 +76,9 @@ export default function ReservePage() {
           The knife they will hand down.<br className="hidden sm:block" /> Their name already on it.
         </h1>
         <p className="mt-5 max-w-[58ch] text-[length:var(--step-lead)] leading-relaxed text-[#DED6C3]/85">
-          The chef knife, the pocket knife, the skillet, the board, the wallet, the cooler. Pick the kind
-          of thing, then the one I buy. I find it, mark it with your words, and bring it to your door,
-          receipt in the box.
+          These are starting points, not a catalog. A chef knife, a folder, a skillet, a board, a wallet,
+          a cooler, the ones I would buy myself. Tell me what you are looking for and I will source it,
+          mark it with your words, and bring it to your door, receipt in the box.
         </p>
         <p className="mt-3 font-mono text-[length:var(--step-fine)] tracking-[0.04em] text-[#DED6C3]/70">
           The piece at its price + {usd(SOURCING.reserveFee)} to find it, mark it, and bring it
@@ -88,15 +89,19 @@ export default function ReservePage() {
           <ReserveList />
         </div>
         <div className="mt-10 rounded-[var(--r-panel)] border border-white/12 bg-white/[0.04] backdrop-blur-md p-5 sm:p-8">
-          <p className="max-w-[64ch] text-[length:var(--step-fine)] leading-relaxed text-[#DED6C3]/65">
-            Anything else, name it: a different steel, a bigger board, the everyday brands too. The {usd(SOURCING.reserveFee)} covers finding it, the engraving, and the delivery.
+          <p className="text-[length:var(--step-panel)] leading-tight text-white/95" style={display}>
+            Not on the list? Good.
+          </p>
+          <p className="mt-3 max-w-[64ch] text-[length:var(--step-row)] leading-relaxed text-[#DED6C3]/80">
+            Most of what I source is something a customer named: a particular steel, a watch, a bigger board, a piece from a maker I have not listed, the everyday brands too.
+            Tell me what you are looking for and I will find it. The {usd(SOURCING.reserveFee)} covers finding it, the engraving, and the delivery.
             A deposit holds the piece before I buy, fully returned if you change your mind before then.
           </p>
           <a
-            href={getSmsLink('Hi Zach. From the reserve list, I would like a ')}
+            href={getSmsLink('Hi Zach. I am looking for a ')}
             className="puffy-btn mt-6 inline-flex items-center justify-center h-11 px-6 rounded-[var(--r-control)] bg-[var(--coral)] text-white text-[length:var(--step-body)] font-semibold hover:bg-[var(--coral-hover)] transition-colors duration-[var(--t-hover)]"
           >
-            Name the piece
+            Tell me what you are looking for
           </a>
         </div>
 
@@ -123,6 +128,17 @@ export default function ReservePage() {
         </p>
         <p className="mt-6 max-w-[64ch] text-[11px] leading-relaxed text-[#DED6C3]/45">
           VURMZ is an independent engraver, not affiliated with or endorsed by any maker named here. Engraving a piece may void its maker&apos;s warranty.
+          {RESERVE_CATEGORIES.some(c => c.photo) && (
+            <>
+              {' '}Photographs by{' '}
+              {RESERVE_CATEGORIES.filter(c => c.photo).map((c, i, arr) => (
+                <span key={c.key}>
+                  <a href={c.photo!.href} target="_blank" rel="noopener noreferrer" className="underline decoration-[#DED6C3]/30 hover:text-[#DED6C3]/80">{c.photo!.credit}</a>
+                  {i < arr.length - 1 ? ', ' : '.'}
+                </span>
+              ))}
+            </>
+          )}
         </p>
         <a
           href={getSmsLink('Hi Zach, from the reserve: ')}
