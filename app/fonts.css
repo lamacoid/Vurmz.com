@@ -31,7 +31,7 @@
 @font-face { font-family: 'Birmingham Sans Serif'; src: url('/fonts/Birmingham-Sans-Serif.ttf') format('truetype'); font-display: swap; }
 @font-face { font-family: 'Blue Highway D Type'; src: url('/fonts/Blue-Highway-D-Type.ttf') format('truetype'); font-display: swap; }
 @font-face { font-family: 'Bonobo'; src: url('/fonts/Bonobo.ttf') format('truetype'); font-display: swap; }
-@font-face { font-family: 'Anuphan'; src: url('/fonts/Anuphan-VariableFont_wght.ttf') format('truetype'); font-display: swap; }
+@font-face { font-family: 'Anuphan'; src: url('/fonts/Anuphan-Regular.ttf') format('truetype'); font-display: swap; }
 
 /* Professional Serif */
 @font-face { font-family: 'Bodoni'; src: url('/fonts/Bodoni-Regular.ttf') format('truetype'); font-display: swap; }

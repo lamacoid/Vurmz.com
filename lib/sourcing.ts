@@ -160,19 +160,19 @@ export const SOURCED: SourcedItem[] = [
   },
   {
     slug: 'yeti-rambler-20', group: 'cooler', noun: 'tumbler', name: 'Yeti Rambler, 20 oz', maker: 'Yeti', material: 'Powder-coated stainless', retail: 35,
-    where: 'Yeti, Cherry Creek North', tier: 'thank-you',
+    where: 'Yeti, Cherry Creek North', tier: 'thank-you', reserve: true,
     blurb: 'The tumbler everyone already trusts. The powder coat lifts clean and the stainless underneath shines through, so a logo or a name reads bright against any color.',
     placements: ['Front', 'Back', 'Full wrap'], mark: 'Coating removed to bright stainless.', backdrop: '/portfolio/tumbler-cherry-creek-37.jpg', leadTime: SOON, sample: 'Margaret',
   },
   {
     slug: 'stanley-quencher-40', group: 'cooler', noun: 'tumbler', name: 'Stanley Quencher, 40 oz', maker: 'Stanley', material: 'Powder-coated stainless', retail: 45,
-    where: "Dick's, Park Meadows", tier: 'thank-you',
+    where: "Dick's, Park Meadows", tier: 'thank-you', reserve: true,
     blurb: 'The big one with the handle. Same powder coat, same bright mark. Names go on the front, a date or a line on the back.',
     placements: ['Front', 'Back'], mark: 'Coating removed to bright stainless.', backdrop: '/portfolio/tumbler-cherry-creek-37.jpg', leadTime: SOON, sample: 'Margaret',
   },
   {
     slug: 'snow-peak-titanium-cup', group: 'cooler', noun: 'cup', name: 'Snow Peak titanium cup', maker: 'Snow Peak', material: 'Titanium', retail: 30,
-    where: 'REI Greenwood Village', tier: 'thank-you', 
+    where: 'REI Greenwood Village', tier: 'thank-you', reserve: true, 
     blurb: 'A single-wall titanium cup that weighs nothing and lasts forever. It takes a dark mark that looks like it was born there. The best small gift on this list.',
     placements: ['Side', 'Base'], mark: 'A dark, matte mark annealed into the titanium.', backdrop: '/portfolio/water-bottle-custom-engraved.jpg', leadTime: SOON, sample: 'Ridgeline, 2026',
   },

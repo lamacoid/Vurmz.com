@@ -173,7 +173,7 @@ export default function AddToCart(props: {
 
       {engravable && !designer && (
         <>
-          <EngravingPicker value={engraving} onChange={setEngraving} />
+          <EngravingPicker value={engraving} onChange={setEngraving} productName={`${props.name} ${finishKey ?? ''}`} finishHex={finishes.find(f => f.label === finishKey)?.hex ?? null} />
           <div className="-mt-2 mb-5 rounded-sm border border-[var(--hairline)] bg-[var(--ink)]/[0.03] p-4 sm:p-5">
             <FileAttach value={file} onChange={setFile} />
           </div>

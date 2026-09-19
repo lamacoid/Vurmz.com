@@ -40,11 +40,18 @@ const DOORS: Door[] = [
     reserve: ['skillet', 'board'],
   },
   {
+    key: 'drink',
+    name: 'Tumblers, bottles, and coolers',
+    line: 'Powder coat lifts to bright steel. A name on the front, a date on the back, the crew on the lid.',
+    pick: p => p.categoryId === 'cat_tumblers' || /tumbler|bottle|flask|cup\b/i.test(p.name),
+    reserve: ['cooler'],
+  },
+  {
     key: 'carry',
     name: 'Carried daily',
     line: 'Keychains, tags, wallets, pens. The small thing that is on you for years.',
     pick: p => p.categoryId === 'cat_keychains' || /pet tag|wallet|pen\b/i.test(p.name) && p.packSize === 1,
-    reserve: ['wallet', 'pen', 'cooler'],
+    reserve: ['wallet', 'pen'],
   },
   {
     key: 'walls',

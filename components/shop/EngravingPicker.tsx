@@ -8,6 +8,7 @@
  * it never simulates the engraved result.
  */
 import { fontOptions } from '@/lib/fonts'
+import { plateFor, GRAIN } from '@/lib/plate'
 import DesignElementPicker, { type DesignElement } from './DesignElementPicker'
 import FontBook from './FontBook'
 
@@ -24,12 +25,22 @@ export default function EngravingPicker({
   value,
   onChange,
   maxLength = 120,
+  productName = '',
+  finishHex = null,
 }: {
   value: EngravingValue
   onChange: (v: EngravingValue) => void
   maxLength?: number
+  /** Names the material, so the preview plate is honest to it. */
+  productName?: string
+  /** The finish chip the customer picked, when the product has them. */
+  finishHex?: string | null
 }) {
   const selected = fontOptions.find(f => f.value === value.fontValue) ?? fontOptions[0]
+  const plate = plateFor(productName, finishHex)
+  const shown = value.text.trim()
+  const size = Math.max(20, Math.min(56, 400 / Math.max(6, shown.length || 10)))
+  const bright = /^#[C-F]/i.test(plate.ink)
 
   return (
     <div className="mb-5 rounded-sm border border-[var(--hairline)] bg-[var(--ink)]/[0.03] p-4 sm:p-5">
@@ -38,6 +49,38 @@ export default function EngravingPicker({
         <span className="flex-1 border-t border-[var(--ink)]/20" aria-hidden />
         <span className="text-[11px] font-mono tracking-[0.3em] uppercase text-[var(--eyebrow)]">The engraving</span>
         <span className="flex-1 border-t border-[var(--ink)]/20" aria-hidden />
+      </div>
+
+      {/* The words and the face, on the material. A preview of the type,
+          not a simulation of the finished piece. */}
+      <div
+        className="relative rounded-[var(--r-tile)] overflow-hidden aspect-[16/9] mb-3"
+        style={{ background: plate.bg, boxShadow: `inset 0 0 0 1px ${plate.edge}` }}
+        aria-hidden
+      >
+        {plate.grain && plate.grain !== 'none' && (
+          <div className="absolute inset-0 opacity-[0.22] pointer-events-none" style={{ backgroundImage: GRAIN[plate.grain] }} />
+        )}
+        <div className="absolute inset-0 flex items-center justify-center gap-4 px-6">
+          {value.element && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={value.element.thumb}
+              alt=""
+              className="h-[42%] w-auto max-w-[30%] object-contain"
+              style={{ filter: bright ? 'invert(1) brightness(1.4)' : 'brightness(0.25)', opacity: 0.9, mixBlendMode: bright ? 'screen' : 'multiply' }}
+            />
+          )}
+          <p
+            className="text-center leading-tight break-words max-w-full"
+            style={{ ...selected.style, color: plate.ink, fontSize: `${size}px`, opacity: shown ? 1 : 0.5, textShadow: bright ? '0 0 8px rgba(255,255,255,0.3)' : '0 1px 0 rgba(255,255,255,0.15)' }}
+          >
+            {shown || 'Your words here'}
+          </p>
+        </div>
+        <span className="absolute left-3 bottom-2 font-mono text-[10px] tracking-[0.2em] uppercase" style={{ color: plate.ink, opacity: 0.6 }}>
+          {plate.mark}
+        </span>
       </div>
 
       <input

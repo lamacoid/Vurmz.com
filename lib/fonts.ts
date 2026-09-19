@@ -39,12 +39,11 @@ export const fontOptions: FontOption[] = [
   { value: 'zen-kurenaido', label: 'Zen Kurenaido', category: 'vurmz', style: { fontFamily: "'Zen Kurenaido', sans-serif" } },
 
   // ============================================
-  // PROFESSIONAL SANS-SERIF (10)
+  // PROFESSIONAL SANS-SERIF (9). Coolvetica delisted 2026-09-19: no licensed file on hand.
   // ============================================
   { value: 'b691-sans', label: 'B691 Sans', category: 'professional-sans', style: { fontFamily: "'B691-Sans', sans-serif" } },
   { value: 'e820-sans', label: 'E820 Sans', category: 'professional-sans', style: { fontFamily: "'E820-Sans', sans-serif" } },
   { value: 'eurasia', label: 'Eurasia', category: 'professional-sans', style: { fontFamily: "'Eurasia', sans-serif" } },
-  { value: 'coolvetica', label: 'Coolvetica', category: 'professional-sans', style: { fontFamily: "'Coolvetica', sans-serif" } },
   { value: 'cleargothic', label: 'ClearGothic', category: 'professional-sans', style: { fontFamily: "'ClearGothicSerial', sans-serif" } },
   { value: 'bolton-sans', label: 'Bolton Sans', category: 'professional-sans', style: { fontFamily: "'Bolton Sans', sans-serif" } },
   { value: 'birmingham-sans', label: 'Birmingham Sans', category: 'professional-sans', style: { fontFamily: "'Birmingham Sans Serif', sans-serif" } },
