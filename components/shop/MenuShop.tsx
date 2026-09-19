@@ -194,7 +194,7 @@ export default async function MenuShop() {
                 </span>
               </Link>
               <p className="text-sm text-[var(--ink-soft)] mt-2 max-w-md mx-auto">
-                {menuCase(house.shortDescription || 'one piece, one placement, a proof before it runs')}
+                {menuCase(house.shortDescription || 'one piece, one placement, back within the week')}
               </p>
               <Link
                 href={`/shop/p/${house.slug}`}

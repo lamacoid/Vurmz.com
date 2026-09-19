@@ -87,7 +87,7 @@ export default function ShopHome() {
             </a>
           </p>
           <p className="text-[13px] text-[var(--ink-soft)] mt-1.5">
-            Most pieces in 24 to 72 hours. You approve a proof photo before anything runs.
+            Most pieces in 24 to 72 hours. One person, start to finish.
           </p>
           <div className="mt-6 border-t-2 border-[var(--ink)]/25" aria-hidden />
           <div className="mt-[3px] mb-4 border-t border-[var(--ink)]/25" aria-hidden />
@@ -122,7 +122,7 @@ export default function ShopHome() {
             <p className="mt-5 text-[14px] leading-relaxed text-[var(--ink-soft)]">
               Anything solid takes a mark: metal, wood, glass, leather, slate, acrylic, plastic. Your own
               piece is one price within a palm-sized mark, a little more for the large or the intricate,
-              and you see a proof before it runs. Do not have the piece yet? Happy to source:
+              and it is back in your hands within the week. Do not have the piece yet? Happy to source:
               named, found, engraved, and brought to you, the piece at its price plus ${SOURCING.reserveFee}.
             </p>
           </div>

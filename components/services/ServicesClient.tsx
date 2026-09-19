@@ -144,14 +144,13 @@ const BRIEF_SMS = 'Hi Zach. What: \nHow many: \nArtwork or words: \nWhere and ho
 // What comes back, in order. Real steps, real timing.
 const RETURNS = [
   { when: 'Same day', h: 'A number', p: 'The price for that count, delivery included where it applies. No setup fee, ever.' },
-  { when: 'Before it runs', h: 'A proof photo', p: 'The first piece, marked, photographed. Nothing else is cut until you say go.' },
   { when: '24 to 72 hrs', h: 'The run', p: 'Same file, same settings, every piece. A batch of 200 matches piece one.' },
   { when: 'The run day', h: 'Hand delivery', p: `Free over $${DELIVERY.freeThreshold}, free at any size on an account. Or pickup, or shipped if you are far.` },
   { when: 'After', h: 'Your files on record', p: 'Logo, layout, settings. The reorder is a text with a count.' },
 ]
 
 // What precision means in this shop. Claims kept to what the machines
-// and the proof process actually deliver.
+// actually deliver.
 const PRECISION = [
   { h: 'The mark is in the material, not on it', p: 'The laser changes the surface itself. Nothing is printed, glued, or coated, so there is nothing to peel, fade, or rub off.' },
   { h: 'From your file, line for line', p: 'Vector art reproduces as drawn: logos, serials, QR codes, part numbers. Text stays legible down to six point.' },
@@ -180,7 +179,6 @@ const ACCOUNT_TERMS = (standingDiscount: string) => [
   { h: `Free delivery, every ${siteInfo.deliveryRunDay}`, p: `Any size, anywhere in the ${DELIVERY.area}. The run is the same day each week.` },
   { h: `NET-${BUSINESS.netTermsDays} terms`, p: 'Invoice after delivery. Pay on your schedule, not at checkout.' },
   { h: `${standingDiscount} on standing orders`, p: 'Counted in real units across the account, and the tier holds between reorders.' },
-  { h: 'A proof before every run', p: 'A photo of the first piece, approved by you, before the rest are cut.' },
   { h: 'One person, start to finish', p: 'You text me. I quote it, make it, and hand it to you.' },
 ]
 
@@ -193,7 +191,7 @@ export default function ServicesClient() {
     '@type': 'Service',
     serviceType: 'Laser Engraving',
     name: 'VURMZ Laser Engraving for Business',
-    description: 'Equipment labels, knife crews, metal cards, branded packs, plates and panels, and one-off marking for businesses in the South Denver metro. Posted prices, proof before every run, delivered weekly.',
+    description: 'Equipment labels, knife crews, metal cards, branded packs, plates and panels, and one-off marking for businesses in the South Denver metro. Posted prices, one person start to finish, delivered weekly.',
     provider: {
       '@type': 'LocalBusiness',
       name: 'VURMZ LLC',
@@ -229,8 +227,7 @@ export default function ServicesClient() {
               Precision laser engraving and marking<br className="hidden sm:block" /> for the businesses of the south Denver metro.
             </h1>
             <p className="mt-5 max-w-[56ch] text-[length:var(--step-lead)] leading-relaxed text-[var(--ink-soft)]">
-              Tell me what you need marked. Send a photo and a count: a number the same day, a proof photo
-              before anything runs, delivery on {siteInfo.deliveryRunDay}. I&apos;m {siteInfo.founder.name},
+              Tell me what you need marked. Send a photo and a count: a number the same day, delivery on {siteInfo.deliveryRunDay}. I&apos;m {siteInfo.founder.name},
               one shop in {siteInfo.city}, run by me.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
@@ -265,8 +262,8 @@ export default function ServicesClient() {
                 <span className="text-[var(--ink)] font-semibold">None</span>
               </span>
               <span className="flex justify-between py-[7px]">
-                <span>Proof before it runs</span>
-                <span className="text-[var(--ink)] font-semibold">Always</span>
+                <span>Who makes it</span>
+                <span className="text-[var(--ink)] font-semibold">Me</span>
               </span>
             </div>
           </div>

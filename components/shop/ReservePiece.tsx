@@ -333,7 +333,7 @@ export default function ReservePiece({ cat, makers, also }: { cat: ReserveCatego
           Same hands, same care, same delivery run as everything else I make. I am {siteInfo.founder.name}, one shop in {siteInfo.city}.
         </p>
         <p className="mt-6 max-w-[64ch] text-[11px] leading-relaxed text-[#DED6C3]/45">
-          VURMZ is an independent engraver, not affiliated with or endorsed by any maker named here. Engraving a piece may void its maker&apos;s warranty.
+          VURMZ is an independent engraver, not affiliated with or endorsed by any maker named here. Engraving a piece may void its maker&apos;s warranty. Deposit, cancellation, and guarantee terms are in the <Link href="/terms" className="underline decoration-[#DED6C3]/30 hover:text-[#DED6C3]/80">terms</Link>.
           {cat.photo && <>{' '}Photograph by <a href={cat.photo.href} target="_blank" rel="noopener noreferrer" className="underline decoration-[#DED6C3]/30 hover:text-[#DED6C3]/80">{cat.photo.credit}</a>.</>}
         </p>
       </div>

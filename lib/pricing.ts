@@ -11,7 +11,7 @@ export const SIGNATURE = {
   tagline: "Custom work, made to order",
   // 2026-09-13 reprice (vurmz-control/RESEARCH/PRICING-MARKET-2026-09.md):
   // the shop side is priced as a high-end niche engraver. $55 covers one
-  // piece, one placement, a proof photo, delivery. Items over $150 add
+  // piece, one placement, delivery. Items over $150 add
   // 10% of value; jewelry and watches from $95.
   startingAt: 55,
   valueSurchargeOver: 150,
@@ -22,7 +22,7 @@ export const SIGNATURE = {
   bullets: [
     "No setup fees",
     "Single items welcome",
-    "A proof photo before it runs",
+    "Back within the week, most pieces",
     "Hand-delivered across the south Denver metro",
   ],
 } as const

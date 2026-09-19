@@ -149,7 +149,7 @@ export default function Page() {
               <span className="text-[var(--ink-soft)]">for the businesses around here.</span>
             </h2>
             <p className="text-[var(--ink-soft)] text-base sm:text-lg leading-relaxed max-w-2xl mb-10">
-              Posted prices. A proof before every run. Delivered across the south metro.
+              Posted prices. One person, start to finish. Delivered across the south metro.
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">

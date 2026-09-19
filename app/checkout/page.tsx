@@ -512,11 +512,11 @@ export default function CheckoutPage() {
               value={notes}
               onChange={e => setNotes(e.target.value)}
               rows={3}
-              placeholder="Placement, sizes, finishes, links to inspiration, anything I should know before I make your proof…"
+              placeholder="Placement, sizes, finishes, links to inspiration, anything I should know before I make it…"
               className="w-full bg-white/70 border border-[#16525C]/12 rounded-sm px-3 py-2 text-sm outline-none focus:border-[#C67A6F]"
             />
             <p className="mt-2 text-xs text-[var(--ink)] font-medium">
-              I always send a proof photo before I engrave. Nothing runs until you approve it.
+              One person makes it, start to finish. Questions before it runs? Text me.
             </p>
 
             {/* Photo / logo attachments, works for guests, no account needed */}

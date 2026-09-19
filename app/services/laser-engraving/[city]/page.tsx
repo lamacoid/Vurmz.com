@@ -36,7 +36,7 @@ const cityData: Record<string, CityData> = {
       'Littleton has a real downtown, one of the few in the south metro. I work with shops, restaurants, and offices throughout Littleton, from Main Street boutiques to offices along Santa Fe Drive.',
       'If you are near the Littleton Riverwalk or in the Columbine Valley area, I can meet you locally to pick up items or hand-deliver finished orders. Direct handoff from the person who engraved your order.',
       'Laser engraving works on metal, wood, acrylic, leather, glass, and more. Branded pens for your register, engraved coasters for your tasting room, custom metal business cards. Whatever you need for your Littleton business, I can make it happen.',
-      'One piece or a standing order. No setup fees, a proof before it runs, hand-delivered across the south Denver metro.',
+      'One piece or a standing order. No setup fees, one person start to finish, hand-delivered across the south Denver metro.',
     ],
   },
   'lone-tree': {
@@ -46,7 +46,7 @@ const cityData: Record<string, CityData> = {
     paragraphs: [
       'Lone Tree has a mix of corporate offices at RidgeGate and shops and restaurants around Park Meadows. I deliver engraved items directly to your Lone Tree office or storefront.',
       'Metal business cards for your team, branded pens for a conference at the Lone Tree Arts Center, custom awards for an event at the Gaylord Rockies. You text me, I quote you, and I hand-deliver the finished product.',
-      'Most pieces are ready within three days, and a proof photo comes first. If you need fifty pens by Friday, say so and I will tell you plainly whether it works.',
+      'Most pieces are ready within three days. If you need fifty pens by Friday, say so and I will tell you plainly whether it works.',
       'Every item is engraved on professional-grade laser equipment. Clean marks, done right the first time.',
     ],
   },
@@ -306,7 +306,7 @@ export default async function CityPage({ params }: Props) {
             Ready to get started in {city.name}?
           </h2>
           <p className="text-[var(--ink-soft)] text-base leading-relaxed mb-6">
-            Text {siteInfo.founder.name} a photo and a count. A number today, a proof before it runs, delivered on {siteInfo.deliveryRunDay}.
+            Text {siteInfo.founder.name} a photo and a count. A number today, delivered on {siteInfo.deliveryRunDay}.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link

@@ -167,7 +167,7 @@ async function sendOrderEmails(env: CloudflareEnv, args: {
         <tr><td style="padding:4px 0;color:#666">${args.fulfillmentLabel}</td><td style="text-align:right">${dollars(args.fulfillmentFeeCents)}</td></tr>
         <tr><td style="padding:4px 0;font-weight:700">Total</td><td style="text-align:right;font-weight:700">${dollars(args.totalCents)}</td></tr>
       </table>
-      <p style="color:#555">If your order has engraving, I&rsquo;ll send you a proof photo to approve before anything runs. I&rsquo;ll reach out with next steps shortly, reply to this email anytime.</p>
+      <p style="color:#555">I&rsquo;ll reach out with next steps shortly. Reply to this email anytime.</p>
       <p style="margin-top:24px;color:#999;font-size:12px">VURMZ · Centennial, CO · zach@vurmz.com</p>
     </div>
   `

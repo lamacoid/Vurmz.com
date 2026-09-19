@@ -25,7 +25,7 @@ export default function OnSite({ standalone = false }: { standalone?: boolean })
       <h2 className="text-[length:var(--step-panel)] text-[var(--ink)]" style={display}>The laser comes to you.</h2>
       <p className="mt-2 max-w-[62ch] text-[length:var(--step-row)] leading-relaxed text-[var(--ink-soft)]">
         A launch, a holiday event at the store, a member-guest, a wedding. I bring the machine, the extractor, and a
-        proof of the piece already made. Guests give a name and watch it go into the metal.
+        finished sample of the piece. Guests give a name and watch it go into the metal.
         {' '}{ONSITE.piecesPerHourMetal[0]} to {ONSITE.piecesPerHourMetal[1]} metal pieces an hour, {ONSITE.piecesPerHourWood[0]} to {ONSITE.piecesPerHourWood[1]} on wood or leather.
       </p>
       <div className="mt-5 text-[length:var(--step-row)]">

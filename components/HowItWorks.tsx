@@ -5,11 +5,11 @@ import { DELIVERY, SIGNATURE } from '@/lib/pricing'
 const STEPS = [
   {
     h: 'Text me',
-    p: `Send a photo of what you want engraved, or buy it ready from the shop. Your own piece is $${SIGNATURE.startingAt}, proof included.`,
+    p: `Send a photo of what you want engraved, or buy it ready from the shop. Your own piece is $${SIGNATURE.startingAt}.`,
   },
   {
-    h: 'Approve the proof',
-    p: 'I send a photo before anything is cut. Nothing runs until you say go.',
+    h: 'I make it',
+    p: 'A number the same day. Most pieces are ready in 24 to 72 hours.'
   },
   {
     h: 'Hand-delivered',

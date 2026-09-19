@@ -38,7 +38,7 @@ const OFFERS = [
   },
   {
     h: 'Cards for the office',
-    p: 'Anodized aluminum, designed here on the site, proofed on screen before a single card is cut. Sets of ten and up.',
+    p: 'Anodized aluminum, designed here on the site, so you see the layout before a single card is cut. Sets of ten and up.',
     cta: 'Design a set',
     href: '/shop/metal-cards',
   },
@@ -127,7 +127,7 @@ export default function ReservePage() {
           the same care. I am {siteInfo.founder.name}, one shop in {siteInfo.city}.
         </p>
         <p className="mt-6 max-w-[64ch] text-[11px] leading-relaxed text-[#DED6C3]/45">
-          VURMZ is an independent engraver, not affiliated with or endorsed by any maker named here. Engraving a piece may void its maker&apos;s warranty.
+          VURMZ is an independent engraver, not affiliated with or endorsed by any maker named here. Engraving a piece may void its maker&apos;s warranty. The deposit, cancellation, and guarantee terms are in the <Link href="/terms" className="underline decoration-[#DED6C3]/30 hover:text-[#DED6C3]/80">terms</Link>.
           {RESERVE_CATEGORIES.some(c => c.photo) && (
             <>
               {' '}Photographs by{' '}

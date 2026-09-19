@@ -347,7 +347,7 @@ function CanvasPanel({ config, onChange }: {
       )}
 
       <p className="mt-3 text-[11px] text-[#7FCFD4]">
-        ✓ I match your layout as closely as the material allows and send a proof photo before anything runs.
+        ✓ I match your layout as closely as the material allows.
       </p>
     </div>
   )
@@ -554,7 +554,7 @@ function SilhouettePanel({ config, onChange }: {
       </div>
 
       <p className="mt-3 text-[11px] text-[#7FCFD4]">
-        ✓ The red zone is where the laser marks. I send a proof photo before anything runs.
+        ✓ The red zone is where the laser marks.
       </p>
     </div>
   )

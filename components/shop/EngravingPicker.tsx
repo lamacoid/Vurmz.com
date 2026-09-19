@@ -83,7 +83,7 @@ export default function EngravingPicker({
       />
 
       <p className="mt-3 text-[11px] text-[#7FCFD4]">
-        I send a proof photo for your approval before anything gets engraved.
+        One person sets it and engraves it. Questions first? Text me.
       </p>
     </div>
   )

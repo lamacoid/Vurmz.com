@@ -325,7 +325,7 @@ export default function CardDesigner({
 
       <p className="mt-5 text-[length:var(--step-fine)] text-[var(--ink-soft)]">
         {saveState === 'saved' ? 'Saved.' : saveState === 'saving' ? 'Saving.' : saveState === 'offline' ? 'Saved on this device.' : 'Saves as you go.'}{' '}
-        When you order, the file for the laser is made from exactly this. You approve a proof photo before anything runs.
+        When you order, the file for the laser is made from exactly this. What you see here is what gets cut.
       </p>
       {saveState === 'saved' && !isBlank(design) && emailState !== 'kept' && (
         <form onSubmit={e => { e.preventDefault(); keepByEmail() }} className="mt-3 flex flex-col sm:flex-row gap-2">

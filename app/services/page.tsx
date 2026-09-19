@@ -6,7 +6,7 @@ import ServicesClient from '@/components/services/ServicesClient'
 
 export const metadata: Metadata = {
   title: 'Precision Laser Engraving and Marking for Business | VURMZ',
-  description: 'Equipment labels, knife crews, metal cards, branded packs, plates and panels for South Denver businesses. Posted prices, a proof before every run, standing accounts with weekly delivery and NET-30.',
+  description: 'Equipment labels, knife crews, metal cards, branded packs, plates and panels for South Denver businesses. Posted prices, one person start to finish, standing accounts with weekly delivery and NET-30.',
   alternates: { canonical: '/services' },
 }
 
