@@ -4,9 +4,8 @@ import Link from 'next/link'
 import { ChatBubbleLeftIcon } from '@heroicons/react/24/outline'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 import RotatingTagline from '@/components/RotatingTagline'
-import GiftTiles from '@/components/shop/GiftTiles'
-import ReserveDoor from '@/components/shop/ReserveDoor'
-import { SOURCING } from '@/lib/pricing'
+import ShopRoom from '@/components/shop/ShopRoom'
+import { SOURCING, SIGNATURE } from '@/lib/pricing'
 import HowItWorks from '@/components/HowItWorks'
 
 // GiftTiles reads the live catalog at request time, so this runs on the edge.
@@ -77,8 +76,8 @@ export default function ShopHome() {
           </p>
           <RotatingTagline
             inline
-            accentColor="#C67A6F"
-            className="text-[length:var(--step-section)] font-semibold text-[var(--ink)]"
+            accentColor="#7FCFD4"
+            className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] text-white/95"
           />
           <p className="text-sm text-[var(--ink-soft)] mt-3">
             Made to order, one at a time, and brought to your door across the south Denver metro ·{' '}
@@ -89,26 +88,52 @@ export default function ShopHome() {
           <p className="text-[13px] text-[var(--ink-soft)] mt-1.5">
             Most pieces in 24 to 72 hours. One person, start to finish.
           </p>
-          <div className="mt-6 border-t-2 border-[var(--ink)]/25" aria-hidden />
-          <div className="mt-[3px] mb-4 border-t border-[var(--ink)]/25" aria-hidden />
+          <div className="mt-6 border-t-2 border-white/20" aria-hidden />
+          <div className="mt-[3px] mb-4 border-t border-white/20" aria-hidden />
         </div>
       </section>
 
-      {/* The gifts, as tiles. Accessible to anyone: the lowest posted price
-          in each room, read live, and a photo where the room has one. */}
-      <GiftTiles />
+      {/* The house offer, first: your own piece. */}
+      <section className="pb-10 sm:pb-14">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Link href="/shop/bring-your-own" className="group grid grid-cols-1 md:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] rounded-[var(--r-band)] border border-[#7FCFD4]/35 bg-white/[0.04] hover:bg-white/[0.07] backdrop-blur-md overflow-hidden transition-colors duration-[var(--t-hover)]">
+            <div className="p-6 sm:p-8">
+              <p className="text-[length:var(--step-eyebrow)] font-mono tracking-[0.3em] uppercase text-[#7FCFD4] mb-3">Your stuff</p>
+              <p className="text-[length:var(--step-section)] leading-[1.05] text-white/95" style={{ fontFamily: 'var(--font-display), Georgia, serif' }}>
+                Your own piece, engraved. ${SIGNATURE.startingAt}.
+              </p>
+              <p className="mt-3 max-w-[52ch] text-[length:var(--step-row)] leading-relaxed text-[#DED6C3]/80">
+                The thing you already own, marked. One piece, one placement, your words or a design, back within the week. A little more for the large or the intricate.
+              </p>
+              <span className="mt-5 inline-flex items-center h-10 px-5 rounded-[var(--r-control)] bg-[var(--coral)] text-white text-[length:var(--step-body)] font-semibold group-hover:bg-[var(--coral-hover)] transition-colors duration-[var(--t-hover)]">Start yours</span>
+            </div>
+            <div className="relative min-h-[200px] md:min-h-0">
+              <Image src="/portfolio/macbook-engraving.jpg" alt="A MacBook lid engraved with a columbine" fill sizes="(max-width: 768px) 100vw, 40vw" className="object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#123F47] via-[#123F47]/30 to-transparent md:bg-gradient-to-r" aria-hidden />
+            </div>
+          </Link>
+        </div>
+      </section>
 
-      {/* The door to the reserve: one big pane of the old frosted glass.
-          Click, the frost clears, and the page moves into the teal room. */}
-      <ReserveDoor />
+      {/* Every door, one list each, cheapest to dearest. */}
+      <section className="pb-14">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <ShopRoom houseSlug="engrave-your-item" />
+          <p className="mt-10 text-[length:var(--step-row)] text-[#DED6C3]/70">
+            Anything marked <span className="text-[#7FCFD4]">found for you</span> is a piece I go and buy at its price, plus ${SOURCING.reserveFee} to find it, mark it, and bring it.
+            Not on the list? Tell me what you are looking for and I will source it.{' '}
+            <Link href="/shop/reserve" className="text-[#7FCFD4] hover:text-white transition-colors">The reserve, in full.</Link>
+          </p>
+        </div>
+      </section>
 
       {/* ═══════════ BRING YOUR OWN ═══════════
           The glass panel, same treatment as the trades page: a plain list of
           what people hand me, no prices, because the answer is one price. */}
       <section className="pb-10 sm:pb-14">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-[rgba(127,207,212,.18)] border border-[var(--hairline)] rounded-sm p-6 sm:p-7">
-            <p className="text-[11px] font-mono tracking-[0.24em] uppercase text-[var(--ink)] mb-4">
+          <div className="bg-white/[0.04] backdrop-blur-md border border-white/12 rounded-[var(--r-panel)] p-6 sm:p-7">
+            <p className="text-[11px] font-mono tracking-[0.24em] uppercase text-[#7FCFD4] mb-4">
               What people bring me
             </p>
             <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-2.5 list-none p-0 m-0">

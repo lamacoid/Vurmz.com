@@ -565,3 +565,21 @@ html[data-room="reserve"] header {
   --glass: rgba(127, 207, 212, 0.14);
   --glass-edge: rgba(127, 207, 212, 0.35);
 }
+
+/* The room, site-wide for the shop (2026-09-19): the reserve's deep teal
+   glass applied to every shop page. Tokens only, so the kit follows. */
+.room {
+  --page: #123F47;
+  --surface: rgba(255, 255, 255, 0.05);
+  --ink: #F3EEE2;
+  --ink-soft: rgba(222, 214, 195, 0.8);
+  --hairline: rgba(255, 255, 255, 0.14);
+  --eyebrow: #7FCFD4;
+  --glass: rgba(127, 207, 212, 0.12);
+  --glass-soft: rgba(127, 207, 212, 0.09);
+  --glass-edge: rgba(127, 207, 212, 0.3);
+  --feature: #7FCFD4;
+  --feature-deep: #0D2F35;
+  background: #123F47;
+  color: var(--ink-soft);
+}

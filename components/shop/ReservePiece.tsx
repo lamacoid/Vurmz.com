@@ -54,7 +54,16 @@ export default function ReservePiece({ cat, makers, also }: { cat: ReserveCatego
   const [err, setErr] = useState('')
   const [done, setDone] = useState<{ number: string; deposit: number } | null>(null)
 
-  useEffect(() => { window.dispatchEvent(new Event('vurmz:door-ready')) }, [])
+  useEffect(() => {
+    window.dispatchEvent(new Event('vurmz:door-ready'))
+    // A tile in the shop can arrive with the maker already chosen.
+    const want = new URLSearchParams(window.location.search).get('maker')
+    if (want) {
+      const i = makers.findIndex(m => m.slug === want)
+      if (i >= 0) { setPick(i); setPlacement(makers[i].placements[0] ?? cat.placements[0]) }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const fontOpt = fontOptions.find(f => f.value === font) ?? fontOptions[0]
   const plate = useMemo(() => plateFor(item), [item])
