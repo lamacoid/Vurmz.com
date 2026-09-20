@@ -8,11 +8,13 @@ import { DoorLink } from '@/components/BackRoomDoor'
 import { ReserveMark } from '@/components/shop/ReserveMarks'
 
 /**
- * The shop, as one room. Every door holds one list, cheapest to dearest:
- * what I stock beside what I go and find. A $55 survival knife sits three
- * tiles from a Sebenza. Stocked pieces go to their product page and the
- * cart; found pieces walk through the teal into the reserve with that
- * maker already picked. Prices are read live, never typed here.
+ * The shop, as one room. It opens on the shelf: what is stocked here and
+ * can be marked and out the door in a day or two. Then every door holds
+ * one list, cheapest to dearest: on the shelf, made to order, and what I
+ * go and find, side by side. A $55 survival knife sits three tiles from a
+ * Sebenza. Stocked and made pieces go to their product page and the cart;
+ * found pieces walk through the teal into the reserve with that maker
+ * already picked. Prices and stock flags are read live, never typed here.
  */
 interface Door {
   key: string
@@ -100,8 +102,30 @@ export default async function ShopRoom({ houseSlug }: { houseSlug: string }) {
   const rest = products.filter(p => !taken.has(p.id))
   if (rest.length) sections.push({ door: { key: 'more', name: 'And the rest', line: 'Everything else I make.', pick: () => true, reserve: [] }, tiles: rest.map(p => ({ kind: 'product' as const, p, heroUrl: p.heroMediaId ? media.get(p.heroMediaId)?.url ?? null : null, cents: p.priceCents })).sort((a, b) => a.cents - b.cents) })
 
+  const shelf = products.filter(p => !p.madeToOrder).sort((a, b) => a.priceCents - b.priceCents)
+
   return (
     <div className="space-y-14">
+      {shelf.length > 0 && (
+        <section id="shelf" className="scroll-mt-28">
+          <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-2 mb-5">
+            <div className="max-w-[60ch]">
+              <h2 className="text-[length:var(--step-panel)] sm:text-[length:var(--step-section)] leading-tight text-white/95" style={display}>On the shelf</h2>
+              <p className="mt-1.5 text-[length:var(--step-row)] leading-relaxed text-[#DED6C3]/72">Stocked here. Your words or a design on it, and at your door in a day or two. Plain is fine too.</p>
+            </div>
+            <p className="text-[length:var(--step-fine)] font-mono tracking-[0.06em] text-[#DED6C3]/55 tabular-nums">
+              {shelf.length} pieces · {usd(shelf[0].priceCents)} to {usd(shelf[shelf.length - 1].priceCents)}
+            </p>
+          </div>
+          <ul className="-mx-4 px-4 sm:mx-0 sm:px-0 flex gap-3 sm:gap-4 overflow-x-auto snap-x snap-mandatory pb-2 [scrollbar-width:thin]">
+            {shelf.map(p => (
+              <li key={p.id} className="snap-start shrink-0 w-[44vw] sm:w-48 lg:w-52">
+                <ShelfTile p={p} heroUrl={p.heroMediaId ? media.get(p.heroMediaId)?.url ?? null : null} />
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
       {sections.map(({ door, tiles }) => (
         <section key={door.key} id={door.key} className="scroll-mt-28">
           <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-2 mb-5">
@@ -122,6 +146,15 @@ export default async function ShopRoom({ houseSlug }: { houseSlug: string }) {
   )
 }
 
+const badge = 'absolute left-2.5 top-2.5 text-[9px] font-mono uppercase tracking-[0.15em] text-[#7FCFD4] border border-[#7FCFD4]/50 bg-[#0D2F35]/70 rounded-sm px-1.5 py-px'
+
+/** The foot of a tile: how many, and whether it is here or made for you. */
+function whenLine(p: Product): string {
+  const pack = p.packSize > 1 ? `pack of ${p.packSize} · ` : ''
+  if (!p.madeToOrder) return `${pack}${p.oneOff ? 'in hand' : 'a day or two'}`
+  return `${pack}made to order`
+}
+
 const card = 'group relative flex flex-col rounded-[var(--r-panel)] border border-white/12 bg-white/[0.04] hover:bg-white/[0.08] hover:border-[#7FCFD4]/50 backdrop-blur-md overflow-hidden transition-colors duration-[var(--t-hover)]'
 
 function ProductTile({ p, heroUrl }: { p: Product; heroUrl: string | null }) {
@@ -138,15 +171,17 @@ function ProductTile({ p, heroUrl }: { p: Product; heroUrl: string | null }) {
             <span className="text-[length:var(--step-body)] leading-tight text-[#F3EEE2] group-hover:text-white transition-colors" style={display}>{p.name}</span>
           </div>
         )}
-        {p.oneOff && (
-          <span className="absolute left-2.5 top-2.5 text-[9px] font-mono uppercase tracking-[0.15em] text-[#7FCFD4] border border-[#7FCFD4]/50 bg-[#0D2F35]/70 rounded-sm px-1.5 py-px">1 of 1</span>
-        )}
+        {p.oneOff ? (
+          <span className={badge}>1 of 1</span>
+        ) : !p.madeToOrder ? (
+          <span className={badge}>On the shelf</span>
+        ) : null}
       </div>
       <div className="flex-1 flex flex-col p-3 sm:p-3.5 border-t border-white/10">
         <p className={`text-[length:var(--step-row)] font-semibold leading-snug text-[#F3EEE2] group-hover:text-white ${heroUrl ? '' : 'sr-only'}`}>{p.name}</p>
         {p.shortDescription && <p className={`text-[11px] leading-snug text-[#DED6C3]/60 line-clamp-2 ${heroUrl ? 'mt-1' : ''}`}>{menuCase(p.shortDescription)}</p>}
         <p className="mt-auto pt-2 flex items-baseline justify-between gap-2 text-[length:var(--step-fine)]">
-          <span className="text-[#DED6C3]/50">{p.packSize > 1 ? `pack of ${p.packSize}` : 'in the shop'}</span>
+          <span className="text-[#DED6C3]/50">{whenLine(p)}</span>
           <span className="tabular-nums text-[#F3EEE2] text-[length:var(--step-row)]">{usd(p.priceCents)}</span>
         </p>
       </div>
@@ -160,7 +195,7 @@ function ReserveTile({ it, group }: { it: SourcedItem; group: ReserveGroup }) {
       <div className="relative aspect-[4/3] overflow-hidden bg-[#0D2F35]/50 flex items-center justify-center">
         <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: 'radial-gradient(ellipse at 50% 60%, rgba(127,207,212,0.16) 0%, transparent 60%)' }} aria-hidden />
         <ReserveMark kind={group} className="relative w-[58%] max-w-[200px] text-[#DED6C3]/75 group-hover:text-[#7FCFD4] transition-[color,transform] duration-500 ease-out group-hover:-translate-y-1" />
-        <span className="absolute left-2.5 top-2.5 text-[9px] font-mono uppercase tracking-[0.15em] text-[#7FCFD4] border border-[#7FCFD4]/50 bg-[#0D2F35]/70 rounded-sm px-1.5 py-px">Found for you</span>
+        <span className={badge}>Found for you</span>
       </div>
       <div className="flex-1 flex flex-col p-3 sm:p-3.5 border-t border-white/10">
         <p className="text-[length:var(--step-row)] font-semibold leading-snug text-[#F3EEE2] group-hover:text-white">{it.name}</p>
@@ -171,5 +206,30 @@ function ReserveTile({ it, group }: { it: SourcedItem; group: ReserveGroup }) {
         </p>
       </div>
     </DoorLink>
+  )
+}
+
+/** A small tile for the shelf row: the piece, the price, nothing else. */
+function ShelfTile({ p, heroUrl }: { p: Product; heroUrl: string | null }) {
+  return (
+    <Link href={`/shop/p/${p.slug}`} className={card}>
+      <div className="relative aspect-square overflow-hidden">
+        {heroUrl ? (
+          <>
+            <Image src={heroUrl} alt="" fill sizes="(max-width: 640px) 44vw, 208px" className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.04]" />
+            <div className="absolute inset-0 bg-[#123F47]/25 group-hover:bg-[#123F47]/10 transition-colors duration-500" aria-hidden />
+          </>
+        ) : (
+          <div className="absolute inset-0 grid place-items-center px-3 text-center bg-[#0D2F35]/50">
+            <span className="text-[length:var(--step-row)] leading-tight text-[#F3EEE2]" style={display}>{p.name}</span>
+          </div>
+        )}
+        {p.oneOff && <span className={badge}>1 of 1</span>}
+      </div>
+      <div className="p-2.5 sm:p-3 border-t border-white/10 flex items-baseline justify-between gap-2">
+        <span className={`text-[length:var(--step-fine)] leading-snug text-[#F3EEE2] group-hover:text-white line-clamp-1 ${heroUrl ? '' : 'sr-only'}`}>{p.name}</span>
+        <span className="tabular-nums text-[#F3EEE2] text-[length:var(--step-row)] ml-auto">{usd(p.priceCents)}</span>
+      </div>
+    </Link>
   )
 }

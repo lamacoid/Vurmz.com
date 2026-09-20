@@ -80,13 +80,13 @@ export default function ShopHome() {
             className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] text-white/95"
           />
           <p className="text-sm text-[var(--ink-soft)] mt-3">
-            Made to order, one at a time, and brought to your door across the south Denver metro ·{' '}
+            On the shelf, made to order, or found for you. Brought to your door across the south Denver metro ·{' '}
             <a href={getSmsLink("Hi, I'd like to get something engraved")} className="text-[var(--eyebrow)] font-semibold hover:underline">
               Text {siteInfo.phone}
             </a>
           </p>
           <p className="text-[13px] text-[var(--ink-soft)] mt-1.5">
-            Most pieces in 24 to 72 hours. One person, start to finish.
+            Stocked pieces in a day or two. One person, start to finish.
           </p>
           <div className="mt-6 border-t-2 border-white/20" aria-hidden />
           <div className="mt-[3px] mb-4 border-t border-white/20" aria-hidden />

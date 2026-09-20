@@ -69,8 +69,15 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
   if (product.packSize > 1) metaParts.push(`pack of ${product.packSize}`)
   const subtext = metaParts.join(', ')
 
-  const timingLine =
-    product.madeToOrder && product.leadTimeDays > 0
+  // Stocked pieces say so: the blank is here, the wait is the mark. Made
+  // to order pieces carry their real lead time.
+  const timingLine = !product.madeToOrder
+    ? product.oneOff
+      ? 'In hand. Marked and at your door in a day.'
+      : product.leadTimeDays > 2
+        ? `On the shelf. Ready in about ${product.leadTimeDays} days.`
+        : 'On the shelf. Marked and at your door in a day or two.'
+    : product.leadTimeDays > 0
       ? `Made to order, ready in ${product.leadTimeDays} ${product.leadTimeDays === 1 ? 'day' : 'days'}.`
       : 'Most pieces ready in 24 to 72 hours.'
 
