@@ -4,11 +4,11 @@ import Link from 'next/link'
 import { ChatBubbleLeftIcon } from '@heroicons/react/24/outline'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 import RotatingTagline from '@/components/RotatingTagline'
-import ShopRoom from '@/components/shop/ShopRoom'
+import ShopDoors from '@/components/shop/ShopDoors'
 import { SOURCING, SIGNATURE } from '@/lib/pricing'
 import HowItWorks from '@/components/HowItWorks'
 
-// GiftTiles reads the live catalog at request time, so this runs on the edge.
+// The doors count the live catalog at request time, so this runs on the edge.
 export const runtime = 'edge'
 
 export const metadata: Metadata = {
@@ -115,10 +115,10 @@ export default function ShopHome() {
         </div>
       </section>
 
-      {/* Every door, one list each, cheapest to dearest. */}
+      {/* The doors. Each opens on its own page, one list, cheapest to dearest. */}
       <section className="pb-14">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <ShopRoom houseSlug="engrave-your-item" />
+          <ShopDoors houseSlug="engrave-your-item" />
           <p className="mt-10 text-[length:var(--step-row)] text-[#DED6C3]/70">
             Anything marked <span className="text-[#7FCFD4]">found for you</span> is a piece I go and buy at its price, plus ${SOURCING.reserveFee} to find it, mark it, and bring it.
             Not on the list? Tell me what you are looking for and I will source it.{' '}

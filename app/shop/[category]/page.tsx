@@ -12,11 +12,21 @@ import AccordionFAQ from '@/components/AccordionFAQ'
 import CategoryMenu from '@/components/shop/CategoryMenu'
 import GlassImage from '@/components/shop/GlassImage'
 import { getCategoryBySlug as getD1CategoryBySlug } from '@/lib/db/repos/products'
+import { doorFor } from '@/lib/shop-doors'
+import DoorPage, { sectionFor } from '@/components/shop/DoorPage'
+
+const HOUSE_SLUG = 'engrave-your-item'
 
 export const runtime = 'edge'
 
 export async function generateMetadata({ params }: { params: Promise<{ category: string }> }): Promise<Metadata> {
   const { category: slug } = await params
+  // A door of the shop (2026-09-20) comes before the legacy category pages.
+  const door = doorFor(slug)
+  if (door) {
+    const title = `${door.name} | VURMZ Shop`
+    return { title: { absolute: title }, description: door.about, alternates: { canonical: `/shop/${slug}` }, openGraph: { title, description: door.about } }
+  }
   const cat = getCategoryBySlug(slug)
   if (!cat) return {}
   return {
@@ -39,6 +49,11 @@ export async function generateMetadata({ params }: { params: Promise<{ category:
 
 export default async function ShopCategoryPage({ params }: { params: Promise<{ category: string }> }) {
   const { category: slug } = await params
+  if (doorFor(slug)) {
+    const section = await sectionFor(slug, HOUSE_SLUG)
+    if (!section) notFound()
+    return <DoorPage section={section} />
+  }
   const cat = getCategoryBySlug(slug)
   if (!cat) notFound()
 

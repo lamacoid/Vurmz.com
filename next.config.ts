@@ -33,6 +33,14 @@ const nextConfig: NextConfig = {
   // were dead and had to move here.
   async redirects() {
     return [
+      // The old shop categories became the doors (2026-09-20).
+      { source: '/shop/gifts', destination: '/shop/shelf', permanent: true },
+      { source: '/shop/coasters', destination: '/shop/table', permanent: true },
+      { source: '/shop/tumblers', destination: '/shop/drink', permanent: true },
+      { source: '/shop/keychains', destination: '/shop/carry', permanent: true },
+      { source: '/shop/decor', destination: '/shop/walls', permanent: true },
+      { source: '/shop/pens', destination: '/shop/business', permanent: true },
+      { source: '/shop/metal-cards', destination: '/shop/business', permanent: true },
       // The reserve was one page per maker for a day (2026-09-16); it is by kind of thing now.
       { source: '/shop/reserve/ridge-wallet-aluminum', destination: '/shop/reserve/wallet', permanent: true },
       { source: '/shop/reserve/ridge-wallet-titanium', destination: '/shop/reserve/wallet', permanent: true },
@@ -76,7 +84,6 @@ const nextConfig: NextConfig = {
       { source: '/services/centennial', destination: '/services/laser-engraving/centennial', permanent: true },
       { source: '/gifts', destination: '/shop', permanent: true },
       // Retired consumer categories folded into Bring Your Own (2026-06-12).
-      { source: '/shop/knives', destination: '/shop/bring-your-own', permanent: true },
       { source: '/shop/devices', destination: '/shop/bring-your-own', permanent: true },
       { source: '/laser-engraving/:city*', destination: '/services/laser-engraving/:city*', permanent: true },
     ]

@@ -40,7 +40,7 @@ const OFFERS = [
     h: 'Cards for the office',
     p: 'Anodized aluminum, designed here on the site, so you see the layout before a single card is cut. Sets of ten and up.',
     cta: 'Design a set',
-    href: '/shop/metal-cards',
+    href: '/shop/business',
   },
 ]
 
