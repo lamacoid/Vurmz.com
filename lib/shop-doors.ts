@@ -16,6 +16,8 @@ export interface DoorInfo {
   line: string
   /** A longer line for the top of the door's own page. */
   about: string
+  /** Where the rest of this door lives, when part of it is sold elsewhere. */
+  elsewhere?: { label: string; href: string }
 }
 
 export interface Door extends DoorInfo {
@@ -85,8 +87,9 @@ export const DOORS: Door[] = [
     key: 'business',
     etch: 'business',
     name: 'For the business',
-    line: 'Pens, cards, labels, coasters by the pack. Priced by the run.',
-    about: 'Pens, cards, labels, and coasters by the pack, one logo across the run. Priced by the run, and the tier holds between reorders. A standing account if it is regular.',
+    line: 'Pens by the pack here. Cards, labels, and coasters by the run on the services page.',
+    about: 'Pens by the pack, one logo across the run. Priced by the run, and the tier holds between reorders. A standing account if it is regular.',
+    elsewhere: { label: 'Cards, labels, and coasters by the pack are priced on the services page.', href: '/services' },
     pick: p => p.packSize > 1 || p.categoryId === 'cat_labels_tags' || p.categoryId === 'cat_metal_cards' || p.categoryId === 'cat_pens',
     reserve: [],
   },

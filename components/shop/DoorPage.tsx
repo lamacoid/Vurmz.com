@@ -31,6 +31,11 @@ export default function DoorPage({ section: { door, tiles } }: { section: Sectio
         <div>
           <h1 className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] leading-[1.05] text-white/95" style={display}>{door.name}</h1>
           <p className="mt-3 max-w-[58ch] text-[length:var(--step-body)] leading-relaxed text-[#DED6C3]/80">{door.about}</p>
+          {door.elsewhere && (
+            <p className="mt-2 max-w-[58ch] text-[length:var(--step-row)] leading-relaxed">
+              <Link href={door.elsewhere.href} className="text-[#7FCFD4] hover:text-white transition-colors">{door.elsewhere.label}</Link>
+            </p>
+          )}
           <p className="mt-4 text-[length:var(--step-fine)] font-mono tracking-[0.06em] text-[#DED6C3]/55 tabular-nums">
             {tiles.length === 1 ? 'One piece' : `${tiles.length} pieces`} · {rangeOf(tiles)}
           </p>
