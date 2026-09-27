@@ -4,14 +4,14 @@ import { siteInfo, getSmsLink } from '@/lib/site-info'
 import VurmzLogo from '@/components/VurmzLogo'
 
 const PRODUCTS = [
-  { label: 'On the shelf', href: '/shop/shelf' },
+  { label: 'In stock', href: '/shop/shelf' },
   { label: 'Your own piece', href: '/shop/bring-your-own' },
-  { label: 'Knives and gear', href: '/shop/knives' },
-  { label: 'Kitchen and table', href: '/shop/table' },
+  { label: 'Knives', href: '/shop/knives' },
+  { label: 'Coasters and boards', href: '/shop/table' },
   { label: 'Drinkware', href: '/shop/drink' },
-  { label: 'Carried daily', href: '/shop/carry' },
-  { label: 'Walls and gifts', href: '/shop/walls' },
-  { label: 'For the business', href: '/shop/business' },
+  { label: 'Everyday carry', href: '/shop/carry' },
+  { label: 'Signs and decor', href: '/shop/walls' },
+  { label: 'Business', href: '/shop/business' },
   { label: 'The reserve', href: '/shop/reserve' },
 ]
 

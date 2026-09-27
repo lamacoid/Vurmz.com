@@ -75,8 +75,8 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
     ? product.oneOff
       ? 'In hand. Marked and at your door in a day.'
       : product.leadTimeDays > 2
-        ? `On the shelf. Ready in about ${product.leadTimeDays} days.`
-        : 'On the shelf. Marked and at your door in a day or two.'
+        ? `In stock. Ready in about ${product.leadTimeDays} days.`
+        : 'In stock. Marked and at your door in a day or two.'
     : product.leadTimeDays > 0
       ? `Made to order, ready in ${product.leadTimeDays} ${product.leadTimeDays === 1 ? 'day' : 'days'}.`
       : 'Most pieces ready in 24 to 72 hours.'

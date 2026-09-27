@@ -37,9 +37,9 @@ export const SHELF: DoorInfo = {
   key: SHELF_KEY,
   etch: 'shelf',
   art: ETCH.coaster,
-  name: 'On the shelf',
-  line: 'Stocked here. Your words or a design on it, at your door in a day or two.',
-  about: 'Everything on this page is on a shelf in Centennial right now. Pick it, tell me the words or the design, and it is marked and at your door in a day or two. Plain is fine too.',
+  name: 'In stock',
+  line: 'Here now. Your words or a design on it, at your door in a day or two.',
+  about: 'Everything on this page is in stock in Centennial right now. Pick it, tell me the words or the design, and it is marked and at your door in a day or two. Plain is fine too.',
 }
 
 export const DOORS: Door[] = [
@@ -47,8 +47,8 @@ export const DOORS: Door[] = [
     key: 'knives',
     etch: 'knives',
   art: ETCH.knife,
-    name: 'Knives and gear',
-    line: 'From a blade I stock to the one I go and find.',
+    name: 'Knives',
+    line: 'A blade I stock, or one I go and find for you.',
     about: 'A survival knife I keep in hand, then the chef’s knives, pocket knives, and multitools I go and find at their price. Initials at the heel, a date on the scale, a name along the spine.',
     pick: p => /knife|blade|multitool/i.test(p.name),
     reserve: ['chef-knife', 'pocket-knife', 'multitool'],
@@ -57,8 +57,8 @@ export const DOORS: Door[] = [
     key: 'table',
     etch: 'table',
   art: ETCH.board,
-    name: 'The kitchen and the table',
-    line: 'Boards, coasters, iron. The things a family uses every Sunday.',
+    name: 'Coasters and boards',
+    line: 'Pine, slate, stainless, bamboo, and cast iron.',
     about: 'Coasters in pine, slate, and stainless, a bamboo board, and the boards and skillets I go and find. A family name, a date, a recipe title, a design from the library.',
     pick: p => (p.categoryId === 'cat_coasters' && p.packSize < 10) || /board|skillet/i.test(p.name),
     reserve: ['skillet', 'board'],
@@ -67,8 +67,8 @@ export const DOORS: Door[] = [
     key: 'drink',
     etch: 'drink',
   art: ETCH.tumbler,
-    name: 'Tumblers, bottles, and coolers',
-    line: 'Powder coat lifts to bright steel. A name on the front, a date on the back.',
+    name: 'Drinkware',
+    line: 'Tumblers, bottles, cups, coolers. Marked through the coat to bright steel.',
     about: 'The tumblers, bottles, cups, and coolers I go and find, marked through the coat to bright steel. A name on the front, a date on the back, the crew on the lid. Have one already? Bring it.',
     pick: p => p.categoryId === 'cat_tumblers' || /tumbler|bottle|flask|cup\b/i.test(p.name),
     reserve: ['cooler'],
@@ -77,8 +77,8 @@ export const DOORS: Door[] = [
     key: 'carry',
     etch: 'carry',
   art: ETCH.keychain,
-    name: 'Carried daily',
-    line: 'Keychains, tags, wallets, pens. The small thing that is on you for years.',
+    name: 'Everyday carry',
+    line: 'Keychains, tags, wallets, pens.',
     about: 'The keychain, the pet tag, the AirTag tag, the wallet card, the pen. Small, stocked, and out the door fast. Then the wallets and pens I go and find.',
     pick: p => p.categoryId === 'cat_keychains' || (/pet tag|wallet|pen\b|airtag/i.test(p.name) && p.packSize === 1),
     reserve: ['wallet', 'pen'],
@@ -86,8 +86,8 @@ export const DOORS: Door[] = [
   {
     key: 'walls',
     etch: 'walls',
-    name: 'Walls, gifts, and the odd project',
-    line: 'Signs, panel art, a photo burned into wood, the piece nobody else will take.',
+    name: 'Signs and decor',
+    line: 'Signs, panel art, a photo burned into wood, the mailbox.',
     about: 'Signs cut from stocked wood, panel art from the library or your own drawing, a photograph burned into the grain, a mini mailbox, a decal. The odd project is welcome here.',
     pick: p => p.categoryId === 'cat_decor' || p.categoryId === 'cat_gifts',
     reserve: [],
@@ -96,7 +96,7 @@ export const DOORS: Door[] = [
     key: 'business',
     etch: 'business',
   art: ETCH.pen,
-    name: 'For the business',
+    name: 'Business',
     line: 'Pens by the pack here. Cards, labels, and coasters by the run on the services page.',
     about: 'Pens by the pack, one logo across the run. Priced by the run, and the tier holds between reorders. A standing account if it is regular.',
     elsewhere: { label: 'Cards, labels, and coasters by the pack are priced on the services page.', href: '/services' },
@@ -105,7 +105,7 @@ export const DOORS: Door[] = [
   },
 ]
 
-const REST: DoorInfo = { key: 'more', etch: 'more', name: 'And the rest', line: 'Everything else I make.', about: 'Everything else I make, in one place.' }
+const REST: DoorInfo = { key: 'more', etch: 'more', name: 'Everything else', line: 'The rest of what I make.', about: 'Everything else I make, in one place.' }
 
 export type Tile =
   | { kind: 'product'; p: Product; heroUrl: string | null; cents: number }

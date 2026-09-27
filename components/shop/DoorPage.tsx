@@ -25,7 +25,7 @@ export default function DoorPage({ section: { door, tiles } }: { section: Sectio
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 pb-14">
       <Link href="/shop" className="text-[length:var(--step-fine)] font-mono tracking-[0.18em] uppercase text-[#7FCFD4] hover:text-white transition-colors">
-        All the doors
+        All categories
       </Link>
 
       <header className="mt-6 grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_260px] gap-6 md:gap-10 items-center">
@@ -58,8 +58,8 @@ export default function DoorPage({ section: { door, tiles } }: { section: Sectio
         </p>
       )}
 
-      <nav aria-label="Other doors" className="mt-14 pt-6 border-t border-white/10">
-        <p className="text-[length:var(--step-fine)] font-mono tracking-[0.18em] uppercase text-[#DED6C3]/55 mb-3">The other doors</p>
+      <nav aria-label="Other categories" className="mt-14 pt-6 border-t border-white/10">
+        <p className="text-[length:var(--step-fine)] font-mono tracking-[0.18em] uppercase text-[#DED6C3]/55 mb-3">Other categories</p>
         <ul className="flex flex-wrap gap-x-6 gap-y-2 list-none p-0 m-0">
           {others.map(d => (
             <li key={d.key}>

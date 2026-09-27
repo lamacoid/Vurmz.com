@@ -21,7 +21,7 @@ const badge = 'absolute left-2.5 top-2.5 text-[9px] font-mono uppercase tracking
 /** The foot of a tile: how many, and whether it is here or made for you. */
 function whenLine(p: Product): string {
   const pack = p.packSize > 1 ? `pack of ${p.packSize} · ` : ''
-  if (!p.madeToOrder) return `${pack}${p.oneOff ? 'in hand' : 'a day or two'}`
+  if (!p.madeToOrder) return `${pack}${p.oneOff ? 'in hand' : 'in stock'}`
   return `${pack}made to order`
 }
 
@@ -56,7 +56,7 @@ export function ProductTile({ p, heroUrl }: { p: Product; heroUrl: string | null
         {p.oneOff ? (
           <span className={badge}>1 of 1</span>
         ) : !p.madeToOrder ? (
-          <span className={badge}>On the shelf</span>
+          <span className={badge}>In stock</span>
         ) : null}
       </div>
       <div className="flex-1 flex flex-col p-3 sm:p-3.5 border-t border-white/10">
