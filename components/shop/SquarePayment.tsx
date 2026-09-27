@@ -92,7 +92,7 @@ export default function SquarePayment({
 
   return (
     <div>
-      <div className="rounded-sm border border-[#16525C]/12 bg-white/60 p-3 min-h-[56px]">
+      <div className="rounded-sm border border-[var(--hairline)] bg-[var(--surface)] p-3 min-h-[56px]">
         <div ref={mountRef} />
         {loading && <p className="text-xs text-[var(--ink-soft)]">Loading secure card form…</p>}
       </div>

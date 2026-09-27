@@ -18,7 +18,7 @@ export default function ShopCategoryNotFound() {
             <Link
               key={cat.slug}
               href={`/shop/${cat.slug}`}
-              className="p-4 bg-white/60 border border-[#16525C]/8 rounded-sm hover:border-[#C67A6F]/20 transition-colors text-center"
+              className="p-4 bg-[var(--surface)] border border-[var(--hairline)] rounded-sm hover:border-[#C67A6F]/20 transition-colors text-center"
             >
               <span className="text-sm font-semibold text-[var(--ink)]">{cat.shortName}</span>
             </Link>

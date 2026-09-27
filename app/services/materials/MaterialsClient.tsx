@@ -206,7 +206,7 @@ export default function MaterialsClient() {
                 key={cap.name}
                 variants={fadeUp}
                 transition={{ duration: 0.35 }}
-                className="bg-white/70 border border-[#16525C]/12 rounded-sm p-4 hover:border-[#C67A6F]/50 transition-colors puffy-light"
+                className="bg-[var(--surface)] border border-[var(--hairline)] rounded-sm p-4 hover:border-[#C67A6F]/50 transition-colors puffy-light"
               >
                 <h3 className="text-sm font-semibold text-[var(--ink)] leading-tight">{cap.name}</h3>
                 <p className="text-xs text-[#5a655f] mt-1.5 leading-relaxed">{cap.description}</p>

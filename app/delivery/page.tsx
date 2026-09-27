@@ -23,7 +23,7 @@ const TIERS = [
     p: 'Centennial, Littleton, Lone Tree, Highlands Ranch, Englewood, Greenwood Village, Parker, south Aurora. Free hand-delivery over $50, $5 under.',
   },
   {
-    sw: 'bg-[#16525C]/20 border border-dashed border-[#16525C]',
+    sw: 'bg-[#7FCFD4]/20 border border-dashed border-[#7FCFD4]',
     h: 'Greater metro · free over $500',
     p: 'Castle Rock in the south up to Broomfield in the north, foothills to the eastern plains. On a big order I make the drive to your door anywhere in here, free.',
   },

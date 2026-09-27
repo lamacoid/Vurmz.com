@@ -13,7 +13,7 @@ interface TestimonialCarouselProps {
 
 const themeStyles = {
   shop: {
-    card: 'bg-white/60 border border-[#16525C]/8',
+    card: 'bg-[var(--surface)] border border-[var(--hairline)]',
     quote: 'text-[#C67A6F]',
     name: 'text-[var(--ink)]',
     role: 'text-[var(--ink-soft)]',

@@ -364,7 +364,7 @@ export default function CheckoutPage() {
                     className={`flex items-start gap-3 rounded-sm border p-3 cursor-pointer ${
                       chosenMethod === opt.method
                         ? 'border-[#C67A6F] bg-[#C67A6F]/5'
-                        : 'border-[#16525C]/12 bg-white/60 hover:border-[#16525C]/25'
+                        : 'border-[var(--hairline)] bg-[var(--surface)] hover:border-[var(--hairline)]'
                     }`}
                   >
                     <input
@@ -397,7 +397,7 @@ export default function CheckoutPage() {
                                 className={`text-xs px-3 py-1.5 rounded-sm border transition-colors ${
                                   handDeliveryWindow === w.key
                                     ? 'border-[#C67A6F] bg-[var(--coral)] text-white'
-                                    : 'border-[#16525C]/15 bg-white/70 text-[var(--ink)] hover:border-[#C67A6F]/50'
+                                    : 'border-[var(--hairline)] bg-[var(--surface)] text-[var(--ink)] hover:border-[#C67A6F]/50'
                                 }`}
                               >
                                 {w.label}
@@ -428,7 +428,7 @@ export default function CheckoutPage() {
                           onChange={e => setHandDeliveryNote(e.target.value.slice(0, 500))}
                           rows={2}
                           placeholder="e.g. Gate code 1234, leave with front desk if I'm not home."
-                          className="w-full bg-white/70 border border-[#16525C]/12 rounded-sm px-3 py-2 text-xs outline-none focus:border-[#C67A6F]"
+                          className="w-full bg-[var(--surface)] border border-[var(--hairline)] rounded-sm px-3 py-2 text-xs outline-none focus:border-[#C67A6F]"
                         />
                       </div>
                     </div>
@@ -449,7 +449,7 @@ export default function CheckoutPage() {
                       className={`flex items-start gap-3 rounded-sm border p-3 cursor-pointer ${
                         selectedAddressId === a.id
                           ? 'border-[#C67A6F] bg-[#C67A6F]/5'
-                          : 'border-[#16525C]/12 bg-white/60 hover:border-[#16525C]/25'
+                          : 'border-[var(--hairline)] bg-[var(--surface)] hover:border-[var(--hairline)]'
                       }`}
                     >
                       <input
@@ -474,7 +474,7 @@ export default function CheckoutPage() {
                     className={`flex items-center gap-3 rounded-sm border p-3 cursor-pointer ${
                       selectedAddressId === null
                         ? 'border-[#C67A6F] bg-[#C67A6F]/5'
-                        : 'border-[#16525C]/12 bg-white/60 hover:border-[#16525C]/25'
+                        : 'border-[var(--hairline)] bg-[var(--surface)] hover:border-[var(--hairline)]'
                     }`}
                   >
                     <input
@@ -513,7 +513,7 @@ export default function CheckoutPage() {
               onChange={e => setNotes(e.target.value)}
               rows={3}
               placeholder="Placement, sizes, finishes, links to inspiration, anything I should know before I make it…"
-              className="w-full bg-white/70 border border-[#16525C]/12 rounded-sm px-3 py-2 text-sm outline-none focus:border-[#C67A6F]"
+              className="w-full bg-[var(--surface)] border border-[var(--hairline)] rounded-sm px-3 py-2 text-sm outline-none focus:border-[#C67A6F]"
             />
             <p className="mt-2 text-xs text-[var(--ink)] font-medium">
               One person makes it, start to finish. Questions before it runs? Text me.
@@ -527,7 +527,7 @@ export default function CheckoutPage() {
               {attachments.length > 0 && (
                 <ul className="space-y-1 mb-2">
                   {attachments.map(a => (
-                    <li key={a.key} className="text-sm bg-white/70 border border-[#16525C]/12 rounded-sm px-3 py-1.5">
+                    <li key={a.key} className="text-sm bg-[var(--surface)] border border-[var(--hairline)] rounded-sm px-3 py-1.5">
                       <div className="flex items-center justify-between">
                         <span className="truncate">{a.filename}</span>
                         <button
@@ -546,7 +546,7 @@ export default function CheckoutPage() {
                 </ul>
               )}
               {attachments.length < 3 && (
-                <label className={`inline-flex items-center gap-2 px-4 py-2 border border-[#16525C]/20 rounded-sm text-sm cursor-pointer hover:border-[#C67A6F] transition-colors ${uploading ? 'opacity-50 pointer-events-none' : ''}`}>
+                <label className={`inline-flex items-center gap-2 px-4 py-2 border border-[var(--hairline)] rounded-sm text-sm cursor-pointer hover:border-[#C67A6F] transition-colors ${uploading ? 'opacity-50 pointer-events-none' : ''}`}>
                   <input
                     type="file"
                     accept="image/jpeg,image/png,image/gif,image/webp,image/svg+xml,application/pdf,.svg,.pdf"
@@ -576,7 +576,7 @@ export default function CheckoutPage() {
             ) : (
               // Card payment temporarily unavailable. We do NOT let the
               // public place an unpaid order; point them to Zach instead.
-              <div className="rounded-sm border border-[#16525C]/15 bg-white/70 px-4 py-3">
+              <div className="rounded-sm border border-[var(--hairline)] bg-[var(--surface)] px-4 py-3">
                 <p className="text-sm text-[var(--ink)] font-semibold">Card payment is down for a moment.</p>
                 <p className="text-sm text-[var(--ink-soft)] mt-1">
                   Text me at{' '}
@@ -590,7 +590,7 @@ export default function CheckoutPage() {
         </div>
 
         {/* Summary */}
-        <aside className="lg:sticky lg:top-6 lg:self-start bg-white/70 border border-[#16525C]/12 rounded-sm p-5">
+        <aside className="lg:sticky lg:top-6 lg:self-start bg-[var(--surface)] border border-[var(--hairline)] rounded-sm p-5">
           <p className="text-[11px] uppercase tracking-wider text-[var(--ink-soft)] mb-3 font-semibold">Summary</p>
           <div className="space-y-3">
             {items.map(item => (
@@ -598,7 +598,7 @@ export default function CheckoutPage() {
                 {designFrom(item.metadata) ? (
                   <div className="w-24 flex-shrink-0 self-start"><CardThumb design={designFrom(item.metadata)!} id={`co-${item.productId}`} /></div>
                 ) : (
-                <div className="w-14 h-14 bg-white border border-[#16525C]/10 rounded-sm overflow-hidden flex-shrink-0">
+                <div className="w-14 h-14 bg-white border border-[var(--hairline)] rounded-sm overflow-hidden flex-shrink-0">
                   {item.heroUrl ? <img src={item.heroUrl} alt="" className="w-full h-full object-cover" /> : null}
                 </div>
                 )}
@@ -627,7 +627,7 @@ export default function CheckoutPage() {
               </div>
             ))}
           </div>
-          <div className="border-t border-[#16525C]/10 mt-4 pt-3 space-y-1 text-sm">
+          <div className="border-t border-[var(--hairline)] mt-4 pt-3 space-y-1 text-sm">
             <div className="flex justify-between"><span className="text-[var(--ink-soft)]">Subtotal</span><span>{money(subtotalCents)}</span></div>
             <div className="flex justify-between"><span className="text-[var(--ink-soft)]">{chosen?.label ?? 'Delivery'}</span><span>{chosen ? money(chosen.priceCents) : 'TBD'}</span></div>
             <div className="flex justify-between text-base font-semibold pt-2"><span>Total</span><span>{money(totalCents)}</span></div>
@@ -672,7 +672,7 @@ function Input({
         value={value}
         placeholder={placeholder}
         onChange={e => onChange(e.target.value)}
-        className="w-full bg-white/70 border border-[#16525C]/12 rounded-sm px-3 py-2 text-sm outline-none focus:border-[#C67A6F]"
+        className="w-full bg-[var(--surface)] border border-[var(--hairline)] rounded-sm px-3 py-2 text-sm outline-none focus:border-[#C67A6F]"
       />
     </label>
   )

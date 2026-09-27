@@ -32,7 +32,7 @@ function Inner() {
         You&rsquo;ll get a confirmation email in a minute. I&rsquo;ll reach out personally with next steps.
       </p>
       <div className="flex gap-3 justify-center">
-        <Link href="/shop" className="px-5 h-11 inline-flex items-center bg-white/60 border border-[#16525C]/12 text-[var(--ink)] text-sm font-semibold rounded-sm">
+        <Link href="/shop" className="px-5 h-11 inline-flex items-center bg-[var(--surface)] border border-[var(--hairline)] text-[var(--ink)] text-sm font-semibold rounded-sm">
           Keep shopping
         </Link>
         <Link href="/account" className="px-5 h-11 inline-flex items-center bg-[var(--coral)] hover:bg-[var(--coral-hover)] text-white text-sm font-semibold rounded-[var(--r-control)]">

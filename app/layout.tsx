@@ -178,7 +178,16 @@ export default function RootLayout({
           })();
         `}} />
       </head>
-      <body className={`${inter.className} ${fraunces.variable} relative`}>
+      <body className={`${inter.className} ${fraunces.variable} room relative`}>
+        {/* The room's light: a soft signal-teal bloom, fixed behind everything */}
+        <div
+          className="pointer-events-none fixed inset-0 z-0"
+          aria-hidden
+          style={{
+            background:
+              'radial-gradient(ellipse 70% 50% at 20% 10%, rgba(127,207,212,0.10) 0%, transparent 55%), radial-gradient(ellipse 60% 45% at 85% 90%, rgba(13,47,53,0.8) 0%, transparent 60%)',
+          }}
+        />
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-[var(--coral)] focus:text-white focus:rounded-[var(--r-control)] focus:shadow-lg"
@@ -187,7 +196,7 @@ export default function RootLayout({
         </a>
         <LocalTicker />
         <CartProvider>
-          <main id="main-content">{children}</main>
+          <main id="main-content" className="relative z-[1]">{children}</main>
         </CartProvider>
         <LaserCursor />
         <SunTracker />
