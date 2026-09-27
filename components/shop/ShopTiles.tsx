@@ -6,6 +6,8 @@ import { deliveredPrice, type ReserveGroup, type SourcedItem } from '@/lib/sourc
 import { DoorLink } from '@/components/BackRoomDoor'
 import { ReserveMark } from '@/components/shop/ReserveMarks'
 import { usd, type Tile } from '@/lib/shop-doors'
+import { productArt, reserveArt } from '@/lib/shop-art'
+import EtchArt from '@/components/shop/EtchArt'
 
 /**
  * The tiles behind a door. A stocked or made piece goes to its product
@@ -32,10 +34,16 @@ export function TileGrid({ tiles }: { tiles: Tile[] }) {
 }
 
 export function ProductTile({ p, heroUrl }: { p: Product; heroUrl: string | null }) {
+  const art = heroUrl ? null : productArt(p.slug)
   return (
     <Link href={`/shop/p/${p.slug}`} className={card}>
       <div className="relative aspect-[4/3] overflow-hidden">
-        {heroUrl ? (
+        {art ? (
+          <div className="absolute inset-0 flex items-center justify-center bg-[#0D2F35]/50">
+            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: 'radial-gradient(ellipse at 50% 60%, rgba(127,207,212,0.16) 0%, transparent 60%)' }} aria-hidden />
+            <EtchArt src={art} className="w-[66%] aspect-[4/3] transition-transform duration-500 ease-out group-hover:-translate-y-1" sizes="(max-width: 768px) 40vw, 200px" />
+          </div>
+        ) : heroUrl ? (
           <>
             <Image src={heroUrl} alt={p.name} fill sizes="(max-width: 768px) 50vw, 25vw" className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.04]" />
             <div className="absolute inset-0 bg-[#123F47]/30 group-hover:bg-[#123F47]/15 transition-colors duration-500" aria-hidden />
@@ -52,8 +60,8 @@ export function ProductTile({ p, heroUrl }: { p: Product; heroUrl: string | null
         ) : null}
       </div>
       <div className="flex-1 flex flex-col p-3 sm:p-3.5 border-t border-white/10">
-        <p className={`text-[length:var(--step-row)] font-semibold leading-snug text-[#F3EEE2] group-hover:text-white ${heroUrl ? '' : 'sr-only'}`}>{p.name}</p>
-        {p.shortDescription && <p className={`text-[11px] leading-snug text-[#DED6C3]/60 line-clamp-2 ${heroUrl ? 'mt-1' : ''}`}>{menuCase(p.shortDescription)}</p>}
+        <p className={`text-[length:var(--step-row)] font-semibold leading-snug text-[#F3EEE2] group-hover:text-white ${heroUrl || art ? '' : 'sr-only'}`}>{p.name}</p>
+        {p.shortDescription && <p className={`text-[11px] leading-snug text-[#DED6C3]/60 line-clamp-2 ${heroUrl || art ? 'mt-1' : ''}`}>{menuCase(p.shortDescription)}</p>}
         <p className="mt-auto pt-2 flex items-baseline justify-between gap-2 text-[length:var(--step-fine)]">
           <span className="text-[#DED6C3]/50">{whenLine(p)}</span>
           <span className="tabular-nums text-[#F3EEE2] text-[length:var(--step-row)]">{usd(p.priceCents)}</span>
@@ -68,7 +76,11 @@ export function ReserveTile({ it, group }: { it: SourcedItem; group: ReserveGrou
     <DoorLink href={`/shop/reserve/${group}?maker=${it.slug}`} className={card}>
       <div className="relative aspect-[4/3] overflow-hidden bg-[#0D2F35]/50 flex items-center justify-center">
         <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: 'radial-gradient(ellipse at 50% 60%, rgba(127,207,212,0.16) 0%, transparent 60%)' }} aria-hidden />
-        <ReserveMark kind={group} className="relative w-[58%] max-w-[200px] text-[#DED6C3]/75 group-hover:text-[#7FCFD4] transition-[color,transform] duration-500 ease-out group-hover:-translate-y-1" />
+        {reserveArt(group) ? (
+          <EtchArt src={reserveArt(group)!} className="w-[66%] max-w-[220px] aspect-[4/3] transition-transform duration-500 ease-out group-hover:-translate-y-1" sizes="(max-width: 768px) 40vw, 200px" />
+        ) : (
+          <ReserveMark kind={group} className="relative w-[58%] max-w-[200px] text-[#DED6C3]/75 group-hover:text-[#7FCFD4] transition-[color,transform] duration-500 ease-out group-hover:-translate-y-1" />
+        )}
         <span className={badge}>Found for you</span>
       </div>
       <div className="flex-1 flex flex-col p-3 sm:p-3.5 border-t border-white/10">

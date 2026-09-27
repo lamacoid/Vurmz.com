@@ -3,6 +3,7 @@ import { listProducts, type Product } from '@/lib/db/repos/products'
 import { getMediaByIds } from '@/lib/db/repos/media'
 import { buildShop, rangeOf, type Section } from '@/lib/shop-doors'
 import { DoorEtching } from '@/components/shop/DoorEtchings'
+import EtchArt from '@/components/shop/EtchArt'
 
 /**
  * The shop page: the doors, and only the doors. Each is an etching of the
@@ -38,7 +39,11 @@ function DoorCard({ section: { door, tiles }, wide = false, index = 0 }: { secti
     >
       <div className={`relative flex items-center justify-center overflow-hidden ${wide ? 'aspect-[16/9] md:aspect-auto md:min-h-[220px]' : 'aspect-[4/3]'}`}>
         <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: 'radial-gradient(ellipse at 50% 60%, rgba(127,207,212,0.16) 0%, transparent 60%)' }} aria-hidden />
-        <DoorEtching kind={door.etch} className="relative w-[64%] max-w-[260px] text-[#DED6C3]/85 group-hover:text-[#7FCFD4] transition-[color,transform] duration-500 ease-out group-hover:-translate-y-1" />
+        {door.art ? (
+          <EtchArt src={door.art} className="w-[68%] max-w-[300px] aspect-[4/3] transition-transform duration-500 ease-out group-hover:-translate-y-1" />
+        ) : (
+          <DoorEtching kind={door.etch} className="relative w-[64%] max-w-[260px] text-[#DED6C3]/85 group-hover:text-[#7FCFD4] transition-[color,transform] duration-500 ease-out group-hover:-translate-y-1" />
+        )}
       </div>
       <div className={`border-t border-white/10 ${wide ? 'md:border-t-0 md:border-l p-5 sm:p-7 flex flex-col justify-center' : 'p-4 sm:p-5'}`}>
         <p className={`${wide ? 'text-[length:var(--step-section)]' : 'text-[length:var(--step-panel)]'} leading-tight text-white/95`} style={display}>{door.name}</p>

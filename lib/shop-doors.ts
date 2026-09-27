@@ -1,6 +1,7 @@
 import type { Product } from '@/lib/db/repos/products'
 import { makersFor, deliveredPrice, type ReserveGroup, type SourcedItem } from '@/lib/sourcing'
 import type { DoorKind } from '@/components/shop/DoorEtchings'
+import { ETCH } from '@/lib/shop-art'
 
 /**
  * The doors of the shop. The shop page shows the doors; each door has its
@@ -11,7 +12,10 @@ import type { DoorKind } from '@/components/shop/DoorEtchings'
  */
 export interface DoorInfo {
   key: string
+  /** The line drawing, used when there is no etching from the sheet yet. */
   etch: DoorKind
+  /** The etching from the sheet, when the door has one. */
+  art?: string
   name: string
   line: string
   /** A longer line for the top of the door's own page. */
@@ -32,6 +36,7 @@ export const SHELF_KEY = 'shelf'
 export const SHELF: DoorInfo = {
   key: SHELF_KEY,
   etch: 'shelf',
+  art: ETCH.coaster,
   name: 'On the shelf',
   line: 'Stocked here. Your words or a design on it, at your door in a day or two.',
   about: 'Everything on this page is on a shelf in Centennial right now. Pick it, tell me the words or the design, and it is marked and at your door in a day or two. Plain is fine too.',
@@ -41,6 +46,7 @@ export const DOORS: Door[] = [
   {
     key: 'knives',
     etch: 'knives',
+  art: ETCH.knife,
     name: 'Knives and gear',
     line: 'From a blade I stock to the one I go and find.',
     about: 'A survival knife I keep in hand, then the chef’s knives, pocket knives, and multitools I go and find at their price. Initials at the heel, a date on the scale, a name along the spine.',
@@ -50,6 +56,7 @@ export const DOORS: Door[] = [
   {
     key: 'table',
     etch: 'table',
+  art: ETCH.board,
     name: 'The kitchen and the table',
     line: 'Boards, coasters, iron. The things a family uses every Sunday.',
     about: 'Coasters in pine, slate, and stainless, a bamboo board, and the boards and skillets I go and find. A family name, a date, a recipe title, a design from the library.',
@@ -59,6 +66,7 @@ export const DOORS: Door[] = [
   {
     key: 'drink',
     etch: 'drink',
+  art: ETCH.tumbler,
     name: 'Tumblers, bottles, and coolers',
     line: 'Powder coat lifts to bright steel. A name on the front, a date on the back.',
     about: 'The tumblers, bottles, cups, and coolers I go and find, marked through the coat to bright steel. A name on the front, a date on the back, the crew on the lid. Have one already? Bring it.',
@@ -68,6 +76,7 @@ export const DOORS: Door[] = [
   {
     key: 'carry',
     etch: 'carry',
+  art: ETCH.keychain,
     name: 'Carried daily',
     line: 'Keychains, tags, wallets, pens. The small thing that is on you for years.',
     about: 'The keychain, the pet tag, the AirTag tag, the wallet card, the pen. Small, stocked, and out the door fast. Then the wallets and pens I go and find.',
@@ -86,6 +95,7 @@ export const DOORS: Door[] = [
   {
     key: 'business',
     etch: 'business',
+  art: ETCH.pen,
     name: 'For the business',
     line: 'Pens by the pack here. Cards, labels, and coasters by the run on the services page.',
     about: 'Pens by the pack, one logo across the run. Priced by the run, and the tier holds between reorders. A standing account if it is regular.',

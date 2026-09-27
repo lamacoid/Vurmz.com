@@ -4,6 +4,7 @@ import { DOORS, SHELF, rangeOf, type Section } from '@/lib/shop-doors'
 import { loadShop } from '@/components/shop/ShopDoors'
 import { TileGrid } from '@/components/shop/ShopTiles'
 import { DoorEtching } from '@/components/shop/DoorEtchings'
+import EtchArt from '@/components/shop/EtchArt'
 
 /**
  * One door, open. The etching, the name, the longer line, the count and
@@ -41,7 +42,7 @@ export default function DoorPage({ section: { door, tiles } }: { section: Sectio
           </p>
         </div>
         <div className="hidden md:flex items-center justify-center rounded-[var(--r-panel)] border border-white/12 bg-white/[0.04] backdrop-blur-md aspect-[4/3]">
-          <DoorEtching kind={door.etch} className="w-[70%] text-[#DED6C3]/85" />
+          {door.art ? <EtchArt src={door.art} className="w-[72%] aspect-[4/3]" /> : <DoorEtching kind={door.etch} className="w-[70%] text-[#DED6C3]/85" />}
         </div>
       </header>
 
