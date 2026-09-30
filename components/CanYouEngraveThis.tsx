@@ -1,0 +1,185 @@
+'use client'
+/* eslint-disable @next/next/no-img-element */
+/**
+ * "Can you engrave this?": a photo and two lines, and a number comes back
+ * by text the same day. Photos go through the guest upload (the private
+ * checkout/ prefix on R2), the request lands in the inbox with the photo
+ * keys attached, and Zach gets the email with admin links to each photo.
+ * Phone or email, either one is enough.
+ */
+import { useRef, useState } from 'react'
+import { siteInfo, getSmsLink } from '@/lib/site-info'
+import { SIGNATURE } from '@/lib/pricing'
+
+interface Shot { key: string; filename: string; preview: string }
+
+const MAX_FILES = 3
+const MAX_SIZE = 10 * 1024 * 1024
+const ACCEPT = 'image/jpeg,image/png,image/webp,image/gif'
+
+export default function CanYouEngraveThis({ compact = false }: { compact?: boolean }) {
+  const [shots, setShots] = useState<Shot[]>([])
+  const [uploading, setUploading] = useState(false)
+  const [item, setItem] = useState('')
+  const [words, setWords] = useState('')
+  const [name, setName] = useState('')
+  const [phone, setPhone] = useState('')
+  const [email, setEmail] = useState('')
+  const [website, setWebsite] = useState('')
+  const [status, setStatus] = useState<'idle' | 'sending' | 'done' | 'error'>('idle')
+  const [error, setError] = useState('')
+  const fileRef = useRef<HTMLInputElement>(null)
+
+  async function addFiles(list: FileList | null) {
+    if (!list) return
+    setError('')
+    const room = MAX_FILES - shots.length
+    const files = Array.from(list).slice(0, Math.max(0, room))
+    if (files.length === 0) return
+    setUploading(true)
+    try {
+      for (const f of files) {
+        if (f.size > MAX_SIZE) { setError('Each photo has to be under 10 MB.'); continue }
+        const fd = new FormData()
+        fd.append('file', f)
+        const res = await fetch('/api/checkout/upload', { method: 'POST', body: fd })
+        const data = await res.json() as { ok: boolean; data?: { key: string; filename: string }; error?: { message?: string } }
+        if (!res.ok || !data.ok || !data.data) { setError(data.error?.message || 'That photo did not upload. Try again.'); continue }
+        const preview = URL.createObjectURL(f)
+        setShots(prev => [...prev, { key: data.data!.key, filename: data.data!.filename, preview }])
+      }
+    } finally {
+      setUploading(false)
+      if (fileRef.current) fileRef.current.value = ''
+    }
+  }
+
+  async function submit(e: React.FormEvent) {
+    e.preventDefault()
+    setError('')
+    if (!phone.trim() && !email.trim()) { setError('A phone number or an email, so I can send the number back.'); return }
+    if (shots.length === 0 && !item.trim()) { setError('A photo, or at least tell me what the thing is.'); return }
+    setStatus('sending')
+    const message = [
+      'Can you engrave this?',
+      item.trim() ? `What it is: ${item.trim()}` : '',
+      words.trim() ? `What to put on it: ${words.trim()}` : '',
+      shots.length ? `${shots.length} photo${shots.length === 1 ? '' : 's'} attached.` : 'No photo.',
+    ].filter(Boolean).join('\n')
+    try {
+      const res = await fetch('/api/contact/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: name.trim(),
+          email: email.trim(),
+          phone: phone.trim(),
+          message,
+          productInterest: `Custom Engraving ($${SIGNATURE.startingAt}+)`,
+          website,
+          attachments: shots.map(s => ({ key: s.key, filename: s.filename })),
+        }),
+      })
+      const data = await res.json() as { error?: string }
+      if (!res.ok) throw new Error(data.error || 'Something went wrong')
+      setStatus('done')
+    } catch (err) {
+      setStatus('error')
+      setError(err instanceof Error ? err.message : 'It did not send. Text me the photo instead.')
+    }
+  }
+
+  const field = 'w-full bg-[var(--surface)] border border-[var(--hairline)] rounded-[var(--r-control)] px-3.5 py-3 text-[15px] text-[var(--ink)] placeholder:text-[var(--ink-soft)]/70 outline-none focus:border-[#7FCFD4] transition-colors'
+  const label = 'block text-[11px] font-mono uppercase tracking-[0.18em] text-[var(--ink-soft)] mb-1.5'
+
+  if (status === 'done') {
+    return (
+      <div className="rounded-[var(--r-panel)] border border-[#7FCFD4]/40 bg-white/[0.04] backdrop-blur-md p-6 sm:p-8">
+        <p className="text-[length:var(--step-panel)] text-[var(--ink)]" style={{ fontFamily: 'var(--font-display), Georgia, serif' }}>Got it.</p>
+        <p className="mt-2 text-[var(--ink-soft)] leading-relaxed">
+          I will look at it and send a number back today, usually within the hour. If it is faster, text me at{' '}
+          <a href={getSmsLink()} className="text-[#7FCFD4] hover:text-white">{siteInfo.phone}</a>.
+        </p>
+      </div>
+    )
+  }
+
+  return (
+    <form onSubmit={submit} className={`rounded-[var(--r-panel)] border border-white/12 bg-white/[0.04] backdrop-blur-md ${compact ? 'p-5 sm:p-6' : 'p-6 sm:p-8'}`}>
+      {/* The photo, first. */}
+      <div>
+        <span className={label}>The photo</span>
+        <div className="flex flex-wrap gap-3">
+          {shots.map(s => (
+            <div key={s.key} className="relative w-24 h-24 rounded-[var(--r-tile)] overflow-hidden border border-white/12">
+              <img src={s.preview} alt="" className="w-full h-full object-cover" />
+              <button
+                type="button"
+                onClick={() => setShots(prev => prev.filter(x => x.key !== s.key))}
+                className="absolute top-1 right-1 w-6 h-6 rounded-full bg-[#0D2F35]/80 text-white text-xs leading-none"
+                aria-label="Remove photo"
+              >
+                ×
+              </button>
+            </div>
+          ))}
+          {shots.length < MAX_FILES && (
+            <label className={`w-24 h-24 rounded-[var(--r-tile)] border border-dashed border-[#7FCFD4]/50 hover:border-[#7FCFD4] flex flex-col items-center justify-center text-center text-[12px] text-[#7FCFD4] cursor-pointer transition-colors ${uploading ? 'opacity-50 pointer-events-none' : ''}`}>
+              <span className="text-2xl leading-none mb-1">+</span>
+              {uploading ? 'Uploading' : shots.length ? 'Another' : 'Add a photo'}
+              <input ref={fileRef} type="file" accept={ACCEPT} multiple capture="environment" className="sr-only" onChange={e => addFiles(e.target.files)} />
+            </label>
+          )}
+        </div>
+        <p className="mt-1.5 text-[12px] text-[var(--ink-soft)]/80">Up to three. Phone photos are fine. Show me the spot you want marked.</p>
+      </div>
+
+      <div className={`mt-4 grid grid-cols-1 ${compact ? '' : 'sm:grid-cols-2'} gap-4`}>
+        <div>
+          <label htmlFor="cyet-item" className={label}>What is it</label>
+          <input id="cyet-item" className={field} maxLength={120} value={item} onChange={e => setItem(e.target.value)} placeholder="A chef's knife. A Yeti. My dad's hammer." />
+        </div>
+        <div>
+          <label htmlFor="cyet-words" className={label}>What goes on it</label>
+          <input id="cyet-words" className={field} maxLength={200} value={words} onChange={e => setWords(e.target.value)} placeholder="A name and a date. Our logo. Not sure yet." />
+        </div>
+      </div>
+
+      <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div>
+          <label htmlFor="cyet-name" className={label}>Your name</label>
+          <input id="cyet-name" className={field} required maxLength={100} value={name} onChange={e => setName(e.target.value)} placeholder="First name is fine" />
+        </div>
+        <div>
+          <label htmlFor="cyet-phone" className={label}>Phone</label>
+          <input id="cyet-phone" className={field} type="tel" maxLength={30} value={phone} onChange={e => setPhone(e.target.value)} placeholder="I text the number back" />
+        </div>
+        <div>
+          <label htmlFor="cyet-email" className={label}>Email, if you prefer</label>
+          <input id="cyet-email" className={field} type="email" maxLength={254} value={email} onChange={e => setEmail(e.target.value)} placeholder="you@example.com" />
+        </div>
+      </div>
+
+      {/* Honeypot: hidden from people, filled by bots. */}
+      <div aria-hidden="true" style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, overflow: 'hidden' }}>
+        <label htmlFor="cyet-website">Website (leave blank)</label>
+        <input id="cyet-website" type="text" tabIndex={-1} autoComplete="off" value={website} onChange={e => setWebsite(e.target.value)} />
+      </div>
+
+      {error && <p className="mt-3 text-sm text-[#E8A598]">{error}</p>}
+
+      <div className="mt-5 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-5">
+        <button
+          type="submit"
+          disabled={status === 'sending' || uploading}
+          className="inline-flex items-center justify-center h-12 px-7 rounded-[var(--r-control)] bg-[var(--coral)] hover:bg-[var(--coral-hover)] text-white text-[15px] font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {status === 'sending' ? 'Sending' : 'Send it, get a number'}
+        </button>
+        <a href={getSmsLink('Hi Zach, can you engrave this? ')} className="text-[14px] text-[var(--ink-soft)] hover:text-[var(--ink)] transition-colors">
+          Or text the photo to <span className="text-[#7FCFD4]">{siteInfo.phone}</span>
+        </a>
+      </div>
+    </form>
+  )
+}

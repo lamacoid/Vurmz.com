@@ -10,12 +10,12 @@ import CartButton from '@/components/shop/CartButton'
 import VurmzLogo from '@/components/VurmzLogo'
 
 const NAV_LINKS = [
-  // Pricing lives ON the services page now, no separate nav item.
+  // Ways to use VURMZ, not everything it sells (2026-09-30).
   { label: 'Shop', href: '/shop' },
-  { label: 'Services', href: '/services' },
-  { label: 'Portfolio', href: '/services/portfolio' },
+  { label: 'Engrave your stuff', href: '/engrave' },
+  { label: 'Business', href: '/services' },
+  { label: 'Work', href: '/services/portfolio' },
   { label: 'About', href: '/about' },
-  { label: 'Contact', href: '/services/contact' },
 ]
 
 export default function SiteHeader({ variant = 'services' }: { variant?: 'shop' | 'services' }) {
@@ -99,11 +99,20 @@ export default function SiteHeader({ variant = 'services' }: { variant?: 'shop' 
                 className="inline-flex flex-shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full bg-[#0B93F6] hover:bg-[#0A84FF] pl-2.5 pr-3.5 py-1.5 text-[13px] font-semibold text-white shadow-sm shadow-black/20 transition-colors"
               >
                 <ChatBubbleOvalLeftEllipsisIcon className="w-5 h-5" />
-                {siteInfo.phone}
+                Text me
               </a>
             </div>
 
-            {/* Mobile menu button */}
+            {/* Mobile: the text button stays in reach, then the menu */}
+            <div className="lg:hidden flex items-center gap-1">
+              <a
+                href={getSmsLink()}
+                aria-label={`Text ${siteInfo.phone}`}
+                className="inline-flex items-center gap-1 rounded-full bg-[#0B93F6] pl-2 pr-3 py-1.5 text-[12px] font-semibold text-white shadow-sm shadow-black/20"
+              >
+                <ChatBubbleOvalLeftEllipsisIcon className="w-4 h-4" />
+                Text me
+              </a>
             <button
               type="button"
               className="lg:hidden p-2 -mr-2 rounded-full transition-colors"
@@ -117,6 +126,7 @@ export default function SiteHeader({ variant = 'services' }: { variant?: 'shop' 
                 <Bars3Icon className={`h-5 w-5 ${menuIcon}`} />
               )}
             </button>
+            </div>
           </div>
         </nav>
       </header>

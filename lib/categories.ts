@@ -78,7 +78,7 @@ export const SHOP_CATEGORIES: ShopCategory[] = [
       { question: 'What can you engrave?', answer: 'Knives, laptops and tablets, tumblers and flasks, tools, lighters, watch backs, instruments, the thing your grandfather left you. Metal, wood, glass, leather, slate, acrylic, plastic. Send a photo and I will say how it will mark.' },
       { question: 'What does the price cover?', answer: 'One piece, one placement, your words or one design from the library, within a palm-sized mark. That is most jobs. Larger marks, both sides, deep marking, full wraps, or a logo I have to redraw run a little more, and I confirm any extra before anything runs.' },
       { question: 'How do I get it to you?', answer: 'Drop it off anywhere in the south Denver metro, or ship it. Add your text or design here and say what is coming in the instructions.' },
-      { question: 'Will engraving harm it?', answer: 'No. The mark is in the surface. It does not weaken a blade or reach a laptop\'s internals. On a knife I test on the spine first, and you approve a photo before the real thing is touched.' },
+      { question: 'Will engraving harm it?', answer: 'No. The mark is in the surface. It does not weaken a blade or reach a laptop\'s internals. On a knife I test settings on the spine first.' },
       { question: 'What about a warranty?', answer: 'Apple does not void a warranty for cosmetic engraving; other makers vary. The mark never touches the internals.' },
     ],
     relatedCategories: ['gifts', 'tumblers', 'decor'],

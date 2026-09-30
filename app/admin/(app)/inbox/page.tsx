@@ -18,6 +18,8 @@ interface Message {
   receivedAt: string
   notes?: string
   replies?: Reply[]
+  /** Photos from the "Can you engrave this?" form (private R2 keys). */
+  attachments?: Array<{ key: string; filename: string }>
 }
 
 function timeAgo(date: string) {
@@ -164,6 +166,22 @@ export default function InboxPage() {
             <p className="text-[11px] uppercase tracking-wider text-[var(--a-ink-faint)] mb-1.5">{firstName} wrote</p>
             <p className="text-[15px] text-[var(--a-ink)] whitespace-pre-wrap leading-relaxed">{selected.message}</p>
           </div>
+
+          {/* Their photos, served through the admin-only R2 route */}
+          {(selected.attachments || []).length > 0 && (
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+              {selected.attachments!.map(a => (
+                <a key={a.key} href={`/api/admin/r2/${a.key}`} target="_blank" rel="noreferrer" className="block rounded-lg overflow-hidden border border-[var(--a-line)] bg-black/15">
+                  {/\.(png|jpe?g|gif|webp)$/i.test(a.key) ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={`/api/admin/r2/${a.key}`} alt={a.filename} className="w-full aspect-square object-cover" />
+                  ) : (
+                    <span className="block p-3 text-xs text-[var(--a-ink-soft)]">{a.filename}</span>
+                  )}
+                </a>
+              ))}
+            </div>
+          )}
 
           {/* Your past replies */}
           {(selected.replies || []).map((r, i) => (

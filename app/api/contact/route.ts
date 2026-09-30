@@ -95,7 +95,9 @@ export async function POST(request: NextRequest) {
       phone?: string
       message?: string
       productInterest?: string
-      website?: string  // honeypot — must be empty
+      website?: string  // honeypot, must be empty
+      /** Photos from the "Can you engrave this?" form: guest upload keys. */
+      attachments?: Array<{ key?: string; filename?: string }>
     }
 
     // Honeypot check — bots fill every field; humans don't see this one.
@@ -106,19 +108,29 @@ export async function POST(request: NextRequest) {
 
     let { name, email, phone, message, productInterest } = body
 
-    // Basic validation
-    if (!name || !email || !message) {
+    // Basic validation. A photo quote can come with a phone number and no
+    // email (that is how most people want the answer back), so one of the
+    // two is enough.
+    if (!name || !message || (!email && !phone)) {
       return NextResponse.json(
-        { error: 'Name, email, and message are required.' },
+        { error: 'Name, a message, and a phone number or email are required.' },
         { status: 400 }
       )
     }
+    email = email || ''
+
+    // Attachments: only keys the guest upload route hands out, at most three.
+    const ATTACH_KEY_RE = /^checkout\/gup_[A-Za-z0-9]+\/[^/]{1,200}$/
+    const attachments = (Array.isArray(body.attachments) ? body.attachments : [])
+      .filter(a => a && typeof a.key === 'string' && ATTACH_KEY_RE.test(a.key))
+      .slice(0, 3)
+      .map(a => ({ key: a.key as string, filename: stripControlChars(String(a.filename ?? '')).slice(0, 200) || 'photo' }))
 
     // Enforce length limits
     if (name.length > MAX_LENGTHS.name) {
       return NextResponse.json({ error: 'Name is too long.' }, { status: 400 })
     }
-    if (email.length > MAX_LENGTHS.email) {
+    if (email && email.length > MAX_LENGTHS.email) {
       return NextResponse.json({ error: 'Email is too long.' }, { status: 400 })
     }
     if (phone && phone.length > MAX_LENGTHS.phone) {
@@ -140,8 +152,8 @@ export async function POST(request: NextRequest) {
       productInterest = ''
     }
 
-    // Email validation
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
+    // Email validation (when given)
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
       return NextResponse.json(
         { error: 'Please provide a valid email address.' },
         { status: 400 }
@@ -159,6 +171,7 @@ export async function POST(request: NextRequest) {
         const submission = {
           id: crypto.randomUUID().slice(0, 8),
           name, email, phone, message, productInterest,
+          ...(attachments.length ? { attachments } : {}),
           read: false,
           archived: false,
           receivedAt: new Date().toISOString(),
@@ -219,6 +232,10 @@ export async function POST(request: NextRequest) {
         </table>
         <hr style="border: none; border-top: 1px solid #eee; margin: 16px 0;" />
         <p style="white-space: pre-wrap;">${escapeHtml(message)}</p>
+        ${attachments.length ? `
+        <p style="margin-top: 16px; font-weight: bold; color: #666;">Photos (admin login)</p>
+        <ul>${attachments.map(a => `<li><a href="https://www.vurmz.com/api/admin/r2/${a.key.split('/').map(encodeURIComponent).join('/')}">${escapeHtml(a.filename)}</a></li>`).join('')}</ul>
+        ` : ''}
       </div>
     `
 
@@ -231,8 +248,8 @@ export async function POST(request: NextRequest) {
       body: JSON.stringify({
         from: 'VURMZ Website <noreply@vurmz.com>',
         to: 'zach@vurmz.com',
-        reply_to: email,
-        subject: `New Contact: ${name.slice(0, 80)}${productInterest ? ` (${productInterest})` : ''}`,
+        ...(email ? { reply_to: email } : {}),
+        subject: `${attachments.length ? 'Can you engrave this' : 'New Contact'}: ${name.slice(0, 80)}${productInterest ? ` (${productInterest})` : ''}`,
         html: htmlBody,
       }),
     })
@@ -245,9 +262,9 @@ export async function POST(request: NextRequest) {
       await reportError(new Error('Contact notification email failed'), { route: 'contact', extra: { step: 'notify', errorData } })
     }
 
-    // Send confirmation email to the customer
+    // Send confirmation email to the customer, when there is an address.
     try {
-      await fetch('https://api.resend.com/emails', {
+      if (email) await fetch('https://api.resend.com/emails', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${resendApiKey}`,

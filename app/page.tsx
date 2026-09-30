@@ -1,246 +1,247 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ArrowRightIcon, ChatBubbleLeftIcon } from '@heroicons/react/24/outline'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
-import { SHOP_CATEGORIES } from '@/lib/categories'
-import { CATALOG } from '@/lib/pricing'
-import { shopTestimonials } from '@/lib/testimonials'
+import { SIGNATURE, DELIVERY, CATALOG } from '@/lib/pricing'
+import { portfolioItems } from '@/lib/portfolio'
+import { aboutContent } from '@/lib/about'
+import { SHELF, DOORS } from '@/lib/shop-doors'
 import SiteHeader from '@/components/SiteHeader'
 import SiteFooter from '@/components/SiteFooter'
-import CategoryCard from '@/components/CategoryCard'
-import TestimonialCarousel from '@/components/TestimonialCarousel'
-import TrustedBy from '@/components/TrustedBy'
 import ContactForm from '@/components/ContactForm'
-import RotatingHeroBg from '@/components/RotatingHeroBg'
-import ItemScroller from '@/components/ItemScroller'
-import GlassImage from '@/components/shop/GlassImage'
-import RotatingTagline from '@/components/RotatingTagline'
-import VurmzLogo from '@/components/VurmzLogo'
 import HowItWorks from '@/components/HowItWorks'
+import CanYouEngraveThis from '@/components/CanYouEngraveThis'
+import EtchArt from '@/components/shop/EtchArt'
+import { DoorEtching } from '@/components/shop/DoorEtchings'
 
-// Single-page homepage: one brand, one scroll, shop first, then the anchored
-// "For businesses" half, then contact. Replaced the old split chooser.
+/**
+ * The homepage, rebuilt 2026-09-30 around the ways to use VURMZ instead of
+ * everything it sells. Three paths up top, proof, then the one that
+ * matters most: the thing you already own, photographed and priced.
+ */
 export const metadata: Metadata = {
   alternates: { canonical: '/' },
 }
 
-const CONSUMER_CATEGORIES = SHOP_CATEGORIES.filter(cat => {
-  if (cat.pricingType === 'signature') return true
-  if (cat.pricingKey && cat.pricingKey in CATALOG) {
-    const data = CATALOG[cat.pricingKey]
-    return !('materials' in data)
-  }
-  return true
-})
+const display = { fontFamily: 'var(--font-display), Georgia, serif' }
+const glass = 'rounded-[var(--r-panel)] border border-white/12 bg-white/[0.04] backdrop-blur-md'
+const eyebrow = 'text-[11px] font-mono tracking-[0.3em] uppercase text-[#7FCFD4]'
 
-const WORK = [
-  { src: '/portfolio/culinary-cleaver-engraved.jpg', label: 'Knife Engraving' },
-  { src: '/portfolio/water-bottle-full-wrap.jpg', label: 'Full-Wrap Bottle' },
-  { src: '/portfolio/eye-storm-hexagonal-mirror.jpg', label: 'Custom Mirror Art' },
-  { src: '/portfolio/denver-map-glass-coaster.jpg', label: 'Glass Coaster' },
-  { src: '/portfolio/macbook-engraving.jpg', label: 'MacBook Engraving' },
-  { src: '/portfolio/clga-faceplate-closeup.jpg', label: 'Amp Faceplate' },
-  { src: '/portfolio/tumbler-cherry-creek-37.jpg', label: 'Branded Tumbler' },
-  { src: '/portfolio/pocket-knife-engraved.jpg', label: 'Pocket Knife' },
+const PATHS = [
+  {
+    h: 'I already have something',
+    p: 'A knife, a laptop, a flask. Send a photo, get a number today.',
+    href: '/engrave',
+    cta: 'Engrave my stuff',
+  },
+  {
+    h: 'Shop things to engrave',
+    p: 'Coasters, boards, knives, tumblers, tags. Priced, in stock, your words on them.',
+    href: '/shop',
+    cta: 'See the shop',
+  },
+  {
+    h: 'I am ordering for a business',
+    p: 'Pens, cards, labels, coasters, knife crews. Posted prices by the run.',
+    href: '/services',
+    cta: 'Business pricing',
+  },
 ]
 
-const B2B_LANES = [
-  { h: 'Equipment labels', p: `Anodized aluminum, 3M backed, a mark that outlives the equipment. $${CATALOG.serviceTags.aluminumBase * CATALOG.serviceTags.pack} per ${CATALOG.serviceTags.pack}.`, href: '/services/metal-tags' },
-  { h: 'Knife crews', p: `I pick up the whole line’s knives and return them engraved next day. $${CATALOG.knife.base} single, $${CATALOG.knife.fullKitchen.perKnife} a knife for full kitchens.`, href: '/services/knife-engraving' },
-  { h: 'Metal cards', p: 'Sixteen layouts, fourteen colors. Design it on the page and the laser file writes itself.', href: '/shop/p/anodized-aluminum-wallet-card' },
-  { h: 'Plates, panels, one-offs', p: 'Faceplates, valve tags, signage, jobsite tools. Send a photo and a count, you get a number today.', href: '/services#lanes' },
-  { h: 'Standing accounts', p: `Logo on file, free delivery every ${siteInfo.deliveryRunDay}, NET-30, 15% off standing orders.`, href: '/services#account' },
+// Eight pieces, the strongest proof, straight from the portfolio.
+const WORK_SLUGS = ['culinary-cleaver', 'macbook-personalization', 'denver-map-mirror', 'medieval-water-bottle', 'pocket-knife', 'clga-amp-faceplate', 'branded-tumbler', 'eye-storm-mirror']
+const WORK = WORK_SLUGS.map(s => portfolioItems.find(p => p.slug === s)).filter((p): p is (typeof portfolioItems)[number] => !!p)
+
+const SHOP = [SHELF, ...DOORS.filter(d => d.key !== 'business')]
+
+const BUSINESS_ROWS = [
+  ['Setup fees', 'None. A logo file is a logo file.'],
+  ['Turnaround', 'Most runs in 24 to 72 hours.'],
+  ['Delivery', `Hand-delivered across the ${DELIVERY.area}. Every ${siteInfo.deliveryRunDay} for standing accounts.`],
+  ['Small orders', `Yes. Ten pens is a run. ${CATALOG.knife.fullKitchen.perKnife ? `Knife crews from $${CATALOG.knife.fullKitchen.perKnife} a blade.` : ''}`.trim()],
+  ['Your logo', 'Stays on file. A reorder is a text with a count.'],
+  ['Prices', 'Posted on the site. Priced by the run, and the tier holds between reorders.'],
+  ['Terms', 'NET-30 on standing accounts.'],
+]
+
+const WHY = [
+  { h: 'Local', p: `Centennial. I drive the south Denver metro myself, free over $${DELIVERY.freeThreshold}.` },
+  { h: 'One person', p: 'You text me. I answer, I quote it, I engrave it, I hand it to you.' },
+  { h: 'Fast', p: 'A number the same day. Most pieces back in 24 to 72 hours.' },
+  { h: 'Unusual items welcome', p: 'Metal, wood, glass, leather, slate, plastic. If it is solid, it takes a mark.' },
 ]
 
 export default function Page() {
   return (
-    <div className="bg-[var(--page)] text-[var(--ink-soft)]" data-theme="shop">
-      {/* Smooth anchor scrolling + let the color bands butt against their
-          divider lines (override the global 2.5rem section gap on this page). */}
-      <style dangerouslySetInnerHTML={{ __html: 'html{scroll-behavior:smooth}#home-sections>section+section{margin-top:0}' }} />
-
+    <div className="text-[var(--ink-soft)]" data-theme="shop">
+      <style dangerouslySetInnerHTML={{ __html: 'html{scroll-behavior:smooth}' }} />
       <SiteHeader variant="shop" />
-      <div id="home-sections">
-        {/* ═══════════ HERO, animated teal VURMZ logo over rotating work photos ═══════════ */}
-        <section className="relative px-4 pt-32 sm:pt-36 pb-12 sm:pb-14 text-center overflow-hidden">
-          <RotatingHeroBg />
-          <div className="relative z-10">
-          <h1 className="sr-only">VURMZ Laser Engraving in {siteInfo.address}</h1>
-          {/* The solid deep-teal wordmark on the paper hero. */}
-          <div className="hero-logo-light mx-auto mb-6 justify-center">
-            <VurmzLogo className="h-14 sm:h-[72px]" color="var(--ink)" />
-          </div>
 
-          <RotatingTagline
-            accentColor="#C67A6F"
-            className="text-[var(--hero-ink)] text-3xl sm:text-4xl lg:text-5xl mb-8 max-w-xl mx-auto"
-          />
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link
-              href="/shop"
-              className="inline-flex items-center justify-center gap-2 h-[52px] px-7 rounded-[var(--r-control)] bg-[var(--coral)] text-white text-[length:var(--step-lead)] font-semibold hover:bg-[var(--coral-hover)] transition-colors duration-[var(--t-hover)] puffy-btn"
-            >
-              Browse the shop
-              <ArrowRightIcon className="w-4 h-4" />
+      {/* 1. Hero: the line, and three ways in. */}
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-12 pb-12 sm:pb-16">
+        <p className={`${eyebrow} mb-4`}>Laser engraving · {siteInfo.address}</p>
+        <h1 className="text-[length:var(--step-display)] sm:text-[clamp(3rem,7vw,5.5rem)] leading-[1.02] text-white/95 max-w-[14ch]" style={display}>
+          Put your name on something.
+        </h1>
+        <p className="mt-5 max-w-[52ch] text-[length:var(--step-lead)] leading-relaxed text-[var(--ink-soft)]">
+          One person in Centennial with industrial engraving equipment. Posted prices, a number the same day, hand-delivered.
+        </p>
+        <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
+          {PATHS.map(x => (
+            <Link key={x.href} href={x.href} className={`group ${glass} hover:bg-white/[0.07] hover:border-[#7FCFD4]/50 p-5 sm:p-6 flex flex-col transition-colors duration-[var(--t-hover)]`}>
+              <span className="text-[length:var(--step-panel)] leading-tight text-white/95" style={display}>{x.h}</span>
+              <span className="mt-2 text-[14.5px] leading-relaxed text-[var(--ink-soft)]">{x.p}</span>
+              <span className="mt-5 inline-flex items-center gap-2 text-[14px] font-semibold text-[#7FCFD4] group-hover:text-white transition-colors">
+                {x.cta}
+                <span aria-hidden className="transition-transform group-hover:translate-x-1">&rarr;</span>
+              </span>
             </Link>
-            <Link
-              href="/services/"
-              className="btn-aqua inline-flex items-center justify-center gap-2 px-8 py-4 font-semibold text-base rounded-sm"
-            >
-              For businesses
-              <ArrowRightIcon className="w-4 h-4" />
-            </Link>
-          </div>
-          </div>
-        </section>
+          ))}
+        </div>
+      </section>
 
-        {/* ═══════════ RECENT WORK, photos over the scrolling "ideas" backdrop ═══════════ */}
-        <section className="relative band-teal-deep py-14 sm:py-[72px] overflow-hidden">
-          {/* The "endless ideas" marquee, a faint background texture behind the
-              photos. Edges fade via a mask so it dissolves cleanly on any band
-              color (paper in light, teal in dark) with no dark smudges. */}
-          <div
-            className="absolute inset-0 pointer-events-none select-none flex flex-col justify-center"
-            aria-hidden
-            style={{
-              WebkitMaskImage: 'linear-gradient(to right, transparent, #000 14%, #000 86%, transparent)',
-              maskImage: 'linear-gradient(to right, transparent, #000 14%, #000 86%, transparent)',
-            }}
-          >
-            <ItemScroller opacityScale={0.22} />
-          </div>
-          <div className="relative z-10 max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
-            <p className="text-center text-xs font-mono text-[var(--eyebrow)] tracking-[0.2em] uppercase mb-6">Recent work</p>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              {WORK.map((item) => (
-                <div key={item.label} className="group relative aspect-square rounded-sm overflow-hidden puffy">
-                  <GlassImage src={item.src} alt={item.label} depth="card" sizes="(max-width: 640px) 50vw, 25vw" className="absolute inset-0" />
-                  <div className="absolute inset-0 flex items-end p-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <span className="text-white text-xs font-medium drop-shadow">{item.label}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ═══════════ SHOP CATEGORIES (base teal band) ═══════════ */}
-        <section className="band-teal border-t border-[var(--hairline)] py-14 sm:py-[72px]">
-          <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-[length:var(--step-section)] font-semibold text-[var(--ink)] text-center mb-8">Shop by category</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {CONSUMER_CATEGORIES.map((cat) => (
-                <CategoryCard key={cat.slug} category={cat} />
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ═══════════ HOW IT WORKS, the one shared version ═══════════ */}
-        <HowItWorks />
-
-        {/* ═══════════ SERVICES, the anchored business half ═══════════ */}
-        <section id="services" className="relative band-teal-deep border-t border-[var(--hairline)] scroll-mt-16">
-          <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
-            <p className="text-xs font-mono text-[var(--eyebrow)] tracking-[0.25em] uppercase mb-3">For your work</p>
-            <h2 className="text-[length:var(--step-section)] font-semibold text-[var(--ink)] tracking-tight leading-tight mb-4">
-              Things I make<br />
-              <span className="text-[var(--ink-soft)]">for the businesses around here.</span>
-            </h2>
-            <p className="text-[var(--ink-soft)] text-base sm:text-lg leading-relaxed max-w-2xl mb-10">
-              Posted prices. One person, start to finish. Delivered across the south metro.
-            </p>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
-              {B2B_LANES.map((lane) => (
-                <Link
-                  key={lane.h}
-                  href={lane.href}
-                  className="group bg-[var(--surface)] border border-[var(--hairline)] rounded-sm p-6 hover:border-vurmz-teal/40 transition-colors puffy"
-                >
-                  <h3 className="font-semibold text-[var(--ink)] mb-2 flex items-center justify-between">
-                    {lane.h}
-                    <ArrowRightIcon className="w-4 h-4 text-[var(--eyebrow)] opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
-                  </h3>
-                  <p className="text-[var(--ink-soft)] text-sm leading-relaxed">{lane.p}</p>
-                </Link>
-              ))}
-            </div>
-
-            <div className="flex flex-col sm:flex-row gap-3">
-              <Link
-                href="/services"
-                className="group inline-flex items-center justify-center gap-2 px-6 py-3 bg-[var(--coral)] text-white font-semibold text-sm rounded-[var(--r-control)] hover:bg-[var(--coral)]-hover transition-all puffy-btn"
-              >
-                Everything for business
-                <ArrowRightIcon className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+      {/* 2. Work strip: proof, fast. */}
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-14 sm:pb-20">
+        <div className="flex items-baseline justify-between mb-4">
+          <p className={eyebrow}>Recent work</p>
+          <Link href="/services/portfolio" className="text-[13px] text-[var(--ink-soft)] hover:text-white transition-colors">All the work</Link>
+        </div>
+        <ul className="grid grid-cols-4 lg:grid-cols-8 gap-2 list-none p-0 m-0">
+          {WORK.map(w => (
+            <li key={w.slug}>
+              <Link href={`/services/portfolio/${w.slug}`} className="group block">
+                <span className="relative block aspect-square rounded-[var(--r-tile)] overflow-hidden border border-white/10">
+                  <Image src={w.src} alt={w.label} fill sizes="(max-width: 1024px) 25vw, 12vw" className="object-cover transition-transform duration-700 group-hover:scale-[1.05]" />
+                </span>
+                <span className="block mt-1.5 text-[11px] leading-snug text-[var(--ink-soft)] group-hover:text-white transition-colors line-clamp-1">{w.material}</span>
               </Link>
-              <a
-                href={getSmsLink('Hi, I have a business engraving question')}
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-vurmz-cream text-vurmz-dark font-semibold text-sm rounded-sm hover:bg-vurmz-cream-hover transition-all puffy-btn"
-              >
-                <ChatBubbleLeftIcon className="w-4 h-4" />
-                Text {siteInfo.phone}
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      {/* 3. Already own it? The primary thing. */}
+      <section id="engrave" className="border-y border-white/10 bg-[#0D2F35]/40 scroll-mt-28">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 grid grid-cols-1 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] gap-8 lg:gap-12 items-start">
+          <div>
+            <p className={`${eyebrow} mb-3`}>Already own it?</p>
+            <h2 className="text-[length:var(--step-section)] leading-[1.05] text-white/95" style={display}>
+              Knife. Tool. Laptop. Flask. Weird piece of metal from your garage.
+            </h2>
+            <p className="mt-4 text-[length:var(--step-lead)] leading-relaxed text-[var(--ink-soft)] max-w-[44ch]">
+              Send me a photo and I will tell you if I can mark it and what it costs. One piece is ${SIGNATURE.startingAt} for most jobs.
+            </p>
+            <p className="mt-4 text-[14px] text-[var(--ink-soft)]">
+              <Link href="/engrave" className="text-[#7FCFD4] hover:text-white transition-colors">What people bring, and what the price covers.</Link>
+            </p>
+          </div>
+          <CanYouEngraveThis compact />
+        </div>
+      </section>
+
+      {/* 4. Shop: six categories, not the taxonomy. */}
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
+        <div className="flex items-baseline justify-between mb-5">
+          <h2 className="text-[length:var(--step-section)] leading-tight text-white/95" style={display}>The shop</h2>
+          <Link href="/shop" className="text-[13px] text-[var(--ink-soft)] hover:text-white transition-colors">Everything</Link>
+        </div>
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+          {SHOP.map(d => (
+            <Link key={d.key} href={`/shop/${d.key}`} className={`group ${glass} hover:bg-white/[0.07] hover:border-[#7FCFD4]/50 overflow-hidden transition-colors duration-[var(--t-hover)]`}>
+              <span className="relative flex items-center justify-center aspect-[4/3] sm:aspect-[16/9]">
+                {d.art ? (
+                  <EtchArt src={d.art} className="w-[56%] max-w-[220px] aspect-[4/3] transition-transform duration-500 ease-out group-hover:-translate-y-1" />
+                ) : (
+                  <DoorEtching kind={d.etch} className="w-[54%] max-w-[200px] text-[#DED6C3]/85 group-hover:text-[#7FCFD4] transition-colors" />
+                )}
+              </span>
+              <span className="block border-t border-white/10 p-3 sm:p-4">
+                <span className="block text-[length:var(--step-body)] leading-tight text-white/95" style={display}>{d.name}</span>
+                <span className="hidden sm:block mt-1 text-[13px] leading-snug text-[var(--ink-soft)]">{d.line}</span>
+              </span>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* 5. Business: the procurement table. */}
+      <section id="business" className="border-y border-white/10 bg-[#0D2F35]/40 scroll-mt-28">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 grid grid-cols-1 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] gap-8 lg:gap-12 items-start">
+          <div>
+            <p className={`${eyebrow} mb-3`}>For a business</p>
+            <h2 className="text-[length:var(--step-section)] leading-[1.05] text-white/95" style={display}>
+              Pens, cards, labels, coasters, knife crews.
+            </h2>
+            <p className="mt-4 text-[length:var(--step-lead)] leading-relaxed text-[var(--ink-soft)] max-w-[40ch]">
+              Priced by the run. Send a count and a logo, you get a number today.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Link href="/services" className="inline-flex items-center h-11 px-6 rounded-[var(--r-control)] bg-[var(--coral)] hover:bg-[var(--coral-hover)] text-white text-[14.5px] font-semibold transition-colors">
+                Business pricing
+              </Link>
+              <a href={getSmsLink('Hi Zach, I have a business order. ')} className="inline-flex items-center h-11 px-6 rounded-[var(--r-control)] border border-white/20 hover:border-[#7FCFD4]/60 text-[var(--ink)] text-[14.5px] font-semibold transition-colors">
+                Text a count
               </a>
             </div>
-
-            <div className="mt-12 border-t border-[var(--hairline)] pt-8">
-              <TrustedBy theme="services" />
-            </div>
           </div>
-        </section>
-
-        {/* ═══════════ ABOUT (oatmeal band, dark text) ═══════════ */}
-        <section className="bg-[var(--surface)] border-t border-black/5">
-          <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
-              <div className="relative aspect-[4/3] overflow-hidden rounded-sm puffy-light">
-                <Image src="/images/zach.jpeg" alt={`${siteInfo.founder.name}, owner of VURMZ`} fill className="object-cover" />
-                <div className="absolute bottom-4 left-4">
-                  <span className="text-xs font-mono text-white/80 tracking-wider uppercase drop-shadow">{siteInfo.founder.name} &middot; Owner</span>
-                </div>
+          <dl className={`${glass} divide-y divide-white/10`}>
+            {BUSINESS_ROWS.map(([k, v]) => (
+              <div key={k} className="grid grid-cols-[120px_minmax(0,1fr)] sm:grid-cols-[160px_minmax(0,1fr)] gap-4 px-4 sm:px-5 py-3.5">
+                <dt className="text-[12px] font-mono uppercase tracking-[0.14em] text-[#7FCFD4] pt-0.5">{k}</dt>
+                <dd className="text-[14.5px] leading-relaxed text-[var(--ink)]">{v}</dd>
               </div>
-              <div>
-                <p className="text-xs font-mono text-[var(--ink)] tracking-[0.2em] uppercase mb-4">Who I Am</p>
-                <h2 className="text-[length:var(--step-section)] font-semibold text-[var(--ink)] tracking-tight leading-tight mb-4">
-                  No department.<br /><span className="text-[var(--ink)]/50">Just me.</span>
-                </h2>
-                <p className="text-[#4f5d5b] text-base leading-relaxed mb-4">
-                  I&apos;m {siteInfo.founder.name}, and I run VURMZ out of {siteInfo.city}. You text me, I quote you, I engrave it, and I hand it to you. No middlemen at any step.
-                </p>
-                <Link href="/about" className="inline-flex items-center gap-2 text-[#B0675D] font-semibold text-sm hover:gap-3 transition-all">
-                  About VURMZ
-                  <ArrowRightIcon className="w-4 h-4" />
-                </Link>
-              </div>
+            ))}
+          </dl>
+        </div>
+      </section>
+
+      {/* 6. How it works: the one shared version. */}
+      <HowItWorks />
+
+      {/* 7. Why VURMZ. */}
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-14 sm:pb-20">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+          {WHY.map(w => (
+            <div key={w.h} className={`${glass} p-5`}>
+              <p className="text-[length:var(--step-body)] text-white/95" style={display}>{w.h}</p>
+              <p className="mt-1.5 text-[14px] leading-relaxed text-[var(--ink-soft)]">{w.p}</p>
             </div>
-          </div>
-        </section>
+          ))}
+        </div>
+      </section>
 
-        {/* ═══════════ TESTIMONIALS (base teal band) ═══════════ */}
-        <section className="band-teal border-t border-[var(--hairline)]">
-          <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16">
-            <TestimonialCarousel testimonials={shopTestimonials} theme="services" />
+      {/* 8. Zach, short. */}
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-14 sm:pb-20">
+        <div className={`${glass} grid grid-cols-1 md:grid-cols-[220px_minmax(0,1fr)] gap-6 md:gap-8 items-center p-5 sm:p-6`}>
+          <div className="relative aspect-square max-w-[220px] rounded-[var(--r-tile)] overflow-hidden border border-white/10">
+            <Image src={aboutContent.image} alt={`${siteInfo.founder.name}, who runs VURMZ`} fill sizes="220px" className="object-cover" />
           </div>
-        </section>
-
-        {/* ═══════════ CONTACT (darker teal band) ═══════════ */}
-        <section id="contact" className="band-teal-deep border-t border-[var(--hairline)] scroll-mt-16">
-          <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16">
-            <p className="text-xs font-mono text-[var(--eyebrow)] tracking-[0.2em] uppercase mb-3 text-center">Contact</p>
-            <h2 className="text-[length:var(--step-section)] font-semibold text-[var(--ink)] tracking-tight mb-2 text-center">
-              Questions? Send it.
-            </h2>
-            <p className="text-[var(--ink-soft)] text-sm text-center mb-8">
-              Or skip the form and text me at{' '}
-              <a href={getSmsLink()} className="text-[var(--eyebrow)] font-semibold hover:underline">{siteInfo.phone}</a>
-              , that&apos;s usually faster.
+          <div>
+            <p className={`${eyebrow} mb-2`}>Who you are texting</p>
+            <p className="text-[length:var(--step-panel)] leading-tight text-white/95" style={display}>
+              I&rsquo;m {siteInfo.founder.name}. I run VURMZ out of {siteInfo.city}, and I handle every job myself.
             </p>
-            <ContactForm />
+            <p className="mt-3 text-[14.5px] leading-relaxed text-[var(--ink-soft)]">
+              You text me, I quote it, I engrave it, I hand it to you. No department, no middle step.{' '}
+              <Link href="/about" className="text-[#7FCFD4] hover:text-white transition-colors">More about VURMZ.</Link>
+            </p>
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
+
+      {/* 9. Contact. */}
+      <section id="contact" className="border-t border-white/10 bg-[#0D2F35]/40 scroll-mt-28">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16">
+          <p className={`${eyebrow} mb-3 text-center`}>Contact</p>
+          <h2 className="text-[length:var(--step-section)] text-white/95 text-center" style={display}>Questions? Send it.</h2>
+          <p className="mt-2 mb-8 text-[14px] text-[var(--ink-soft)] text-center">
+            Or skip the form and text me at{' '}
+            <a href={getSmsLink()} className="text-[#7FCFD4] hover:text-white transition-colors">{siteInfo.phone}</a>. That is usually faster.
+          </p>
+          <ContactForm />
+        </div>
+      </section>
+
       <SiteFooter />
     </div>
   )
