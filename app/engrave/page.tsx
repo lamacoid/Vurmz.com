@@ -7,7 +7,7 @@ import { SIGNATURE, DELIVERY } from '@/lib/pricing'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 
 export const metadata: Metadata = {
-  title: { absolute: 'Engrave your stuff | VURMZ, Centennial CO' },
+  title: { absolute: 'Already own the thing? Engrave it | VURMZ, Centennial CO' },
   description: `Knife, tool, laptop, flask, the odd piece of metal from your garage. Send a photo and get a number the same day. One piece from $${SIGNATURE.startingAt}, hand-delivered across the south Denver metro.`,
   alternates: { canonical: '/engrave' },
 }
@@ -43,9 +43,9 @@ export default function EngravePage() {
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-10 pb-16">
       <header className="max-w-[60ch]">
-        <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-[#7FCFD4] mb-3">Already own it?</p>
+        <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-[#7FCFD4] mb-3">Engrave your stuff</p>
         <h1 className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] leading-[1.05] text-white/95" style={display}>
-          Engrave your stuff.
+          Already own the thing?
         </h1>
         <p className="mt-4 text-[length:var(--step-lead)] leading-relaxed text-[var(--ink-soft)]">
           Knife. Tool. Laptop. Flask. Weird piece of metal from your garage. Send me a photo and I will tell you if I can mark it and what it costs.
@@ -66,7 +66,7 @@ export default function EngravePage() {
             <p className="mt-3 text-[14.5px] leading-relaxed text-[var(--ink-soft)]">
               Most pieces are back within the week. Hand-delivered across the {DELIVERY.area}, free over ${DELIVERY.freeThreshold}.
             </p>
-            <Link href="/shop/bring-your-own" className="mt-4 inline-flex items-center text-[14px] text-[#7FCFD4] hover:text-white transition-colors">
+            <Link href="/shop/p/engrave-your-item" className="mt-4 inline-flex items-center text-[14px] text-[#7FCFD4] hover:text-white transition-colors">
               Know what you want already? Order it now.
             </Link>
           </div>

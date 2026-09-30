@@ -1,11 +1,10 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import type { Metadata } from 'next'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 import { aboutContent, aboutMeta } from '@/lib/about'
-import Breadcrumbs from '@/components/Breadcrumbs'
 import SiteHeader from '@/components/SiteHeader'
 import SiteFooter from '@/components/SiteFooter'
-import HowItWorks from '@/components/HowItWorks'
 
 export const metadata: Metadata = {
   title: 'About',
@@ -13,68 +12,51 @@ export const metadata: Metadata = {
   alternates: { canonical: '/about' },
 }
 
-// The About page, plated on the same cream menu card as the shop.
-// Zach's story in his own words, the photo framed, the pillars as three
-// words. No value cards, no manufactured warmth, no block of color.
+const display = { fontFamily: 'var(--font-display), Georgia, serif' }
+
+// Short, on purpose (2026-09-30). One person. Local. Fast. Unusual
+// items welcome. His name. That is the whole page.
+const FACTS = [
+  { h: 'One person', p: 'You text me. I quote it, I engrave it, I hand it to you.' },
+  { h: 'Local', p: `${siteInfo.city}, most of my life. I drive the south Denver metro myself.` },
+  { h: 'Fast', p: 'A number the same day. Most pieces back in 24 to 72 hours.' },
+  { h: 'Unusual items welcome', p: 'Metal, wood, glass, leather, slate, plastic. If it is solid, it takes a mark.' },
+]
+
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-[var(--page)] text-[var(--ink-soft)]">
-      <SiteHeader variant="services" />
+    <div className="min-h-screen text-[var(--ink-soft)]" data-theme="shop">
+      <SiteHeader variant="shop" />
 
-      <section className="pt-24 sm:pt-28 pb-16">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Breadcrumbs items={[{ label: 'VURMZ', href: '/' }, { label: 'About' }]} theme="landing" />
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-10 pb-16">
+        <div className="grid grid-cols-1 md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] gap-8 md:gap-12 items-start">
+          <div className="relative aspect-[4/5] max-w-[420px] rounded-[var(--r-panel)] overflow-hidden border border-white/10">
+            <Image src={aboutContent.image} alt={`${siteInfo.founder.name}, who runs VURMZ`} fill className="object-cover" sizes="(min-width: 768px) 40vw, 100vw" priority />
+          </div>
 
-          {/* The card: everything lives on it, like the menu. */}
-          <div className="mt-6 bg-[var(--surface)] border border-[var(--hairline)] rounded-sm px-5 sm:px-10 py-8 sm:py-10">
-            <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-[var(--eyebrow)] mb-3">About</p>
-            <h1
-              className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] text-[var(--ink)] leading-[1.08] max-w-2xl"
-              style={{ fontFamily: 'var(--font-display), Georgia, serif', textWrap: 'balance' }}
-            >
-              {aboutContent.headline}
+          <div>
+            <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-[#7FCFD4] mb-3">About</p>
+            <h1 className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] leading-[1.05] text-white/95" style={display}>
+              I&rsquo;m {siteInfo.founder.name}. VURMZ is me and a couple of lasers in {siteInfo.city}.
             </h1>
+            <p className="mt-5 max-w-[52ch] text-[length:var(--step-lead)] leading-relaxed text-[var(--ink-soft)]">
+              I started making custom cards for another project, taught myself the machine, and it did not stop. VURMZ was a nickname in high school. Now it is the name on the invoices.
+            </p>
 
-            <div className="mt-6 border-t-2 border-[var(--ink)]/25" aria-hidden />
-            <div className="mt-[3px] border-t border-[var(--ink)]/25" aria-hidden />
+            <dl className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+              {FACTS.map(f => (
+                <div key={f.h} className="rounded-[var(--r-panel)] border border-white/12 bg-white/[0.04] backdrop-blur-md p-5">
+                  <dt className="text-[length:var(--step-body)] text-white/95" style={display}>{f.h}</dt>
+                  <dd className="mt-1.5 text-[14px] leading-relaxed text-[var(--ink-soft)]">{f.p}</dd>
+                </div>
+              ))}
+            </dl>
 
-            <div className="grid grid-cols-1 md:grid-cols-[2fr_3fr] gap-8 md:gap-12 mt-10 items-start">
-              {/* The photo, framed like a plate. */}
-              <div className="relative aspect-[4/5] overflow-hidden rounded-sm border border-[var(--hairline)] bg-[var(--page)]">
-                <Image src={aboutContent.image} alt={`${siteInfo.founder.name}, owner of VURMZ`} fill className="object-cover" sizes="(min-width: 768px) 40vw, 100vw" />
-                <span className="absolute bottom-3 left-3 text-[10px] font-mono text-white/85 tracking-[0.2em] uppercase drop-shadow">
-                  {siteInfo.founder.name} &middot; Owner
-                </span>
-              </div>
-
-              <div className="space-y-5">
-                {aboutContent.storyParagraphs.map((p, i) => (
-                  <p key={i} className="text-[var(--ink-soft)] text-base leading-relaxed">{p}</p>
-                ))}
-              </div>
-            </div>
-
-            {/* The pillars: three words, no explaining. */}
-            <div className="mt-12 flex items-center gap-4">
-              <span className="flex-1 border-t border-[var(--ink)]/20" aria-hidden />
-              <p
-                className="text-xl sm:text-2xl font-semibold text-[var(--ink)] tracking-tight whitespace-nowrap"
-                style={{ fontFamily: 'var(--font-display), Georgia, serif' }}
-              >
-                {aboutContent.pillars}
-              </p>
-              <span className="flex-1 border-t border-[var(--ink)]/20" aria-hidden />
-            </div>
-
-            <div className="mt-12">
-              <HowItWorks variant="inline" />
-            </div>
-
-            <p className="mt-10 pt-5 border-t border-[var(--hairline)] text-xs text-[var(--ink-soft)] text-center">
-              <a href={getSmsLink()} className="text-[var(--eyebrow)] font-semibold hover:underline">
-                Text {siteInfo.phone}
-              </a>{' '}
-              and it goes straight to me.
+            <p className="mt-8 text-[15px] text-[var(--ink-soft)]">
+              Have something to engrave?{' '}
+              <Link href="/engrave" className="text-[#7FCFD4] hover:text-white transition-colors">Send a photo</Link>
+              {' '}or text me at{' '}
+              <a href={getSmsLink()} className="text-[#7FCFD4] hover:text-white transition-colors">{siteInfo.phone}</a>. It goes straight to me.
             </p>
           </div>
         </div>

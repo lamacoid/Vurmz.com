@@ -5,7 +5,7 @@ import VurmzLogo from '@/components/VurmzLogo'
 
 const PRODUCTS = [
   { label: 'In stock', href: '/shop/shelf' },
-  { label: 'Your own piece', href: '/shop/bring-your-own' },
+  { label: 'Your own piece', href: '/engrave' },
   { label: 'Knives', href: '/shop/knives' },
   { label: 'Coasters and boards', href: '/shop/table' },
   { label: 'Drinkware', href: '/shop/drink' },

@@ -33,6 +33,8 @@ const nextConfig: NextConfig = {
   // were dead and had to move here.
   async redirects() {
     return [
+      // Bring your own is the engrave page now (2026-09-30).
+      { source: '/shop/bring-your-own', destination: '/engrave', permanent: true },
       // The old shop categories became the doors (2026-09-20).
       { source: '/shop/gifts', destination: '/shop/shelf', permanent: true },
       { source: '/shop/coasters', destination: '/shop/table', permanent: true },

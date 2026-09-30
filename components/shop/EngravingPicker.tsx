@@ -25,9 +25,9 @@ export interface EngravingValue {
 type Mode = 'text' | 'design' | 'file'
 
 const MODES: Array<{ key: Mode; label: string; hint: string }> = [
-  { key: 'text', label: 'Words', hint: 'A name, a date, a line. You pick the face.' },
-  { key: 'design', label: 'A design', hint: 'From the library. Add words if you want.' },
-  { key: 'file', label: 'My own file', hint: 'A logo or artwork. SVG or PDF is best.' },
+  { key: 'text', label: 'Text', hint: 'A name, a date, a line. You pick the face.' },
+  { key: 'file', label: 'Logo or artwork', hint: 'Your own file. SVG or PDF is best.' },
+  { key: 'design', label: 'Choose a design', hint: 'From the library. Add text if you want.' },
 ]
 
 export default function EngravingPicker({
