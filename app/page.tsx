@@ -7,6 +7,7 @@ import { portfolioItems } from '@/lib/portfolio'
 import { aboutContent } from '@/lib/about'
 import { SHELF, DOORS } from '@/lib/shop-doors'
 import SiteHeader from '@/components/SiteHeader'
+import RotatingTagline from '@/components/RotatingTagline'
 import SiteFooter from '@/components/SiteFooter'
 import ContactForm from '@/components/ContactForm'
 import HowItWorks from '@/components/HowItWorks'
@@ -77,12 +78,15 @@ export default function Page() {
       <style dangerouslySetInnerHTML={{ __html: 'html{scroll-behavior:smooth}' }} />
       <SiteHeader variant="shop" />
 
-      {/* 1. Hero: the line, and three ways in. */}
+      {/* 1. Hero: the rotating line, then three ways in. */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-12 pb-12 sm:pb-16">
         <p className={`${eyebrow} mb-4`}>Laser engraving · {siteInfo.address}</p>
-        <h1 className="text-[length:var(--step-display)] sm:text-[clamp(3rem,7vw,5.5rem)] leading-[1.02] text-white/95 max-w-[14ch]" style={display}>
-          Put your name on something.
-        </h1>
+        <h1 className="sr-only">Laser engraving in {siteInfo.address}. Put your name, logo, or story on something.</h1>
+        <RotatingTagline
+          inline
+          accentColor="#7FCFD4"
+          className="block text-[length:var(--step-display)] sm:text-[clamp(3rem,7vw,5.25rem)] leading-[1.05] text-white/95 max-w-[16ch]"
+        />
         <p className="mt-5 max-w-[52ch] text-[length:var(--step-lead)] leading-relaxed text-[var(--ink-soft)]">
           One person in Centennial with industrial engraving equipment. Posted prices, a number the same day, hand-delivered.
         </p>
