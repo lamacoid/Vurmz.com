@@ -10,10 +10,11 @@ export const SIGNATURE = {
   name: "Signature",
   tagline: "Custom work, made to order",
   // 2026-09-13 reprice (vurmz-control/RESEARCH/PRICING-MARKET-2026-09.md):
-  // the shop side is priced as a high-end niche engraver. $55 covers one
-  // piece, one placement, delivery. Items over $150 add
-  // 10% of value; jewelry and watches from $95.
-  startingAt: 55,
+  // the shop side is priced as a high-end niche engraver. Bring your own
+  // thing is $50 (2026-10-01, Zach: "BYOT is $50 per", the number he
+  // quotes by text): one piece, one placement, delivery. Items over $150
+  // add 10% of value; jewelry and watches from $95.
+  startingAt: 50,
   valueSurchargeOver: 150,
   valueSurchargePct: 0.10,
   valueSurchargeCap: 150,

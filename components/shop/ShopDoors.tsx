@@ -34,7 +34,7 @@ function DoorCard({ section: { door, tiles }, wide = false, index = 0 }: { secti
   return (
     <Link
       href={`/shop/${door.key}`}
-      className={`group relative rounded-[var(--r-panel)] border border-white/12 bg-white/[0.04] hover:bg-white/[0.07] hover:border-[#7FCFD4]/50 backdrop-blur-md overflow-hidden transition-colors duration-[var(--t-hover)] ${wide ? 'sm:col-span-2 lg:col-span-3 grid grid-cols-1 md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]' : 'flex flex-col'}`}
+      className={`group relative rounded-[var(--r-panel)] border border-[var(--hairline)] bg-[var(--surface)] hover:bg-[var(--glass-soft)] hover:border-[var(--feature)]/40 overflow-hidden transition-colors duration-[var(--t-hover)] ${wide ? 'sm:col-span-2 lg:col-span-3 grid grid-cols-1 md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]' : 'flex flex-col'}`}
       style={{ animationDelay: `${index * 70}ms` }}
     >
       <div className={`relative flex items-center justify-center overflow-hidden ${wide ? 'aspect-[16/9] md:aspect-auto md:min-h-[220px]' : 'aspect-[4/3]'}`}>
@@ -42,15 +42,15 @@ function DoorCard({ section: { door, tiles }, wide = false, index = 0 }: { secti
         {door.art ? (
           <EtchArt src={door.art} className="w-[68%] max-w-[300px] aspect-[4/3] transition-transform duration-500 ease-out group-hover:-translate-y-1" />
         ) : (
-          <DoorEtching kind={door.etch} className="relative w-[64%] max-w-[260px] text-[#DED6C3]/85 group-hover:text-[#7FCFD4] transition-[color,transform] duration-500 ease-out group-hover:-translate-y-1" />
+          <DoorEtching kind={door.etch} className="relative w-[64%] max-w-[260px] text-[var(--ink-soft)] group-hover:text-[var(--feature)] transition-[color,transform] duration-500 ease-out group-hover:-translate-y-1" />
         )}
       </div>
-      <div className={`border-t border-white/10 ${wide ? 'md:border-t-0 md:border-l p-5 sm:p-7 flex flex-col justify-center' : 'p-4 sm:p-5'}`}>
-        <p className={`${wide ? 'text-[length:var(--step-section)]' : 'text-[length:var(--step-panel)]'} leading-tight text-white/95`} style={display}>{door.name}</p>
-        <p className="mt-1.5 text-[length:var(--step-row)] leading-snug text-[#DED6C3]/75">{wide ? door.about : door.line}</p>
+      <div className={`border-t border-[var(--hairline)] ${wide ? 'md:border-t-0 md:border-l p-5 sm:p-7 flex flex-col justify-center' : 'p-4 sm:p-5'}`}>
+        <p className={`${wide ? 'text-[length:var(--step-section)]' : 'text-[length:var(--step-panel)]'} leading-tight text-[var(--ink)]`} style={display}>{door.name}</p>
+        <p className="mt-1.5 text-[length:var(--step-row)] leading-snug text-[var(--ink-soft)]">{wide ? door.about : door.line}</p>
         <p className="mt-3 flex items-baseline justify-between gap-3 text-[length:var(--step-fine)]">
-          <span className="text-[#DED6C3]/55">{n === 1 ? 'One piece' : `${n} pieces`}</span>
-          <span className="tabular-nums text-[#F3EEE2]">{rangeOf(tiles)}</span>
+          <span className="text-[var(--ink-soft)]">{n === 1 ? 'One piece' : `${n} pieces`}</span>
+          <span className="tabular-nums text-[var(--ink)]">{rangeOf(tiles)}</span>
         </p>
       </div>
     </Link>

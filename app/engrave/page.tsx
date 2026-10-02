@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import CanYouEngraveThis from '@/components/CanYouEngraveThis'
 import { getCategoryBySlug } from '@/lib/categories'
-import { SIGNATURE, DELIVERY } from '@/lib/pricing'
+import { SIGNATURE, DELIVERY, SOURCING } from '@/lib/pricing'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 
 export const metadata: Metadata = {
@@ -43,8 +43,8 @@ export default function EngravePage() {
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-10 pb-16">
       <header className="max-w-[60ch]">
-        <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-[#7FCFD4] mb-3">Engrave your stuff</p>
-        <h1 className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] leading-[1.05] text-white/95" style={display}>
+        <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-[var(--feature)] mb-3">Engrave your stuff</p>
+        <h1 className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] leading-[1.05] text-[var(--ink)]" style={display}>
           Already own the thing?
         </h1>
         <p className="mt-4 text-[length:var(--step-lead)] leading-relaxed text-[var(--ink-soft)]">
@@ -56,9 +56,9 @@ export default function EngravePage() {
         <CanYouEngraveThis />
 
         <aside className="space-y-6">
-          <div className="rounded-[var(--r-panel)] border border-white/12 bg-white/[0.04] backdrop-blur-md p-5 sm:p-6">
-            <p className="text-[11px] font-mono tracking-[0.24em] uppercase text-[#7FCFD4] mb-3">The price</p>
-            <p className="text-[length:var(--step-section)] leading-none text-white/95" style={display}>${SIGNATURE.startingAt}</p>
+          <div className="rounded-[var(--r-panel)] border border-[var(--hairline)] bg-[var(--surface)] p-5 sm:p-6">
+            <p className="text-[11px] font-mono tracking-[0.24em] uppercase text-[var(--feature)] mb-3">The price</p>
+            <p className="text-[length:var(--step-section)] leading-none text-[var(--ink)]" style={display}>${SIGNATURE.startingAt}</p>
             <p className="mt-3 text-[14.5px] leading-relaxed text-[var(--ink-soft)]">
               One piece, one placement, your words or one design from the library, within a palm-sized mark. That is most jobs.
               Larger marks, both sides, deep marking, full wraps, or a logo I have to redraw run a little more. I confirm any extra before anything runs.
@@ -66,14 +66,25 @@ export default function EngravePage() {
             <p className="mt-3 text-[14.5px] leading-relaxed text-[var(--ink-soft)]">
               Most pieces are back within the week. Hand-delivered across the {DELIVERY.area}, free over ${DELIVERY.freeThreshold}.
             </p>
-            <Link href="/shop/p/engrave-your-item" className="mt-4 inline-flex items-center text-[14px] text-[#7FCFD4] hover:text-white transition-colors">
+            <Link href="/shop/p/engrave-your-item" className="mt-4 inline-flex items-center text-[14px] text-[var(--feature)] hover:text-[var(--ink)] transition-colors">
               Know what you want already? Order it now.
+            </Link>
+          </div>
+
+          <div className="rounded-[var(--r-panel)] border border-[var(--feature)]/25 bg-[var(--glass-soft)] p-5 sm:p-6">
+            <p className="text-[11px] font-mono tracking-[0.24em] uppercase text-[var(--eyebrow)] mb-3">Do not have it yet?</p>
+            <p className="text-[length:var(--step-body)] font-semibold text-[var(--ink)]">Tell me what you want. I go get it.</p>
+            <p className="mt-2 text-[14.5px] leading-relaxed text-[var(--ink-soft)]">
+              I order it, mark it, and bring it to you. One delivery instead of three: no box to wait on, no handoff, no second trip. The piece at its price, plus ${SOURCING.reserveFee}.
+            </p>
+            <Link href="/shop/reserve" className="mt-3 inline-flex items-center text-[14px] font-semibold text-[#B0675D] hover:underline">
+              What I find for people
             </Link>
           </div>
 
           <div className="grid grid-cols-2 gap-2">
             {PROOF.map(p => (
-              <div key={p.src} className="relative aspect-square rounded-[var(--r-tile)] overflow-hidden border border-white/10">
+              <div key={p.src} className="relative aspect-square rounded-[var(--r-tile)] overflow-hidden border border-[var(--hairline)]">
                 <Image src={p.src} alt={p.alt} fill sizes="(max-width: 1024px) 50vw, 20vw" className="object-cover" />
               </div>
             ))}
@@ -83,11 +94,11 @@ export default function EngravePage() {
 
       <section className="mt-14 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
         <div>
-          <h2 className="text-[length:var(--step-panel)] text-white/95 mb-4" style={display}>What people bring me</h2>
+          <h2 className="text-[length:var(--step-panel)] text-[var(--ink)] mb-4" style={display}>What people bring me</h2>
           <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 list-none p-0 m-0">
             {BRING.map(item => (
               <li key={item} className="text-[15px] leading-snug text-[var(--ink-soft)] flex gap-2.5">
-                <span className="text-[#7FCFD4] flex-shrink-0" aria-hidden>·</span>
+                <span className="text-[var(--feature)] flex-shrink-0" aria-hidden>·</span>
                 {item}
               </li>
             ))}
@@ -97,7 +108,7 @@ export default function EngravePage() {
           </p>
         </div>
         <div>
-          <h2 className="text-[length:var(--step-panel)] text-white/95 mb-4" style={display}>Getting it to me</h2>
+          <h2 className="text-[length:var(--step-panel)] text-[var(--ink)] mb-4" style={display}>Getting it to me</h2>
           <ol className="space-y-3 list-none p-0 m-0">
             {[
               'Send the photo here or by text. I answer with a number the same day.',
@@ -105,7 +116,7 @@ export default function EngravePage() {
               'It comes back engraved, by one person, start to finish.',
             ].map((s, i) => (
               <li key={s} className="flex gap-3 text-[15px] leading-relaxed text-[var(--ink-soft)]">
-                <span className="w-7 h-7 flex-shrink-0 rounded-full border border-[#7FCFD4]/60 text-[#7FCFD4] font-mono text-[12px] flex items-center justify-center">{i + 1}</span>
+                <span className="w-7 h-7 flex-shrink-0 rounded-full border border-[var(--feature)]/40 text-[var(--feature)] font-mono text-[12px] flex items-center justify-center">{i + 1}</span>
                 {s}
               </li>
             ))}
@@ -115,8 +126,8 @@ export default function EngravePage() {
 
       {faqs.length > 0 && (
         <section className="mt-14 max-w-[70ch]">
-          <h2 className="text-[length:var(--step-panel)] text-white/95 mb-4" style={display}>Questions I get</h2>
-          <dl className="divide-y divide-white/10 border-y border-white/10">
+          <h2 className="text-[length:var(--step-panel)] text-[var(--ink)] mb-4" style={display}>Questions I get</h2>
+          <dl className="divide-y divide-[var(--hairline)] border-y border-[var(--hairline)]">
             {faqs.map(f => (
               <div key={f.question} className="py-4">
                 <dt className="text-[15.5px] font-semibold text-[var(--ink)]">{f.question}</dt>
@@ -129,7 +140,7 @@ export default function EngravePage() {
 
       <p className="mt-12 text-[14px] text-[var(--ink-soft)]">
         Faster to talk? Text {siteInfo.founder.name} at{' '}
-        <a href={getSmsLink('Hi Zach, can you engrave this? ')} className="text-[#7FCFD4] hover:text-white transition-colors">{siteInfo.phone}</a>.
+        <a href={getSmsLink('Hi Zach, can you engrave this? ')} className="text-[var(--feature)] hover:text-[var(--ink)] transition-colors">{siteInfo.phone}</a>.
       </p>
     </div>
   )

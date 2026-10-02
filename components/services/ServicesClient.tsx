@@ -15,8 +15,8 @@ import CanYouEngraveThis from '@/components/CanYouEngraveThis'
  */
 
 const display = { fontFamily: 'var(--font-display), Georgia, serif' }
-const glass = 'rounded-[var(--r-panel)] border border-white/12 bg-white/[0.04] backdrop-blur-md'
-const eyebrow = 'text-[11px] font-mono tracking-[0.3em] uppercase text-[#7FCFD4]'
+const glass = 'rounded-[var(--r-panel)] border border-[var(--hairline)] bg-[var(--surface)]'
+const eyebrow = 'text-[11px] font-mono tracking-[0.3em] uppercase text-[var(--feature)]'
 
 // $3 stays $3, $7.5 becomes $7.50. Prices are written as people say them.
 const price = (n: number) => (n % 1 === 0 ? `$${n}` : `$${n.toFixed(2)}`)
@@ -133,7 +133,7 @@ export default function ServicesClient() {
       {/* Need something marked? */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-12 pb-10">
         <p className={`${eyebrow} mb-3`}>For a business</p>
-        <h1 className="text-[length:var(--step-display)] sm:text-[clamp(2.75rem,6vw,4.5rem)] leading-[1.02] text-white/95 max-w-[16ch]" style={display}>
+        <h1 className="text-[length:var(--step-display)] sm:text-[clamp(2.75rem,6vw,4.5rem)] leading-[1.02] text-[var(--ink)] max-w-[16ch]" style={display}>
           Need something marked?
         </h1>
         <p className="mt-5 max-w-[50ch] text-[length:var(--step-lead)] leading-relaxed text-[var(--ink-soft)]">
@@ -146,7 +146,7 @@ export default function ServicesClient() {
           >
             Text {siteInfo.founder.name}
           </a>
-          <a href="#quote" className="inline-flex items-center justify-center h-12 px-7 rounded-[var(--r-control)] border border-white/20 hover:border-[#7FCFD4]/60 text-[var(--ink)] text-[15px] font-semibold transition-colors">
+          <a href="#quote" className="inline-flex items-center justify-center h-12 px-7 rounded-[var(--r-control)] border border-[var(--hairline)] hover:border-[var(--feature)]/40 text-[var(--ink)] text-[15px] font-semibold transition-colors">
             Or send it here
           </a>
         </div>
@@ -154,10 +154,10 @@ export default function ServicesClient() {
 
       {/* The table, then the form. */}
       <section id="quote" className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-14 sm:pb-20 grid grid-cols-1 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] gap-6 lg:gap-10 items-start scroll-mt-28">
-        <dl className={`${glass} divide-y divide-white/10`}>
+        <dl className={`${glass} divide-y divide-[var(--hairline)]`}>
           {TABLE.map(([k, v]) => (
             <div key={k} className="grid grid-cols-[150px_minmax(0,1fr)] gap-4 px-4 sm:px-5 py-3.5">
-              <dt className="text-[12px] font-mono uppercase tracking-[0.14em] text-[#7FCFD4] pt-0.5">{k}</dt>
+              <dt className="text-[12px] font-mono uppercase tracking-[0.14em] text-[var(--feature)] pt-0.5">{k}</dt>
               <dd className="text-[14.5px] leading-relaxed text-[var(--ink)]">{v}</dd>
             </div>
           ))}
@@ -166,19 +166,19 @@ export default function ServicesClient() {
       </section>
 
       {/* Posted prices. */}
-      <section id="lanes" className="border-y border-white/10 bg-[#0D2F35]/40 scroll-mt-28">
+      <section id="lanes" className="border-y border-[var(--hairline)] bg-[var(--surface)]/60 scroll-mt-28">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
           <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 mb-6">
-            <h2 className="text-[length:var(--step-section)] leading-tight text-white/95" style={display}>Posted prices</h2>
+            <h2 className="text-[length:var(--step-section)] leading-tight text-[var(--ink)]" style={display}>Posted prices</h2>
             <p className="text-[13px] text-[var(--ink-soft)]">Volume pricing below. No setup fees on anything.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12">
             {LANES.map((row, i) => {
               const inner = (
-                <span className={`flex flex-col gap-0.5 py-3.5 border-b border-white/10 ${i >= LANES.length - 1 ? 'md:border-b-0' : ''}`}>
+                <span className={`flex flex-col gap-0.5 py-3.5 border-b border-[var(--hairline)] ${i >= LANES.length - 1 ? 'md:border-b-0' : ''}`}>
                   <span className="flex flex-wrap items-baseline justify-between gap-x-4">
                     <span className="text-[15.5px] font-semibold text-[var(--ink)]">{row.name}</span>
-                    <span className="text-[15.5px] text-[#7FCFD4] font-semibold whitespace-nowrap tabular-nums">{row.value}</span>
+                    <span className="text-[15.5px] text-[var(--feature)] font-semibold whitespace-nowrap tabular-nums">{row.value}</span>
                   </span>
                   {row.note && <span className="text-[13px] leading-snug text-[var(--ink-soft)]">{row.note}</span>}
                 </span>
@@ -192,7 +192,7 @@ export default function ServicesClient() {
           </div>
           <p className="mt-6 text-[13.5px] text-[var(--ink-soft)]">
             What marks, and how it looks on each material:{' '}
-            <Link href="/services/materials" className="text-[#7FCFD4] hover:text-white transition-colors">the materials list</Link>.
+            <Link href="/services/materials" className="text-[var(--feature)] hover:text-[var(--ink)] transition-colors">the materials list</Link>.
           </p>
         </div>
       </section>
@@ -203,10 +203,10 @@ export default function ServicesClient() {
       </section>
 
       {/* The account. */}
-      <section id="account" className="border-y border-white/10 bg-[#0D2F35]/40 scroll-mt-28">
+      <section id="account" className="border-y border-[var(--hairline)] bg-[var(--surface)]/60 scroll-mt-28">
         <div id="business" className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
           <p className={`${eyebrow} mb-3`}>The account</p>
-          <h2 className="text-[length:var(--step-section)] leading-[1.05] text-white/95 max-w-[24ch]" style={display}>
+          <h2 className="text-[length:var(--step-section)] leading-[1.05] text-[var(--ink)] max-w-[24ch]" style={display}>
             Same thing every month? Set it up once.
           </h2>
           <p className="mt-4 max-w-[52ch] text-[length:var(--step-lead)] leading-relaxed text-[var(--ink-soft)]">
@@ -216,7 +216,7 @@ export default function ServicesClient() {
           <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             {ACCOUNT_TERMS(standingDiscount).map(t => (
               <div key={t.h} className={`${glass} p-5`}>
-                <p className="text-[length:var(--step-body)] text-white/95" style={display}>{t.h}</p>
+                <p className="text-[length:var(--step-body)] text-[var(--ink)]" style={display}>{t.h}</p>
                 <p className="mt-1.5 text-[14px] leading-relaxed text-[var(--ink-soft)]">{t.p}</p>
               </div>
             ))}
@@ -224,10 +224,10 @@ export default function ServicesClient() {
 
           <div className="mt-6 grid grid-cols-2 lg:grid-cols-4 gap-3">
             {BUSINESS_TIER_CARDS.map(tier => (
-              <div key={tier.name} className={`rounded-[var(--r-tile)] p-4 border ${tier.freeDelivery ? 'border-[#7FCFD4]/60 bg-white/[0.06]' : 'border-white/12 bg-white/[0.03]'}`}>
+              <div key={tier.name} className={`rounded-[var(--r-tile)] p-4 border ${tier.freeDelivery ? 'border-[var(--feature)]/40 bg-[var(--surface)]' : 'border-[var(--hairline)] bg-[var(--surface)]'}`}>
                 <p className="text-[15px] font-semibold text-[var(--ink)]">{tier.name}</p>
                 <p className="text-[12px] font-mono text-[var(--ink-soft)] mb-2">{tier.range}</p>
-                <p className="text-[length:var(--step-panel)] text-white/95" style={display}>{tier.discount}</p>
+                <p className="text-[length:var(--step-panel)] text-[var(--ink)]" style={display}>{tier.discount}</p>
                 {tier.freeDelivery && (
                   <p className="mt-1.5 text-[12px] leading-snug text-[var(--ink-soft)]">Free delivery any size, NET-{BUSINESS.netTermsDays}</p>
                 )}
@@ -242,14 +242,14 @@ export default function ServicesClient() {
             <Link href="/account" className="inline-flex items-center justify-center h-12 px-7 rounded-[var(--r-control)] bg-[var(--coral)] hover:bg-[var(--coral-hover)] text-white text-[15px] font-semibold transition-colors">
               Open an account
             </Link>
-            <a href={getSmsLink('Hi Zach, I would like to set up a standing account for: ')} className="inline-flex items-center justify-center h-12 px-7 rounded-[var(--r-control)] border border-white/20 hover:border-[#7FCFD4]/60 text-[var(--ink)] text-[15px] font-semibold transition-colors">
+            <a href={getSmsLink('Hi Zach, I would like to set up a standing account for: ')} className="inline-flex items-center justify-center h-12 px-7 rounded-[var(--r-control)] border border-[var(--hairline)] hover:border-[var(--feature)]/40 text-[var(--ink)] text-[15px] font-semibold transition-colors">
               Or text me and I set it up
             </a>
           </div>
 
           <div className="mt-8 flex flex-wrap gap-2">
             {siteInfo.serviceAreas.map(area => (
-              <span key={area} className="px-3 py-1 border border-white/15 rounded-full text-[12.5px] text-[var(--ink-soft)]">{area}</span>
+              <span key={area} className="px-3 py-1 border border-[var(--hairline)] rounded-full text-[12.5px] text-[var(--ink-soft)]">{area}</span>
             ))}
           </div>
         </div>
@@ -261,9 +261,9 @@ export default function ServicesClient() {
       </section>
 
       {/* Close. */}
-      <section className="border-t border-white/10">
+      <section className="border-t border-[var(--hairline)]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex flex-col sm:flex-row sm:items-center gap-5">
-          <p className="text-[length:var(--step-panel)] leading-tight text-white/95" style={display}>
+          <p className="text-[length:var(--step-panel)] leading-tight text-[var(--ink)]" style={display}>
             Send a photo and a count. You will have a real number today.
           </p>
           <a href={getSmsLink('Hi Zach, here is what I need marked: ')} className="sm:ml-auto inline-flex items-center justify-center whitespace-nowrap h-12 px-7 rounded-[var(--r-control)] bg-[var(--coral)] hover:bg-[var(--coral-hover)] text-white text-[15px] font-semibold transition-colors">

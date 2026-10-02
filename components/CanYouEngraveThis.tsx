@@ -104,30 +104,30 @@ export default function CanYouEngraveThis({ compact = false, variant = 'personal
     }
   }
 
-  const field = 'w-full bg-[var(--surface)] border border-[var(--hairline)] rounded-[var(--r-control)] px-3.5 py-3 text-[15px] text-[var(--ink)] placeholder:text-[var(--ink-soft)]/70 outline-none focus:border-[#7FCFD4] transition-colors'
+  const field = 'w-full bg-[var(--surface)] border border-[var(--hairline)] rounded-[var(--r-control)] px-3.5 py-3 text-[15px] text-[var(--ink)] placeholder:text-[var(--ink-soft)]/70 outline-none focus:border-[var(--feature)] transition-colors'
   const label = 'block text-[11px] font-mono uppercase tracking-[0.18em] text-[var(--ink-soft)] mb-1.5'
   const smsText = business ? 'Hi Zach, I need something marked for my business. ' : 'Hi Zach, can you engrave this? '
 
   if (status === 'done') {
     return (
-      <div className="rounded-[var(--r-panel)] border border-[#7FCFD4]/40 bg-white/[0.04] backdrop-blur-md p-6 sm:p-8">
+      <div className="rounded-[var(--r-panel)] border border-[var(--feature)]/40 bg-[var(--surface)] p-6 sm:p-8">
         <p className="text-[length:var(--step-panel)] text-[var(--ink)]" style={{ fontFamily: 'var(--font-display), Georgia, serif' }}>Got it.</p>
         <p className="mt-2 text-[var(--ink-soft)] leading-relaxed">
           I will look at it and send a {business ? 'price' : 'number'} back today, usually within the hour. If it is faster, text me at{' '}
-          <a href={getSmsLink()} className="text-[#7FCFD4] hover:text-white">{siteInfo.phone}</a>.
+          <a href={getSmsLink()} className="text-[var(--feature)] hover:text-[var(--ink)]">{siteInfo.phone}</a>.
         </p>
       </div>
     )
   }
 
   return (
-    <form onSubmit={submit} className={`rounded-[var(--r-panel)] border border-white/12 bg-white/[0.04] backdrop-blur-md ${compact ? 'p-5 sm:p-6' : 'p-6 sm:p-8'}`}>
+    <form onSubmit={submit} className={`rounded-[var(--r-panel)] border border-[var(--hairline)] bg-[var(--surface)] ${compact ? 'p-5 sm:p-6' : 'p-6 sm:p-8'}`}>
       {/* The photo, first. */}
       <div>
         <span className={label}>{business ? 'A photo of the thing, or the logo' : 'The photo'}</span>
         <div className="flex flex-wrap gap-3">
           {shots.map(s => (
-            <div key={s.key} className="relative w-24 h-24 rounded-[var(--r-tile)] overflow-hidden border border-white/12 bg-[#0D2F35]/50">
+            <div key={s.key} className="relative w-24 h-24 rounded-[var(--r-tile)] overflow-hidden border border-[var(--hairline)] bg-[var(--glass-soft)]">
               {s.preview ? (
                 <img src={s.preview} alt="" className="w-full h-full object-cover" />
               ) : (
@@ -136,7 +136,7 @@ export default function CanYouEngraveThis({ compact = false, variant = 'personal
               <button
                 type="button"
                 onClick={() => setShots(prev => prev.filter(x => x.key !== s.key))}
-                className="absolute top-1 right-1 w-6 h-6 rounded-full bg-[#0D2F35]/80 text-white text-xs leading-none"
+                className="absolute top-1 right-1 w-6 h-6 rounded-full bg-[var(--surface)]/90 text-white text-xs leading-none"
                 aria-label="Remove file"
               >
                 ×
@@ -144,7 +144,7 @@ export default function CanYouEngraveThis({ compact = false, variant = 'personal
             </div>
           ))}
           {shots.length < MAX_FILES && (
-            <label className={`w-24 h-24 rounded-[var(--r-tile)] border border-dashed border-[#7FCFD4]/50 hover:border-[#7FCFD4] flex flex-col items-center justify-center text-center text-[12px] text-[#7FCFD4] cursor-pointer transition-colors ${uploading ? 'opacity-50 pointer-events-none' : ''}`}>
+            <label className={`w-24 h-24 rounded-[var(--r-tile)] border border-dashed border-[var(--feature)]/40 hover:border-[var(--feature)] flex flex-col items-center justify-center text-center text-[12px] text-[var(--feature)] cursor-pointer transition-colors ${uploading ? 'opacity-50 pointer-events-none' : ''}`}>
               <span className="text-2xl leading-none mb-1">+</span>
               {uploading ? 'Uploading' : shots.length ? 'Another' : business ? 'Add a file' : 'Add a photo'}
               <input ref={fileRef} type="file" accept={business ? ACCEPT_BUSINESS : ACCEPT_PHOTO} multiple capture={business ? undefined : 'environment'} className="sr-only" onChange={e => addFiles(e.target.files)} />
@@ -211,7 +211,7 @@ export default function CanYouEngraveThis({ compact = false, variant = 'personal
         <input id="cyet-website" type="text" tabIndex={-1} autoComplete="off" value={website} onChange={e => setWebsite(e.target.value)} />
       </div>
 
-      {error && <p className="mt-3 text-sm text-[#E8A598]">{error}</p>}
+      {error && <p className="mt-3 text-sm text-[var(--error)]">{error}</p>}
 
       <div className="mt-5 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-5">
         <button
@@ -222,7 +222,7 @@ export default function CanYouEngraveThis({ compact = false, variant = 'personal
           {status === 'sending' ? 'Sending' : business ? 'Send it, get a price' : 'Send it, get a number'}
         </button>
         <a href={getSmsLink(smsText)} className="text-[14px] text-[var(--ink-soft)] hover:text-[var(--ink)] transition-colors">
-          Or text it to <span className="text-[#7FCFD4]">{siteInfo.phone}</span>
+          Or text it to <span className="text-[var(--feature)]">{siteInfo.phone}</span>
         </a>
       </div>
     </form>

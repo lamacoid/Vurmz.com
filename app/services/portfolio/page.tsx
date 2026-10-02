@@ -37,8 +37,8 @@ export default function PortfolioPage() {
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-10 pb-16">
       <header className="max-w-[60ch]">
-        <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-[#7FCFD4] mb-3">The work</p>
-        <h1 className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] leading-[1.05] text-white/95" style={display}>
+        <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-[var(--feature)] mb-3">The work</p>
+        <h1 className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] leading-[1.05] text-[var(--ink)]" style={display}>
           Eight pieces, so you know what the machine can do.
         </h1>
         <p className="mt-4 text-[length:var(--step-lead)] leading-relaxed text-[var(--ink-soft)]">
@@ -50,10 +50,10 @@ export default function PortfolioPage() {
         {items.map(({ slug, what, item }) => (
           <li key={slug}>
             <Link href={`/services/portfolio/${slug}`} className="group block">
-              <span className="relative block aspect-square rounded-[var(--r-tile)] overflow-hidden border border-white/10">
+              <span className="relative block aspect-square rounded-[var(--r-tile)] overflow-hidden border border-[var(--hairline)]">
                 <Image src={item.src} alt={item.label} fill sizes="(max-width: 1024px) 50vw, 25vw" className="object-cover transition-transform duration-700 group-hover:scale-[1.04]" />
               </span>
-              <span className="block mt-2 text-[14.5px] leading-snug text-[var(--ink)] group-hover:text-white transition-colors">{what}</span>
+              <span className="block mt-2 text-[14.5px] leading-snug text-[var(--ink)] group-hover:text-[var(--ink)] transition-colors">{what}</span>
               <span className="block mt-0.5 text-[11.5px] font-mono tracking-[0.06em] text-[var(--ink-soft)]">{item.material} · {item.process}</span>
             </Link>
           </li>
@@ -65,20 +65,20 @@ export default function PortfolioPage() {
           Also:{' '}
           {rest.map((p, i) => (
             <span key={p.slug}>
-              <Link href={`/services/portfolio/${p.slug}`} className="text-[#7FCFD4] hover:text-white transition-colors">{p.label.toLowerCase()}</Link>
+              <Link href={`/services/portfolio/${p.slug}`} className="text-[var(--feature)] hover:text-[var(--ink)] transition-colors">{p.label.toLowerCase()}</Link>
               {i < rest.length - 1 ? ', ' : '.'}
             </span>
           ))}
         </p>
       )}
 
-      <div className="mt-14 pt-8 border-t border-white/10 flex flex-col sm:flex-row sm:items-center gap-4">
-        <p className="text-[length:var(--step-panel)] leading-tight text-white/95" style={display}>Have something like this? Send a photo.</p>
+      <div className="mt-14 pt-8 border-t border-[var(--hairline)] flex flex-col sm:flex-row sm:items-center gap-4">
+        <p className="text-[length:var(--step-panel)] leading-tight text-[var(--ink)]" style={display}>Have something like this? Send a photo.</p>
         <div className="sm:ml-auto flex flex-wrap gap-3">
           <Link href="/engrave" className="inline-flex items-center justify-center h-11 px-6 rounded-[var(--r-control)] bg-[var(--coral)] hover:bg-[var(--coral-hover)] text-white text-[14.5px] font-semibold transition-colors">
             Get a number
           </Link>
-          <a href={getSmsLink('I saw the work and I have something to engrave: ')} className="inline-flex items-center justify-center h-11 px-6 rounded-[var(--r-control)] border border-white/20 hover:border-[#7FCFD4]/60 text-[var(--ink)] text-[14.5px] font-semibold transition-colors">
+          <a href={getSmsLink('I saw the work and I have something to engrave: ')} className="inline-flex items-center justify-center h-11 px-6 rounded-[var(--r-control)] border border-[var(--hairline)] hover:border-[var(--feature)]/40 text-[var(--ink)] text-[14.5px] font-semibold transition-colors">
             Text {siteInfo.phone}
           </a>
         </div>

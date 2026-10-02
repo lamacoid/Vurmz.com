@@ -5,7 +5,7 @@ interface TrustedByProps {
   theme?: 'landing' | 'shop' | 'services'
 }
 
-// Two names, set quietly in ink. The SVG logo uses currentColor so it takes
+// Three names, set quietly in ink. The SVG logo uses currentColor so it takes
 // the same ink as the text link beside it.
 export default function TrustedBy(_: TrustedByProps) {
   return (
@@ -21,6 +21,20 @@ export default function TrustedBy(_: TrustedByProps) {
           className="flex-shrink-0 text-[length:var(--step-row)] font-medium opacity-70 hover:opacity-100 transition-opacity duration-[var(--t-hover)]"
         >
           Nordstrom Beauty
+        </a>
+        <a
+          href="https://coloradowolverinesbjj.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex-shrink-0 opacity-70 hover:opacity-100 transition-opacity duration-[var(--t-hover)]"
+        >
+          <Image
+            src="/images/clients/colorado-wolverines.png"
+            alt="Colorado Wolverines"
+            width={56}
+            height={56}
+            className="h-12 w-auto"
+          />
         </a>
         <a
           href="http://countylineguitaramps.com"
