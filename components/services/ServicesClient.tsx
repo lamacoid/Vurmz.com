@@ -16,7 +16,7 @@ import CanYouEngraveThis from '@/components/CanYouEngraveThis'
 
 const display = { fontFamily: 'var(--font-display), Georgia, serif' }
 const glass = 'rounded-[var(--r-panel)] border border-[var(--hairline)] bg-[var(--surface)]'
-const eyebrow = 'text-[11px] font-mono tracking-[0.3em] uppercase text-[var(--feature)]'
+const eyebrow = 'text-[11px] font-mono tracking-[0.3em] uppercase text-[var(--eyebrow)]'
 
 // $3 stays $3, $7.5 becomes $7.50. Prices are written as people say them.
 const price = (n: number) => (n % 1 === 0 ? `$${n}` : `$${n.toFixed(2)}`)
@@ -146,7 +146,7 @@ export default function ServicesClient() {
           >
             Text {siteInfo.founder.name}
           </a>
-          <a href="#quote" className="inline-flex items-center justify-center h-12 px-7 rounded-[var(--r-control)] border border-[var(--hairline)] hover:border-[var(--feature)]/40 text-[var(--ink)] text-[15px] font-semibold transition-colors">
+          <a href="#quote" className="inline-flex items-center justify-center h-12 px-7 rounded-[var(--r-control)] border border-[var(--hairline)] hover:border-[var(--glass-edge)] text-[var(--ink)] text-[15px] font-semibold transition-colors">
             Or send it here
           </a>
         </div>
@@ -157,7 +157,7 @@ export default function ServicesClient() {
         <dl className={`${glass} divide-y divide-[var(--hairline)]`}>
           {TABLE.map(([k, v]) => (
             <div key={k} className="grid grid-cols-[150px_minmax(0,1fr)] gap-4 px-4 sm:px-5 py-3.5">
-              <dt className="text-[12px] font-mono uppercase tracking-[0.14em] text-[var(--feature)] pt-0.5">{k}</dt>
+              <dt className="text-[12px] font-mono uppercase tracking-[0.14em] text-[var(--eyebrow)] pt-0.5">{k}</dt>
               <dd className="text-[14.5px] leading-relaxed text-[var(--ink)]">{v}</dd>
             </div>
           ))}
@@ -166,7 +166,7 @@ export default function ServicesClient() {
       </section>
 
       {/* Posted prices. */}
-      <section id="lanes" className="border-y border-[var(--hairline)] bg-[var(--surface)]/60 scroll-mt-28">
+      <section id="lanes" className="room relative overflow-hidden scroll-mt-28" style={{ backgroundImage: 'radial-gradient(ellipse 70% 60% at 15% 0%, rgba(127,207,212,0.16) 0%, transparent 55%)' }}>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
           <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 mb-6">
             <h2 className="text-[length:var(--step-section)] leading-tight text-[var(--ink)]" style={display}>Posted prices</h2>
@@ -178,7 +178,7 @@ export default function ServicesClient() {
                 <span className={`flex flex-col gap-0.5 py-3.5 border-b border-[var(--hairline)] ${i >= LANES.length - 1 ? 'md:border-b-0' : ''}`}>
                   <span className="flex flex-wrap items-baseline justify-between gap-x-4">
                     <span className="text-[15.5px] font-semibold text-[var(--ink)]">{row.name}</span>
-                    <span className="text-[15.5px] text-[var(--feature)] font-semibold whitespace-nowrap tabular-nums">{row.value}</span>
+                    <span className="text-[15.5px] text-[var(--eyebrow)] font-semibold whitespace-nowrap tabular-nums">{row.value}</span>
                   </span>
                   {row.note && <span className="text-[13px] leading-snug text-[var(--ink-soft)]">{row.note}</span>}
                 </span>
@@ -192,7 +192,7 @@ export default function ServicesClient() {
           </div>
           <p className="mt-6 text-[13.5px] text-[var(--ink-soft)]">
             What marks, and how it looks on each material:{' '}
-            <Link href="/services/materials" className="text-[var(--feature)] hover:text-[var(--ink)] transition-colors">the materials list</Link>.
+            <Link href="/services/materials" className="text-[var(--eyebrow)] hover:text-[var(--ink)] transition-colors">the materials list</Link>.
           </p>
         </div>
       </section>
@@ -203,7 +203,7 @@ export default function ServicesClient() {
       </section>
 
       {/* The account. */}
-      <section id="account" className="border-y border-[var(--hairline)] bg-[var(--surface)]/60 scroll-mt-28">
+      <section id="account" className="room relative overflow-hidden scroll-mt-28" style={{ backgroundImage: 'radial-gradient(ellipse 60% 50% at 90% 100%, rgba(127,207,212,0.14) 0%, transparent 60%)' }}>
         <div id="business" className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
           <p className={`${eyebrow} mb-3`}>The account</p>
           <h2 className="text-[length:var(--step-section)] leading-[1.05] text-[var(--ink)] max-w-[24ch]" style={display}>
@@ -224,7 +224,7 @@ export default function ServicesClient() {
 
           <div className="mt-6 grid grid-cols-2 lg:grid-cols-4 gap-3">
             {BUSINESS_TIER_CARDS.map(tier => (
-              <div key={tier.name} className={`rounded-[var(--r-tile)] p-4 border ${tier.freeDelivery ? 'border-[var(--feature)]/40 bg-[var(--surface)]' : 'border-[var(--hairline)] bg-[var(--surface)]'}`}>
+              <div key={tier.name} className={`rounded-[var(--r-tile)] p-4 border ${tier.freeDelivery ? 'border-[var(--glass-edge)] bg-[var(--surface)]' : 'border-[var(--hairline)] bg-[var(--surface)]'}`}>
                 <p className="text-[15px] font-semibold text-[var(--ink)]">{tier.name}</p>
                 <p className="text-[12px] font-mono text-[var(--ink-soft)] mb-2">{tier.range}</p>
                 <p className="text-[length:var(--step-panel)] text-[var(--ink)]" style={display}>{tier.discount}</p>
@@ -242,7 +242,7 @@ export default function ServicesClient() {
             <Link href="/account" className="inline-flex items-center justify-center h-12 px-7 rounded-[var(--r-control)] bg-[var(--coral)] hover:bg-[var(--coral-hover)] text-white text-[15px] font-semibold transition-colors">
               Open an account
             </Link>
-            <a href={getSmsLink('Hi Zach, I would like to set up a standing account for: ')} className="inline-flex items-center justify-center h-12 px-7 rounded-[var(--r-control)] border border-[var(--hairline)] hover:border-[var(--feature)]/40 text-[var(--ink)] text-[15px] font-semibold transition-colors">
+            <a href={getSmsLink('Hi Zach, I would like to set up a standing account for: ')} className="inline-flex items-center justify-center h-12 px-7 rounded-[var(--r-control)] border border-[var(--hairline)] hover:border-[var(--glass-edge)] text-[var(--ink)] text-[15px] font-semibold transition-colors">
               Or text me and I set it up
             </a>
           </div>

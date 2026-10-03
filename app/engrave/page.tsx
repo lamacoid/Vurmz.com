@@ -71,13 +71,13 @@ export default function EngravePage() {
             </Link>
           </div>
 
-          <div className="rounded-[var(--r-panel)] border border-[var(--feature)]/25 bg-[var(--glass-soft)] p-5 sm:p-6">
+          <div className="room rounded-[var(--r-panel)] border border-[var(--glass-edge)] p-5 sm:p-6 relative overflow-hidden" style={{ backgroundImage: 'radial-gradient(ellipse 80% 70% at 10% 0%, rgba(127,207,212,0.18) 0%, transparent 60%)' }}>
             <p className="text-[11px] font-mono tracking-[0.24em] uppercase text-[var(--eyebrow)] mb-3">Do not have it yet?</p>
             <p className="text-[length:var(--step-body)] font-semibold text-[var(--ink)]">Tell me what you want. I go get it.</p>
             <p className="mt-2 text-[14.5px] leading-relaxed text-[var(--ink-soft)]">
               I order it, mark it, and bring it to you. One delivery instead of three: no box to wait on, no handoff, no second trip. The piece at its price, plus ${SOURCING.reserveFee}.
             </p>
-            <Link href="/shop/reserve" className="mt-3 inline-flex items-center text-[14px] font-semibold text-[#B0675D] hover:underline">
+            <Link href="/shop/reserve" className="mt-3 inline-flex items-center text-[14px] font-semibold text-[var(--eyebrow)] hover:underline">
               What I find for people
             </Link>
           </div>

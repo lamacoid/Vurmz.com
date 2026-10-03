@@ -15,6 +15,9 @@ import ItemScroller from '@/components/ItemScroller'
 import GlassImage from '@/components/shop/GlassImage'
 import RotatingTagline from '@/components/RotatingTagline'
 import CanYouEngraveThis from '@/components/CanYouEngraveThis'
+import RotatingHeroBg from '@/components/RotatingHeroBg'
+import VurmzLogo from '@/components/VurmzLogo'
+import { ETCH } from '@/lib/shop-art'
 import EtchArt from '@/components/shop/EtchArt'
 import { DoorEtching } from '@/components/shop/DoorEtchings'
 
@@ -31,6 +34,9 @@ export const metadata: Metadata = {
 const display = { fontFamily: 'var(--font-display), Georgia, serif' }
 const card = 'rounded-[var(--r-panel)] border border-[var(--hairline)] bg-[var(--surface)]'
 const eyebrow = 'text-[11px] font-mono tracking-[0.3em] uppercase text-[var(--eyebrow)]'
+// A glassy teal break on the paper: the reserve's room, used as a band.
+const roomBand = 'room relative overflow-hidden'
+const bloom = { backgroundImage: 'radial-gradient(ellipse 70% 60% at 15% 0%, rgba(127,207,212,0.16) 0%, transparent 55%), radial-gradient(ellipse 60% 50% at 90% 100%, rgba(13,47,53,0.85) 0%, transparent 60%)' }
 
 const PATHS = [
   { h: 'I already have something', p: 'A knife, a laptop, a flask. Send a photo, get a number today.', href: '/engrave', cta: 'Engrave my stuff' },
@@ -57,19 +63,24 @@ export default function Page() {
       <style dangerouslySetInnerHTML={{ __html: 'html{scroll-behavior:smooth}' }} />
       <SiteHeader variant="shop" />
 
-      {/* 1. Hero: the rotating line, then three ways in. */}
-      <section className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-12 pb-12 sm:pb-16">
-        <p className={`${eyebrow} mb-4`}>Laser engraving · {siteInfo.address}</p>
+      {/* 1. Hero: the wordmark over the work, the rotating line, then three ways in. */}
+      <section className="relative px-4 sm:px-6 lg:px-8 pt-10 sm:pt-16 pb-10 sm:pb-14 overflow-hidden">
+        <RotatingHeroBg />
+        <div className="relative z-10 max-w-[1280px] mx-auto">
         <h1 className="sr-only">Laser engraving in {siteInfo.address}. Put your name, logo, or story on something.</h1>
-        <RotatingTagline
-          inline
-          accentColor="#C67A6F"
-          className="block text-[length:var(--step-display)] sm:text-[clamp(3rem,7vw,5.25rem)] leading-[1.05] text-[var(--ink)] max-w-[16ch]"
-        />
-        <p className="mt-5 max-w-[52ch] text-[length:var(--step-lead)] leading-relaxed text-[var(--ink-soft)]">
-          One person in Centennial with industrial engraving equipment. Posted prices, a number the same day, hand-delivered.
-        </p>
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
+        <div className="text-center">
+          <div className="hero-logo-light mx-auto mb-6 justify-center">
+            <VurmzLogo className="h-14 sm:h-[72px]" color="var(--ink)" />
+          </div>
+          <RotatingTagline
+            accentColor="#C67A6F"
+            className="text-[var(--hero-ink)] text-3xl sm:text-4xl lg:text-5xl mb-5 max-w-xl mx-auto"
+          />
+          <p className="mx-auto max-w-[52ch] text-[length:var(--step-lead)] leading-relaxed text-[var(--ink-soft)]">
+            One person in Centennial with industrial engraving equipment. Posted prices, a number the same day, hand-delivered.
+          </p>
+        </div>
+        <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
           {PATHS.map(x => (
             <Link key={x.href} href={x.href} className={`group ${card} hover:border-[var(--feature)]/40 p-5 sm:p-6 flex flex-col transition-colors duration-[var(--t-hover)] puffy-light`}>
               <span className="text-[length:var(--step-panel)] leading-tight text-[var(--ink)]" style={display}>{x.h}</span>
@@ -81,11 +92,13 @@ export default function Page() {
             </Link>
           ))}
         </div>
+        </div>
       </section>
 
-      {/* 2. Bring your own thing. Have it, or let me go get it. */}
-      <section id="engrave" className="border-y border-[var(--hairline)] bg-[var(--surface)]/60 scroll-mt-28">
-        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 grid grid-cols-1 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] gap-8 lg:gap-12 items-start">
+      {/* 2. Bring your own thing. Have it, or let me go get it. The first teal break. */}
+      <section id="engrave" className={`${roomBand} scroll-mt-28`} style={bloom}>
+        <EtchArt tone="cream" src={ETCH.knife} className="absolute -right-10 -bottom-6 w-[420px] aspect-[4/3] opacity-[0.10] pointer-events-none" sizes="420px" />
+        <div className="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 grid grid-cols-1 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] gap-8 lg:gap-12 items-start">
           <div>
             <p className={`${eyebrow} mb-3`}>Bring your own thing</p>
             <h2 className="text-[length:var(--step-section)] leading-[1.05] text-[var(--ink)]" style={display}>
@@ -94,12 +107,12 @@ export default function Page() {
             <p className="mt-4 text-[length:var(--step-lead)] leading-relaxed text-[var(--ink-soft)] max-w-[44ch]">
               Send me a photo and I will tell you if I can mark it and what it costs. One piece is ${SIGNATURE.startingAt} for most jobs.
             </p>
-            <div className="mt-6 rounded-[var(--r-panel)] border border-[var(--feature)]/25 bg-[var(--glass-soft)] p-5">
+            <div className="mt-6 rounded-[var(--r-panel)] border border-[var(--glass-edge)] bg-[var(--glass)] p-5">
               <p className="text-[length:var(--step-body)] font-semibold text-[var(--ink)]">Do not have it yet? I will go get it.</p>
               <p className="mt-1.5 text-[14.5px] leading-relaxed text-[var(--ink-soft)]">
                 Tell me what you want and I order it, mark it, and bring it. One delivery instead of three: no waiting on a box, no handing it off, no second trip. The piece at its price, plus ${SOURCING.reserveFee}.
               </p>
-              <Link href="/shop/reserve" className="mt-3 inline-flex items-center gap-2 text-[14px] font-semibold text-[#B0675D] hover:gap-3 transition-all">
+              <Link href="/shop/reserve" className="mt-3 inline-flex items-center gap-2 text-[14px] font-semibold text-[var(--eyebrow)] hover:gap-3 transition-all">
                 What I find for people
                 <ArrowRightIcon className="w-4 h-4" />
               </Link>
@@ -169,9 +182,10 @@ export default function Page() {
       {/* 5. How it works, the one shared version. */}
       <HowItWorks />
 
-      {/* 6. Services, the anchored business half. */}
-      <section id="services" className="relative bg-[var(--surface)]/60 border-y border-[var(--hairline)] scroll-mt-16">
-        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
+      {/* 6. Services, the anchored business half. The second teal break. */}
+      <section id="services" className={`${roomBand} scroll-mt-16`} style={bloom}>
+        <EtchArt tone="cream" src={ETCH.pen} className="absolute -right-8 top-6 w-[380px] aspect-[4/3] opacity-[0.10] pointer-events-none" sizes="380px" />
+        <div className="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
           <p className={`${eyebrow} mb-3`}>For your work</p>
           <h2 className="text-[length:var(--step-section)] text-[var(--ink)] tracking-tight leading-tight mb-4" style={display}>
             Things I make<br />
@@ -183,7 +197,7 @@ export default function Page() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
             {B2B_LANES.map(lane => (
-              <Link key={lane.h} href={lane.href} className={`group ${card} p-6 hover:border-[var(--feature)]/40 transition-colors puffy-light`}>
+              <Link key={lane.h} href={lane.href} className="group rounded-[var(--r-panel)] border border-[var(--hairline)] bg-[var(--surface)] p-6 hover:border-[var(--glass-edge)] hover:bg-[var(--glass)] transition-colors">
                 <h3 className="font-semibold text-[var(--ink)] mb-2 flex items-center justify-between">
                   {lane.h}
                   <ArrowRightIcon className="w-4 h-4 text-[var(--eyebrow)] opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
@@ -198,7 +212,7 @@ export default function Page() {
               Everything for business
               <ArrowRightIcon className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
-            <a href={getSmsLink('Hi, I have a business engraving question')} className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-[var(--ink)]/25 text-[var(--ink)] font-semibold text-sm rounded-[var(--r-control)] hover:border-[var(--ink)] transition-colors">
+            <a href={getSmsLink('Hi, I have a business engraving question')} className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-[var(--ink)]/35 text-[var(--ink)] font-semibold text-sm rounded-[var(--r-control)] hover:border-[var(--ink)] transition-colors">
               <ChatBubbleLeftIcon className="w-4 h-4" />
               Text {siteInfo.phone}
             </a>
@@ -211,7 +225,7 @@ export default function Page() {
       </section>
 
       {/* 7. About. */}
-      <section className="border-b border-[var(--hairline)]">
+      <section>
         <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
             <div className="relative aspect-[4/3] overflow-hidden rounded-sm puffy-light">
@@ -238,7 +252,7 @@ export default function Page() {
       </section>
 
       {/* 8. Contact. */}
-      <section id="contact" className="bg-[var(--surface)]/60 scroll-mt-16">
+      <section id="contact" className="bg-[var(--surface)]/60 border-t border-[var(--hairline)] scroll-mt-16">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16">
           <p className={`${eyebrow} mb-3 text-center`}>Contact</p>
           <h2 className="text-[length:var(--step-section)] text-[var(--ink)] tracking-tight mb-2 text-center" style={display}>
