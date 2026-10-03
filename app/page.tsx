@@ -38,7 +38,7 @@ const PATHS = [
   { h: 'I am ordering for a business', p: 'Pens, cards, labels, coasters, knife crews. Posted prices by the run.', href: '/services', cta: 'Business pricing' },
 ]
 
-const WORK_SLUGS = ['culinary-cleaver', 'medieval-water-bottle', 'eye-storm-mirror', 'denver-map-mirror', 'macbook-personalization', 'clga-amp-faceplate', 'branded-tumbler', 'pocket-knife']
+const WORK_SLUGS = ['wolverines-knife', 'culinary-cleaver', 'medieval-water-bottle', 'denver-map-mirror', 'macbook-personalization', 'clga-amp-faceplate', 'branded-tumbler', 'pocket-knife']
 const WORK = WORK_SLUGS.map(s => portfolioItems.find(p => p.slug === s)).filter((p): p is (typeof portfolioItems)[number] => !!p)
 
 const SHOP = [SHELF, ...DOORS.filter(d => d.key !== 'business')]

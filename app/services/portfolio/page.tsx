@@ -20,6 +20,7 @@ const display = { fontFamily: 'var(--font-display), Georgia, serif' }
 
 // The eight strongest, with a plain caption: what it is, not a pitch.
 const STRONGEST: Array<{ slug: string; what: string }> = [
+  { slug: 'wolverines-knife', what: 'A championship knife, two logos and a line on the blade' },
   { slug: 'culinary-cleaver', what: 'A cleaver, named for the chef' },
   { slug: 'macbook-personalization', what: 'A MacBook lid, a columbine on the aluminum' },
   { slug: 'denver-map-mirror', what: 'A Denver street map on a beveled mirror' },
@@ -27,7 +28,6 @@ const STRONGEST: Array<{ slug: string; what: string }> = [
   { slug: 'pocket-knife', what: 'A pocket knife, pattern on the bolster' },
   { slug: 'clga-amp-faceplate', what: 'An amp faceplate, a recurring run' },
   { slug: 'branded-tumbler', what: 'A tumbler with a Cherry Creek logo' },
-  { slug: 'eye-storm-mirror', what: 'Original art on a hexagonal mirror' },
 ]
 
 export default function PortfolioPage() {

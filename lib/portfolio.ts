@@ -27,6 +27,18 @@ export interface PortfolioItem {
 
 export const portfolioItems: PortfolioItem[] = [
   {
+    slug: 'wolverines-knife',
+    src: '/portfolio/wolverines-knife.jpg',
+    label: 'Championship Knife for the Colorado Wolverines',
+    context: 'Two logos and a line on a stainless blade, for a jiu-jitsu team',
+    material: 'Stainless steel fixed blade',
+    process: 'annealed',
+    customerType: 'Business',
+    leadTimeDays: 2,
+    tags: ['metal', 'knives', 'business'],
+    story: 'The Colorado Wolverines wanted a knife for their Desert Duals champion: the team logo, the line, and the event logo, all on the blade. The team logo came as a full-color file, so I redrew it as a single-tone engraving file first, then marked the blade dark into the steel. Both files are on hand now, so the next one is a text with a count.',
+  },
+  {
     slug: 'denver-map-mirror',
     src: '/portfolio/denver-map-mirror-closeup.jpg',
     label: 'Denver Metro Map on Mirror',
