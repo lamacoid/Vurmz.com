@@ -20,7 +20,7 @@ const display = { fontFamily: 'var(--font-display), Georgia, serif' }
 
 // The eight strongest, with a plain caption: what it is, not a pitch.
 const STRONGEST: Array<{ slug: string; what: string }> = [
-  { slug: 'wolverines-knife', what: 'A championship knife, two logos and a line on the blade' },
+  { slug: 'wolverines-knife', what: 'Five KA-BARs for a team of champions' },
   { slug: 'culinary-cleaver', what: 'A cleaver, named for the chef' },
   { slug: 'macbook-personalization', what: 'A MacBook lid, a columbine on the aluminum' },
   { slug: 'denver-map-mirror', what: 'A Denver street map on a beveled mirror' },
