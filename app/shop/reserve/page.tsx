@@ -81,7 +81,7 @@ export default function ReservePage() {
           mark it with your words, and bring it to your door, receipt in the box.
         </p>
         <p className="mt-3 font-mono text-[length:var(--step-fine)] tracking-[0.04em] text-[#DED6C3]/70">
-          The piece at its price + {usd(SOURCING.reserveFee)} to find it, mark it, and bring it
+          Piece at cost. {usd(SOURCING.reserveFee)} for everything else: finding it, marking it, bringing it
         </p>
 
         {/* The shelves */}
@@ -94,7 +94,7 @@ export default function ReservePage() {
           </p>
           <p className="mt-3 max-w-[64ch] text-[length:var(--step-row)] leading-relaxed text-[#DED6C3]/80">
             Most of what I source is something a customer named: a particular steel, a watch, a bigger board, a piece from a maker I have not listed, the everyday brands too.
-            Tell me what you are looking for and I will find it. The {usd(SOURCING.reserveFee)} covers finding it, the engraving, and the delivery.
+            Tell me what you are looking for and I will find it. The piece is at cost, what it costs to buy, receipt in the box. The {usd(SOURCING.reserveFee)} is the fee on top, and it covers finding it, engraving it, and delivering it.
             A deposit holds the piece before I buy, fully returned if you change your mind before then.
           </p>
           <a

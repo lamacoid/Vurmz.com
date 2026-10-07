@@ -46,7 +46,7 @@ export const SHOP_CATEGORIES: ShopCategory[] = [
     faqs: [
       { question: 'What can be engraved?', answer: 'Metal, wood, glass, leather, slate, acrylic, most hard plastics. If it is solid, it very likely marks. Send a photo and I will tell you how it will look on that material before you decide.' },
       { question: 'Can you mark something I already own?', answer: 'Yes. That is the house offer, your own piece engraved. This page is for pieces I supply.' },
-      { question: 'I know what I want but I do not have it.', answer: 'Happy to source. Name the piece and I find it, buy it, engrave it, and bring it to you. The piece is billed at its price plus $65 to find it, mark it, and bring it, and a deposit holds it.' },
+      { question: 'I know what I want but I do not have it.', answer: 'Happy to source. Name the piece and I find it, buy it, engrave it, and bring it to you. The piece is at cost, what it costs to buy. The $65 fee on top covers finding it, marking it, and bringing it, and a deposit holds it.' },
       { question: 'How long does it take?', answer: 'Most pieces are ready within three days. If there is a date, tell me and I will say plainly whether it works.' },
       { question: 'Can I ask questions before it is made?', answer: 'Always. Text me a photo and what you have in mind and I will tell you exactly how it will look on that material.' },
     ],
@@ -108,7 +108,7 @@ export const SHOP_CATEGORIES: ShopCategory[] = [
       { question: 'Can you engrave the one I already have?', answer: 'Yes. That is your own piece, engraved. Send a photo and I will tell you how the coating will mark.' },
       { question: 'How does a powder-coated tumbler mark?', answer: 'The laser lifts the coating to the bare steel underneath, so the mark is bright metal against the color. It does not peel, fade, or wash off. It is the most asked-for look.' },
       { question: 'Do you do full wraps?', answer: 'Yes. A design around the whole cup is possible. Send the art and I will quote it.' },
-      { question: 'I want a particular brand.', answer: 'Happy to source. Name it and I find it, engrave it, and bring it. The piece is billed at its price plus $65 to find it, mark it, and bring it.' },
+      { question: 'I want a particular brand.', answer: 'Happy to source. Name it and I find it, engrave it, and bring it. The piece is at cost, what it costs to buy. The $65 fee on top covers finding it, marking it, and bringing it.' },
     ],
     relatedCategories: ['coasters', 'gifts'],
     howItWorks: [

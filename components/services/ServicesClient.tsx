@@ -76,8 +76,8 @@ const LANES: { name: string; value: string; note?: string; href?: string }[] = [
   },
   {
     name: 'Happy to source',
-    value: `${price(SOURCING.reserveFee)} plus the piece`,
-    note: 'Name the piece. I find it, mark it, and bring it.',
+    value: `${price(SOURCING.reserveFee)} fee, piece at cost`,
+    note: 'Name the piece. You pay what it costs to buy; the fee covers finding it, marking it, and bringing it.',
     href: '/shop/reserve',
   },
   {

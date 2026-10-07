@@ -143,7 +143,7 @@ export default function ReservePiece({ cat, makers, also }: { cat: ReserveCatego
             <dt className="text-[10px] font-mono tracking-[0.24em] uppercase text-[#7FCFD4]">What it comes to</dt>
             <dd className="mt-1 text-[length:var(--step-body)] text-[#F3EEE2] tabular-nums">
               {makers.length ? `${usd(deliveredPrice(makers[0]))} to ${usd(deliveredPrice(makers[makers.length - 1]))}` : ''}
-              <span className="block text-[11px] text-[#DED6C3]/55 mt-0.5">the piece at its price, plus {usd(SOURCING.reserveFee)} to find it, mark it, and bring it</span>
+              <span className="block text-[11px] text-[#DED6C3]/55 mt-0.5">the piece at cost, plus the {usd(SOURCING.reserveFee)} fee for finding it, marking it, and bringing it</span>
             </dd>
           </div>
           <div className="bg-[#123F47]/80 backdrop-blur-md px-5 py-4">
@@ -271,7 +271,7 @@ export default function ReservePiece({ cat, makers, also }: { cat: ReserveCatego
                 </div>
               </dl>
               <p className="mt-3 text-[11px] leading-relaxed text-[#DED6C3]/55">
-                The {cat.noun} at its price, receipt in the box. A deposit of {usd(SOURCING.deposit(item.retail))} holds it before I buy, returned in full if you change your mind before then. The rest when it is in your hands.
+                The {cat.noun} at cost, receipt in the box, and the fee on top. A deposit of {usd(SOURCING.deposit(item.retail))} holds it before I buy, returned in full if you change your mind before then. The rest when it is in your hands.
               </p>
               {done ? (
                 <div className="mt-5 rounded-[var(--r-tile)] border border-[#7FCFD4]/50 bg-[#7FCFD4]/10 p-4">

@@ -110,7 +110,7 @@ export default function Page() {
             <div className="mt-6 rounded-[var(--r-panel)] border border-[var(--glass-edge)] bg-[var(--glass)] p-5">
               <p className="text-[length:var(--step-body)] font-semibold text-[var(--ink)]">Do not have it yet? I will go get it.</p>
               <p className="mt-1.5 text-[14.5px] leading-relaxed text-[var(--ink-soft)]">
-                Tell me what you want and I order it, mark it, and bring it. One delivery instead of three: no waiting on a box, no handing it off, no second trip. The piece at its price, plus ${SOURCING.reserveFee}.
+                Tell me what you want and I order it, mark it, and bring it. One delivery instead of three: no waiting on a box, no handing it off, no second trip. The piece is at cost, what it costs to buy. ${SOURCING.reserveFee} covers everything else: finding it, marking it, bringing it.
               </p>
               <Link href="/shop/reserve" className="mt-3 inline-flex items-center gap-2 text-[14px] font-semibold text-[var(--eyebrow)] hover:gap-3 transition-all">
                 What I find for people

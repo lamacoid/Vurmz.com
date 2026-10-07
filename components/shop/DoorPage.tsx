@@ -52,7 +52,7 @@ export default function DoorPage({ section: { door, tiles } }: { section: Sectio
 
       {found && (
         <p className="mt-10 text-[length:var(--step-row)] text-[var(--ink-soft)] max-w-[70ch]">
-          Anything marked <span className="text-[var(--feature)]">found for you</span> is a piece I go and buy at its price, plus ${SOURCING.reserveFee} to find it, mark it, and bring it.
+          Anything marked <span className="text-[var(--feature)]">found for you</span> is a piece I go and buy for you. The piece is at cost, and ${SOURCING.reserveFee} on top covers finding it, marking it, and bringing it.
           Not on the list? Tell me what you are looking for and I will source it.{' '}
           <Link href="/shop/reserve" className="text-[var(--feature)] hover:text-[var(--ink)] transition-colors">The reserve, in full.</Link>
         </p>

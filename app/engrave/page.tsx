@@ -75,7 +75,7 @@ export default function EngravePage() {
             <p className="text-[11px] font-mono tracking-[0.24em] uppercase text-[var(--eyebrow)] mb-3">Do not have it yet?</p>
             <p className="text-[length:var(--step-body)] font-semibold text-[var(--ink)]">Tell me what you want. I go get it.</p>
             <p className="mt-2 text-[14.5px] leading-relaxed text-[var(--ink-soft)]">
-              I order it, mark it, and bring it to you. One delivery instead of three: no box to wait on, no handoff, no second trip. The piece at its price, plus ${SOURCING.reserveFee}.
+              I order it, mark it, and bring it to you. One delivery instead of three: no box to wait on, no handoff, no second trip. The piece is at cost, what it costs to buy. ${SOURCING.reserveFee} covers everything else: finding it, marking it, bringing it.
             </p>
             <Link href="/shop/reserve" className="mt-3 inline-flex items-center text-[14px] font-semibold text-[var(--eyebrow)] hover:underline">
               What I find for people

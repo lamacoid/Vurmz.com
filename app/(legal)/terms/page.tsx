@@ -48,7 +48,7 @@ export default function TermsPage() {
     {
       title: 'The reserve: pieces I buy for you',
       items: [
-        { term: 'What it is', desc: `You name a piece, or pick one of my starting points, and I find it, buy it new, engrave it with your words, and bring it to you. You pay the piece at its price with the receipt in the box, plus $${fee} that covers finding it, the engraving, and the delivery. Gift boxing and a second engraving placement are priced separately.` },
+        { term: 'What it is', desc: `You name a piece, or pick one of my starting points, and I find it, buy it new, engrave it with your words, and bring it to you. The piece is billed at cost, what it costs me to buy, with the receipt in the box. The $${fee} fee is on top of that and covers finding it, the engraving, and the delivery. Gift boxing and a second engraving placement are priced separately.` },
         { term: 'The deposit', desc: 'A reservation is not an order until the deposit is paid. The deposit is the price of the piece plus half the fee. Until I have bought the piece, you can cancel and the deposit comes back in full. Once I have bought it, the deposit covers the piece, and the balance is due when it is in your hands.' },
         { term: 'Prices on the site', desc: 'The delivered prices shown are based on the maker\'s list price on the day I checked. If the store price is different when I go to buy it, I tell you the real number before I buy, and you can say no.' },
         { term: 'Availability', desc: 'Some pieces are stocked locally and some are ordered in. I give you the honest lead time before you commit. If a piece cannot be had, the deposit comes back in full.' },

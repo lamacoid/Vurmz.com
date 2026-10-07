@@ -101,7 +101,7 @@ export async function POST(req: NextRequest) {
     // Money, from the source of truth.
     const base = deliveredPrice(item)
     const items = [
-      { description: `${item.name} (${item.maker}) at its price`, qty: 1, unitPriceCents: item.retail * 100 },
+      { description: `${item.name} (${item.maker}) at cost`, qty: 1, unitPriceCents: item.retail * 100 },
       { description: 'Found, engraved, hand delivered', qty: 1, unitPriceCents: (base - item.retail) * 100 },
       ...(body.giftBox ? [{ description: 'Gift box', qty: 1, unitPriceCents: SOURCING.giftBox * 100 }] : []),
       ...(body.second ? [{ description: 'Second placement', qty: 1, unitPriceCents: SOURCING.secondLocation * 100 }] : []),
@@ -191,7 +191,7 @@ export async function POST(req: NextRequest) {
       const bodyText = [
         `Your ${item.name} is reserved, ${quote.number}.`,
         `The words: "${text}" in ${font.label}, on the ${placement.toLowerCase()}.${body.giftBox ? ' Gift box, yes.' : ''}${body.second ? ' A second placement, yes.' : ''}`,
-        `${usd(total)} delivered: the ${item.noun} at ${usd(item.retail)}, receipt in the box, plus ${usd(SOURCING.reserveFee)} to find it, mark it, and bring it. I will text or email you today for a ${usd(deposit)} deposit, which holds the piece before I buy it and comes back in full if you change your mind before then.`,
+        `${usd(total)} delivered: the ${item.noun} at cost, ${usd(item.retail)} with the receipt in the box, plus the ${usd(SOURCING.reserveFee)} fee for finding it, marking it, and bringing it. I will text or email you today for a ${usd(deposit)} deposit, which holds the piece before I buy it and comes back in full if you change your mind before then.`,
         item.leadTime,
         `Zach`,
       ].join('\n\n')
