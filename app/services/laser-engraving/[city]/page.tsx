@@ -3,6 +3,7 @@ import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { ArrowRightIcon, ChatBubbleLeftIcon } from '@heroicons/react/24/outline'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
+import { SIGNATURE } from '@/lib/pricing'
 import Breadcrumbs from '@/components/Breadcrumbs'
 
 // ---------------------------------------------------------------------------
@@ -80,7 +81,7 @@ const cityData: Record<string, CityData> = {
       'Englewood is right in the heart of the south Denver metro. From the shops along South Broadway to the offices near CityCenter Englewood, I do custom engraving with free local delivery.',
       'If you run a restaurant, brewery, or retail shop in the South Broadway corridor, engraved coasters, pint glasses, and metal business cards are a solid way to stand out. Engraved, not printed; people notice the difference.',
       'Englewood also has a lot of medical and professional offices. Engraved pens, nameplates, and awards are a practical way to get your brand in front of patients, clients, and staff. I handle everything from design to delivery.',
-      'Pricing is straightforward. Custom engraving starts at $35, and I stock pens, keychains, coasters, and metal business cards in ready-to-engrave packs. Text me what you need and I will get back to you with a quote.',
+      `Pricing is straightforward. Custom engraving starts at $${SIGNATURE.startingAt}, and I stock pens, keychains, coasters, and metal business cards in ready-to-engrave packs. Text me what you need and I will get back to you with a quote.`,
     ],
   },
   'castle-rock': {
@@ -181,7 +182,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!city) return {}
 
   const title = `Laser Engraving in ${city.name}, CO`
-  const description = `Professional laser engraving in ${city.name}, Colorado. Branded pen packs, metal service tags, custom engraving starting at $35. Next-day turnaround, hand-delivered by VURMZ.`
+  const description = `Professional laser engraving in ${city.name}, Colorado. Branded pen packs, metal service tags, custom engraving starting at $${SIGNATURE.startingAt}. Next-day turnaround, hand-delivered by VURMZ.`
 
   return {
     title,

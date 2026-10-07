@@ -31,12 +31,6 @@ const OFFERS = [
     href: getSmsLink('Hi Zach. I have a piece of jewelry to mark: '),
   },
   {
-    h: 'Boxed, and marked twice',
-    p: `A gift box for ${usd(SOURCING.giftBox)}. A second placement, the inside of a lid or the back of a blade, for ${usd(SOURCING.secondLocation)}.`,
-    cta: 'Ask for it with the piece',
-    href: getSmsLink('Hi Zach. From the reserve list, boxed, I would like a '),
-  },
-  {
     h: 'Cards for the office',
     p: 'Anodized aluminum, designed here on the site, so you see the layout before a single card is cut. Sets of ten and up.',
     cta: 'Design a set',
