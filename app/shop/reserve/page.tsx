@@ -117,8 +117,8 @@ export default function ReservePage() {
         </div>
 
         <p className="mt-12 max-w-[56ch] text-[length:var(--step-row)] leading-relaxed text-[#DED6C3]/75">
-          Same hands, same care, same delivery run as everything else I make. The coasters and the Shun get
-          the same care. I am {siteInfo.founder.name}, one shop in {siteInfo.city}.
+          Same hands, same care, same delivery run as everything else I make. The coasters and the Miyabi get
+          the same care. Made and delivered from {siteInfo.city}.
         </p>
         <p className="mt-6 max-w-[64ch] text-[11px] leading-relaxed text-[#DED6C3]/45">
           VURMZ is an independent engraver, not affiliated with or endorsed by any maker named here. Engraving a piece may void its maker&apos;s warranty. The deposit, cancellation, and guarantee terms are in the <Link href="/terms" className="underline decoration-[#DED6C3]/30 hover:text-[#DED6C3]/80">terms</Link>.
