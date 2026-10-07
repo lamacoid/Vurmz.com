@@ -1,5 +1,6 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { designById } from '@/lib/design/sheet'
 import { useCart } from '@/lib/cart/store'
 import { fontOptions } from '@/lib/fonts'
 import { menuPrice } from '@/lib/menu-format'
@@ -44,6 +45,14 @@ export default function AddToCart(props: {
   const [qty, setQty] = useState(1)
   const [added, setAdded] = useState(false)
   const [engraving, setEngraving] = useState<EngravingValue>({ text: '', fontValue: 'zen-kurenaido', placement: '', element: null })
+  // A design picked on the wall (/designs) arrives as ?design=de_xxx and is
+  // already chosen when the form opens.
+  useEffect(() => {
+    const id = new URLSearchParams(window.location.search).get('design')
+    if (!id) return
+    const el = designById(id)
+    if (el) setEngraving(prev => (prev.element ? prev : { ...prev, element: el }))
+  }, [])
   const [file, setFile] = useState<AttachedFile | null>(null)
   const [design, setDesign] = useState<CardDesign | null>(null)
   const designer = props.engravable !== false && (props.cardMaterials?.length ?? 0) > 0

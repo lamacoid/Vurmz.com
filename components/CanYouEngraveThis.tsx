@@ -10,7 +10,8 @@
  * The business variant asks for a count and a logo instead of the words,
  * and takes SVG and PDF, because that is what a logo arrives as.
  */
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { designById, sheetFor } from '@/lib/design/sheet'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 import { SIGNATURE } from '@/lib/pricing'
 
@@ -36,6 +37,14 @@ export default function CanYouEngraveThis({ compact = false, variant = 'personal
   const [status, setStatus] = useState<'idle' | 'sending' | 'done' | 'error'>('idle')
   const [error, setError] = useState('')
   const fileRef = useRef<HTMLInputElement>(null)
+
+  // Arriving from the design wall: name the design in the message.
+  useEffect(() => {
+    const id = new URLSearchParams(window.location.search).get('design')
+    if (!id) return
+    const el = designById(id)
+    if (el) setWords(prev => prev || `${sheetFor(el.category).name} design ${el.label.replace(/^\D+/, '')} from the wall (${el.id})`)
+  }, [])
 
   async function addFiles(list: FileList | null) {
     if (!list) return

@@ -4,6 +4,7 @@ import { siteInfo, getSmsLink } from '@/lib/site-info'
 import VurmzLogo from '@/components/VurmzLogo'
 
 const PRODUCTS = [
+  { label: 'The design wall', href: '/designs' },
   { label: 'In stock', href: '/shop/shelf' },
   { label: 'Your own piece', href: '/engrave' },
   { label: 'Knives', href: '/shop/knives' },

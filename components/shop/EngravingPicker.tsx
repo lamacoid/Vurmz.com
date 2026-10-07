@@ -7,7 +7,8 @@
  * selected face (app/fonts.css loads every face globally), so what you
  * type is the real font: the form responds, it never simulates the piece.
  */
-import { useState, type ReactNode } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
+import Link from 'next/link'
 import { fontOptions } from '@/lib/fonts'
 import { plateFor, GRAIN } from '@/lib/plate'
 import DesignElementPicker, { type DesignElement } from './DesignElementPicker'
@@ -51,6 +52,8 @@ export default function EngravingPicker({
   // Start on whichever path already has something in it; otherwise wait
   // for the choice.
   const [mode, setMode] = useState<Mode | null>(value.element ? 'design' : value.text ? 'text' : null)
+  // A design chosen on the wall arrives after mount; open that path for it.
+  useEffect(() => { if (value.element && mode === null) setMode('design') }, [value.element, mode])
   const selected = fontOptions.find(f => f.value === value.fontValue) ?? fontOptions[0]
   const plate = plateFor(productName, finishHex)
   const shown = value.text.trim()
@@ -175,6 +178,9 @@ export default function EngravingPicker({
         <>
           {preview}
           <DesignElementPicker selected={value.element} onSelect={el => onChange({ ...value, element: el })} />
+          <p className="mt-2 text-[11px] text-[var(--ink-soft)]">
+            Want to see them all at once? <Link href="/designs" target="_blank" className="text-[var(--eyebrow)] font-semibold hover:underline">Browse the design wall &rarr;</Link>
+          </p>
           <div className="mt-3">{textControls}</div>
           {placement}
         </>

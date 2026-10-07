@@ -12,6 +12,7 @@ import VurmzLogo from '@/components/VurmzLogo'
 const NAV_LINKS = [
   // Ways to use VURMZ, not everything it sells (2026-09-30).
   { label: 'Shop', href: '/shop' },
+  { label: 'Designs', href: '/designs' },
   { label: 'Engrave your stuff', href: '/engrave' },
   { label: 'Business', href: '/services' },
   { label: 'Work', href: '/services/portfolio' },
