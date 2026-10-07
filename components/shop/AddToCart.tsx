@@ -48,7 +48,12 @@ export default function AddToCart(props: {
   // A design picked on the wall (/designs) arrives as ?design=de_xxx and is
   // already chosen when the form opens.
   useEffect(() => {
-    const id = new URLSearchParams(window.location.search).get('design')
+    let id = new URLSearchParams(window.location.search).get('design')
+    if (!id) {
+      // Picked on the wall, then a product chosen from the shop: the
+      // design rides along in session storage and is used once.
+      try { id = sessionStorage.getItem('vurmz:design'); if (id) sessionStorage.removeItem('vurmz:design') } catch { id = null }
+    }
     if (!id) return
     const el = designById(id)
     if (el) setEngraving(prev => (prev.element ? prev : { ...prev, element: el }))

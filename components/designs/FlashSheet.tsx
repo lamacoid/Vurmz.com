@@ -152,7 +152,11 @@ export default function FlashSheet({ initialSheet = '' }: { initialSheet?: strin
                   <Link href={`/engrave?design=${open.id}`} className="inline-flex items-center justify-center h-11 px-5 rounded-[var(--r-control)] bg-[var(--coral)] hover:bg-[var(--coral-hover)] text-white text-[14.5px] font-semibold transition-colors">
                     Put it on my own thing
                   </Link>
-                  <Link href={`/shop?design=${open.id}`} className="inline-flex items-center justify-center h-11 px-5 rounded-[var(--r-control)] border border-[var(--ink)]/25 hover:border-[var(--ink)] text-[var(--ink)] text-[14.5px] font-semibold transition-colors">
+                  <Link
+                    href="/shop"
+                    onClick={() => { try { sessionStorage.setItem('vurmz:design', open.id) } catch { /* private mode */ } }}
+                    className="inline-flex items-center justify-center h-11 px-5 rounded-[var(--r-control)] border border-[var(--ink)]/25 hover:border-[var(--ink)] text-[var(--ink)] text-[14.5px] font-semibold transition-colors"
+                  >
                     Put it on something from the shop
                   </Link>
                   <button type="button" onClick={() => setOpen(null)} className="mt-1 text-[13px] text-[var(--ink-soft)] hover:text-[var(--ink)]">Back to the wall</button>
