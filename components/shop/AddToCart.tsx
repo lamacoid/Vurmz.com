@@ -260,7 +260,7 @@ export default function AddToCart(props: {
           line only renders where it isn't already said. */}
       {!engravable && (
         <p className="mt-2 text-[11px] text-[var(--ink-soft)]">
-          One person makes it, start to finish.
+          Made in Centennial, checked before it leaves.
         </p>
       )}
     </div>

@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>VURMZ invoice INV-1001</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  @page{size:8.5in 11in;margin:0}
+  :root{--page:#123F47;--deep:#0D2F35;--ink:#F3EEE2;--soft:rgba(222,214,195,.8);--teal:#7FCFD4;--hair:rgba(255,255,255,.16)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:8.5in;height:11in;background:var(--page);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body{font-family:Inter,system-ui,sans-serif;color:var(--soft);position:relative;overflow:hidden}
+  .bloom{position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 20% 10%,rgba(127,207,212,.12) 0%,transparent 55%),radial-gradient(ellipse 60% 45% at 85% 90%,rgba(13,47,53,.85) 0%,transparent 60%)}
+  .frame{position:absolute;inset:.42in;border:1px solid var(--hair);border-radius:6px}
+  .frame:after{content:"";position:absolute;inset:5px;border:1px solid rgba(255,255,255,.07);border-radius:4px}
+  .page{position:absolute;inset:.42in;padding:.55in .6in .5in;display:flex;flex-direction:column}
+  .mono{font-family:ui-monospace,Menlo,monospace;letter-spacing:.22em;text-transform:uppercase;font-size:9.5px;color:var(--teal)}
+  .top{display:flex;justify-content:space-between;align-items:flex-start}
+  .mark{width:2.2in;aspect-ratio:23.7/7.18;background:var(--ink);-webkit-mask:url(file:///Users/zacharydemillo/Projects/VURMZ/Main%20Site/public/images/vurmz-wordmark.svg) no-repeat left center/contain;mask:url(file:///Users/zacharydemillo/Projects/VURMZ/Main%20Site/public/images/vurmz-wordmark.svg) no-repeat left center/contain}
+  .top .right{text-align:right;font-size:11.5px;line-height:1.6}
+  .top .right b{display:block;font-family:Fraunces,Georgia,serif;font-weight:400;font-size:30px;color:rgba(255,255,255,.95);line-height:1;margin-bottom:6px;letter-spacing:0}
+  h1{font-family:Fraunces,Georgia,serif;font-weight:400;font-size:40px;line-height:1.05;color:rgba(255,255,255,.95);margin-top:.45in;max-width:5.1in}
+  h1 em{font-style:italic;color:var(--teal)}
+  .meta{margin-top:.3in;display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:.3in;font-size:12px;line-height:1.55}
+  .meta .mono{display:block;margin-bottom:6px}
+  .meta strong{color:var(--ink);font-weight:600}
+  table{width:100%;border-collapse:collapse;margin-top:.38in;font-size:12.5px}
+  th{text-align:left;font-family:ui-monospace,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;font-size:9px;color:var(--teal);font-weight:400;padding:0 0 8px;border-bottom:1px solid var(--hair)}
+  th.n,td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+  td{padding:12px 0;border-bottom:1px solid var(--hair);vertical-align:top;color:var(--ink);line-height:1.45}
+  td small{display:block;color:var(--soft);font-size:11px;margin-top:3px}
+  td.q{text-align:center;white-space:nowrap}
+  tr.total td{border-bottom:0;padding-top:16px}
+  tr.total td.label{font-family:Fraunces,Georgia,serif;font-size:18px;color:rgba(255,255,255,.95)}
+  tr.total td.n{font-family:Fraunces,Georgia,serif;font-size:30px;color:var(--teal);line-height:1}
+  .art{position:absolute;right:.7in;top:1.55in;width:1.55in;opacity:.85}
+  .notes{margin-top:.3in;font-size:11.5px;line-height:1.6;max-width:5.9in}
+  .notes p+p{margin-top:8px}
+  .foot{margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end;gap:.3in;border-top:1px solid var(--hair);padding-top:14px;font-size:11px;line-height:1.6}
+  .foot .pillars{font-family:ui-monospace,Menlo,monospace;letter-spacing:.26em;text-transform:uppercase;font-size:10px;color:var(--teal)}
+  .foot a{color:var(--teal);text-decoration:none}
+</style></head>
+<body>
+<div class="bloom"></div><div class="frame"></div>
+<div class="page">
+  <div class="top">
+    <div>
+      <div class="mark" role="img" aria-label="VURMZ"></div>
+      <p class="mono" style="margin-top:10px">Laser engraving · Centennial, Colorado</p>
+    </div>
+    <div class="right">
+      <b>Invoice</b>
+      <span class="mono">No.</span> INV-1001<br>
+      <span class="mono">Date</span> September 30, 2026<br>
+      <span class="mono">Due</span> On receipt
+    </div>
+  </div>
+
+  <h1>Five KA-BARs, marked for the <em>Colorado Wolverines.</em></h1>
+  <img class="art" src="file:///Users/zacharydemillo/Projects/VURMZ/Main%20Site/public/shop/etch/knife.png" alt="">
+
+  <div class="meta">
+    <div>
+      <span class="mono">Billed to</span>
+      <strong>David C. Segraves</strong><br>
+      President, Colorado Wolverines<br>
+      Dave@coloradowolverinesbjj.com<br>
+      (504) 914-5090
+    </div>
+    <div>
+      <span class="mono">From</span>
+      <strong>VURMZ LLC</strong><br>
+      Zach DeMillo<br>
+      Centennial, Colorado<br>
+      zach@vurmz.com
+    </div>
+    <div>
+      <span class="mono">The job</span>
+      Customer-supplied knives<br>
+      Both sides of the blade<br>
+      Coating removed to bright steel<br>
+      Hand-delivered
+    </div>
+  </div>
+
+  <table>
+    <thead><tr><th>Item</th><th class="q" style="text-align:center">Qty</th><th class="n">Each</th><th class="n">Amount</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Blade engraving, both sides. KA-BAR USMC fixed blade.<small>Colorado Wolverines logo on one side. "Desert Duals 2026 Champion" and the Desert Duals logo on the other.</small></td>
+        <td class="q">5</td><td class="n">$50.00</td><td class="n">$250.00</td>
+      </tr>
+      <tr>
+        <td>Design work. Wolverines logo converted to a clean engraving file.<small>Kept on file for future orders.</small></td>
+        <td class="q">1</td><td class="n">$45.00</td><td class="n">$45.00</td>
+      </tr>
+      <tr>
+        <td>Discount. Design work, on the house.</td>
+        <td class="q"></td><td class="n"></td><td class="n">&minus;$45.00</td>
+      </tr>
+      <tr>
+        <td>Military discount, 15%.<small>Thank you for your service.</small></td>
+        <td class="q"></td><td class="n"></td><td class="n">&minus;$37.50</td>
+      </tr>
+      <tr class="total"><td class="label" colspan="3">Total due</td><td class="n">$212.50</td></tr>
+    </tbody>
+  </table>
+
+  <div class="notes">
+    <p><strong style="color:var(--ink)">Paying it.</strong> The Square link in the email takes a card. Or text me and we sort it out another way.</p>
+    <p>Thanks, Dave. Congratulations to the team. Not affiliated with KA-BAR; engraving does not affect the blade.</p>
+  </div>
+
+  <div class="foot">
+    <div>
+      <span class="pillars">Local. Thoughtful. Fast.</span><br>
+      Centennial, Colorado. Text (720) 468-0138 · <a href="https://www.vurmz.com">vurmz.com</a>
+    </div>
+    <div style="text-align:right">VURMZ LLC · Centennial, CO<br>Invoice INV-1001 · $212.50 due on receipt</div>
+  </div>
+</div>
+</body></html>

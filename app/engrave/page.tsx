@@ -113,7 +113,7 @@ export default function EngravePage() {
             {[
               'Send the photo here or by text. I answer with a number the same day.',
               'Drop it off anywhere in the south Denver metro, or ship it to me.',
-              'It comes back engraved, by one person, start to finish.',
+              'It comes back engraved and hand-delivered.',
             ].map((s, i) => (
               <li key={s} className="flex gap-3 text-[15px] leading-relaxed text-[var(--ink-soft)]">
                 <span className="w-7 h-7 flex-shrink-0 rounded-full border border-[var(--feature)]/40 text-[var(--feature)] font-mono text-[12px] flex items-center justify-center">{i + 1}</span>

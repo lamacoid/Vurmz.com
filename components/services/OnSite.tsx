@@ -5,7 +5,7 @@ const display = { fontFamily: 'var(--font-display), Georgia, serif' }
 const usd = (n: number) => `$${n.toLocaleString('en-US')}`
 
 /**
- * VURMZ on site: the laser comes to the event or the store. One person,
+ * VURMZ on site: the laser comes to the event or the store. One machine,
  * one machine, names on the piece while the guest watches. Rate card from
  * the 2026-09 research; every line is a real term.
  */

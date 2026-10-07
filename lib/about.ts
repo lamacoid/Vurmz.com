@@ -9,7 +9,7 @@ export const aboutContent = {
   storyParagraphs: [
     `I wanted custom cards for another project and decided to make them myself. I taught myself the machine. One led to another, and it hasn't stopped.`,
     `VURMZ started as a nickname in high school. Now it's the name on the invoices.`,
-    `I'm one person. I've lived in Centennial most of my life, and I handle every job myself, from the first text to the delivery.`,
+    `I've lived in Centennial most of my life. Every job is quoted, made, and delivered from here.`,
   ],
 
   pillars: 'Local. Thoughtful. Fast.',
@@ -18,5 +18,5 @@ export const aboutContent = {
 } as const
 
 export const aboutMeta = {
-  description: `Meet ${siteInfo.founder.name}, the person behind VURMZ. One-person laser engraving shop in ${siteInfo.city}, Colorado. Local. Thoughtful. Fast.`,
+  description: `Meet ${siteInfo.founder.name}, the person behind VURMZ. Laser engraving in ${siteInfo.city}, Colorado. Local. Thoughtful. Fast.`,
 }

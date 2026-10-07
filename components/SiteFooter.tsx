@@ -108,7 +108,7 @@ export default function SiteFooter() {
       <div className="border-t border-white/10">
         <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center">
           <p className="text-vurmz-teal text-sm sm:text-base font-semibold tracking-wide italic">
-            Need a guy with some lasers? That&apos;s me.
+            Need something engraved? Text me.
           </p>
           <p className="mt-3 text-xs text-[var(--feature-ink)]/45">
             Built from scratch. Powered by <span className="text-vurmz-teal font-medium">VURMZ | webWorks</span>

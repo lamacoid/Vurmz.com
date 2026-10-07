@@ -7,7 +7,7 @@ interface TrustBarProps {
 
 const items = [
   { icon: ClockIcon, label: 'Next-Day Turnaround' },
-  { icon: UserIcon, label: 'One Person, Start to Finish' },
+  { icon: UserIcon, label: 'Checked Before It Leaves' },
   { icon: MapPinIcon, label: 'Hand-Delivered in South Denver' },
 ]
 

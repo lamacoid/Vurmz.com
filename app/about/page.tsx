@@ -14,10 +14,10 @@ export const metadata: Metadata = {
 
 const display = { fontFamily: 'var(--font-display), Georgia, serif' }
 
-// Short, on purpose (2026-09-30). One person. Local. Fast. Unusual
+// Short, on purpose (2026-09-30). Direct. Local. Fast. Unusual
 // items welcome. His name. That is the whole page.
 const FACTS = [
-  { h: 'One person', p: 'You text me. I quote it, I engrave it, I hand it to you.' },
+  { h: 'Direct', p: 'Text me what you want. You get a number the same day.' },
   { h: 'Local', p: `${siteInfo.city}, most of my life. I drive the south Denver metro myself.` },
   { h: 'Fast', p: 'A number the same day. Most pieces back in 24 to 72 hours.' },
   { h: 'Unusual items welcome', p: 'Metal, wood, glass, leather, slate, plastic. If it is solid, it takes a mark.' },

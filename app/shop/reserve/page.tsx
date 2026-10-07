@@ -9,7 +9,7 @@ import { siteInfo, getSmsLink } from '@/lib/site-info'
 
 export const metadata: Metadata = {
   title: { absolute: 'The Reserve | VURMZ' },
-  description: 'The chef knife, the pocket knife, the skillet, the board, the wallet, the cooler: found, engraved with your words, and hand-delivered across the south Denver metro. One person, hand delivered.',
+  description: 'The chef knife, the pocket knife, the skillet, the board, the wallet, the cooler: found, engraved with your words, and hand-delivered across the south Denver metro.',
   alternates: { canonical: '/shop/reserve' },
 }
 

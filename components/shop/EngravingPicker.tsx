@@ -189,7 +189,7 @@ export default function EngravingPicker({
 
       {mode !== null && (
         <p className="mt-3 text-[11px] text-[#7FCFD4]">
-          One person sets it and engraves it. Questions first? Text me.
+          Questions first? Text me.
         </p>
       )}
     </div>

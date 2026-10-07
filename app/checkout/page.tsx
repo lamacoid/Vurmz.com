@@ -516,7 +516,7 @@ export default function CheckoutPage() {
               className="w-full bg-[var(--surface)] border border-[var(--hairline)] rounded-sm px-3 py-2 text-sm outline-none focus:border-[#C67A6F]"
             />
             <p className="mt-2 text-xs text-[var(--ink)] font-medium">
-              One person makes it, start to finish. Questions before it runs? Text me.
+              Questions before it runs? Text me.
             </p>
 
             {/* Photo / logo attachments, works for guests, no account needed */}

@@ -77,7 +77,7 @@ export default function Page() {
             className="text-[var(--hero-ink)] text-3xl sm:text-4xl lg:text-5xl mb-5 max-w-xl mx-auto"
           />
           <p className="mx-auto max-w-[52ch] text-[length:var(--step-lead)] leading-relaxed text-[var(--ink-soft)]">
-            One person in Centennial with industrial engraving equipment. Posted prices, a number the same day, hand-delivered.
+            Industrial engraving equipment in Centennial. Posted prices, a number the same day, hand-delivered.
           </p>
         </div>
         <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
@@ -192,7 +192,7 @@ export default function Page() {
             <span className="text-[var(--ink-soft)]">for the businesses around here.</span>
           </h2>
           <p className="text-[var(--ink-soft)] text-base sm:text-lg leading-relaxed max-w-2xl mb-10">
-            Posted prices. One person, start to finish. Delivered across the south metro.
+            Posted prices. Delivered across the south metro.
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
@@ -237,10 +237,10 @@ export default function Page() {
             <div>
               <p className={`${eyebrow} mb-4`}>Who I am</p>
               <h2 className="text-[length:var(--step-section)] text-[var(--ink)] tracking-tight leading-tight mb-4" style={display}>
-                No department.<br /><span className="text-[var(--ink)]/50">Just me.</span>
+                I&apos;m {siteInfo.founder.name}.<br /><span className="text-[var(--ink)]/50">VURMZ is in {siteInfo.city}.</span>
               </h2>
               <p className="text-[var(--ink-soft)] text-base leading-relaxed mb-4">
-                I&apos;m {siteInfo.founder.name}, and I run VURMZ out of {siteInfo.city}. You text me, I quote you, I engrave it, and I hand it to you. No middlemen at any step.
+                Text me what you want marked. You get a number the same day, and the finished piece comes to your door.
               </p>
               <Link href="/about" className="inline-flex items-center gap-2 text-[#B0675D] font-semibold text-sm hover:gap-3 transition-all">
                 About VURMZ

@@ -33,7 +33,7 @@ export default function TermsPage() {
     },
     {
       title: 'What I do',
-      text: `${siteInfo.name} is one person doing laser engraving and marking in ${siteInfo.city}, ${siteInfo.state}: pieces from the shop, pieces you bring me, business runs, and pieces I find and buy on your behalf (the reserve). Everything is made here and delivered across the south Denver metro. These terms cover all of it. By placing an order you agree to them.`,
+      text: `${siteInfo.name} does laser engraving and marking in ${siteInfo.city}, ${siteInfo.state}: pieces from the shop, pieces you bring me, business runs, and pieces I find and buy on your behalf (the reserve). Everything is made here and delivered across the south Denver metro. These terms cover all of it. By placing an order you agree to them.`,
     },
     {
       title: 'Prices, quotes, and payment',

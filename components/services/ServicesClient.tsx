@@ -105,7 +105,7 @@ export default function ServicesClient() {
     '@type': 'Service',
     serviceType: 'Laser Engraving',
     name: 'VURMZ Laser Engraving for Business',
-    description: 'Equipment labels, knife crews, metal cards, branded packs, plates and panels, and one-off marking for businesses in the South Denver metro. Posted prices, one person start to finish, delivered weekly.',
+    description: 'Equipment labels, knife crews, metal cards, branded packs, plates and panels, and one-off marking for businesses in the South Denver metro. Posted prices, delivered weekly.',
     provider: {
       '@type': 'LocalBusiness',
       name: 'VURMZ LLC',

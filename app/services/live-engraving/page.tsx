@@ -5,7 +5,7 @@ import OnSite from '@/components/services/OnSite'
 
 export const metadata: Metadata = {
   title: { absolute: 'Live Engraving for Events in Denver | VURMZ' },
-  description: 'Live laser engraving at your event or store in the Denver metro. One person, one machine, names on the piece while the guest watches. Half day, full day, or per piece for retail.',
+  description: 'Live laser engraving at your event or store in the Denver metro. One machine, names on the piece while the guest watches. Half day, full day, or per piece for retail.',
   alternates: { canonical: '/services/live-engraving' },
   openGraph: {
     title: 'Live Engraving for Events in Denver | VURMZ',

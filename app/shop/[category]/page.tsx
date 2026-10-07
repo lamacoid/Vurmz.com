@@ -296,7 +296,7 @@ export default async function ShopCategoryPage({ params }: { params: Promise<{ c
             <div>
               <h3 className="font-semibold text-[var(--ink)] text-sm mb-1">Satisfaction promise</h3>
               <p className="text-[var(--ink-soft)] text-sm leading-relaxed">
-                One person handles your order from start to finish. I don&apos;t deliver until it&apos;s right. If something&apos;s off, I fix it.
+                I don&apos;t deliver until it&apos;s right. If something&apos;s off, I fix it.
               </p>
             </div>
           </div>

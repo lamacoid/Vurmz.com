@@ -34,7 +34,7 @@ export const SHOP_CATEGORIES: ShopCategory[] = [
     shortName: 'Gifts',
     tagline: 'The gift that stays on the desk.',
     cardDescription: 'An anniversary, a retirement, a thank-you that should outlast the card it came with. The object you choose, marked once, properly.',
-    description: 'Engraved gifts and keepsakes from a one-person laser shop in Centennial, Colorado. Cutting boards, knives, coasters, jewelry, the piece you already have. Hand-delivered across the south Denver metro.',
+    description: 'Engraved gifts and keepsakes from a laser shop in Centennial, Colorado. Cutting boards, knives, coasters, jewelry, the piece you already have. Hand-delivered across the south Denver metro.',
     heroImage: '/portfolio/culinary-cleaver-engraved.jpg',
     galleryImages: [
       '/portfolio/culinary-cleaver-engraved.jpg',
@@ -62,8 +62,8 @@ export const SHOP_CATEGORIES: ShopCategory[] = [
     name: 'Your Own Piece',
     shortName: 'Your Piece',
     tagline: 'The thing you already love, marked.',
-    cardDescription: 'A knife, a watch back, a laptop, a flask, the tool your father carried. Bring it or ship it and it comes back engraved, by one person, start to finish.',
-    description: 'Engrave your own piece in Centennial, Colorado. Knives, laptops, watches, flasks, tools, heirlooms: what you bring, marked by one person with a laser. Hand-delivered across the south Denver metro.',
+    cardDescription: 'A knife, a watch back, a laptop, a flask, the tool your father carried. Bring it or ship it and it comes back engraved.',
+    description: 'Engrave your own piece in Centennial, Colorado. Knives, laptops, watches, flasks, tools, heirlooms: what you bring, marked with a laser. Hand-delivered across the south Denver metro.',
     heroImage: '/portfolio/macbook-engraving.jpg',
     galleryImages: [
       '/portfolio/pocket-knife-engraved.jpg',
