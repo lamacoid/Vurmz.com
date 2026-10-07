@@ -10,17 +10,11 @@
  * thumbnails must never push the Add-to-cart button below the fold.
  */
 import { useEffect, useMemo, useState } from 'react'
-import catalogRaw from '@/lib/design/catalog.json'
+import { CATALOG, SHEETS, type DesignElement } from '@/lib/design/sheet'
 
-export interface DesignElement {
-  id: string
-  label: string
-  category: string
-  thumb: string
-}
+export type { DesignElement }
 
-const CATALOG = catalogRaw as DesignElement[]
-const CATEGORIES = Array.from(new Set(CATALOG.map(e => e.category)))
+const CATEGORIES = SHEETS.map(s => s.key).filter(k => CATALOG.some(e => e.category === k))
 
 export default function DesignElementPicker({
   selected,
@@ -36,8 +30,8 @@ export default function DesignElementPicker({
   const shown = useMemo(() => {
     const q = query.trim().toLowerCase()
     return CATALOG.filter(e =>
-      (q ? e.label.toLowerCase().includes(q) || e.category.toLowerCase().includes(q) : e.category === cat)
-    ).slice(0, 120)
+      (q ? e.label.toLowerCase().includes(q) || (e.sub ?? '').toLowerCase().includes(q) || e.category.toLowerCase().includes(q) : e.category === cat)
+    ).slice(0, 160)
   }, [cat, query])
 
   // Escape closes the library; page scroll holds while it's open.
@@ -86,7 +80,7 @@ export default function DesignElementPicker({
           <img src={selected.thumb} alt={selected.label} className="h-12 w-12 object-contain bg-[#f0ebe0] rounded-sm p-1" />
           <div className="text-xs">
             <p className="text-[var(--ink)] font-medium">{selected.label}</p>
-            <p className="text-[var(--ink-soft)]">{selected.category}</p>
+            <p className="text-[var(--ink-soft)]">{selected.category}{selected.sub ? ` · ${selected.sub}` : ''}</p>
           </div>
         </div>
       )}
@@ -126,7 +120,7 @@ export default function DesignElementPicker({
                 type="text"
                 value={query}
                 onChange={e => setQuery(e.target.value)}
-                placeholder="Search designs (anchor, rose, skull…)"
+                placeholder="Search designs (columbine, elk, skull, shield)"
                 className="w-full bg-[var(--surface)] border border-[var(--hairline)] rounded-sm px-3 py-2 text-sm text-[var(--ink)] placeholder:text-[var(--ink-soft)] outline-none focus:border-[#C67A6F]"
               />
               {!query && (

@@ -8,13 +8,15 @@
  */
 import { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
-import { CATALOG, SHEETS, sheetFor, countBySheet, type DesignElement } from '@/lib/design/sheet'
+import { CATALOG, SHEETS, SUBS, sheetFor, countBySheet, type DesignElement } from '@/lib/design/sheet'
 
 const display = { fontFamily: 'var(--font-display), Georgia, serif' }
 const INK = { filter: 'invert(1) sepia(0.3) saturate(0.5) brightness(1.02)' }
 
 export default function FlashSheet({ initialSheet = '' }: { initialSheet?: string }) {
-  const [sheet, setSheet] = useState<string>(initialSheet)
+  const [sheet, setSheetRaw] = useState<string>(initialSheet)
+  const [sub, setSub] = useState<string>('')
+  const setSheet = (k: string) => { setSheetRaw(k); setSub('') }
   const [query, setQuery] = useState('')
   const [open, setOpen] = useState<DesignElement | null>(null)
   const [copied, setCopied] = useState(false)
@@ -23,10 +25,11 @@ export default function FlashSheet({ initialSheet = '' }: { initialSheet?: strin
     const q = query.trim().toLowerCase()
     return CATALOG.filter(e => {
       if (sheet && e.category !== sheet) return false
+      if (sub && e.sub !== sub) return false
       if (!q) return true
-      return e.label.toLowerCase().includes(q) || e.category.toLowerCase().includes(q) || sheetFor(e.category).name.toLowerCase().includes(q) || e.id.endsWith(q)
+      return e.label.toLowerCase().includes(q) || (e.sub ?? '').toLowerCase().includes(q) || e.category.toLowerCase().includes(q) || e.id.endsWith(q)
     })
-  }, [sheet, query])
+  }, [sheet, sub, query])
 
   // Escape closes the plate; page scroll holds while it is open.
   useEffect(() => {
@@ -92,16 +95,30 @@ export default function FlashSheet({ initialSheet = '' }: { initialSheet?: strin
         </div>
       </div>
 
+      {/* Sub-sheets, when a sheet is open. */}
+      {current && (SUBS[current.key]?.length ?? 0) > 1 && (
+        <div className="mt-5 flex flex-wrap items-center gap-1.5">
+          <button type="button" onClick={() => setSub('')} className={`text-[12px] px-2.5 py-1 rounded-full border transition-colors ${!sub ? 'border-[var(--ink)]/60 text-[var(--ink)]' : 'border-[var(--hairline)] text-[var(--ink-soft)] hover:text-[var(--ink)]'}`}>
+            All {current.name.toLowerCase()}
+          </button>
+          {SUBS[current.key].map(x => (
+            <button key={x.name} type="button" onClick={() => setSub(x.name)} className={`text-[12px] px-2.5 py-1 rounded-full border transition-colors ${sub === x.name ? 'border-[var(--ink)]/60 text-[var(--ink)]' : 'border-[var(--hairline)] text-[var(--ink-soft)] hover:text-[var(--ink)]'}`}>
+              {x.name} <span className="font-mono text-[10.5px] opacity-70 ml-0.5">{x.count}</span>
+            </button>
+          ))}
+        </div>
+      )}
+
       {/* The sheet heading. */}
-      <div className="mt-8 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
+      <div className="mt-6 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
         <h2 className="text-[length:var(--step-section)] leading-tight text-[var(--ink)]" style={display}>
-          {current ? current.name : query ? 'Search' : 'Everything on the wall'}
+          {sub ? sub : current ? current.name : query ? 'Search' : 'Everything on the wall'}
         </h2>
         <p className="text-[13px] font-mono tracking-[0.06em] text-[var(--ink-soft)] tabular-nums">
           {shown.length} {shown.length === 1 ? 'design' : 'designs'}
         </p>
       </div>
-      {current?.line && <p className="mt-1.5 text-[length:var(--step-row)] text-[var(--ink-soft)] max-w-[60ch]">{current.line}</p>}
+      {current?.line && !sub && <p className="mt-1.5 text-[length:var(--step-row)] text-[var(--ink-soft)] max-w-[60ch]">{current.line}</p>}
 
       {/* The plates. */}
       <ul className="mt-6 grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-2 sm:gap-3 list-none p-0 m-0">
@@ -110,10 +127,10 @@ export default function FlashSheet({ initialSheet = '' }: { initialSheet?: strin
             <button
               type="button"
               onClick={() => setOpen(el)}
-              title={`${sheetFor(el.category).name} ${el.label.replace(/^\D+/, '')}`}
+              title={el.label}
               className="group block w-full aspect-square rounded-[var(--r-tile)] bg-[#123F47] border border-[#16525C] hover:border-[#7FCFD4] p-2.5 sm:p-3 transition-colors"
             >
-              <img src={el.thumb} alt={el.label} loading="lazy" decoding="async" className="h-full w-full object-contain opacity-90 group-hover:opacity-100 transition-opacity" style={INK} />
+              <img src={el.thumb} alt={el.label} loading="lazy" decoding="async" className="h-full w-full object-contain opacity-90 group-hover:opacity-100 transition-opacity" style={el.dark ? undefined : INK} />
             </button>
           </li>
         ))}
@@ -136,10 +153,10 @@ export default function FlashSheet({ initialSheet = '' }: { initialSheet?: strin
           >
             <div className="grid grid-cols-1 sm:grid-cols-[minmax(0,1fr)_280px]">
               <div className="bg-[#123F47] p-8 sm:p-12 flex items-center justify-center aspect-square sm:aspect-auto sm:min-h-[420px]">
-                <img src={open.thumb} alt={open.label} className="max-h-full max-w-full object-contain" style={{ ...INK, width: 320, height: 320 }} />
+                <img src={open.thumb} alt={open.label} className="max-h-full max-w-full object-contain" style={{ ...(open.dark ? {} : INK), width: 320, height: 320 }} />
               </div>
               <div className="p-5 sm:p-6 flex flex-col">
-                <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-[var(--eyebrow)]">{sheetFor(open.category).name}</p>
+                <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-[var(--eyebrow)]">{sheetFor(open.category).name} · {open.sub}</p>
                 <p className="mt-1 text-[length:var(--step-panel)] leading-tight text-[var(--ink)]" style={display}>{open.label}</p>
                 <p className="mt-3 text-[13.5px] leading-relaxed text-[var(--ink-soft)]">
                   Marks clean on metal, wood, slate, leather, and glass. On a knife or a tumbler it sits beside your words; on a board or a coaster it can carry the piece on its own.

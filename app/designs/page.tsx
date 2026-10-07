@@ -21,7 +21,7 @@ export default function DesignsPage() {
           {CATALOG.length} designs, ready to engrave.
         </h1>
         <p className="mt-4 text-[length:var(--step-lead)] leading-relaxed text-[var(--ink-soft)]">
-          Browse it like flash on a shop wall. Pick a sheet, find the one, and put it on your own thing or on something from the shop. Every design marks clean in metal, wood, slate, leather, and glass.
+          Browse it like flash on a shop wall. Every design is named for what it is and sorted by what it shows, so pick a sheet, narrow it down, and find the one. Every design marks clean in metal, wood, slate, leather, and glass.
         </p>
         <p className="mt-3 text-[14px] leading-relaxed text-[var(--ink-soft)]">
           Monograms and names are set in type, not drawn, so they live on the product page: pick a face there. Have your own artwork? <Link href="/engrave" className="text-[var(--feature)] hover:underline">Send it with a photo of the piece.</Link>
