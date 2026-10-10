@@ -27,6 +27,18 @@ export interface PortfolioItem {
 
 export const portfolioItems: PortfolioItem[] = [
   {
+    slug: 'wedding-gift-label',
+    src: '/portfolio/wedding-gift-label.jpg',
+    label: 'Wedding Gift Label',
+    context: 'A monogram and the date on mirror stainless, four sizes',
+    material: 'Mirror stainless steel',
+    process: 'annealed',
+    customerType: 'Personal',
+    leadTimeDays: 1,
+    tags: ['metal', 'labels', 'personal'],
+    story: 'They asked for a glass decanter engraved. Glass was not an option that day, so I offered a stainless badge for the piece instead: the monogram and the wedding date, annealed dark into mirror steel, in four sizes so it fits whatever it lands on. Sold the same morning.',
+  },
+  {
     slug: 'wolverines-knife',
     src: '/portfolio/wolverines-knife.jpg',
     label: 'Five KA-BARs for the Colorado Wolverines',
