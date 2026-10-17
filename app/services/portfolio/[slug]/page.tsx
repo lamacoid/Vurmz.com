@@ -96,6 +96,23 @@ export default async function PortfolioDetailPage({ params }: Props) {
               className="object-cover"
             />
           </div>
+          {item.video && (
+            <div className="lg:col-start-1 lg:row-start-2 relative w-full max-w-[315px] aspect-[9/16] rounded-sm overflow-hidden bg-black/40 border border-[var(--hairline)]">
+              <video
+                src={item.video.src}
+                poster={item.video.poster}
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                className="absolute inset-0 h-full w-full object-cover"
+              />
+              <p className="absolute bottom-0 inset-x-0 px-3 py-2 text-[11px] font-mono tracking-[0.2em] uppercase text-white/85 bg-gradient-to-t from-black/60 to-transparent">
+                The back, being marked
+              </p>
+            </div>
+          )}
 
           <div className="flex flex-col">
             <Link

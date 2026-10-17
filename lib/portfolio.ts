@@ -23,9 +23,24 @@ export interface PortfolioItem {
   leadTimeDays: number
   tags: string[]
   story: string
+  /** A short muted clip of the piece being made, shown on its page. */
+  video?: { src: string; poster: string }
 }
 
 export const portfolioItems: PortfolioItem[] = [
+  {
+    slug: 'three-willows-coasters',
+    src: '/portfolio/three-willows-coasters.jpg',
+    label: 'Coasters for Three Willows Ranch',
+    context: 'Slate, both sides: the venue on the front, a question for the table on the back',
+    material: 'Natural slate',
+    process: 'engraved',
+    customerType: 'Business',
+    leadTimeDays: 3,
+    tags: ['slate', 'coasters', 'business', 'venue'],
+    story: 'A wedding venue near Fort Collins wanted something couples would keep. The front carries the willows, the mountains, and the ranch name. The back asks the couple one question to talk about that night, with a number to text for more. The laser frosts the slate pale where it lands, so both sides read clean on the dark stone.',
+    video: { src: '/video/three-willows-coaster.mp4', poster: '/video/three-willows-coaster.jpg' },
+  },
   {
     slug: 'wedding-gift-label',
     src: '/portfolio/wedding-gift-label.jpg',

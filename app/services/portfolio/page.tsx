@@ -22,12 +22,12 @@ const display = { fontFamily: 'var(--font-display), Georgia, serif' }
 const STRONGEST: Array<{ slug: string; what: string }> = [
   { slug: 'wolverines-knife', what: 'Five KA-BARs for a team of champions' },
   { slug: 'wedding-gift-label', what: 'Wedding gift label, a monogram and the date on mirror steel' },
+  { slug: 'three-willows-coasters', what: 'Slate coasters for a wedding venue, both sides' },
   { slug: 'culinary-cleaver', what: 'A cleaver, named for the chef' },
   { slug: 'macbook-personalization', what: 'A MacBook lid, a columbine on the aluminum' },
   { slug: 'denver-map-mirror', what: 'A Denver street map on a beveled mirror' },
   { slug: 'medieval-water-bottle', what: 'A water bottle, wrapped the whole way around' },
   { slug: 'pocket-knife', what: 'A pocket knife, pattern on the bolster' },
-  { slug: 'clga-amp-faceplate', what: 'An amp faceplate, a recurring run' },
 ]
 
 export default function PortfolioPage() {
