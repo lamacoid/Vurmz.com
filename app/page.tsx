@@ -77,7 +77,7 @@ export default function Page() {
             className="text-[var(--hero-ink)] text-3xl sm:text-4xl lg:text-5xl mb-5 max-w-xl mx-auto"
           />
           <p className="mx-auto max-w-[52ch] text-[length:var(--step-lead)] leading-relaxed text-[var(--ink-soft)]">
-            Industrial engraving equipment in Centennial. Posted prices, a number the same day, hand-delivered.
+            Laser engraving in Centennial. Posted prices, a number the same day, hand-delivered.
           </p>
         </div>
         <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">

@@ -59,7 +59,7 @@ const CAPABILITIES = [
     image: 'https://res.cloudinary.com/business-products/image/upload/q_auto,c_pad,b_transparent,w_300,h_300/v1667550303/products/images/large/S-131-116SQ--6f9914ea.jpg',
   },
   {
-    name: 'Industrial Tags & Labels',
+    name: 'Equipment Tags & Labels',
     description: 'Asset tags, valve tags, equipment labels, breaker box labels, serial plates. Metal or ABS plastic.',
     image: 'https://res.cloudinary.com/business-products/image/upload/q_auto,c_pad,b_transparent,w_300,h_300/v1667557617/products/images/large/ULT202--4483a6b9.png',
   },

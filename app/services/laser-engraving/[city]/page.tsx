@@ -48,7 +48,7 @@ const cityData: Record<string, CityData> = {
       'Lone Tree has a mix of corporate offices at RidgeGate and shops and restaurants around Park Meadows. I deliver engraved items directly to your Lone Tree office or storefront.',
       'Metal business cards for your team, branded pens for a conference at the Lone Tree Arts Center, custom awards for an event at the Gaylord Rockies. You text me, I quote you, and I hand-deliver the finished product.',
       'Most pieces are ready within three days. If you need fifty pens by Friday, say so and I will tell you plainly whether it works.',
-      'Every item is engraved on professional-grade laser equipment. Clean marks, done right the first time.',
+      'Clean marks, done right the first time. Every piece checked by hand before it goes out.',
     ],
   },
   parker: {
@@ -56,7 +56,7 @@ const cityData: Record<string, CityData> = {
     name: 'Parker',
     neighborhoods: 'Mainstreet Parker, the PACE Center, Stroh Ranch, and Stonegate neighborhoods',
     paragraphs: [
-      'Parker is growing fast, and I work with restaurants, offices, contractors, and retailers here. Custom engraving on everything from branded pens to industrial equipment labels.',
+      'Parker is growing fast, and I work with restaurants, offices, contractors, and retailers here. Custom engraving on everything from branded pens to equipment labels.',
       'If you are in the Mainstreet Parker district, near the PACE Center, or along Parker Road, I deliver directly to your location. Handed to you by the person who made it.',
       'Many of my Parker clients order quarterly packs of branded pens, coasters, or keychains to keep their offices stocked. It makes a real impression on customers.',
       'An engraved logo is cut into the material itself. It feels different because it is.',
@@ -148,7 +148,7 @@ const services = [
   { name: 'Coasters & Barware', description: 'Wood, slate, or steel coasters engraved for restaurants and breweries.' },
   { name: 'Keychains & Small Pieces', description: 'Aluminum keychains and tags, engraved to match for teams, events, and closings.' },
   { name: 'Knife & Tool Engraving', description: 'Custom text or logos on kitchen knives, multitools, and blades.' },
-  { name: 'Industrial Labels & Nameplates', description: 'ABS panel labels, equipment tags, and compliance nameplates.' },
+  { name: 'Labels & Nameplates', description: 'ABS panel labels, equipment tags, and compliance nameplates.' },
   { name: 'Gifts & Awards', description: 'Cutting boards, tumblers, knives, and the piece a client keeps on the desk.' },
 ]
 
