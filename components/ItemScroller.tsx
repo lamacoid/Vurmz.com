@@ -40,7 +40,7 @@ export const LINES = [
     size: 'text-3xl sm:text-4xl',
   },
   {
-    // Contractors, Trades & Industrial
+    // Contractors & Trades
     items: [
       'Tool Tags', 'Equipment Labels', 'Hard Hat Tags', 'Safety Signs',
       'Panel Labels', 'Electrical Labels', 'Valve Tags', 'Pipe Markers',

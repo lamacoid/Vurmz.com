@@ -19,7 +19,7 @@ const faqItems = [
   },
   {
     question: 'How are orders structured?',
-    answer: `Stock items like pens, coasters, and keychains come in packs of 15. Bring your own thing (engraving something you already have) is $${SIGNATURE.startingAt} for one piece, one placement. Industrial labels and trades work are quoted per job.`,
+    answer: `Stock items like pens, coasters, and keychains come in packs of 15. Bring your own thing (engraving something you already have) is $${SIGNATURE.startingAt} for one piece, one placement. Equipment labels and trades work are quoted per job.`,
   },
   {
     question: 'Can I bring my own items to engrave?',

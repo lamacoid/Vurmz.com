@@ -4,7 +4,7 @@ const newProducts = [
   {
     id: "equipment-nameplates",
     name: "Equipment Nameplates & Data Plates",
-    description: "Laser engraved anodized aluminum and stainless steel nameplates. Rating plates, serial number plates, specification plates for industrial equipment.",
+    description: "Laser engraved anodized aluminum and stainless steel nameplates. Rating plates, serial number plates, specification plates.",
     price: "Quote per job",
     enabled: true,
     hasDesigner: false,
