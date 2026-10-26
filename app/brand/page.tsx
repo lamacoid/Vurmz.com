@@ -30,9 +30,9 @@ const PALETTE = [
 ]
 
 const TYPE = [
-  { label: 'Display 46', cls: 'text-[length:var(--step-display)] tracking-[-0.02em]', serif: true, note: 'Fraunces 600' },
-  { label: 'Section 30', cls: 'text-[length:var(--step-section)]', serif: true, note: 'Fraunces 600' },
-  { label: 'Panel title 19', cls: 'text-[length:var(--step-panel)]', serif: true, note: 'Fraunces 600' },
+  { label: 'Display 46', cls: 'text-[length:var(--step-display)] tracking-[-0.02em]', serif: true, note: 'EB Garamond 600' },
+  { label: 'Section 30', cls: 'text-[length:var(--step-section)]', serif: true, note: 'EB Garamond 600' },
+  { label: 'Panel title 19', cls: 'text-[length:var(--step-panel)]', serif: true, note: 'EB Garamond 600' },
   { label: 'Lead 17', cls: 'text-[length:var(--step-lead)] leading-[1.7]', serif: false, note: 'Inter 400, ~56 characters' },
   { label: 'Body 15', cls: 'text-[length:var(--step-body)] leading-[1.65]', serif: false, note: 'Inter 400' },
   { label: 'Row 14.5', cls: 'text-[length:var(--step-row)]', serif: false, note: 'Inter 400 / 600' },

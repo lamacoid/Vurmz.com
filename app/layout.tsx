@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter, Fraunces } from 'next/font/google'
+import { Inter, EB_Garamond } from 'next/font/google'
 import './globals.css'
 import './fonts.css'
 import LocalTicker from '@/components/LocalTicker'
@@ -10,8 +10,9 @@ import { CartProvider } from '@/lib/cart/store'
 
 const inter = Inter({ subsets: ['latin'] })
 
-// Display serif for hero headlines, clean, sophisticated, with a real italic.
-const fraunces = Fraunces({
+// Display serif for hero headlines, with a real italic. Variable weight
+// 400 to 800, so the kit's 600 headings come straight from the family.
+const garamond = EB_Garamond({
   subsets: ['latin'],
   variable: '--font-display',
   display: 'swap',
@@ -178,7 +179,7 @@ export default function RootLayout({
           })();
         `}} />
       </head>
-      <body className={`${inter.className} ${fraunces.variable} relative`}>
+      <body className={`${inter.className} ${garamond.variable} relative`}>
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-[var(--coral)] focus:text-white focus:rounded-[var(--r-control)] focus:shadow-lg"

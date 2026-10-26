@@ -31,7 +31,7 @@ body.is-admin > main {
 :root {
   color-scheme: light;
 
-  /* ── Type scale. Display is Fraunces, the rest is Inter, labels mono. ── */
+  /* ── Type scale. Display is EB Garamond, the rest is Inter, labels mono. ── */
   --step-display: 2.875rem;  /* 46px, tracking -0.02em */
   --step-section: 1.875rem;  /* 30px */
   --step-panel:   1.1875rem; /* 19px */
@@ -106,7 +106,7 @@ body.is-admin > main {
   --logo-glow: none;
 }
 /* ── Headings belong to the display face, by default and by element. ──
-   A page does not choose whether its h1 is Fraunces; the base layer decides,
+   A page does not choose whether its h1 is EB Garamond; the base layer decides,
    and a utility (font-mono for an eyebrow, font-sans for a form label) can
    still override it because utilities sit in a higher layer. Weight is 600.
    Bold is not in the kit. Scoped to main so the footer's small labels and
