@@ -5,7 +5,7 @@ interface TrustedByProps {
   theme?: 'landing' | 'shop' | 'services'
 }
 
-// Three names, set quietly in ink. The SVG logo uses currentColor so it takes
+// Four names, set quietly in ink. The SVG logo uses currentColor so it takes
 // the same ink as the text link beside it.
 export default function TrustedBy(_: TrustedByProps) {
   return (
@@ -13,7 +13,7 @@ export default function TrustedBy(_: TrustedByProps) {
       <p className="text-[length:var(--step-eyebrow)] font-mono tracking-[0.2em] uppercase mb-5 text-[var(--eyebrow)]">
         Trusted by
       </p>
-      <div className="flex items-center justify-center gap-12 sm:gap-16 text-[var(--ink)]">
+      <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-6 sm:gap-x-16 text-[var(--ink)]">
         <a
           href="https://www.nordstrom.com/store-details/nordstrom-cherry-creek-shopping-center"
           target="_blank"
@@ -49,6 +49,17 @@ export default function TrustedBy(_: TrustedByProps) {
             height={36}
           />
         </a>
+        {/* No site to link to. In dark mode the charcoal mark drops to a
+            one-tone light silhouette so it still reads on the deep teal. */}
+        <span className="flex-shrink-0 opacity-70 hover:opacity-100 transition-opacity duration-[var(--t-hover)]">
+          <Image
+            src="/images/clients/integrity-backflow.png"
+            alt="Integrity Backflow"
+            width={67}
+            height={48}
+            className="h-12 w-auto dark:brightness-0 dark:invert"
+          />
+        </span>
       </div>
     </div>
   )
