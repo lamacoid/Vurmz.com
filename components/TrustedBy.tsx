@@ -49,15 +49,15 @@ export default function TrustedBy(_: TrustedByProps) {
             height={36}
           />
         </a>
-        {/* No site to link to. In dark mode the charcoal mark drops to a
-            one-tone light silhouette so it still reads on the deep teal. */}
+        {/* No site to link to. The row sits on the teal band, so the charcoal
+            mark is set as a one-tone light silhouette like the others. */}
         <span className="flex-shrink-0 opacity-70 hover:opacity-100 transition-opacity duration-[var(--t-hover)]">
           <Image
             src="/images/clients/integrity-backflow.png"
             alt="Integrity Backflow"
             width={67}
             height={48}
-            className="h-12 w-auto dark:brightness-0 dark:invert"
+            className="h-12 w-auto brightness-0 invert"
           />
         </span>
       </div>
