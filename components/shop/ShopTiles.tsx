@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import type { Product } from '@/lib/db/repos/products'
 import { menuCase } from '@/lib/menu-format'
-import { deliveredPrice, type ReserveGroup, type SourcedItem } from '@/lib/sourcing'
+import { deliveredPrice, reserveCategory, type ReserveGroup, type SourcedItem } from '@/lib/sourcing'
 import { DoorLink } from '@/components/BackRoomDoor'
 import { ReserveMark } from '@/components/shop/ReserveMarks'
 import { usd, type Tile } from '@/lib/shop-doors'
@@ -72,14 +72,26 @@ export function ProductTile({ p, heroUrl }: { p: Product; heroUrl: string | null
 }
 
 export function ReserveTile({ it, group }: { it: SourcedItem; group: ReserveGroup }) {
+  // The real photograph from the reserve category, the same one on its door.
+  // The etching stays as the fallback for a group without one.
+  const photo = reserveCategory(group)?.photo?.src ?? null
   return (
     <DoorLink href={`/shop/reserve/${group}?maker=${it.slug}`} className={card}>
       <div className="relative aspect-[4/3] overflow-hidden bg-[var(--glass-soft)] flex items-center justify-center">
-        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: 'radial-gradient(ellipse at 50% 60%, rgba(127,207,212,0.16) 0%, transparent 60%)' }} aria-hidden />
-        {reserveArt(group) ? (
-          <EtchArt src={reserveArt(group)!} className="w-[66%] max-w-[220px] aspect-[4/3] transition-transform duration-500 ease-out group-hover:-translate-y-1" sizes="(max-width: 768px) 40vw, 200px" />
+        {photo ? (
+          <>
+            <Image src={photo} alt={it.name} fill sizes="(max-width: 768px) 50vw, 25vw" className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.04]" />
+            <div className="absolute inset-0 bg-[#16525C]/15 group-hover:bg-[#16525C]/5 transition-colors duration-500" aria-hidden />
+          </>
         ) : (
-          <ReserveMark kind={group} className="relative w-[58%] max-w-[200px] text-[var(--ink-soft)] group-hover:text-[var(--feature)] transition-[color,transform] duration-500 ease-out group-hover:-translate-y-1" />
+          <>
+            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: 'radial-gradient(ellipse at 50% 60%, rgba(127,207,212,0.16) 0%, transparent 60%)' }} aria-hidden />
+            {reserveArt(group) ? (
+              <EtchArt src={reserveArt(group)!} className="w-[66%] max-w-[220px] aspect-[4/3] transition-transform duration-500 ease-out group-hover:-translate-y-1" sizes="(max-width: 768px) 40vw, 200px" />
+            ) : (
+              <ReserveMark kind={group} className="relative w-[58%] max-w-[200px] text-[var(--ink-soft)] group-hover:text-[var(--feature)] transition-[color,transform] duration-500 ease-out group-hover:-translate-y-1" />
+            )}
+          </>
         )}
         <span className={badge}>Found for you</span>
       </div>

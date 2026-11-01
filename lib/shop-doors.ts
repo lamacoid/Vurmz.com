@@ -114,6 +114,8 @@ export type Tile =
 export interface Section {
   door: DoorInfo
   tiles: Tile[]
+  /** Found-for-you pieces held back from this door; they live in the reserve. */
+  held?: number
 }
 
 export function doorFor(key: string): DoorInfo | null {
@@ -127,7 +129,13 @@ export function doorFor(key: string): DoorInfo | null {
  * no door claims is shelved under "And the rest", never hidden. The shelf
  * is every product with the made-to-order flag off, whichever door it
  * lives behind.
+ *
+ * A door shows at most three found-for-you pieces: the ones flagged for
+ * the reserve list first, then the cheapest, so the door stays a menu and
+ * the dear things do not crowd it. The rest wait in the reserve.
  */
+const RESERVE_PER_DOOR = 3
+
 export function buildShop(products: Product[], urlFor: (p: Product) => string | null): { shelf: Section; doors: Section[] } {
   const taken = new Set<string>()
   const product = (p: Product): Tile => ({ kind: 'product', p, heroUrl: urlFor(p), cents: p.priceCents })
@@ -140,9 +148,15 @@ export function buildShop(products: Product[], urlFor: (p: Product) => string | 
       taken.add(p.id)
       tiles.push(product(p))
     }
-    for (const g of d.reserve) for (const it of makersFor(g)) tiles.push({ kind: 'reserve', it, group: g, cents: deliveredPrice(it) * 100 })
+    const pool: Tile[] = []
+    for (const g of d.reserve) for (const it of makersFor(g)) pool.push({ kind: 'reserve', it, group: g, cents: deliveredPrice(it) * 100 })
+    pool.sort(byPrice)
+    const flagged = pool.filter(t => t.kind === 'reserve' && t.it.reserve)
+    const rest = pool.filter(t => !(t.kind === 'reserve' && t.it.reserve))
+    const kept = [...flagged, ...rest].slice(0, RESERVE_PER_DOOR).sort(byPrice)
+    tiles.push(...kept)
     tiles.sort(byPrice)
-    return { door: d, tiles }
+    return { door: d, tiles, held: pool.length - kept.length }
   }).filter(s => s.tiles.length > 0)
 
   const rest = products.filter(p => !taken.has(p.id))
