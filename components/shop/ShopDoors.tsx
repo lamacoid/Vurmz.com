@@ -1,14 +1,13 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { listProducts, type Product } from '@/lib/db/repos/products'
 import { getMediaByIds } from '@/lib/db/repos/media'
 import { buildShop, rangeOf, type Section } from '@/lib/shop-doors'
-import { DoorEtching } from '@/components/shop/DoorEtchings'
-import EtchArt from '@/components/shop/EtchArt'
 
 /**
- * The shop page: the doors, and only the doors. Each is an etching of the
- * thing on the glass, the one line, how many pieces wait behind it, and
- * what they come to. The shelf goes first and wide: what is here today.
+ * The shop page: the doors, and only the doors. Each is a photograph of
+ * the thing, the one line, how many pieces wait behind it, and what they
+ * come to. The shelf goes first and wide: what is here today.
  */
 const display = { fontFamily: 'var(--font-display), Georgia, serif' }
 
@@ -37,13 +36,14 @@ function DoorCard({ section: { door, tiles }, wide = false, index = 0 }: { secti
       className={`group relative rounded-[var(--r-panel)] border border-[var(--hairline)] bg-[var(--surface)] hover:bg-[var(--glass-soft)] hover:border-[var(--feature)]/40 overflow-hidden transition-colors duration-[var(--t-hover)] ${wide ? 'sm:col-span-2 lg:col-span-3 grid grid-cols-1 md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]' : 'flex flex-col'}`}
       style={{ animationDelay: `${index * 70}ms` }}
     >
-      <div className={`relative flex items-center justify-center overflow-hidden ${wide ? 'aspect-[16/9] md:aspect-auto md:min-h-[220px]' : 'aspect-[4/3]'}`}>
-        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: 'radial-gradient(ellipse at 50% 60%, rgba(127,207,212,0.16) 0%, transparent 60%)' }} aria-hidden />
-        {door.art ? (
-          <EtchArt src={door.art} className="w-[68%] max-w-[300px] aspect-[4/3] transition-transform duration-500 ease-out group-hover:-translate-y-1" />
-        ) : (
-          <DoorEtching kind={door.etch} className="relative w-[64%] max-w-[260px] text-[var(--ink-soft)] group-hover:text-[var(--feature)] transition-[color,transform] duration-500 ease-out group-hover:-translate-y-1" />
-        )}
+      <div className={`relative overflow-hidden ${wide ? 'aspect-[16/9] md:aspect-auto md:min-h-[220px]' : 'aspect-[4/3]'}`}>
+        <Image
+          src={door.photo}
+          alt={door.name}
+          fill
+          sizes={wide ? '(max-width: 768px) 100vw, 640px' : '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'}
+          className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.04]"
+        />
       </div>
       <div className={`border-t border-[var(--hairline)] ${wide ? 'md:border-t-0 md:border-l p-5 sm:p-7 flex flex-col justify-center' : 'p-4 sm:p-5'}`}>
         <p className={`${wide ? 'text-[length:var(--step-section)]' : 'text-[length:var(--step-panel)]'} leading-tight text-[var(--ink)]`} style={display}>{door.name}</p>

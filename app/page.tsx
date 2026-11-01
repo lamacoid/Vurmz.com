@@ -14,8 +14,6 @@ import RotatingTagline from '@/components/RotatingTagline'
 import CanYouEngraveThis from '@/components/CanYouEngraveThis'
 import RotatingHeroBg from '@/components/RotatingHeroBg'
 import VurmzLogo from '@/components/VurmzLogo'
-import { ETCH } from '@/lib/shop-art'
-import EtchArt from '@/components/shop/EtchArt'
 
 /**
  * The homepage as a hallway, not a warehouse (slimmed 2026-11-01).
@@ -89,7 +87,6 @@ export default function Page() {
 
       {/* 2. Bring your own thing. Have it, or let me go get it. The first teal break. */}
       <section id="engrave" className={`${roomBand} scroll-mt-28`} style={bloom}>
-        <EtchArt tone="cream" src={ETCH.knife} className="absolute -right-10 -bottom-6 w-[420px] aspect-[4/3] opacity-[0.10] pointer-events-none" sizes="420px" />
         <div className="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 grid grid-cols-1 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] gap-8 lg:gap-12 items-start">
           <div>
             <p className={`${eyebrow} mb-3`}>Bring your own thing</p>
@@ -146,7 +143,6 @@ export default function Page() {
 
       {/* 4. Services, the anchored business half. The second teal break. */}
       <section id="services" className={`${roomBand} scroll-mt-16`} style={bloom}>
-        <EtchArt tone="cream" src={ETCH.pen} className="absolute -right-8 top-6 w-[380px] aspect-[4/3] opacity-[0.10] pointer-events-none" sizes="380px" />
         <div className="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
           <p className={`${eyebrow} mb-3`}>For your work</p>
           <h2 className="text-[length:var(--step-section)] text-[var(--ink)] tracking-tight leading-tight mb-4" style={display}>

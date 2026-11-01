@@ -1,7 +1,5 @@
 import type { Product } from '@/lib/db/repos/products'
 import { makersFor, deliveredPrice, type ReserveGroup, type SourcedItem } from '@/lib/sourcing'
-import type { DoorKind } from '@/components/shop/DoorEtchings'
-import { ETCH } from '@/lib/shop-art'
 
 /**
  * The doors of the shop. The shop page shows the doors; each door has its
@@ -12,10 +10,8 @@ import { ETCH } from '@/lib/shop-art'
  */
 export interface DoorInfo {
   key: string
-  /** The line drawing, used when there is no etching from the sheet yet. */
-  etch: DoorKind
-  /** The etching from the sheet, when the door has one. */
-  art?: string
+  /** The photograph on the door: the work itself where there is a shot of it, the licensed reserve photo otherwise. */
+  photo: string
   name: string
   line: string
   /** A longer line for the top of the door's own page. */
@@ -35,8 +31,7 @@ export const SHELF_KEY = 'shelf'
 
 export const SHELF: DoorInfo = {
   key: SHELF_KEY,
-  etch: 'shelf',
-  art: ETCH.coaster,
+  photo: '/portfolio/three-willows-coasters.jpg',
   name: 'In stock',
   line: 'Here now. Your words or a design on it, at your door in a day or two.',
   about: 'Everything on this page is in stock in Centennial right now. Pick it, tell me the words or the design, and it is marked and at your door in a day or two. Plain is fine too.',
@@ -45,8 +40,7 @@ export const SHELF: DoorInfo = {
 export const DOORS: Door[] = [
   {
     key: 'knives',
-    etch: 'knives',
-  art: ETCH.knife,
+    photo: '/portfolio/wolverines-knife.jpg',
     name: 'Knives',
     line: 'A blade I stock, or one I go and find for you.',
     about: 'A survival knife I keep in hand, then the chef’s knives, pocket knives, and multitools I go and find at their price. Initials at the heel, a date on the scale, a name along the spine.',
@@ -55,8 +49,7 @@ export const DOORS: Door[] = [
   },
   {
     key: 'table',
-    etch: 'table',
-  art: ETCH.board,
+    photo: '/portfolio/denver-map-glass-coaster.jpg',
     name: 'Coasters and boards',
     line: 'Pine, slate, stainless, bamboo, and cast iron.',
     about: 'Coasters in pine, slate, and stainless, a bamboo board, and the boards and skillets I go and find. A family name, a date, a recipe title, a design from the library.',
@@ -65,8 +58,7 @@ export const DOORS: Door[] = [
   },
   {
     key: 'drink',
-    etch: 'drink',
-  art: ETCH.tumbler,
+    photo: '/portfolio/water-bottle-full-wrap.jpg',
     name: 'Drinkware',
     line: 'Tumblers, bottles, cups, coolers. Marked through the coat to bright steel.',
     about: 'The tumblers, bottles, cups, and coolers I go and find, marked through the coat to bright steel. A name on the front, a date on the back, the crew on the lid. Have one already? Bring it.',
@@ -75,8 +67,7 @@ export const DOORS: Door[] = [
   },
   {
     key: 'carry',
-    etch: 'carry',
-  art: ETCH.keychain,
+    photo: '/reserve/wallet.jpg',
     name: 'Everyday carry',
     line: 'Keychains, tags, wallets, pens.',
     about: 'The keychain, the pet tag, the AirTag tag, the wallet card, the pen. Small, stocked, and out the door fast. Then the wallets and pens I go and find.',
@@ -85,7 +76,7 @@ export const DOORS: Door[] = [
   },
   {
     key: 'walls',
-    etch: 'walls',
+    photo: '/portfolio/laser-engraved-artwork.jpg',
     name: 'Signs and decor',
     line: 'Signs, panel art, a photo burned into wood, the mailbox.',
     about: 'Signs cut from stocked wood, panel art from the library or your own drawing, a photograph burned into the grain, a mini mailbox, a decal. The odd project is welcome here.',
@@ -94,8 +85,7 @@ export const DOORS: Door[] = [
   },
   {
     key: 'business',
-    etch: 'business',
-  art: ETCH.pen,
+    photo: '/portfolio/metal-business-card-original.png',
     name: 'Business',
     line: 'Pens by the pack here. Cards, labels, and coasters by the run on the services page.',
     about: 'Pens by the pack, one logo across the run. Priced by the run, and the tier holds between reorders. A standing account if it is regular.',
@@ -105,7 +95,7 @@ export const DOORS: Door[] = [
   },
 ]
 
-const REST: DoorInfo = { key: 'more', etch: 'more', name: 'Everything else', line: 'The rest of what I make.', about: 'Everything else I make, in one place.' }
+const REST: DoorInfo = { key: 'more', photo: '/portfolio/macbook-engraving.jpg', name: 'Everything else', line: 'The rest of what I make.', about: 'Everything else I make, in one place.' }
 
 export type Tile =
   | { kind: 'product'; p: Product; heroUrl: string | null; cents: number }

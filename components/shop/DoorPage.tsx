@@ -1,15 +1,14 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { SOURCING } from '@/lib/pricing'
 import { DOORS, SHELF, rangeOf, type Section } from '@/lib/shop-doors'
 import { loadShop } from '@/components/shop/ShopDoors'
 import { TileGrid } from '@/components/shop/ShopTiles'
-import { DoorEtching } from '@/components/shop/DoorEtchings'
-import EtchArt from '@/components/shop/EtchArt'
 
 /**
- * One door, open. The etching, the name, the longer line, the count and
- * the range, then every piece behind it cheapest to dearest. The other
- * doors wait at the bottom.
+ * One door, open. The photograph, the name, the longer line, the count
+ * and the range, then every piece behind it cheapest to dearest. The
+ * other doors wait at the bottom.
  */
 const display = { fontFamily: 'var(--font-display), Georgia, serif' }
 
@@ -41,8 +40,8 @@ export default function DoorPage({ section: { door, tiles, held } }: { section: 
             {tiles.length === 1 ? 'One piece' : `${tiles.length} pieces`} · {rangeOf(tiles)}
           </p>
         </div>
-        <div className="hidden md:flex items-center justify-center rounded-[var(--r-panel)] border border-[var(--hairline)] bg-[var(--surface)] aspect-[4/3]">
-          {door.art ? <EtchArt src={door.art} className="w-[72%] aspect-[4/3]" /> : <DoorEtching kind={door.etch} className="w-[70%] text-[var(--ink-soft)]" />}
+        <div className="relative hidden md:block rounded-[var(--r-panel)] border border-[var(--hairline)] overflow-hidden aspect-[4/3]">
+          <Image src={door.photo} alt={door.name} fill priority sizes="260px" className="object-cover" />
         </div>
       </header>
 

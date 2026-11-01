@@ -2,10 +2,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import type { Product } from '@/lib/db/repos/products'
 import { menuCase } from '@/lib/menu-format'
-import { deliveredPrice, reserveCategory, type ReserveGroup, type SourcedItem } from '@/lib/sourcing'
+import { deliveredPrice, itemPhoto, type ReserveGroup, type SourcedItem } from '@/lib/sourcing'
 import { usd, type Tile } from '@/lib/shop-doors'
-import { productArt } from '@/lib/shop-art'
-import EtchArt from '@/components/shop/EtchArt'
 
 /**
  * The tiles behind a door. A stocked or made piece goes to its product
@@ -32,16 +30,10 @@ export function TileGrid({ tiles }: { tiles: Tile[] }) {
 }
 
 export function ProductTile({ p, heroUrl }: { p: Product; heroUrl: string | null }) {
-  const art = heroUrl ? null : productArt(p.slug)
   return (
     <Link href={`/shop/p/${p.slug}`} className={card}>
       <div className="relative aspect-[4/3] overflow-hidden">
-        {art ? (
-          <div className="absolute inset-0 flex items-center justify-center bg-[var(--glass-soft)]">
-            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: 'radial-gradient(ellipse at 50% 60%, rgba(127,207,212,0.16) 0%, transparent 60%)' }} aria-hidden />
-            <EtchArt src={art} className="w-[66%] aspect-[4/3] transition-transform duration-500 ease-out group-hover:-translate-y-1" sizes="(max-width: 768px) 40vw, 200px" />
-          </div>
-        ) : heroUrl ? (
+        {heroUrl ? (
           <>
             <Image src={heroUrl} alt={p.name} fill sizes="(max-width: 768px) 50vw, 25vw" className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.04]" />
             <div className="absolute inset-0 bg-[#16525C]/15 group-hover:bg-[#16525C]/5 transition-colors duration-500" aria-hidden />
@@ -58,8 +50,8 @@ export function ProductTile({ p, heroUrl }: { p: Product; heroUrl: string | null
         ) : null}
       </div>
       <div className="flex-1 flex flex-col p-3 sm:p-3.5 border-t border-[var(--hairline)]">
-        <p className={`text-[length:var(--step-row)] font-semibold leading-snug text-[var(--ink)] group-hover:text-[var(--ink)] ${heroUrl || art ? '' : 'sr-only'}`}>{p.name}</p>
-        {p.shortDescription && <p className={`text-[11px] leading-snug text-[var(--ink-soft)] line-clamp-2 ${heroUrl || art ? 'mt-1' : ''}`}>{menuCase(p.shortDescription)}</p>}
+        <p className={`text-[length:var(--step-row)] font-semibold leading-snug text-[var(--ink)] group-hover:text-[var(--ink)] ${heroUrl ? '' : 'sr-only'}`}>{p.name}</p>
+        {p.shortDescription && <p className={`text-[11px] leading-snug text-[var(--ink-soft)] line-clamp-2 ${heroUrl ? 'mt-1' : ''}`}>{menuCase(p.shortDescription)}</p>}
         <p className="mt-auto pt-2 flex items-baseline justify-between gap-2 text-[length:var(--step-fine)]">
           <span className="text-[var(--ink-soft)]">{whenLine(p)}</span>
           <span className="tabular-nums text-[var(--ink)] text-[length:var(--step-row)]">{usd(p.priceCents)}</span>
@@ -70,8 +62,8 @@ export function ProductTile({ p, heroUrl }: { p: Product; heroUrl: string | null
 }
 
 export function ReserveTile({ it, group }: { it: SourcedItem; group: ReserveGroup }) {
-  // The real photograph from the reserve category, the same one on its page.
-  const photo = reserveCategory(group)?.photo?.src ?? null
+  // The piece's own product photo when there is one, the category's otherwise.
+  const photo = itemPhoto(it)
   return (
     <Link href={`/shop/reserve/${group}?maker=${it.slug}`} className={card}>
       <div className="relative aspect-[4/3] overflow-hidden bg-[var(--glass-soft)]">

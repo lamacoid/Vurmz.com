@@ -33,6 +33,9 @@ export interface SourcedItem {
   mark: string
   /** A portfolio photo that sets the mood behind the glass. */
   backdrop: string
+  /** The maker's product photo for this exact piece, when one is in
+   *  public/reserve/items. It wins over the category photo everywhere. */
+  photo?: string
   /** When it can be in hand. */
   leadTime: string
   /** A sample line, so the preview never starts empty. */
@@ -339,6 +342,11 @@ export function rangeFor(key: ReserveGroup): { low: number; high: number } | nul
 
 export function sourcedBySlug(slug: string): SourcedItem | undefined {
   return SOURCED.find(i => i.slug === slug)
+}
+
+/** The best photograph for a piece: its own, else its category's. */
+export function itemPhoto(item: SourcedItem): string | null {
+  return item.photo ?? reserveCategory(item.group)?.photo?.src ?? null
 }
 
 export function deliveredPrice(item: SourcedItem): number {

@@ -13,7 +13,7 @@ import { CategoryCard } from '@/components/shop/ReserveList'
 import { fontOptions } from '@/lib/fonts'
 import { SOURCING } from '@/lib/pricing'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
-import { deliveredPrice, type SourcedItem, type ReserveCategory } from '@/lib/sourcing'
+import { deliveredPrice, itemPhoto, type SourcedItem, type ReserveCategory } from '@/lib/sourcing'
 
 const usd = (n: number) => `$${n.toLocaleString('en-US')}`
 const display = { fontFamily: 'var(--font-display), Georgia, serif' }
@@ -103,9 +103,9 @@ export default function ReservePiece({ cat, makers, also }: { cat: ReserveCatego
             </h1>
             <p className="mt-4 text-[length:var(--step-lead)] leading-relaxed text-[var(--ink-soft)]">{cat.about}</p>
           </div>
-          {cat.photo && (
+          {(itemPhoto(item) ?? cat.photo?.src) && (
             <div className="relative aspect-[4/3] rounded-[var(--r-panel)] overflow-hidden border border-[var(--hairline)]">
-              <Image src={cat.photo.src} alt={cat.label} fill priority sizes="(max-width: 768px) 100vw, 320px" className="object-cover" />
+              <Image src={itemPhoto(item) ?? cat.photo!.src} alt={item.name} fill priority sizes="(max-width: 768px) 100vw, 320px" className="object-cover" />
             </div>
           )}
         </header>
