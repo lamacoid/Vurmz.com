@@ -175,18 +175,16 @@ export default function LocalTicker() {
     <div className="fixed top-0 left-0 right-0 z-[60] h-7 bg-[var(--feature-deep)] border-b border-white/10">
       <div className="max-w-[1280px] mx-auto h-full px-5 sm:px-11 flex items-center justify-between gap-4 font-mono text-[11px] tracking-[0.04em] text-[var(--feature-soft)]">
         {/* He is actually here. */}
-        <div className="flex items-center gap-2 flex-shrink-0">
+        <div className="flex items-center gap-2 flex-shrink-0 min-w-0">
           <span className="relative flex h-1.5 w-1.5" aria-hidden>
             <span className="absolute inline-flex h-full w-full rounded-full bg-[var(--feature-accent)] opacity-60 animate-ping motion-reduce:animate-none" />
             <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[var(--feature-accent)]" />
           </span>
           <span className="text-[var(--feature-ink)]">{siteInfo.city}, {siteInfo.stateAbbr}</span>
-          {mounted && weather && (
-            <span className="flex items-center gap-1.5 sm:hidden">
-              <WeatherGlyph code={weather.code} />
-              <span>{weather.temp}&deg;</span>
-            </span>
-          )}
+          {/* The news: two new lasers on the way. */}
+          <span className="pl-3 ml-1 border-l border-white/10 text-[var(--feature-ink)] truncate">
+            MOPA and galvo diode coming soon
+          </span>
         </div>
 
         <div className="flex items-center gap-3 sm:gap-4 flex-shrink-0">
