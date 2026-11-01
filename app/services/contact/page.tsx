@@ -1,10 +1,10 @@
 import { Metadata } from 'next'
-import Image from 'next/image'
 import { MapPinIcon, ChatBubbleLeftIcon, EnvelopeIcon, ClockIcon } from '@heroicons/react/24/outline'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 import { SIGNATURE } from '@/lib/pricing'
 import ContactForm from '@/components/ContactForm'
 import Breadcrumbs from '@/components/Breadcrumbs'
+import TrustedBy from '@/components/TrustedBy'
 
 export const metadata: Metadata = {
   title: { absolute: 'Contact | VURMZ Laser Engraving, Centennial, CO' },
@@ -187,28 +187,10 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* Trusted By */}
-      <section className="py-14 sm:py-[72px] border-t border-[var(--hairline)] overflow-hidden">
+      {/* Trusted By: the one shared band, ink silhouettes on paper. */}
+      <section className="py-14 sm:py-[72px] border-t border-[var(--hairline)]">
         <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-xs font-mono text-[var(--ink-soft)] tracking-[0.2em] uppercase mb-5 text-center">
-            Trusted by
-          </p>
-        </div>
-        <div className="relative">
-          <div className="flex items-center justify-center gap-12 sm:gap-16">
-            <a href="https://www.nordstrom.com/store-details/nordstrom-cherry-creek-shopping-center" target="_blank" rel="noopener noreferrer" className="flex-shrink-0 text-sm font-medium text-[var(--ink)]/40 hover:text-[var(--ink)]/60 transition-colors">
-              Nordstrom Beauty
-            </a>
-            <a href="http://countylineguitaramps.com" target="_blank" rel="noopener noreferrer" className="flex-shrink-0 hover:opacity-70 transition-opacity">
-              <Image
-                src="/images/clients/county-line-guitar-amps.svg"
-                alt="County Line Guitar Amps"
-                width={120}
-                height={36}
-                className="opacity-40 brightness-0 invert"
-              />
-            </a>
-          </div>
+          <TrustedBy ground="paper" />
         </div>
       </section>
     </div>

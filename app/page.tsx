@@ -5,11 +5,8 @@ import { ArrowRightIcon, ChatBubbleLeftIcon } from '@heroicons/react/24/outline'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 import { SIGNATURE, SOURCING, CATALOG } from '@/lib/pricing'
 import { portfolioItems } from '@/lib/portfolio'
-import { SHELF, DOORS } from '@/lib/shop-doors'
 import SiteHeader from '@/components/SiteHeader'
 import SiteFooter from '@/components/SiteFooter'
-import ContactForm from '@/components/ContactForm'
-import HowItWorks from '@/components/HowItWorks'
 import TrustedBy from '@/components/TrustedBy'
 import ItemScroller from '@/components/ItemScroller'
 import GlassImage from '@/components/shop/GlassImage'
@@ -19,13 +16,12 @@ import RotatingHeroBg from '@/components/RotatingHeroBg'
 import VurmzLogo from '@/components/VurmzLogo'
 import { ETCH } from '@/lib/shop-art'
 import EtchArt from '@/components/shop/EtchArt'
-import { DoorEtching } from '@/components/shop/DoorEtchings'
 
 /**
- * The homepage: the older one-scroll page, with the new way in at the
- * top (2026-10-01). The rotating line, three paths, then the thing you
- * already own (or the thing I go and get for you), then the work, the
- * shop by category, how it works, the business half, me, contact.
+ * The homepage as a hallway, not a warehouse (slimmed 2026-11-01).
+ * The rotating line and three ways in, the thing you already own,
+ * the work, the business band, me. Each path card leads to the page
+ * that does the job properly; nothing is duplicated here anymore.
  */
 export const metadata: Metadata = {
   alternates: { canonical: '/' },
@@ -47,14 +43,10 @@ const PATHS = [
 const WORK_SLUGS = ['wolverines-knife', 'wedding-gift-label', 'three-willows-coasters', 'culinary-cleaver', 'medieval-water-bottle', 'denver-map-mirror', 'macbook-personalization', 'clga-amp-faceplate']
 const WORK = WORK_SLUGS.map(s => portfolioItems.find(p => p.slug === s)).filter((p): p is (typeof portfolioItems)[number] => !!p)
 
-const SHOP = [SHELF, ...DOORS.filter(d => d.key !== 'business')]
-
 const B2B_LANES = [
   { h: 'Equipment labels', p: `Anodized aluminum, 3M backed, a mark that outlives the equipment. $${CATALOG.serviceTags.aluminumBase * CATALOG.serviceTags.pack} per ${CATALOG.serviceTags.pack}.`, href: '/services/metal-tags' },
   { h: 'Knife crews', p: `I pick up the whole line's knives and return them engraved next day. $${CATALOG.knife.crew.perKnife} a knife at ${CATALOG.knife.crew.minQty} or more, $${CATALOG.knife.fullKitchen.perKnife} for a full kitchen.`, href: '/services/knife-engraving' },
   { h: 'Metal cards', p: 'Sixteen layouts, fourteen colors. Design it on the page and the laser file writes itself.', href: '/shop/p/anodized-aluminum-wallet-card' },
-  { h: 'Plates, panels, one-offs', p: 'Faceplates, valve tags, signage, jobsite tools. Send a photo and a count, you get a number today.', href: '/services#lanes' },
-  { h: 'Standing accounts', p: `Logo on file, free delivery every ${siteInfo.deliveryRunDay}, NET-30, 15% off standing orders.`, href: '/services#account' },
 ]
 
 export default function Page() {
@@ -152,37 +144,7 @@ export default function Page() {
         </div>
       </section>
 
-      {/* 4. Shop by category. */}
-      <section className="border-t border-[var(--hairline)] py-14 sm:py-[72px]">
-        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-baseline justify-between mb-8">
-            <h2 className="text-[length:var(--step-section)] text-[var(--ink)]" style={display}>Shop by category</h2>
-            <Link href="/shop" className="text-[13px] text-[var(--ink-soft)] hover:text-[var(--ink)] transition-colors">Everything</Link>
-          </div>
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
-            {SHOP.map(d => (
-              <Link key={d.key} href={`/shop/${d.key}`} className={`group ${card} hover:border-[var(--feature)]/40 overflow-hidden transition-colors duration-[var(--t-hover)] puffy-light`}>
-                <span className="relative flex items-center justify-center aspect-[4/3] sm:aspect-[16/9] bg-[var(--glass-soft)]">
-                  {d.art ? (
-                    <EtchArt src={d.art} className="w-[56%] max-w-[220px] aspect-[4/3] transition-transform duration-500 ease-out group-hover:-translate-y-1" />
-                  ) : (
-                    <DoorEtching kind={d.etch} className="w-[54%] max-w-[200px] text-[var(--feature)] transition-colors" />
-                  )}
-                </span>
-                <span className="block border-t border-[var(--hairline)] p-3 sm:p-4">
-                  <span className="block text-[length:var(--step-body)] leading-tight text-[var(--ink)]" style={display}>{d.name}</span>
-                  <span className="hidden sm:block mt-1 text-[13px] leading-snug text-[var(--ink-soft)]">{d.line}</span>
-                </span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 5. How it works, the one shared version. */}
-      <HowItWorks />
-
-      {/* 6. Services, the anchored business half. The second teal break. */}
+      {/* 4. Services, the anchored business half. The second teal break. */}
       <section id="services" className={`${roomBand} scroll-mt-16`} style={bloom}>
         <EtchArt tone="cream" src={ETCH.pen} className="absolute -right-8 top-6 w-[380px] aspect-[4/3] opacity-[0.10] pointer-events-none" sizes="380px" />
         <div className="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
@@ -224,7 +186,7 @@ export default function Page() {
         </div>
       </section>
 
-      {/* 7. About. */}
+      {/* 5. About. */}
       <section>
         <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
@@ -251,19 +213,19 @@ export default function Page() {
         </div>
       </section>
 
-      {/* 8. Contact. */}
+      {/* 6. Contact, one line. The form lives on /services/contact. */}
       <section id="contact" className="bg-[var(--surface)]/60 border-t border-[var(--hairline)] scroll-mt-16">
-        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16">
-          <p className={`${eyebrow} mb-3 text-center`}>Contact</p>
-          <h2 className="text-[length:var(--step-section)] text-[var(--ink)] tracking-tight mb-2 text-center" style={display}>
-            Questions? Send it.
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-14 text-center">
+          <h2 className="text-[length:var(--step-section)] text-[var(--ink)] tracking-tight mb-3" style={display}>
+            Questions?
           </h2>
-          <p className="text-[var(--ink-soft)] text-sm text-center mb-8">
-            Or skip the form and text me at{' '}
+          <p className="text-[var(--ink-soft)] text-[15px] leading-relaxed">
+            Text me at{' '}
             <a href={getSmsLink()} className="text-[var(--eyebrow)] font-semibold hover:underline">{siteInfo.phone}</a>
-            . That is usually faster.
+            {' '}or write{' '}
+            <a href={`mailto:${siteInfo.email}`} className="text-[var(--eyebrow)] font-semibold hover:underline">{siteInfo.email}</a>
+            . A text is usually fastest.
           </p>
-          <ContactForm />
         </div>
       </section>
 
