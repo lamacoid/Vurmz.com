@@ -181,9 +181,9 @@ export default function LocalTicker() {
             <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[var(--feature-accent)]" />
           </span>
           <span className="text-[var(--feature-ink)]">{siteInfo.city}, {siteInfo.stateAbbr}</span>
-          {/* The news: two new lasers on the way. */}
+          {/* The news. */}
           <span className="pl-3 ml-1 border-l border-white/10 text-[var(--feature-ink)] truncate">
-            MOPA and galvo diode coming soon
+            MOPA coming soon
           </span>
         </div>
 
