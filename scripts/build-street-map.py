@@ -8,9 +8,18 @@ used as a CSS mask so the site's color tokens do the coloring.
 
 Run from the repo root, on a network that can reach overpass-api.de:
     python3 scripts/build-street-map.py
+
+Set OVERPASS_ENDPOINT to use a mirror. If no Overpass instance is reachable
+at all, build from a Geofabrik extract instead:
+    curl -LO https://download.geofabrik.de/north-america/us/colorado-latest.osm.pbf
+    apt-get install -y osmium-tool
+    osmium extract -b -104.92,39.5525,-104.82,39.6075 colorado-latest.osm.pbf -o crop.pbf
+    osmium export crop.pbf -o crop.geojson
+    python3 scripts/build-street-map.py --geojson crop.geojson
 """
 import json
 import math
+import sys
 import urllib.request
 import urllib.parse
 from pathlib import Path
@@ -44,7 +53,8 @@ MIN_SEG = 2.0  # drop points closer than this many viewBox units
 
 
 def fetch() -> dict:
-    url = "https://overpass-api.de/api/interpreter"
+    import os
+    url = os.environ.get("OVERPASS_ENDPOINT", "https://overpass-api.de/api/interpreter")
     data = urllib.parse.urlencode({"data": QUERY}).encode()
     req = urllib.request.Request(url, data=data, headers={"User-Agent": "vurmz-site-map-build"})
     with urllib.request.urlopen(req, timeout=120) as r:
@@ -57,10 +67,11 @@ def project(lon: float, lat: float) -> tuple[float, float]:
     return x, y
 
 
-def path_for(way: dict) -> str | None:
+def path_from_points(coords: list[tuple[float, float]]) -> str | None:
+    """coords is a list of (lon, lat) pairs."""
     pts = []
-    for g in way.get("geometry", []):
-        x, y = project(g["lon"], g["lat"])
+    for lon, lat in coords:
+        x, y = project(lon, lat)
         if pts and abs(x - pts[-1][0]) < MIN_SEG and abs(y - pts[-1][1]) < MIN_SEG:
             continue
         pts.append((x, y))
@@ -72,16 +83,35 @@ def path_for(way: dict) -> str | None:
     return d
 
 
+def iter_ways(raw: dict):
+    """Yield (highway class, [(lon, lat), ...]) from either source format."""
+    if "elements" in raw:  # Overpass out:geom
+        for el in raw["elements"]:
+            coords = [(g["lon"], g["lat"]) for g in el.get("geometry", [])]
+            yield el.get("tags", {}).get("highway"), coords
+    else:  # GeoJSON from `osmium export`
+        for feat in raw.get("features", []):
+            geom = feat.get("geometry") or {}
+            wclass = (feat.get("properties") or {}).get("highway")
+            if geom.get("type") == "LineString":
+                yield wclass, [(c[0], c[1]) for c in geom["coordinates"]]
+            elif geom.get("type") == "MultiLineString":
+                for line in geom["coordinates"]:
+                    yield wclass, [(c[0], c[1]) for c in line]
+
+
 def main() -> None:
-    raw = fetch()
+    if len(sys.argv) == 3 and sys.argv[1] == "--geojson":
+        raw = json.loads(Path(sys.argv[2]).read_text())
+    else:
+        raw = fetch()
     by_weight: dict[float, list[str]] = {}
     ways = 0
-    for el in raw.get("elements", []):
-        wclass = el.get("tags", {}).get("highway")
+    for wclass, coords in iter_ways(raw):
         weight = WEIGHTS.get(wclass)
         if weight is None:
             continue
-        d = path_for(el)
+        d = path_from_points(coords)
         if not d:
             continue
         by_weight.setdefault(weight, []).append(d)
