@@ -14,6 +14,7 @@ import RotatingTagline from '@/components/RotatingTagline'
 import CanYouEngraveThis from '@/components/CanYouEngraveThis'
 import RotatingHeroBg from '@/components/RotatingHeroBg'
 import VurmzLogo from '@/components/VurmzLogo'
+import CityMap from '@/components/CityMap'
 
 /**
  * The homepage as a hallway, not a warehouse (slimmed 2026-11-01).
@@ -35,7 +36,7 @@ const bloom = { backgroundImage: 'radial-gradient(ellipse 70% 60% at 15% 0%, rgb
 const PATHS = [
   { h: 'I already have something', p: 'A knife, a laptop, a flask. Send a photo, get a number today.', href: '/engrave', cta: 'Engrave my stuff' },
   { h: 'Shop things to engrave', p: 'Coasters, boards, knives, tumblers, tags. Priced, in stock, your words on them.', href: '/shop', cta: 'See the shop' },
-  { h: 'I am ordering for a business', p: 'Pens, cards, labels, coasters, knife crews. Posted prices by the run.', href: '/services', cta: 'Business pricing' },
+  { h: 'I’m ordering for a business', p: 'Pens, cards, labels, coasters, knife crews. Posted prices by the run.', href: '/services', cta: 'Business pricing' },
 ]
 
 const WORK_SLUGS = ['wolverines-knife', 'wedding-gift-label', 'three-willows-coasters', 'culinary-cleaver', 'medieval-water-bottle', 'denver-map-mirror', 'macbook-personalization', 'clga-amp-faceplate']
@@ -94,12 +95,12 @@ export default function Page() {
               Knife. Tool. Laptop. Flask. Weird piece of metal from your garage.
             </h2>
             <p className="mt-4 text-[length:var(--step-lead)] leading-relaxed text-[var(--ink-soft)] max-w-[44ch]">
-              Send me a photo and I will tell you if I can mark it and what it costs. One piece is ${SIGNATURE.startingAt} for most jobs.
+              Send me a photo and I’ll tell you if I can mark it and what it costs. One piece is ${SIGNATURE.startingAt} for most jobs.
             </p>
             <div className="mt-6 rounded-[var(--r-panel)] border border-[var(--glass-edge)] bg-[var(--glass)] p-5">
-              <p className="text-[length:var(--step-body)] font-semibold text-[var(--ink)]">Do not have it yet? I will go get it.</p>
+              <p className="text-[length:var(--step-body)] font-semibold text-[var(--ink)]">Don’t have it yet? I’ll go get it.</p>
               <p className="mt-1.5 text-[14.5px] leading-relaxed text-[var(--ink-soft)]">
-                Tell me what you want and I order it, mark it, and bring it. One delivery instead of three: no waiting on a box, no handing it off, no second trip. The piece is at cost, what it costs to buy. ${SOURCING.reserveFee} covers everything else: finding it, marking it, bringing it.
+                Tell me what you want and I’ll order it, mark it, and bring it. One delivery instead of three: no waiting on a box, no handing it off, no second trip. The piece is at cost, what it costs to buy. ${SOURCING.reserveFee} covers everything else: finding it, marking it, bringing it.
               </p>
               <Link href="/shop/reserve" className="mt-3 inline-flex items-center gap-2 text-[14px] font-semibold text-[var(--eyebrow)] hover:gap-3 transition-all">
                 What I find for people
@@ -143,6 +144,7 @@ export default function Page() {
 
       {/* 4. Services, the anchored business half. The second teal break. */}
       <section id="services" className={`${roomBand} scroll-mt-16`} style={bloom}>
+        <CityMap className="inset-y-0 right-[-12%] w-[72%]" opacity={0.09} />
         <div className="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
           <p className={`${eyebrow} mb-3`}>For your work</p>
           <h2 className="text-[length:var(--step-section)] text-[var(--ink)] tracking-tight leading-tight mb-4" style={display}>
@@ -182,9 +184,11 @@ export default function Page() {
         </div>
       </section>
 
-      {/* 5. About. */}
-      <section>
-        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16">
+      {/* 5. About, over the streets he grew up on. */}
+      <section className="relative overflow-hidden">
+        <CityMap className="hidden md:block inset-y-0 right-0 w-[58%]" opacity={0.06} />
+        <div className="absolute inset-0 bg-gradient-to-r from-[var(--page)] via-[var(--page)]/40 to-transparent pointer-events-none" aria-hidden />
+        <div className="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
             <div className="relative aspect-[4/3] overflow-hidden rounded-sm puffy-light">
               <Image src="/images/zach.jpeg" alt={`${siteInfo.founder.name}, owner of VURMZ`} fill className="object-cover" sizes="(max-width: 768px) 100vw, 50vw" />
@@ -195,10 +199,12 @@ export default function Page() {
             <div>
               <p className={`${eyebrow} mb-4`}>Who I am</p>
               <h2 className="text-[length:var(--step-section)] text-[var(--ink)] tracking-tight leading-tight mb-4" style={display}>
-                I&apos;m {siteInfo.founder.name}.<br /><span className="text-[var(--ink)]/50">VURMZ is in {siteInfo.city}.</span>
+                I&apos;m {siteInfo.founder.name}.<br /><span className="text-[var(--ink)]/50">{siteInfo.city}, most of my life.</span>
               </h2>
               <p className="text-[var(--ink-soft)] text-base leading-relaxed mb-4">
-                Text me what you want marked. You get a number the same day, and the finished piece comes to your door.
+                VURMZ started as a high school nickname. Now it&apos;s the name on the invoices.
+                Text me what you want marked, I&apos;ll price it the same day, and when it&apos;s done
+                I&apos;m the one who brings it over.
               </p>
               <Link href="/about" className="inline-flex items-center gap-2 text-[#B0675D] font-semibold text-sm hover:gap-3 transition-all">
                 About VURMZ
