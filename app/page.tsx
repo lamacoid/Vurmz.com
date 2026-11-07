@@ -88,6 +88,8 @@ export default function Page() {
 
       {/* 2. Bring your own thing. Have it, or let me go get it. The first teal break. */}
       <section id="engrave" className={`${roomBand} scroll-mt-28`} style={bloom}>
+        <CityMap className="inset-0" opacity={0.08} />
+        <div className="absolute inset-0 bg-gradient-to-r from-[var(--page)] via-[var(--page)]/40 to-transparent pointer-events-none" aria-hidden />
         <div className="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 grid grid-cols-1 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] gap-8 lg:gap-12 items-start">
           <div>
             <p className={`${eyebrow} mb-3`}>Bring your own thing</p>
@@ -144,7 +146,8 @@ export default function Page() {
 
       {/* 4. Services, the anchored business half. The second teal break. */}
       <section id="services" className={`${roomBand} scroll-mt-16`} style={bloom}>
-        <CityMap className="inset-y-0 right-[-12%] w-[72%]" opacity={0.09} />
+        <CityMap className="inset-0" opacity={0.09} />
+        <div className="absolute inset-0 bg-gradient-to-r from-[var(--page)] via-[var(--page)]/40 to-transparent pointer-events-none" aria-hidden />
         <div className="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
           <p className={`${eyebrow} mb-3`}>For your work</p>
           <h2 className="text-[length:var(--step-section)] text-[var(--ink)] tracking-tight leading-tight mb-4" style={display}>
@@ -186,7 +189,7 @@ export default function Page() {
 
       {/* 5. About, over the streets he grew up on. */}
       <section className="relative overflow-hidden">
-        <CityMap className="hidden md:block inset-y-0 right-0 w-[58%]" opacity={0.06} />
+        <CityMap className="hidden md:block inset-0" opacity={0.06} />
         <div className="absolute inset-0 bg-gradient-to-r from-[var(--page)] via-[var(--page)]/40 to-transparent pointer-events-none" aria-hidden />
         <div className="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
