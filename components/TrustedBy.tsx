@@ -20,7 +20,7 @@ export default function TrustedBy({ ground = 'room' }: TrustedByProps) {
   return (
     <div className="text-center">
       <p className="text-[length:var(--step-eyebrow)] font-mono tracking-[0.2em] uppercase mb-5 text-[var(--eyebrow)]">
-        Trusted by
+        Made for
       </p>
       <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-6 sm:gap-x-16 text-[var(--ink)]">
         <a href="http://countylineguitaramps.com" target="_blank" rel="noopener noreferrer" className={logo}>
