@@ -92,6 +92,7 @@ export default async function PortfolioDetailPage({ params }: Props) {
               alt={item.label}
               fill
               priority
+              quality={85}
               sizes="(max-width: 1024px) 100vw, 50vw"
               className="object-cover"
             />

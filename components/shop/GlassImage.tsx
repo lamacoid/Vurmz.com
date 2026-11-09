@@ -17,6 +17,8 @@ interface GlassImageProps {
   depth?: GlassDepth
   priority?: boolean
   sizes?: string
+  /** next/image quality (default 75). Portfolio photos ask for 85. */
+  quality?: number
   /** Use a plain <img> for remote/D1 media URLs instead of next/image. */
   plain?: boolean
   /** Extra classes on the wrapper (e.g. aspect ratio, rounding). */
@@ -49,6 +51,7 @@ export default function GlassImage({
   depth = 'card',
   priority,
   sizes,
+  quality,
   plain,
   className = '',
 }: GlassImageProps) {
@@ -73,6 +76,7 @@ export default function GlassImage({
           fill
           priority={priority}
           sizes={sizes}
+          quality={quality}
           className={`object-cover transition-transform duration-[800ms] ease-out ${s.img}`}
         />
       )}
