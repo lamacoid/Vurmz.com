@@ -1,117 +1,135 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
 import Link from 'next/link'
+import { listProducts, lowestVariantPrices, type Product } from '@/lib/db/repos/products'
+import { menuPrice, menuCase } from '@/lib/menu-format'
+import { SIGNATURE } from '@/lib/pricing'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
-import RotatingTagline from '@/components/RotatingTagline'
-import ShopDoors from '@/components/shop/ShopDoors'
-import { SOURCING, SIGNATURE } from '@/lib/pricing'
-import { SHELF, DOORS } from '@/lib/shop-doors'
-import HowItWorks from '@/components/HowItWorks'
 
-// The doors count the live catalog at request time, so this runs on the edge.
+// The list reads the live catalog at request time, so this runs on the edge.
 export const runtime = 'edge'
 
 export const metadata: Metadata = {
-  title: { absolute: 'Engraved Coasters, Boards, Cards and Tags | VURMZ Shop' },
-  description: 'The VURMZ shop: engraved coasters, cutting boards, knives, tumblers, tags, and your own piece, made one at a time in Centennial and hand-delivered across the south Denver metro.',
+  title: { absolute: 'Items: engraved coasters, pens, cards, and tags | VURMZ' },
+  description: 'The short list of things VURMZ keeps to engrave: coasters, pens, metal cards, tags, and keychains. Posted prices, engraving included, hand-delivered across the south Denver metro.',
   alternates: { canonical: '/shop' },
 }
 
 const display = { fontFamily: 'var(--font-display), Georgia, serif' }
 
-// The full list, in one line under the doors. The doors are the six
-// that matter; this is everything.
-const EVERYTHING = [
-  { name: 'Your own piece', href: '/engrave' },
-  ...[SHELF, ...DOORS].map(d => ({ name: d.name, href: `/shop/${d.key}` })),
-  { name: 'The reserve', href: '/shop/reserve' },
-]
+/**
+ * Items, streamlined 2026-11-11. One short list instead of a store: the
+ * blanks that business orders and small gifts actually use. Everything else
+ * is "bring your own thing" on /engrave or a quoted lane on /services.
+ * Which products show is decided by category here, never by hiding rows in
+ * the database, so widening or narrowing the list is a one-line change.
+ */
+const ITEM_CATEGORIES = new Set(['cat_coasters', 'cat_pens', 'cat_metal_cards', 'cat_labels_tags', 'cat_keychains'])
+// A pack of ten or more is a business run. Smaller is a single or a set.
+const RUN_SIZE = 10
 
-export default function ShopHome() {
+async function loadItems(): Promise<{ products: Product[]; lowest: Record<string, number> }> {
+  try {
+    const [all, lowest] = await Promise.all([listProducts({ limit: 200 }), lowestVariantPrices()])
+    return { products: all.filter(p => p.categoryId && ITEM_CATEGORIES.has(p.categoryId)), lowest }
+  } catch {
+    // The list never takes the page down. An empty list falls back to the text line.
+    return { products: [], lowest: {} }
+  }
+}
+
+function Row({ p, lowest }: { p: Product; lowest: Record<string, number> }) {
+  const low = lowest[p.id]
+  const from = low !== undefined && low < p.priceCents
   return (
-    <div>
-      {/* Masthead */}
-      <section className="pt-8 sm:pt-10">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="sr-only">Custom Laser Engraving: Gifts, Knives, Tumblers &amp; More</h1>
-          <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-[var(--eyebrow)] mb-3">
-            VURMZ · Centennial, Colorado
-          </p>
-          <RotatingTagline
-            inline
-            accentColor="#C67A6F"
-            className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] text-[var(--ink)]"
+    <li>
+      <Link href={`/shop/p/${p.slug}`} className="group flex flex-col gap-0.5 py-4 border-b border-[var(--hairline)]">
+        <span className="flex items-baseline gap-3">
+          <span className="text-[16px] font-semibold text-[var(--ink)] group-hover:text-[var(--feature)] transition-colors">{p.name}</span>
+          <span className="flex-1 -translate-y-[4px] border-b border-dotted border-[var(--ink)]/25 min-w-[1.5rem]" aria-hidden />
+          <span className="text-[16px] font-semibold text-[var(--eyebrow)] whitespace-nowrap tabular-nums">
+            {from ? `from ${menuPrice(low)}` : menuPrice(p.priceCents)}
+          </span>
+        </span>
+        {p.shortDescription && (
+          <span className="text-[13.5px] leading-snug text-[var(--ink-soft)]">{menuCase(p.shortDescription)}</span>
+        )}
+      </Link>
+    </li>
+  )
+}
+
+function Group({ title, note, items, lowest }: { title: string; note: string; items: Product[]; lowest: Record<string, number> }) {
+  if (items.length === 0) return null
+  return (
+    <section className="mt-10">
+      <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 pb-2 border-b-2 border-[var(--ink)]/25">
+        <h2 className="text-[length:var(--step-panel)] text-[var(--ink)]" style={display}>{title}</h2>
+        <p className="text-[13px] text-[var(--ink-soft)]">{note}</p>
+      </div>
+      <ul className="list-none p-0 m-0">
+        {items.map(p => <Row key={p.id} p={p} lowest={lowest} />)}
+      </ul>
+    </section>
+  )
+}
+
+export default async function ItemsPage() {
+  const { products, lowest } = await loadItems()
+  const byPrice = (a: Product, b: Product) => a.priceCents - b.priceCents
+  const singles = products.filter(p => p.packSize < RUN_SIZE).sort(byPrice)
+  const runs = products.filter(p => p.packSize >= RUN_SIZE).sort(byPrice)
+
+  return (
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-10 pb-16">
+      <header className="max-w-[58ch]">
+        <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-[var(--feature)] mb-3">Items</p>
+        <h1 className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] leading-[1.05] text-[var(--ink)]" style={display}>
+          What I keep to engrave.
+        </h1>
+        <p className="mt-4 text-[length:var(--step-lead)] leading-relaxed text-[var(--ink-soft)]">
+          Pick one, tell me what goes on it, and attach a logo if you have one. The engraving is in the price.
+        </p>
+      </header>
+
+      {products.length === 0 ? (
+        <p className="mt-10 text-[15px] leading-relaxed text-[var(--ink-soft)]">
+          The list is not loading right now. Text {siteInfo.founder.name} at{' '}
+          <a href={getSmsLink('Hi Zach, what do you have in stock to engrave?')} className="text-[var(--feature)] hover:text-[var(--ink)] transition-colors">{siteInfo.phone}</a>{' '}
+          and I will tell you what is on the shelf.
+        </p>
+      ) : (
+        <>
+          <Group
+            title="Singles and sets"
+            note={singles.every(p => !p.madeToOrder) ? 'In stock. At your door in a day or two.' : 'Engraving included.'}
+            items={singles}
+            lowest={lowest}
           />
-          <p className="text-sm text-[var(--ink-soft)] mt-3">
-            In stock, made to order, or found for you. Brought to your door across the south Denver metro ·{' '}
-            <a href={getSmsLink("Hi, I'd like to get something engraved")} className="text-[var(--eyebrow)] font-semibold hover:underline">
-              Text {siteInfo.phone}
-            </a>
-          </p>
-          <div className="mt-6 border-t-2 border-[var(--hairline)]" aria-hidden />
-          <div className="mt-[3px] mb-4 border-t border-[var(--hairline)]" aria-hidden />
-        </div>
-      </section>
+          <Group title="By the pack" note="One logo across the run." items={runs} lowest={lowest} />
+        </>
+      )}
 
-      {/* Already own it: the house offer, first. */}
-      <section className="pb-10 sm:pb-14">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Link href="/engrave" className="group grid grid-cols-1 md:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] rounded-[var(--r-band)] border border-[var(--feature)]/40 bg-[var(--surface)] hover:bg-[var(--glass-soft)] overflow-hidden transition-colors duration-[var(--t-hover)]">
-            <div className="p-6 sm:p-8">
-              <p className="text-[length:var(--step-eyebrow)] font-mono tracking-[0.3em] uppercase text-[var(--feature)] mb-3">Already own it?</p>
-              <p className="text-[length:var(--step-section)] leading-[1.05] text-[var(--ink)]" style={display}>
-                Your own piece, engraved. ${SIGNATURE.startingAt}.
-              </p>
-              <p className="mt-3 max-w-[52ch] text-[length:var(--step-row)] leading-relaxed text-[var(--ink-soft)]">
-                Knife, tool, laptop, flask. Send a photo and I tell you if I can mark it and what it costs. Back within the week.
-              </p>
-              <span className="mt-5 inline-flex items-center h-10 px-5 rounded-[var(--r-control)] bg-[var(--coral)] text-white text-[length:var(--step-body)] font-semibold group-hover:bg-[var(--coral-hover)] transition-colors duration-[var(--t-hover)]">Send a photo</span>
-            </div>
-            <div className="relative min-h-[200px] md:min-h-0">
-              <Image src="/portfolio/macbook-engraving.jpg" alt="A MacBook lid engraved with a columbine" fill sizes="(max-width: 768px) 100vw, 40vw" className="object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-r from-[var(--surface)] via-[var(--surface)]/30 to-transparent" aria-hidden />
-            </div>
-          </Link>
-        </div>
-      </section>
-
-      {/* The doors. Each opens on its own page, one list, cheapest to dearest. */}
-      <section className="pb-14">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <ShopDoors houseSlug="engrave-your-item" />
-          <p className="mt-8 text-[length:var(--step-row)] text-[var(--ink-soft)]">
-            Everything:{' '}
-            {EVERYTHING.map((e, i) => (
-              <span key={e.href}>
-                <Link href={e.href} className="text-[var(--feature)] hover:text-[var(--ink)] transition-colors">{e.name.toLowerCase()}</Link>
-                {i < EVERYTHING.length - 1 ? ', ' : '.'}
-              </span>
-            ))}
+      <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+        <Link href="/engrave" className="group rounded-[var(--r-panel)] border border-[var(--hairline)] bg-[var(--surface)] hover:border-[var(--feature)]/40 p-5 transition-colors">
+          <p className="text-[length:var(--step-body)] text-[var(--ink)]" style={display}>Already own the thing?</p>
+          <p className="mt-1.5 text-[14px] leading-relaxed text-[var(--ink-soft)]">
+            Knife, tool, tumbler, laptop. Send a photo and get a price. Most pieces are ${SIGNATURE.startingAt}.
           </p>
-          <p className="mt-4 text-[length:var(--step-row)] text-[var(--ink-soft)]">
-            Anything marked <span className="text-[var(--feature)]">found for you</span> is a piece I go and buy for you. The piece is at cost, and ${SOURCING.reserveFee} on top covers finding it, marking it, and bringing it.
-            Not on the list? Tell me what you are looking for and I will source it.
+          <span className="mt-3 inline-block text-[14px] font-semibold text-[#B0675D]">Engrave your stuff</span>
+        </Link>
+        <Link href="/services" className="group rounded-[var(--r-panel)] border border-[var(--hairline)] bg-[var(--surface)] hover:border-[var(--feature)]/40 p-5 transition-colors">
+          <p className="text-[length:var(--step-body)] text-[var(--ink)]" style={display}>Ordering for a business?</p>
+          <p className="mt-1.5 text-[14px] leading-relaxed text-[var(--ink-soft)]">
+            Labels, knife crews, plates, and volume pricing are posted on the business page.
           </p>
-        </div>
-      </section>
+          <span className="mt-3 inline-block text-[14px] font-semibold text-[#B0675D]">Business pricing</span>
+        </Link>
+      </div>
 
-      <HowItWorks />
-
-      {/* Close */}
-      <section className="pb-10 sm:pb-14">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-[length:var(--step-section)] text-[var(--ink)] mb-3" style={display}>Not sure what to get?</h2>
-          <p className="text-[var(--ink-soft)] text-base leading-relaxed mb-6">
-            Text me who it is for and what they are into. I will point you at the right thing, or find it.
-          </p>
-          <a
-            href={getSmsLink("Hi Zach, I'm looking for a gift for ")}
-            className="inline-flex items-center justify-center h-12 px-7 rounded-[var(--r-control)] bg-[var(--coral)] hover:bg-[var(--coral-hover)] text-white text-[15px] font-semibold transition-colors"
-          >
-            Text {siteInfo.founder.name} at {siteInfo.phone}
-          </a>
-        </div>
-      </section>
+      <p className="mt-10 text-[14px] text-[var(--ink-soft)]">
+        Not on the list? Text {siteInfo.founder.name} at{' '}
+        <a href={getSmsLink('Hi Zach, do you have ')} className="text-[var(--feature)] hover:text-[var(--ink)] transition-colors">{siteInfo.phone}</a>.
+      </p>
     </div>
   )
 }

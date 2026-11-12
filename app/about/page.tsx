@@ -37,7 +37,7 @@ export default function AboutPage() {
           <div>
             <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-[var(--feature)] mb-3">About</p>
             <h1 className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] leading-[1.05] text-[var(--ink)]" style={display}>
-              I&rsquo;m {siteInfo.founder.name}. VURMZ is me and a couple of lasers in {siteInfo.city}.
+              I&rsquo;m {siteInfo.founder.name}. VURMZ is my laser engraving shop in {siteInfo.city}.
             </h1>
             <p className="mt-5 max-w-[52ch] text-[length:var(--step-lead)] leading-relaxed text-[var(--ink-soft)]">
               I started making custom cards for another project, taught myself the machine, and it did not stop. VURMZ was a nickname in high school. Now it is the name on the invoices.

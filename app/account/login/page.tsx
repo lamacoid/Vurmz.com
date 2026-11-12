@@ -38,7 +38,7 @@ export default function AccountLogin() {
         <div className="bg-[var(--page)] border border-[#7FCFD4]/20 rounded-xl p-6">
           <p className="text-[var(--ink)] font-semibold mb-2">Check your email</p>
           <p className="text-sm text-[var(--ink-soft)]">
-            We sent a sign-in link to <span className="text-[var(--ink)]">{email}</span>. The link expires in 15 minutes.
+            A sign-in link is on its way to<span className="text-[var(--ink)]">{email}</span>. The link expires in 15 minutes.
           </p>
           <p className="text-xs text-[var(--ink-soft)] mt-4">Didn&rsquo;t get it? Check spam, or <button onClick={() => setStatus('idle')} className="text-[#7FCFD4] hover:underline">try again</button>.</p>
         </div>

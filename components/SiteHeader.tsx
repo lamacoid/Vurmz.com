@@ -10,9 +10,8 @@ import CartButton from '@/components/shop/CartButton'
 import VurmzLogo from '@/components/VurmzLogo'
 
 const NAV_LINKS = [
-  // Ways to use VURMZ, not everything it sells (2026-09-30).
-  { label: 'Shop', href: '/shop' },
-  { label: 'Designs', href: '/designs' },
+  // Streamlined 2026-11-11: bring your own thing and business work lead.
+  // The short item list lives at /shop, linked from the pages and the footer.
   { label: 'Engrave your stuff', href: '/engrave' },
   { label: 'Business', href: '/services' },
   { label: 'Work', href: '/services/portfolio' },

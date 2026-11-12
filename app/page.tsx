@@ -5,7 +5,6 @@ import { ArrowRightIcon, ChatBubbleLeftIcon } from '@heroicons/react/24/outline'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 import { SIGNATURE, SOURCING, CATALOG } from '@/lib/pricing'
 import { portfolioItems } from '@/lib/portfolio'
-import { SHELF, DOORS } from '@/lib/shop-doors'
 import SiteHeader from '@/components/SiteHeader'
 import SiteFooter from '@/components/SiteFooter'
 import ContactForm from '@/components/ContactForm'
@@ -19,13 +18,12 @@ import RotatingHeroBg from '@/components/RotatingHeroBg'
 import VurmzLogo from '@/components/VurmzLogo'
 import { ETCH } from '@/lib/shop-art'
 import EtchArt from '@/components/shop/EtchArt'
-import { DoorEtching } from '@/components/shop/DoorEtchings'
 
 /**
- * The homepage: the older one-scroll page, with the new way in at the
- * top (2026-10-01). The rotating line, three paths, then the thing you
- * already own (or the thing I go and get for you), then the work, the
- * shop by category, how it works, the business half, me, contact.
+ * The homepage, streamlined 2026-11-11. Two ways in, bring your own thing
+ * and business work, because that is where every real job has come from.
+ * Then the photo form, the work, the business lanes with the short item
+ * list under them, how it works, me, contact. No shop doors, no designers.
  */
 export const metadata: Metadata = {
   alternates: { canonical: '/' },
@@ -39,9 +37,8 @@ const roomBand = 'room relative overflow-hidden'
 const bloom = { backgroundImage: 'radial-gradient(ellipse 70% 60% at 15% 0%, rgba(127,207,212,0.16) 0%, transparent 55%), radial-gradient(ellipse 60% 50% at 90% 100%, rgba(13,47,53,0.85) 0%, transparent 60%)' }
 
 const PATHS = [
-  { h: 'I already have something', p: 'A knife, a laptop, a flask. Send a photo, get a number today.', href: '/engrave', cta: 'Engrave my stuff' },
-  { h: 'Shop things to engrave', p: 'Coasters, boards, knives, tumblers, tags. Priced, in stock, your words on them.', href: '/shop', cta: 'See the shop' },
-  { h: 'I am ordering for a business', p: 'Pens, cards, labels, coasters, knife crews. Posted prices by the run.', href: '/services', cta: 'Business pricing' },
+  { h: 'I already have the thing', p: `A knife, a tool, a tumbler, a laptop. Send a photo, get a price today. Most pieces are $${SIGNATURE.startingAt}.`, href: '/engrave', cta: 'Engrave my stuff' },
+  { h: 'I am ordering for a business', p: 'Labels, knife crews, pens, cards, plates. Posted prices, no setup fees, delivered.', href: '/services', cta: 'Business pricing' },
 ]
 
 const WORK_SLUGS = [
@@ -51,12 +48,10 @@ const WORK_SLUGS = [
 ]
 const WORK = WORK_SLUGS.map(s => portfolioItems.find(p => p.slug === s)).filter((p): p is (typeof portfolioItems)[number] => !!p)
 
-const SHOP = [SHELF, ...DOORS.filter(d => d.key !== 'business')]
-
 const B2B_LANES = [
   { h: 'Equipment labels', p: `Anodized aluminum, 3M backed, a mark that outlives the equipment. $${CATALOG.serviceTags.aluminumBase * CATALOG.serviceTags.pack} per ${CATALOG.serviceTags.pack}.`, href: '/services/metal-tags' },
   { h: 'Knife crews', p: `I pick up the whole line's knives and return them engraved next day. $${CATALOG.knife.crew.perKnife} a knife at ${CATALOG.knife.crew.minQty} or more, $${CATALOG.knife.fullKitchen.perKnife} for a full kitchen.`, href: '/services/knife-engraving' },
-  { h: 'Metal cards', p: 'Sixteen layouts, fourteen colors. Design it on the page and the laser file writes itself.', href: '/shop/p/anodized-aluminum-wallet-card' },
+  { h: 'Metal cards', p: `Anodized aluminum, card size. Send your logo and the details. $${CATALOG.cards.matteBlackBase * CATALOG.cards.pack} per ${CATALOG.cards.pack}.`, href: '/shop/p/anodized-aluminum-wallet-card' },
   { h: 'Plates, panels, one-offs', p: 'Faceplates, valve tags, signage, jobsite tools. Send a photo and a count, you get a number today.', href: '/services#lanes' },
   { h: 'Standing accounts', p: `Logo on file, free delivery every ${siteInfo.deliveryRunDay}, NET-30, 15% off standing orders.`, href: '/services#account' },
 ]
@@ -67,7 +62,7 @@ export default function Page() {
       <style dangerouslySetInnerHTML={{ __html: 'html{scroll-behavior:smooth}' }} />
       <SiteHeader variant="shop" />
 
-      {/* 1. Hero: the wordmark over the work, the rotating line, then three ways in. */}
+      {/* 1. Hero: the wordmark over the work, the rotating line, then the two ways in. */}
       <section className="relative px-4 sm:px-6 lg:px-8 pt-10 sm:pt-16 pb-10 sm:pb-14 overflow-hidden">
         <RotatingHeroBg />
         <div className="relative z-10 max-w-[1280px] mx-auto">
@@ -84,7 +79,7 @@ export default function Page() {
             Industrial engraving equipment in Centennial. Posted prices, a number the same day, hand-delivered.
           </p>
         </div>
-        <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
+        <div className="mt-10 mx-auto max-w-[920px] grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
           {PATHS.map(x => (
             <Link key={x.href} href={x.href} className={`group ${card} hover:border-[var(--feature)]/40 p-5 sm:p-6 flex flex-col transition-colors duration-[var(--t-hover)] puffy-light`}>
               <span className="text-[length:var(--step-panel)] leading-tight text-[var(--ink)]" style={display}>{x.h}</span>
@@ -116,10 +111,10 @@ export default function Page() {
               <p className="mt-1.5 text-[14.5px] leading-relaxed text-[var(--ink-soft)]">
                 Tell me what you want and I order it, mark it, and bring it. One delivery instead of three: no waiting on a box, no handing it off, no second trip. The piece is at cost, what it costs to buy. ${SOURCING.reserveFee} covers everything else: finding it, marking it, bringing it.
               </p>
-              <Link href="/shop/reserve" className="mt-3 inline-flex items-center gap-2 text-[14px] font-semibold text-[var(--eyebrow)] hover:gap-3 transition-all">
-                What I find for people
+              <a href={getSmsLink('Hi Zach, can you find and engrave this for me: ')} className="mt-3 inline-flex items-center gap-2 text-[14px] font-semibold text-[var(--eyebrow)] hover:gap-3 transition-all">
+                Text me what you want
                 <ArrowRightIcon className="w-4 h-4" />
-              </Link>
+              </a>
             </div>
           </div>
           <CanYouEngraveThis compact />
@@ -156,37 +151,7 @@ export default function Page() {
         </div>
       </section>
 
-      {/* 4. Shop by category. */}
-      <section className="border-t border-[var(--hairline)] py-14 sm:py-[72px]">
-        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-baseline justify-between mb-8">
-            <h2 className="text-[length:var(--step-section)] text-[var(--ink)]" style={display}>Shop by category</h2>
-            <Link href="/shop" className="text-[13px] text-[var(--ink-soft)] hover:text-[var(--ink)] transition-colors">Everything</Link>
-          </div>
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
-            {SHOP.map(d => (
-              <Link key={d.key} href={`/shop/${d.key}`} className={`group ${card} hover:border-[var(--feature)]/40 overflow-hidden transition-colors duration-[var(--t-hover)] puffy-light`}>
-                <span className="relative flex items-center justify-center aspect-[4/3] sm:aspect-[16/9] bg-[var(--glass-soft)]">
-                  {d.art ? (
-                    <EtchArt src={d.art} className="w-[56%] max-w-[220px] aspect-[4/3] transition-transform duration-500 ease-out group-hover:-translate-y-1" />
-                  ) : (
-                    <DoorEtching kind={d.etch} className="w-[54%] max-w-[200px] text-[var(--feature)] transition-colors" />
-                  )}
-                </span>
-                <span className="block border-t border-[var(--hairline)] p-3 sm:p-4">
-                  <span className="block text-[length:var(--step-body)] leading-tight text-[var(--ink)]" style={display}>{d.name}</span>
-                  <span className="hidden sm:block mt-1 text-[13px] leading-snug text-[var(--ink-soft)]">{d.line}</span>
-                </span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 5. How it works, the one shared version. */}
-      <HowItWorks />
-
-      {/* 6. Services, the anchored business half. The second teal break. */}
+      {/* 4. Business, the anchored half. The second teal break. */}
       <section id="services" className={`${roomBand} scroll-mt-16`} style={bloom}>
         <EtchArt tone="cream" src={ETCH.pen} className="absolute -right-8 top-6 w-[380px] aspect-[4/3] opacity-[0.10] pointer-events-none" sizes="380px" />
         <div className="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
@@ -222,11 +187,20 @@ export default function Page() {
             </a>
           </div>
 
+          {/* The short item list, one line. It is a list, not a store. */}
+          <p className="mt-8 max-w-[62ch] text-[14.5px] leading-relaxed text-[var(--ink-soft)]">
+            Need the blanks too? I keep coasters, pens, metal cards, tags, and keychains on the shelf.{' '}
+            <Link href="/shop" className="font-semibold text-[var(--eyebrow)] hover:underline">See the items</Link>.
+          </p>
+
           <div className="mt-12 border-t border-[var(--hairline)] pt-8">
             <TrustedBy theme="services" />
           </div>
         </div>
       </section>
+
+      {/* 5. How it works, the one shared version. */}
+      <HowItWorks />
 
       {/* 7. About. */}
       <section>

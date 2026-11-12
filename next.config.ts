@@ -33,46 +33,15 @@ const nextConfig: NextConfig = {
   // were dead and had to move here.
   async redirects() {
     return [
-      // Bring your own is the engrave page now (2026-09-30).
+      // Streamlined 2026-11-11: the shop is one short list of items at /shop.
+      // The category doors, the reserve, and the design wall are gone, so
+      // every old address lands on the closest page that stays.
       { source: '/shop/bring-your-own', destination: '/engrave', permanent: true },
-      // The old shop categories became the doors (2026-09-20).
-      { source: '/shop/gifts', destination: '/shop/shelf', permanent: true },
-      { source: '/shop/coasters', destination: '/shop/table', permanent: true },
-      { source: '/shop/tumblers', destination: '/shop/drink', permanent: true },
-      { source: '/shop/keychains', destination: '/shop/carry', permanent: true },
-      { source: '/shop/decor', destination: '/shop/walls', permanent: true },
-      { source: '/shop/pens', destination: '/shop/business', permanent: true },
-      { source: '/shop/metal-cards', destination: '/shop/business', permanent: true },
-      // The reserve was one page per maker for a day (2026-09-16); it is by kind of thing now.
-      { source: '/shop/reserve/ridge-wallet-aluminum', destination: '/shop/reserve/wallet', permanent: true },
-      { source: '/shop/reserve/ridge-wallet-titanium', destination: '/shop/reserve/wallet', permanent: true },
-      { source: '/shop/reserve/yeti-rambler-20', destination: '/shop/reserve/cooler', permanent: true },
-      { source: '/shop/reserve/stanley-quencher-40', destination: '/shop/reserve/cooler', permanent: true },
-      { source: '/shop/reserve/snow-peak-titanium-cup', destination: '/shop/reserve/cooler', permanent: true },
-      { source: '/shop/reserve/leatherman-wave-plus', destination: '/shop/reserve/multitool', permanent: true },
-      { source: '/shop/reserve/victorinox-huntsman', destination: '/shop/reserve/pocket-knife', permanent: true },
-      { source: '/shop/reserve/zippo-brushed-chrome', destination: '/shop/reserve/pen', permanent: true },
-      { source: '/shop/reserve/fisher-bullet-space-pen', destination: '/shop/reserve/pen', permanent: true },
-      { source: '/shop/reserve/tactile-turn-bolt-action', destination: '/shop/reserve/pen', permanent: true },
-      { source: '/shop/reserve/buck-110-folding-hunter', destination: '/shop/reserve/pocket-knife', permanent: true },
-      { source: '/shop/reserve/opinel-no-08', destination: '/shop/reserve/pocket-knife', permanent: true },
-      { source: '/shop/reserve/spyderco-delica-4', destination: '/shop/reserve/pocket-knife', permanent: true },
-      { source: '/shop/reserve/benchmade-bugout', destination: '/shop/reserve/pocket-knife', permanent: true },
-      { source: '/shop/reserve/shun-classic-8-chef', destination: '/shop/reserve/chef-knife', permanent: true },
-      { source: '/shop/reserve/smithey-no-10-skillet', destination: '/shop/reserve/skillet', permanent: true },
-      { source: '/shop/reserve/john-boos-maple-board', destination: '/shop/reserve/board', permanent: true },
-      { source: '/shop/reserve/bellroy-slim-sleeve', destination: '/shop/reserve/wallet', permanent: true },
-      { source: '/shop/reserve/moleskine-classic', destination: '/shop/reserve/pen', permanent: true },
-      { source: '/shop/reserve/shun-premier-8-chef', destination: '/shop/reserve/chef-knife', permanent: true },
-      { source: '/shop/reserve/miyabi-birchwood-8-chef', destination: '/shop/reserve/chef-knife', permanent: true },
-      { source: '/shop/reserve/wusthof-classic-ikon-8-chef', destination: '/shop/reserve/chef-knife', permanent: true },
-      { source: '/shop/reserve/benchmade-940-osborne', destination: '/shop/reserve/pocket-knife', permanent: true },
-      { source: '/shop/reserve/chris-reeve-small-sebenza-31', destination: '/shop/reserve/pocket-knife', permanent: true },
-      { source: '/shop/reserve/spyderco-paramilitary-2', destination: '/shop/reserve/pocket-knife', permanent: true },
-      { source: '/shop/reserve/smithey-no-12-skillet', destination: '/shop/reserve/skillet', permanent: true },
-      { source: '/shop/reserve/john-boos-reversible-maple-24x18', destination: '/shop/reserve/board', permanent: true },
-      { source: '/shop/reserve/yeti-tundra-45', destination: '/shop/reserve/cooler', permanent: true },
-      { source: '/shop/reserve/ridge-wallet-carbon-fiber', destination: '/shop/reserve/wallet', permanent: true },
+      { source: '/shop/devices', destination: '/engrave', permanent: true },
+      { source: '/shop/reserve', destination: '/engrave', permanent: true },
+      { source: '/shop/reserve/:slug', destination: '/engrave', permanent: true },
+      { source: '/designs', destination: '/engrave', permanent: true },
+      { source: '/shop/:door(shelf|knives|table|drink|carry|walls|business|more|gifts|coasters|tumblers|keychains|decor|pens|metal-cards)', destination: '/shop', permanent: true },
       { source: '/shop/contact', destination: '/services/contact', permanent: true },
       { source: '/contact', destination: '/services/contact', permanent: true },
       // Pricing merged into the services page (2026-06-13).
@@ -85,8 +54,6 @@ const nextConfig: NextConfig = {
       { source: '/centennial', destination: '/services/laser-engraving/centennial', permanent: true },
       { source: '/services/centennial', destination: '/services/laser-engraving/centennial', permanent: true },
       { source: '/gifts', destination: '/shop', permanent: true },
-      // Retired consumer categories folded into Bring Your Own (2026-06-12).
-      { source: '/shop/devices', destination: '/shop/bring-your-own', permanent: true },
       { source: '/laser-engraving/:city*', destination: '/services/laser-engraving/:city*', permanent: true },
     ]
   },

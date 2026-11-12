@@ -8,6 +8,7 @@ import { useCart } from '@/lib/cart/store'
 import CardThumb, { designFrom, designLabel } from '@/components/designer/CardThumb'
 import SquarePayment from '@/components/shop/SquarePayment'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
+import { HEARD_FROM, heardLine } from '@/lib/heard-from'
 
 interface FulfillmentOption {
   method: 'ship' | 'hand_deliver' | 'pickup' | 'uber_direct' | 'invoice_later'
@@ -52,6 +53,7 @@ export default function CheckoutPage() {
   const [email, setEmail] = useState('')
   const [address, setAddress] = useState({ name: '', line1: '', line2: '', city: '', state: 'CO', postalCode: '', phone: '' })
   const [notes, setNotes] = useState('')
+  const [heard, setHeard] = useState('')
   // Guest-friendly file attachments (photo/logo), uploaded immediately to
   // /api/checkout/upload, keys submitted with the order. `warning` is local
   // UX only (low-contrast advice) and is stripped from the order payload.
@@ -262,8 +264,9 @@ export default function CheckoutPage() {
               variantId: i.variantId ?? undefined,
               qty: i.qty,
               builder: (i.metadata?.builder as undefined) ?? undefined,
-              personalization: eng?.text
-                ? { text: eng.text, fontValue: eng.fontValue ?? '', fontLabel: eng.fontLabel ?? '', placement: eng.placement || undefined }
+              // Notes with no words still ride the order ("logo only, centered").
+              personalization: eng?.text || eng?.placement
+                ? { text: eng.text ?? '', fontValue: eng.fontValue || undefined, fontLabel: eng.fontLabel || undefined, placement: eng.placement || undefined }
                 : undefined,
               options: (i.metadata?.options as { finish?: string } | undefined) ?? undefined,
               file: (i.metadata?.file as { key: string; filename: string } | undefined) ?? undefined,
@@ -281,7 +284,8 @@ export default function CheckoutPage() {
             phone: address.phone || null,
             country: 'US',
           } : null,
-          notes,
+          // The "how did you hear" answer rides the notes as one line.
+          notes: [notes.trim(), heardLine(heard)].filter(Boolean).join('\n').slice(0, 2000),
           attachments: attachments.length ? attachments.map(a => ({ key: a.key, filename: a.filename })) : undefined,
           handDelivery: chosenMethod === 'hand_deliver' ? {
             window: handDeliveryWindow || undefined,
@@ -515,6 +519,16 @@ export default function CheckoutPage() {
               placeholder="Placement, sizes, finishes, links to inspiration, anything I should know before I make it…"
               className="w-full bg-[var(--surface)] border border-[var(--hairline)] rounded-sm px-3 py-2 text-sm outline-none focus:border-[#C67A6F]"
             />
+            <label htmlFor="co-heard" className="block mt-3 text-xs text-[var(--ink-soft)] mb-1">How did you hear about VURMZ? (optional)</label>
+            <select
+              id="co-heard"
+              value={heard}
+              onChange={e => setHeard(e.target.value)}
+              className="w-full sm:w-auto bg-[var(--surface)] border border-[var(--hairline)] rounded-sm px-3 py-2 text-sm text-[var(--ink)] outline-none focus:border-[#C67A6F]"
+            >
+              <option value="">Pick one</option>
+              {HEARD_FROM.map(h => <option key={h} value={h}>{h}</option>)}
+            </select>
             <p className="mt-2 text-xs text-[var(--ink)] font-medium">
               Questions before it runs? Text me.
             </p>

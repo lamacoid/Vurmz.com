@@ -9,18 +9,18 @@ import Breadcrumbs from '@/components/Breadcrumbs'
 
 export const metadata: Metadata = {
   title: { absolute: 'Knife Engraving | VURMZ, Centennial, CO' },
-  description: 'Custom knife engraving in Centennial, CO. Chef knives, pocket knives, cleavers. Names, dates, and logos marked in the steel. Next-day turnaround.',
+  description: 'Custom knife engraving in Centennial, CO. Chef knives, pocket knives, cleavers. Names, dates, and logos marked in the steel. Most knives back in 24 to 72 hours.',
   alternates: { canonical: '/services/knife-engraving' },
   openGraph: {
     title: 'Knife Engraving | VURMZ',
-    description: 'Custom knife engraving in Centennial, CO. Chef knives, pocket knives, cleavers. Names, dates, and logos marked in the steel. Next-day turnaround.',
+    description: 'Custom knife engraving in Centennial, CO. Chef knives, pocket knives, cleavers. Names, dates, and logos marked in the steel. Most knives back in 24 to 72 hours.',
     url: `${siteInfo.url}/services/knife-engraving`,
     images: ['/portfolio/culinary-cleaver-engraved.jpg'],
   },
 }
 
-// Relevant portfolio shots: engraved cleaver + pocket knife.
-const SHOWCASE = ['culinary-cleaver', 'pocket-knife']
+// Real knife jobs from the portfolio: the five KA-BARs, a cleaver, a pocket knife.
+const SHOWCASE = ['wolverines-knife', 'culinary-cleaver', 'pocket-knife']
   .map((slug) => portfolioBySlug[slug])
   .filter(Boolean)
 
@@ -30,7 +30,7 @@ export default function KnifeEngravingPage() {
     '@type': 'Service',
     serviceType: 'Knife Engraving',
     name: 'Custom Knife Engraving',
-    description: 'Custom knife engraving in Centennial, CO. Chef knives, pocket knives, cleavers, and hunting knives. Names, dates, and logos cut into the steel with a laser. Next-day turnaround, hand-delivered across the south Denver metro.',
+    description: 'Custom knife engraving in Centennial, CO. Chef knives, pocket knives, cleavers, and hunting knives. Names, dates, and logos cut into the steel with a laser. Most knives back in 24 to 72 hours, hand-delivered across the south Denver metro.',
     provider: {
       '@type': 'LocalBusiness',
       name: siteInfo.legalName,
@@ -69,7 +69,7 @@ export default function KnifeEngravingPage() {
             Knife Engraving
           </h1>
           <p className="text-[var(--ink-soft)] text-base sm:text-lg leading-relaxed max-w-2xl">
-            I spent fifteen years in professional kitchens before I picked up a laser, so I know what a knife means to the person who carries it. Chef knives, pocket knives, cleavers, hunting knives. A name on the blade, a date on the bolster, a logo on the handle plate. The mark goes into the steel, not onto it, so it survives the sharpener and the dishwasher you shouldn&apos;t be using anyway. Bring me your knife or I&apos;ll source one. Next-day on most jobs.
+            I spent fifteen years in professional kitchens before I picked up a laser, so I know what a knife means to the person who carries it. Chef knives, pocket knives, cleavers, hunting knives. A name on the blade, a date on the bolster, a logo on the handle plate. The mark goes into the steel, not onto it, so it survives the sharpener and the dishwasher you shouldn&apos;t be using anyway. Bring me your knife or I&apos;ll source one. Most knives are back in 24 to 72 hours.
           </p>
         </div>
       </section>
@@ -108,7 +108,7 @@ export default function KnifeEngravingPage() {
             <p className="text-xs font-mono text-[var(--ink-soft)] tracking-[0.2em] uppercase mb-8">
               Recent knife work
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {SHOWCASE.map((item) => (
                 <Link
                   key={item.slug}

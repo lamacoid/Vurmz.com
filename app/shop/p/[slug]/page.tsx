@@ -12,7 +12,6 @@ import { saleFrom, saleWindowOpen, liveSale, saleEndsLabel } from '@/lib/sale'
 import { getMediaById } from '@/lib/db/repos/media'
 import { menuPrice, menuCase } from '@/lib/menu-format'
 import { builderConfigFrom } from '@/lib/builder/types'
-import { materialsFor, isCardProduct } from '@/lib/designer/card'
 import { DELIVERY } from '@/lib/pricing'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 
@@ -29,10 +28,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   }
 }
 
-// The product page as one entry off the Engraver's Menu, plated on the
-// same cream card as the shop. Photo-less products (most of the catalog
-// until photography lands) get a clean single column instead of an empty
-// square; when a product has a photo it takes the framed plate on the left.
+// The product page: name, price, and a plain order form (what it should
+// say, a file, notes). No designer and no previews since 2026-11-11.
+// Photo-less products (most of the catalog until photography lands) get a
+// clean single column; a product with a photo takes the framed plate on the left.
 export default async function ProductDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const product = await getProductBySlug(slug)
@@ -81,29 +80,19 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
       ? `Made to order, ready in ${product.leadTimeDays} ${product.leadTimeDays === 1 ? 'day' : 'days'}.`
       : 'Most pieces ready in 24 to 72 hours.'
 
+  // The old builder config is only read for its facts: the true size line
+  // and the swatch color of a stocked finish. Nothing interactive uses it.
   const builderCfg = builderConfigFrom(product.metadata)
-  // The wallet card gets the designer: identified by its real dimensions,
-  // not by a flag, so every card listing picks it up.
-  const isCard = isCardProduct(product.metadata)
 
   // Finish chips come from the INVENTORY, not from product metadata: the
   // page offers exactly the colors Zach has counted in stock, nothing else.
-  // The dormant builder materials only contribute the swatch hex when a
-  // stocked finish matches one of their labels.
+  // The swatch hex comes from the product's material list when a stocked
+  // finish matches one of its labels.
   const stockedFinishes = product.metadata?.engravable !== false ? await listStockedFinishes(product.id) : []
   const finishes = stockedFinishes.map(label => ({
     label,
     hex: builderCfg?.materials.find(m => m.label.trim().toLowerCase() === label.trim().toLowerCase())?.surface ?? null,
   }))
-
-  // Named layout templates (metal cards). Data-driven from metadata; shape
-  // is validated here so a bad row can never break the page.
-  const templates = (Array.isArray(product.metadata?.orderTemplates) ? product.metadata.orderTemplates as unknown[] : [])
-    .filter((t): t is { key: string; label: string } =>
-      !!t && typeof t === 'object'
-      && typeof (t as { key?: unknown }).key === 'string'
-      && typeof (t as { label?: unknown }).label === 'string')
-    .map(t => ({ key: t.key, label: t.label }))
 
   const orderColumn = (
     <div>
@@ -118,8 +107,6 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
         engravable={product.metadata?.engravable !== false}
         variants={variants.map(v => ({ id: v.id, name: v.name, packSize: v.packSize, priceCents: v.priceCents }))}
         finishes={finishes}
-        templates={templates}
-        cardMaterials={isCard ? materialsFor(stockedFinishes) : undefined}
       />
 
       {/* Fulfillment facts, right where the decision happens. */}
@@ -150,14 +137,33 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
     </div>
   ) : null
 
+  // The piece and its real price as data. The price is the same one the
+  // cart charges (sale price when a sale is live), never a separate number.
+  const productSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: product.name,
+    description: product.description || product.shortDescription || `${product.name}, laser engraved by VURMZ in Centennial, CO.`,
+    ...(gallery[0]?.url ? { image: gallery[0].url } : {}),
+    brand: { '@type': 'Brand', name: 'VURMZ' },
+    offers: {
+      '@type': 'Offer',
+      url: `${siteInfo.url}/shop/p/${product.slug}/`,
+      priceCurrency: 'USD',
+      price: ((sale ? sale.priceCents : lowestCents) / 100).toFixed(2),
+      availability: product.madeToOrder ? 'https://schema.org/MadeToOrder' : 'https://schema.org/InStock',
+      seller: { '@type': 'LocalBusiness', name: siteInfo.legalName },
+    },
+  }
+
   return (
     <div className="text-[var(--ink-soft)] min-h-screen">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }} />
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16">
         <Breadcrumbs
           items={[
             { label: 'VURMZ', href: '/' },
-            { label: 'Shop', href: '/shop' },
-            ...(category ? [{ label: category.name, href: `/shop/${category.slug}` }] : []),
+            { label: 'Items', href: '/shop' },
             { label: product.name },
           ]}
           theme="services"
@@ -166,7 +172,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
         {/* The plate: everything below lives on the menu card. */}
         <div className="mt-6 bg-[var(--surface)] border border-[var(--hairline)] rounded-sm px-5 sm:px-10 py-8 sm:py-10">
           <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-[var(--eyebrow)] mb-3">
-            {category ? category.name : 'From the shop'}
+            {category ? category.name : 'Items'}
           </p>
 
           {/* The menu line, writ large: name, dotted leader, price. */}
@@ -252,7 +258,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
             >
               Text {siteInfo.phone}
             </a>{' '}
-            or <Link href="/shop/contact" className="text-[var(--eyebrow)] font-semibold hover:underline">send a note</Link>.
+            or <Link href="/services/contact" className="text-[var(--eyebrow)] font-semibold hover:underline">send a note</Link>.
           </p>
         </div>
       </div>

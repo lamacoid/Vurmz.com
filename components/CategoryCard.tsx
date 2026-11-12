@@ -25,7 +25,7 @@ function getPrice(cat: ShopCategory): { price: string; note: string } {
     case 'knife':
       return { price: `$${CATALOG.knife.base}/knife`, note: 'Bring your own blade' }
     case 'tool':
-      return { price: `$${CATALOG.tool.base}/piece`, note: `${CATALOG.tool.minimum} piece minimum` }
+      return { price: `$${CATALOG.tool.base}/piece`, note: `$${CATALOG.tool.crew.perPiece} each at ${CATALOG.tool.crew.minQty} or more` }
     case 'pens':
       return { price: `From $${CATALOG.pens.perItem[0]}/pen`, note: `Packs of ${CATALOG.pens.pack} · singles in shop` }
     case 'cards':

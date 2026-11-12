@@ -50,7 +50,7 @@ export default function CartDrawer() {
                 onClick={() => setOpen(false)}
                 className="inline-flex items-center text-[#C67A6F] text-sm font-semibold hover:underline"
               >
-                Browse the shop →
+                See the items
               </Link>
             </div>
           ) : (

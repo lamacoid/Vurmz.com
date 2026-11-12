@@ -40,8 +40,28 @@ const PROOF = [
 
 export default function EngravePage() {
   const faqs = (getCategoryBySlug('bring-your-own')?.faqs ?? [])
+  // The service and its questions, stated as data, so search engines and AI
+  // assistants can quote the price and the answers without guessing.
+  const schema = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Service',
+      serviceType: 'Laser engraving on customer-owned items',
+      name: 'Engrave your own item',
+      description: 'Laser engraving on a piece you already own: knives, tools, tumblers, laptops, flasks, cutting boards, and other solid items. Send a photo for a same-day price.',
+      provider: { '@type': 'LocalBusiness', name: 'VURMZ LLC', url: siteInfo.url, telephone: siteInfo.phone },
+      areaServed: siteInfo.serviceAreas.map(a => ({ '@type': 'City', name: a })),
+      offers: { '@type': 'Offer', priceCurrency: 'USD', price: String(SIGNATURE.startingAt), description: 'One piece, one placement, within a palm-sized mark' },
+    },
+    ...(faqs.length > 0 ? [{
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.question, acceptedAnswer: { '@type': 'Answer', text: f.answer } })),
+    }] : []),
+  ]
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-10 pb-16">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       <header className="max-w-[60ch]">
         <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-[var(--feature)] mb-3">Engrave your stuff</p>
         <h1 className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] leading-[1.05] text-[var(--ink)]" style={display}>
@@ -60,7 +80,7 @@ export default function EngravePage() {
             <p className="text-[11px] font-mono tracking-[0.24em] uppercase text-[var(--feature)] mb-3">The price</p>
             <p className="text-[length:var(--step-section)] leading-none text-[var(--ink)]" style={display}>${SIGNATURE.startingAt}</p>
             <p className="mt-3 text-[14.5px] leading-relaxed text-[var(--ink-soft)]">
-              One piece, one placement, your words or one design from the library, within a palm-sized mark. That is most jobs.
+              One piece, one placement, your words or your artwork, within a palm-sized mark. That is most jobs.
               Larger marks, both sides, deep marking, full wraps, or a logo I have to redraw run a little more. I confirm any extra before anything runs.
             </p>
             <p className="mt-3 text-[14.5px] leading-relaxed text-[var(--ink-soft)]">
@@ -77,9 +97,9 @@ export default function EngravePage() {
             <p className="mt-2 text-[14.5px] leading-relaxed text-[var(--ink-soft)]">
               I order it, mark it, and bring it to you. One delivery instead of three: no box to wait on, no handoff, no second trip. The piece is at cost, what it costs to buy. ${SOURCING.reserveFee} covers everything else: finding it, marking it, bringing it.
             </p>
-            <Link href="/shop/reserve" className="mt-3 inline-flex items-center text-[14px] font-semibold text-[var(--eyebrow)] hover:underline">
-              What I find for people
-            </Link>
+            <a href={getSmsLink('Hi Zach, can you find and engrave this for me: ')} className="mt-3 inline-flex items-center text-[14px] font-semibold text-[var(--eyebrow)] hover:underline">
+              Text me what you want
+            </a>
           </div>
 
           <div className="grid grid-cols-2 gap-2">

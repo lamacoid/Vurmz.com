@@ -24,7 +24,7 @@ const price = (n: number) => (n % 1 === 0 ? `$${n}` : `$${n.toFixed(2)}`)
 // The table a buyer scans before reading anything else.
 const TABLE: Array<[string, string]> = [
   ['Setup fees', 'None'],
-  ['Turnaround', '72 hours on most runs'],
+  ['Turnaround', '24 to 72 hours on most runs'],
   ['Local delivery', 'Yes. Hand-delivered, south Denver metro'],
   ['Who does the work', 'Zach'],
   ['Small orders', 'Yes. Ten pens is a run'],
@@ -49,19 +49,19 @@ const LANES: { name: string; value: string; note?: string; href?: string }[] = [
   {
     name: 'Metal cards',
     value: `${price(CATALOG.cards.matteBlackBase * CATALOG.cards.pack)} per ${CATALOG.cards.pack}`,
-    note: 'Sixteen layouts, fourteen colors. Design it on the page.',
+    note: 'Anodized aluminum, card size. Send your logo and the details, I lay it out.',
     href: '/shop/p/anodized-aluminum-wallet-card',
   },
   {
     name: 'Branded pens',
     value: `${price(CATALOG.pens.perItem[0])} to ${price(CATALOG.pens.perItem[1])} a pen`,
     note: `Soft-touch stylus pens, packs of ${CATALOG.pens.pack}.`,
-    href: '/shop/business',
+    href: '/shop',
   },
   {
     name: 'Tool and gear marking',
     value: `${price(CATALOG.tool.base)} a piece`,
-    note: `${price(CATALOG.tool.jobsite.perPiece)} each at ${CATALOG.tool.jobsite.minQty} or more. Your name on what walks off jobsites.`,
+    note: `${price(CATALOG.tool.crew.perPiece)} each at ${CATALOG.tool.crew.minQty} or more, ${price(CATALOG.tool.jobsite.perPiece)} at ${CATALOG.tool.jobsite.minQty} or more. Your name on what walks off jobsites.`,
   },
   {
     name: 'Installer signature tiles',
@@ -78,7 +78,6 @@ const LANES: { name: string; value: string; note?: string; href?: string }[] = [
     name: 'Happy to source',
     value: `${price(SOURCING.reserveFee)} fee, piece at cost`,
     note: 'Name the piece. You pay what it costs to buy; the fee covers finding it, marking it, and bringing it.',
-    href: '/shop/reserve',
   },
   {
     name: 'Anything one-off',

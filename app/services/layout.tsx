@@ -5,7 +5,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Services',
-  description: 'Laser engraving for small business in Centennial, CO. Branded pen packs, metal service tags, custom engraving. Next-day turnaround, hand-delivered across South Denver.',
+  description: 'Laser engraving for small business in Centennial, CO. Branded pen packs, metal service tags, custom engraving. Most work ready in 24 to 72 hours, hand-delivered across South Denver.',
   // /services itself is a client component and can't export metadata, so its
   // canonical lives here. Child routes (pricing, portfolio, contact, etc.)
   // override this with their own canonical.

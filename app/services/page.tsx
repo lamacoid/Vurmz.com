@@ -6,7 +6,7 @@ import ServicesClient from '@/components/services/ServicesClient'
 
 export const metadata: Metadata = {
   title: { absolute: 'Need something marked? Engraving for business | VURMZ' },
-  description: 'Send a photo, how many, and your logo or the words. A price the same day. No setup fees, 72 hour turnaround, hand-delivered across the south Denver metro, small orders welcome, logo stays on file.',
+  description: 'Send a photo, how many, and your logo or the words. A price the same day. No setup fees, most runs ready in 24 to 72 hours, hand-delivered across the south Denver metro, small orders welcome, logo stays on file.',
   alternates: { canonical: '/services' },
 }
 

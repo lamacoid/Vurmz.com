@@ -18,6 +18,8 @@ interface CloudflareEnv {
   SITE_URL: string
   RESEND_API_KEY: string
   RESEND_AUDIENCE_ID?: string
+  /** Optional. Signs the photo links in lead emails. Falls back to RESEND_API_KEY. */
+  FILE_LINK_SECRET?: string
 
   // Admin auth
   ADMIN_PASSWORD_HASH: string

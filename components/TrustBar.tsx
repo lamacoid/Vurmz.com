@@ -6,7 +6,7 @@ interface TrustBarProps {
 }
 
 const items = [
-  { icon: ClockIcon, label: 'Next-Day Turnaround' },
+  { icon: ClockIcon, label: 'Ready in 24 to 72 hours' },
   { icon: UserIcon, label: 'Checked Before It Leaves' },
   { icon: MapPinIcon, label: 'Hand-Delivered in South Denver' },
 ]

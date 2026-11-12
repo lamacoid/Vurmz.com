@@ -4,6 +4,10 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getRequestContext } from '@cloudflare/next-on-pages'
 import { reportError } from '@/lib/error'
 import { CONTACT_PRODUCT_OPTIONS } from '@/lib/pricing'
+import { signFilePath, fileLinkSecret } from '@/lib/media/signed-link'
+
+// Links in the notification email are absolute and always point at production.
+const SITE = 'https://www.vurmz.com'
 
 const ALLOWED_ORIGINS = [
   'https://vurmz.com',
@@ -205,6 +209,16 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: true })
     }
 
+    // Each photo gets a signed link that opens with no login (the old link
+    // needed an admin session and looked dead from a mail app). A file whose
+    // link cannot be signed falls back to a pointer at the admin inbox, where
+    // the lead and its files are already stored.
+    const files = await Promise.all(attachments.map(async a => {
+      const path = await signFilePath(a.key, fileLinkSecret()).catch(() => null)
+      return { ...a, url: path ? `${SITE}${path}` : null, isImage: /\.(jpe?g|png|gif|webp)$/i.test(a.key) }
+    }))
+    const linked = files.filter((f): f is typeof f & { url: string } => !!f.url)
+
     const htmlBody = `
       <div style="font-family: sans-serif; max-width: 600px;">
         <h2 style="color: #3CB9B2;">New Contact Form Submission</h2>
@@ -232,14 +246,17 @@ export async function POST(request: NextRequest) {
         </table>
         <hr style="border: none; border-top: 1px solid #eee; margin: 16px 0;" />
         <p style="white-space: pre-wrap;">${escapeHtml(message)}</p>
-        ${attachments.length ? `
-        <p style="margin-top: 16px; font-weight: bold; color: #666;">Photos (admin login)</p>
-        <ul>${attachments.map(a => `<li><a href="https://www.vurmz.com/api/admin/r2/${a.key.split('/').map(encodeURIComponent).join('/')}">${escapeHtml(a.filename)}</a></li>`).join('')}</ul>
+        ${files.length ? `
+        <p style="margin-top: 16px; font-weight: bold; color: #666;">Photos</p>
+        ${files.map(f => f.url
+          ? `<p style="margin: 8px 0;"><a href="${f.url}">${escapeHtml(f.filename)}</a></p>${f.isImage ? `<p style="margin: 8px 0;"><a href="${f.url}"><img src="${f.url}" alt="${escapeHtml(f.filename)}" style="max-width: 100%; height: auto; border: 1px solid #eee; border-radius: 4px;" /></a></p>` : ''}`
+          : `<p style="margin: 8px 0;">${escapeHtml(f.filename)}: open it in the <a href="${SITE}/admin/inbox">admin inbox</a>.</p>`).join('')}
+        <p style="font-size: 12px; color: #999;">The photo links open without a login and stop working after 30 days. The files stay in the admin inbox.</p>
         ` : ''}
       </div>
     `
 
-    const res = await fetch('https://api.resend.com/emails', {
+    const sendLead = (withFiles: boolean) => fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${resendApiKey}`,
@@ -251,8 +268,20 @@ export async function POST(request: NextRequest) {
         ...(email ? { reply_to: email } : {}),
         subject: `${attachments.length ? 'Can you engrave this' : 'New Contact'}: ${name.slice(0, 80)}${productInterest ? ` (${productInterest})` : ''}`,
         html: htmlBody,
+        // The photos also ride the email as real attachments. Resend fetches
+        // each one from its signed link, so nothing is loaded into this worker.
+        ...(withFiles && linked.length ? { attachments: linked.map(f => ({ filename: f.filename, path: f.url })) } : {}),
       }),
     })
+
+    let res = await sendLead(true)
+    if (!res.ok && linked.length) {
+      // An attachment that will not fetch must never cost the notification.
+      // Send it again with the links and inline photos only.
+      const firstError = await res.json().catch(() => ({}))
+      await reportError(new Error('Contact email with attachments failed, resent without'), { route: 'contact', extra: { step: 'notify-attachments', firstError } })
+      res = await sendLead(false)
+    }
 
     if (!res.ok) {
       // Notification email failed, but the lead is already in the inbox. Log

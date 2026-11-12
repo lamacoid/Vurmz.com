@@ -10,10 +10,10 @@
  * The business variant asks for a count and a logo instead of the words,
  * and takes SVG and PDF, because that is what a logo arrives as.
  */
-import { useEffect, useRef, useState } from 'react'
-import { designById, sheetFor } from '@/lib/design/sheet'
+import { useRef, useState } from 'react'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 import { SIGNATURE } from '@/lib/pricing'
+import { HEARD_FROM, heardLine } from '@/lib/heard-from'
 
 interface Shot { key: string; filename: string; preview: string | null }
 
@@ -34,17 +34,10 @@ export default function CanYouEngraveThis({ compact = false, variant = 'personal
   const [phone, setPhone] = useState('')
   const [email, setEmail] = useState('')
   const [website, setWebsite] = useState('')
+  const [heard, setHeard] = useState('')
   const [status, setStatus] = useState<'idle' | 'sending' | 'done' | 'error'>('idle')
   const [error, setError] = useState('')
   const fileRef = useRef<HTMLInputElement>(null)
-
-  // Arriving from the design wall: name the design in the message.
-  useEffect(() => {
-    const id = new URLSearchParams(window.location.search).get('design')
-    if (!id) return
-    const el = designById(id)
-    if (el) setWords(prev => prev || `${sheetFor(el.category).name} design ${el.label.replace(/^\D+/, '')} from the wall (${el.id})`)
-  }, [])
 
   async function addFiles(list: FileList | null) {
     if (!list) return
@@ -89,7 +82,7 @@ export default function CanYouEngraveThis({ compact = false, variant = 'personal
           item.trim() ? `What it is: ${item.trim()}` : '',
           words.trim() ? `What to put on it: ${words.trim()}` : '',
         ]
-    ).concat(shots.length ? `${shots.length} file${shots.length === 1 ? '' : 's'} attached.` : 'No photo.').filter(Boolean).join('\n')
+    ).concat(shots.length ? `${shots.length} file${shots.length === 1 ? '' : 's'} attached.` : 'No photo.', heardLine(heard)).filter(Boolean).join('\n')
     try {
       const res = await fetch('/api/contact/', {
         method: 'POST',
@@ -212,6 +205,14 @@ export default function CanYouEngraveThis({ compact = false, variant = 'personal
           <label htmlFor="cyet-email" className={label}>Email, if you prefer</label>
           <input id="cyet-email" className={field} type="email" maxLength={254} value={email} onChange={e => setEmail(e.target.value)} placeholder="you@example.com" />
         </div>
+      </div>
+
+      <div className="mt-4 max-w-sm">
+        <label htmlFor="cyet-heard" className={label}>How did you hear about VURMZ? (optional)</label>
+        <select id="cyet-heard" className={field} value={heard} onChange={e => setHeard(e.target.value)}>
+          <option value="">Pick one</option>
+          {HEARD_FROM.map(h => <option key={h} value={h}>{h}</option>)}
+        </select>
       </div>
 
       {/* Honeypot: hidden from people, filled by bots. */}

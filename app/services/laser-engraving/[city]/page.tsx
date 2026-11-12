@@ -182,7 +182,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!city) return {}
 
   const title = `Laser Engraving in ${city.name}, CO`
-  const description = `Professional laser engraving in ${city.name}, Colorado. Branded pen packs, metal service tags, custom engraving starting at $${SIGNATURE.startingAt}. Next-day turnaround, hand-delivered by VURMZ.`
+  const description = `Laser engraving in ${city.name}, Colorado. Bring your own knife, tool, or tumbler from $${SIGNATURE.startingAt}, or order labels, cards, and pens for your business. Most work ready in 24 to 72 hours, hand-delivered by VURMZ.`
 
   return {
     title,
@@ -361,7 +361,7 @@ export default async function CityPage({ params }: Props) {
       <section className="py-14 sm:py-[72px] border-t border-[var(--hairline)]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="text-xs font-mono text-[var(--ink-soft)] tracking-[0.2em] uppercase mb-4">
-            Other Areas We Serve
+            Other areas I deliver to
           </p>
           <div className="flex flex-wrap gap-2">
             {Object.values(cityData)

@@ -6,7 +6,7 @@ import { portfolioItems } from '@/lib/portfolio'
 
 export const metadata: Metadata = {
   title: { absolute: 'The work | VURMZ laser engraving, Centennial CO' },
-  description: 'Twelve pieces: knives, metal cards marked in color, slate coasters, a brushed aluminum nameplate, a portrait medallion, mirrors, a full-wrap bottle. What it is, what it is made of, how it was marked.',
+  description: 'Twelve pieces: knives, metal cards marked in color, slate coasters, a brushed stainless nameplate, a portrait medallion, mirrors, a full-wrap bottle. What it is, what it is made of, how it was marked.',
   alternates: { canonical: '/services/portfolio' },
   openGraph: {
     title: 'The work | VURMZ',
@@ -31,7 +31,7 @@ const STRONGEST: Array<{ slug: string; what: string }> = [
   { slug: 'denver-map-mirror', what: 'A Denver street map on a beveled mirror' },
   { slug: 'medieval-water-bottle', what: 'A water bottle, wrapped the whole way around' },
   { slug: 'pocket-knife', what: 'A pocket knife, pattern on the bolster' },
-  { slug: 'vurmz-nameplate', what: 'A brushed aluminum nameplate, four holes, ready to mount' },
+  { slug: 'vurmz-nameplate', what: 'A brushed stainless nameplate, four holes, ready to mount' },
 ]
 
 export default function PortfolioPage() {

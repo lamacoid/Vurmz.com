@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { ArrowRightIcon, CheckCircleIcon } from '@heroicons/react/24/outline'
 import { siteInfo } from '@/lib/site-info'
 import { CONTACT_PRODUCT_OPTIONS } from '@/lib/pricing'
+import { HEARD_FROM, heardLine } from '@/lib/heard-from'
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -35,6 +36,9 @@ export default function ContactForm() {
   }, [])
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
   const [errorMessage, setErrorMessage] = useState('')
+  // Kept out of formData so the API body stays the shape it validates. The
+  // answer rides the end of the message as one line.
+  const [heard, setHeard] = useState('')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -45,7 +49,10 @@ export default function ContactForm() {
       const res = await fetch('/api/contact/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          message: [formData.message.trim(), heardLine(heard)].filter(Boolean).join('\n\n'),
+        }),
       })
 
       const data = await res.json() as { error?: string; success?: boolean }
@@ -56,6 +63,7 @@ export default function ContactForm() {
 
       setStatus('success')
       setFormData({ name: '', email: '', phone: '', productInterest: '', message: '', website: '' })
+      setHeard('')
     } catch (err) {
       setStatus('error')
       setErrorMessage(err instanceof Error ? err.message : 'Failed to send. Please try again.')
@@ -161,6 +169,21 @@ export default function ContactForm() {
           className="w-full px-4 py-3 bg-[var(--surface)] border border-[var(--hairline)] rounded-lg text-[var(--ink)] placeholder-[var(--ink-soft)] focus:border-vurmz-teal focus:ring-1 focus:ring-vurmz-teal outline-none transition-colors resize-none"
           placeholder="Tell me about your project. What you need, quantity, timeline..."
         />
+      </div>
+
+      <div>
+        <label htmlFor="heard" className="block text-sm font-medium text-[var(--ink-soft)] mb-1.5">
+          How did you hear about VURMZ? (optional)
+        </label>
+        <select
+          id="heard"
+          value={heard}
+          onChange={e => setHeard(e.target.value)}
+          className="w-full px-4 py-3 bg-[var(--surface)] border border-[var(--hairline)] rounded-lg text-[var(--ink)] focus:border-vurmz-teal focus:ring-1 focus:ring-vurmz-teal outline-none transition-colors"
+        >
+          <option value="">Pick one</option>
+          {HEARD_FROM.map(h => <option key={h} value={h}>{h}</option>)}
+        </select>
       </div>
 
       {/* Honeypot, hidden from users, catches bots that fill every field */}

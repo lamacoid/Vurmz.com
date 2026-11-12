@@ -1,15 +1,9 @@
 'use client'
-import { useEffect, useState } from 'react'
-import { designById } from '@/lib/design/sheet'
+import { useState } from 'react'
 import { useCart } from '@/lib/cart/store'
-import { fontOptions } from '@/lib/fonts'
 import { menuPrice } from '@/lib/menu-format'
 import { trackConversion } from '@/lib/track'
-import EngravingPicker, { type EngravingValue } from './EngravingPicker'
 import FileAttach, { type AttachedFile } from './FileAttach'
-import TemplatePicker, { type OrderTemplate } from './TemplatePicker'
-import CardDesigner from '@/components/designer/CardDesigner'
-import { CARD_TEMPLATES, type CardDesign, type CardMaterial } from '@/lib/designer/card'
 
 export interface PackOption {
   /** null = the product's own default pack. */
@@ -19,6 +13,13 @@ export interface PackOption {
   priceCents: number
 }
 
+/**
+ * The order form, streamlined 2026-11-11. No designer, no pickers, no
+ * previews: the customer says what goes on it, attaches a file if they have
+ * one, and I lay it out. The cart item keeps the same metadata shape the
+ * checkout, the order emails, and the admin already read (engraving.text,
+ * engraving.placement, options.finish, file), so nothing downstream changes.
+ */
 export default function AddToCart(props: {
   productId: string
   slug: string
@@ -35,32 +36,13 @@ export default function AddToCart(props: {
    *  product page). hex is the swatch color when known. The form only ever
    *  offers what this list carries. */
   finishes?: Array<{ label: string; hex: string | null }>
-  /** Named layout templates (metadata.orderTemplates), metal cards today. */
-  templates?: OrderTemplate[]
-  /** When set, the card designer replaces the template, engraving, and file
-   *  pickers: the customer designs the card and the laser file rides the order. */
-  cardMaterials?: CardMaterial[]
 }) {
   const { add, items } = useCart()
   const [qty, setQty] = useState(1)
   const [added, setAdded] = useState(false)
-  const [engraving, setEngraving] = useState<EngravingValue>({ text: '', fontValue: 'zen-kurenaido', placement: '', element: null })
-  // A design picked on the wall (/designs) arrives as ?design=de_xxx and is
-  // already chosen when the form opens.
-  useEffect(() => {
-    let id = new URLSearchParams(window.location.search).get('design')
-    if (!id) {
-      // Picked on the wall, then a product chosen from the shop: the
-      // design rides along in session storage and is used once.
-      try { id = sessionStorage.getItem('vurmz:design'); if (id) sessionStorage.removeItem('vurmz:design') } catch { id = null }
-    }
-    if (!id) return
-    const el = designById(id)
-    if (el) setEngraving(prev => (prev.element ? prev : { ...prev, element: el }))
-  }, [])
+  const [words, setWords] = useState('')
+  const [notes, setNotes] = useState('')
   const [file, setFile] = useState<AttachedFile | null>(null)
-  const [design, setDesign] = useState<CardDesign | null>(null)
-  const designer = props.engravable !== false && (props.cardMaterials?.length ?? 0) > 0
 
   // The default pack plus any admin-defined options, sorted by pack size.
   const options: PackOption[] = [
@@ -83,42 +65,23 @@ export default function AddToCart(props: {
   const [finishKey, setFinishKey] = useState<string | null>(null)
   const finish = finishes.find(f => f.label === finishKey) ?? finishes[0] ?? null
 
-  const templates = engravable ? (props.templates ?? []) : []
-  const [templateKey, setTemplateKey] = useState<string | null>(null)
-  const template = templates.find(t => t.key === templateKey) ?? null
-
   const alreadyInCart = props.oneOff && items.some(i => i.productId === props.productId)
-  const engText = engraving.text.trim()
-  // An order is personalized if it has text OR a chosen design element OR a file.
-  const hasPersonalization = Boolean(engText) || Boolean(engraving.element) || Boolean(file) || Boolean(design)
+  const text = words.trim()
+  const placement = notes.trim()
 
   function buildMetadata(): Record<string, unknown> | undefined {
     if (!engravable) return undefined
     const meta: Record<string, unknown> = {}
-    if (engText || engraving.element) {
-      const font = fontOptions.find(f => f.value === engraving.fontValue)
-      const placement = engraving.placement.trim()
+    // Notes without words still ride the order: "logo only, centered" is a
+    // complete instruction when a file is attached.
+    if (text || placement) {
       meta.engraving = {
-        text: engText.slice(0, 120),
-        fontValue: engraving.fontValue,
-        fontLabel: font?.label ?? engraving.fontValue,
+        text: text.slice(0, 120),
         ...(placement ? { placement: placement.slice(0, 200) } : {}),
-        ...(engraving.element ? { element: { id: engraving.element.id, label: engraving.element.label, thumb: engraving.element.thumb } } : {}),
       }
     }
-    const options: Record<string, string> = {}
-    if (hasFinishes && finish) options.finish = finish.label
-    if (template) options.template = template.label
-    if (design) {
-      meta.design = design
-      const mat = props.cardMaterials?.find(m => m.key === design.materialKey)
-      const tpl = CARD_TEMPLATES.find(t => t.key === design.templateKey)
-      if (mat) options.finish = mat.label
-      if (tpl) options.template = tpl.label
-      if (design.logo) meta.file = { key: design.logo.key, filename: design.logo.filename }
-    }
-    if (Object.keys(options).length) meta.options = options
-    if (file && !design) meta.file = { key: file.key, filename: file.filename }
+    if (hasFinishes && finish) meta.options = { finish: finish.label }
+    if (file) meta.file = { key: file.key, filename: file.filename }
     return Object.keys(meta).length ? meta : undefined
   }
 
@@ -147,35 +110,26 @@ export default function AddToCart(props: {
     setTimeout(() => setAdded(false), 1400)
   }
 
+  const label = 'block text-[11px] uppercase tracking-wider text-[var(--ink-soft)] mb-2'
+  const field = 'w-full rounded-sm border border-[var(--hairline)] bg-[var(--page)] px-3 py-2.5 text-[15px] text-[var(--ink)] placeholder:text-[var(--ink-soft)]/60 focus:outline-none focus:border-[var(--eyebrow)]'
+  const chip = (on: boolean) =>
+    `inline-flex items-center gap-2 px-4 py-2 rounded-sm border text-sm transition-colors ${
+      on
+        ? 'border-[var(--eyebrow)] bg-[var(--eyebrow)]/10 text-[var(--ink)] font-semibold'
+        : 'border-[var(--hairline)] text-[var(--ink-soft)] hover:border-[var(--ink)]/40 hover:text-[var(--ink)]'
+    }`
+
   return (
     <div>
-      {designer && (
-        <CardDesigner productId={props.productId} materials={props.cardMaterials!} onChange={setDesign} />
-      )}
-
-      {!designer && templates.length > 0 && (
-        <TemplatePicker templates={templates} value={templateKey} onChange={setTemplateKey} />
-      )}
-
-      {/* Finish options: chips with the real surface color as the swatch. */}
-      {!designer && hasFinishes && (
+      {/* Finish options: only what is counted in stock. */}
+      {hasFinishes && (
         <div className="mb-4">
-          <span className="block text-[11px] uppercase tracking-wider text-[var(--ink-soft)] mb-2">Finish</span>
+          <span className={label}>Finish</span>
           <div className="flex flex-wrap gap-2">
             {finishes.map(f => {
               const isSel = f.label === (finish?.label ?? '')
               return (
-                <button
-                  key={f.label}
-                  type="button"
-                  onClick={() => setFinishKey(f.label)}
-                  aria-pressed={isSel}
-                  className={`inline-flex items-center gap-2 px-4 py-2 rounded-sm border text-sm transition-colors ${
-                    isSel
-                      ? 'border-[var(--eyebrow)] bg-[var(--eyebrow)]/10 text-[var(--ink)] font-semibold'
-                      : 'border-[var(--hairline)] text-[var(--ink-soft)] hover:border-[var(--ink)]/40 hover:text-[var(--ink)]'
-                  }`}
-                >
+                <button key={f.label} type="button" onClick={() => setFinishKey(f.label)} aria-pressed={isSel} className={chip(isSel)}>
                   {f.hex && <span aria-hidden className="w-3.5 h-3.5 rounded-full border border-black/20" style={{ background: f.hex }} />}
                   {f.label}
                 </button>
@@ -185,37 +139,51 @@ export default function AddToCart(props: {
         </div>
       )}
 
-      {engravable && !designer && (
-        <>
-          <EngravingPicker
-            value={engraving}
-            onChange={setEngraving}
-            productName={`${props.name} ${finishKey ?? ''}`}
-            finishHex={finishes.find(f => f.label === finishKey)?.hex ?? null}
-            fileSlot={<FileAttach value={file} onChange={setFile} />}
-          />
-        </>
+      {engravable && (
+        <div className="mb-4 space-y-4">
+          <div>
+            <label htmlFor="atc-words" className={label}>What should it say?</label>
+            <input
+              id="atc-words"
+              type="text"
+              value={words}
+              onChange={e => setWords(e.target.value)}
+              maxLength={120}
+              placeholder="A name, a date, a line. Leave blank for a logo only."
+              className={field}
+            />
+          </div>
+          <div>
+            <span className={label}>Logo or artwork</span>
+            <FileAttach value={file} onChange={setFile} />
+          </div>
+          <div>
+            <label htmlFor="atc-notes" className={label}>Anything else?</label>
+            <textarea
+              id="atc-notes"
+              value={notes}
+              onChange={e => setNotes(e.target.value)}
+              maxLength={200}
+              rows={2}
+              placeholder="Where it goes, a style you like, a deadline."
+              className={field}
+            />
+          </div>
+          <p className="text-[12px] leading-relaxed text-[var(--ink-soft)]">
+            I lay it out and text you if anything is unclear before it runs.
+          </p>
+        </div>
       )}
 
-      {/* Pack-size options: framed chips, price on each, menu-quiet. */}
+      {/* Pack-size options: framed chips, price on each. */}
       {hasOptions && !props.oneOff && (
         <div className="mb-4">
-          <span className="block text-[11px] uppercase tracking-wider text-[var(--ink-soft)] mb-2">Size</span>
+          <span className={label}>Size</span>
           <div className="flex flex-wrap gap-2">
             {options.map(o => {
               const isSel = (o.variantId ?? '') === (selected.variantId ?? '')
               return (
-                <button
-                  key={o.variantId ?? 'base'}
-                  type="button"
-                  onClick={() => setSelectedKey(o.variantId)}
-                  aria-pressed={isSel}
-                  className={`px-4 py-2 rounded-sm border text-sm transition-colors ${
-                    isSel
-                      ? 'border-[var(--eyebrow)] bg-[var(--eyebrow)]/10 text-[var(--ink)] font-semibold'
-                      : 'border-[var(--hairline)] text-[var(--ink-soft)] hover:border-[var(--ink)]/40 hover:text-[var(--ink)]'
-                  }`}
-                >
+                <button key={o.variantId ?? 'base'} type="button" onClick={() => setSelectedKey(o.variantId)} aria-pressed={isSel} className={chip(isSel)}>
                   {o.name} <span className={isSel ? 'text-[var(--eyebrow)]' : ''}>{menuPrice(o.priceCents)}</span>
                 </button>
               )
@@ -228,53 +196,35 @@ export default function AddToCart(props: {
         <button
           onClick={onAdd}
           disabled={alreadyInCart}
-          className="w-full inline-flex items-center justify-center px-6 h-11 bg-[var(--coral)] hover:bg-[var(--coral-hover)] disabled:opacity-60 disabled:cursor-not-allowed text-white text-sm font-semibold transition-colors puffy-btn"
+          className="w-full inline-flex items-center justify-center px-6 h-11 bg-[var(--coral)] hover:bg-[var(--coral-hover)] disabled:opacity-60 disabled:cursor-not-allowed text-white text-sm font-semibold transition-colors"
         >
           {alreadyInCart ? 'Already in cart' : added ? 'Added' : 'Add to cart'}
         </button>
       ) : (
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="inline-flex items-center justify-center bg-[var(--page)] border border-[var(--hairline)] rounded-sm text-[var(--ink)]">
-            <button
-              onClick={() => setQty(q => Math.max(1, q - 1))}
-              className="px-3 py-2.5 text-[var(--ink-soft)] hover:text-[var(--ink)]"
-              aria-label="Decrease quantity"
-            >
+            <button onClick={() => setQty(q => Math.max(1, q - 1))} className="px-3 py-2.5 text-[var(--ink-soft)] hover:text-[var(--ink)]" aria-label="Decrease quantity">
               −
             </button>
             <span className="min-w-[2.5rem] text-center text-sm font-semibold">{qty}</span>
-            <button
-              onClick={() => setQty(q => q + 1)}
-              className="px-3 py-2.5 text-[var(--ink-soft)] hover:text-[var(--ink)]"
-              aria-label="Increase quantity"
-            >
+            <button onClick={() => setQty(q => q + 1)} className="px-3 py-2.5 text-[var(--ink-soft)] hover:text-[var(--ink)]" aria-label="Increase quantity">
               +
             </button>
           </div>
           <button
             onClick={onAdd}
-            className="flex-1 inline-flex items-center justify-center px-6 h-11 bg-[var(--coral)] hover:bg-[var(--coral-hover)] text-white text-sm font-semibold transition-colors puffy-btn"
+            className="flex-1 inline-flex items-center justify-center px-6 h-11 bg-[var(--coral)] hover:bg-[var(--coral-hover)] text-white text-sm font-semibold transition-colors"
           >
             {added ? 'Added' : 'Add to cart'}
           </button>
         </div>
       )}
 
-      {engravable && hasPersonalization && (
+      {engravable && (text || file) && (
         <p className="mt-2 text-[11px] text-[var(--ink-soft)]">
-          {design ? <>Your card design</> : engText ? <>Engraving “{engText}”</> : 'Your design'}
-          {engraving.element ? <> + {engraving.element.label} design</> : null}
-          {file ? <> + {file.filename}</> : null}
-          {' '}will be applied{props.oneOff ? '' : ' to each item in the pack'}.
-        </p>
-      )}
-
-      {/* Risk reversal at the exact moment of doubt. Engravable products
-          already carry this promise inside the engraving picker, so this
-          line only renders where it isn't already said. */}
-      {!engravable && (
-        <p className="mt-2 text-[11px] text-[var(--ink-soft)]">
-          Made in Centennial, checked before it leaves.
+          {text ? <>Engraving “{text}”</> : 'Your file'}
+          {text && file ? <> with {file.filename}</> : null}
+          {' '}goes on {props.oneOff || selected.packSize === 1 ? 'the piece' : 'each item in the pack'}.
         </p>
       )}
     </div>

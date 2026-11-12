@@ -1,6 +1,5 @@
 import { MetadataRoute } from 'next'
 import { portfolioItems } from '@/lib/portfolio'
-import { RESERVE_CATEGORIES } from '@/lib/sourcing'
 
 const serviceAreaSlugs = [
   'centennial',
@@ -33,29 +32,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
-      url: `${baseUrl}/designs`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
       url: `${baseUrl}/engrave`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.9,
     },
-    {
-      url: `${baseUrl}/shop/reserve`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    ...RESERVE_CATEGORIES.map(c => ({
-      url: `${baseUrl}/shop/reserve/${c.key}`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
-      priority: 0.6,
-    })),
     {
       url: `${baseUrl}/services`,
       lastModified: new Date(),
@@ -121,14 +102,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }))
 
-  const shopCategorySlugs = ['shelf', 'knives', 'table', 'drink', 'carry', 'walls', 'business']
-  const shopCategoryPages: MetadataRoute.Sitemap = shopCategorySlugs.map((slug) => ({
-    url: `${baseUrl}/shop/${slug}`,
-    lastModified: new Date(),
-    changeFrequency: 'monthly',
-    priority: 0.8,
-  }))
-
   const portfolioPages: MetadataRoute.Sitemap = portfolioItems.map((item) => ({
     url: `${baseUrl}/services/portfolio/${item.slug}`,
     lastModified: new Date(),
@@ -136,5 +109,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }))
 
-  return [...staticPages, ...serviceAreaPages, ...shopCategoryPages, ...portfolioPages]
+  return [...staticPages, ...serviceAreaPages, ...portfolioPages]
 }

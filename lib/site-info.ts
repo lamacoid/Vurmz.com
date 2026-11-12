@@ -10,7 +10,7 @@ export const siteInfo = {
   name: 'VURMZ',
   legalName: 'VURMZ LLC',
   tagline: 'Laser engraving for small business.',
-  description: 'Premium laser engraving services in Centennial, Colorado. Branded pens, metal business cards, industrial labels, knife engraving, and more.',
+  description: 'Laser engraving in Centennial, Colorado. Knives, tools, and tumblers you already own, plus equipment labels, metal business cards, and branded pens for local businesses.',
 
   // Contact
   phone: '(720) 468-0138',

@@ -104,7 +104,7 @@ export default function SquarePayment({
         {submitting ? 'Processing…' : `Pay $${(amountCents / 100).toFixed(2)}`}
       </button>
       <p className="mt-2 text-[11px] text-[var(--ink-soft)]">
-        Secured by Square. Your card details never touch our servers.
+        Secured by Square. Your card details never touch the VURMZ servers.
       </p>
     </div>
   )

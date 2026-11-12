@@ -82,16 +82,21 @@ export const CATALOG = {
   },
   knife: {
     name: "Knife Marking",
-    base: 20,
+    base: 50,
     unit: "per knife (bring your own)",
-    // Repriced 2026-07-03 (approved sheet): $20/$12/$6 beats the mail-in
-    // market's $35/$15/$7 without the two-way shipping or the two weeks.
-    crew: { minQty: 4, perKnife: 12 },
-    fullKitchen: { minQty: 10, perKnife: 6 },
+    // Repriced 2026-11-11, Zach: services labor "can probably be more
+    // expensive." One rule for anything a customer hands over: one piece is
+    // the bring-your-own price ($50, SIGNATURE.startingAt), $25 each at 4 or
+    // more, $15 each at 10 or more. Before this a single knife was $20 here
+    // and $50 on the engrave page, and a 10-knife kitchen with free pickup
+    // came to $60, under one hour of the posted shop rate. The July 2026
+    // ladder was $20/$12/$6.
+    crew: { minQty: 4, perKnife: 25 },
+    fullKitchen: { minQty: 10, perKnife: 15 },
     options: [
-      { label: "Name near handle (most common)", price: 20 },
-      { label: "Crew rate (4+ knives)", price: 12, note: "per knife" },
-      { label: "Full kitchen (10+ knives)", price: 6, note: "per knife" },
+      { label: "Name near handle (most common)", price: 50 },
+      { label: "Crew rate (4+ knives)", price: 25, note: "per knife" },
+      { label: "Full kitchen (10+ knives)", price: 15, note: "per knife" },
       { label: "+ Deep marking", price: 5, modifier: true },
       { label: "+ Second line / logo", price: 3, modifier: true },
       { label: "Kitchen crew pickup (South Denver)", price: 0, note: "Free" },
@@ -99,24 +104,28 @@ export const CATALOG = {
   },
   tool: {
     name: "Tool Marking",
-    base: 15,
+    base: 50,
     unit: "per tool",
-    minimum: 4,
-    // Jobsite ladder mirrors the knife crew ladder (the $8 deep rate is
-    // Zach's number, locked 2026-06-12).
-    crew: { minQty: 4, perPiece: 12 },
-    jobsite: { minQty: 10, perPiece: 8 },
-    note: "4-piece minimum for free delivery",
+    minimum: 1,
+    // Same ladder as knives since 2026-11-11: $50 one, $25 each at 4 or
+    // more, $15 each at 10 or more. Was $15/$12/$8.
+    crew: { minQty: 4, perPiece: 25 },
+    jobsite: { minQty: 10, perPiece: 15 },
+    // One piece already clears the free-delivery bar, so there is no
+    // piece minimum to state anymore.
+    note: "Free delivery in the south Denver metro",
   },
   serviceTags: {
     name: "Metal Service Tags",
-    // Top of range = 10 stainless fully loaded at $15/tag (the approved
-    // stainlessLoaded rate). Was 180 from the pre-July stainless price.
-    range: [30, 150] as const,
+    // Bottom of range = 10 aluminum at the base rate. Top = 10 stainless
+    // fully loaded at $15/tag (the approved stainlessLoaded rate).
+    range: [50, 150] as const,
     pack: 10,
-    // Per-tag bases, named so the services configurator and the pricing
-    // cards read the same numbers (they were display-only strings before).
-    aluminumBase: 3,
+    // Per-tag bases, named so the services page and the pricing cards read
+    // the same numbers. Aluminum went $3 to $5 on 2026-11-11: Zach said ten
+    // tags for $30 is a volume-tier price, not a starting price. At $5 the
+    // top 20% tier lands at $4 a tag, and a pack of ten clears free delivery.
+    aluminumBase: 5,
     stainlessBase: 12,
     addOn: 1, // logo, QR, or back side: $1 each, per tag
     options: [
@@ -349,7 +358,7 @@ export const INDIVIDUAL_PRICING_CARDS = [
   },
   {
     category: CATALOG.tool.name,
-    packNote: `${CATALOG.tool.minimum} piece minimum for free delivery`,
+    packNote: CATALOG.tool.note,
     packTotal: '',
     items: [
       { name: 'Name / ID marking', price: usd(CATALOG.tool.base), note: '' },

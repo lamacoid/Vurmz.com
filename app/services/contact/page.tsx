@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 const faqItems = [
   {
     question: 'How fast can you turn around an order?',
-    answer: 'Next-day on most jobs. Same-day is usually possible on stock items. Bigger runs and custom sourcing take longer. Tell me the deadline and I will tell you if it is doable.',
+    answer: 'Most jobs are ready in 24 to 72 hours. Next-day and same-day are possible as a rush. Bigger runs and custom sourcing take longer. Tell me the deadline and I will tell you if it is doable.',
   },
   {
     question: 'How are orders structured?',
