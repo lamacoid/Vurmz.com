@@ -1,23 +1,19 @@
 import Link from 'next/link'
+import { pageMeta, BUSINESS_REF } from '@/lib/seo'
 import Image from 'next/image'
 import { Metadata } from 'next'
 import { ArrowRightIcon, ChatBubbleLeftIcon } from '@heroicons/react/24/outline'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
-import { portfolioBySlug } from '@/lib/portfolio'
+import { portfolioBySlug, portfolioAlt } from '@/lib/portfolio'
 import { CATALOG } from '@/lib/pricing'
 import Breadcrumbs from '@/components/Breadcrumbs'
 
-export const metadata: Metadata = {
-  title: { absolute: 'Knife Engraving | VURMZ, Centennial, CO' },
+export const metadata: Metadata = pageMeta({
+  title: 'Knife Engraving | VURMZ, Centennial, CO',
   description: 'Custom knife engraving in Centennial, CO. Chef knives, pocket knives, cleavers. Names, dates, and logos marked in the steel. Most knives back in 24 to 72 hours.',
-  alternates: { canonical: '/services/knife-engraving' },
-  openGraph: {
-    title: 'Knife Engraving | VURMZ',
-    description: 'Custom knife engraving in Centennial, CO. Chef knives, pocket knives, cleavers. Names, dates, and logos marked in the steel. Most knives back in 24 to 72 hours.',
-    url: `${siteInfo.url}/services/knife-engraving`,
-    images: ['/portfolio/culinary-cleaver-engraved.jpg'],
-  },
-}
+  path: '/services/knife-engraving',
+  image: { url: '/portfolio/culinary-cleaver-engraved.jpg', alt: 'A stainless cleaver engraved with a name by VURMZ in Centennial, Colorado' },
+})
 
 // Real knife jobs from the portfolio: the five KA-BARs, a cleaver, a pocket knife.
 const SHOWCASE = ['wolverines-knife', 'culinary-cleaver', 'pocket-knife']
@@ -31,18 +27,7 @@ export default function KnifeEngravingPage() {
     serviceType: 'Knife Engraving',
     name: 'Custom Knife Engraving',
     description: 'Custom knife engraving in Centennial, CO. Chef knives, pocket knives, cleavers, and hunting knives. Names, dates, and logos cut into the steel with a laser. Most knives back in 24 to 72 hours, hand-delivered across the south Denver metro.',
-    provider: {
-      '@type': 'LocalBusiness',
-      name: siteInfo.legalName,
-      url: siteInfo.url,
-      telephone: siteInfo.phone,
-      address: {
-        '@type': 'PostalAddress',
-        addressLocality: siteInfo.city,
-        addressRegion: siteInfo.stateAbbr,
-        addressCountry: 'US',
-      },
-    },
+    provider: BUSINESS_REF,
     areaServed: siteInfo.serviceAreas.map((area) => ({ '@type': 'City', name: area })),
     offers: {
       '@type': 'Offer',
@@ -112,13 +97,13 @@ export default function KnifeEngravingPage() {
               {SHOWCASE.map((item) => (
                 <Link
                   key={item.slug}
-                  href="/engrave"
+                  href={`/services/portfolio/${item.slug}`}
                   className="group block"
                 >
                   <div className="relative aspect-[4/3] rounded-sm overflow-hidden">
                     <Image
                       src={item.src}
-                      alt={item.label}
+                      alt={portfolioAlt(item)}
                       fill
                       className="object-cover transition-transform duration-300 group-hover:scale-105"
                       sizes="(max-width: 640px) 100vw, 50vw"

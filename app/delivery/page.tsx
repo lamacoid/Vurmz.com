@@ -1,15 +1,16 @@
 import type { Metadata } from 'next'
+import { pageMeta } from '@/lib/seo'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import SiteHeader from '@/components/SiteHeader'
 import SiteFooter from '@/components/SiteFooter'
 import DeliveryMap from '@/components/DeliveryMap'
 
-export const metadata: Metadata = {
-  title: 'Delivery & Shipping',
-  description: `Where VURMZ delivers: free hand-delivery across the Denver metro, from Castle Rock to Broomfield, and shipping anywhere in the US on small engraved goods.`,
-  alternates: { canonical: '/delivery' },
-}
+export const metadata: Metadata = pageMeta({
+  title: 'Delivery and Shipping | VURMZ, Centennial CO',
+  description: 'Where VURMZ delivers: free hand-delivery across the Denver metro, from Castle Rock to Broomfield, and shipping anywhere in the US on small engraved goods.',
+  path: '/delivery',
+})
 
 const TIERS = [
   {

@@ -18,5 +18,5 @@ export const aboutContent = {
 } as const
 
 export const aboutMeta = {
-  description: `Meet ${siteInfo.founder.name}, the person behind VURMZ. Laser engraving in ${siteInfo.city}, Colorado. Local. Thoughtful. Fast.`,
+  description: `Meet ${siteInfo.founder.name}, owner of VURMZ. Custom laser engraving in ${siteInfo.city}, Colorado, for the south Denver metro. Local. Thoughtful. Fast.`,
 }

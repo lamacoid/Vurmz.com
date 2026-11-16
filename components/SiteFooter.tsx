@@ -4,24 +4,19 @@ import { siteInfo, getSmsLink } from '@/lib/site-info'
 import VurmzLogo from '@/components/VurmzLogo'
 
 const PRODUCTS = [
-  { label: 'The design wall', href: '/designs' },
-  { label: 'In stock', href: '/shop/shelf' },
-  { label: 'Your own piece', href: '/engrave' },
-  { label: 'Knives', href: '/shop/knives' },
-  { label: 'Coasters and boards', href: '/shop/table' },
-  { label: 'Drinkware', href: '/shop/drink' },
-  { label: 'Everyday carry', href: '/shop/carry' },
-  { label: 'Signs and decor', href: '/shop/walls' },
-  { label: 'Business', href: '/shop/business' },
-  { label: 'The reserve', href: '/shop/reserve' },
+  { label: 'Engrave your stuff', href: '/engrave' },
+  { label: 'Items', href: '/shop' },
+  { label: 'The work', href: '/services/portfolio' },
+  { label: 'Delivery', href: '/delivery' },
 ]
 
 const BUSINESS = [
-  { label: 'Services & Pricing', href: '/services' },
-  { label: 'Portfolio', href: '/services/portfolio' },
+  { label: 'Business pricing', href: '/services' },
   { label: 'Materials', href: '/services/materials' },
-  { label: 'Service Tags', href: '/services/metal-tags' },
+  { label: 'Metal business cards', href: '/services/metal-business-cards' },
+  { label: 'Metal tags', href: '/services/metal-tags' },
   { label: 'Knife Engraving', href: '/services/knife-engraving' },
+  { label: 'Live engraving', href: '/services/live-engraving' },
   { label: 'Contact', href: '/services/contact' },
 ]
 
@@ -40,7 +35,7 @@ export default function SiteFooter() {
           <div className="col-span-2 sm:col-span-1">
             <VurmzLogo className="h-7 mb-4" color="var(--feature-ink)" />
             <p className="text-[var(--feature-soft)] text-sm leading-relaxed mb-5 max-w-xs">
-              Precision laser engraving in {siteInfo.city}, {siteInfo.state}. Hand-delivered across the South Denver metro.
+              Laser engraving in {siteInfo.city}, {siteInfo.state}. Hand-delivered across the South Denver metro.
             </p>
             <div className="space-y-2">
               <div className="flex items-center gap-2 text-sm text-[var(--feature-soft)]">
@@ -61,7 +56,7 @@ export default function SiteFooter() {
 
           {/* Products */}
           <div>
-            <h3 className="text-xs font-semibold text-[var(--feature-soft)] uppercase tracking-wider mb-4">Products</h3>
+            <h3 className="text-xs font-semibold text-[var(--feature-soft)] uppercase tracking-wider mb-4">Engraving</h3>
             <ul className="space-y-2">
               {PRODUCTS.map((link) => (
                 <li key={link.href}>

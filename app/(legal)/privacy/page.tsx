@@ -1,12 +1,13 @@
 import { Metadata } from 'next'
+import { pageMeta } from '@/lib/seo'
 import Link from 'next/link'
 import { siteInfo } from '@/lib/site-info'
 
-export const metadata: Metadata = {
-  title: 'Privacy Policy',
-  description: `Privacy policy for ${siteInfo.legalName}. How we handle your information when you use our laser engraving services in ${siteInfo.city}, CO.`,
-  alternates: { canonical: '/privacy' },
-}
+export const metadata: Metadata = pageMeta({
+  title: 'Privacy Policy | VURMZ Laser Engraving',
+  description: `Privacy policy for ${siteInfo.legalName}. How your information is handled when you use VURMZ laser engraving services in ${siteInfo.city}, CO.`,
+  path: '/privacy',
+})
 
 export default function PrivacyPage() {
   return (

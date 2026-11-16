@@ -4,7 +4,8 @@ import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { ArrowRightIcon, ChatBubbleLeftIcon, ArrowLeftIcon } from '@heroicons/react/24/outline'
 import { getSmsLink, siteInfo } from '@/lib/site-info'
-import { portfolioBySlug, portfolioItems } from '@/lib/portfolio'
+import { portfolioBySlug, portfolioItems, portfolioAlt } from '@/lib/portfolio'
+import { pageMeta } from '@/lib/seo'
 import Breadcrumbs from '@/components/Breadcrumbs'
 
 export const dynamicParams = false
@@ -21,16 +22,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   const item = portfolioBySlug[slug]
   if (!item) return { title: 'Not found' }
-  return {
-    title: item.label,
-    description: `${item.context}, laser engraved by VURMZ in ${siteInfo.city}, ${siteInfo.stateAbbr}. Material: ${item.material}. ${item.leadTimeDays}-day turnaround.`,
-    openGraph: {
-      title: `${item.label} · VURMZ`,
-      description: item.context,
-      images: [{ url: `https://www.vurmz.com${item.src}`, width: 1200, height: 800, alt: item.label }],
-    },
-    alternates: { canonical: `https://www.vurmz.com/services/portfolio/${item.slug}` },
-  }
+  const long = `${item.label} | VURMZ Laser Engraving`
+  return pageMeta({
+    title: long.length <= 60 ? long : `${item.label} | VURMZ`,
+    description: `${item.context}. ${item.material}, ${item.process}. Laser engraved by VURMZ in ${siteInfo.city}, ${siteInfo.stateAbbr}.`,
+    path: `/services/portfolio/${item.slug}`,
+    image: { url: item.src, alt: portfolioAlt(item) },
+    type: 'article',
+  })
 }
 
 export default async function PortfolioDetailPage({ params }: Props) {
@@ -38,10 +37,14 @@ export default async function PortfolioDetailPage({ params }: Props) {
   const item = portfolioBySlug[slug]
   if (!item) notFound()
 
-  // Find 3 related items (matching tag), excluding self
-  const related = portfolioItems
-    .filter((p) => p.slug !== item.slug && p.tags.some((t) => item.tags.includes(t)))
-    .slice(0, 3)
+  // Three more pieces: the next one in the list, then pieces that share a
+  // tag, then whatever follows. Starting from this piece's own place in the
+  // list (instead of always the first three matches) means every piece is
+  // linked from at least one other, so none is reachable only from the index.
+  const at = portfolioItems.findIndex((p) => p.slug === item.slug)
+  const after = [...portfolioItems.slice(at + 1), ...portfolioItems.slice(0, at)]
+  const sharesTag = (p: (typeof portfolioItems)[number]) => p.tags.some((t) => item.tags.includes(t))
+  const related = [...new Set([after[0], ...after.filter(sharesTag), ...after])].filter(Boolean).slice(0, 3)
 
   // Schema.org CreativeWork structured data
   const ld = {
@@ -89,7 +92,7 @@ export default async function PortfolioDetailPage({ params }: Props) {
           <div className="relative aspect-[4/3] rounded-sm overflow-hidden bg-black/40">
             <Image
               src={item.src}
-              alt={item.label}
+              alt={portfolioAlt(item)}
               fill
               priority
               quality={85}
@@ -188,7 +191,7 @@ export default async function PortfolioDetailPage({ params }: Props) {
                 <div className="relative aspect-square overflow-hidden">
                   <Image
                     src={r.src}
-                    alt={r.label}
+                    alt={portfolioAlt(r)}
                     fill
                     sizes="(max-width: 640px) 100vw, 33vw"
                     className="object-cover group-hover:scale-105 transition-transform duration-500"

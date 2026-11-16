@@ -74,7 +74,7 @@ const CAPABILITIES = [
 const OPTIONS = [
   {
     icon: ShoppingBagIcon,
-    title: 'Shop the basics',
+    title: 'Pick from the item list',
     description: 'Pens, anodized aluminum cards, tags, coasters, keychains, and more. Items I keep in stock and can engrave right away.',
     cta: 'Ask what\u2019s in stock',
     sms: "Hi, what do you have in stock right now?",
@@ -134,7 +134,7 @@ export default function MaterialsClient() {
               transition={{ duration: 0.5 }}
               className="text-[var(--ink-soft)] text-base sm:text-lg leading-relaxed max-w-xl"
             >
-              Shop from what I have on hand, use Bring Your Own for something you already have, or tell me what you need and I&apos;ll make it happen.
+              Pick from the items I keep on hand, bring something you already have, or tell me what you need and I&apos;ll make it happen.
             </motion.p>
           </motion.div>
         </div>
@@ -192,6 +192,9 @@ export default function MaterialsClient() {
           <h2 className="text-[length:var(--step-section)] font-semibold text-[var(--ink)] tracking-tight mb-2">What I can engrave</h2>
           <p className="text-[#4f5d5b] text-sm mb-8 max-w-lg">
             Metal, wood, glass, acrylic, leather, plastic, stone. If it&apos;s solid, I can mark it.
+          </p>
+          <p className="text-[#4f5d5b] text-sm mb-8 max-w-lg -mt-4">
+            Two lasers in the shop: a 60 W MOPA fiber for bare and coated metal, and a 40 W diode for wood, glass, slate, leather, and acrylic. No CO2.
           </p>
 
           <motion.div

@@ -1,21 +1,14 @@
 import { Metadata } from 'next'
+import { pageMeta } from '@/lib/seo'
 import Link from 'next/link'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 import { SOURCING, SHOP_POLICY, BUSINESS, DELIVERY } from '@/lib/pricing'
 
-export const metadata: Metadata = {
-  title: 'Terms & Conditions',
-  description: `Terms of service and policies for ${siteInfo.name} laser engraving services in ${siteInfo.city}, ${siteInfo.state}.`,
-  openGraph: {
-    title: 'Terms & Conditions',
-    description: `Terms of service and policies for ${siteInfo.name} laser engraving services.`,
-    url: `${siteInfo.url}/terms`,
-    siteName: siteInfo.name,
-    type: 'website',
-    locale: 'en_US',
-  },
-  alternates: { canonical: '/terms' },
-}
+export const metadata: Metadata = pageMeta({
+  title: 'Terms and Conditions | VURMZ Laser Engraving',
+  description: `Terms and policies for ${siteInfo.name} laser engraving in ${siteInfo.city}, ${siteInfo.state}: orders, turnaround, rush work, and delivery.`,
+  path: '/terms',
+})
 
 export default function TermsPage() {
   const lastUpdated = 'September 19, 2026'

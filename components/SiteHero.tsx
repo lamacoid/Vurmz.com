@@ -67,7 +67,12 @@ export default function SiteHero({ eyebrow, heading, accent = 'coral', children 
               transform: i === bg ? 'scale(1)' : 'scale(1.08)',
             }}
           >
-            <Image src={img.src} alt="" fill sizes="100vw" quality={55} priority={i === 0} className="object-cover" />
+            {/* Only the photo that is up, the one leaving, and the one coming
+                next are mounted, so a visitor does not download the whole set
+                when the page opens. */}
+            {(i === bg || i === (bg + 1) % heroBg.length || i === (bg - 1 + heroBg.length) % heroBg.length) && (
+              <Image src={img.src} alt="" fill sizes="100vw" quality={55} priority={i === 0} className="object-cover" />
+            )}
           </div>
         ))}
         <div className="absolute inset-0" style={{ backgroundColor: 'var(--hero-film)' }} />

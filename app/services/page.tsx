@@ -1,14 +1,16 @@
 import type { Metadata } from 'next'
+import { pageMeta } from '@/lib/seo'
 import ServicesClient from '@/components/services/ServicesClient'
 
 // No D1 read on this page anymore (the catalog lives on /shop), so it
 // prerenders as static instead of running on the edge per request.
 
-export const metadata: Metadata = {
-  title: { absolute: 'Need something marked? Engraving for business | VURMZ' },
-  description: 'Send a photo, how many, and your logo or the words. A price the same day. No setup fees, most runs ready in 24 to 72 hours, hand-delivered across the south Denver metro, small orders welcome, logo stays on file.',
-  alternates: { canonical: '/services' },
-}
+export const metadata: Metadata = pageMeta({
+  title: 'Laser Engraving for Business | VURMZ, Centennial CO',
+  description: 'Laser engraving and marking for businesses in the south Denver metro. Metal tags, cards, pens, knives, plates. Posted prices, no setup fees, small runs welcome.',
+  path: '/services',
+  image: { url: '/images/portfolio/holographic-metal-cards.jpg', alt: 'Mirror stainless metal cards marked in color by VURMZ' },
+})
 
 export default function ServicesPage() {
   return <ServicesClient />

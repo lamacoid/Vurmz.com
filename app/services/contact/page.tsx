@@ -1,16 +1,18 @@
 import { Metadata } from 'next'
+import { pageMeta } from '@/lib/seo'
 import Image from 'next/image'
+import Link from 'next/link'
 import { MapPinIcon, ChatBubbleLeftIcon, EnvelopeIcon, ClockIcon } from '@heroicons/react/24/outline'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 import { SIGNATURE } from '@/lib/pricing'
 import ContactForm from '@/components/ContactForm'
 import Breadcrumbs from '@/components/Breadcrumbs'
 
-export const metadata: Metadata = {
-  title: { absolute: 'Contact | VURMZ Laser Engraving, Centennial, CO' },
-  description: `Contact ${siteInfo.founder.name} at ${siteInfo.name} for laser engraving in ${siteInfo.city} and Denver metro. Text ${siteInfo.phone} or email.`,
-  alternates: { canonical: '/services/contact' },
-}
+export const metadata: Metadata = pageMeta({
+  title: 'Contact VURMZ | Laser Engraving Quotes in Centennial, CO',
+  description: `Get a laser engraving quote from ${siteInfo.name} in ${siteInfo.city}, CO. Send a photo and a count, or text ${siteInfo.phone}. A price comes back the same day.`,
+  path: '/services/contact',
+})
 
 const faqItems = [
   {
@@ -72,7 +74,7 @@ export default function ContactPage() {
         <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
             <h1 className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] font-semibold mb-4">
-              Let&apos;s Talk
+              Get a laser engraving quote
             </h1>
             <p className="text-xl text-[var(--ink-soft)]">
               Send a message or a text. You get Zach directly.
@@ -184,6 +186,28 @@ export default function ContactPage() {
               </div>
             ))}
           </div>
+          {/* Where each kind of job lives, so a question here leads to the page with the prices. */}
+          <nav aria-label="Prices and details" className="max-w-3xl mx-auto mt-8">
+            <h3 className="text-xs font-mono text-[var(--eyebrow)] tracking-[0.2em] uppercase mb-3">Prices and details</h3>
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 list-none p-0 m-0">
+              {[
+                { label: 'Engrave something you own', href: '/engrave' },
+                { label: 'Metal business cards', href: '/services/metal-business-cards' },
+                { label: 'Knife engraving', href: '/services/knife-engraving' },
+                { label: 'Custom metal tags', href: '/services/metal-tags' },
+                { label: 'Coasters, pens, and other items', href: '/shop' },
+                { label: 'Business pricing', href: '/services' },
+                { label: 'Materials', href: '/services/materials' },
+                { label: 'Live engraving at events', href: '/services/live-engraving' },
+              ].map((l) => (
+                <li key={l.href}>
+                  <Link href={l.href} className="block py-2.5 border-b border-[var(--hairline)] text-sm text-[var(--ink)] hover:text-[var(--eyebrow)] transition-colors">
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
         </div>
       </section>
 

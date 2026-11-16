@@ -7,6 +7,8 @@ import LaserCursor from '@/components/LaserCursor'
 import SunTracker from '@/components/SunTracker'
 import BackRoomDoor from '@/components/BackRoomDoor'
 import { CartProvider } from '@/lib/cart/store'
+import { SIGNATURE, CATALOG } from '@/lib/pricing'
+import { OG_DEFAULT } from '@/lib/seo'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -22,40 +24,35 @@ const garamond = EB_Garamond({
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.vurmz.com'),
   title: {
-    default: 'VURMZ | Precision Laser Engraving, Centennial CO',
+    default: 'VURMZ | Custom Laser Engraving in Centennial, Colorado',
     template: '%s | VURMZ Laser Engraving',
   },
-  description: 'VURMZ precision laser engraving in Centennial, CO. Shop engraved products or get custom engraving services for your business. Next-day turnaround, hand-delivered in South Denver metro.',
+  description: 'Custom laser engraving in Centennial, Colorado. Bring your own knife, tool, or tumbler, or order metal cards, tags, and pens for your business. Hand-delivered.',
   authors: [{ name: 'VURMZ' }],
   creator: 'VURMZ',
   icons: {
     icon: '/favicon.svg',
     apple: '/images/apple-touch-icon.png',
   },
+  // The defaults below are for any page that does not set its own. Every
+  // real page builds its own block with pageMeta() in lib/seo.ts.
   openGraph: {
     type: 'website',
     locale: 'en_US',
     url: 'https://www.vurmz.com',
     siteName: 'VURMZ',
-    title: 'VURMZ | Precision Laser Engraving, Centennial CO',
-    description: 'Precision laser engraving and marking in Centennial, Colorado. Engraved gifts, your own pieces, and business work for Greenwood Village, Cherry Hills Village, Lone Tree, Castle Pines, and Parker.',
-    images: [
-      {
-        // og-card.jpg is drawn by scripts/make-og-image.mjs. The old
-        // og-image.jpg was a corrupted photo; new filename so scrapers
-        // refetch instead of serving their cached copy.
-        url: 'https://www.vurmz.com/images/og-card.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'VURMZ Laser Engraving. Centennial, Colorado. Hand-delivered.',
-      },
-    ],
+    title: 'VURMZ | Custom Laser Engraving in Centennial, Colorado',
+    description: 'Custom laser engraving in Centennial, Colorado. Bring your own knife, tool, or tumbler, or order metal cards, tags, and pens for your business. Hand-delivered.',
+    // The stainless shop nameplate (2026-11-15). Earlier cards: og-demon.jpg,
+    // og-card.jpg, og-image.jpg. A new filename each time, so scrapers
+    // refetch instead of serving a cached copy.
+    images: [OG_DEFAULT],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'VURMZ | Laser Engraving · Shop & Services',
-    description: 'VURMZ laser engraving in Centennial, CO. Shop or get custom services.',
-    images: ['https://www.vurmz.com/images/og-card.jpg'],
+    title: 'VURMZ | Custom Laser Engraving in Centennial, Colorado',
+    description: 'Custom laser engraving in Centennial, Colorado. Bring your own knife, tool, or tumbler, or order for your business. Hand-delivered.',
+    images: [OG_DEFAULT.url],
   },
   robots: {
     index: true,
@@ -86,9 +83,13 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "LocalBusiness",
-              "name": "VURMZ LLC",
+              "@id": "https://www.vurmz.com/#business",
+              "name": "VURMZ",
+              "legalName": "VURMZ LLC",
               "alternateName": "VURMZ Laser Engraving",
-              "description": "Precision laser engraving services for businesses and individuals in the South Denver metro area. Branded pen packs, metal service tags, coasters, keychains, custom engraving, concierge sourcing. Next-day turnaround, hand-delivered.",
+              "image": `https://www.vurmz.com${OG_DEFAULT.url}`,
+              "logo": "https://www.vurmz.com/images/apple-touch-icon.png",
+              "description": `Laser engraving in Centennial, Colorado for the south Denver metro. Engraving on items you already own (knives, tools, tumblers, laptops) from $${SIGNATURE.startingAt}, and marked goods for local businesses: equipment labels, knife crews, metal cards, branded pens, plates and panels. Posted prices, a quote the same day, most work in 24 to 72 hours, hand-delivered.`,
               "url": "https://www.vurmz.com",
               "telephone": "(720) 468-0138",
               "email": "zach@vurmz.com",
@@ -128,42 +129,38 @@ export default function RootLayout({
               "hasOfferCatalog": {
                 "@type": "OfferCatalog",
                 "name": "Laser Engraving Services",
+                // What VURMZ actually sells, with the posted prices read
+                // from lib/pricing so this never disagrees with the pages.
                 "itemListElement": [
-                  {
-                    "@type": "Offer",
-                    "itemOffered": {
-                      "@type": "Service",
-                      "name": "Branded Pens",
-                      "description": "Metal stylus pens with custom logo engraving for businesses"
-                    }
-                  },
-                  {
-                    "@type": "Offer",
-                    "itemOffered": {
-                      "@type": "Service",
-                      "name": "Metal Business Cards",
-                      "description": "Anodized aluminum business cards with laser engraved text and logos"
-                    }
-                  },
-                  {
-                    "@type": "Offer",
-                    "itemOffered": {
-                      "@type": "Service",
-                      "name": "Equipment Labels & Nameplates",
-                      "description": "ABS plastic signs and labels for electrical panels, control boxes, and equipment"
-                    }
-                  },
-                  {
-                    "@type": "Offer",
-                    "itemOffered": {
-                      "@type": "Service",
-                      "name": "Custom Gifts & Awards",
-                      "description": "Personalized trophies, cutting boards, plaques, and keepsake gifts"
-                    }
-                  }
-                ]
+                  { name: 'Engraving on items you already own', description: 'Knives, tools, tumblers, laptops, flasks, cutting boards, and other solid items. One piece, one placement.', price: SIGNATURE.startingAt },
+                  { name: 'Knife engraving', description: `Names and marks on pocket knives and kitchen knives. ${CATALOG.knife.crew.minQty} or more at $${CATALOG.knife.crew.perKnife} each.`, price: CATALOG.knife.base },
+                  { name: 'Tool and gear marking', description: 'Names and ID marks on hand tools and jobsite gear.', price: CATALOG.tool.base },
+                  { name: 'Custom metal tags', description: 'Small custom tags in steel and aluminum, made to order.', price: CATALOG.serviceTags.aluminumBase },
+                  { name: 'Metal business cards', description: `Anodized aluminum cards engraved with a logo and details, packs of ${CATALOG.cards.pack}.`, price: CATALOG.cards.matteBlackBase * CATALOG.cards.pack },
+                  { name: 'Branded pens', description: `Soft-touch stylus pens engraved with a name or logo, packs of ${CATALOG.pens.pack}.`, price: CATALOG.pens.packPrice[0] },
+                ].map(o => ({
+                  "@type": "Offer",
+                  "priceCurrency": "USD",
+                  "price": String(o.price),
+                  "itemOffered": { "@type": "Service", "name": o.name, "description": o.description },
+                }))
               },
               "sameAs": []
+            })
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              "@id": "https://www.vurmz.com/#website",
+              "url": "https://www.vurmz.com/",
+              "name": "VURMZ",
+              "alternateName": "VURMZ Laser Engraving",
+              "inLanguage": "en-US",
+              "publisher": { "@id": "https://www.vurmz.com/#business" },
             })
           }}
         />

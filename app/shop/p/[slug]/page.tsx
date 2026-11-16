@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
-import { portfolioItems, type PortfolioItem } from '@/lib/portfolio'
+import { portfolioItems, portfolioAlt, type PortfolioItem } from '@/lib/portfolio'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import AddToCart from '@/components/shop/AddToCart'
 import ProductGallery from '@/components/shop/ProductGallery'
@@ -14,6 +14,8 @@ import { menuPrice, menuCase } from '@/lib/menu-format'
 import { builderConfigFrom } from '@/lib/builder/types'
 import { DELIVERY } from '@/lib/pricing'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
+import { pageMeta, fitSentences, BUSINESS_REF } from '@/lib/seo'
+import { relatedItems } from '@/lib/items'
 
 export const runtime = 'edge'
 
@@ -21,11 +23,23 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params
   const product = await getProductBySlug(slug)
   if (!product || !product.isPublished || product.soldAt) return { title: 'Not found' }
-  return {
-    title: product.name,
-    description: product.description || `${product.name}, custom laser engraved by VURMZ in Centennial, CO.`,
-    alternates: { canonical: `/shop/p/${slug}` },
-  }
+  // The share image is the product's own photo when it has one.
+  const hero = product.heroMediaId ? await getMediaById(product.heroMediaId).catch(() => null) : null
+  const withCity = `${product.name} | VURMZ, Centennial CO`
+  const lead = product.shortDescription ? `${product.name}: ${menuCase(product.shortDescription)}.` : `${product.name}.`
+  const engravable = product.metadata?.engravable !== false
+  return pageMeta({
+    title: withCity.length <= 60 ? withCity : `${product.name} | VURMZ`,
+    // Whole sentences only, as many as fit, so it never ends mid-thought.
+    description: fitSentences([
+      lead,
+      'Made by VURMZ in Centennial, Colorado.',
+      ...(engravable ? ['Engraving is included in the price.'] : []),
+      'Hand-delivered or shipped.',
+    ]),
+    path: `/shop/p/${slug}`,
+    image: hero?.url ? { url: hero.url, alt: hero.altText || product.name } : undefined,
+  })
 }
 
 // The product page: name, price, and a plain order form (what it should
@@ -37,11 +51,12 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
   const product = await getProductBySlug(slug)
   if (!product || !product.isPublished || product.soldAt) return notFound()
 
-  const [category, hero, variants, galleryRows] = await Promise.all([
+  const [category, hero, variants, galleryRows, related] = await Promise.all([
     product.categoryId ? getCategoryById(product.categoryId) : null,
     product.heroMediaId ? getMediaById(product.heroMediaId) : null,
     listVariants(product.id),
     listProductImages(product.id),
+    relatedItems(product),
   ])
 
   // Gallery = product_images rows; a product with only a hero photo still
@@ -152,7 +167,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
       priceCurrency: 'USD',
       price: ((sale ? sale.priceCents : lowestCents) / 100).toFixed(2),
       availability: product.madeToOrder ? 'https://schema.org/MadeToOrder' : 'https://schema.org/InStock',
-      seller: { '@type': 'LocalBusiness', name: siteInfo.legalName },
+      seller: BUSINESS_REF,
     },
   }
 
@@ -250,6 +265,34 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
             </>
           )}
 
+          {/* Other items, and the two other ways in. Plain links, so a
+              visitor and a crawler can both reach the rest of the site. */}
+          {related.length > 0 && (
+            <nav aria-label="Related items" className="mt-10">
+              <div className="flex items-center gap-3 mb-3">
+                <span className="flex-1 border-t border-[var(--ink)]/20" aria-hidden />
+                <h2 className="text-xs font-mono tracking-[0.3em] uppercase text-[var(--eyebrow)]">You might also like</h2>
+                <span className="flex-1 border-t border-[var(--ink)]/20" aria-hidden />
+              </div>
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 list-none p-0 m-0">
+                {related.map(r => (
+                  <li key={r.id}>
+                    <Link href={`/shop/p/${r.slug}`} className="group flex items-baseline justify-between gap-3 py-2.5 border-b border-[var(--hairline)] text-sm">
+                      <span className="text-[var(--ink)] group-hover:text-[var(--feature)] transition-colors">{r.name}</span>
+                      <span className="text-[var(--eyebrow)] font-semibold tabular-nums whitespace-nowrap">{menuPrice(r.priceCents)}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-4 text-xs text-[var(--ink-soft)] text-center">
+                Already own the thing?{' '}
+                <Link href="/engrave" className="text-[var(--eyebrow)] font-semibold hover:underline">Engrave your own piece</Link>.
+                {' '}Ordering for a business?{' '}
+                <Link href="/services" className="text-[var(--eyebrow)] font-semibold hover:underline">See business pricing</Link>.
+              </p>
+            </nav>
+          )}
+
           <p className="mt-10 pt-5 border-t border-[var(--hairline)] text-xs text-[var(--ink-soft)] text-center">
             Questions about this piece?{' '}
             <a
@@ -307,7 +350,7 @@ function PortfolioStrip({ title, blurb, slugs, portfolioLink = false }: { title:
             <span className="block relative aspect-square overflow-hidden rounded-sm border border-[var(--hairline)] bg-[var(--page)]">
               <Image
                 src={p.src}
-                alt={p.label}
+                alt={portfolioAlt(p)}
                 fill
                 sizes="(min-width: 640px) 25vw, 50vw"
                 className="object-cover transition-transform duration-300 group-hover:scale-[1.03] motion-reduce:transition-none"

@@ -1,53 +1,61 @@
 import Link from 'next/link'
+import { pageMeta, BUSINESS_REF } from '@/lib/seo'
 import Image from 'next/image'
 import { Metadata } from 'next'
-import { ArrowRightIcon, ChatBubbleLeftIcon } from '@heroicons/react/24/outline'
+import { ChatBubbleLeftIcon } from '@heroicons/react/24/outline'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
-import { portfolioBySlug } from '@/lib/portfolio'
+import { CATALOG } from '@/lib/pricing'
+import { portfolioBySlug, portfolioAlt } from '@/lib/portfolio'
 import Breadcrumbs from '@/components/Breadcrumbs'
 
-export const metadata: Metadata = {
-  title: { absolute: 'Metal Service Tags & Equipment Nameplates | VURMZ, Centennial, CO' },
-  description: 'Engraved metal service tags, serial plates, and equipment nameplates for trades in the Denver metro. Durable laser marking, most runs ready in 24 to 72 hours, hand-delivered.',
-  alternates: { canonical: '/services/metal-tags' },
-  openGraph: {
-    title: 'Metal Service Tags & Equipment Nameplates | VURMZ',
-    description: 'Engraved metal service tags, serial plates, and equipment nameplates for trades in the Denver metro. Durable laser marking, most runs ready in 24 to 72 hours, hand-delivered.',
-    url: `${siteInfo.url}/services/metal-tags`,
-    images: ['/portfolio/clga-faceplate-closeup.jpg'],
-  },
-}
+/**
+ * Custom metal tags, 2026-11-12. Zach: the page was "just too specific.
+ * I don't have exactly the things listed. Just list small steel and
+ * aluminum custom tagging. Tell me what you need and we'll figure it
+ * out." So: no named tag types, no stock sizes, no pack of ten with an
+ * adhesive back, no trades list. What it is, what helps price it, some
+ * metal work, and a way to say what you need.
+ */
 
-// Relevant portfolio shots: brushed-metal faceplate, anodized panel, asset marking.
-// Metal only: a plastic charger does not belong under "recent metal work".
+const description = 'Custom metal tags in steel and aluminum, laser marked in Centennial, CO. Tell me what you need and we will figure it out. Most runs ready in 24 to 72 hours.'
+
+export const metadata: Metadata = pageMeta({
+  title: 'Custom Metal Tags, Steel and Aluminum | VURMZ, Centennial',
+  description: description,
+  path: '/services/metal-tags',
+  image: { url: '/portfolio/clga-faceplate-closeup.jpg', alt: 'A laser engraved metal faceplate made by VURMZ' },
+})
+
+const display = { fontFamily: 'var(--font-display), Georgia, serif' }
+
+// Metal only: the shop plate, a faceplate, an anodized panel.
 const SHOWCASE = ['vurmz-nameplate', 'clga-amp-faceplate', 'aluminum-artwork']
   .map((slug) => portfolioBySlug[slug])
   .filter(Boolean)
 
+// What helps me price it. Nothing here is required.
+const HELPS = [
+  { h: 'What it goes on', p: 'A machine, a tool, a key, a bag, a product you make.' },
+  { h: 'About how big', p: 'A rough size is enough. A photo next to a ruler is better.' },
+  { h: 'What it should say', p: 'A name, a number, a logo, a code. Send the file if you have one.' },
+  { h: 'How many', p: 'One or a few hundred. A guess is fine.' },
+]
+
 export default function MetalTagsPage() {
+  const sms = getSmsLink('Hi Zach, I need some custom metal tags. What they go on: \nAbout how big: \nWhat they say: \nHow many: ')
+
   const serviceSchema = {
     '@context': 'https://schema.org',
     '@type': 'Service',
-    serviceType: 'Metal Service Tags & Equipment Nameplates',
-    name: 'Engraved Metal Service Tags & Equipment Nameplates',
-    description: 'Laser engraved service tags, serial plates, QC tags, and equipment nameplates for HVAC, electrical, plumbing, and trade shops across the south Denver metro. Durable, most runs ready in 24 to 72 hours, hand-delivered.',
-    provider: {
-      '@type': 'LocalBusiness',
-      name: siteInfo.legalName,
-      url: siteInfo.url,
-      telephone: siteInfo.phone,
-      address: {
-        '@type': 'PostalAddress',
-        addressLocality: siteInfo.city,
-        addressRegion: siteInfo.stateAbbr,
-        addressCountry: 'US',
-      },
-    },
+    serviceType: 'Custom Metal Tags',
+    name: 'Custom Metal Tags in Steel and Aluminum',
+    description: 'Small custom tags in steel and aluminum, laser marked to order for businesses across the south Denver metro. Most runs ready in 24 to 72 hours, hand-delivered.',
+    provider: BUSINESS_REF,
     areaServed: siteInfo.serviceAreas.map((area) => ({ '@type': 'City', name: area })),
     offers: {
       '@type': 'Offer',
       priceCurrency: 'USD',
-      priceSpecification: { '@type': 'PriceSpecification', priceCurrency: 'USD' },
+      priceSpecification: { '@type': 'PriceSpecification', minPrice: CATALOG.serviceTags.aluminumBase, priceCurrency: 'USD' },
     },
   }
 
@@ -58,52 +66,55 @@ export default function MetalTagsPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
       />
 
-      {/* ═══════════ HERO ═══════════ */}
+      {/* ═══════════ WHAT IT IS ═══════════ */}
       <section className="pt-6 pb-12 sm:pt-10 sm:pb-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Breadcrumbs items={[{ label: 'VURMZ', href: '/' }, { label: 'Services', href: '/services' }, { label: 'Metal Service Tags' }]} theme="services" />
+          <Breadcrumbs items={[{ label: 'VURMZ', href: '/' }, { label: 'Business', href: '/services' }, { label: 'Metal tags' }]} theme="services" />
           <p className="text-xs font-mono text-[var(--eyebrow)] tracking-[0.2em] uppercase mb-4">
-            For the Trades
+            Custom tags
           </p>
-          <h1 className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] font-semibold text-[var(--ink)] tracking-tight leading-tight mb-6">
-            Metal Service Tags &amp; Equipment Nameplates
+          <h1 className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] text-[var(--ink)] tracking-tight leading-tight mb-6 max-w-[20ch]" style={display}>
+            Small steel and aluminum tags, made to what you need.
           </h1>
           <p className="text-[var(--ink-soft)] text-base sm:text-lg leading-relaxed max-w-2xl">
-            Stickers fall off. Sharpie wipes away. A laser mark in stainless or anodized aluminum outlives the equipment it&apos;s on. I make service tags, serial plates, QC tags, and nameplates for HVAC techs, electricians, plumbers, and shops across the south Denver metro. Phone number, license number, QR code, logo, whatever your tag needs to carry. Standard sizes or cut to spec. Order ten or order five hundred. Most runs are ready in 24 to 72 hours, hand-delivered.
+            I make small custom tags in steel and aluminum. Tell me what you need and we will figure it out.
+            The mark is in the metal, so it does not peel or wipe off.
           </p>
           <p className="mt-5 text-[13px] font-mono tracking-wide text-[var(--eyebrow)]">
-            No setup fee. No minimums. Hand-delivered. Volume pricing from 50 tags.
+            No setup fee. No minimum. Aluminum from ${CATALOG.serviceTags.aluminumBase} a tag, steel from ${CATALOG.serviceTags.stainlessBase}.
           </p>
+          <div className="mt-7 flex flex-col sm:flex-row gap-3">
+            <a
+              href={sms}
+              className="inline-flex items-center justify-center gap-2 h-12 px-7 bg-[var(--coral)] text-white font-semibold text-[15px] rounded-[var(--r-control)] hover:bg-[var(--coral-hover)] transition-colors"
+            >
+              <ChatBubbleLeftIcon className="w-4 h-4" />
+              Text {siteInfo.phone}
+            </a>
+            <Link
+              href="/services#quote"
+              className="inline-flex items-center justify-center h-12 px-7 border border-[var(--hairline)] hover:border-[var(--glass-edge)] text-[var(--ink)] font-semibold text-[15px] rounded-[var(--r-control)] transition-colors"
+            >
+              Or send it here
+            </Link>
+          </div>
         </div>
       </section>
 
-      {/* ═══════════ POSTED ITEM: adhesive equipment labels ═══════════ */}
+      {/* ═══════════ WHAT HELPS ═══════════ */}
       <section className="pb-12 sm:pb-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="border border-[var(--ink)]/30 rounded-sm p-1">
-            <div className="border border-[var(--ink)]/15 rounded-sm bg-[var(--eyebrow)]/[0.06] px-5 py-5 sm:px-6 flex flex-col sm:flex-row items-center gap-5">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/api/media/media%2Fad%2F04%2Fad04f51666544fb7fe4b9fbd031c9745fa136b387b48b7cb8042d6324beff6a7.jpg"
-                alt="Black stainless metal label with adhesive foam backing"
-                className="w-28 h-28 flex-shrink-0 rounded-sm border border-[var(--hairline)] object-cover"
-              />
-              <div className="flex-1 text-center sm:text-left">
-                <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-[var(--eyebrow)] mb-1.5">Ready to order</p>
-                <p className="text-lg font-semibold text-[var(--ink)]" style={{ fontFamily: 'var(--font-display), Georgia, serif' }}>
-                  Metal Equipment Labels, pack of 10. $30.
-                </p>
-                <p className="text-sm text-[var(--ink-soft)] mt-1">
-                  stainless, engraved with your logo, 3M foam adhesive backing, peel and press
-                </p>
-              </div>
-              <Link
-                href="/shop/p/metal-labels-pack-10/"
-                className="inline-flex items-center justify-center px-6 h-10 border border-[var(--eyebrow)]/50 text-[var(--eyebrow)] text-sm font-semibold rounded-sm hover:bg-[var(--eyebrow)]/10 transition-colors whitespace-nowrap"
-              >
-                Order the pack
-              </Link>
-            </div>
+          <div className="bg-[var(--surface)] border border-[var(--hairline)] rounded-[var(--r-panel)] p-6 sm:p-8">
+            <h2 className="text-[length:var(--step-panel)] text-[var(--ink)]" style={display}>What helps me give you a price</h2>
+            <p className="mt-1.5 text-[length:var(--step-fine)] text-[var(--ink-soft)]">Send what you know. We sort out the rest together.</p>
+            <dl className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-x-10">
+              {HELPS.map((h) => (
+                <div key={h.h} className="py-3.5 border-t border-[var(--hairline)]">
+                  <dt className="text-[length:var(--step-body)] font-semibold text-[var(--ink)]">{h.h}</dt>
+                  <dd className="mt-0.5 text-[length:var(--step-row)] leading-relaxed text-[var(--ink-soft)]">{h.p}</dd>
+                </div>
+              ))}
+            </dl>
           </div>
         </div>
       </section>
@@ -125,7 +136,7 @@ export default function MetalTagsPage() {
                   <div className="relative aspect-[4/3] rounded-sm overflow-hidden">
                     <Image
                       src={item.src}
-                      alt={item.label}
+                      alt={portfolioAlt(item)}
                       fill
                       className="object-cover transition-transform duration-300 group-hover:scale-105"
                       sizes="(max-width: 640px) 100vw, 33vw"
@@ -141,31 +152,22 @@ export default function MetalTagsPage() {
         </section>
       )}
 
-      {/* ═══════════ CTA ═══════════ */}
+      {/* ═══════════ CLOSE ═══════════ */}
       <section className="py-14 sm:py-[72px] border-t border-[var(--hairline)]">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-[length:var(--step-section)] font-semibold text-[var(--ink)] tracking-tight mb-4">
-            Tell me what your tag needs to carry.
+          <h2 className="text-[length:var(--step-section)] text-[var(--ink)] tracking-tight mb-4" style={display}>
+            Tell me what you need.
           </h2>
           <p className="text-[var(--ink-soft)] text-base leading-relaxed mb-6">
-            Text me the details and a rough count. You have a number today.
+            A photo and a rough count is plenty. You have a number today.
           </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link
-              href="/services/contact"
-              className="group inline-flex items-center justify-center gap-2 px-6 py-3 bg-[var(--coral)] text-white font-semibold text-sm rounded-[var(--r-control)] hover:bg-[var(--coral)]-hover transition-all"
-            >
-              Send the job
-              <ArrowRightIcon className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
-            <a
-              href={getSmsLink('I need metal service tags or nameplates')}
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-vurmz-cream text-vurmz-dark font-semibold text-sm rounded-sm hover:bg-vurmz-cream-hover transition-all"
-            >
-              <ChatBubbleLeftIcon className="w-4 h-4" />
-              Text {siteInfo.phone}
-            </a>
-          </div>
+          <a
+            href={sms}
+            className="inline-flex items-center justify-center gap-2 h-12 px-7 bg-[var(--coral)] text-white font-semibold text-[15px] rounded-[var(--r-control)] hover:bg-[var(--coral-hover)] transition-colors"
+          >
+            <ChatBubbleLeftIcon className="w-4 h-4" />
+            Text {siteInfo.phone}
+          </a>
         </div>
       </section>
     </div>

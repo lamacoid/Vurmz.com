@@ -1,19 +1,14 @@
 import type { Metadata } from 'next'
+import { pageMeta } from '@/lib/seo'
 import { siteInfo } from '@/lib/site-info'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import OnSite from '@/components/services/OnSite'
 
-export const metadata: Metadata = {
-  title: { absolute: 'Live Engraving for Events in Denver | VURMZ' },
-  description: 'Live laser engraving at your event or store in the Denver metro. One machine, names on the piece while the guest watches. Half day, full day, or per piece for retail.',
-  alternates: { canonical: '/services/live-engraving' },
-  openGraph: {
-    title: 'Live Engraving for Events in Denver | VURMZ',
-    description: 'Live laser engraving at your event or store. Half day, full day, or per piece for retail activations.',
-    url: `${siteInfo.url}/services/live-engraving`,
-    images: ['/portfolio/clga-faceplate-closeup.jpg'],
-  },
-}
+export const metadata: Metadata = pageMeta({
+  title: 'Live Engraving for Events in Denver | VURMZ',
+  description: 'Live laser engraving at your event or store in the Denver metro. Names engraved on the piece while the guest watches. Half day, full day, or per piece.',
+  path: '/services/live-engraving',
+})
 
 export default function LiveEngravingPage() {
   return (

@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { pageMeta } from '@/lib/seo'
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
@@ -6,11 +7,12 @@ import { aboutContent, aboutMeta } from '@/lib/about'
 import SiteHeader from '@/components/SiteHeader'
 import SiteFooter from '@/components/SiteFooter'
 
-export const metadata: Metadata = {
-  title: 'About',
+export const metadata: Metadata = pageMeta({
+  title: 'About VURMZ | Laser Engraving in Centennial, Colorado',
   description: aboutMeta.description,
-  alternates: { canonical: '/about' },
-}
+  path: '/about',
+  image: { url: '/images/zach.jpeg', alt: 'Zach, owner of VURMZ laser engraving in Centennial, Colorado' },
+})
 
 const display = { fontFamily: 'var(--font-display), Georgia, serif' }
 

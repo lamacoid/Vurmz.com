@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { pageMeta, BUSINESS_REF } from '@/lib/seo'
 import Link from 'next/link'
 import Image from 'next/image'
 import CanYouEngraveThis from '@/components/CanYouEngraveThis'
@@ -6,11 +7,12 @@ import { getCategoryBySlug } from '@/lib/categories'
 import { SIGNATURE, DELIVERY, SOURCING } from '@/lib/pricing'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 
-export const metadata: Metadata = {
-  title: { absolute: 'Already own the thing? Engrave it | VURMZ, Centennial CO' },
-  description: `Knife, tool, laptop, flask, the odd piece of metal from your garage. Send a photo and get a number the same day. One piece from $${SIGNATURE.startingAt}, hand-delivered across the south Denver metro.`,
-  alternates: { canonical: '/engrave' },
-}
+export const metadata: Metadata = pageMeta({
+  title: 'Engrave Your Own Knife, Tool or Tumbler | VURMZ, Centennial',
+  description: `Bring a knife, tool, tumbler, or laptop and I engrave it. Send a photo for a same-day price, from $${SIGNATURE.startingAt} a piece. Centennial, CO, hand-delivered.`,
+  path: '/engrave',
+  image: { url: '/portfolio/pocket-knife-engraved.jpg', alt: 'A pocket knife with an engraved bolster, engraved by VURMZ in Centennial, Colorado' },
+})
 
 const display = { fontFamily: 'var(--font-display), Georgia, serif' }
 
@@ -49,7 +51,7 @@ export default function EngravePage() {
       serviceType: 'Laser engraving on customer-owned items',
       name: 'Engrave your own item',
       description: 'Laser engraving on a piece you already own: knives, tools, tumblers, laptops, flasks, cutting boards, and other solid items. Send a photo for a same-day price.',
-      provider: { '@type': 'LocalBusiness', name: 'VURMZ LLC', url: siteInfo.url, telephone: siteInfo.phone },
+      provider: BUSINESS_REF,
       areaServed: siteInfo.serviceAreas.map(a => ({ '@type': 'City', name: a })),
       offers: { '@type': 'Offer', priceCurrency: 'USD', price: String(SIGNATURE.startingAt), description: 'One piece, one placement, within a palm-sized mark' },
     },
@@ -63,8 +65,8 @@ export default function EngravePage() {
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-10 pb-16">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       <header className="max-w-[60ch]">
-        <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-[var(--feature)] mb-3">Engrave your stuff</p>
         <h1 className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] leading-[1.05] text-[var(--ink)]" style={display}>
+          <span className="block text-[11px] font-mono tracking-[0.3em] uppercase text-[var(--feature)] mb-3">Custom engraving on your own item</span>
           Already own the thing?
         </h1>
         <p className="mt-4 text-[length:var(--step-lead)] leading-relaxed text-[var(--ink-soft)]">

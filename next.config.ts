@@ -16,11 +16,14 @@ const commit = (() => {
 const nextConfig: NextConfig = {
 
   images: {
-    // Enable Next.js image optimization for better performance
-    // Images will be served in modern formats (WebP/AVIF) and properly sized
-    formats: ['image/avif', 'image/webp'],
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920],
-    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    // The built-in optimizer does nothing on Cloudflare Pages (it returned
+    // the original file at every width), so photos are sized ahead of time
+    // by scripts/optimize-images.mjs and picked by lib/image-loader.ts.
+    // These widths must match WIDTHS in that script.
+    loader: 'custom',
+    loaderFile: './lib/image-loader.ts',
+    deviceSizes: [640, 1080, 1920],
+    imageSizes: [128, 256, 384],
   },
 
   trailingSlash: true,
@@ -54,6 +57,13 @@ const nextConfig: NextConfig = {
       { source: '/centennial', destination: '/services/laser-engraving/centennial', permanent: true },
       { source: '/services/centennial', destination: '/services/laser-engraving/centennial', permanent: true },
       { source: '/gifts', destination: '/shop', permanent: true },
+      // Addresses that appear in older notes and drafts (2026-11-15). They
+      // never existed here; each lands on the page that does the job.
+      { source: '/products', destination: '/shop', permanent: true },
+      { source: '/products/metal-business-cards', destination: '/services/metal-business-cards', permanent: true },
+      { source: '/metal-business-cards', destination: '/services/metal-business-cards', permanent: true },
+      { source: '/quote', destination: '/services/contact', permanent: true },
+      { source: '/faq', destination: '/services/contact', permanent: true },
       { source: '/laser-engraving/:city*', destination: '/services/laser-engraving/:city*', permanent: true },
     ]
   },

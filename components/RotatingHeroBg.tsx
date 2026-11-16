@@ -46,6 +46,13 @@ export default function RotatingHeroBg() {
     }
   }, [i, still])
 
+  // Only the slide that is up, the one fading out, and the one coming next
+  // carry a photo. Mounting all twenty made every visitor download all
+  // twenty the moment the page opened. The next one loads while the
+  // current one holds, so the crossfade never shows an empty frame.
+  const n = SLIDES.length
+  const near = (idx: number) => idx === i || idx === (i + 1) % n || idx === (i - 1 + n) % n
+
   return (
     <div className="absolute inset-0 pointer-events-none select-none overflow-hidden" aria-hidden>
       {SLIDES.map((s, idx) => (
@@ -68,9 +75,9 @@ export default function RotatingHeroBg() {
               preload="metadata"
               className="absolute inset-0 h-full w-full object-cover"
             />
-          ) : (
+          ) : near(idx) ? (
             <Image src={s.src} alt="" fill sizes="100vw" quality={55} priority={idx === 1} className="object-cover" />
-          )}
+          ) : null}
         </div>
       ))}
       <div className="absolute inset-0" style={{ backgroundColor: 'var(--hero-film)' }} />

@@ -271,6 +271,15 @@ export const portfolioItems: PortfolioItem[] = [
   },
 ]
 
+/**
+ * Alt text for a portfolio photo: what the piece is, what it is made of,
+ * and how it was marked. Describes the picture first; the shop name comes
+ * last so a screen reader hears the useful part before the credit.
+ */
+export function portfolioAlt(item: PortfolioItem): string {
+  return `${item.label}: ${item.material.toLowerCase()}, ${item.process}. Laser engraved by VURMZ in Centennial, Colorado.`
+}
+
 // Map for fast lookup by slug
 export const portfolioBySlug: Record<string, PortfolioItem> = Object.fromEntries(
   portfolioItems.map((p) => [p.slug, p]),

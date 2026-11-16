@@ -1,10 +1,11 @@
 import type { Metadata } from 'next'
+import { pageMeta } from '@/lib/seo'
 import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRightIcon, ChatBubbleLeftIcon } from '@heroicons/react/24/outline'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 import { SIGNATURE, SOURCING, CATALOG } from '@/lib/pricing'
-import { portfolioItems } from '@/lib/portfolio'
+import { portfolioItems, portfolioAlt } from '@/lib/portfolio'
 import SiteHeader from '@/components/SiteHeader'
 import SiteFooter from '@/components/SiteFooter'
 import ContactForm from '@/components/ContactForm'
@@ -25,9 +26,11 @@ import EtchArt from '@/components/shop/EtchArt'
  * Then the photo form, the work, the business lanes with the short item
  * list under them, how it works, me, contact. No shop doors, no designers.
  */
-export const metadata: Metadata = {
-  alternates: { canonical: '/' },
-}
+export const metadata: Metadata = pageMeta({
+  title: 'VURMZ | Custom Laser Engraving in Centennial, Colorado',
+  description: 'Custom laser engraving in Centennial, Colorado. Bring your own knife, tool, or tumbler, or order metal cards, tags, and pens for your business. Hand-delivered.',
+  path: '/',
+})
 
 const display = { fontFamily: 'var(--font-display), Georgia, serif' }
 const card = 'rounded-[var(--r-panel)] border border-[var(--hairline)] bg-[var(--surface)]'
@@ -49,9 +52,9 @@ const WORK_SLUGS = [
 const WORK = WORK_SLUGS.map(s => portfolioItems.find(p => p.slug === s)).filter((p): p is (typeof portfolioItems)[number] => !!p)
 
 const B2B_LANES = [
-  { h: 'Equipment labels', p: `Anodized aluminum, 3M backed, a mark that outlives the equipment. $${CATALOG.serviceTags.aluminumBase * CATALOG.serviceTags.pack} per ${CATALOG.serviceTags.pack}.`, href: '/services/metal-tags' },
+  { h: 'Custom metal tags', p: `Small steel and aluminum tags. Tell me what you need and we will figure it out. From $${CATALOG.serviceTags.aluminumBase} a tag.`, href: '/services/metal-tags' },
   { h: 'Knife crews', p: `I pick up the whole line's knives and return them engraved next day. $${CATALOG.knife.crew.perKnife} a knife at ${CATALOG.knife.crew.minQty} or more, $${CATALOG.knife.fullKitchen.perKnife} for a full kitchen.`, href: '/services/knife-engraving' },
-  { h: 'Metal cards', p: `Anodized aluminum, card size. Send your logo and the details. $${CATALOG.cards.matteBlackBase * CATALOG.cards.pack} per ${CATALOG.cards.pack}.`, href: '/shop/p/anodized-aluminum-wallet-card' },
+  { h: 'Metal cards', p: `Anodized aluminum, card size. Send your logo and the details. $${CATALOG.cards.matteBlackBase * CATALOG.cards.pack} per ${CATALOG.cards.pack}.`, href: '/services/metal-business-cards' },
   { h: 'Plates, panels, one-offs', p: 'Faceplates, valve tags, signage, jobsite tools. Send a photo and a count, you get a number today.', href: '/services#lanes' },
   { h: 'Standing accounts', p: `Logo on file, free delivery every ${siteInfo.deliveryRunDay}, NET-30, 15% off standing orders.`, href: '/services#account' },
 ]
@@ -141,7 +144,7 @@ export default function Page() {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {WORK.map(item => (
               <Link key={item.slug} href={`/services/portfolio/${item.slug}`} className="group relative aspect-square rounded-sm overflow-hidden puffy-light block">
-                <GlassImage src={item.src} alt={item.label} depth="card" quality={85} sizes="(max-width: 640px) 50vw, 25vw" className="absolute inset-0" />
+                <GlassImage src={item.src} alt={portfolioAlt(item)} depth="card" quality={85} sizes="(max-width: 640px) 50vw, 25vw" className="absolute inset-0" />
                 <div className="absolute inset-0 flex items-end p-3 opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-t from-black/60 to-transparent">
                   <span className="text-white text-xs font-medium drop-shadow">{item.material}</span>
                 </div>

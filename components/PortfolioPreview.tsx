@@ -34,7 +34,7 @@ export default function PortfolioPreview({ items, theme, linkTo, linkLabel = 'Se
           <div key={item.src} className="group relative aspect-square rounded-sm overflow-hidden">
             <Image
               src={item.src}
-              alt={item.label}
+              alt={`${item.label}, laser engraved by VURMZ`}
               fill
               className="object-cover group-hover:scale-[1.05] transition-transform duration-500"
               sizes="(max-width: 640px) 50vw, 25vw"

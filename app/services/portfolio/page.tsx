@@ -1,20 +1,16 @@
 import { Metadata } from 'next'
+import { pageMeta } from '@/lib/seo'
 import Link from 'next/link'
 import Image from 'next/image'
 import { getSmsLink, siteInfo } from '@/lib/site-info'
-import { portfolioItems } from '@/lib/portfolio'
+import { portfolioItems, portfolioAlt } from '@/lib/portfolio'
 
-export const metadata: Metadata = {
-  title: { absolute: 'The work | VURMZ laser engraving, Centennial CO' },
-  description: 'Twelve pieces: knives, metal cards marked in color, slate coasters, a brushed stainless nameplate, a portrait medallion, mirrors, a full-wrap bottle. What it is, what it is made of, how it was marked.',
-  alternates: { canonical: '/services/portfolio' },
-  openGraph: {
-    title: 'The work | VURMZ',
-    description: 'Knives, metal cards marked in color, slate coasters, a nameplate, a portrait medallion, mirrors, a full-wrap bottle. What it is and how it was marked.',
-    url: 'https://www.vurmz.com/services/portfolio',
-    images: ['/images/portfolio/holographic-metal-cards.jpg'],
-  },
-}
+export const metadata: Metadata = pageMeta({
+  title: 'Laser Engraving Work and Portfolio | VURMZ, Centennial CO',
+  description: 'Finished laser engraving from VURMZ in Centennial, CO: knives, metal cards, slate coasters, a stainless nameplate, mirrors. What each is and how it was marked.',
+  path: '/services/portfolio',
+  image: { url: '/images/portfolio/holographic-metal-cards.jpg', alt: 'Mirror stainless metal cards marked in color by VURMZ' },
+})
 
 const display = { fontFamily: 'var(--font-display), Georgia, serif' }
 
@@ -38,11 +34,25 @@ export default function PortfolioPage() {
   const items = STRONGEST.map(s => ({ ...s, item: portfolioItems.find(p => p.slug === s.slug)! })).filter(x => x.item)
   const rest = portfolioItems.filter(p => !STRONGEST.some(s => s.slug === p.slug))
 
+  // The pieces as data, in the order the page shows them.
+  const listSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Laser engraving work by VURMZ',
+    itemListElement: [...items.map(x => x.item), ...rest].map((p, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: p.label,
+      url: `${siteInfo.url}/services/portfolio/${p.slug}/`,
+    })),
+  }
+
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-10 pb-16">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(listSchema) }} />
       <header className="max-w-[60ch]">
-        <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-[var(--feature)] mb-3">The work</p>
         <h1 className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] leading-[1.05] text-[var(--ink)]" style={display}>
+          <span className="block text-[11px] font-mono tracking-[0.3em] uppercase text-[var(--feature)] mb-3">Laser engraving work</span>
           Twelve pieces, so you know what the machine can do.
         </h1>
         <p className="mt-4 text-[length:var(--step-lead)] leading-relaxed text-[var(--ink-soft)]">
@@ -55,7 +65,7 @@ export default function PortfolioPage() {
           <li key={slug}>
             <Link href={`/services/portfolio/${slug}`} className="group block">
               <span className="relative block aspect-square rounded-[var(--r-tile)] overflow-hidden border border-[var(--hairline)]">
-                <Image src={item.src} alt={item.label} fill quality={85} sizes="(max-width: 1024px) 50vw, 25vw" className="object-cover transition-transform duration-700 group-hover:scale-[1.04]" />
+                <Image src={item.src} alt={portfolioAlt(item)} fill quality={85} sizes="(max-width: 1024px) 50vw, 25vw" className="object-cover transition-transform duration-700 group-hover:scale-[1.04]" />
               </span>
               <span className="block mt-2 text-[14.5px] leading-snug text-[var(--ink)] group-hover:text-[var(--ink)] transition-colors">{what}</span>
               <span className="block mt-0.5 text-[11.5px] font-mono tracking-[0.06em] text-[var(--ink-soft)]">{item.material} · {item.process}</span>

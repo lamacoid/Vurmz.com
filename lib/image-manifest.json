@@ -1,0 +1,673 @@
+{
+ "/images/apple-touch-icon.png": {
+  "h": "7427fa9d",
+  "w": [
+   128,
+   180
+  ]
+ },
+ "/images/clients/colorado-wolverines.png": {
+  "h": "9072505d",
+  "w": [
+   128,
+   256,
+   384,
+   580
+  ]
+ },
+ "/images/clients/integrity-backflow.png": {
+  "h": "c7317789",
+  "w": [
+   128,
+   256,
+   384,
+   640,
+   671
+  ]
+ },
+ "/images/og-card.jpg": {
+  "h": "db06adb9",
+  "w": [
+   128,
+   256,
+   384,
+   640,
+   1080,
+   1200
+  ]
+ },
+ "/images/og-demon.jpg": {
+  "h": "f315225c",
+  "w": [
+   128,
+   256,
+   384,
+   640,
+   1080,
+   1200
+  ]
+ },
+ "/images/og-vurmz-nameplate.jpg": {
+  "h": "5a6e9316",
+  "w": [
+   128,
+   256,
+   384,
+   640,
+   1080,
+   1200
+  ]
+ },
+ "/images/portfolio/holographic-metal-cards.jpg": {
+  "h": "476918b7",
+  "w": [
+   128,
+   256,
+   384,
+   640,
+   900
+  ]
+ },
+ "/images/portfolio/integrity-backflow-coaster.jpg": {
+  "h": "0ee91c75",
+  "w": [
+   128,
+   256,
+   384,
+   640,
+   1080,
+   1425
+  ]
+ },
+ "/images/portfolio/portrait-medallion.jpg": {
+  "h": "1493a64b",
+  "w": [
+   128,
+   256,
+   384,
+   640,
+   900
+  ]
+ },
+ "/images/portfolio/vintage-tools-coin.jpg": {
+  "h": "3119b89d",
+  "w": [
+   128,
+   256,
+   384,
+   640,
+   900
+  ]
+ },
+ "/images/portfolio/vurmz-nameplate.jpg": {
+  "h": "e4d75c2e",
+  "w": [
+   128,
+   256,
+   384,
+   640,
+   1080,
+   1600
+  ]
+ },
+ "/images/vurmz-logo-text.png": {
+  "h": "0dab7050",
+  "w": [
+   128,
+   256,
+   384,
+   640,
+   1080,
+   1869
+  ]
+ },
+ "/images/wood-grain-bg.jpg": {
+  "h": "4d9c9286",
+  "w": [
+   128,
+   256,
+   384,
+   640,
+   1080
+  ]
+ },
+ "/images/wood-grain-horizontal.jpg": {
+  "h": "737f4eaa",
+  "w": [
+   128,
+   256,
+   384,
+   640,
+   1080,
+   1920
+  ]
+ },
+ "/images/zach.jpeg": {
+  "h": "e1f11743",
+  "w": [
+   128,
+   256,
+   384,
+   600
+  ]
+ },
+ "/portfolio/clga-faceplate-angled.jpg": {
+  "h": "6e127f36",
+  "w": [
+   128,
+   256,
+   384,
+   640,
+   1080,
+   1600
+  ]
+ },
+ "/portfolio/clga-faceplate-closeup.jpg": {
+  "h": "1739c4c6",
+  "w": [
+   128,
+   256,
+   384,
+   640,
+   1080,
+   1600
+  ]
+ },
+ "/portfolio/clga-faceplate-standing.jpg": {
+  "h": "183b9da5",
+  "w": [
+   128,
+   256,
+   384,
+   640,
+   1080,
+   1600
+  ]
+ },
+ "/portfolio/columbine-macbook-engraving.jpg": {
+  "h": "ceea9ce0",
+  "w": [
+   128,
+   256,
+   384,
+   640,
+   900
+  ]
+ },
+ "/portfolio/culinary-cleaver-engraved.jpg": {
+  "h": "b313970b",
+  "w": [
+   128,
+   256,
+   384,
+   640,
+   1080,
+   1600
+  ]
+ },
+ "/portfolio/cyclist-lawyer-knife.jpg": {
+  "h": "06f4bb04",
+  "w": [
+   128,
+   256,
+   384,
+   640,
+   1080,
+   1600
+  ]
+ },
+ "/portfolio/denver-map-glass-coaster.jpg": {
+  "h": "8c9e4b6f",
+  "w": [
+   128,
+   256,
+   384,
+   640,
+   1080,
+   1200
+  ]
+ },
+ "/portfolio/denver-map-mirror-closeup.jpg": {
+  "h": "114cb45b",
+  "w": [
+   128,
+   256,
+   384,
+   640,
+   900
+  ]
+ },
+ "/portfolio/engraved-hand-saw.jpg": {
+  "h": "d86e930c",
+  "w": [
+   128,
+   256,
+   384,
+   640,
+   900
+  ]
+ },
+ "/portfolio/eye-storm-hexagonal-mirror.jpg": {
+  "h": "fa94b408",
+  "w": [
+   128,
+   256,
+   384,
+   640,
+   900
+  ]
+ },
+ "/portfolio/laser-engraved-artwork.jpg": {
+  "h": "a87694b4",
+  "w": [
+   128,
+   256,
+   384,
+   640,
+   1080,
+   1200
+  ]
+ },
+ "/portfolio/macbook-engraving.jpg": {
+  "h": "3e569c94",
+  "w": [
+   128,
+   256,
+   384,
+   640,
+   1080,
+   1600
+  ]
+ },
+ "/portfolio/metal-business-card-original.png": {
+  "h": "56062309",
+  "w": [
+   128,
+   256,
+   384,
+   640,
+   800
+  ]
+ },
+ "/portfolio/plastic-marking-charger.jpg": {
+  "h": "8eada9fa",
+  "w": [
+   128,
+   256,
+   384,
+   640,
+   900
+  ]
+ },
+ "/portfolio/pocket-knife-engraved.jpg": {
+  "h": "04947849",
+  "w": [
+   128,
+   256,
+   384,
+   640,
+   900
+  ]
+ },
+ "/portfolio/three-willows-coasters.jpg": {
+  "h": "1dc906a1",
+  "w": [
+   128,
+   256,
+   384,
+   640,
+   1080,
+   1600
+  ]
+ },
+ "/portfolio/tumbler-cherry-creek-37.jpg": {
+  "h": "a2b8e100",
+  "w": [
+   128,
+   256,
+   384,
+   640,
+   1019
+  ]
+ },
+ "/portfolio/water-bottle-custom-engraved.jpg": {
+  "h": "a4b656ab",
+  "w": [
+   128,
+   256,
+   384,
+   640,
+   905
+  ]
+ },
+ "/portfolio/water-bottle-full-wrap.jpg": {
+  "h": "751cd7e1",
+  "w": [
+   128,
+   256,
+   384,
+   640,
+   900
+  ]
+ },
+ "/portfolio/wedding-gift-label.jpg": {
+  "h": "e19cb55f",
+  "w": [
+   128,
+   256,
+   384,
+   640,
+   1080,
+   1600
+  ]
+ },
+ "/portfolio/wolverines-knife.jpg": {
+  "h": "db4380c7",
+  "w": [
+   128,
+   256,
+   384,
+   640,
+   1080,
+   1600
+  ]
+ },
+ "/reserve/board.jpg": {
+  "h": "29fcc28f",
+  "w": [
+   128,
+   256,
+   384,
+   640,
+   1080,
+   1600
+  ]
+ },
+ "/reserve/chef-knife.jpg": {
+  "h": "7c293240",
+  "w": [
+   128,
+   256,
+   384,
+   640,
+   1080,
+   1600
+  ]
+ },
+ "/reserve/cooler.jpg": {
+  "h": "fc19e2ac",
+  "w": [
+   128,
+   256,
+   384,
+   640,
+   1080,
+   1600
+  ]
+ },
+ "/reserve/multitool.jpg": {
+  "h": "933dbb88",
+  "w": [
+   128,
+   256,
+   384,
+   640,
+   1080,
+   1600
+  ]
+ },
+ "/reserve/pen.jpg": {
+  "h": "c1036633",
+  "w": [
+   128,
+   256,
+   384,
+   640,
+   1080,
+   1600
+  ]
+ },
+ "/reserve/pocket-knife.jpg": {
+  "h": "118d0cda",
+  "w": [
+   128,
+   256,
+   384,
+   640,
+   1080,
+   1600
+  ]
+ },
+ "/reserve/skillet.jpg": {
+  "h": "c9145305",
+  "w": [
+   128,
+   256,
+   384,
+   640,
+   1080,
+   1600
+  ]
+ },
+ "/reserve/wallet.jpg": {
+  "h": "e50f7796",
+  "w": [
+   128,
+   256,
+   384,
+   640,
+   1080,
+   1600
+  ]
+ },
+ "/shop/etch/board-ink.png": {
+  "h": "8d2a0e98",
+  "w": [
+   128,
+   256,
+   384,
+   397
+  ]
+ },
+ "/shop/etch/board.png": {
+  "h": "343b769f",
+  "w": [
+   128,
+   256,
+   384,
+   397
+  ]
+ },
+ "/shop/etch/coaster-ink.png": {
+  "h": "b9043141",
+  "w": [
+   128,
+   256,
+   382
+  ]
+ },
+ "/shop/etch/coaster.png": {
+  "h": "ec2af997",
+  "w": [
+   128,
+   256,
+   382
+  ]
+ },
+ "/shop/etch/glass-ink.png": {
+  "h": "7bd4f854",
+  "w": [
+   128,
+   256,
+   278
+  ]
+ },
+ "/shop/etch/glass.png": {
+  "h": "29f16cd7",
+  "w": [
+   128,
+   256,
+   278
+  ]
+ },
+ "/shop/etch/keychain-ink.png": {
+  "h": "b62991fc",
+  "w": [
+   128,
+   256,
+   365
+  ]
+ },
+ "/shop/etch/keychain.png": {
+  "h": "89ed7272",
+  "w": [
+   128,
+   256,
+   365
+  ]
+ },
+ "/shop/etch/knife-ink.png": {
+  "h": "acc40dd7",
+  "w": [
+   128,
+   256,
+   384,
+   439
+  ]
+ },
+ "/shop/etch/knife.png": {
+  "h": "4ad23dbb",
+  "w": [
+   128,
+   256,
+   384,
+   439
+  ]
+ },
+ "/shop/etch/lighter-ink.png": {
+  "h": "360b936a",
+  "w": [
+   128,
+   256,
+   311
+  ]
+ },
+ "/shop/etch/lighter.png": {
+  "h": "9b57fe51",
+  "w": [
+   128,
+   256,
+   311
+  ]
+ },
+ "/shop/etch/opener-ink.png": {
+  "h": "874d5974",
+  "w": [
+   128,
+   256,
+   384,
+   385
+  ]
+ },
+ "/shop/etch/opener.png": {
+  "h": "eba6710e",
+  "w": [
+   128,
+   256,
+   384,
+   385
+  ]
+ },
+ "/shop/etch/pen-ink.png": {
+  "h": "e3d0cbdd",
+  "w": [
+   128,
+   256,
+   384,
+   406
+  ]
+ },
+ "/shop/etch/pen.png": {
+  "h": "a7c82a9a",
+  "w": [
+   128,
+   256,
+   384,
+   406
+  ]
+ },
+ "/shop/etch/pouch-ink.png": {
+  "h": "c9fd89e9",
+  "w": [
+   128,
+   256,
+   334
+  ]
+ },
+ "/shop/etch/pouch.png": {
+  "h": "3b958a23",
+  "w": [
+   128,
+   256,
+   334
+  ]
+ },
+ "/shop/etch/tag-ink.png": {
+  "h": "04df24c1",
+  "w": [
+   128,
+   256,
+   356
+  ]
+ },
+ "/shop/etch/tag.png": {
+  "h": "f598d21f",
+  "w": [
+   128,
+   256,
+   356
+  ]
+ },
+ "/shop/etch/tumbler-ink.png": {
+  "h": "da062c37",
+  "w": [
+   128,
+   256,
+   270
+  ]
+ },
+ "/shop/etch/tumbler.png": {
+  "h": "0a8c317b",
+  "w": [
+   128,
+   256,
+   270
+  ]
+ },
+ "/shop/etch/wallet-ink.png": {
+  "h": "23d98be6",
+  "w": [
+   128,
+   256,
+   349
+  ]
+ },
+ "/shop/etch/wallet.png": {
+  "h": "6805ece5",
+  "w": [
+   128,
+   256,
+   349
+  ]
+ },
+ "/video/three-willows-coaster.jpg": {
+  "h": "c4a9135b",
+  "w": [
+   128,
+   256,
+   384,
+   640,
+   720
+  ]
+ }
+}

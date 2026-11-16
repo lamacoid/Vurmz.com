@@ -9,7 +9,8 @@ import { getCustomerSession } from '@/lib/auth/customer'
 import { audit } from '@/lib/audit'
 import { getClientIp, getUserAgent } from '@/lib/auth/session'
 import { createPayment, isSquareEnabled } from '@/lib/payments/square'
-import { getDb, getEnv, newId, nowIso } from '@/lib/db/client'
+import { getDb, getEnv } from '@/lib/db/client'
+import { settleSquarePayment } from '@/lib/money/settle'
 import { reportError } from '@/lib/error'
 import { businessTierFor } from '@/lib/pricing'
 import { CARD_MATERIALS, CARD_TEMPLATES } from '@/lib/designer/card'
@@ -315,8 +316,10 @@ export async function POST(req: NextRequest) {
     if (it.file) fileByProduct.set(it.productId, { key: it.file.key, filename: it.file.filename })
     const t = it.personalization?.text?.trim()
     const el = it.personalization?.element
-    // Persist personalization when there's engraving text OR a chosen design.
-    if (t || el) {
+    // Persist personalization when there's engraving text, a chosen design,
+    // or notes alone (a logo-only order still says where the mark goes).
+    const where = it.personalization?.placement?.trim()
+    if (t || el || where) {
       personalByProduct.set(it.productId, {
         text: (t || '').slice(0, 200),
         fontValue: it.personalization?.fontValue || undefined,
@@ -411,25 +414,21 @@ export async function POST(req: NextRequest) {
     if (!result.ok) {
       return NextResponse.json({ ok: false, error: { code: 'PAYMENT_DECLINED', message: result.error } }, { status: 402 })
     }
-    const db = getDb()
     try {
-      await db.prepare(
-        `INSERT INTO payments (id, invoice_id, customer_id, amount_cents, status, square_payment_id, square_receipt_url, method_brand, method_last4, metadata, created_at, updated_at)
-         VALUES (?, NULL, ?, ?, 'succeeded', ?, ?, ?, ?, ?, ?, ?)`
-      ).bind(
-        newId('pay'),
-        customer.id,
-        totalCents,
-        result.paymentId,
-        result.receiptUrl,
-        result.brand,
-        result.last4,
-        // payments has no order_id column; carry the link in metadata so shop
-        // payments can be reconciled to orders without a schema migration.
-        JSON.stringify({ orderId: order.id, orderNumber: order.number }),
-        nowIso(),
-        nowIso()
-      ).run()
+      // One writer for money (lib/money/settle.ts): payments row + ledger
+      // line, idempotent on the Square payment id.
+      await settleSquarePayment({
+        squarePaymentId: result.paymentId,
+        amountCents: totalCents,
+        receiptUrl: result.receiptUrl,
+        brand: result.brand,
+        last4: result.last4,
+        orderId: order.id,
+        customerId: customer.id,
+        taxCents: 0,
+        source: 'checkout',
+        note: `Order ${order.number}`,
+      })
     } catch (payErr) {
       // The card was charged at Square but the payments row failed to persist.
       // Never silently lose the Square payment id — log it prominently and report

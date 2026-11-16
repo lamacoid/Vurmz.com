@@ -5,6 +5,7 @@ import { ArrowRightIcon, ChatBubbleLeftIcon } from '@heroicons/react/24/outline'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 import { SIGNATURE } from '@/lib/pricing'
 import Breadcrumbs from '@/components/Breadcrumbs'
+import { pageMeta, BUSINESS_REF } from '@/lib/seo'
 
 // ---------------------------------------------------------------------------
 // City data: slug, display name, and unique local copy per service area
@@ -182,20 +183,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!city) return {}
 
   const title = `Laser Engraving in ${city.name}, CO`
-  const description = `Laser engraving in ${city.name}, Colorado. Bring your own knife, tool, or tumbler from $${SIGNATURE.startingAt}, or order labels, cards, and pens for your business. Most work ready in 24 to 72 hours, hand-delivered by VURMZ.`
+  const description = `Laser engraving in ${city.name}, Colorado. Bring your own knife, tool, or tumbler from $${SIGNATURE.startingAt}, or order tags, cards, and pens. Hand-delivered by VURMZ.`
 
-  return {
-    title,
-    description,
-    openGraph: {
-      title: `${title} | VURMZ`,
-      description,
-      url: `${siteInfo.url}/services/laser-engraving/${city.slug}`,
-    },
-    alternates: {
-      canonical: `/services/laser-engraving/${city.slug}`,
-    },
-  }
+  // The city title is what already ranks, so it only gains the brand.
+  return pageMeta({ title: `${title} | VURMZ`, description, path: `/services/laser-engraving/${city.slug}` })
 }
 
 // ---------------------------------------------------------------------------
@@ -207,37 +198,18 @@ export default async function CityPage({ params }: Props) {
   const city = getCityFromSlug(slug)
   if (!city) notFound()
 
+  // A service offered in this city by the one business in the root layout.
+  // It used to be a second LocalBusiness with this page as its address,
+  // which told a search engine there were twelve businesses.
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'LocalBusiness',
-    name: siteInfo.legalName,
-    alternateName: 'VURMZ Laser Engraving',
-    description: `Professional laser engraving services in ${city.name}, Colorado. Branded pens, metal business cards, equipment labels, custom gifts. Hand-delivered by VURMZ.`,
-    url: `${siteInfo.url}/services/laser-engraving/${city.slug}`,
-    telephone: siteInfo.phone,
-    email: siteInfo.email,
-    address: {
-      '@type': 'PostalAddress',
-      addressLocality: 'Centennial',
-      addressRegion: 'CO',
-      postalCode: '80112',
-      addressCountry: 'US',
-    },
-    geo: {
-      '@type': 'GeoCoordinates',
-      latitude: siteInfo.coordinates.lat,
-      longitude: siteInfo.coordinates.lng,
-    },
-    areaServed: {
-      '@type': 'City',
-      name: city.name,
-    },
-    priceRange: '$$',
-    openingHours: 'Mo-Sa 08:00-18:00',
-    founder: {
-      '@type': 'Person',
-      name: siteInfo.founder.fullName,
-    },
+    '@type': 'Service',
+    serviceType: 'Laser Engraving',
+    name: `Laser Engraving in ${city.name}, Colorado`,
+    description: `Laser engraving in ${city.name}, Colorado. Branded pens, metal business cards, custom metal tags, knives, and gifts. Hand-delivered by VURMZ from Centennial.`,
+    url: `${siteInfo.url}/services/laser-engraving/${city.slug}/`,
+    provider: BUSINESS_REF,
+    areaServed: { '@type': 'City', name: `${city.name}, Colorado` },
   }
 
   return (

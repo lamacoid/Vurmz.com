@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
+import { pageMeta } from '@/lib/seo'
 import Link from 'next/link'
-import { listProducts, lowestVariantPrices, type Product } from '@/lib/db/repos/products'
+import { lowestVariantPrices, type Product } from '@/lib/db/repos/products'
+import { listItems, RUN_SIZE } from '@/lib/items'
 import { menuPrice, menuCase } from '@/lib/menu-format'
 import { SIGNATURE } from '@/lib/pricing'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
@@ -8,11 +10,11 @@ import { siteInfo, getSmsLink } from '@/lib/site-info'
 // The list reads the live catalog at request time, so this runs on the edge.
 export const runtime = 'edge'
 
-export const metadata: Metadata = {
-  title: { absolute: 'Items: engraved coasters, pens, cards, and tags | VURMZ' },
-  description: 'The short list of things VURMZ keeps to engrave: coasters, pens, metal cards, tags, and keychains. Posted prices, engraving included, hand-delivered across the south Denver metro.',
-  alternates: { canonical: '/shop' },
-}
+export const metadata: Metadata = pageMeta({
+  title: 'Engraved Coasters, Pens, Cards and Tags | VURMZ, Centennial',
+  description: 'Coasters, pens, metal cards, tags, and keychains kept in stock to engrave. Posted prices with engraving included. Hand-delivered across the south Denver metro.',
+  path: '/shop',
+})
 
 const display = { fontFamily: 'var(--font-display), Georgia, serif' }
 
@@ -23,14 +25,12 @@ const display = { fontFamily: 'var(--font-display), Georgia, serif' }
  * Which products show is decided by category here, never by hiding rows in
  * the database, so widening or narrowing the list is a one-line change.
  */
-const ITEM_CATEGORIES = new Set(['cat_coasters', 'cat_pens', 'cat_metal_cards', 'cat_labels_tags', 'cat_keychains'])
-// A pack of ten or more is a business run. Smaller is a single or a set.
-const RUN_SIZE = 10
+// The rule itself lives in lib/items.ts, shared with the product pages and the sitemap.
 
 async function loadItems(): Promise<{ products: Product[]; lowest: Record<string, number> }> {
   try {
-    const [all, lowest] = await Promise.all([listProducts({ limit: 200 }), lowestVariantPrices()])
-    return { products: all.filter(p => p.categoryId && ITEM_CATEGORIES.has(p.categoryId)), lowest }
+    const [products, lowest] = await Promise.all([listItems(), lowestVariantPrices()])
+    return { products, lowest }
   } catch {
     // The list never takes the page down. An empty list falls back to the text line.
     return { products: [], lowest: {} }
@@ -79,11 +79,27 @@ export default async function ItemsPage() {
   const singles = products.filter(p => p.packSize < RUN_SIZE).sort(byPrice)
   const runs = products.filter(p => p.packSize >= RUN_SIZE).sort(byPrice)
 
+  // The list as data, in the order the page shows it.
+  const listSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Items to engrave',
+    itemListElement: [...singles, ...runs].map((p, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: p.name,
+      url: `${siteInfo.url}/shop/p/${p.slug}/`,
+    })),
+  }
+
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-10 pb-16">
+      {products.length > 0 && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(listSchema) }} />
+      )}
       <header className="max-w-[58ch]">
-        <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-[var(--feature)] mb-3">Items</p>
         <h1 className="text-[length:var(--step-section)] sm:text-[length:var(--step-display)] leading-[1.05] text-[var(--ink)]" style={display}>
+          <span className="block text-[11px] font-mono tracking-[0.3em] uppercase text-[var(--feature)] mb-3">Coasters, pens, metal cards, and tags</span>
           What I keep to engrave.
         </h1>
         <p className="mt-4 text-[length:var(--step-lead)] leading-relaxed text-[var(--ink-soft)]">
