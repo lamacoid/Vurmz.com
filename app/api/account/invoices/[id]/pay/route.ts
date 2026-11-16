@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import { requireCustomer } from '@/lib/auth/customer'
-import { getInvoiceById, recordInvoicePayment } from '@/lib/db/repos/invoices'
+import { getInvoiceById } from '@/lib/db/repos/invoices'
+import { settleSquarePayment } from '@/lib/money/settle'
 import { createPayment, isSquareEnabled } from '@/lib/payments/square'
 import { audit } from '@/lib/audit'
 import { getClientIp, getUserAgent } from '@/lib/auth/session'
-import { getDb, newId, nowIso } from '@/lib/db/client'
 import { reportError } from '@/lib/error'
 
 export const runtime = 'edge'
@@ -54,33 +54,21 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ id: string
     // charged. Record the payment idempotently and, if recording fails, return a
     // 500 that tells them to contact support rather than implying nothing happened.
     try {
-      const db = getDb()
-
-      // Idempotency: if we've already recorded this Square payment (e.g. a retry
-      // of the same idempotencyKey returned the same paymentId), don't double-count.
-      const already = await db.prepare(
-        'SELECT id FROM payments WHERE square_payment_id = ? LIMIT 1'
-      ).bind(result.paymentId).first<{ id: string }>()
-      if (already) {
-        return NextResponse.json({ ok: true, data: { receiptUrl: result.receiptUrl } })
-      }
-
-      await db.prepare(
-        `INSERT INTO payments (id, invoice_id, customer_id, amount_cents, status, square_payment_id, square_receipt_url, method_brand, method_last4, metadata, created_at, updated_at)
-         VALUES (?, ?, ?, ?, 'succeeded', ?, ?, ?, ?, '{}', ?, ?)`
-      ).bind(
-        newId('pay'),
-        invoice.id,
-        session.customer.id,
-        owed,
-        result.paymentId,
-        result.receiptUrl,
-        result.brand,
-        result.last4,
-        nowIso(),
-        nowIso()
-      ).run()
-      await recordInvoicePayment(invoice.id, owed)
+      // One writer for money (lib/money/settle.ts). Idempotent on the
+      // Square payment id, so a retry of the same idempotencyKey records once.
+      await settleSquarePayment({
+        squarePaymentId: result.paymentId,
+        amountCents: owed,
+        receiptUrl: result.receiptUrl,
+        brand: result.brand,
+        last4: result.last4,
+        invoiceId: invoice.id,
+        orderId: invoice.orderId,
+        customerId: session.customer.id,
+        taxCents: invoice.amountPaidCents === 0 ? invoice.taxCents : 0,
+        source: 'account_pay',
+        note: `Invoice ${invoice.number}`,
+      })
 
       await audit({
         actorType: 'customer', actorId: session.customer.id,

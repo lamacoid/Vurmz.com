@@ -1,13 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import { withAdminAuth } from '@/lib/auth/admin'
-import { getOrderById, listOrderItems, updateOrderStatus, setOrderProof, updateOrderStatusCas, setOrderProofCas, settleOrderCash, type OrderStatus, type ProofStatus } from '@/lib/db/repos/orders'
+import { getOrderById, listOrderItems, updateOrderStatus, setOrderProof, updateOrderStatusCas, setOrderProofCas, type OrderStatus, type ProofStatus } from '@/lib/db/repos/orders'
 import { applyOrderInventory, reverseOrderInventory } from '@/lib/db/repos/inventory'
 import { isLegalGuardedMove, isLegalGuardedProofMove } from '@/lib/admin/transitions'
 import { getCustomerById, getCustomerByEmail } from '@/lib/db/repos/customers'
 import { audit } from '@/lib/audit'
 import { getClientIp, getUserAgent } from '@/lib/auth/session'
 import { getDb } from '@/lib/db/client'
+import { SETTLED_SQL } from '@/lib/money/ledger'
+import { settleCash } from '@/lib/money/settle'
 
 export const runtime = 'edge'
 
@@ -31,14 +33,10 @@ export async function GET(req: NextRequest, ctx: { params: Promise<{ id: string 
       orderCount: c?.orderCount ?? 0,
       lifetimeValueCents: c?.lifetimeValueCents ?? 0,
     }
-    // Settlement is derived (Phase B): cash mark, Square payment, or paid
-    // linked invoice. Same rule as the dashboard, one truth.
+    // Settlement is derived from the ledger: sale and refund lines cover the
+    // total. Same rule as the dashboard, one truth (lib/money/ledger.ts).
     const settledRow = await getDb().prepare(
-      `SELECT CASE WHEN (
-         COALESCE(json_extract(o.metadata,'$.payment.settled'),0) = 1
-         OR EXISTS(SELECT 1 FROM invoices i WHERE i.order_id = o.id AND i.status = 'paid')
-         OR EXISTS(SELECT 1 FROM payments p WHERE p.status = 'succeeded' AND json_extract(p.metadata,'$.orderId') = o.id)
-       ) THEN 1 ELSE 0 END AS s FROM orders o WHERE o.id = ?`
+      `SELECT CASE WHEN ${SETTLED_SQL} THEN 1 ELSE 0 END AS s FROM orders o WHERE o.id = ?`
     ).bind(id).first<{ s: number }>()
     return NextResponse.json({ ok: true, data: { order, items, customer, settled: settledRow?.s === 1 } })
   })
@@ -60,7 +58,7 @@ const patchSchema = z.object({
   expectedProof: z.enum(PROOFS).optional(),
   /** Phase B collect gate: record a cash payment. CAS on the settled flag,
    *  so a double-tap can never record two payments. */
-  settle: z.literal('cash').optional(),
+  settle: z.enum(['cash','venmo','other']).optional(),
 })
 
 export async function PATCH(req: NextRequest, ctx: { params: Promise<{ id: string }> }) {
@@ -147,9 +145,9 @@ export async function PATCH(req: NextRequest, ctx: { params: Promise<{ id: strin
       })
     }
 
-    if (body.data.settle === 'cash') {
-      const settled = await settleOrderCash(id, { id: session.email ?? null })
-      if (!settled) {
+    if (body.data.settle) {
+      const { inserted } = await settleCash(id, { id: session.email ?? null }, body.data.settle)
+      if (!inserted) {
         const current = await getOrderById(id)
         if (!current) return NextResponse.json({ ok: false, error: { code: 'NOT_FOUND' } }, { status: 404 })
         // Already settled (or racing tap): news, not an error.
@@ -158,7 +156,7 @@ export async function PATCH(req: NextRequest, ctx: { params: Promise<{ id: strin
       await audit({
         actorType: 'admin', actorId: session.email ?? null,
         action: 'order.settled_cash', targetType: 'order', targetId: id,
-        diff: { method: 'cash' },
+        diff: { method: body.data.settle },
         ip: getClientIp(req), userAgent: getUserAgent(req),
       })
     }

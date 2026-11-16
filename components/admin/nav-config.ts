@@ -49,7 +49,7 @@ export const adminNav: NavGroup[] = [
     label: 'Commerce',
     items: [
       { href: '/admin/invoices', label: 'Invoices', icon: 'file-invoice', badge: 'invoices-overdue' },
-      { href: '/admin/revenue', label: 'Revenue', icon: 'dollar' },
+      { href: '/admin/revenue', label: 'Money', icon: 'dollar' },
     ],
   },
   {

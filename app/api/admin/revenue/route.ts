@@ -14,13 +14,13 @@ export async function GET(req: NextRequest) {
     const months = Math.min(24, Number(url.searchParams.get('months') ?? 12))
     const db = getDb()
 
-    // Revenue by month (from paid invoices + completed orders' payments)
+    // Revenue by month, from the ledger (sales net of refunds)
     const monthlyRes = await db.prepare(
       `SELECT substr(created_at, 1, 7) as month,
               SUM(amount_cents) as revenue_cents,
               COUNT(*) as order_count
-       FROM payments
-       WHERE status = 'succeeded'
+       FROM ledger
+       WHERE kind IN ('sale','refund')
        GROUP BY month
        ORDER BY month DESC
        LIMIT ?`
@@ -49,8 +49,8 @@ export async function GET(req: NextRequest) {
     // Totals
     const totals = await db.prepare(
       `SELECT
-         (SELECT COALESCE(SUM(amount_cents), 0) FROM payments WHERE status = 'succeeded') as revenue_ever,
-         (SELECT COALESCE(SUM(amount_cents), 0) FROM payments WHERE status = 'succeeded' AND created_at >= date('now', 'start of month')) as revenue_month,
+         (SELECT COALESCE(SUM(amount_cents), 0) FROM ledger WHERE kind IN ('sale','refund')) as revenue_ever,
+         (SELECT COALESCE(SUM(amount_cents), 0) FROM ledger WHERE kind IN ('sale','refund') AND occurred_at >= date('now', 'start of month')) as revenue_month,
          (SELECT COUNT(*) FROM orders WHERE status NOT IN ('cancelled','refunded')) as orders_total,
          (SELECT COUNT(*) FROM customers WHERE deleted_at IS NULL) as customers_total`
     ).first<{ revenue_ever: number; revenue_month: number; orders_total: number; customers_total: number }>()

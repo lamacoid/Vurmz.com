@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { withAdminAuth } from '@/lib/auth/admin'
 import { getDb } from '@/lib/db/client'
+import { SETTLED_SQL } from '@/lib/money/ledger'
 import { listOrderItemFlags } from '@/lib/db/repos/orders'
 import type { RailTicket } from '@/lib/admin/next-action'
 
@@ -17,17 +18,12 @@ export const runtime = 'edge'
  * linked invoice paid. Used both to compute each ticket's settled flag
  * and to keep delivered-but-unpaid orders ON the rail (I5).
  */
-const SETTLED_SQL = `(
-  COALESCE(json_extract(o.metadata,'$.payment.settled'), 0) = 1
-  OR EXISTS(SELECT 1 FROM invoices i WHERE i.order_id = o.id AND i.status = 'paid')
-  OR EXISTS(SELECT 1 FROM payments p WHERE p.status = 'succeeded' AND json_extract(p.metadata,'$.orderId') = o.id)
-)`
 const ON_RAIL_SQL = `(o.status IN ('new','confirmed','in_progress','ready') OR (o.status = 'delivered' AND NOT ${SETTLED_SQL}))`
 
 export async function GET(req: NextRequest) {
   return withAdminAuth(req, async () => {
     const db = getDb()
-    const [actionRows, countRows, collected, pipeline, flags, itemRows, dueTodayRow, newSinceRow] = await Promise.all([
+    const [actionRows, countRows, collected, pipeline, flags, itemRows, dueTodayRow, newSinceRow, invoicesOwed] = await Promise.all([
       // The rail: open work plus delivered-but-unpaid, customer joined in.
       db.prepare(
         `SELECT o.id, o.number, o.email, o.status, o.total_cents, o.fulfillment_method,
@@ -40,7 +36,7 @@ export async function GET(req: NextRequest) {
       ).all<{ id: string; number: string; email: string; status: string; total_cents: number; fulfillment_method: string; fulfillment_eta: string | null; fulfillment_address: string | null; metadata: string; created_at: string; customer_name: string | null; customer_phone: string | null; settled: number }>(),
       db.prepare(`SELECT status, COUNT(*) n FROM orders GROUP BY status`).all<{ status: string; n: number }>(),
       db.prepare(
-        `SELECT COALESCE(SUM(amount_cents),0) c FROM payments WHERE status='succeeded' AND created_at >= datetime('now','-7 day')`
+        `SELECT COALESCE(SUM(amount_cents),0) c FROM ledger WHERE kind IN ('sale','refund') AND occurred_at >= datetime('now','-7 day')`
       ).first<{ c: number }>(),
       // Owed to you = everything on the rail that has not settled yet.
       db.prepare(
@@ -59,6 +55,12 @@ export async function GET(req: NextRequest) {
       ).first<{ c: number }>(),
       db.prepare(
         `SELECT COUNT(*) c FROM orders WHERE created_at >= datetime('now','-1 day')`
+      ).first<{ c: number }>(),
+      // Invoices still open, including the ones written in the Square app and
+      // mirrored by the sync. Owed is owed wherever the paper lives.
+      db.prepare(
+        `SELECT COALESCE(SUM(total_cents - amount_paid_cents),0) c FROM invoices
+         WHERE status IN ('sent','viewed','overdue','partially_paid') AND order_id IS NULL`
       ).first<{ c: number }>(),
     ])
 
@@ -129,7 +131,7 @@ export async function GET(req: NextRequest) {
         dueToday: dueTodayRow?.c ?? 0,
         newSinceYesterday: newSinceRow?.c ?? 0,
         revenue7dCents: collected?.c ?? 0,
-        pipelineCents: pipeline?.c ?? 0,
+        pipelineCents: (pipeline?.c ?? 0) + (invoicesOwed?.c ?? 0),
       },
     })
   })

@@ -265,3 +265,13 @@ each step to ON THE RACK (ready) then OUT FOR DELIVERY then delivered.
 Missing piece vs today: a delivery RUN, grouping ready tickets, flipping
 them to out-for-delivery together, handing the stops to Apple Maps.
 Timing is promise-date urgency (red/amber/green), never fixed windows.
+
+## Addendum 2026-11-06: the Now corner
+
+Zach: "an urgent corner where the next step is stated and it's crucial.
+Don't do anything else until now. Like a bump system in a kitchen."
+Every admin page carries one card in the same corner: the single most
+urgent next action in the business, one sentence, one button that does
+it. Bump = done. Park until a time is the only other move. The rest of
+the page dims while the corner has a card. Full spec in PIPELINE.md
+phase 2. This outranks the five rooms in build order.

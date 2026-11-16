@@ -1,10 +1,21 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { money } from '@/lib/format'
 
-interface Reply { body: string; sentAt: string; by: string }
+interface ReplyAttachment { key: string; filename: string; size: number }
+interface Reply { body: string; sentAt: string; by: string; attachments?: ReplyAttachment[] }
+
+const MAX_FILES = 5
+const MAX_TOTAL_BYTES = 10 * 1024 * 1024
+const ACCEPT = 'image/*,.pdf,.svg,.ai,.eps,.dxf,.lbrn,.lbrn2'
+
+function fileSize(n: number) {
+  if (n < 1024) return `${n} B`
+  if (n < 1024 * 1024) return `${Math.round(n / 1024)} KB`
+  return `${(n / 1024 / 1024).toFixed(1)} MB`
+}
 interface CustomerCtx { id: string; email: string; name: string; orderCount: number; lifetimeValueCents: number; createdAt: string }
 interface Message {
   id: string
@@ -43,7 +54,22 @@ export default function InboxPage() {
   const [sendError, setSendError] = useState('')
   const [composeOpen, setComposeOpen] = useState(false)
   const [justSent, setJustSent] = useState(false)
+  const [files, setFiles] = useState<File[]>([])
+  const fileInput = useRef<HTMLInputElement>(null)
   const [ctx, setCtx] = useState<CustomerCtx | 'none' | null>(null)
+
+  function addFiles(list: FileList | null) {
+    if (!list) return
+    setSendError(''); setJustSent(false)
+    const next = [...files]
+    for (const f of Array.from(list)) {
+      if (next.some(x => x.name === f.name && x.size === f.size)) continue
+      next.push(f)
+    }
+    if (next.length > MAX_FILES) { setSendError(`Up to ${MAX_FILES} files per reply.`); return }
+    if (next.reduce((n, f) => n + f.size, 0) > MAX_TOTAL_BYTES) { setSendError('Files add up to more than 10 MB. Send a smaller version or a link.'); return }
+    setFiles(next)
+  }
 
   async function load() {
     const res = await fetch(`/api/admin/inbox?filter=${filter}`)
@@ -56,7 +82,7 @@ export default function InboxPage() {
   useEffect(() => { load() }, [filter])
 
   function open(msg: Message) {
-    setReply(''); setSendError(''); setJustSent(false)
+    setReply(''); setFiles([]); setSendError(''); setJustSent(false)
     setSelected(msg)
     setCtx(null)
     if (msg.email) {
@@ -96,15 +122,15 @@ export default function InboxPage() {
     if (!text) return
     setSending(true); setSendError('')
     try {
-      const res = await fetch(`/api/admin/inbox/${msg.id}/reply`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ body: text }),
-      })
+      const form = new FormData()
+      form.set('body', text)
+      for (const f of files) form.append('files', f)
+      const res = await fetch(`/api/admin/inbox/${msg.id}/reply`, { method: 'POST', body: form })
       const data = await res.json() as { ok?: boolean; message?: Message; error?: { message?: string } }
       if (!res.ok || !data.ok) throw new Error(data.error?.message || 'Could not send. Please try again.')
       setSelected(data.message || msg)
       setReply('')
+      setFiles([])
       setJustSent(true)
     } catch (e) {
       setSendError(e instanceof Error ? e.message : 'Could not send. Please try again.')
@@ -188,6 +214,15 @@ export default function InboxPage() {
             <div key={i} className="bg-white/[0.04] border-l-2 border-[var(--a-accent)] rounded-lg p-4">
               <p className="text-[11px] uppercase tracking-wider text-[var(--a-accent)] mb-1.5">You replied &middot; {timeAgo(r.sentAt)}</p>
               <p className="text-[15px] text-[var(--a-ink)] whitespace-pre-wrap leading-relaxed">{r.body}</p>
+              {(r.attachments || []).length > 0 && (
+                <div className="flex flex-wrap gap-1.5 mt-3">
+                  {r.attachments!.map(a => (
+                    <a key={a.key} href={`/api/admin/r2/${a.key}`} target="_blank" rel="noreferrer" className="text-xs bg-white/5 hover:bg-white/10 px-2.5 py-1 rounded-full text-[var(--a-ink-soft)]">
+                      {a.filename} <span className="text-[var(--a-ink-faint)]">{fileSize(a.size)}</span>
+                    </a>
+                  ))}
+                </div>
+              )}
             </div>
           ))}
 
@@ -202,15 +237,46 @@ export default function InboxPage() {
                 placeholder={`Write your reply… it emails ${firstName} from VURMZ.`}
                 className="w-full rounded-lg bg-black/15 border border-[var(--a-line)] p-3 text-[15px] text-[var(--a-ink)] placeholder:text-[var(--a-ink-faint)] focus:outline-none focus:border-[var(--a-accent)] resize-y"
               />
+              {files.length > 0 && (
+                <div className="flex flex-wrap gap-1.5 mt-2">
+                  {files.map(f => (
+                    <span key={`${f.name}-${f.size}`} className="inline-flex items-center gap-1.5 text-xs bg-white/5 pl-2.5 pr-1.5 py-1 rounded-full text-[var(--a-ink-soft)]">
+                      {f.name} <span className="text-[var(--a-ink-faint)]">{fileSize(f.size)}</span>
+                      <button
+                        type="button"
+                        onClick={() => setFiles(files.filter(x => x !== f))}
+                        aria-label={`Remove ${f.name}`}
+                        className="w-4 h-4 rounded-full hover:bg-white/10 text-[var(--a-ink-faint)] leading-none"
+                      >×</button>
+                    </span>
+                  ))}
+                </div>
+              )}
               {sendError && <p className="text-sm text-[#E89B8F] mt-2">{sendError}</p>}
               {justSent && <p className="text-sm text-[var(--a-accent)] mt-2">✓ Sent to {selected.email}</p>}
+              <input
+                ref={fileInput}
+                type="file"
+                multiple
+                accept={ACCEPT}
+                className="hidden"
+                onChange={e => { addFiles(e.target.files); e.target.value = '' }}
+              />
               <div className="flex items-center gap-2 mt-3">
                 <button
                   onClick={() => sendReply(selected)}
                   disabled={sending || !reply.trim()}
                   className="px-5 py-2.5 bg-[var(--a-cta)] hover:bg-[var(--a-cta-hover)] disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm font-semibold rounded-lg transition-colors"
                 >
-                  {sending ? 'Sending…' : 'Send reply'}
+                  {sending ? 'Sending…' : files.length ? `Send with ${files.length} file${files.length === 1 ? '' : 's'}` : 'Send reply'}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => fileInput.current?.click()}
+                  disabled={sending || files.length >= MAX_FILES}
+                  className="px-4 py-2.5 bg-white/5 hover:bg-white/10 disabled:opacity-50 text-[var(--a-ink-soft)] text-sm font-medium rounded-lg transition-colors"
+                >
+                  Attach a file
                 </button>
                 {selected.phone && (
                   <a href={`sms:${selected.phone}`} className="px-4 py-2.5 bg-white/5 hover:bg-white/10 text-[var(--a-ink-soft)] text-sm font-medium rounded-lg transition-colors">

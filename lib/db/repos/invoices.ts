@@ -112,6 +112,61 @@ export async function createInvoice(input: CreateInvoiceInput): Promise<Invoice>
   return hydrate(row!)
 }
 
+export async function getInvoiceBySquareOrderId(squareOrderId: string): Promise<Invoice | null> {
+  const row = await getDb().prepare('SELECT * FROM invoices WHERE square_order_id = ?').bind(squareOrderId).first<InvoiceRow>()
+  return row ? hydrate(row) : null
+}
+
+export interface SquareInvoiceUpsert {
+  squareInvoiceId: string
+  squareOrderId: string | null
+  /** Square's own number, e.g. "000012". Shown as SQ-000012 here. */
+  squareNumber: string | null
+  customerId: string
+  status: InvoiceStatus
+  totalCents: number
+  amountPaidCents: number
+  dueDate: string | null
+  notes: string
+  sentAt: string | null
+  paidAt: string | null
+}
+
+/**
+ * Mirror an invoice that was written in the Square app. Keyed on the Square
+ * invoice id, so re-running the sync only updates. Invoices made here
+ * (INV-…) keep their own number; Square ones read SQ-….
+ */
+export async function upsertSquareInvoice(input: SquareInvoiceUpsert): Promise<{ invoice: Invoice; inserted: boolean }> {
+  const db = getDb()
+  const now = nowIso()
+  const existing = await db.prepare('SELECT * FROM invoices WHERE square_invoice_id = ?').bind(input.squareInvoiceId).first<InvoiceRow>()
+  if (existing) {
+    // A paid status set through our own settle path wins over a stale Square read.
+    const status = existing.status === 'paid' && input.status !== 'refunded' ? 'paid' : input.status
+    await db.prepare(
+      `UPDATE invoices SET status = ?, subtotal_cents = ?, total_cents = ?, amount_paid_cents = ?, due_date = ?,
+         square_order_id = COALESCE(?, square_order_id), notes = CASE WHEN notes = '' THEN ? ELSE notes END,
+         sent_at = COALESCE(sent_at, ?), paid_at = COALESCE(paid_at, ?), updated_at = ?
+       WHERE id = ?`
+    ).bind(status, input.totalCents, input.totalCents, input.amountPaidCents, input.dueDate, input.squareOrderId, input.notes,
+      input.sentAt, input.paidAt, now, existing.id).run()
+    const row = await db.prepare('SELECT * FROM invoices WHERE id = ?').bind(existing.id).first<InvoiceRow>()
+    return { invoice: hydrate(row!), inserted: false }
+  }
+  const id = newId('inv')
+  const number = input.squareNumber ? `SQ-${input.squareNumber}` : `SQ-${input.squareInvoiceId.slice(0, 8)}`
+  await db.prepare(
+    `INSERT INTO invoices (id, number, customer_id, order_id, status, subtotal_cents, tax_cents, total_cents, amount_paid_cents,
+       due_date, square_invoice_id, square_order_id, notes, sent_at, paid_at, created_at, updated_at)
+     VALUES (?, ?, ?, NULL, ?, ?, 0, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+     ON CONFLICT(number) DO UPDATE SET updated_at = excluded.updated_at`
+  ).bind(id, number, input.customerId, input.status, input.totalCents, input.totalCents, input.amountPaidCents,
+    input.dueDate, input.squareInvoiceId, input.squareOrderId, input.notes, input.sentAt, input.paidAt, now, now).run()
+  const row = await db.prepare('SELECT * FROM invoices WHERE square_invoice_id = ? OR number = ?').bind(input.squareInvoiceId, number).first<InvoiceRow>()
+  return { invoice: hydrate(row!), inserted: row?.id === id }
+}
+
 export async function getInvoiceById(id: string): Promise<Invoice | null> {
   const db = getDb()
   const row = await db.prepare('SELECT * FROM invoices WHERE id = ?').bind(id).first<InvoiceRow>()
@@ -163,7 +218,15 @@ export async function recordInvoicePayment(invoiceId: string, amountCents: numbe
   const db = getDb()
   const inv = await getInvoiceById(invoiceId)
   if (!inv) return
-  const newPaid = inv.amountPaidCents + amountCents
+  let newPaid = inv.amountPaidCents + amountCents
+  if (inv.squareInvoiceId) {
+    // Square owns the paid figure on its own invoices and the sync rewrites
+    // it each run. Adding here would double it, so take the larger of what
+    // Square last said and what the ledger (idempotent) has linked.
+    const led = await db.prepare(`SELECT COALESCE(SUM(amount_cents),0) c FROM ledger WHERE invoice_id = ? AND kind = 'sale'`)
+      .bind(invoiceId).first<{ c: number }>()
+    newPaid = Math.max(inv.amountPaidCents, led?.c ?? 0)
+  }
   const fullyPaid = newPaid >= inv.totalCents
   const status: InvoiceStatus = fullyPaid ? 'paid' : 'partially_paid'
   const now = nowIso()
