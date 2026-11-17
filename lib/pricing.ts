@@ -149,6 +149,15 @@ export const CATALOG = {
 // the delivery. One number, so a $30 cup does not turn into $120. Deposit
 // before the piece is bought. Terms from the 2026-09 research, simplified
 // 2026-09-16 after the stacked fees read as weird.
+/**
+ * The community board cards. Their QR code opens /card, which thanks the
+ * person and takes this much off the quote. The cards are engraved metal and
+ * say nothing about a discount, so the number can change here any time.
+ */
+export const CARD_OFFER = {
+  percentOff: 20,
+} as const
+
 export const SOURCING = {
   label: "Happy to source",
   /** Finding it, marking it, bringing it. One fee. */

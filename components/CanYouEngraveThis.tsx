@@ -13,7 +13,7 @@
 import { useRef, useState } from 'react'
 import { siteInfo, getSmsLink } from '@/lib/site-info'
 import { SIGNATURE } from '@/lib/pricing'
-import { HEARD_FROM, heardLine } from '@/lib/heard-from'
+import { HEARD_FROM, HEARD_PREFIX, heardLine } from '@/lib/heard-from'
 
 interface Shot { key: string; filename: string; preview: string | null }
 
@@ -22,8 +22,12 @@ const MAX_SIZE = 10 * 1024 * 1024
 const ACCEPT_PHOTO = 'image/jpeg,image/png,image/webp,image/gif'
 const ACCEPT_BUSINESS = 'image/jpeg,image/png,image/webp,image/gif,image/svg+xml,application/pdf,.svg,.pdf'
 
-export default function CanYouEngraveThis({ compact = false, variant = 'personal' }: { compact?: boolean; variant?: 'personal' | 'business' }) {
+export default function CanYouEngraveThis({ compact = false, variant = 'personal', cardOffer }: { compact?: boolean; variant?: 'personal' | 'business'; cardOffer?: number }) {
   const business = variant === 'business'
+  // Set on /card only: the person scanned a community board card and was
+  // promised this percent off. The promise rides the message, the same way
+  // the heard-from answer does, so it is in front of Zach when he prices it.
+  const cardLine = cardOffer ? `${HEARD_PREFIX} Community board card. ${cardOffer}% off promised.` : ''
   const [shots, setShots] = useState<Shot[]>([])
   const [uploading, setUploading] = useState(false)
   const [item, setItem] = useState('')
@@ -82,7 +86,7 @@ export default function CanYouEngraveThis({ compact = false, variant = 'personal
           item.trim() ? `What it is: ${item.trim()}` : '',
           words.trim() ? `What to put on it: ${words.trim()}` : '',
         ]
-    ).concat(shots.length ? `${shots.length} file${shots.length === 1 ? '' : 's'} attached.` : 'No photo.', heardLine(heard)).filter(Boolean).join('\n')
+    ).concat(shots.length ? `${shots.length} file${shots.length === 1 ? '' : 's'} attached.` : 'No photo.', cardLine || heardLine(heard)).filter(Boolean).join('\n')
     try {
       const res = await fetch('/api/contact/', {
         method: 'POST',
@@ -108,15 +112,17 @@ export default function CanYouEngraveThis({ compact = false, variant = 'personal
 
   const field = 'w-full bg-[var(--surface)] border border-[var(--hairline)] rounded-[var(--r-control)] px-3.5 py-3 text-[15px] text-[var(--ink)] placeholder:text-[var(--ink-soft)]/70 outline-none focus:border-[var(--eyebrow)] transition-colors'
   const label = 'block text-[11px] font-mono uppercase tracking-[0.18em] text-[var(--ink-soft)] mb-1.5'
-  const smsText = business ? 'Hi Zach, I need something marked for my business. ' : 'Hi Zach, can you engrave this? '
+  const smsText = cardOffer
+    ? `Hi Zach, I scanned your card (${cardOffer}% off). Can you engrave this? `
+    : business ? 'Hi Zach, I need something marked for my business. ' : 'Hi Zach, can you engrave this? '
 
   if (status === 'done') {
     return (
       <div className="rounded-[var(--r-panel)] border border-[var(--glass-edge)] bg-[var(--surface)] p-6 sm:p-8">
         <p className="text-[length:var(--step-panel)] text-[var(--ink)]" style={{ fontFamily: 'var(--font-display), Georgia, serif' }}>Got it.</p>
         <p className="mt-2 text-[var(--ink-soft)] leading-relaxed">
-          I will look at it and send a {business ? 'price' : 'number'} back today, usually within the hour. If it is faster, text me at{' '}
-          <a href={getSmsLink()} className="text-[var(--eyebrow)] hover:text-[var(--ink)]">{siteInfo.phone}</a>.
+          I will look at it and send a {business ? 'price' : 'number'} back today, usually within the hour{cardOffer ? `, with the ${cardOffer}% already off` : ''}. If it is faster, text me at{' '}
+          <a href={getSmsLink(cardOffer ? smsText : undefined)} className="text-[var(--eyebrow)] hover:text-[var(--ink)]">{siteInfo.phone}</a>.
         </p>
       </div>
     )
@@ -207,13 +213,13 @@ export default function CanYouEngraveThis({ compact = false, variant = 'personal
         </div>
       </div>
 
-      <div className="mt-4 max-w-sm">
+      {!cardOffer && <div className="mt-4 max-w-sm">
         <label htmlFor="cyet-heard" className={label}>How did you hear about VURMZ? (optional)</label>
         <select id="cyet-heard" className={field} value={heard} onChange={e => setHeard(e.target.value)}>
           <option value="">Pick one</option>
           {HEARD_FROM.map(h => <option key={h} value={h}>{h}</option>)}
         </select>
-      </div>
+      </div>}
 
       {/* Honeypot: hidden from people, filled by bots. */}
       <div aria-hidden="true" style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, overflow: 'hidden' }}>
